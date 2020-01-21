@@ -8,7 +8,13 @@ import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
-import { Navigation } from '../types';
+//import { Navigation } from '../types';
+
+import {
+  NavigationParams,
+  NavigationScreenProp,
+  NavigationState,
+} from 'react-navigation';
 
 import {
   passwordValidator,
@@ -28,7 +34,11 @@ type RegisterState = {
   securityAnswerError: string,
 }
 
-class RegisterScreen extends React.Component<{}, RegisterState> {
+interface Props {
+  navigation: NavigationScreenProp<NavigationState, NavigationParams>;
+}
+
+class RegisterScreen extends React.Component<Props, RegisterState> {
   
   constructor(RegisterState) {
     super(RegisterState)
@@ -54,6 +64,8 @@ class RegisterScreen extends React.Component<{}, RegisterState> {
     this.setState({securityAnswerError: securityAnswerValidator(this.state.securityAnswer)});
 
     console.log(this.state.passwordError);
+
+    this.props.navigation.navigate('HomeScreen');
   };
 
   render() {
