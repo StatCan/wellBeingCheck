@@ -39,10 +39,10 @@ interface Props {
 }
 
 class RegisterScreen extends React.Component<Props, RegisterState> {
-  
+
   constructor(RegisterState) {
     super(RegisterState)
-    this.state = { 
+    this.state = {
       password: "",
       passwordError: "",
       passwordConfirm: "",
@@ -52,16 +52,17 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
       securityAnswer: "",
       securityAnswerError: "",
     };
+    this._retrieveData('user_password');
   }
 
   _onSignUpPressed = () => {
     console.log("_onSignUpPressed");
     console.log(this.state);
 
-    this.setState({passwordError: passwordValidator(this.state.password)});
-    this.setState({passwordConfirmError: passwordConfirmValidator(this.state.password, this.state.passwordConfirm)});
-    this.setState({securityQuestionError: securityQuestionValidator(this.state.securityQuestion)});
-    this.setState({securityAnswerError: securityAnswerValidator(this.state.securityAnswer)});
+    this.setState({ passwordError: passwordValidator(this.state.password) });
+    this.setState({ passwordConfirmError: passwordConfirmValidator(this.state.password, this.state.passwordConfirm) });
+    this.setState({ securityQuestionError: securityQuestionValidator(this.state.securityQuestion) });
+    this.setState({ securityAnswerError: securityAnswerValidator(this.state.securityAnswer) });
 
     console.log(this.state.passwordError);
     console.log(this.state.passwordConfirmError);
@@ -69,74 +70,109 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     console.log(this.state.securityAnswerError);
 
     if (
-      !!this.state.passwordError ||
-      !!this.state.passwordConfirmError ||
-      !!this.state.securityQuestionError ||
-      !!this.state.securityAnswerError
-    )
-    {
+      (this.state.passwordError == '') &&
+      (this.state.passwordConfirmError == '') &&
+      (this.state.securityQuestionError == '') &&
+      (this.state.securityAnswerError == '')
+    ) {
+      //validation passed lets store user
+      this._storeData('user_password', this.state.password);
+      this._storeData('user_security_question', this.state.securityQuestion);
+      this._storeData('user_security_answer', this.state.securityAnswer);
       this.props.navigation.navigate('Dashboard');
     }
+    else {
+      alert('here');
+    }
   };
+
+  _storeData = async (key, value) => {
+    try {
+      await AsyncStorage.setItem(key, value);
+      alert('saved');
+    } catch (error) {
+      alert('error');
+      console.log(error);
+    }
+  }
+
+  _retrieveData = async (key) => {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      if (value != null) {
+        alert(value);
+      }
+      else {
+        alert('value is null');
+      }
+    } catch (error) {
+      alert('error');
+      console.log(error);
+    }
+  }
+
+  _handleSecurityQuestionChange(value) {
+    this.setState({ securityQuestion: this.state.securityQuestion });
+  }
 
   render() {
     return (
       <Background>
         {/* <BackButton goBack={() => navigation.navigate('HomeScreen')} /> */}
-  
+
         <Logo />
-  
+
         <Header>Create Account Armon</Header>
-  
+
         <TextInput
           label="Password"
           returnKeyType="next"
           value={this.state.password}
-          onChangeText={text => this.setState({password: text})}
+          onChangeText={text => this.setState({ password: text })}
           error={!!this.state.passwordError}
           errorText={this.state.passwordError}
           secureTextEntry={true}
         />
-  
+
         <TextInput
           label="Password Confirm"
           returnKeyType="next"
           value={this.state.passwordConfirm}
-          onChangeText={text => this.setState({passwordConfirm: text})}
+          onChangeText={text => this.setState({ passwordConfirm: text })}
           error={!!this.state.passwordConfirmError}
           errorText={this.state.passwordConfirmError}
           secureTextEntry={true}
         />
-  
-        {/* <Text>Security Question</Text>
+
+        <Text>Security Question</Text>
         <Picker
           style={[styles.picker]} itemStyle={styles.pickerItem}
           onValueChange={(itemValue, itemIndex) =>
-            setSecurityQuestion({ value: itemValue, error: '' })
+            this._handleSecurityQuestionChange({ value: itemValue })
           }>
           <Picker.Item label="Mother's Maiden name" value="mdn" />
           <Picker.Item label="Year of Birth" value="yob" />
-        </Picker> */}
-  
+        </Picker>
+
         <TextInput
           label="Security Answer"
           returnKeyType="next"
           value={this.state.securityAnswer}
-          onChangeText={text => this.setState({securityAnswer: text})}
+          onChangeText={text => this.setState({ securityAnswer: text })}
           error={!!this.state.securityAnswerError}
           errorText={this.state.securityAnswerError}
         />
-  
+
         <Button mode="contained" onPress={this._onSignUpPressed} style={styles.button}>
           Sign Up
         </Button>
-  
-        {/* <View style={styles.row}>
+
+        <View style={styles.row}>
           <Text style={styles.label}>Already have an account? </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('LoginScreen')}>
             <Text style={styles.link}>Login</Text>
           </TouchableOpacity>
-        </View> */}
+        </View>
       </Background>
     );
   }
