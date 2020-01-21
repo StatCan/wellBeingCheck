@@ -1,5 +1,6 @@
 import React, { memo, useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Picker, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { AsyncStorage } from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
@@ -10,11 +11,10 @@ import { theme } from '../core/theme';
 import { Navigation } from '../types';
 
 import {
-  emailValidator,
   passwordValidator,
-  nameValidator,
-  pinValidator,
-  pinConfirmValidator,
+  passwordConfirmValidator,
+  securityQuestionValidator,
+  securityAnswerValidator,
 } from '../core/utils';
 
 type Props = {
@@ -22,16 +22,22 @@ type Props = {
 };
 
 const RegisterScreen = ({ navigation }: Props) => {
-  const [pin, setPIN] = useState({ value: '', error: '' });
-  const [pinconfirm, setPINConfirm] = useState({ value: '', error: '' });
+  const [password, setPassword] = useState({ value: '', error: '' });
+  const [passwordConfirm, setPasswordConfirm] = useState({ value: '', error: '' });
+  const [securityQuestion, setSecurityQuestion] = useState({ value: '', error: '' });
+  const [securityAnswer, setSecurityAnswer] = useState({ value: '', error: '' });
 
   const _onSignUpPressed = () => {
-    const pinError = pinValidator(pin.value);
-    const pinConfirmError = pinConfirmValidator(pin.value, pinconfirm.value);
+    const passwordError = passwordValidator(password.value);
+    const passwordConfirmError = passwordConfirmValidator(password.value, passwordConfirm.value);
+    const securityQuestionError = securityQuestionValidator(securityQuestion.value);
+    const securityAnswerError = securityAnswerValidator(securityAnswer.value);
 
-    if (pinError || pinConfirmError) {
-      setPIN({ ...pin, error: pinError });
-      setPINConfirm({ ...pinconfirm, error: pinConfirmError });
+    if (passwordError || passwordConfirmError || securityQuestionError || securityQuestionError) {
+      setPassword({ ...password, error: passwordError });
+      setPasswordConfirm({ ...passwordConfirm, error: passwordConfirmError });
+      setSecurityQuestion({ ...securityQuestion, error: securityQuestionError });
+      setSecurityAnswer({ ...securityAnswer, error: securityAnswerError });
       return;
     }
 
@@ -47,23 +53,42 @@ const RegisterScreen = ({ navigation }: Props) => {
       <Header>Create Account</Header>
 
       <TextInput
-        label="PIN"
+        label="Paswword"
         returnKeyType="next"
-        value={pin.value}
-        onChangeText={text => setPIN({ value: text, error: '' })}
-        error={!!pin.error}
-        errorText={pin.error}
-        keyboardType={'numeric'}
+        value={password.value}
+        onChangeText={text => setPassword({ value: text, error: '' })}
+        error={!!password.error}
+        errorText={password.error}
+        secureTextEntry={true}
       />
 
       <TextInput
-        label="PIN Confirm"
+        label="Paswword Confirm"
         returnKeyType="next"
-        value={pinconfirm.value}
-        onChangeText={text => setPINConfirm({ value: text, error: '' })}
-        error={!!pinconfirm.error}
-        errorText={pinconfirm.error}
-        keyboardType={'numeric'}
+        value={passwordConfirm.value}
+        onChangeText={text => setPasswordConfirm({ value: text, error: '' })}
+        error={!!passwordConfirm.error}
+        errorText={passwordConfirm.error}
+        secureTextEntry={true}
+      />
+
+      <Text>Security Question</Text>
+      <Picker
+        style={[styles.picker]} itemStyle={styles.pickerItem}
+        onValueChange={(itemValue, itemIndex) =>
+          setSecurityQuestion({ value: itemValue, error: '' })
+        }>
+        <Picker.Item label="Mother's Maiden name" value="mdn" />
+        <Picker.Item label="Year of Birth" value="yob" />
+      </Picker>
+
+      <TextInput
+        label="Security Answer"
+        returnKeyType="next"
+        value={securityAnswer.value}
+        onChangeText={text => setSecurityAnswer({ value: text, error: '' })}
+        error={!!securityAnswer.error}
+        errorText={securityAnswer.error}
       />
 
       <Button mode="contained" onPress={_onSignUpPressed} style={styles.button}>
@@ -94,6 +119,15 @@ const styles = StyleSheet.create({
   link: {
     fontWeight: 'bold',
     color: theme.colors.primary,
+  },
+  picker: {
+    width: 100,
+    backgroundColor: '#ffff',
+    borderColor: '#330033',
+    borderWidth: 10,
+  },
+  pickerItem: {
+    color: 'red'
   },
 });
 
