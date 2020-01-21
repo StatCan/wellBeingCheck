@@ -19,9 +19,13 @@ import {
 
 type RegisterState = {
   password: string,
+  passwordError: string,
   passwordConfirm: string,
+  passwordConfirmError: string,
   securityQuestion: string,
+  securityQuestionError: string,
   securityAnswer: string,
+  securityAnswerError: string,
 }
 
 class RegisterScreen extends React.Component<{}, RegisterState> {
@@ -30,28 +34,26 @@ class RegisterScreen extends React.Component<{}, RegisterState> {
     super(RegisterState)
     this.state = { 
       password: "",
+      passwordError: "",
       passwordConfirm: "",
+      passwordConfirmError: "",
       securityQuestion: "",
+      securityQuestionError: "",
       securityAnswer: "",
+      securityAnswerError: "",
     };
   }
 
   _onSignUpPressed = () => {
     console.log("_onSignUpPressed");
-    const passwordError = passwordValidator(this.state.password);
-    const passwordConfirmError = passwordConfirmValidator(this.state.password, this.state.passwordConfirm);
-    const securityQuestionError = securityQuestionValidator(this.state.securityQuestion);
-    const securityAnswerError = securityAnswerValidator(this.state.securityAnswer);
+    console.log(this.state);
 
-    console.log(passwordError);
+    this.setState({passwordError: passwordValidator(this.state.password)});
+    this.setState({passwordConfirmError: passwordConfirmValidator(this.state.password, this.state.passwordConfirm)});
+    this.setState({securityQuestionError: securityQuestionValidator(this.state.securityQuestion)});
+    this.setState({securityAnswerError: securityAnswerValidator(this.state.securityAnswer)});
 
-    if (passwordError || passwordConfirmError || securityQuestionError || securityQuestionError) {
-      // setPassword({ ...password, error: passwordError });
-      // setPasswordConfirm({ ...passwordConfirm, error: passwordConfirmError });
-      // setSecurityQuestion({ ...securityQuestion, error: securityQuestionError });
-      // setSecurityAnswer({ ...securityAnswer, error: securityAnswerError });
-      return;
-    }
+    console.log(this.state.passwordError);
   };
 
   render() {
@@ -68,8 +70,8 @@ class RegisterScreen extends React.Component<{}, RegisterState> {
           returnKeyType="next"
           value={this.state.password}
           onChangeText={text => this.setState({password: text})}
-          // error={!!password.error}
-          // errorText={password.error}
+          error={!!this.state.passwordError}
+          errorText={this.state.passwordError}
           secureTextEntry={true}
         />
   
