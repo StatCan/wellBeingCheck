@@ -8,10 +8,13 @@ import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
 import { Navigation } from '../types';
+
 import {
   emailValidator,
   passwordValidator,
   nameValidator,
+  pinValidator,
+  pinConfirmValidator,
 } from '../core/utils';
 
 type Props = {
@@ -19,19 +22,16 @@ type Props = {
 };
 
 const RegisterScreen = ({ navigation }: Props) => {
-  const [name, setName] = useState({ value: '', error: '' });
-  const [email, setEmail] = useState({ value: '', error: '' });
-  const [password, setPassword] = useState({ value: '', error: '' });
+  const [pin, setPIN] = useState({ value: '', error: '' });
+  const [pinconfirm, setPINConfirm] = useState({ value: '', error: '' });
 
   const _onSignUpPressed = () => {
-    const nameError = nameValidator(name.value);
-    const emailError = emailValidator(email.value);
-    const passwordError = passwordValidator(password.value);
+    const pinError = pinValidator(pin.value);
+    const pinConfirmError = pinConfirmValidator(pin.value, pinconfirm.value);
 
-    if (emailError || passwordError || nameError) {
-      setName({ ...name, error: nameError });
-      setEmail({ ...email, error: emailError });
-      setPassword({ ...password, error: passwordError });
+    if (pinError || pinConfirmError) {
+      setPIN({ ...pin, error: pinError });
+      setPINConfirm({ ...pinconfirm, error: pinConfirmError });
       return;
     }
 
@@ -47,35 +47,23 @@ const RegisterScreen = ({ navigation }: Props) => {
       <Header>Create Account</Header>
 
       <TextInput
-        label="Name"
+        label="PIN"
         returnKeyType="next"
-        value={name.value}
-        onChangeText={text => setName({ value: text, error: '' })}
-        error={!!name.error}
-        errorText={name.error}
+        value={pin.value}
+        onChangeText={text => setPIN({ value: text, error: '' })}
+        error={!!pin.error}
+        errorText={pin.error}
+        keyboardType={'numeric'}
       />
 
       <TextInput
-        label="Email"
+        label="PIN Confirm"
         returnKeyType="next"
-        value={email.value}
-        onChangeText={text => setEmail({ value: text, error: '' })}
-        error={!!email.error}
-        errorText={email.error}
-        autoCapitalize="none"
-        autoCompleteType="email"
-        textContentType="emailAddress"
-        keyboardType="email-address"
-      />
-
-      <TextInput
-        label="Password"
-        returnKeyType="done"
-        value={password.value}
-        onChangeText={text => setPassword({ value: text, error: '' })}
-        error={!!password.error}
-        errorText={password.error}
-        secureTextEntry
+        value={pinconfirm.value}
+        onChangeText={text => setPINConfirm({ value: text, error: '' })}
+        error={!!pinconfirm.error}
+        errorText={pinconfirm.error}
+        keyboardType={'numeric'}
       />
 
       <Button mode="contained" onPress={_onSignUpPressed} style={styles.button}>

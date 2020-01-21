@@ -18,3 +18,14 @@ export const nameValidator = (name: string) => {
 
   return '';
 };
+
+export const pinValidator = (pin: string) => {
+  if (!pin || pin.length <= 0) return 'PIN is required';
+  if (pin.length < 4) return 'PIN must be at least 4 characters';
+  return '';
+};
+
+export const pinConfirmValidator = (pin: string, pinConfirm: string) => {
+  if (pin !== pinConfirm) return 'PINs does not match';
+  return '';
+};

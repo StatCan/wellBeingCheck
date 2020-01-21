@@ -37,7 +37,7 @@ const LoginScreen = ({ navigation }: Props) => {
 
       <Logo />
 
-      <Header>Welcome back.</Header>
+      <Header>Welcome back</Header>
 
       <TextInput
         label="Email"

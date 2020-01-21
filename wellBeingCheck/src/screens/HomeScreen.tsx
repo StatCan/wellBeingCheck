@@ -14,8 +14,7 @@ const HomeScreen = ({ navigation, theme }: Props) => (
 
   <Background>
     <Logo />
-    <Header>Well-Being Check</Header>
-
+    <Header>Well-Being</Header>
     <Paragraph>
       Statistics Canada - Well Being Survey
     </Paragraph>
