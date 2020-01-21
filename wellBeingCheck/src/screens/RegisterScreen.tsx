@@ -98,17 +98,17 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
           secureTextEntry={true}
         />
   
-        {/* <TextInput
-          label="Paswword Confirm"
+        <TextInput
+          label="Password Confirm"
           returnKeyType="next"
-          value={passwordConfirm.value}
-          onChangeText={text => setPasswordConfirm({ value: text, error: '' })}
-          error={!!passwordConfirm.error}
-          errorText={passwordConfirm.error}
+          value={this.state.passwordConfirm}
+          onChangeText={text => this.setState({passwordConfirm: text})}
+          error={!!this.state.passwordConfirmError}
+          errorText={this.state.passwordConfirmError}
           secureTextEntry={true}
         />
   
-        <Text>Security Question</Text>
+        {/* <Text>Security Question</Text>
         <Picker
           style={[styles.picker]} itemStyle={styles.pickerItem}
           onValueChange={(itemValue, itemIndex) =>
@@ -116,16 +116,16 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
           }>
           <Picker.Item label="Mother's Maiden name" value="mdn" />
           <Picker.Item label="Year of Birth" value="yob" />
-        </Picker>
+        </Picker> */}
   
         <TextInput
           label="Security Answer"
           returnKeyType="next"
-          value={securityAnswer.value}
-          onChangeText={text => setSecurityAnswer({ value: text, error: '' })}
-          error={!!securityAnswer.error}
-          errorText={securityAnswer.error}
-        /> */}
+          value={this.state.securityAnswer}
+          onChangeText={text => this.setState({securityAnswer: text})}
+          error={!!this.state.securityAnswerError}
+          errorText={this.state.securityAnswerError}
+        />
   
         <Button mode="contained" onPress={this._onSignUpPressed} style={styles.button}>
           Sign Up
