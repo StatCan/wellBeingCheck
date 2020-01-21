@@ -64,8 +64,19 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     this.setState({securityAnswerError: securityAnswerValidator(this.state.securityAnswer)});
 
     console.log(this.state.passwordError);
+    console.log(this.state.passwordConfirmError);
+    console.log(this.state.securityQuestionError);
+    console.log(this.state.securityAnswerError);
 
-    this.props.navigation.navigate('HomeScreen');
+    if (
+      !!this.state.passwordError ||
+      !!this.state.passwordConfirmError ||
+      !!this.state.securityQuestionError ||
+      !!this.state.securityAnswerError
+    )
+    {
+      this.props.navigation.navigate('Dashboard');
+    }
   };
 
   render() {
