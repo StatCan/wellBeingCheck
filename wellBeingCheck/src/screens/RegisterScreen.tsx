@@ -126,7 +126,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
   render() {
     return (
       <Background>
-        {/* <BackButton goBack={() => navigation.navigate('HomeScreen')} /> */}
+        <BackButton goBack={() => this.props.navigation.navigate('HomeScreen')} />
 
         <Logo />
 
