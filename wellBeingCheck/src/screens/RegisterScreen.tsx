@@ -95,14 +95,6 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     }
   };
 
-  // if (isValid) {
-  //   alert("creating new account called");
-  //   this._CreateAccount();
-  // }
-  // else {
-  //   alert("creating new account failed to call");
-  // }
-
   _storeData = async (key, value) => {
     try {
       await AsyncStorage.setItem(key, value);
@@ -126,7 +118,9 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
   }
 
   _handleSecurityQuestionChange(value) {
-    this.setState({ securityQuestion: this.state.securityQuestion });
+    console.log(value.value)
+    this.setState({ securityQuestion: value.value });
+    alert(this.state.securityQuestion)
   }
 
   render() {
@@ -158,12 +152,10 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
           secureTextEntry={true}
         />
 
-        <Text>Security Question</Text>
         <Picker
           style={[styles.picker]} itemStyle={styles.pickerItem}
-          onValueChange={(itemValue, itemIndex) =>
-            this._handleSecurityQuestionChange({ value: itemValue })
-          }>
+          onValueChange={value => this.setState({ securityQuestion: value })}>
+          <Picker.Item label="Select a security question" value="" />
           <Picker.Item label="Mother's Maiden name" value="mdn" />
           <Picker.Item label="Year of Birth" value="yob" />
         </Picker>
@@ -208,13 +200,14 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
   },
   picker: {
-    width: 100,
+    width: '100%',
     backgroundColor: '#ffff',
     borderColor: '#330033',
     borderWidth: 10,
   },
   pickerItem: {
-    color: 'red'
+    color: 'red',
+    width:'80%'
   },
 });
 
