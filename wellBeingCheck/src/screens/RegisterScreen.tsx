@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useState, useCallback } from 'react';
 import { Picker, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Background from '../components/Background';
@@ -52,47 +52,61 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
       securityAnswer: "",
       securityAnswerError: "",
     };
-    this._retrieveData('user_password');
+    //this._retrieveData('user_password');
+  }
+
+  _validateForm = () => {
+    const isPasswordValid = passwordValidator(this.state.password);
+    const isPasswordConfirmValid = passwordConfirmValidator(this.state.password, this.state.passwordConfirm);
+    const isSecurityQuestionValid = securityQuestionValidator(this.state.securityQuestion);
+    const isSecurityAnswerValid = securityAnswerValidator(this.state.securityAnswer);
+
+    if ((isPasswordValid == '') && (isPasswordConfirmValid == '') && (isSecurityQuestionValid == '') && (isSecurityAnswerValid == '')) {
+      this.setState({ passwordError: '' });
+      this.setState({ passwordConfirmError: '' });
+      this.setState({ securityQuestionError: '' });
+      this.setState({ securityAnswerError: '' });
+      return true;
+    }
+    else {
+      this.setState({ passwordError: isPasswordValid });
+      this.setState({ passwordConfirmError: isPasswordConfirmValid });
+      this.setState({ securityQuestionError: isSecurityQuestionValid });
+      this.setState({ securityAnswerError: isSecurityAnswerValid });
+      return false;
+    }
+  }
+
+  _CreateAccount = () => {
+    alert("_CreateAccount called");
+    //validation passed lets store user
+    this._storeData('user_password', this.state.password);
+    this._storeData('user_security_question', this.state.securityQuestion);
+    this._storeData('user_security_answer', this.state.securityAnswer);
+    this.props.navigation.navigate('Dashboard');
   }
 
   _onSignUpPressed = () => {
-    console.log("_onSignUpPressed");
-    console.log(this.state);
-
-    this.setState({ passwordError: passwordValidator(this.state.password) });
-    this.setState({ passwordConfirmError: passwordConfirmValidator(this.state.password, this.state.passwordConfirm) });
-    this.setState({ securityQuestionError: securityQuestionValidator(this.state.securityQuestion) });
-    this.setState({ securityAnswerError: securityAnswerValidator(this.state.securityAnswer) });
-
-    console.log(this.state.passwordError);
-    console.log(this.state.passwordConfirmError);
-    console.log(this.state.securityQuestionError);
-    console.log(this.state.securityAnswerError);
-
-    if (
-      (this.state.passwordError == '') &&
-      (this.state.passwordConfirmError == '') &&
-      (this.state.securityQuestionError == '') &&
-      (this.state.securityAnswerError == '')
-    ) {
-      //validation passed lets store user
-      this._storeData('user_password', this.state.password);
-      this._storeData('user_security_question', this.state.securityQuestion);
-      this._storeData('user_security_answer', this.state.securityAnswer);
-      this.props.navigation.navigate('Dashboard');
+    const isValid = this._validateForm();
+    if (isValid) {
+      this._CreateAccount();
     }
     else {
-      alert('here');
     }
   };
+
+  // if (isValid) {
+  //   alert("creating new account called");
+  //   this._CreateAccount();
+  // }
+  // else {
+  //   alert("creating new account failed to call");
+  // }
 
   _storeData = async (key, value) => {
     try {
       await AsyncStorage.setItem(key, value);
-      alert('saved');
     } catch (error) {
-      alert('error');
-      console.log(error);
     }
   }
 
@@ -122,7 +136,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 
         <Logo />
 
-        <Header>Create Account Armon</Header>
+        <Header>Create Account</Header>
 
         <TextInput
           label="Password"
