@@ -169,6 +169,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
           <Picker.Item label="Mother's Maiden name" value="mdn" />
           <Picker.Item label="Year of Birth" value="yob" />
         </Picker>
+        <Text style={styles.errorTest}>{this.state.securityQuestionError}</Text>
 
         <TextInput
           label="Security Answer"
@@ -197,6 +198,13 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 const styles = StyleSheet.create({
   label: {
     color: theme.colors.secondary,
+  },
+  errorTest: {
+    color: theme.colors.error,
+    marginTop: 5,
+    textAlign: 'left',
+    alignSelf: 'stretch',
+    marginLeft: 4,
   },
   button: {
     marginTop: 24,
