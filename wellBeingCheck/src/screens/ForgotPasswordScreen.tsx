@@ -1,67 +1,121 @@
-import React, { memo, useState } from 'react';
-import { Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { emailValidator } from '../core/utils';
+import React, { memo, useState, useCallback } from 'react';
+import { Picker, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { AsyncStorage } from 'react-native';
 import Background from '../components/Background';
-import BackButton from '../components/BackButton';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
-import TextInput from '../components/TextInput';
-import { theme } from '../core/theme';
 import Button from '../components/Button';
-import { Navigation } from '../types';
+import TextInput from '../components/TextInput';
+import BackButton from '../components/BackButton';
+import { theme } from '../core/theme';
+//import { Navigation } from '../types';
 
-type Props = {
-  navigation: Navigation;
-};
+import {
+  NavigationParams,
+  NavigationScreenProp,
+  NavigationState,
+} from 'react-navigation';
 
-const ForgotPasswordScreen = ({ navigation }: Props) => {
-  const [email, setEmail] = useState({ value: '', error: '' });
+import {
+  passwordValidator,
+  passwordConfirmValidator,
+  securityQuestionValidator,
+  securityAnswerValidator,
+} from '../core/utils';
+import { Drawer } from 'react-native-paper';
 
-  const _onSendPressed = () => {
-    const emailError = emailValidator(email.value);
+type ForgotPasswordState = {
+  securityQuestion: string,
+  securityAnswer: string,
+  securityAnswerError: string,
+}
 
-    if (emailError) {
-      setEmail({ ...email, error: emailError });
-      return;
-    }
+interface Props {
+  navigation: NavigationScreenProp<NavigationState, NavigationParams>;
+}
 
-    navigation.navigate('LoginScreen');
-  };
+class ForgotPasswordScreen extends React.Component<Props, ForgotPasswordState> {
 
-  return (
-    <Background>
-      <BackButton goBack={() => navigation.navigate('LoginScreen')} />
+  constructor(ForgotPasswordState) {
+    super(ForgotPasswordState)
+    this.state = {
+      securityQuestion: "",
+      securityAnswer: "",
+      securityAnswerError: "",
+    };
+    this._accountAlreadyExists();
+  }
 
-      <Logo />
+  _accountAlreadyExists() {
+    AsyncStorage.getItem('user_account', (err, result) => {
+      console.log(result);
+      if (result) {
+        let resultAsObj = JSON.parse(result)
+        let secQue = resultAsObj.security_question;
+        this.setState({ securityQuestion: secQue });
+      }
+      else {
+        this.setState({ securityQuestion: 'no account exists' });
+      }
+    });
+  }
 
-      <Header>Restore Password</Header>
+  _onResetPasswordPressed = () => {
+    AsyncStorage.getItem('user_account', (err, result) => {
+      console.log(result);
+      if (result) {
+        let resultAsObj = JSON.parse(result)
+        let userSetSecAnswer = resultAsObj.security_answer
+        const inputAnswer = this.state.securityAnswer
 
-      <TextInput
-        label="E-mail address"
-        returnKeyType="done"
-        value={email.value}
-        onChangeText={text => setEmail({ value: text, error: '' })}
-        error={!!email.error}
-        errorText={email.error}
-        autoCapitalize="none"
-        autoCompleteType="email"
-        textContentType="emailAddress"
-        keyboardType="email-address"
-      />
+        if (userSetSecAnswer !== inputAnswer) {
+          //incorrect pasword
+          this.setState({ securityAnswerError: 'incorrect answer' });
+        }
+        else {
+          //user login success - redirect
+          this.props.navigation.navigate('Dashboard');
+        }
+      }
+      else {
+      }
+    });
+  }
 
-      <Button mode="contained" onPress={_onSendPressed} style={styles.button}>
-        Send Reset Instructions
-      </Button>
+  render() {
+    return (
+      <Background>
+        <BackButton goBack={() => this.props.navigation.navigate('LoginScreen')} />
 
-      <TouchableOpacity
-        style={styles.back}
-        onPress={() => navigation.navigate('LoginScreen')}
-      >
-        <Text style={styles.label}>← Back to login</Text>
-      </TouchableOpacity>
-    </Background>
-  );
-};
+        <Logo />
+
+        <Header>Restore Password</Header>
+
+        <Text style={styles.label}>{this.state.securityQuestion}</Text>
+
+        <TextInput
+          label="Security Answer"
+          returnKeyType="next"
+          value={this.state.securityAnswer}
+          onChangeText={text => this.setState({ securityAnswer: text })}
+          error={!!this.state.securityAnswerError}
+          errorText={this.state.securityAnswerError}
+        />
+
+        <Button mode="contained" onPress={this._onResetPasswordPressed} style={styles.button}>
+          Reset Password
+        </Button>
+
+        <TouchableOpacity
+          style={styles.back}
+          onPress={() => this.props.navigation.navigate('LoginScreen')}
+        >
+          <Text style={styles.label}>← Back to login</Text>
+        </TouchableOpacity>
+      </Background>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   back: {

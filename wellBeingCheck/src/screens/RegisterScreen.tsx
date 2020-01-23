@@ -166,8 +166,8 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
           style={[styles.picker]} itemStyle={styles.pickerItem}
           onValueChange={value => this.setState({ securityQuestion: value })}>
           <Picker.Item label="Select a security question" value="" />
-          <Picker.Item label="Mother's Maiden name" value="mdn" />
-          <Picker.Item label="Year of Birth" value="yob" />
+          <Picker.Item label="Mother's Maiden name" value="Mother's Maiden name" />
+          <Picker.Item label="Year of Birth" value="Year of Birth" />
         </Picker>
         <Text style={styles.errorTest}>{this.state.securityQuestionError}</Text>
 
