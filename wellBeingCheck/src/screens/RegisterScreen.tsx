@@ -53,6 +53,16 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
       securityAnswerError: "",
     };
     //this._retrieveData('user_password');
+    this._accountAlreadyExists();
+  }
+
+  _accountAlreadyExists() {
+    const currentPassword = this._retrieveData('user_password');
+    if (!!currentPassword) {
+      //user already has account
+      alert('user account already exixst!');
+      this.props.navigation.navigate('HomeScreen');
+    }
   }
 
   _validateForm = () => {
@@ -105,14 +115,12 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     try {
       const value = await AsyncStorage.getItem(key);
       if (value != null) {
-        alert(value);
+        return value;
       }
       else {
-        alert('value is null');
+        return "";
       }
     } catch (error) {
-      alert('error');
-      console.log(error);
     }
   }
 
