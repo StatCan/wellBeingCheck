@@ -2,8 +2,9 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 18808,
+  "packagerPid": 3044,
   "expoServerNgrokUrl": "https://uc-uqh.anonymous.wellbeingcheck.exp.direct",
   "packagerNgrokUrl": "https://packager.uc-uqh.anonymous.wellbeingcheck.exp.direct",
-  "ngrokPid": 16452
+  "ngrokPid": 21708,
+  "webpackServerPort": null
 }

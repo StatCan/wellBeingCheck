@@ -78,7 +78,6 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
   }
 
   _CreateAccount = () => {
-    alert("_CreateAccount called");
     //validation passed lets store user
     this._storeData('user_password', this.state.password);
     this._storeData('user_security_question', this.state.securityQuestion);
@@ -117,12 +116,6 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     }
   }
 
-  _handleSecurityQuestionChange(value) {
-    console.log(value.value)
-    this.setState({ securityQuestion: value.value });
-    alert(this.state.securityQuestion)
-  }
-
   render() {
     return (
       <Background>
@@ -155,7 +148,6 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
         <Picker
           style={[styles.picker]} itemStyle={styles.pickerItem}
           onValueChange={value => this.setState({ securityQuestion: value })}>
-          <Picker.Item label="Select a security question" value="" />
           <Picker.Item label="Mother's Maiden name" value="mdn" />
           <Picker.Item label="Year of Birth" value="yob" />
         </Picker>
