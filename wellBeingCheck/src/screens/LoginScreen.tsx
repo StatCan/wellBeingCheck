@@ -1,5 +1,5 @@
-import React, { memo } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { memo, useState, useCallback } from 'react';
+import { Picker, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
@@ -8,12 +8,21 @@ import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
+//import { Navigation } from '../types';
 
 import {
   NavigationParams,
   NavigationScreenProp,
   NavigationState,
 } from 'react-navigation';
+
+import {
+  passwordValidator,
+  passwordConfirmValidator,
+  securityQuestionValidator,
+  securityAnswerValidator,
+} from '../core/utils';
+import { Drawer } from 'react-native-paper';
 
 type LoginState = {
   password: string,
@@ -34,21 +43,20 @@ class LoginScreen extends React.Component<Props, LoginState> {
     };
   }
 
-  _onLoginPressed() {
+  _onLoginPressed = () => {
     AsyncStorage.getItem('user_account', (err, result) => {
       console.log(result);
       if (result) {
         let resultAsObj = JSON.parse(result)
         let currentPassword = resultAsObj.password
-        //const inputPassword = this.state.password
-        console.log(currentPassword);
-        if (currentPassword !== 'aaa') {
+        const inputPassword = this.state.password
+        if (currentPassword !== inputPassword) {
           //incorrect pasword
-          // this.setState({ passwordError: 'incorrect password' });
+          this.setState({ passwordError: 'incorrect password' });
         }
         else {
           //user login success - redirect
-          //     this.props.navigation.navigate('HomeScreen');
+          this.props.navigation.navigate('Dashboard');
         }
       }
       else {
