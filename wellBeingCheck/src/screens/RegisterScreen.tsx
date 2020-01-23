@@ -22,6 +22,7 @@ import {
   securityQuestionValidator,
   securityAnswerValidator,
 } from '../core/utils';
+import { Drawer } from 'react-native-paper';
 
 type RegisterState = {
   password: string,
@@ -60,8 +61,8 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     const currentPassword = this._retrieveData('user_password');
     if (!!currentPassword) {
       //user already has account
-      alert('user account already exixst!');
-      this.props.navigation.navigate('HomeScreen');
+      alert('user account already exixst! - navigation block commented');
+      //this.props.navigation.navigate('HomeScreen');
     }
   }
 
@@ -94,7 +95,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
       security_question: this.state.securityQuestion,
       security_answer: this.state.securityAnswer,
     };
-  
+
     AsyncStorage.setItem('user_account', JSON.stringify(userAccountObj), () => {
       this.props.navigation.navigate('Dashboard');
     });
@@ -158,9 +159,13 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
           secureTextEntry={true}
         />
 
+        {/* mode can also be dropdown - dialog will allow more space */}
         <Picker
+          mode='dialog'
+          selectedValue={this.state.securityQuestion}
           style={[styles.picker]} itemStyle={styles.pickerItem}
           onValueChange={value => this.setState({ securityQuestion: value })}>
+          <Picker.Item label="Select a security question" value="" />
           <Picker.Item label="Mother's Maiden name" value="mdn" />
           <Picker.Item label="Year of Birth" value="yob" />
         </Picker>
@@ -212,7 +217,7 @@ const styles = StyleSheet.create({
   },
   pickerItem: {
     color: 'red',
-    width:'80%'
+    width: '80%'
   },
 });
 

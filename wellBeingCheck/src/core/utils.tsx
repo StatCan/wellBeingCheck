@@ -27,7 +27,7 @@ export const passwordConfirmValidator = (password: string, passwordConfirm: stri
 };
 
 export const securityQuestionValidator = (securityQuestion: string) => {
-  if (!securityQuestion || securityQuestion.length <= 0) return 'Security question is required';
+  if (securityQuestion.length == 0) return 'Security question is required';
   return '';
 };
 
