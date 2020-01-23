@@ -1,5 +1,6 @@
-import React, { memo, useState } from 'react';
-import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
+import React, { memo } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { AsyncStorage } from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
@@ -7,82 +8,98 @@ import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
-import { emailValidator, passwordValidator } from '../core/utils';
-import { Navigation } from '../types';
 
-type Props = {
-  navigation: Navigation;
-};
+import {
+  NavigationParams,
+  NavigationScreenProp,
+  NavigationState,
+} from 'react-navigation';
 
-const LoginScreen = ({ navigation }: Props) => {
-  const [email, setEmail] = useState({ value: '', error: '' });
-  const [password, setPassword] = useState({ value: '', error: '' });
+type LoginState = {
+  password: string,
+  passwordError: string,
+}
 
-  const _onLoginPressed = () => {
-    const emailError = emailValidator(email.value);
-    const passwordError = passwordValidator(password.value);
+interface Props {
+  navigation: NavigationScreenProp<NavigationState, NavigationParams>;
+}
 
-    if (emailError || passwordError) {
-      setEmail({ ...email, error: emailError });
-      setPassword({ ...password, error: passwordError });
-      return;
-    }
-    console.log("Test");
-    navigation.navigate('Dashboard');
-  };
+class LoginScreen extends React.Component<Props, LoginState> {
 
-  return (
-    <Background>
-      <BackButton goBack={() => navigation.navigate('HomeScreen')} />
+  constructor(LoginState) {
+    super(LoginState)
+    this.state = {
+      password: "",
+      passwordError: "",
+    };
+  }
 
-      <Logo />
+  _onLoginPressed() {
+    AsyncStorage.getItem('user_account', (err, result) => {
+      console.log(result);
+      if (result) {
+        let resultAsObj = JSON.parse(result)
+        let currentPassword = resultAsObj.password
+        //const inputPassword = this.state.password
+        console.log(currentPassword);
+        if (currentPassword !== 'aaa') {
+          //incorrect pasword
+          // this.setState({ passwordError: 'incorrect password' });
+        }
+        else {
+          //user login success - redirect
+          //     this.props.navigation.navigate('HomeScreen');
+        }
+      }
+      else {
+        this.setState({ passwordError: 'incorrect password' });
+      }
+    });
+  }
 
-      <Header>Welcome back</Header>
+  render() {
+    return (
+      <Background>
+        <BackButton goBack={() => this.props.navigation.navigate('HomeScreen')} />
 
-      <TextInput
-        label="Email"
-        returnKeyType="next"
-        value={email.value}
-        onChangeText={text => setEmail({ value: text, error: '' })}
-        error={!!email.error}
-        errorText={email.error}
-        autoCapitalize="none"
-        autoCompleteType="email"
-        textContentType="emailAddress"
-        keyboardType="email-address"
-      />
+        <Logo />
 
-      <TextInput
-        label="Password"
-        returnKeyType="done"
-        value={password.value}
-        onChangeText={text => setPassword({ value: text, error: '' })}
-        error={!!password.error}
-        errorText={password.error}
-        secureTextEntry
-      />
+        <Header>Welcome back</Header>
 
-      <View style={styles.forgotPassword}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('ForgotPasswordScreen')}
-        >
-          <Text style={styles.label}>Forgot your password?</Text>
-        </TouchableOpacity>
-      </View>
+        <TextInput
+          label="Password"
+          returnKeyType="next"
+          value={this.state.password}
+          onChangeText={text => this.setState({ password: text })}
+          error={!!this.state.passwordError}
+          errorText={this.state.passwordError}
+          secureTextEntry={true}
+        />
 
-      <Button mode="contained" onPress={_onLoginPressed}>
-        Login
+        <View style={styles.forgotPassword}>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('ForgotPasswordScreen')}
+          >
+            <Text style={styles.label}>Forgot your password?</Text>
+          </TouchableOpacity>
+        </View>
+
+        <Button
+          mode="contained"
+          onPress={this._onLoginPressed}>
+          Login
       </Button>
 
-      <View style={styles.row}>
-        <Text style={styles.label}>Don’t have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
-          <Text style={styles.link}>Sign up</Text>
-        </TouchableOpacity>
-      </View>
-    </Background>
-  );
-};
+        <View style={styles.row}>
+          <Text style={styles.label}>Don’t have an account? </Text>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('RegisterScreen')}>
+            <Text style={styles.link}>Sign up</Text>
+          </TouchableOpacity>
+        </View>
+      </Background>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   forgotPassword: {
@@ -90,17 +107,17 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     marginBottom: 24,
   },
+  label: {
+    color: theme.colors.secondary,
+  },
   row: {
     flexDirection: 'row',
     marginTop: 4,
   },
-  label: {
-    color: theme.colors.secondary,
-  },
   link: {
     fontWeight: 'bold',
     color: theme.colors.primary,
-  },
+  }
 });
 
 export default memo(LoginScreen);

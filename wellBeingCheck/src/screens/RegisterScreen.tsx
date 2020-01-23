@@ -89,10 +89,15 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 
   _CreateAccount = () => {
     //validation passed lets store user
-    this._storeData('user_password', this.state.password);
-    this._storeData('user_security_question', this.state.securityQuestion);
-    this._storeData('user_security_answer', this.state.securityAnswer);
-    this.props.navigation.navigate('Dashboard');
+    let userAccountObj = {
+      password: this.state.password,
+      security_question: this.state.securityQuestion,
+      security_answer: this.state.securityAnswer,
+    };
+  
+    AsyncStorage.setItem('user_account', JSON.stringify(userAccountObj), () => {
+      this.props.navigation.navigate('Dashboard');
+    });
   }
 
   _onSignUpPressed = () => {
