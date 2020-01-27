@@ -1,14 +1,14 @@
 import React, { memo, useState, useCallback } from 'react';
 import { Picker, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { AsyncStorage } from 'react-native';
-import Background from '../components/Background';
-import Logo from '../components/Logo';
-import Header from '../components/Header';
-import Button from '../components/Button';
-import TextInput from '../components/TextInput';
-import BackButton from '../components/BackButton';
-import { theme } from '../core/theme';
-//import { Navigation } from '../types';
+import Background from '../../components/Background';
+import Logo from '../../components/Logo';
+import Header from '../../components/Header';
+import Button from '../../components/Button';
+import TextInput from '../../components/TextInput';
+import BackButton from '../../components/BackButton';
+import { theme } from '../../core/theme';
+//import { Navigation } from '../../types';
 
 import {
   NavigationParams,
@@ -21,7 +21,7 @@ import {
   passwordConfirmValidator,
   securityQuestionValidator,
   securityAnswerValidator,
-} from '../core/utils';
+} from '../../core/utils';
 import { Drawer } from 'react-native-paper';
 
 type LoginState = {
