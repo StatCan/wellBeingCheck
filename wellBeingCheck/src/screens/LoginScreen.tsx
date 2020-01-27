@@ -72,7 +72,7 @@ class LoginScreen extends React.Component<Props, LoginState> {
 
         <Logo />
 
-        <Header>Welcome back</Header>
+        <Header>Well-Being Check</Header>
 
         <TextInput
           label="Password"

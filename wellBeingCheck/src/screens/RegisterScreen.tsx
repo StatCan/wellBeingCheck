@@ -169,7 +169,10 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
           <Picker.Item label="Mother's Maiden name" value="Mother's Maiden name" />
           <Picker.Item label="Year of Birth" value="Year of Birth" />
         </Picker>
-        <Text style={styles.errorTest}>{this.state.securityQuestionError}</Text>
+        {this.state.securityQuestionError != '' ? (
+          <Text style={styles.errorTest}>{this.state.securityQuestionError}</Text>
+          ): null
+        }
 
         <TextInput
           label="Security Answer"
