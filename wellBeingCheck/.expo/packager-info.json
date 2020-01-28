@@ -2,9 +2,9 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 17276,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "packagerPid": 77656,
+  "expoServerNgrokUrl": "https://ec-6ke.zack786.wellbeingcheck.exp.direct",
+  "packagerNgrokUrl": "https://packager.ec-6ke.zack786.wellbeingcheck.exp.direct",
+  "ngrokPid": 77668,
   "webpackServerPort": null
 }
