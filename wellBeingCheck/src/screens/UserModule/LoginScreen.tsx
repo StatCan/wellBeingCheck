@@ -7,7 +7,8 @@ import Header from '../../components/Header';
 import Button from '../../components/Button';
 import TextInput from '../../components/TextInput';
 import BackButton from '../../components/BackButton';
-import { theme } from '../../core/theme';
+import { newTheme } from '../../core/theme';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 //import { Navigation } from '../../types';
 
 import {
@@ -67,6 +68,7 @@ class LoginScreen extends React.Component<Props, LoginState> {
 
   render() {
     return (
+      <PaperProvider theme={newTheme}>
       <Background>
         <BackButton goBack={() => this.props.navigation.navigate('HomeScreen')} />
 
@@ -105,6 +107,7 @@ class LoginScreen extends React.Component<Props, LoginState> {
           </TouchableOpacity>
         </View>
       </Background>
+      </PaperProvider>
     );
   }
 }
@@ -116,7 +119,7 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   label: {
-    color: theme.colors.secondary,
+    color: newTheme.colors.secondary,
   },
   row: {
     flexDirection: 'row',
@@ -124,7 +127,7 @@ const styles = StyleSheet.create({
   },
   link: {
     fontWeight: 'bold',
-    color: theme.colors.primary,
+    color: newTheme.colors.primary,
   }
 });
 

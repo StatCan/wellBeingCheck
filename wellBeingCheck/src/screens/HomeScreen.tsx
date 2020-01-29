@@ -6,7 +6,9 @@ import Button from '../components/Button';
 import Paragraph from '../components/Paragraph';
 import { Navigation } from '../types';
 import { NavigationScreenProp, NavigationState, NavigationParams } from 'react-navigation';
-import { AsyncStorage, TouchableOpacity, StyleSheet } from 'react-native';
+import { AsyncStorage, TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { newTheme } from '../core/theme';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 
 type HomeState = {
   canRegisterBtnIsDisabled: boolean,
@@ -48,14 +50,19 @@ class HomeScreen extends React.Component<Props, HomeState> {
 
   render() {
     return (
+      <PaperProvider theme={newTheme}>
       <Background>
         <Logo />
-        <Header>Well-Being</Header>
+        <Text>Well-Being Check</Text>
         <Paragraph>
           Statistics Canada - Well Being Survey
         </Paragraph>
-        <Button mode="contained" onPress={() => this.props.navigation.navigate('LoginScreen')}>
+        <Button 
+          mode="contained" 
+          onPress={() => this.props.navigation.navigate('LoginScreen')}>
+          <Text style={styles.whiteText}>
           Login
+          </Text>
         </Button>
         <Button
           style={styles.createButton}
@@ -65,14 +72,18 @@ class HomeScreen extends React.Component<Props, HomeState> {
           Create Account
     </Button>
       </Background>
+      </PaperProvider>
     );
   }
 }
 
 const styles = StyleSheet.create({
   createButton: {
-    opacity: 1,
+    opacity: 1
   },
+  whiteText: {
+    color: newTheme.colors.whiteText
+  }
 });
 
 export default memo(HomeScreen);
