@@ -24,21 +24,22 @@ const deviceWidth = Dimensions.get('window').width;
 class Dashboard extends React.Component<Props> {
 
   render() {
+
     return (
       <Background>
         <View style={styles.homeContainer}>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('LocalNotification')} style={{alignSelf:'flex-end'}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{alignSelf:'flex-end'}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
               <TouchableOpacity onPress={() => this.props.navigation.navigate('CurrentEQ')} style={{flex:2,justifyContent:'center'}}>
                   <View style={styles.outer}>
                       <View style={styles.inner}>
-                            <Feather name="check-square" size={100} color="blue" /><Text style={{fontSize:50}}>Start</Text>
+                            <Text style={styles.startButtonText}>START MY SURVEY</Text>
                       </View>
                   </View>
                 </TouchableOpacity>
                 <View style={[styles.homeContainer,{marginBottom:10},{flexDirection:'row',flex:1}]}>
                   <TouchableOpacity onPress={() => this.props.navigation.navigate('Result2')} style={styles.smallButton}><EvilIcons name="chart" size={40} color="black" /><Text style={{fontSize:20}}>Result</Text></TouchableOpacity>
                   <TouchableOpacity onPress={() => this.props.navigation.navigate('About')} style={styles.smallButton}><EvilIcons name="tag" size={40} color="black" /><Text style={{fontSize:20}}>About</Text></TouchableOpacity>
-                  <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUs')} style={styles.smallButton}><Feather name="phone" size={40} color="black" /><Text style={{fontSize:20}}>Contact</Text></TouchableOpacity>
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}><Feather name="phone" size={40} color="black" /><Text style={{fontSize:20}}>Contact</Text></TouchableOpacity>
                 </View>
             </View>
       </Background>
@@ -48,6 +49,7 @@ class Dashboard extends React.Component<Props> {
 
 
 const styles = StyleSheet.create({
+  startButtonText:{fontSize:25, color: '#fff', textAlign: 'center', fontWeight: '700'},
   background: {flex: 1, width: deviceWidth,height: null,},
   homeContainer: { flex: 1, alignItems: 'center', justifyContent: 'space-between',marginTop:40 },
   logo: { width: 300, height: 100 },
