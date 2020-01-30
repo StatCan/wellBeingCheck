@@ -7,22 +7,14 @@ import Header from '../../components/Header';
 import Button from '../../components/Button';
 import TextInput from '../../components/TextInput';
 import BackButton from '../../components/BackButton';
-import { theme } from '../../core/theme';
-//import { Navigation } from '../../types';
+import { newTheme } from '../../core/theme';
+import { List, Divider } from 'react-native-paper';
 
 import {
   NavigationParams,
   NavigationScreenProp,
   NavigationState,
 } from 'react-navigation';
-
-import {
-  passwordValidator,
-  passwordConfirmValidator,
-  securityQuestionValidator,
-  securityAnswerValidator,
-} from '../../core/utils';
-import { Drawer, List, Divider } from 'react-native-paper';
 
 type SettingsState = {
   notificationState: boolean,
@@ -44,9 +36,10 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   render() {
     return (
       <View>
-        <BackButton goBack={() => this.props.navigation.navigate('HomeScreen')} />
 
-        <List.Section>
+        <BackButton goBack={() => this.props.navigation.navigate('Dashboard')} />
+
+        <List.Section style={styles.mainStyle}>
           <List.Subheader>Settings</List.Subheader>
           <List.Item
             title="Notifications"
@@ -72,7 +65,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
 }
 
 const styles = StyleSheet.create({
-
+  mainStyle:{marginTop:100}
 });
 
 export default memo(SettingsScreen);

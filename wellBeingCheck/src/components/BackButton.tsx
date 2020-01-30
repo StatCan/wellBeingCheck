@@ -15,12 +15,12 @@ const BackButton = ({ goBack }: Props) => (
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    top: 10 + getStatusBarHeight(),
+    top: 15 + getStatusBarHeight(),
     left: 10,
   },
   image: {
-    width: 24,
-    height: 24,
+    width: 40,
+    height: 40,
   },
 });
 
