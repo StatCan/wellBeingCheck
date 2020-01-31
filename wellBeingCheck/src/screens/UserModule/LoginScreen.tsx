@@ -74,7 +74,7 @@ class LoginScreen extends React.Component<Props, LoginState> {
 
         <Logo />
 
-        <Header>Well-Being Check</Header>
+        <Text>Well-Being Check</Text>
 
         <TextInput
           label="Password"
@@ -97,7 +97,7 @@ class LoginScreen extends React.Component<Props, LoginState> {
         <Button
           mode="contained"
           onPress={this._onLoginPressed}>
-          Login
+          <Text style={styles.whiteText}>Login</Text>
       </Button>
 
         <View style={styles.row}>
@@ -128,6 +128,9 @@ const styles = StyleSheet.create({
   link: {
     fontWeight: 'bold',
     color: newTheme.colors.primary,
+  },
+  whiteText: {
+    color: newTheme.colors.whiteText
   }
 });
 
