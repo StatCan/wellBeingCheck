@@ -28,20 +28,20 @@ class Dashboard extends React.Component<Props> {
     return (
       <Background>
         <View style={styles.homeContainer}>
-        <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{alignSelf:'flex-end'}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('CurrentEQ')} style={{flex:2,justifyContent:'center'}}>
-                  <View style={styles.outer}>
-                      <View style={styles.inner}>
-                            <Text style={styles.startButtonText}>START MY SURVEY</Text>
-                      </View>
-                  </View>
-                </TouchableOpacity>
-                <View style={[styles.homeContainer,{marginBottom:10},{flexDirection:'row',flex:1}]}>
-                  <TouchableOpacity onPress={() => this.props.navigation.navigate('Result2')} style={styles.smallButton}><EvilIcons name="chart" size={40} color="black" /><Text style={{fontSize:20}}>Result</Text></TouchableOpacity>
-                  <TouchableOpacity onPress={() => this.props.navigation.navigate('About')} style={styles.smallButton}><EvilIcons name="tag" size={40} color="black" /><Text style={{fontSize:20}}>About</Text></TouchableOpacity>
-                  <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}><Feather name="phone" size={40} color="black" /><Text style={{fontSize:20}}>Contact</Text></TouchableOpacity>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{alignSelf:'flex-end'}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('SurveyScreen')} style={{flex:2,justifyContent:'center'}}>
+            <View style={styles.outer}>
+                <View style={styles.inner}>
+                      <Text style={styles.startButtonText}>START MY SURVEY</Text>
                 </View>
             </View>
+          </TouchableOpacity>
+          <View style={[styles.homeContainer,{marginBottom:10},{flexDirection:'row',flex:1}]}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('ResultScreen')} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>Dashboard</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')} style={styles.smallButton}><EvilIcons name="question" size={40} color="white" /><Text style={styles.smallButtonText}>About</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}><Feather name="phone" size={40} color="white" /><Text style={styles.smallButtonText}>Contact</Text></TouchableOpacity>
+          </View>
+        </View>
       </Background>
     );
   }
@@ -60,9 +60,7 @@ const styles = StyleSheet.create({
   inner: {
       alignItems: 'center',
       justifyContent: 'center',
-
       borderRadius:95,
-
       width:190,height:190,
       alignSelf:'center',
       backgroundColor:'#66cc99'
@@ -88,8 +86,18 @@ const styles = StyleSheet.create({
      // boxShadow:15px 5px 10px grey;
       backgroundColor:'lightgray'
     },
-  smallButton:{width:100,height:100,borderRadius:50, backgroundColor:'lightcyan',justifyContent:'center',alignItems:'center',margin:10}
-
+  smallButton:{
+    width:100,
+    height:100,
+    borderRadius:50, 
+    backgroundColor:'#66cc99',
+    justifyContent:'center',
+    alignItems:'center',
+    margin:10},
+  smallButtonText:{
+    color: '#fff',
+    fontSize:15
+  }
 });
 
 export default memo(Dashboard);
