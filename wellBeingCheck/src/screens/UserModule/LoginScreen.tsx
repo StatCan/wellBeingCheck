@@ -69,44 +69,44 @@ class LoginScreen extends React.Component<Props, LoginState> {
   render() {
     return (
       <PaperProvider theme={newTheme}>
-      <Background>
-        <BackButton goBack={() => this.props.navigation.navigate('HomeScreen')} />
+        <Background>
+          <BackButton goBack={() => this.props.navigation.navigate('HomeScreen')} />
 
-        <Logo />
+          <Logo />
 
-        <Header>Well-Being Check</Header>
+          <Header>Well-Being Check</Header>
 
-        <TextInput
-          label="Password"
-          returnKeyType="next"
-          value={this.state.password}
-          onChangeText={text => this.setState({ password: text })}
-          error={!!this.state.passwordError}
-          errorText={this.state.passwordError}
-          secureTextEntry={true}
-        />
+          <TextInput
+            label="Password"
+            returnKeyType="next"
+            value={this.state.password}
+            onChangeText={text => this.setState({ password: text })}
+            error={!!this.state.passwordError}
+            errorText={this.state.passwordError}
+            secureTextEntry={true}
+          />
 
-        <View style={styles.forgotPassword}>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('ForgotPasswordScreen')}
-          >
-            <Text style={styles.label}>Forgot your password?</Text>
-          </TouchableOpacity>
-        </View>
+          <View style={styles.forgotPassword}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('ForgotPasswordScreen')}
+            >
+              <Text style={styles.label}>Forgot your password?</Text>
+            </TouchableOpacity>
+          </View>
 
-        <Button
-          mode="contained"
-          onPress={this._onLoginPressed}>
-          Login
-      </Button>
+          <Button
+            mode="contained"
+            onPress={this._onLoginPressed}>
+            Login
+          </Button>
 
-        <View style={styles.row}>
-          <Text style={styles.label}>Don’t have an account? </Text>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('RegisterScreen')}>
-            <Text style={styles.link}>Sign up</Text>
-          </TouchableOpacity>
-        </View>
-      </Background>
+          <View style={styles.row}>
+            <Text style={styles.label}>Don’t have an account? </Text>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('RegisterScreen')}>
+              <Text style={styles.link}>Sign up</Text>
+            </TouchableOpacity>
+          </View>
+        </Background>
       </PaperProvider>
     );
   }

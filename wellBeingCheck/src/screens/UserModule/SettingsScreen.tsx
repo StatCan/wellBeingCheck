@@ -33,6 +33,17 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     };
   }
 
+  _debugClearAllLocalData() {
+    try {
+      AsyncStorage.removeItem('user_account', (err) => {
+        console.log("user account deleted");
+        console.log(err);
+        console.log("all data cleared");
+      });
+    } catch (error) {
+    }
+  }
+
   render() {
     return (
       <View>
@@ -59,13 +70,19 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
           />
         </List.Section>
 
+        <Button
+          mode="contained"
+          onPress={this._debugClearAllLocalData}>
+          (Debug) -- Delete user account
+        </Button>
+
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  mainStyle:{marginTop:100}
+  mainStyle: { marginTop: 100 }
 });
 
 export default memo(SettingsScreen);
