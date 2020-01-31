@@ -2,6 +2,7 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
 import {
+  LaunchScreen,
   HomeScreen,
   LoginScreen,
   RegisterScreen,
@@ -14,6 +15,7 @@ import {
 
 const Router = createStackNavigator(
   {
+    LaunchScreen,
     HomeScreen,
     LoginScreen,
     RegisterScreen,
@@ -24,7 +26,7 @@ const Router = createStackNavigator(
     AboutScreen
   },
   {
-    initialRouteName: 'HomeScreen',
+    initialRouteName: 'LaunchScreen',
     headerMode: 'none',
   }
 );

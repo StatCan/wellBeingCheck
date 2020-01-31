@@ -69,10 +69,10 @@ class LoginScreen extends React.Component<Props, LoginState> {
   render() {
     return (
       <PaperProvider theme={newTheme}>
-      <Background>
-        <BackButton goBack={() => this.props.navigation.navigate('HomeScreen')} />
+        <Background>
+          <BackButton goBack={() => this.props.navigation.navigate('HomeScreen')} />
 
-        <Logo />
+          <Logo />
 
         <Text>Well-Being Check</Text>
 
