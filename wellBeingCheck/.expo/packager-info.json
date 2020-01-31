@@ -1,10 +1,10 @@
 {
   "devToolsPort": 19002,
   "expoServerPort": 19000,
-  "packagerPort": 19003,
-  "packagerPid": 12759,
-  "expoServerNgrokUrl": "https://yb-ym2.zack786.wellbeingcheck.exp.direct",
-  "packagerNgrokUrl": "https://packager.yb-ym2.zack786.wellbeingcheck.exp.direct",
-  "ngrokPid": 12770,
+  "packagerPort": 19001,
+  "packagerPid": 1984,
+  "expoServerNgrokUrl": "https://yb-ym2.anonymous.wellbeingcheck.exp.direct",
+  "packagerNgrokUrl": "https://packager.yb-ym2.anonymous.wellbeingcheck.exp.direct",
+  "ngrokPid": 5072,
   "webpackServerPort": null
 }
