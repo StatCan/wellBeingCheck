@@ -10,7 +10,9 @@ import {
   Dashboard,
   SettingsScreen,
   ContactUsScreen,
-  AboutScreen
+  AboutScreen,
+  ResultScreen,
+  EQSurveyScreen
 } from './screens';
 
 const Router = createStackNavigator(
@@ -23,7 +25,9 @@ const Router = createStackNavigator(
     Dashboard,
     SettingsScreen,
     ContactUsScreen,
-    AboutScreen
+    AboutScreen,
+    ResultScreen,
+    EQSurveyScreen
   },
   {
     initialRouteName: 'LaunchScreen',

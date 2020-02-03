@@ -6,4 +6,6 @@ export { default as ForgotPasswordScreen } from './UserModule/ForgotPasswordScre
 export { default as SettingsScreen } from './UserModule/SettingsScreen';
 export { default as ContactUsScreen } from './UserModule/ContactUsScreen';
 export { default as AboutScreen } from './UserModule/AboutScreen';
+export { default as ResultScreen } from './UserModule/ResultScreen';
+export { default as EQSurveyScreen } from './UserModule/EQSurveyScreen';
 export { default as Dashboard } from './Dashboard';
