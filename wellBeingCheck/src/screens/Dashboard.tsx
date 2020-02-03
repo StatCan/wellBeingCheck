@@ -29,7 +29,7 @@ class Dashboard extends React.Component<Props> {
       <Background>
         <View style={styles.homeContainer}>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{alignSelf:'flex-end'}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('SurveyScreen')} style={{flex:2,justifyContent:'center'}}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('EQSurveyScreen')} style={{flex:2,justifyContent:'center'}}>
             <View style={styles.outer}>
                 <View style={styles.inner}>
                       <Text style={styles.startButtonText}>START MY SURVEY</Text>
