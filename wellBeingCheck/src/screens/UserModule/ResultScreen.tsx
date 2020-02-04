@@ -1,10 +1,25 @@
 import * as React from 'react';
-import { Text, View,ScrollView, StyleSheet,TouchableOpacity,Dimensions } from 'react-native';
+import { Text, View,ScrollView, StyleSheet,TouchableOpacity,Dimensions,Image } from 'react-native';
 import TabNavigator from './TabPageScreen';
-import BackButton from '../../components/BackButton';
+import Constants from 'expo-constants';
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
-export default class App extends React.Component {
+import {
+  NavigationParams,
+  NavigationScreenProp,
+  NavigationState,
+} from 'react-navigation';
+
+interface Props {
+  navigation: NavigationScreenProp<NavigationState, NavigationParams>;
+}
+type Category={cat_id:string,cat_name:string,backgroundcolor:string}
+type ScreenState={
+  categes:Category[],
+  change:boolean,isPopulation:boolean,loading:boolean
+}
+
+export default class App extends React.Component<Props,ScreenState> {
    constructor(props) {
         super(props);
         this.state = {
@@ -21,12 +36,8 @@ export default class App extends React.Component {
           for (let x = 0; x < this.state.categes.length; x++) {
             if (this.state.categes[x].cat_id == item.cat_id) {
               categes[x].backgroundcolor = 'lightblue';
-
-            //  this.setState({categes: categes,});
             } else {
               categes[x].backgroundcolor = 'lightgray';
-
-              //this.setState({categes: categes,});
             }
           }
              this.setState({categes: categes,});
@@ -35,8 +46,6 @@ export default class App extends React.Component {
 
         };
         displayTab() {
-              //  this.setState({loading: true});
-
                 if (this.state.isPopulation) {
                     return <Text> The survey is not done yet,please check resule after 6 months! </Text>;
                 } else {
@@ -49,10 +58,13 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <View style={{flexDirection:'row',justifyContent: 'space-around'}}>
+         <TouchableOpacity style={styles.touchable} onPress={()=>{this.props.navigation.navigate('Dashboard')}}>
+               <Text style={{fontSize:30, fontWeight:'bold'}}>⇦</Text>
+          </TouchableOpacity>
                              {this.state.categes.map((item, key) => (
                                        <TouchableOpacity key={key}
                                          style={{
-                                           width: deviceWidth/2,
+                                           width: deviceWidth/3,
                                            height: 50,
                                            alignItems: 'center',
                                            justifyContent: 'center',
@@ -74,7 +86,14 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    marginTop:24,// Constants.statusBarHeight,
+    marginTop:Constants.statusBarHeight,
     backgroundColor: 'white',
   },
+  touchable:{ width: deviceWidth/3, height: 50,  alignItems: 'center', justifyContent: 'center',backgroundColor: 'lightgray'},
+  image: {
+      width: 40,
+      height: 40,
+    },
 });
+
+//  <Image style={styles.image} source={require('../../assets/arrow_back.png')} />
