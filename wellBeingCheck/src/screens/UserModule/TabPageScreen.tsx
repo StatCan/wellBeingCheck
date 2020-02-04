@@ -119,7 +119,7 @@ const TabScreen = createMaterialTopTabNavigator(
                  // <AntDesign name="meh" size={25} color="green" />
                 ),
                 tabBarOnPress:({navigation,defaultHandler})=>{
-               
+
                 }
 
               },
@@ -191,6 +191,8 @@ const TabScreen = createMaterialTopTabNavigator(
         textAlign: 'center',
       },
       indicatorStyle: {
+        height: 2,
+        backgroundColor: 'red',
         borderBottomColor: '#87B56A',
         borderBottomWidth: 2,
       },
@@ -205,7 +207,7 @@ const App = createStackNavigator({
     navigationOptions: {
      //  header:<View style={{marginTop:30,flexDirection:'row',}}><Text>Person</Text><Text>Popultion</Text></View>,
      //   header:  <Image source={require('./StatCanLogo.png')} style={{ width: null, height: 100 }} />,
-      header: null,
+      headerShown: false,
     //  headerStyle: {
      //   backgroundColor: '#633689',
      // },
