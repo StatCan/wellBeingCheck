@@ -4,29 +4,16 @@ import { Image,View,Button,Text,ScrollView,Dimensions} from 'react-native';
 import {createAppContainer} from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
-//import Ionicons from 'react-native-vector-icons/Ionicons';
-//import FirstPage from './SurveyResultScreen';
-//import CarouselPage from './CarouselScreen';
-//import SecondPage from './SliderScreen';
 import { Ionicons,EvilIcons,Feather } from '@expo/vector-icons';
-import Icon from 'react-native-vector-icons/FontAwesome';
-//import ViewPagerAdapter from 'react-native-tab-view-viewpager-adapter';
 import FullWidthImage from './FullWidthScreen';
 const height=Dimensions.get('window').height-100;
-
+type ScreenState={
+  width: number,height:number
+}
+interface props {
+  source: { uri: string }
+}
 class FirstPage extends React.Component {
-  constructor(props) {
-    super(props);
-    console.log(global.surveyACode);
-  }
- // componentWillReceiveProps() {
-   //       console.log('rerender here')
-          //this.yourFunction()
-          //this.setState({})
-     // }
-  componentDidMount() {
-              //    this.props.onFinish();
-    }
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -39,10 +26,6 @@ class FirstPage extends React.Component {
   }
 }
 class SecondPage extends React.Component {
-  constructor(props) {
-    super(props);
-    console.log(global.surveyACode);
-  }
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -79,9 +62,10 @@ class ForthPage extends React.Component {
     );
   }
 }
-class FifthPage extends React.Component {
-   constructor() {
-          super();
+
+class FifthPage extends React.Component<props,ScreenState> {
+   constructor(props) {
+          super(props);
 
           this.state = {
               width: 0,
@@ -89,12 +73,12 @@ class FifthPage extends React.Component {
           };
       }
       _onLayout(event) {
-                  Image.getSize(this.props.source.uri, (width, height) => {
+                  Image.getSize(this.props.source.uri, (width: number, height: number) => {
                       this.setState({
                           width: width,
                           height: height
                       });
-                  });
+                  },null);
               }
   render() {
     return (
@@ -170,7 +154,7 @@ const TabScreen = createMaterialTopTabNavigator(
   // pagerComponent: ViewPagerAdapter,
     tabBarPosition: 'bottom',
     swipeEnabled: true,
-    animationEnabled: true,
+   // animationEnabled: true,
     tabBarOptions: {
         iconStyle: {
                 width: 30,
