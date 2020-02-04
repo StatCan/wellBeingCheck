@@ -8,7 +8,15 @@ import Button from '../../components/Button';
 import TextInput from '../../components/TextInput';
 import BackButton from '../../components/BackButton';
 import { theme } from '../../core/theme';
-//import { Navigation } from '../../types';
+
+import * as Localization from 'expo-localization';
+import i18n from 'i18n-js';
+i18n.fallbacks = true;
+i18n.locale = Localization.locale;
+i18n.translations = {
+  en: { welcome: 'Hello', name: 'Charlie' },
+  ja: { welcome: 'こんにちは' },
+};
 
 import {
   NavigationParams,
@@ -139,6 +147,8 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 
         <Header>Create Account</Header>
 
+        <Header>{Resources.t('welcome')}</Header>
+
         <TextInput
           label="Password"
           returnKeyType="next"
@@ -166,12 +176,15 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
           style={[styles.picker]} itemStyle={styles.pickerItem}
           onValueChange={value => this.setState({ securityQuestion: value })}>
           <Picker.Item label="Select a security question" value="" />
-          <Picker.Item label="Mother's Maiden name" value="Mother's Maiden name" />
-          <Picker.Item label="Year of Birth" value="Year of Birth" />
+          <Picker.Item label="What is your mother’s maiden name?" value="What is your mother’s maiden name?" />
+          <Picker.Item label="What primary school did you go to?" value="What primary school did you go to?" />
+          <Picker.Item label="What was your first car?" value="What was your first car?" />
+          <Picker.Item label="What is your favourite game or sport?" value="What is your favourite game or sport?" />
+          <Picker.Item label="What was your first job? " value="What was your first job? " />
         </Picker>
         {this.state.securityQuestionError != '' ? (
           <Text style={styles.errorTest}>{this.state.securityQuestionError}</Text>
-          ): null
+        ) : null
         }
 
         <TextInput

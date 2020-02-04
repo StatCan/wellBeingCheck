@@ -1,10 +1,10 @@
 {
   "devToolsPort": 19002,
   "expoServerPort": 19000,
-  "packagerPort": 19003,
-  "packagerPid": 20358,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "packagerPort": 19001,
+  "packagerPid": 8260,
+  "expoServerNgrokUrl": "https://nc-s3m.anonymous.wellbeingcheck.exp.direct",
+  "packagerNgrokUrl": "https://packager.nc-s3m.anonymous.wellbeingcheck.exp.direct",
+  "ngrokPid": 5792,
   "webpackServerPort": null
 }
