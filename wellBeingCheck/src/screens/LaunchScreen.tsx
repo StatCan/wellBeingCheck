@@ -41,31 +41,51 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
 
   //determine if user already has an account
   _bootstarp = () => {
-    AsyncStorage.getItem('user_account', (err, result) => {
-      console.log(result);
-      if (result) {
-        let resultAsObj = JSON.parse(result)
-        let currentPassword = resultAsObj.password
+    console.log("_bootstarp");
+    AsyncStorage.getItem('user_account', (err, userAccountResult) => {
+      console.log(userAccountResult);
+      let userAccountResultObj = JSON.parse(userAccountResult)
+      let currentPassword = null
+      if (userAccountResultObj) {
+        currentPassword = userAccountResultObj.password
+      }
 
-        if (currentPassword != "") {
-          this._loginFlow();
+      AsyncStorage.getItem('user_getting_started', (err, userGettingStartedResult) => {
+        console.log(userGettingStartedResult);
+        let userGettingStartedResultObj = JSON.parse(userGettingStartedResult)
+        let gettingStarted = false
+        if (userGettingStartedResultObj) {
+          console.log(userGettingStartedResultObj)
+          gettingStarted = userGettingStartedResultObj.gettingStarted
         }
-        else {
-          this._firstLoginFlow();
-        }
-      }
-      else {
-        this._firstLoginFlow();
-      }
+
+        AsyncStorage.getItem('user_terms_and_conditions', (err, userTermsResult) => {
+          console.log(userTermsResult);
+          let userTermsResultObj = JSON.parse(userTermsResult)
+          let termsOfService = false
+          if (userTermsResultObj) {
+            termsOfService = userTermsResultObj.termsOfService
+          }
+          //here we have all results
+          if (gettingStarted == false) {
+            console.log("!gettingStarted");
+            this.props.navigation.navigate('GettingStartedScreen');
+          }
+          else if (termsOfService == false) {
+            console.log("!termsOfService");
+            this.props.navigation.navigate('TermsOfServiceScreen');
+          }
+          else if ((currentPassword == null) || (currentPassword == "")) {
+            console.log("!currentPassword");
+            this.props.navigation.navigate('RegisterScreen');
+          }
+          else {
+            alert("failed to detect route");
+            this.props.navigation.navigate('RegisterScreen');
+          }
+        });
+      });
     });
-  }
-
-  _firstLoginFlow() {
-    this.props.navigation.navigate('RegisterScreen');
-  }
-
-  _loginFlow() {
-    this.props.navigation.navigate('LoginScreen');
   }
 
   render() {

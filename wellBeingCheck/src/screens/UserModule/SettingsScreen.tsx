@@ -40,6 +40,16 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
         console.log(err);
         console.log("all data cleared");
       });
+      AsyncStorage.removeItem('user_terms_and_conditions', (err) => {
+        console.log("user terms deleted");
+        console.log(err);
+        console.log("all data cleared");
+      });
+      AsyncStorage.removeItem('user_getting_started', (err) => {
+        console.log("user getting started deleted");
+        console.log(err);
+        console.log("all data cleared");
+      });
     } catch (error) {
     }
   }

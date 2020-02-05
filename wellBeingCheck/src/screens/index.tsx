@@ -1,4 +1,6 @@
 export { default as LaunchScreen } from './LaunchScreen';
+export { default as GettingStartedScreen } from './GettingStartedScreen';
+export { default as TermsOfServiceScreen } from './TermsOfServiceScreen';
 export { default as HomeScreen } from './HomeScreen';
 export { default as LoginScreen } from './UserModule/LoginScreen';
 export { default as RegisterScreen } from './UserModule/RegisterScreen';

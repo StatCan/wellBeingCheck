@@ -1,9 +1,9 @@
 {
-  "expoServerNgrokUrl": "https://5c-kq5.heikako.wellbeingcheck.exp.direct",
-  "packagerNgrokUrl": "https://packager.5c-kq5.heikako.wellbeingcheck.exp.direct",
-  "ngrokPid": 9960,
+  "expoServerNgrokUrl": "https://5c-kq5.anonymous.wellbeingcheck.exp.direct",
+  "packagerNgrokUrl": "https://packager.5c-kq5.anonymous.wellbeingcheck.exp.direct",
+  "ngrokPid": 3876,
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 6560
+  "packagerPid": 17600
 }
