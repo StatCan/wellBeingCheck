@@ -42,6 +42,46 @@ class Dashboard extends React.Component<Props> {
             <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}><Feather name="phone" size={40} color="white" /><Text style={styles.smallButtonText}>Contact</Text></TouchableOpacity>
           </View>
         </View>
+         <TouchableOpacity onPress={() =>{
+                 console.log("asdfgasdfasdfasdfasd");
+                 var snt = ["2020/02/01 08:10:00", "2020/02/01 12:10:00", "2020/02/01 18:10:00"];
+                 let paraData = {
+                                         "PlatFormVersion": "1.2",
+                                         "DeviceName": "Andoird",
+                                         "NativeAppVersion": "2.2",
+                                         "NativeBuildVersion": "3.2",
+                                         "DeviceYearClass": "4.2",
+                                         "SessionID": "5.2",
+                                         "WakeTime": "07:12",
+                                         "SleepTime": "21.2",
+                                         "NotificationCount": "2",
+                                         "NotificationEnable":true,
+                                         "ScheduledNotificationTimes": snt
+                                     };
+                      fetch('http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/SaveParaData/aaa', {
+                          method: 'POST',
+                                         headers: {
+                                           Accept: 'application/json',
+                                           'Content-Type': 'application/json',
+                                         },
+                                         body:JSON.stringify(paraData),
+
+                          }).then((response) => {
+                                 return response.json();
+                               })
+                               .then((myJson) => {
+                                 console.log(myJson);
+                               }).catch((error)=>{
+                                 console.log(error.message);
+                              });
+
+                 }
+                  }
+
+
+
+
+                 style={styles.smallButton}><Text style={{fontSize:20}}>Test</Text></TouchableOpacity>
       </Background>
     );
   }
