@@ -43,16 +43,16 @@ class EQSurveyScreen extends React.Component<Props> {
     let uri=global.surveyACode==''?'http://barabasy.eastus.cloudapp.azure.com/anonymous-anonyme/en/login-connexion/load-charger/eqgsab4602447bbc45ad8e85328d21f6c1b4':'http://barabasy.eastus.cloudapp.azure.com/anonymous-anonyme/en/login-connexion/load-charger/eqgs0a8c12086319496aadc23bacf80cba8b';
     if(global.surveyACode==''){
        if(resources.culture=='en')
-            uri='http://barabasy.eastus.cloudapp.azure.com/anonymous-anonyme/en/login-connexion/load-charger/eqgsab4602447bbc45ad8e85328d21f6c1b4';
+            uri='http://barabasy.eastus.cloudapp.azure.com/anonymous-anonyme/en/login-connexion/load-charger/eqgsa6fb4330c26e463f94b8342cc1fb9d8b';
        else
-            uri='http://barabasy.eastus.cloudapp.azure.com/anonymous-anonyme/fr/login-connexion/load-charger/eqgsab4602447bbc45ad8e85328d21f6c1b4';
+            uri='http://barabasy.eastus.cloudapp.azure.com/anonymous-anonyme/fr/login-connexion/load-charger/eqgsa6fb4330c26e463f94b8342cc1fb9d8b';
 
     }
     else{
            if(resources.culture=='en')
-                uri='http://barabasy.eastus.cloudapp.azure.com/anonymous-anonyme/en/login-connexion/load-charger/eqgs0a8c12086319496aadc23bacf80cba8b';
+                uri='http://barabasy.eastus.cloudapp.azure.com/anonymous-anonyme/en/login-connexion/load-charger/eqgsd0ed709a7df0465da7cb4881b290ff22';
            else
-                uri='http://barabasy.eastus.cloudapp.azure.com/anonymous-anonyme/fr/login-connexion/load-charger/eqgs0a8c12086319496aadc23bacf80cba8b';
+                uri='http://barabasy.eastus.cloudapp.azure.com/anonymous-anonyme/fr/login-connexion/load-charger/eqgsd0ed709a7df0465da7cb4881b290ff22';
     }
 
     const uri1='https://webdashboardapp.azurewebsites.net/Home/ConductSurvey?userToken='+global.userToken+'&notificationId='+dt.toISOString()+'&culture='+resources.culture;
