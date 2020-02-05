@@ -65,8 +65,7 @@ class EQSurveyScreen extends React.Component<Props> {
 
                   <View style={{flexDirection:'row',alignSelf:'flex-end'}}>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{alignSelf:'flex-end'}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.webView.postMessage('test')} style={{alignSelf:'flex-end'}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
-                    </View>
+                  </View>
               </View>
                 <WebView
                           ref={(view) => this.webView = view}
@@ -144,3 +143,4 @@ const styles = StyleSheet.create({
 });
 
 export default memo(EQSurveyScreen);
+// <TouchableOpacity onPress={() => this.webView.postMessage('test')} style={{alignSelf:'flex-end'}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
