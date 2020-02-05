@@ -43,7 +43,6 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
     };
 
     AsyncStorage.setItem('user_terms_and_conditions', JSON.stringify(userTermsAndConditionsObj), () => {
-      this.props.navigation.state.params.refresh()
       this.props.navigation.navigate('LaunchScreen');
     });
   }
@@ -214,7 +213,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
           <Button
             mode="contained"
             onPress={this._onTermsDisagree}>
-            <Text style={styles.whiteText}>Disagree</Text>
+            <Text style={styles.whiteText}>Decline</Text>
           </Button>
 
           {/* <View style={{ flex: 0.1 }}>

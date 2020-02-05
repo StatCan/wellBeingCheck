@@ -70,7 +70,7 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
           <Button
             mode="contained"
             onPress={this._onGettingStartedNext}>
-            <Text style={styles.whiteText}>Agree</Text>
+            <Text style={styles.whiteText}>Next</Text>
           </Button>
 
         </Background>

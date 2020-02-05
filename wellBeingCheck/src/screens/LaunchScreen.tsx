@@ -1,5 +1,5 @@
 import React, { memo, useState, useCallback } from 'react';
-import { Picker, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Picker, View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
@@ -15,6 +15,7 @@ import {
   NavigationParams,
   NavigationScreenProp,
   NavigationState,
+  NavigationEvents,
 } from 'react-navigation';
 
 import {
@@ -93,6 +94,9 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
       <PaperProvider theme={newTheme}>
         <Background>
         </Background>
+        <NavigationEvents
+          onDidFocus={() => this._bootstarp()}
+        />
       </PaperProvider>
     );
   }

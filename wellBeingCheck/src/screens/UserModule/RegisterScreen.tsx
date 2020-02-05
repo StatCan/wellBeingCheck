@@ -137,7 +137,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 
         <Logo />
 
-        <Header>Create Account</Header>
+        <Header>Secure your account</Header>
 
         <TextInput
           label="Password"

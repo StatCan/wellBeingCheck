@@ -50,6 +50,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
         console.log(err);
         console.log("all data cleared");
       });
+      alert("all data cleared");
     } catch (error) {
     }
   }
