@@ -1,35 +1,40 @@
-import React, { memo, useState, useCallback } from 'react';
-import { Picker, View, Text, StyleSheet, TouchableOpacity, Switch } from 'react-native';
-import { AsyncStorage } from 'react-native';
+import React, {memo, useState, useCallback} from 'react';
+import {
+  Picker,
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Switch
+} from 'react-native';
+import {AsyncStorage} from 'react-native';
 import Background from '../../components/Background';
 import Logo from '../../components/Logo';
 import Header from '../../components/Header';
 import Button from '../../components/Button';
 import TextInput from '../../components/TextInput';
 import BackButton from '../../components/BackButton';
-import { newTheme } from '../../core/theme';
-import { List, Divider } from 'react-native-paper';
+import {newTheme} from '../../core/theme';
+import {List, Divider} from 'react-native-paper';
 
-import {
-  NavigationParams,
-  NavigationScreenProp,
-  NavigationState,
-} from 'react-navigation';
+import {NavigationParams, NavigationScreenProp, NavigationState} from 'react-navigation';
 
 type SettingsState = {
-  notificationState: boolean,
+  notificationState: boolean
 }
 
 interface Props {
-  navigation: NavigationScreenProp<NavigationState, NavigationParams>;
+  navigation : NavigationScreenProp < NavigationState,
+  NavigationParams >;
 }
 
-class SettingsScreen extends React.Component<Props, SettingsState> {
+class SettingsScreen extends React.Component < Props,
+SettingsState > {
 
   constructor(SettingsState) {
     super(SettingsState)
     this.state = {
-      notificationState: true,
+      notificationState: true
     };
   }
 
@@ -40,39 +45,35 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
         console.log(err);
         console.log("all data cleared");
       });
-    } catch (error) {
-    }
+    } catch (error) {}
   }
 
   render() {
     return (
       <View>
-
-        <BackButton goBack={() => this.props.navigation.navigate('Dashboard')} />
+        <View style={styles.toolbar}>
+          <BackButton goBack={() => this.props.navigation.navigate('Dashboard')}/>
+          <Text style={styles.toolbarTitle}>Settings</Text>
+        </View>
 
         <List.Section style={styles.mainStyle}>
-          <List.Subheader>Settings</List.Subheader>
           <List.Item
             title="Notifications"
-            left={() => <List.Icon icon="bell-alert" />}
-            right={() =>
-              <Switch
-                value={this.state.notificationState}
-                onValueChange={() => { this.setState({ notificationState: !this.state.notificationState }); }
-                }
-              />
-            }
-          />
+            left={() => <List.Icon icon="bell-alert"/>}
+            right={() => <Switch
+            value={this.state.notificationState}
+            onValueChange={() => {
+            this.setState({
+              notificationState: !this.state.notificationState
+            });
+          }}/>}/>
           <Divider></Divider>
           <List.Item
             title="Number of notifications"
-            left={() => <List.Icon color="#000" icon="" />}
-          />
+            left={() => <List.Icon color="#000" icon=""/>}/>
         </List.Section>
 
-        <Button
-          mode="contained"
-          onPress={this._debugClearAllLocalData}>
+        <Button mode="contained" onPress={this._debugClearAllLocalData}>
           (Debug) -- Delete user account
         </Button>
 
@@ -82,7 +83,28 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
 }
 
 const styles = StyleSheet.create({
-  mainStyle: { marginTop: 100 }
+  mainStyle: {
+    marginTop: 0
+  },
+  toolbar: {
+    backgroundColor: '#F4D2D1',
+    paddingTop: 68,
+    paddingBottom: 15,
+    flexDirection: 'row'
+  },
+  toolbarButton: {
+    width: 50,
+    color: '#fff',
+    textAlign: 'center'
+  },
+  toolbarTitle: {
+    color: '#000',
+    marginTop: 0,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 20,
+    flex: 0.60
+  }
 });
 
 export default memo(SettingsScreen);
