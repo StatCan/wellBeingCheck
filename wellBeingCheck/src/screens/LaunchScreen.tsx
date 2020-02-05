@@ -81,8 +81,8 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
             this.props.navigation.navigate('RegisterScreen');
           }
           else {
-            alert("failed to detect route");
-            this.props.navigation.navigate('RegisterScreen');
+            //user has seen getting started, and accepted terms and has a new account
+            this.props.navigation.navigate('LoginScreen');
           }
         });
       });

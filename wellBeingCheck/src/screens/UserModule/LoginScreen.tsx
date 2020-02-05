@@ -74,39 +74,39 @@ class LoginScreen extends React.Component<Props, LoginState> {
 
           <Logo />
 
-        <Text>Well-Being Check</Text>
+          <Text>Well-Being Check</Text>
 
-        <TextInput
-          label="Password"
-          returnKeyType="next"
-          value={this.state.password}
-          onChangeText={text => this.setState({ password: text })}
-          error={!!this.state.passwordError}
-          errorText={this.state.passwordError}
-          secureTextEntry={true}
-        />
+          <TextInput
+            label="Password"
+            returnKeyType="next"
+            value={this.state.password}
+            onChangeText={text => this.setState({ password: text })}
+            error={!!this.state.passwordError}
+            errorText={this.state.passwordError}
+            secureTextEntry={true}
+          />
 
-        <View style={styles.forgotPassword}>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('ForgotPasswordScreen')}
-          >
-            <Text style={styles.label}>Forgot your password?</Text>
-          </TouchableOpacity>
-        </View>
+          <View style={styles.forgotPassword}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('ForgotPasswordScreen')}
+            >
+              <Text style={styles.label}>Forgot your password?</Text>
+            </TouchableOpacity>
+          </View>
 
-        <Button
-          mode="contained"
-          onPress={this._onLoginPressed}>
-          <Text style={styles.whiteText}>Login</Text>
-      </Button>
+          <Button
+            mode="contained"
+            onPress={this._onLoginPressed}>
+            <Text style={styles.whiteText}>Login</Text>
+          </Button>
 
-        <View style={styles.row}>
+          {/* <View style={styles.row}>
           <Text style={styles.label}>Don’t have an account? </Text>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('RegisterScreen')}>
             <Text style={styles.link}>Sign up</Text>
           </TouchableOpacity>
-        </View>
-      </Background>
+        </View> */}
+        </Background>
       </PaperProvider>
     );
   }
