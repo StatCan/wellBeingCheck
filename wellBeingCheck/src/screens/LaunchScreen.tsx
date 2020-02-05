@@ -41,6 +41,8 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
 
   //determine if user already has an account
   _bootstarp = () => {
+    const surveyAcode=AsyncStorage.getItem('EsmSurveyACode');global.surveyAcode=surveyAcode;
+        if(surveyAcode!='none')global.doneSurveyA=true;console.log("Read from localStorage:"+surveyAcode);
     AsyncStorage.getItem('user_account', (err, result) => {
       console.log(result);
       if (result) {

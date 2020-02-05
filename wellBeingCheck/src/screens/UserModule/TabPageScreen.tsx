@@ -34,11 +34,11 @@ class FirstPage extends React.Component<props,ScreenState> {
         this.state = {
                width: 0,
                height: 0, timeStamp:timeStamp
-           }; console.log('aaaaaa='+obj.aaa);
+           };
         }
    componentDidMount() {
              this.props.navigation.addListener('didFocus', () => {
-             console.log('check need reload aaaaaaa:'+global.needReload1);  console.log('aaaaaa='+obj.aaa);
+             console.log('check need reload aaaaaaa:'+global.needReload1);
              if(global.needReload1){
                   d=new Date();
                   timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
