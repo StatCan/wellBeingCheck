@@ -29,7 +29,7 @@ class Dashboard extends React.Component<Props> {
       <Background>
         <View style={styles.homeContainer}>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{alignSelf:'flex-end'}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('EQSurveyScreen')} style={{flex:2,justifyContent:'center'}}>
+          <TouchableOpacity onPress={() =>{global.needReload1=true;global.needReload2=true;global.needReload3=true;global.needReload4=true;global.needReload5=true;global.needReload6=true;global.needReload7=true;   this.props.navigation.navigate('EQSurveyScreen');} } style={{flex:2,justifyContent:'center'}}>
             <View style={styles.outer}>
                 <View style={styles.inner}>
                       <Text style={styles.startButtonText}>START MY SURVEY</Text>

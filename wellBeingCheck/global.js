@@ -15,3 +15,6 @@ global.needReload4=true;
 global.needReload5=true;
 global.needReload6=true;
 global.needReload7=true;
+
+
+obj = {aaa:'bbbb123456789'};
