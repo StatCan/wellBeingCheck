@@ -322,7 +322,7 @@ let TabScreen = createMaterialTopTabNavigator(
         Mood: {
                  screen: ThirdPage,
                  navigationOptions: {
-                                                   tabBarLabel:"⚕",
+                                                   tabBarLabel:"☈",
                                                    tabBarIcon: ({ tintColor }) => (
                                                    //  <Icon name="users" size={30} color="black" />
                                                    // <EvilIcons name="gear" size={32} color="green" />
@@ -332,7 +332,7 @@ let TabScreen = createMaterialTopTabNavigator(
         MoodA: {
                                                                   screen: ThirdAPage,
                                                                   navigationOptions: {
-                                                                                                    tabBarLabel:"⚕",
+                                                                                                    tabBarLabel:"⇉",
                                                                                                     tabBarIcon: ({ tintColor }) => (
                                                                                                     //  <Icon name="users" size={30} color="black" />
                                                                                                     // <EvilIcons name="gear" size={32} color="green" />
@@ -342,7 +342,7 @@ let TabScreen = createMaterialTopTabNavigator(
         MoodB: {
                          screen: ThirdBPage,
                          navigationOptions: {
-                                                           tabBarLabel:"⚕",
+                                                           tabBarLabel:"↯",
                                                            tabBarIcon: ({ tintColor }) => (
                                                            //  <Icon name="users" size={30} color="black" />
                                                            // <EvilIcons name="gear" size={32} color="green" />
@@ -362,7 +362,7 @@ let TabScreen = createMaterialTopTabNavigator(
         Table: {
                                                               screen: FifthPage,
                                                               navigationOptions: {
-                                                                                                tabBarLabel:"▤",
+                                                                                                tabBarLabel:"☶",
                                                                                                 tabBarIcon: ({ tintColor }) => (
                                                                                                 //  <Icon name="users" size={30} color="black" />
                                                                                                 // <EvilIcons name="gear" size={32} color="green" />
