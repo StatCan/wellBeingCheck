@@ -24,7 +24,12 @@ import * as Permissions from 'expo-permissions';
 import {NavigationParams, NavigationScreenProp, NavigationState} from 'react-navigation';
 
 type SettingsState = {
-  notificationState: boolean
+  notificationState: boolean,
+  notification: boolean, 
+  waketime: string, 
+  sleeptime: string, 
+  notificationcount: number, 
+  culture: string 
 }
 
 interface Props {
@@ -32,15 +37,69 @@ interface Props {
   NavigationParams >;
 }
 
-class SettingsScreen extends React.Component < Props,
-SettingsState > {
+class SettingsScreen extends React.Component < Props, SettingsState > {
 
   constructor(SettingsState) {
     super(SettingsState)
     this.state = {
-      notificationState: true
+      notificationState: true,
+      notification: true, 
+      waketime: '08:00', 
+      sleeptime: '21:00', 
+      notificationcount: 5, 
+      culture: 'English' 
     };
+    this.wakeTimeHandler = this.wakeTimeHandler.bind(this);
+    this.sleepTimeHandler = this.sleepTimeHandler.bind(this);
   }
+
+  wakeTimeHandler(time) {
+    this.setState({
+      waketime: time
+    })
+  }
+
+  sleepTimeHandler(time) {
+    this.setState({
+      sleeptime: time
+    })
+  }
+
+  askPermissions = async () => {
+    const { status: existingStatus } = await Permissions.getAsync(
+      Permissions.NOTIFICATIONS
+    );
+    let finalStatus = existingStatus;
+    if (existingStatus !== "granted") {
+      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      finalStatus = status;
+    }
+    if (finalStatus !== "granted") {
+      if (global.debugMode) console.log("Notifications Permission Not Granted");
+      return false;
+    }
+    if (global.debugMode) console.log("Notifications Permission Granted");
+    return true;
+  };
+
+  componentDidMount() {
+
+    // Handle notifications that are received or selected while the app
+    // is open. If the app was closed and then opened by tapping the
+    // notification (rather than just tapping the app icon to open it),
+    // this function will fire on the next tick after the app starts
+    // with the notification data.
+
+    if (global.debugMode) console.log("DEBUGMODE ON - Outputting Console Logs");
+    if (global.debugMode) console.log("Settings Screen Component Mounted");
+    this.askPermissions();
+    this._notificationSubscription = Notifications.addListener(this._handleNotification);
+  }
+
+  _handleNotification = (notification) => {
+    if (global.debugMode) console.log("Notification was clicked - navigating to Survey");
+    this.props.navigation.navigate('CurrentEQ');
+  };
 
   _debugClearAllLocalData() {
     try {
@@ -85,8 +144,9 @@ SettingsState > {
           }}/>}/>
           <Divider></Divider>
           <List.Item
+            style={styles.listStyle}
             title="Number of notifications"
-            left={() => <List.Icon color="#000" icon=""/>}/>
+          />
         </List.Section>
 
         <Button mode="contained" onPress={this._debugClearAllLocalData}>
@@ -120,6 +180,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 20,
     flex: 0.60
+  },
+  listStyle: {
+    marginLeft: 60
   }
 });
 
