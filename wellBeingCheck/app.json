@@ -2,6 +2,9 @@
   "name": "wellBeingCheck",
   "displayName": "Well-Being Check",
   "expo": {
+    "androidStatusBar": {
+      "backgroundColor": "#000000"
+    },
     "name": "wellBeingCheck",
     "slug": "expo-template-bare",
     "privacy": "unlisted",
