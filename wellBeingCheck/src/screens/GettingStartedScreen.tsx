@@ -77,13 +77,14 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
             </ScrollView>
           </SafeAreaView>
 
-          <Button style={styles.btnNext}
-            mode="contained"
-            onPress={this._onGettingStartedNext}>
-            <Text style={styles.btnText}>Next</Text>
-          </Button>
-
         </BackgroundWide>
+
+        <Button style={styles.btnNext}
+          mode="contained"
+          onPress={this._onGettingStartedNext}>
+          <Text style={styles.btnText}>Next</Text>
+        </Button>
+
       </PaperProvider>
     );
   }
@@ -110,6 +111,7 @@ const styles = StyleSheet.create({
     color: newTheme.colors.whiteText,
     width: 100,
     alignSelf: "flex-end",
+    marginRight: 20,
   },
   btnText: {
     color: newTheme.colors.whiteText,
