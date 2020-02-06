@@ -22,7 +22,9 @@ import {
   securityQuestionValidator,
   securityAnswerValidator,
 } from '../../core/utils';
-import { Drawer } from 'react-native-paper';
+import { Drawer, Title } from 'react-native-paper';
+import LogoClear from '../../components/LogoClear';
+import LogoClearSmall from '../../components/LogoClearSmall';
 
 type RegisterState = {
   password: string,
@@ -61,7 +63,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     const currentPassword = this._retrieveData('user_password');
     if (!!currentPassword) {
       //user already has account
-      alert('user account already exixst! - navigation block commented');
+      //alert('user account already exixst! - navigation block commented');
       //this.props.navigation.navigate('HomeScreen');
     }
   }
@@ -135,12 +137,12 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
       <Background>
         {/* <BackButton goBack={() => this.props.navigation.navigate('HomeScreen')} /> */}
 
-        <Logo />
+        <LogoClearSmall />
 
-        <Header>Secure your account</Header>
+        <Title style={styles.title}>Secure your account</Title>
 
         <TextInput
-          label="Password"
+          label="Enter password"
           returnKeyType="next"
           value={this.state.password}
           onChangeText={text => this.setState({ password: text })}
@@ -150,7 +152,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
         />
 
         <TextInput
-          label="Password Confirm"
+          label="Confirm password"
           returnKeyType="next"
           value={this.state.passwordConfirm}
           onChangeText={text => this.setState({ passwordConfirm: text })}
@@ -165,7 +167,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
           selectedValue={this.state.securityQuestion}
           style={[styles.picker]} itemStyle={styles.pickerItem}
           onValueChange={value => this.setState({ securityQuestion: value })}>
-          <Picker.Item label="Select a security question" value="" />
+          <Picker.Item label="Select question" value="" />
           <Picker.Item label="Mother's Maiden name" value="Mother's Maiden name" />
           <Picker.Item label="Year of Birth" value="Year of Birth" />
         </Picker>
@@ -175,7 +177,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
         }
 
         <TextInput
-          label="Security Answer"
+          label="Answer"
           returnKeyType="next"
           value={this.state.securityAnswer}
           onChangeText={text => this.setState({ securityAnswer: text })}
@@ -199,6 +201,11 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 }
 
 const styles = StyleSheet.create({
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginTop: 10,
+  },
   label: {
     color: theme.colors.secondary,
   },
