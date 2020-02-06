@@ -137,6 +137,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
             title="Notifications"
             left={() => <List.Icon icon="bell-alert"/>}
             right={() => <Switch
+            style={{margin: 10}}
             value={this.state.notificationState}
             onValueChange={() => {
             this.setState({
@@ -148,26 +149,26 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
             style={styles.listStyle}
             title="Number of notifications"
           />
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-          <Text style={styles.label}>Wake Time:</Text>
-          <TimePicker time={this.state.waketime} timeType="wakeTime" handler = {this.wakeTimeHandler} />
-        </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-          <Text style={styles.label}>Sleep Time:</Text>
-          <TimePicker time={this.state.sleeptime} timeType="sleepTime" handler = {this.sleepTimeHandler} />
-        </View>
-        <Text style={[styles.label,{marginLeft:60}]}>Notification number per day:</Text>
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
-          <Text style={styles.label}>Language:</Text>
-          <Picker  
-                    selectedValue={this.state.culture}
-                    onValueChange={c => this.setState({culture:c})}
-                    style={{ width: 100, height:100, marginBottom:20, justifyContent:'space-around' }}
-                    mode="dropdown">
-                    <Picker.Item label="English" value="1" />
-                    <Picker.Item label="French" value="2" />
-          </Picker>
-        </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+            <Text style={styles.label}>Wake Time:</Text>
+            <TimePicker time={this.state.waketime} timeType="wakeTime" handler = {this.wakeTimeHandler} />
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+            <Text style={styles.label}>Sleep Time:</Text>
+            <TimePicker time={this.state.sleeptime} timeType="sleepTime" handler = {this.sleepTimeHandler} />
+          </View>
+
+          <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+            <Text style={{marginLeft: 38, fontSize: 16, marginTop: 40}}>Language:</Text>
+            <Picker  
+                selectedValue={this.state.culture}
+                onValueChange={c => this.setState({culture:c})}
+                style={{ width: 100, height:100, marginBottom:20, justifyContent:'space-around' }}
+                mode="dropdown">
+                <Picker.Item label="English" value="1" />
+                <Picker.Item label="French" value="2" />
+            </Picker>
+          </View>
         </List.Section>
 
         <Button mode="contained" onPress={this._debugClearAllLocalData}>
@@ -212,7 +213,11 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   input:{borderWidth:1,width:100,paddingLeft:4},
-  label:{color:'black', fontWeight:'900', fontSize: 14, padding:10}
+  label:{
+    fontSize: 16,
+    marginLeft: 20,
+    padding:10
+  }
 });
 
 export default memo(SettingsScreen);
