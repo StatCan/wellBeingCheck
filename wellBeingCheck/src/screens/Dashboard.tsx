@@ -8,6 +8,7 @@ import Paragraph from '../components/Paragraph';
 import Button from '../components/Button';
 import { Navigation } from '../types';
 import { EvilIcons, Feather } from '@expo/vector-icons';
+import LogoClearSmall from '../components/LogoClearSmall';
 import {
   NavigationParams,
   NavigationScreenProp,

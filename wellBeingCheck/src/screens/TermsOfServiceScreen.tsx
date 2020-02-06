@@ -244,6 +244,7 @@ const styles = StyleSheet.create({
   },
   btnAgree: {
     width: 120,
+    backgroundColor: newTheme.colors.primary,
     alignSelf: "flex-end",
   },
   title: {
