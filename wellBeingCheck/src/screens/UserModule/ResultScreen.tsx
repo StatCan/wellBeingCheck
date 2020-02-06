@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View,ScrollView, StyleSheet,TouchableOpacity,Dimensions,Image } from 'react-native';
+import { Text, View,ScrollView, StyleSheet,TouchableOpacity,Dimensions,Image,ActivityIndicator } from 'react-native';
 import TabNavigator from './TabPageScreen';
 import { Ionicons,EvilIcons,Feather } from '@expo/vector-icons';
 import Constants from 'expo-constants';
@@ -21,7 +21,6 @@ type ScreenState={
 export default class App extends React.Component<Props,ScreenState> {
   render() {
     return (
-
       <View style={styles.container}>
           <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{marginLeft:0}}><EvilIcons name="arrow-left" size={32} color="black" /></TouchableOpacity>
@@ -37,7 +36,7 @@ const styles = StyleSheet.create({
   container: {
     flex:1,
     marginTop:Constants.statusBarHeight,
-    backgroundColor: 'white',
+   // backgroundColor: 'white',
   },
   touchable:{ width: deviceWidth/3, height: 50,  alignItems: 'center', justifyContent: 'center',backgroundColor: 'lightgray'},
   image: {
