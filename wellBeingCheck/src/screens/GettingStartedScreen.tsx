@@ -18,6 +18,9 @@ import {
   SafeAreaView,
   ScrollView,
 } from 'react-navigation';
+import AppBanner from '../components/AppBanner';
+import LogoClear from '../components/LogoClear';
+import LogoClearSmall from '../components/LogoClearSmall';
 
 type GettingStartedState = {
   gettingStarted: boolean,
@@ -50,9 +53,11 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
   render() {
     return (
       <PaperProvider theme={newTheme}>
-        <Background>
+        <AppBanner />
 
-          <Logo />
+        <Background>
+          
+        <LogoClearSmall />
 
           <Text>Getting Started</Text>
 

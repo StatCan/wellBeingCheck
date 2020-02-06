@@ -24,6 +24,8 @@ import {
   securityAnswerValidator,
 } from '../../core/utils';
 import { Drawer } from 'react-native-paper';
+import LogoClear from '../../components/LogoClear';
+import AppBanner from '../../components/AppBanner';
 
 type LoginState = {
   password: string,
@@ -69,15 +71,17 @@ class LoginScreen extends React.Component<Props, LoginState> {
   render() {
     return (
       <PaperProvider theme={newTheme}>
+        <AppBanner />
+
         <Background>
           <BackButton goBack={() => this.props.navigation.navigate('HomeScreen')} />
-
-          <Logo />
+          
+          <LogoClear />
 
           <Text>Well-Being Check</Text>
 
           <TextInput
-            label="Password"
+            label="Enter password"
             returnKeyType="next"
             value={this.state.password}
             onChangeText={text => this.setState({ password: text })}
