@@ -8,7 +8,7 @@ import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import { newTheme } from '../core/theme';
-import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import { DefaultTheme, Provider as PaperProvider, Card, Title, Paragraph, Headline, Banner } from 'react-native-paper';
 import Constants from 'expo-constants';
 
 import {
@@ -24,6 +24,7 @@ import LogoClearSmall from '../components/LogoClearSmall';
 
 type GettingStartedState = {
   gettingStarted: boolean,
+  bannerVisibility: boolean,
 }
 
 interface Props {
@@ -36,6 +37,7 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
     super(GettingStartedState)
     this.state = {
       gettingStarted: false,
+      bannerVisibility: true,
     };
   }
 
@@ -56,19 +58,19 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
         <AppBanner />
 
         <Background>
-          
+
         <LogoClearSmall />
 
           <Text>Getting Started</Text>
 
           <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}>
-              <Text style={styles.text}>
+              <Paragraph style={styles.paragraph}>
                 Whya are we conducting this study?
 
                 What is Lorem Ipsum?
   Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-              </Text>
+              </Paragraph>
             </ScrollView>
           </SafeAreaView>
 
@@ -85,6 +87,17 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
 }
 
 const styles = StyleSheet.create({
+  title: {
+    alignSelf: 'baseline',
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginTop: 10,
+  },
+  paragraph: {
+    alignSelf: 'baseline',
+    fontSize: 15,
+    width: '100%',
+  },
   label: {
     color: newTheme.colors.secondary,
   },
@@ -93,9 +106,11 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    width: '100%',
     marginTop: Constants.statusBarHeight,
   },
   scrollView: {
+    width: '100%',
     marginHorizontal: 20,
   },
   text: {
