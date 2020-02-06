@@ -14,7 +14,7 @@ import {
   ContactUsScreen,
   AboutScreen,
   ResultScreen,
-  EQSurveyScreen
+  EQSurveyScreen,
 } from './screens';
 
 const Router = createStackNavigator(

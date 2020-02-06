@@ -108,6 +108,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
         console.log(err);
         console.log("all data cleared");
       });
+      AsyncStorage.removeItem('EsmUserToken');AsyncStorage.setItem('EsmSurveyACode','none'); AsyncStorage.removeItem('EsmCulture')
       AsyncStorage.removeItem('user_terms_and_conditions', (err) => {
         console.log("user terms deleted");
         console.log(err);

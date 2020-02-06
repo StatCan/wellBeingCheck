@@ -36,10 +36,9 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
     super(LaunchState)
     this.state = {
     };
-
     this._bootstarp();
-  }
 
+  }
   //determine if user already has an account
   _bootstarp = () => {
     console.log("_bootstarp");

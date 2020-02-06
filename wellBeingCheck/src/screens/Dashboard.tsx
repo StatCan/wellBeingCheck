@@ -1,7 +1,7 @@
 
 import React, { memo } from 'react';
 import Background from '../components/Background';
-import { View, Text, TextInput, Image, StyleSheet, ImageBackground, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Image, StyleSheet,ImageBackground,Dimensions,TouchableOpacity,AsyncStorage } from 'react-native';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
 import Paragraph from '../components/Paragraph';
@@ -22,14 +22,13 @@ const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
 
 class Dashboard extends React.Component<Props> {
-
   render() {
 
     return (
       <Background>
         <View style={styles.homeContainer}>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{ alignSelf: 'flex-end' }}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('EQSurveyScreen')} style={{ flex: 2, justifyContent: 'center' }}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{alignSelf:'flex-end'}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
+          <TouchableOpacity onPress={() =>{global.needReload1=true;global.needReload2=true;global.needReload3=true;global.needReload4=true;global.needReload5=true;global.needReload6=true;global.needReload7=true;   this.props.navigation.navigate('EQSurveyScreen');} } style={{flex:2,justifyContent:'center'}}>
             <View style={styles.outer}>
               <View style={styles.inner}>
                 <Text style={styles.startButtonText}>START MY SURVEY</Text>
@@ -103,3 +102,39 @@ const styles = StyleSheet.create({
 
 export default memo(Dashboard);
 
+// //         <TouchableOpacity onPress={() =>{
+//                    console.log("asdfgasdfasdfasdfasd");
+//                    var snt = ["2020/02/01 08:10:00", "2020/02/01 12:10:00", "2020/02/01 18:10:00"];
+//                    let paraData = {
+//                                            "PlatFormVersion": "1.2",
+//                                            "DeviceName": "Andoird",
+//                                            "NativeAppVersion": "2.2",
+//                                            "NativeBuildVersion": "3.2",
+//                                            "DeviceYearClass": "4.2",
+//                                            "SessionID": "5.2",
+//                                            "WakeTime": "07:12",
+//                                            "SleepTime": "21.2",
+//                                            "NotificationCount": "2",
+//                                            "NotificationEnable":true,
+//                                            "ScheduledNotificationTimes": snt
+//                                        };
+//                         fetch('http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/SaveParaData/aaa', {
+//                             method: 'POST',
+//                                            headers: {
+//                                              Accept: 'application/json',
+//                                              'Content-Type': 'application/json',
+//                                            },
+//                                            body:JSON.stringify(paraData),
+
+//                             }).then((response) => {
+//                                    return response.json();
+//                                  })
+//                                  .then((myJson) => {
+//                                    console.log(myJson);
+//                                  }).catch((error)=>{
+//                                    console.log(error.message);
+//                                 });
+
+//                    }
+//                     }
+//               style={styles.smallButton}><Text style={{fontSize:20}}>Test</Text></TouchableOpacity>
