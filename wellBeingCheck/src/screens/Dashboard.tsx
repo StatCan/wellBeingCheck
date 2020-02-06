@@ -1,7 +1,7 @@
 
 import React, { memo } from 'react';
 import Background from '../components/Background';
-import { View, Text, TextInput, Image, StyleSheet,ImageBackground,Dimensions,TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Image, StyleSheet,ImageBackground,Dimensions,TouchableOpacity,AsyncStorage } from 'react-native';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
 import Paragraph from '../components/Paragraph';
@@ -22,7 +22,6 @@ const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
 
 class Dashboard extends React.Component<Props> {
-
   render() {
 
     return (
