@@ -21,6 +21,7 @@ import {
 import AppBanner from '../components/AppBanner';
 import LogoClear from '../components/LogoClear';
 import LogoClearSmall from '../components/LogoClearSmall';
+import BackgroundWide from '../components/BackgroundWide';
 
 type GettingStartedState = {
   gettingStarted: boolean,
@@ -57,7 +58,7 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
       <PaperProvider theme={newTheme}>
         <AppBanner />
 
-        <Background>
+        <BackgroundWide>
 
           <LogoClearSmall />
 
@@ -76,13 +77,13 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
             </ScrollView>
           </SafeAreaView>
 
-          <Button
+          <Button style={styles.btnNext}
             mode="contained"
             onPress={this._onGettingStartedNext}>
-            <Text style={styles.whiteText}>Next</Text>
+            <Text style={styles.btnText}>Next</Text>
           </Button>
 
-        </Background>
+        </BackgroundWide>
       </PaperProvider>
     );
   }
@@ -105,13 +106,17 @@ const styles = StyleSheet.create({
   label: {
     color: newTheme.colors.secondary,
   },
-  whiteText: {
-    color: newTheme.colors.whiteText
+  btnNext: {
+    color: newTheme.colors.whiteText,
+    width: 100,
+    alignSelf: "flex-end",
+  },
+  btnText: {
+    color: newTheme.colors.whiteText,
   },
   container: {
     flex: 1,
     width: '100%',
-    marginTop: Constants.statusBarHeight,
   },
   scrollView: {
     width: '100%',

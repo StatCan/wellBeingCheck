@@ -74,7 +74,7 @@ class LoginScreen extends React.Component<Props, LoginState> {
         <AppBanner />
 
         <Background>
-          <BackButton goBack={() => this.props.navigation.navigate('HomeScreen')} />
+          {/* <BackButton goBack={() => this.props.navigation.navigate('HomeScreen')} /> */}
           
           <LogoClear />
 
