@@ -133,11 +133,11 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
   render() {
     return (
       <Background>
-        <BackButton goBack={() => this.props.navigation.navigate('HomeScreen')} />
+        {/* <BackButton goBack={() => this.props.navigation.navigate('HomeScreen')} /> */}
 
         <Logo />
 
-        <Header>Create Account</Header>
+        <Header>Secure your account</Header>
 
         <TextInput
           label="Password"
@@ -187,12 +187,12 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
           Sign Up
         </Button>
 
-        <View style={styles.row}>
+        {/* <View style={styles.row}>
           <Text style={styles.label}>Already have an account? </Text>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('LoginScreen')}>
             <Text style={styles.link}>Login</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
       </Background>
     );
   }

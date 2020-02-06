@@ -3,6 +3,8 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 import {
   LaunchScreen,
+  GettingStartedScreen,
+  TermsOfServiceScreen,
   HomeScreen,
   LoginScreen,
   RegisterScreen,
@@ -18,6 +20,8 @@ import {
 const Router = createStackNavigator(
   {
     LaunchScreen,
+    GettingStartedScreen,
+    TermsOfServiceScreen,
     HomeScreen,
     LoginScreen,
     RegisterScreen,

@@ -30,12 +30,12 @@ class Dashboard extends React.Component<Props> {
           <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{alignSelf:'flex-end'}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
           <TouchableOpacity onPress={() =>{global.needReload1=true;global.needReload2=true;global.needReload3=true;global.needReload4=true;global.needReload5=true;global.needReload6=true;global.needReload7=true;   this.props.navigation.navigate('EQSurveyScreen');} } style={{flex:2,justifyContent:'center'}}>
             <View style={styles.outer}>
-                <View style={styles.inner}>
-                      <Text style={styles.startButtonText}>START MY SURVEY</Text>
-                </View>
+              <View style={styles.inner}>
+                <Text style={styles.startButtonText}>START MY SURVEY</Text>
+              </View>
             </View>
           </TouchableOpacity>
-          <View style={[styles.homeContainer,{marginBottom:10},{flexDirection:'row',flex:1}]}>
+          <View style={[styles.homeContainer, { marginBottom: 10 }, { flexDirection: 'row', flex: 1 }]}>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('ResultScreen')} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>Dashboard</Text></TouchableOpacity>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')} style={styles.smallButton}><EvilIcons name="question" size={40} color="white" /><Text style={styles.smallButtonText}>About</Text></TouchableOpacity>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}><Feather name="phone" size={40} color="white" /><Text style={styles.smallButtonText}>Contact</Text></TouchableOpacity>
@@ -48,54 +48,55 @@ class Dashboard extends React.Component<Props> {
 
 
 const styles = StyleSheet.create({
-  startButtonText:{fontSize:25, color: '#fff', textAlign: 'center', fontWeight: '700'},
-  background: {flex: 1, width: deviceWidth,height: null,},
-  homeContainer: { flex: 1, alignItems: 'center', justifyContent: 'space-between',marginTop:40 },
+  startButtonText: { fontSize: 25, color: '#fff', textAlign: 'center', fontWeight: '700' },
+  background: { flex: 1, width: deviceWidth, height: null, },
+  homeContainer: { flex: 1, alignItems: 'center', justifyContent: 'space-between', marginTop: 40 },
   logo: { width: 300, height: 100 },
   homeButtonContainer: { flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignContent: 'space-between' },
   homeButtonColumn: { width: 150, height: 150, justifyContent: 'space-between', alignContent: 'space-between' },
   homeButton: { width: 100 },
   homeSeperator: { width: 20, height: 150 },
   inner: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderRadius:95,
-      width:190,height:190,
-      alignSelf:'center',
-      backgroundColor:'#66cc99'
-    },
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 95,
+    width: 190, height: 190,
+    alignSelf: 'center',
+    backgroundColor: '#66cc99'
+  },
   outer: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderColor:'lightgray',
-      borderRadius:110,
-      borderWidth:1,
-      width:220,height:220,
-      alignSelf:'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderColor: 'lightgray',
+    borderRadius: 110,
+    borderWidth: 1,
+    width: 220, height: 220,
+    alignSelf: 'center',
 
-      shadowColor: "gray",
-      shadowOffset:{
+    shadowColor: "gray",
+    shadowOffset: {
       width: 10,
       height: 8,
-      },
-      shadowOpacity: 0.8,
-      shadowRadius: 5,
-      elevation: 16,
-
-     // boxShadow:15px 5px 10px grey;
-      backgroundColor:'lightgray'
     },
-  smallButton:{
-    width:100,
-    height:100,
-    borderRadius:50, 
-    backgroundColor:'#66cc99',
-    justifyContent:'center',
-    alignItems:'center',
-    margin:10},
-  smallButtonText:{
+    shadowOpacity: 0.8,
+    shadowRadius: 5,
+    elevation: 16,
+
+    // boxShadow:15px 5px 10px grey;
+    backgroundColor: 'lightgray'
+  },
+  smallButton: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: '#66cc99',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 10
+  },
+  smallButtonText: {
     color: '#fff',
-    fontSize:15
+    fontSize: 15
   }
 });
 
