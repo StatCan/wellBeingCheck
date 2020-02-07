@@ -17,11 +17,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 15 + getStatusBarHeight(),
     left: 10,
+    zIndex: 1
   },
   image: {
     width: 40,
-    height: 40,
-  },
+    height: 40
+  }
 });
 
 export default memo(BackButton);
