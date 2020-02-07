@@ -15,6 +15,13 @@
       "ios",
       "android",
       "web"
-    ]
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.statcan.wellbeingcheck"
+    },
+    "android": {
+      "package": "com.statcan.wellbeingcheck"
+    }
   }
 }
