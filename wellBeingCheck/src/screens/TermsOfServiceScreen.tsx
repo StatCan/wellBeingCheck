@@ -10,6 +10,7 @@ import BackButton from '../components/BackButton';
 import { newTheme } from '../core/theme';
 import { DefaultTheme, Provider as PaperProvider, Title, Paragraph } from 'react-native-paper';
 import Constants from 'expo-constants';
+import * as Permissions from 'expo-permissions';
 
 import {
   NavigationParams,
@@ -37,6 +38,27 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
       termsOfService: false,
     };
   }
+
+  componentDidMount() {
+    this.askPermissions();
+  }
+
+  askPermissions = async () => {
+    const { status: existingStatus } = await Permissions.getAsync(
+      Permissions.NOTIFICATIONS
+    );
+    let finalStatus = existingStatus;
+    if (existingStatus !== "granted") {
+      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      finalStatus = status;
+    }
+    if (finalStatus !== "granted") {
+      if (global.debugMode) console.log("Notifications Permission Not Granted");
+      return false;
+    }
+    if (global.debugMode) console.log("Notifications Permission Granted");
+    return true;
+  };
 
   _onTermsAgree = () => {
     console.log("_onTermsAgree");
