@@ -125,6 +125,17 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
   }
 
   render() {
+
+    let debugButtons;
+
+    if (global.debugMode){
+      debugButtons =         
+      (<View style={{alignItems: 'center', marginTop: 20, justifyContent: 'space-around' }}>
+        <Button mode="contained" onPress={this._debugClearAllLocalData}>
+            (Debug) Delete user account
+        </Button>
+      </View>);
+    }
     return (
       <View>
         <View style={styles.toolbar}>
@@ -149,6 +160,11 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
             style={styles.listStyle}
             title="Number of notifications"
           />
+          <List.Item
+            style={styles.listStyle}
+            title="5"
+          />
+
           <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
             <Text style={styles.label}>Wake Time:</Text>
             <TimePicker time={this.state.waketime} timeType="wakeTime" handler = {this.wakeTimeHandler} />
@@ -159,11 +175,11 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
           </View>
 
           <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-            <Text style={{marginLeft: 38, fontSize: 16, marginTop: 40}}>Language:</Text>
+            <Text style={{marginLeft: 38, fontSize: 16, marginTop: 60}}>Language:</Text>
             <Picker  
                 selectedValue={this.state.culture}
                 onValueChange={c => this.setState({culture:c})}
-                style={{ width: 100, height:100, marginBottom:20, justifyContent:'space-around' }}
+                style={{ width: 100, height:100, marginBottom:20, marginTop:40, justifyContent:'space-around' }}
                 mode="dropdown">
                 <Picker.Item label="English" value="1" />
                 <Picker.Item label="French" value="2" />
@@ -171,9 +187,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
           </View>
         </List.Section>
 
-        <Button mode="contained" onPress={this._debugClearAllLocalData}>
-          (Debug) -- Delete user account
-        </Button>
+        {debugButtons}
 
       </View>
     );
@@ -182,7 +196,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
 
 const styles = StyleSheet.create({
   mainStyle: {
-    marginTop: 0
+    marginTop: 20
   },
   toolbar: {
     backgroundColor: '#F4D2D1',
