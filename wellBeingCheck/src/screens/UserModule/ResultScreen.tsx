@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View,ScrollView, StyleSheet,TouchableOpacity,Dimensions,Image,ActivityIndicator } from 'react-native';
+import { Text, View,ScrollView, StyleSheet,TouchableOpacity,Dimensions,Image,ActivityIndicator ,Modal} from 'react-native';
 import TabNavigator from './TabPageScreen';
 import { Ionicons,EvilIcons,Feather } from '@expo/vector-icons';
 import Constants from 'expo-constants';
@@ -8,9 +8,9 @@ const deviceWidth = Dimensions.get('window').width;
 import {
   NavigationParams,
   NavigationScreenProp,
-  NavigationState,
+  NavigationState,Model,
 } from 'react-navigation';
-
+import Loader from './Loader';
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
@@ -19,6 +19,12 @@ type ScreenState={
 }
 
 export default class App extends React.Component<Props,ScreenState> {
+    constructor(props) {
+      	    super(props);
+      	    this.state={loading:true};
+       }
+
+  componentDidMount(){this.setState({loading:false});}
   render() {
     return (
       <View style={styles.container}>
@@ -27,6 +33,7 @@ export default class App extends React.Component<Props,ScreenState> {
                 <Text style={{fontSize:24}}>Your Result</Text>
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{marginRight:0}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
           </View>
+         <Loader loading={this.state.loading} />
          <TabNavigator />
       </View>
     );
@@ -43,6 +50,22 @@ const styles = StyleSheet.create({
       width: 40,
       height: 40,
     },
+  modalBackground: {
+        flex: 1,
+        alignItems: 'center',
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        backgroundColor: '#00000040'
+      },
+  activityIndicatorWrapper: {
+        backgroundColor: '#FFFFFF',
+        height: 100,
+        width: 100,
+        borderRadius: 10,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-around'
+      }
 });
 
 //  <Image style={styles.image} source={require('../../assets/arrow_back.png')} />

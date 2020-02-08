@@ -1,6 +1,6 @@
 //This is an example of React Native Tab
 import React from 'react';
-import { Image,View,Button,Text,ScrollView,Dimensions} from 'react-native';
+import { Image,View,Button,Text,ScrollView,Dimensions,AsyncStorage} from 'react-native';
 import {createAppContainer} from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
@@ -19,8 +19,8 @@ interface props {
 }
 
 
-const height=Dimensions.get('window').height-100;
-const width=Dimensions.get('window').width;
+const height=Math.floor(Dimensions.get('window').height)-100;
+const width=Math.floor(Dimensions.get('window').width);
 type ScreenState={
   width: number,height:number,timeStamp:string
 }
@@ -28,15 +28,40 @@ let timeStamp='';
 let d=new Date();
 timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
 console.log('timeOld:'+timeStamp);
-class FirstPage extends React.Component<props,ScreenState> {
-     constructor(props) {
-         super(props);
-        this.state = {
-               width: 0,
-               height: 0, timeStamp:timeStamp
-           };
-        }
-   componentDidMount() {
+class FirstPage extends React.Component {
+   constructor(props) {
+   	    super(props);
+   	    this.state = {pictureBase64: null, width: 0,height: 0};
+    }
+   loadImage() {
+   	    AsyncStorage.getItem('image1', (error, result) => {
+   	      if (!error && result != null){
+                   this.setState({ pictureBase64: result });
+              }
+              else {
+                  // do something else
+              }
+   	    })
+   	  }
+    fetchImage() {   //working
+
+              let timeStamp='';
+             let d=new Date();
+             timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
+            let url='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/ScalableBarFW/aaa/'+timeStamp+'/en/'+width;
+           console.log(url);
+           fetch(url)
+             .then( response => response.blob() )
+             .then( blob =>{
+                 var reader = new FileReader() ;
+                 reader.onload = function(){
+                     console.log(this.result);// <--- `this.result` contains a base64 data URI
+                   AsyncStorage.setItem('image', this.result);
+                 } ;
+                 reader.readAsDataURL(blob) ;
+             }) ;
+         }
+    componentDidMount() {
              this.props.navigation.addListener('didFocus', () => {
              console.log('check need reload aaaaaaa:'+global.needReload1);
              if(global.needReload1){
@@ -48,249 +73,459 @@ class FirstPage extends React.Component<props,ScreenState> {
              }
 
         });
+             this.loadImage();
         }
-    render() {
-          global.needReload1=false;
-         let uri='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/MacaroniFW/aaa/'+this.state.timeStamp+'/en/'+width;
-        //   let uri='http://localhost:49159/MacaroniFW/aaa/'+this.state.timeStamp+'/en/'+width; console.log(uri);
-       console.log(uri);
-       console.log(timeStamp);
-      return (
-        <View style={{ flex: 1,marginTop:10 }}>
-               <ScrollView  maximumZoomScale={4} minimumZoomScale={1}  bouncesZoom={true}>
-                  <FullWidthImage source={{uri: uri}} />
-               </ScrollView>
-        </View>
-      );
+   _onLayout(event) {
+           const containerWidth = event.nativeEvent.layout.width;
+            Image.getSize(this.state.pictureBase64, (w, h) => {
+                     console.log('width:'+width);console.log('height:'+width);
+                           this.setState({
+                               width: width,
+                               height: width * h / w
+                           });
+                       });
+       }
+   render() {
+   	    return (
+   	      <View style={{ flex: 1,marginTop:10 }}>
+   	        {this.state.pictureBase64 && (
+                <View onLayout={this._onLayout.bind(this)}>
+                   <ScrollView  maximumZoomScale={4} minimumZoomScale={1}  bouncesZoom={true}>
+                   <Image source={{ uri: this.state.pictureBase64 }}  style={{width: this.state.width,height: this.state.height }} />
+                   </ScrollView>
+                  </View>
+   	        )}
+   	      </View>
+   	    );
+   	  }
+   	}
+class SecondPage extends React.Component {
+   constructor(props) {
+   	    super(props);
+   	    this.state = {pictureBase64: null, width: 0,height: 0};
     }
-  }
-class SecondPage extends React.Component<props,ScreenState> {
-    constructor(props) {
-                                                 super(props);
-                                                this.state = {
-                                                       width: 0,
-                                                       height: 0, timeStamp:timeStamp
-                                                   };
-                                                }
-    componentDidMount() {
-                 this._navListener = this.props.navigation.addListener('didFocus', () => {
-                 // console.log('check need reload:'+global.needReload);
-                  if(global.needReload2){
-                       d=new Date();
-                       timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-                       console.log('inside:'+timeStamp);console.log('global:'+global.needReload);
-                       global.needReload2=false;
-                       this.setState({timeStamp:timeStamp});
-                  }
+   loadImage() {
+   	    AsyncStorage.getItem('image2', (error, result) => {
+   	     if (!error && result != null){
+                            this.setState({ pictureBase64: result });
+                       }
+                       else {
+                           // do something else
+                       }
+   	    })
+   	  }
+    fetchImage() {   //working
 
-             });
-             }
-       render() {
-         let uri='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/ScalableBarFW/aaa/'+this.state.timeStamp+'/en/'+width;
-           //  let uri='http://localhost:49159/ScalableBarFW/aaa/'+this.state.timeStamp+'/en/'+width;
-         console.log(uri);
-             global.needReload2=false;
-        return (
-          <View style={{ flex: 1,marginTop:10 }}>
-                 <ScrollView  maximumZoomScale={4} minimumZoomScale={1}  bouncesZoom={true}>
-                    <FullWidthImage source={{uri: uri}} />
-                 </ScrollView>
-          </View>
-        );
-      }
-    }
-
-class ThirdPage extends React.Component<props,ScreenState> {
-    constructor(props) {
-              super(props);
-
-              this.state = {
-                  width: 0,
-                  height: 0, timeStamp:timeStamp
-              };
-          }
-    componentDidMount() {
-             this._navListener = this.props.navigation.addListener('didFocus', () => {
-             // console.log('check need reload:'+global.needReload);
-              if(global.needReload3){
-                   d=new Date();
-                   timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-                   console.log('inside:'+timeStamp);console.log('global:'+global.needReload);
-                   global.needReload3=false;
-                   this.setState({timeStamp:timeStamp});
-              }
-
-         });
-         }
-    render() {
-      let uri='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/ScalableLineFW/aaa/'+this.state.timeStamp+'/en/'+width;
-    //    let uri='http://localhost:49159/ScalableLineFW/aaa/'+this.state.timeStamp+'/en/'+width;
-     console.log(uri);
-         global.needReload3=false;
-    return (
-      <View style={{ flex: 1,marginTop:10 }}>
-             <ScrollView  maximumZoomScale={4} minimumZoomScale={1}  bouncesZoom={true}>
-                <FullWidthImage source={{uri: uri}} />
-             </ScrollView>
-      </View>
-    );
-  }
-}
-class ThirdAPage extends React.Component<props,ScreenState> {
-   constructor(props) {
-          super(props);
-
-          this.state = {
-              width: 0,
-              height: 0, timeStamp:timeStamp
-          };
-      }
-   componentDidMount() {
-             this._navListener = this.props.navigation.addListener('didFocus', () => {
-             // console.log('check need reload:'+global.needReload);
-              if(global.needReload4){
-                   d=new Date();
-                   timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-                   console.log('inside:'+timeStamp);console.log('global:'+global.needReload);
-                   global.needReload4=false;
-                   this.setState({timeStamp:timeStamp});
-              }
-
-         });
-         }
-  render() {
-      let uri='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/ScalableLine/aaa/'+this.state.timeStamp+'/en/';
-    //     let uri='http://localhost:49159/ScalableLine/aaa/'+this.state.timeStamp+'/en/';
-     console.log(uri); global.needReload4=false;
-     console.log('width:'+this.state.width); console.log('height:'+this.state.height);
-    return (
-      <View style={{ flex: 1,marginTop:10 }}>
-              <ScrollView horizontal   style={{height:height,padding:10}}  maximumZoomScale={2} minimumZoomScale={1}  bouncesZoom={true}>
-                <Image source={{uri: uri}} style={{width:600,height:400, resizeMode: 'stretch' }}  />
-             </ScrollView>
-      </View>
-    );
-  }
-}
-class ThirdBPage extends React.Component<props,ScreenState> {
-   constructor(props) {
-          super(props);
-
-          this.state = {
-              width: 0,
-              height: 0, timeStamp:timeStamp
-          };
-      }
-
-   componentDidMount() {
-             this._navListener = this.props.navigation.addListener('didFocus', () => {
-             // console.log('check need reload:'+global.needReload);
-              if(global.needReload7){
-                   d=new Date();
-                   timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-                   console.log('inside:'+timeStamp);console.log('global:'+global.needReload);
-                   global.needReload7=false;
-                   this.setState({timeStamp:timeStamp});
-              }
-
-         });
-         }
-  render() {
-      let uri='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/ScalableCBarFW/aaa/'+this.state.timeStamp+'/en/'+width;
-    //     let uri='http://localhost:49159/ScalableCBarFW/aaa/'+this.state.timeStamp+'/en/'+width;
-     console.log(uri); global.needReload7=false;
-
-    return (
-      <View style={{ flex: 1,marginTop:10 }}>
-             <ScrollView  maximumZoomScale={4} minimumZoomScale={1}  bouncesZoom={true}>
-                <FullWidthImage source={{uri: uri}} />
-             </ScrollView>
-      </View>
-    );
-  }
-}
-
-
-
-class ForthPage extends React.Component<props,ScreenState> {
-   constructor(props) {
-             super(props);
-
-             let timeStamp='12345';
+              let timeStamp='';
              let d=new Date();
-             timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds(); console.log('timeOld aaa:'+timeStamp);
-             this.state = {
-                 width: 0,
-                 height: 0,timeStamp:timeStamp
-             };
+             timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
+            let url='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/ScalableBarFW/aaa/'+timeStamp+'/en/'+width;
+           console.log(url);
+           fetch(url)
+             .then( response => response.blob() )
+             .then( blob =>{
+                 var reader = new FileReader() ;
+                 reader.onload = function(){
+                     console.log(this.result);// <--- `this.result` contains a base64 data URI
+                   AsyncStorage.setItem('image', this.result);
+                 } ;
+                 reader.readAsDataURL(blob) ;
+             }) ;
          }
     componentDidMount() {
-               this._navListener = this.props.navigation.addListener('didFocus', () => {
-               // console.log('check need reload:'+global.needReload);
-                if(global.needReload5){
-                     d=new Date();
-                     timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-                     console.log('inside:'+timeStamp);console.log('global:'+global.needReload);
-                     global.needReload5=false;
-                     this.setState({timeStamp:timeStamp});
-                }
+             this.props.navigation.addListener('didFocus', () => {
+             console.log('check need reload aaaaaaa:'+global.needReload1);
+             if(global.needReload1){
+                  d=new Date();
+                  timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
+                  console.log('inside:'+timeStamp);console.log('global:'+global.needReload);
+                  global.needReload1=false;
+                  this.setState({timeStamp:timeStamp});
+             }
 
-           });
-           }
-    render() {
-        let uri='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/BulletinFW/aaa/'+this.state.timeStamp+'/en/'+width;
-      //     let uri='http://localhost:49159/BulletinFW/aaa/'+this.state.timeStamp+'/en/'+width;
-       console.log(uri); global.needReload5=false;
-
-      return (
-        <View style={{ flex: 1,marginTop:10 }}>
-               <ScrollView  maximumZoomScale={4} minimumZoomScale={1}  bouncesZoom={true}>
-                  <FullWidthImage source={{uri: uri}} />
-               </ScrollView>
-        </View>
-      );
-    }
-  }
-
-class FifthPage extends React.Component<props,ScreenState> {
+        });
+             this.loadImage();
+        }
+   _onLayout(event) {
+           const containerWidth = event.nativeEvent.layout.width;
+            Image.getSize(this.state.pictureBase64, (w, h) => {
+                     console.log('width:'+width);console.log('height:'+width);
+                           this.setState({
+                               width: width,
+                               height: width * h / w
+                           });
+                       });
+       }
+   render() {
+   	    return (
+   	      <View style={{ flex: 1,marginTop:10 }}>
+   	        {this.state.pictureBase64 && (
+                <View onLayout={this._onLayout.bind(this)}>
+                <ScrollView  maximumZoomScale={4} minimumZoomScale={1}  bouncesZoom={true}>
+                   <Image source={{ uri: this.state.pictureBase64 }} style={{width: this.state.width,height: this.state.height }} />
+                 </ScrollView>
+                  </View>
+   	        )}
+   	      </View>
+   	    );
+   	  }
+   	}
+class ThirdPage extends React.Component {
    constructor(props) {
-          super(props);
-
-          let timeStamp='12345';
-          let d=new Date();
-          timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds(); console.log('timeOld aaa:'+timeStamp);
-          this.state = {
-              width: 0,
-              height: 0,timeStamp:timeStamp
-          };
-      }
-         componentDidMount() {
-                   this._navListener = this.props.navigation.addListener('didFocus', () => {
-                    console.log('check need reload:'+global.needReload6);
-                    if(global.needReload6){
-                         d=new Date();
-                         timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-                         console.log('inside:'+timeStamp);console.log('global:'+global.needReload6);
-                         global.needReload6=false;
-                         this.setState({timeStamp:timeStamp});
-                    }
-
-               });
-               }
-  render() {
-      let uri='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/TableFW/aaa/'+this.state.timeStamp+'/en/'+width;
-     // let uri='http://localhost:49159/TableFW/aaa/'+this.state.timeStamp+'/en/'+width;
-       console.log(uri); global.needReload6=false;
-
-      return (
-        <View style={{ flex: 1,marginTop:10 }}>
-               <ScrollView  maximumZoomScale={4} minimumZoomScale={1}  bouncesZoom={true}>
-                  <FullWidthImage source={{uri: uri}} />
-               </ScrollView>
-        </View>
-      );
+   	    super(props);
+   	    this.state = {pictureBase64: null, width: 0,height: 0};
     }
-  }
+   loadImage() {
+   	    AsyncStorage.getItem('image3', (error, result) => {
+   	      if (!error && result != null){
+                             this.setState({ pictureBase64: result });
+                        }
+                        else {
+                            // do something else
+                        }
+   	    })
+   	  }
+    fetchImage() {   //working
+
+              let timeStamp='';
+             let d=new Date();
+             timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
+            let url='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/ScalableBarFW/aaa/'+timeStamp+'/en/'+width;
+           console.log(url);
+           fetch(url)
+             .then( response => response.blob() )
+             .then( blob =>{
+                 var reader = new FileReader() ;
+                 reader.onload = function(){
+                     console.log(this.result);// <--- `this.result` contains a base64 data URI
+                   AsyncStorage.setItem('image', this.result);
+                 } ;
+                 reader.readAsDataURL(blob) ;
+             }) ;
+         }
+    componentDidMount() {
+             this.props.navigation.addListener('didFocus', () => {
+             console.log('check need reload aaaaaaa:'+global.needReload1);
+             if(global.needReload1){
+                  d=new Date();
+                  timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
+                  console.log('inside:'+timeStamp);console.log('global:'+global.needReload);
+                  global.needReload1=false;
+                  this.setState({timeStamp:timeStamp});
+             }
+
+        });
+             this.loadImage();
+        }
+   _onLayout(event) {
+           const containerWidth = event.nativeEvent.layout.width;
+            Image.getSize(this.state.pictureBase64, (w, h) => {
+                     console.log('width:'+width);console.log('height:'+width);
+                           this.setState({
+                               width: width,
+                               height: width * h / w
+                           });
+                       });
+       }
+   render() {
+   	    return (
+   	      <View style={{ flex: 1,marginTop:10 }}>
+   	        {this.state.pictureBase64 && (
+                <View onLayout={this._onLayout.bind(this)}>
+                 <ScrollView  maximumZoomScale={4} minimumZoomScale={1}  bouncesZoom={true}>
+                   <Image source={{ uri: this.state.pictureBase64 }} style={{width: this.state.width,height: this.state.height }} />
+                  </ScrollView>
+                 </View>
+   	        )}
+   	      </View>
+   	    );
+   	  }
+   	}
+class ThirdAPage extends React.Component {
+   constructor(props) {
+   	    super(props);
+   	    this.state = {pictureBase64: null, width: 0,height: 0};
+    }
+   loadImage() {
+   	    AsyncStorage.getItem('image4', (error, result) => {
+   	     if (!error && result != null){
+                            this.setState({ pictureBase64: result });
+                       }
+                       else {
+                           // do something else
+                       }
+   	    })
+   	  }
+    fetchImage() {   //working
+
+              let timeStamp='';
+             let d=new Date();
+             timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
+            let url='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/ScalableBarFW/aaa/'+timeStamp+'/en/'+width;
+           console.log(url);
+           fetch(url)
+             .then( response => response.blob() )
+             .then( blob =>{
+                 var reader = new FileReader() ;
+                 reader.onload = function(){
+                     console.log(this.result);// <--- `this.result` contains a base64 data URI
+                   AsyncStorage.setItem('image', this.result);
+                 } ;
+                 reader.readAsDataURL(blob) ;
+             }) ;
+         }
+    componentDidMount() {
+             this.props.navigation.addListener('didFocus', () => {
+             console.log('check need reload aaaaaaa:'+global.needReload1);
+             if(global.needReload1){
+                  d=new Date();
+                  timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
+                  console.log('inside:'+timeStamp);console.log('global:'+global.needReload);
+                  global.needReload1=false;
+                  this.setState({timeStamp:timeStamp});
+             }
+
+        });
+             this.loadImage();
+        }
+   _onLayout(event) {
+           const containerWidth = event.nativeEvent.layout.width;
+            Image.getSize(this.state.pictureBase64, (w, h) => {
+                     console.log('width3:'+width);console.log('height3:'+height);
+                      console.log('width3a:'+w);console.log('height3a:'+h);
+                           this.setState({
+                               width: height*w/h,
+                               height: height
+                           });
+                       });
+       }
+   render() {
+   	    return (
+   	      <View style={{ flex: 1,marginTop:10 }}>
+   	        {this.state.pictureBase64 && (
+                <View onLayout={this._onLayout.bind(this)}>
+                   <ScrollView horizontal   style={{height:height,padding:10}}  maximumZoomScale={2} minimumZoomScale={1}  bouncesZoom={true}>
+                   <Image source={{ uri: this.state.pictureBase64 }} style={{width: this.state.width,height: this.state.height }} />
+                   </ScrollView>
+                  </View>
+   	        )}
+   	      </View>
+   	    );
+   	  }
+   	}
+class ThirdBPage extends React.Component {
+   constructor(props) {
+   	    super(props);
+   	    this.state = {pictureBase64: null, width: 0,height: 0};
+    }
+   loadImage() {
+   	    AsyncStorage.getItem('image5', (error, result) => {
+   	    if (!error && result != null){
+                           this.setState({ pictureBase64: result });
+                      }
+                      else {
+                          // do something else
+                      }
+   	    })
+   	  }
+    fetchImage() {   //working
+
+              let timeStamp='';
+             let d=new Date();
+             timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
+            let url='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/ScalableBarFW/aaa/'+timeStamp+'/en/'+width;
+           console.log(url);
+           fetch(url)
+             .then( response => response.blob() )
+             .then( blob =>{
+                 var reader = new FileReader() ;
+                 reader.onload = function(){
+                     console.log(this.result);// <--- `this.result` contains a base64 data URI
+                   AsyncStorage.setItem('image', this.result);
+                 } ;
+                 reader.readAsDataURL(blob) ;
+             }) ;
+         }
+    componentDidMount() {
+             this.props.navigation.addListener('didFocus', () => {
+             console.log('check need reload aaaaaaa:'+global.needReload1);
+             if(global.needReload1){
+                  d=new Date();
+                  timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
+                  console.log('inside:'+timeStamp);console.log('global:'+global.needReload);
+                  global.needReload1=false;
+                  this.setState({timeStamp:timeStamp});
+             }
+
+        });
+             this.loadImage();
+        }
+   _onLayout(event) {
+           const containerWidth = event.nativeEvent.layout.width;
+            Image.getSize(this.state.pictureBase64, (w, h) => {
+                     console.log('width:'+width);console.log('height:'+width);
+                           this.setState({
+                               width: width,
+                               height: width * h / w
+                           });
+                       });
+       }
+   render() {
+   	    return (
+   	      <View style={{ flex: 1,marginTop:10 }}>
+   	        {this.state.pictureBase64 && (
+                <View onLayout={this._onLayout.bind(this)}>
+                 <ScrollView  maximumZoomScale={4} minimumZoomScale={1}  bouncesZoom={true}>
+                   <Image source={{ uri: this.state.pictureBase64 }} style={{width: this.state.width,height: this.state.height }} />
+                  </ScrollView>
+                 </View>
+   	        )}
+   	      </View>
+   	    );
+   	  }
+   	}
+class ForthPage extends React.Component {
+   constructor(props) {
+   	    super(props);
+   	    this.state = {pictureBase64: null, width: 0,height: 0};
+    }
+   loadImage() {
+   	    AsyncStorage.getItem('image6', (error, result) => {
+   	     if (!error && result != null){
+                            this.setState({ pictureBase64: result });
+                       }
+                       else {
+                           // do something else
+                       }
+   	    })
+   	  }
+    fetchImage() {   //working
+
+              let timeStamp='';
+             let d=new Date();
+             timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
+            let url='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/ScalableBarFW/aaa/'+timeStamp+'/en/'+width;
+           console.log(url);
+           fetch(url)
+             .then( response => response.blob() )
+             .then( blob =>{
+                 var reader = new FileReader() ;
+                 reader.onload = function(){
+                     console.log(this.result);// <--- `this.result` contains a base64 data URI
+                   AsyncStorage.setItem('image', this.result);
+                 } ;
+                 reader.readAsDataURL(blob) ;
+             }) ;
+         }
+    componentDidMount() {
+             this.props.navigation.addListener('didFocus', () => {
+             console.log('check need reload aaaaaaa:'+global.needReload1);
+             if(global.needReload1){
+                  d=new Date();
+                  timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
+                  console.log('inside:'+timeStamp);console.log('global:'+global.needReload);
+                  global.needReload1=false;
+                  this.setState({timeStamp:timeStamp});
+             }
+
+        });
+             this.loadImage();
+        }
+   _onLayout(event) {
+           const containerWidth = event.nativeEvent.layout.width;
+            Image.getSize(this.state.pictureBase64, (w, h) => {
+                     console.log('width:'+width);console.log('height:'+width);
+                           this.setState({
+                               width: width,
+                               height: width * h / w
+                           });
+                       });
+       }
+   render() {
+   	    return (
+   	      <View style={{ flex: 1,marginTop:10 }}>
+   	        {this.state.pictureBase64 && (
+                <View onLayout={this._onLayout.bind(this)}>
+                   <ScrollView  maximumZoomScale={4} minimumZoomScale={1}  bouncesZoom={true}>
+                   <Image source={{ uri: this.state.pictureBase64 }}  style={{width: this.state.width,height: this.state.height }} />
+                   </ScrollView>
+                  </View>
+   	        )}
+   	      </View>
+   	    );
+   	  }
+   	}
+class FifthPage extends React.Component {
+   constructor(props) {
+   	    super(props);
+   	    this.state = {pictureBase64: null, width: 0,height: 0};
+    }
+   loadImage() {
+   	    AsyncStorage.getItem('image7', (error, result) => {
+   	      if (!error && result != null){
+                             this.setState({ pictureBase64: result });
+                        }
+                        else {
+                            // do something else
+                        }
+   	    })
+   	  }
+    fetchImage() {   //working
+
+              let timeStamp='';
+             let d=new Date();
+             timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
+            let url='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/ScalableBarFW/aaa/'+timeStamp+'/en/'+width;
+           console.log(url);
+           fetch(url)
+             .then( response => response.blob() )
+             .then( blob =>{
+                 var reader = new FileReader() ;
+                 reader.onload = function(){
+                     console.log(this.result);// <--- `this.result` contains a base64 data URI
+                   AsyncStorage.setItem('image', this.result);
+                 } ;
+                 reader.readAsDataURL(blob) ;
+             }) ;
+         }
+    componentDidMount() {
+             this.props.navigation.addListener('didFocus', () => {
+             console.log('check need reload aaaaaaa:'+global.needReload1);
+             if(global.needReload1){
+                  d=new Date();
+                  timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
+                  console.log('inside:'+timeStamp);console.log('global:'+global.needReload);
+                  global.needReload1=false;
+                  this.setState({timeStamp:timeStamp});
+             }
+
+        });
+             this.loadImage();
+        }
+   _onLayout(event) {
+           const containerWidth = event.nativeEvent.layout.width;
+            Image.getSize(this.state.pictureBase64, (w, h) => {
+                     console.log('width:'+width);console.log('height:'+width);
+                           this.setState({
+                               width: width,
+                               height: width * h / w
+                           });
+                       });
+       }
+   render() {
+   	    return (
+   	      <View style={{ flex: 1,marginTop:10 }}>
+   	        {this.state.pictureBase64 && (
+                <View onLayout={this._onLayout.bind(this)}>
+                   <ScrollView  maximumZoomScale={4} minimumZoomScale={1}  bouncesZoom={true}>
+                   <Image source={{ uri: this.state.pictureBase64 }}  style={{width: this.state.width,height: this.state.height }} />
+                   </ScrollView>
+                  </View>
+   	        )}
+   	      </View>
+   	    );
+   	  }
+   	}
 
 let TabScreen = createMaterialTopTabNavigator(
   {
@@ -424,3 +659,12 @@ export default createAppContainer(App);
 
 
 //<Image source={{uri:'http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/Table/aaa/en'}}  style={{width: this.state.width,height: this.state.height }}/>
+
+
+//  <View style={{flexDirection:'row'}}><Button title='Fetch' onPress={() => this.fetchImage()} /><Button title='Display' onPress={() => this.loadImage()} /></View>
+
+
+
+
+
+

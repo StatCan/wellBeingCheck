@@ -1,15 +1,8 @@
 import React, { memo, useState, useCallback } from 'react';
-import { Image, View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator } from 'react-native';
+import { Image, View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator,Button } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import { Ionicons,EvilIcons,Feather } from '@expo/vector-icons';
-import Background from '../../components/Background';
-import Logo from '../../components/Logo';
-import Header from '../../components/Header';
-import Button from '../../components/Button';
-import TextInput from '../../components/TextInput';
-import BackButton from '../../components/BackButton';
-import { newTheme } from '../../core/theme';
-import { List, Divider } from 'react-native-paper';
+
 import WebView from 'react-native-webview';
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
@@ -29,7 +22,10 @@ type ScreenState={
 class EQSurveyScreen extends React.Component<Props,ScreenState> {
 constructor(Props) {
     super(Props)
+       let jsCode='document.addEventListener("message", function (message) { document.getElementById("langtest").click(); });var btn = document.createElement("button");btn.style.visibility ="hidden";btn.onclick = switchlang;btn.setAttribute("id", "langtest");document.body.appendChild(btn);    function switchlang() { var a = document.querySelector("a.sc-js-langchange");var href = a.href;if (href.indexOf("/q/fr")>0) {var res = href.replace("/q/fr", "/q/en");a.setAttribute("href", res);a.click();} else if (href.indexOf("/q/en")>0) {var res = href.replace("/q/en", "/q/fr");a.setAttribute("href", res);a.click();} }';
+    this.state=({Sacode:'',jsCode:jsCode});
     this._bootstarp();
+ //   this.fetchImage();
   }
 _bootstarp = () => {
     AsyncStorage.getItem('EsmSurveyACode', (err, result) => {
@@ -38,6 +34,63 @@ _bootstarp = () => {
       this.setState({Sacode:result})
     });
   }
+   componentDidMount(){this.fetchImages();}
+  fetchImageSingle() {   //working
+
+                let timeStamp='';
+               let d=new Date();
+               timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
+              let url='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/ScalableBarFW/aaa/'+timeStamp+'/en/'+deviceWidth;
+             console.log(url);
+             fetch(url)
+               .then( response => response.blob() )
+               .then( blob =>{
+                   var reader = new FileReader() ;
+                   reader.onload = function(){
+                       console.log(this.result);// <--- `this.result` contains a base64 data URI
+                     AsyncStorage.setItem('image', this.result);
+                   } ;
+                   reader.readAsDataURL(blob) ;
+               }) ;
+           }
+  fetchImages(){
+          let timeStamp='';
+          let d=new Date();
+          timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
+          let uri0='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/WarnFW/en/'+deviceWidth;
+          let uri1='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/MacaroniFW/aaa/'+timeStamp+'/en/'+deviceWidth;
+          let uri2='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/ScalableBarFW/aaa/'+timeStamp+'/en/'+deviceWidth;
+          let uri3='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/ScalableLineFW/aaa/'+timeStamp+'/en/'+deviceWidth;
+          let uri4='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/ScalableLine/aaa/'+timeStamp+'/en/';
+          let uri5='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/ScalableCBarFW/aaa/'+timeStamp+'/en/'+deviceWidth;
+          let uri6='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/BulletinFW/aaa/'+timeStamp+'/en/'+deviceWidth;
+          let uri7='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/TableFW/aaa/'+timeStamp+'/en/'+deviceWidth;
+          this.fetchImage(uri0,0);
+          this.fetchImage(uri1,1);
+          this.fetchImage(uri2,2);
+          this.fetchImage(uri3,3);
+          this.fetchImage(uri4,4);
+          this.fetchImage(uri5,5);
+          this.fetchImage(uri6,6);
+          this.fetchImage(uri7,7);
+    }
+     fetchImage(url:string,index:number) {   //working
+          fetch(url)
+            .then( response => response.blob() )
+            .then( blob =>{
+                var reader = new FileReader() ;
+                reader.onload = function(){
+                    console.log(this.result);// <--- `this.result` contains a base64 data URI
+                    console.log('image'+index);
+                   AsyncStorage.setItem('image'+index, this.result);
+                } ;
+                reader.readAsDataURL(blob) ;
+            }) ;
+        }
+
+
+
+
   displaySpinner() {
     return (
       <View>
@@ -45,7 +98,7 @@ _bootstarp = () => {
       </View>
     );
   }
-  state={jsCode:''};
+
 
   render() {
     if (global.debugMode) console.log("Debug Mode ON"); console.log("sacode:"+global.surveyAcode+" "+this.state.Sacode);
@@ -67,6 +120,9 @@ _bootstarp = () => {
     }
     console.log('after choose:'+uri);
      let jsCode='document.addEventListener("message", function (message) { document.getElementById("langtest").click(); });var btn = document.createElement("button");btn.style.visibility ="hidden";btn.onclick = switchlang;btn.setAttribute("id", "langtest");document.body.appendChild(btn);    function switchlang() { var a = document.querySelector("a.sc-js-langchange");var href = a.href;if (href.indexOf("/q/fr")>0) {var res = href.replace("/q/fr", "/q/en");a.setAttribute("href", res);a.click();} else if (href.indexOf("/q/en")>0) {var res = href.replace("/q/en", "/q/fr");a.setAttribute("href", res);a.click();} }';
+  //     jsCode+=' var button = document.createElement("button");button.innerHTML = "Back"; button.className += "btn"; button.className += " btn-primary";button.onclick = function () {var sac ="1234567890";alert("1234567890");window.ReactNativeWebView.postMessage(sac);};document.body.appendChild(button);window.addEventListener("popstate", function (e) { alert("url changed"); });';
+ //  jsCode+=' var button = document.createElement("button");button.innerHTML = "Back"; button.className += "btn"; button.className += " btn-primary";button.onclick = function () {var sac = document.querySelector("div.sc-box-main p span.ecf-bold").innerText;window.ReactNativeWebView.postMessage(sac); return false;};document.body.appendChild(button);';
+
     return (
           <View style={{ flex: 1, marginTop: 24 }}>
 
@@ -75,6 +131,7 @@ _bootstarp = () => {
                   <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                       <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{marginLeft:0}}><EvilIcons name="arrow-left" size={32} color="black" /></TouchableOpacity>
                       <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{marginRight:0}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
+                      <TouchableOpacity onPress={() => this.webView.postMessage('test')} style={{alignSelf:'flex-end'}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
                   </View>
               </View>
                 <WebView
@@ -89,7 +146,7 @@ _bootstarp = () => {
                           startInLoadingState={false}
                           scalesPageToFit={true}
                           startInLoadingState={true}
-                          injectedJavaScript={jsCode}
+                          injectedJavaScript={this.state.jsCode}
                           renderLoading={() => {
                             return this.displaySpinner();
                           }}
@@ -104,31 +161,41 @@ _bootstarp = () => {
                                         //    http://barabasy.eastus.cloudapp.azure.com/anonymous-anonyme/en/operations/submitconfirmation-confirmationsoumission
                                 console.log("sacode:"+global.surveyACode);
                                 if(global.surveyACode ==''||global.surveyACode =='none'){
+                                    // let jsCode='var sac = document.querySelector("div.sc-box-main p span.ecf-bold").innerText;window.postMessage(sac);';
+                                    let jsCode=' var button = document.createElement("button");button.innerHTML = "Back"; button.className += "btn"; button.className += " btn-primary";button.onclick = function () {var sac = document.querySelector("div.sc-box-main p span.ecf-bold").innerText;alert(sac);window.ReactNativeWebView.postMessage(sac); return false;};document.body.appendChild(button);';
 
-                                    AsyncStorage.setItem('EsmSurveyACode', 'fakeSacode');
-                                    global.surveyACode = 'fakeSacode';global.doneSurveyA=true;
-                                    console.log("go get sacode");
+                                     this.setState({jsCode:jsCode});
+
+                                  //  AsyncStorage.setItem('EsmSurveyACode', 'fakeSacode');
+                                    //global.surveyACode = 'fakeSacode';global.doneSurveyA=true;
+                                  //  console.log("go get sacode");
 
                                 }
-                                this.props.navigation.navigate('Dashboard');
+                                else this.fetchImage();
 
 
-                                let jsCode=' var button = document.createElement("button");button.innerHTML = "Back"; button.className += "btn"; button.className += " btn-primary";button.onclick = function () {var sac = document.querySelector("div.sc-box-main p span.ecf-bold").innerText;window.postMessage(sac); return false;};document.body.appendChild(button);';
-                                this.setState({jsCode:jsCode});
+                              //  this.props.navigation.navigate('Dashboard');
+
+
+                         //       let jsCode=' var button = document.createElement("button");button.innerHTML = "Back"; button.className += "btn"; button.className += " btn-primary";button.onclick = function () {var sac = document.querySelector("div.sc-box-main p span.ecf-bold").innerText;window.postMessage(sac); return false;};document.body.appendChild(button);';
+
                               //  this.props.navigation.navigate('Home');
                             }
                           }}
                           onMessage={event => {
+                              console.log('gggggg');
+                             console.log('sa-code======='+event.nativeEvent.data);
                         //    if (event.nativeEvent.data == "Hello React Native!")
                               if(global.surveyACode=='none'){
+                                console.log('postback saccode');
                                 console.log(event.nativeEvent.data);
                                 AsyncStorage.setItem('EsmSurveyACode', event.nativeEvent.data);
                                 global.surveyACode = event.nativeEvent.data;global.doneSurveyA=true;
                                // this.forceUpdate();
-                                this.props.navigation.navigate('Home');
+                                this.props.navigation.navigate('Dashboard');
                               }
                               else
-                                this.props.navigation.navigate('Home');
+                                this.props.navigation.navigate('Dashboard');
                           }}
 
                         />
