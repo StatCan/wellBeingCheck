@@ -50,11 +50,13 @@ const primeTimeAwakeIntervals = [
   weekendPercentage: 20  // J
 }];
 
+var scheduledDateArray = new Array();
+
 // Unit Test the Scheduling Algorithm
 // awakeHour: Default is 6h or 6am
 // sleepHour: Default is 22h or 10pm
 
-export function notificationAlgo(awakeHour = 6, sleepHour = 22) {
+export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5) {
 
   awakeHour = parseInt(awakeHour.substring(0, 2));
   sleepHour = parseInt(sleepHour.substring(0, 2));
@@ -64,8 +66,6 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22) {
 
   // Clear existing notifications
   Notifications.cancelAllScheduledNotificationsAsync()
-
-  numPings = this.state.notificationcount;
 
   // Based on defaults awakeInterval is 16
   awakeInterval = sleepHour - awakeHour;
@@ -118,6 +118,32 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22) {
     });
   }
 }
+
+export function scheduleNotification20s() {
+  if (global.debugMode) console.log("Scheduling Test Notification 20s");
+  if (Platform.OS === 'android') {
+    Notifications.createChannelAndroidAsync('chat-messages', {
+      name: 'Chat messages',
+      sound: true,
+      vibrate: true,
+    });
+  }
+  let notificationId = Notifications.scheduleLocalNotificationAsync(
+    {
+      title: "Scheduled Notification",
+      body: "Scheduled Notification 20s",
+      ios: { sound: true },
+      android: {
+        "channelId": "chat-messages"
+      }
+    },
+    {
+      time: new Date().getTime() + 20000
+    }
+  );
+
+  if (global.debugMode) console.log(notificationId);
+};
 
 scheduleNotificationBasedOnTime = async (hour, day) => {
   if (Platform.OS === 'android') {
