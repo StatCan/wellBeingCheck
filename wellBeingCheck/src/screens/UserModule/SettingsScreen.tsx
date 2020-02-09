@@ -18,7 +18,7 @@ import BackButton from '../../components/BackButton';
 import {newTheme} from '../../core/theme';
 import {List, Divider} from 'react-native-paper';
 import TimePicker from '../../components/TimePicker'
-import NotificationAlgo from '../../utils/notificationAlgo'
+import {notificationAlgo, scheduleNotification20s} from '../../utils/notificationAlgo'
 import { Notifications } from "expo";
 import * as Permissions from 'expo-permissions';
 
@@ -131,6 +131,8 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
 
     if (debugMode) console.log("Back button Pressed");
 
+    notificationAlgo(this.state.waketime, this.state.sleeptime, this.state.notificationcount);
+
     if(this.state.culture==2) resources.culture ='fr';
     else resources.culture ='en';
 
@@ -157,6 +159,9 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
       (<View style={{alignItems: 'center', marginTop: 20, justifyContent: 'space-around' }}>
         <Button mode="contained" onPress={this._debugClearAllLocalData}>
             (Debug) Delete user account
+        </Button>
+        <Button mode="contained" onPress={() => scheduleNotification20s()}>
+          Schedule 20s Notification
         </Button>
       </View>);
     }
