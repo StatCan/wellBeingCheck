@@ -22,7 +22,7 @@ import {
 
 } from '../core/utils';
 import { Drawer } from 'react-native-paper';
-
+import Constants from 'expo-constants';
 type LaunchState = {
 }
 
@@ -37,6 +37,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
     this.state = {
     };
     this._bootstarp();
+    this.bootstrapA();
 
   }
   //determine if user already has an account
@@ -86,8 +87,51 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
         });
       });
     });
-  }
+    AsyncStorage.getItem('userToken',(err,result)=>{
 
+    });
+  }
+  bootstrapA = async () => {
+      let userToken = await AsyncStorage.getItem('EsmUserToken');
+      if (userToken == null)userToken= Constants.deviceId;   //   global.userToken=this.generateShortGuid(24);
+      global.userToken=userToken;
+      let doneSurveyA = await AsyncStorage.getItem('doneSurveyA');
+      if(doneSurveyA==null)global.doneSurveyA=false;else global.doneSurveyA=true;
+      global.doneSurveyA=true;
+       let url = 'http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/GetConfiguration';
+      fetch(url)
+            .then((response) => response.json())
+            .then((responseJson) => {
+              global.jwToken=responseJson[0];
+              global.surveyAUrlEng=responseJson[1];
+              global.surveyAUrlFre=responseJson[2];
+              global.surveyThkUrlEng=responseJson[3];
+              global.surveyThkUrlFre=responseJson[4];
+              global.surveyBUrlEng=responseJson[5];
+              global.surveyBUrlFre=responseJson[6];
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+    };
+  generateGuid() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+  generateShortGuid(len) {
+          var buf = [],
+              chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
+              charlen = chars.length,
+              length = len || 32;
+
+          for (var i = 0; i < length; i++) {
+              buf[i] = chars.charAt(Math.floor(Math.random() * charlen));
+          }
+
+          return buf.join('');
+      }
   render() {
     return (
       <PaperProvider theme={newTheme}>

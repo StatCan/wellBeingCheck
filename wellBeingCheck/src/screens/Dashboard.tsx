@@ -20,8 +20,26 @@ interface Props {
 
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
-
+let hasImage='0';
 class Dashboard extends React.Component<Props> {
+    constructor(props) {
+   	    super(props);
+
+   	    this.hasImage();
+    }
+    async hasImage(){
+        try {
+           let value = await AsyncStorage.getItem('hasImage');
+           if (value != null){
+              hasImage='1';
+           }
+           else {
+              // do something else
+          }
+        } catch (error) {
+          // Error retrieving data
+        }
+    }
   render() {
 
     return (
@@ -36,7 +54,7 @@ class Dashboard extends React.Component<Props> {
             </View>
           </TouchableOpacity>
           <View style={[styles.homeContainer, { marginBottom: 10 }, { flexDirection: 'row', flex: 1 }]}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('ResultScreen')} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>Dashboard</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() =>{if(hasImage=='1')this.props.navigation.navigate('ResultScreen');else alert('No data found,you have to complete the survey at least once.');}} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>Dashboard</Text></TouchableOpacity>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')} style={styles.smallButton}><EvilIcons name="question" size={40} color="white" /><Text style={styles.smallButtonText}>About</Text></TouchableOpacity>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}><Feather name="phone" size={40} color="white" /><Text style={styles.smallButtonText}>Contact</Text></TouchableOpacity>
           </View>

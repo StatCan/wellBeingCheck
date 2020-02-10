@@ -30,7 +30,8 @@ export default class App extends React.Component<Props,ScreenState> {
       <View style={styles.container}>
           <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{marginLeft:0}}><EvilIcons name="arrow-left" size={32} color="black" /></TouchableOpacity>
-                <Text style={{fontSize:24}}>Your Result</Text>
+
+                 <Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:34,height:34}} />
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{marginRight:0}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
           </View>
          <Loader loading={this.state.loading} />
@@ -69,3 +70,4 @@ const styles = StyleSheet.create({
 });
 
 //  <Image style={styles.image} source={require('../../assets/arrow_back.png')} />
+ //               <Text style={{fontSize:24}}>Your Result</Text>

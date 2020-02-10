@@ -43,31 +43,11 @@ class FirstPage extends React.Component {
               }
    	    })
    	  }
-    fetchImage() {   //working
-
-              let timeStamp='';
-             let d=new Date();
-             timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-            let url='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/ScalableBarFW/aaa/'+timeStamp+'/en/'+width;
-           console.log(url);
-           fetch(url)
-             .then( response => response.blob() )
-             .then( blob =>{
-                 var reader = new FileReader() ;
-                 reader.onload = function(){
-                     console.log(this.result);// <--- `this.result` contains a base64 data URI
-                   AsyncStorage.setItem('image', this.result);
-                 } ;
-                 reader.readAsDataURL(blob) ;
-             }) ;
-         }
     componentDidMount() {
              this.props.navigation.addListener('didFocus', () => {
-             console.log('check need reload aaaaaaa:'+global.needReload1);
              if(global.needReload1){
                   d=new Date();
                   timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-                  console.log('inside:'+timeStamp);console.log('global:'+global.needReload);
                   global.needReload1=false;
                   this.setState({timeStamp:timeStamp});
              }
@@ -78,7 +58,6 @@ class FirstPage extends React.Component {
    _onLayout(event) {
            const containerWidth = event.nativeEvent.layout.width;
             Image.getSize(this.state.pictureBase64, (w, h) => {
-                     console.log('width:'+width);console.log('height:'+width);
                            this.setState({
                                width: width,
                                height: width * h / w
@@ -114,31 +93,11 @@ class SecondPage extends React.Component {
                        }
    	    })
    	  }
-    fetchImage() {   //working
-
-              let timeStamp='';
-             let d=new Date();
-             timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-            let url='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/ScalableBarFW/aaa/'+timeStamp+'/en/'+width;
-           console.log(url);
-           fetch(url)
-             .then( response => response.blob() )
-             .then( blob =>{
-                 var reader = new FileReader() ;
-                 reader.onload = function(){
-                     console.log(this.result);// <--- `this.result` contains a base64 data URI
-                   AsyncStorage.setItem('image', this.result);
-                 } ;
-                 reader.readAsDataURL(blob) ;
-             }) ;
-         }
     componentDidMount() {
              this.props.navigation.addListener('didFocus', () => {
-             console.log('check need reload aaaaaaa:'+global.needReload1);
              if(global.needReload1){
                   d=new Date();
                   timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-                  console.log('inside:'+timeStamp);console.log('global:'+global.needReload);
                   global.needReload1=false;
                   this.setState({timeStamp:timeStamp});
              }
@@ -149,7 +108,6 @@ class SecondPage extends React.Component {
    _onLayout(event) {
            const containerWidth = event.nativeEvent.layout.width;
             Image.getSize(this.state.pictureBase64, (w, h) => {
-                     console.log('width:'+width);console.log('height:'+width);
                            this.setState({
                                width: width,
                                height: width * h / w
@@ -185,31 +143,11 @@ class ThirdPage extends React.Component {
                         }
    	    })
    	  }
-    fetchImage() {   //working
-
-              let timeStamp='';
-             let d=new Date();
-             timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-            let url='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/ScalableBarFW/aaa/'+timeStamp+'/en/'+width;
-           console.log(url);
-           fetch(url)
-             .then( response => response.blob() )
-             .then( blob =>{
-                 var reader = new FileReader() ;
-                 reader.onload = function(){
-                     console.log(this.result);// <--- `this.result` contains a base64 data URI
-                   AsyncStorage.setItem('image', this.result);
-                 } ;
-                 reader.readAsDataURL(blob) ;
-             }) ;
-         }
     componentDidMount() {
              this.props.navigation.addListener('didFocus', () => {
-             console.log('check need reload aaaaaaa:'+global.needReload1);
              if(global.needReload1){
                   d=new Date();
                   timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-                  console.log('inside:'+timeStamp);console.log('global:'+global.needReload);
                   global.needReload1=false;
                   this.setState({timeStamp:timeStamp});
              }
@@ -220,7 +158,6 @@ class ThirdPage extends React.Component {
    _onLayout(event) {
            const containerWidth = event.nativeEvent.layout.width;
             Image.getSize(this.state.pictureBase64, (w, h) => {
-                     console.log('width:'+width);console.log('height:'+width);
                            this.setState({
                                width: width,
                                height: width * h / w
@@ -256,31 +193,11 @@ class ThirdAPage extends React.Component {
                        }
    	    })
    	  }
-    fetchImage() {   //working
-
-              let timeStamp='';
-             let d=new Date();
-             timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-            let url='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/ScalableBarFW/aaa/'+timeStamp+'/en/'+width;
-           console.log(url);
-           fetch(url)
-             .then( response => response.blob() )
-             .then( blob =>{
-                 var reader = new FileReader() ;
-                 reader.onload = function(){
-                     console.log(this.result);// <--- `this.result` contains a base64 data URI
-                   AsyncStorage.setItem('image', this.result);
-                 } ;
-                 reader.readAsDataURL(blob) ;
-             }) ;
-         }
     componentDidMount() {
              this.props.navigation.addListener('didFocus', () => {
-             console.log('check need reload aaaaaaa:'+global.needReload1);
              if(global.needReload1){
                   d=new Date();
                   timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-                  console.log('inside:'+timeStamp);console.log('global:'+global.needReload);
                   global.needReload1=false;
                   this.setState({timeStamp:timeStamp});
              }
@@ -291,8 +208,6 @@ class ThirdAPage extends React.Component {
    _onLayout(event) {
            const containerWidth = event.nativeEvent.layout.width;
             Image.getSize(this.state.pictureBase64, (w, h) => {
-                     console.log('width3:'+width);console.log('height3:'+height);
-                      console.log('width3a:'+w);console.log('height3a:'+h);
                            this.setState({
                                width: height*w/h,
                                height: height
@@ -328,31 +243,11 @@ class ThirdBPage extends React.Component {
                       }
    	    })
    	  }
-    fetchImage() {   //working
-
-              let timeStamp='';
-             let d=new Date();
-             timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-            let url='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/ScalableBarFW/aaa/'+timeStamp+'/en/'+width;
-           console.log(url);
-           fetch(url)
-             .then( response => response.blob() )
-             .then( blob =>{
-                 var reader = new FileReader() ;
-                 reader.onload = function(){
-                     console.log(this.result);// <--- `this.result` contains a base64 data URI
-                   AsyncStorage.setItem('image', this.result);
-                 } ;
-                 reader.readAsDataURL(blob) ;
-             }) ;
-         }
     componentDidMount() {
              this.props.navigation.addListener('didFocus', () => {
-             console.log('check need reload aaaaaaa:'+global.needReload1);
              if(global.needReload1){
                   d=new Date();
                   timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-                  console.log('inside:'+timeStamp);console.log('global:'+global.needReload);
                   global.needReload1=false;
                   this.setState({timeStamp:timeStamp});
              }
@@ -363,7 +258,6 @@ class ThirdBPage extends React.Component {
    _onLayout(event) {
            const containerWidth = event.nativeEvent.layout.width;
             Image.getSize(this.state.pictureBase64, (w, h) => {
-                     console.log('width:'+width);console.log('height:'+width);
                            this.setState({
                                width: width,
                                height: width * h / w
@@ -399,31 +293,11 @@ class ForthPage extends React.Component {
                        }
    	    })
    	  }
-    fetchImage() {   //working
-
-              let timeStamp='';
-             let d=new Date();
-             timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-            let url='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/ScalableBarFW/aaa/'+timeStamp+'/en/'+width;
-           console.log(url);
-           fetch(url)
-             .then( response => response.blob() )
-             .then( blob =>{
-                 var reader = new FileReader() ;
-                 reader.onload = function(){
-                     console.log(this.result);// <--- `this.result` contains a base64 data URI
-                   AsyncStorage.setItem('image', this.result);
-                 } ;
-                 reader.readAsDataURL(blob) ;
-             }) ;
-         }
     componentDidMount() {
              this.props.navigation.addListener('didFocus', () => {
-             console.log('check need reload aaaaaaa:'+global.needReload1);
              if(global.needReload1){
                   d=new Date();
                   timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-                  console.log('inside:'+timeStamp);console.log('global:'+global.needReload);
                   global.needReload1=false;
                   this.setState({timeStamp:timeStamp});
              }
@@ -434,7 +308,6 @@ class ForthPage extends React.Component {
    _onLayout(event) {
            const containerWidth = event.nativeEvent.layout.width;
             Image.getSize(this.state.pictureBase64, (w, h) => {
-                     console.log('width:'+width);console.log('height:'+width);
                            this.setState({
                                width: width,
                                height: width * h / w
@@ -470,31 +343,11 @@ class FifthPage extends React.Component {
                         }
    	    })
    	  }
-    fetchImage() {   //working
-
-              let timeStamp='';
-             let d=new Date();
-             timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-            let url='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/ScalableBarFW/aaa/'+timeStamp+'/en/'+width;
-           console.log(url);
-           fetch(url)
-             .then( response => response.blob() )
-             .then( blob =>{
-                 var reader = new FileReader() ;
-                 reader.onload = function(){
-                     console.log(this.result);// <--- `this.result` contains a base64 data URI
-                   AsyncStorage.setItem('image', this.result);
-                 } ;
-                 reader.readAsDataURL(blob) ;
-             }) ;
-         }
     componentDidMount() {
              this.props.navigation.addListener('didFocus', () => {
-             console.log('check need reload aaaaaaa:'+global.needReload1);
              if(global.needReload1){
                   d=new Date();
                   timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-                  console.log('inside:'+timeStamp);console.log('global:'+global.needReload);
                   global.needReload1=false;
                   this.setState({timeStamp:timeStamp});
              }
@@ -505,7 +358,6 @@ class FifthPage extends React.Component {
    _onLayout(event) {
            const containerWidth = event.nativeEvent.layout.width;
             Image.getSize(this.state.pictureBase64, (w, h) => {
-                     console.log('width:'+width);console.log('height:'+width);
                            this.setState({
                                width: width,
                                height: width * h / w
