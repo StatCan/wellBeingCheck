@@ -5,6 +5,7 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  Platform,
   Switch
 } from 'react-native';
 import {AsyncStorage} from 'react-native';
@@ -17,9 +18,11 @@ import BackButton from '../../components/BackButton';
 import {newTheme} from '../../core/theme';
 import {List, Divider} from 'react-native-paper';
 import TimePicker from '../../components/TimePicker'
-import NotificationAlgo from '../../utils/notificationAlgo'
+import {notificationAlgo, scheduleNotification20s} from '../../utils/notificationAlgo'
 import { Notifications } from "expo";
 import * as Permissions from 'expo-permissions';
+
+var scheduledDateArray = new Array();
 
 import {NavigationParams, NavigationScreenProp, NavigationState} from 'react-navigation';
 
@@ -124,6 +127,29 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
     }
   }
 
+  _backButtonPressed(){
+
+    if (debugMode) console.log("Back button Pressed");
+
+    notificationAlgo(this.state.waketime, this.state.sleeptime, this.state.notificationcount);
+
+    if(this.state.culture==2) resources.culture ='fr';
+    else resources.culture ='en';
+
+    if (global.debugMode) console.log("Platform version: " + Platform.Version);
+    if (global.debugMode) console.log("Device Name: " + Expo.Constants.deviceName);
+    if (global.debugMode) console.log("Native App Version: " + Expo.Constants.nativeAppVersion);
+    if (global.debugMode) console.log("Native Build Version: " + Expo.Constants.nativeBuildVersion);
+    if (global.debugMode) console.log("Device Year Class: " + Expo.Constants.deviceYearClass);
+    if (global.debugMode) console.log("Session ID: " + Expo.Constants.sessionId);
+    if (global.debugMode) console.log("Wake Time: " + this.state.waketime);
+    if (global.debugMode) console.log("Sleep Time: " + this.state.sleeptime);
+    if (global.debugMode) console.log("Notification Count: " + this.state.notificationcount);
+    if (global.debugMode) console.log("Scheduled Notification Times: " + scheduledDateArray);
+
+    this.props.navigation.navigate('Dashboard');
+  }
+
   render() {
 
     let debugButtons;
@@ -134,12 +160,15 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
         <Button mode="contained" onPress={this._debugClearAllLocalData}>
             (Debug) Delete user account
         </Button>
+        <Button mode="contained" onPress={() => scheduleNotification20s()}>
+          Schedule 20s Notification
+        </Button>
       </View>);
     }
     return (
       <View>
         <View style={styles.toolbar}>
-          <BackButton goBack={() => this.props.navigation.navigate('Dashboard')}/>
+          <BackButton goBack={() => this._backButtonPressed()}/>
           <Text style={styles.toolbarTitle}>Settings</Text>
         </View>
 
@@ -160,10 +189,18 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
             style={styles.listStyle}
             title="Number of notifications"
           />
-          <List.Item
-            style={styles.listStyle}
-            title="5"
-          />
+          {/* Temporary Implementation */}
+          <Picker  
+                selectedValue={this.state.notificationcount}
+                onValueChange={n => this.setState({notificationcount:n})}
+                style={{ width: 100, height:100, marginLeft: 30, marginBottom:40, justifyContent:'space-around' }}
+                mode="dropdown">
+              <Picker.Item label="1" value="1" />
+              <Picker.Item label="2" value="2" />
+              <Picker.Item label="3" value="3" />
+              <Picker.Item label="4" value="4" />
+              <Picker.Item label="5" value="5" />
+          </Picker>
 
           <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
             <Text style={styles.label}>Wake Time:</Text>
