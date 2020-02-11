@@ -1,16 +1,13 @@
-import React, { memo, useState, useCallback } from 'react';
-import { Picker, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { memo } from 'react';
+import { Text, StyleSheet } from 'react-native';
 import { AsyncStorage } from 'react-native';
-import Background from '../components/Background';
-import Logo from '../components/Logo';
-import Header from '../components/Header';
 import Button from '../components/Button';
-import TextInput from '../components/TextInput';
-import BackButton from '../components/BackButton';
 import { newTheme } from '../core/theme';
-import { DefaultTheme, Provider as PaperProvider, Card, Title, Paragraph, Headline, Banner } from 'react-native-paper';
-import Constants from 'expo-constants';
-
+import { Provider as PaperProvider, Title, Paragraph } from 'react-native-paper';
+import AppBanner from '../components/AppBanner';
+import LogoClearSmall from '../components/LogoClearSmall';
+import BackgroundWide from '../components/BackgroundWide';
+import { resources } from '../../GlobalResources';
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -18,10 +15,6 @@ import {
   SafeAreaView,
   ScrollView,
 } from 'react-navigation';
-import AppBanner from '../components/AppBanner';
-import LogoClear from '../components/LogoClear';
-import LogoClearSmall from '../components/LogoClearSmall';
-import BackgroundWide from '../components/BackgroundWide';
 
 type GettingStartedState = {
   gettingStarted: boolean,
@@ -62,17 +55,12 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
 
           <LogoClearSmall />
 
-          <Title style={styles.title}>Getting Started</Title>
+          <Title style={styles.title}>{resources.getString("getting_started")}</Title>
 
           <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}>
               <Paragraph style={styles.paragraph}>
-                Whya are we conducting this study?
-
-                What is Lorem Ipsum?
-  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                {resources.getString("getting_started_content")}
               </Paragraph>
             </ScrollView>
           </SafeAreaView>
@@ -82,7 +70,7 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
         <Button style={styles.btnNext}
           mode="contained"
           onPress={this._onGettingStartedNext}>
-          <Text style={styles.btnText}>Next</Text>
+          <Text style={styles.btnText}>{resources.getString("gl.next")}</Text>
         </Button>
 
       </PaperProvider>
