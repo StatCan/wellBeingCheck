@@ -8,6 +8,7 @@ import Paragraph from '../components/Paragraph';
 import Button from '../components/Button';
 import { Navigation } from '../types';
 import { EvilIcons, Feather } from '@expo/vector-icons';
+import LogoClearSmall from '../components/LogoClearSmall';
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -29,7 +30,7 @@ class Dashboard extends React.Component<Props> {
     }
     async hasImage(){
         try {
-           let value = await AsyncStorage.getItem('hasImage');
+           let value = await AsyncStorage.getItem('hasImage');console.log(value);
            if (value != null){
               hasImage='1';
            }

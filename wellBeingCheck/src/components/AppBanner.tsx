@@ -1,7 +1,5 @@
 import React, { memo } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
-import { white } from 'react-native-paper/lib/typescript/src/styles/colors';
-import Constants from 'expo-constants';
 
 const AppBanner = () => (
   <View>
@@ -13,13 +11,12 @@ const AppBanner = () => (
 
 const styles = StyleSheet.create({
   image: {
-    backgroundColor: "#ffffff",
     maxWidth: 300,
     minWidth: 250,
     height: 50,
   },
   statusBar: {
-    backgroundColor: "#ffffff",
+    backgroundColor: "#f7f8f9",
     height: 50,
   },
 });

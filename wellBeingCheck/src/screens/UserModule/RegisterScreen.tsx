@@ -7,7 +7,7 @@ import Header from '../../components/Header';
 import Button from '../../components/Button';
 import TextInput from '../../components/TextInput';
 import BackButton from '../../components/BackButton';
-import { theme } from '../../core/theme';
+import { theme, newTheme } from '../../core/theme';
 //import { Navigation } from '../../types';
 
 import {
@@ -144,6 +144,9 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
         <TextInput
           label="Enter password"
           returnKeyType="next"
+          selectionColor = {newTheme.colors.primary}
+          underlineColor = {newTheme.colors.primary}
+          theme = {newTheme}
           value={this.state.password}
           onChangeText={text => this.setState({ password: text })}
           error={!!this.state.passwordError}
@@ -154,6 +157,9 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
         <TextInput
           label="Confirm password"
           returnKeyType="next"
+          selectionColor = {newTheme.colors.primary}
+          underlineColor = {newTheme.colors.primary}
+          theme = {newTheme}
           value={this.state.passwordConfirm}
           onChangeText={text => this.setState({ passwordConfirm: text })}
           error={!!this.state.passwordConfirmError}
@@ -179,6 +185,9 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
         <TextInput
           label="Answer"
           returnKeyType="next"
+          selectionColor = {newTheme.colors.primary}
+          underlineColor = {newTheme.colors.primary}
+          theme = {newTheme}
           value={this.state.securityAnswer}
           onChangeText={text => this.setState({ securityAnswer: text })}
           error={!!this.state.securityAnswerError}
@@ -217,6 +226,7 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   button: {
+    backgroundColor: newTheme.colors.primary,
     marginTop: 24,
   },
   row: {

@@ -5,6 +5,7 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  Platform,
   Switch
 } from 'react-native';
 import {AsyncStorage} from 'react-native';
@@ -17,11 +18,13 @@ import BackButton from '../../components/BackButton';
 import {newTheme} from '../../core/theme';
 import {List, Divider} from 'react-native-paper';
 import TimePicker from '../../components/TimePicker'
-import NotificationAlgo from '../../utils/notificationAlgo'
+import {notificationAlgo, scheduleNotification20s} from '../../utils/notificationAlgo'
 import { Notifications } from "expo";
 import * as Permissions from 'expo-permissions';
-
 import {NavigationParams, NavigationScreenProp, NavigationState} from 'react-navigation';
+import { resources } from '../../../GlobalResources';
+
+var scheduledDateArray = new Array();
 
 type SettingsState = {
   notificationState: boolean,
@@ -38,6 +41,7 @@ interface Props {
 }
 
 class SettingsScreen extends React.Component < Props, SettingsState > {
+  _notificationSubscription: any;
 
   constructor(SettingsState) {
     super(SettingsState)
@@ -124,11 +128,48 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
     }
   }
 
+  _backButtonPressed(){
+
+    if (debugMode) console.log("Back button Pressed");
+
+    notificationAlgo(this.state.waketime, this.state.sleeptime, this.state.notificationcount);
+
+    if(this.state.culture==2) resources.culture ='fr';
+    else resources.culture ='en';
+
+    if (global.debugMode) console.log("Platform version: " + Platform.Version);
+    if (global.debugMode) console.log("Device Name: " + Expo.Constants.deviceName);
+    if (global.debugMode) console.log("Native App Version: " + Expo.Constants.nativeAppVersion);
+    if (global.debugMode) console.log("Native Build Version: " + Expo.Constants.nativeBuildVersion);
+    if (global.debugMode) console.log("Device Year Class: " + Expo.Constants.deviceYearClass);
+    if (global.debugMode) console.log("Session ID: " + Expo.Constants.sessionId);
+    if (global.debugMode) console.log("Wake Time: " + this.state.waketime);
+    if (global.debugMode) console.log("Sleep Time: " + this.state.sleeptime);
+    if (global.debugMode) console.log("Notification Count: " + this.state.notificationcount);
+    if (global.debugMode) console.log("Scheduled Notification Times: " + scheduledDateArray);
+
+    this.props.navigation.navigate('Dashboard');
+  }
+
   render() {
+
+    let debugButtons;
+
+    if (global.debugMode){
+      debugButtons =         
+      (<View style={{alignItems: 'center', marginTop: 20, justifyContent: 'space-around' }}>
+        <Button mode="contained" onPress={this._debugClearAllLocalData}>
+            (Debug) Delete user account
+        </Button>
+        <Button mode="contained" onPress={() => scheduleNotification20s()}>
+          Schedule 20s Notification
+        </Button>
+      </View>);
+    }
     return (
       <View>
         <View style={styles.toolbar}>
-          <BackButton goBack={() => this.props.navigation.navigate('Dashboard')}/>
+          <BackButton goBack={() => this._backButtonPressed()}/>
           <Text style={styles.toolbarTitle}>Settings</Text>
         </View>
 
@@ -137,6 +178,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
             title="Notifications"
             left={() => <List.Icon icon="bell-alert"/>}
             right={() => <Switch
+            style={{margin: 10}}
             value={this.state.notificationState}
             onValueChange={() => {
             this.setState({
@@ -148,31 +190,42 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
             style={styles.listStyle}
             title="Number of notifications"
           />
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-          <Text style={styles.label}>Wake Time:</Text>
-          <TimePicker time={this.state.waketime} timeType="wakeTime" handler = {this.wakeTimeHandler} />
-        </View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-          <Text style={styles.label}>Sleep Time:</Text>
-          <TimePicker time={this.state.sleeptime} timeType="sleepTime" handler = {this.sleepTimeHandler} />
-        </View>
-        <Text style={[styles.label,{marginLeft:60}]}>Notification number per day:</Text>
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' }}>
-          <Text style={styles.label}>Language:</Text>
+          {/* Temporary Implementation */}
           <Picker  
-                    selectedValue={this.state.culture}
-                    onValueChange={c => this.setState({culture:c})}
-                    style={{ width: 100, height:100, marginBottom:20, justifyContent:'space-around' }}
-                    mode="dropdown">
-                    <Picker.Item label="English" value="1" />
-                    <Picker.Item label="French" value="2" />
+                selectedValue={this.state.notificationcount}
+                onValueChange={n => this.setState({notificationcount:n})}
+                style={{ width: 100, height:100, marginLeft: 30, marginBottom:40, justifyContent:'space-around' }}
+                mode="dropdown">
+              <Picker.Item label="1" value="1" />
+              <Picker.Item label="2" value="2" />
+              <Picker.Item label="3" value="3" />
+              <Picker.Item label="4" value="4" />
+              <Picker.Item label="5" value="5" />
           </Picker>
-        </View>
+
+          <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+            <Text style={styles.label}>Wake Time:</Text>
+            <TimePicker time={this.state.waketime} timeType="wakeTime" handler = {this.wakeTimeHandler} />
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+            <Text style={styles.label}>Sleep Time:</Text>
+            <TimePicker time={this.state.sleeptime} timeType="sleepTime" handler = {this.sleepTimeHandler} />
+          </View>
+
+          <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+            <Text style={{marginLeft: 38, fontSize: 16, marginTop: 60}}>Language:</Text>
+            <Picker  
+                selectedValue={this.state.culture}
+                onValueChange={c => this.setState({culture:c})}
+                style={{ width: 100, height:100, marginBottom:20, marginTop:40, justifyContent:'space-around' }}
+                mode="dropdown">
+                <Picker.Item label="English" value="1" />
+                <Picker.Item label="French" value="2" />
+            </Picker>
+          </View>
         </List.Section>
 
-        <Button mode="contained" onPress={this._debugClearAllLocalData}>
-          (Debug) -- Delete user account
-        </Button>
+        {debugButtons}
 
       </View>
     );
@@ -181,7 +234,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
 
 const styles = StyleSheet.create({
   mainStyle: {
-    marginTop: 0
+    marginTop: 20
   },
   toolbar: {
     backgroundColor: '#F4D2D1',
@@ -212,7 +265,11 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   input:{borderWidth:1,width:100,paddingLeft:4},
-  label:{color:'black', fontWeight:'900', fontSize: 14, padding:10}
+  label:{
+    fontSize: 16,
+    marginLeft: 20,
+    padding:10
+  }
 });
 
 export default memo(SettingsScreen);

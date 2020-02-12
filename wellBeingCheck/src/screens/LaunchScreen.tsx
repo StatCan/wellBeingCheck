@@ -101,12 +101,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
       global.doneSurveyA=true;
       let url = global.webApiBaseUrl+'GetConfiguration';
       let token=this.fetchJwToken();console.log(token);console.log(url);
-      fetch(url, {
-                method: 'GET',
-                headers: {
-                  'Authorization': 'Bearer ' + token
-                }
-              })
+      fetch(url)
             .then((response) =>{
                if (response.status >= 400 && response.status < 600) {
                   global.jwToken='';

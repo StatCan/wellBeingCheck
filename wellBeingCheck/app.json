@@ -6,15 +6,22 @@
       "backgroundColor": "#000000"
     },
     "name": "wellBeingCheck",
-    "slug": "expo-template-bare",
+    "slug": "WellBeingCheck",
     "privacy": "unlisted",
     "sdkVersion": "36.0.0",
-    "version": "1.0.0",
+    "version": "1.0.5",
     "entryPoint": "node_modules/expo/AppEntry.js",
     "platforms": [
       "ios",
       "android",
       "web"
-    ]
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.statcan.wellbeingcheck"
+    },
+    "android": {
+      "package": "com.statcan.wellbeingcheck"
+    }
   }
 }

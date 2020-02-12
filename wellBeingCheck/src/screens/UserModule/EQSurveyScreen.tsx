@@ -2,8 +2,8 @@ import React, { memo, useState, useCallback } from 'react';
 import { Image, View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator,Button } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import { Ionicons,EvilIcons,Feather } from '@expo/vector-icons';
-
 import WebView from 'react-native-webview';
+import { resources } from '../../../GlobalResources';
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
 
@@ -19,10 +19,10 @@ interface Props {
 type ScreenState={
     Sacode:string,jsCode:string
 }
-class EQSurveyScreen extends React.Component<Props,ScreenState> {
-constructor(Props) {
+export default class EQSurveyScreen extends React.Component<Props, ScreenState> {
+  constructor(Props) {
     super(Props)
-     let clearCookie='document.cookie.split(";").forEach(function(c) {document.cookie = c.trim().split("=")[0] + "=;" + "expires=Thu, 01 Jan 1970 00:00:00 UTC;";});';
+    let clearCookie='document.cookie.split(";").forEach(function(c) {document.cookie = c.trim().split("=")[0] + "=;" + "expires=Thu, 01 Jan 1970 00:00:00 UTC;";});';
     let jsCode=clearCookie+'document.addEventListener("message", function (message) { document.getElementById("langtest").click(); });var btn = document.createElement("button");btn.style.visibility ="hidden";btn.onclick = switchlang;btn.setAttribute("id", "langtest");document.body.appendChild(btn);    function switchlang() { var a = document.querySelector("a.sc-js-langchange");var href = a.href;if (href.indexOf("/q/fr")>0) {var res = href.replace("/q/fr", "/q/en");a.setAttribute("href", res);a.click();} else if (href.indexOf("/q/en")>0) {var res = href.replace("/q/en", "/q/fr");a.setAttribute("href", res);a.click();} }';
     this.state=({Sacode:'',jsCode:jsCode});
   }
@@ -83,7 +83,7 @@ constructor(Props) {
           AsyncStorage.setItem('hasImage','1');
     }
    fetchImage(url:string,index:number) {
-          let token=this.fetchJwToken();
+          let token=this.fetchJwToken();console.log(token);console.log(url);
           fetch(url, {
                     method: 'GET',
                     headers: {
@@ -93,7 +93,7 @@ constructor(Props) {
           .then( response =>{
                   if (response.status >= 400 && response.status < 600) {
                        global.jwToken='';
-                       throw new Error("Access denied, Try again, if same thing would happen again contact StatCan");
+                       throw new Error("Access denied(G"+index+"), Try again, if same thing would happen again contact StatCan");
                   }else{
                        response.blob()
                        .then(blob =>{
@@ -116,23 +116,21 @@ constructor(Props) {
       </View>
     );
   }
-
-
-  render() {
+   render() {
      let uri='http://barabasy.eastus.cloudapp.azure.com/anonymous-anonyme/en/login-connexion/load-charger/eqgsd0ed709a7df0465da7cb4881b290ff22';
      if(global.doneSurveyA){
        if(resources.culture=='en')
-            uri=surveyBUrlEng;
+            uri=global.surveyBUrlEng;
        else
-            uri=surveyBUrlFre;
+            uri=global.surveyBUrlFre;
        }
      else{
          if(resources.culture=='en')
-             uri=surveyAUrlEng;
+             uri=global.surveyAUrlEng;
          else
-             uri=surveyAUrlFre;
+             uri=global.surveyAUrlFre;
          }
-    console.log('after choose:'+uri);
+    console.log('after choose:'+uri);this.fetchImages();
     return (
           <View style={{ flex: 1, marginTop: 24 }}>
            <View style={{height:24}}>
@@ -176,10 +174,8 @@ constructor(Props) {
                             }
                           }}
                         />
-
-
-          </View>
-        );
+      </View>
+    );
   }
 }
 
@@ -189,15 +185,15 @@ const styles = StyleSheet.create({
     marginTop: 100
   },
   webview: {
-  //  flex: 1,
-    marginTop:24,
+    //  flex: 1,
+    marginTop: 24,
     width: deviceWidth,
-    height: deviceHeight+2000
+    height: deviceHeight + 2000
   },
   logo: { width: 300, height: 40 },
 });
 
-export default memo(EQSurveyScreen);
+//export default memo(EQSurveyScreen);
 // <TouchableOpacity onPress={() => this.webView.postMessage('test')} style={{alignSelf:'flex-end'}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
 
 //  <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{marginRight:0}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
