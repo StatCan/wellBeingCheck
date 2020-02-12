@@ -40,6 +40,50 @@ class Dashboard extends React.Component<Props> {
           // Error retrieving data
         }
     }
+    fetchJwToken() {
+        console.log('global.jwt:'+global.jwToken);
+        if(global.jwToken!='')return global.jwToken;
+        if(global.userToken!='' && global.password!=''){
+           let url=global.webApiBaseUrl+'Token/'+global.userToken+'/'+global.password;
+           return fetch(url)
+           .then((response) => response.json())
+           .then((responseJson) => {
+               global.jwToken=responseJson;
+           })
+           .catch((error) => {
+                console.error(error);
+           });
+        }
+        else {
+           alert("Not registered");
+        }
+
+                                    }
+    sendRequest(){
+        let token=this.fetchJwToken();
+        let url=global.webApiBaseUrl+'api/Values';
+        console.log(url);
+        fetch(url, {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer ' + token
+          }
+        })
+        .then(res =>{
+        console.log(res.status);
+                 if (res.status >= 400 && res.status < 600) {
+                         global.jwToken='';
+                         throw new Error("Access denied, Try again later, if same thing would happen again contact StatCan");
+
+                       }
+                  else{
+                     res.json().then(data => { console.log(data);alert('Received data successfully'); })
+                     }
+                  }
+              )
+   //     .then(data => { console.log(data) })
+        .catch(err => { console.log(err) })
+    }
   render() {
 
     return (
@@ -57,6 +101,7 @@ class Dashboard extends React.Component<Props> {
             <TouchableOpacity onPress={() =>{if(hasImage=='1')this.props.navigation.navigate('ResultScreen');else alert('No data found,you have to complete the survey at least once.');}} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>Dashboard</Text></TouchableOpacity>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')} style={styles.smallButton}><EvilIcons name="question" size={40} color="white" /><Text style={styles.smallButtonText}>About</Text></TouchableOpacity>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}><Feather name="phone" size={40} color="white" /><Text style={styles.smallButtonText}>Contact</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() => this.sendRequest()} style={styles.smallButton}><Text style={styles.smallButtonText}>Test</Text></TouchableOpacity>
           </View>
         </View>
       </Background>

@@ -48,7 +48,8 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
       let userAccountResultObj = JSON.parse(userAccountResult)
       let currentPassword = null
       if (userAccountResultObj) {
-        currentPassword = userAccountResultObj.password
+        currentPassword = userAccountResultObj.password;
+        global.password=currentPassword;
       }
 
       AsyncStorage.getItem('user_getting_started', (err, userGettingStartedResult) => {
@@ -98,17 +99,29 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
       let doneSurveyA = await AsyncStorage.getItem('doneSurveyA');
       if(doneSurveyA==null)global.doneSurveyA=false;else global.doneSurveyA=true;
       global.doneSurveyA=true;
-       let url = 'http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/GetConfiguration';
-      fetch(url)
-            .then((response) => response.json())
-            .then((responseJson) => {
-              global.jwToken=responseJson[0];
-              global.surveyAUrlEng=responseJson[1];
-              global.surveyAUrlFre=responseJson[2];
-              global.surveyThkUrlEng=responseJson[3];
-              global.surveyThkUrlFre=responseJson[4];
-              global.surveyBUrlEng=responseJson[5];
-              global.surveyBUrlFre=responseJson[6];
+      let url = global.webApiBaseUrl+'GetConfiguration';
+      let token=this.fetchJwToken();console.log(token);console.log(url);
+      fetch(url, {
+                method: 'GET',
+                headers: {
+                  'Authorization': 'Bearer ' + token
+                }
+              })
+            .then((response) =>{
+               if (response.status >= 400 && response.status < 600) {
+                  global.jwToken='';
+                  throw new Error("Access denied(1), Try again, if same thing would happen again contact StatCan");
+               }else{
+                  response.json().then((responseJson) => {
+                         global.jwToken=responseJson[0];
+                         global.surveyAUrlEng=responseJson[1];
+                         global.surveyAUrlFre=responseJson[2];
+                         global.surveyThkUrlEng=responseJson[3];
+                         global.surveyThkUrlFre=responseJson[4];
+                         global.surveyBUrlEng=responseJson[5];
+                         global.surveyBUrlFre=responseJson[6];
+                    })
+              }
             })
             .catch((error) => {
               console.error(error);
@@ -132,6 +145,25 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
 
           return buf.join('');
       }
+  fetchJwToken() {
+          console.log('global.jwt:'+global.jwToken);
+          if(global.jwToken!='')return global.jwToken;
+          if(global.userToken!='' && global.password!=''){
+             let url=global.webApiBaseUrl+'Token/'+global.userToken+'/'+global.password;
+             return fetch(url)
+             .then((response) => response.json())
+             .then((responseJson) => {
+                 global.jwToken=responseJson;
+             })
+             .catch((error) => {
+                  console.error(error);
+             });
+          }
+          else {
+             alert("Not registered");
+          }
+
+                                      }
   render() {
     return (
       <PaperProvider theme={newTheme}>

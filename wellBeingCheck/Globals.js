@@ -1,6 +1,5 @@
 global.name='AAA';
 global.department='bbb';
-global.password='';
 global.question='';
 global.answer='';
 global.timeStamp=0;
@@ -15,8 +14,9 @@ global.needReload6=true;
 global.needReload7=true;
 
 
-global.userToken='';
 global.jwToken='';
+global.userToken='12345';
+global.password='1234';
 global.surveyAUrlEng='';
 global.surveyAUrlFre='';
 global.surveyBUrlEng='';
@@ -24,4 +24,5 @@ global.surveyBUrlFre='';
 global.surveyThkUrlEng='';
 global.surveyThkUrlFre='';
 global.doneSurveyA=false;
+global.webApiBaseUrl='http://localhost:49159/'   //'http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/';//'http://localhost:49159/'
 

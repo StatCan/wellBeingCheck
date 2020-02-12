@@ -41,18 +41,37 @@ constructor(Props) {
         console.error(error);
       });
            }
+   fetchJwToken() {
+           if(global.jwToken!='')return global.jwToken;
+           if(global.userToken!='' && global.password!=''){
+              let url=global.webApiBaseUrl+'Token/'+global.userToken+'/'+global.password;
+              return fetch(url)
+              .then((response) => response.json())
+              .then((responseJson) => {
+                  global.jwToken=responseJson;
+              })
+              .catch((error) => {
+                   console.error(error);
+              });
+           }
+           else {
+              alert("Not registered");
+           }
+
+                                       }
    fetchImages(){
+
           let timeStamp='';
           let d=new Date();
           timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-          let uri0='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/WarnFW/en/'+deviceWidth;
-          let uri1='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/MacaroniFW/aaa/'+timeStamp+'/en/'+deviceWidth;
-          let uri2='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/ScalableBarFW/aaa/'+timeStamp+'/en/'+deviceWidth;
-          let uri3='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/ScalableLineFW/aaa/'+timeStamp+'/en/'+deviceWidth;
-          let uri4='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/ScalableLine/aaa/'+timeStamp+'/en/';
-          let uri5='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/ScalableCBarFW/aaa/'+timeStamp+'/en/'+deviceWidth;
-          let uri6='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/BulletinFW/aaa/'+timeStamp+'/en/'+deviceWidth;
-          let uri7='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/TableFW/aaa/'+timeStamp+'/en/'+deviceWidth;
+          let uri0=global.webApiBaseUrl+'WarnFW/en/'+deviceWidth;
+          let uri1=global.webApiBaseUrl+'MacaroniFW/aaa/'+timeStamp+'/en/'+deviceWidth;
+          let uri2=global.webApiBaseUrl+'ScalableBarFW/aaa/'+timeStamp+'/en/'+deviceWidth;
+          let uri3=global.webApiBaseUrl+'ScalableLineFW/aaa/'+timeStamp+'/en/'+deviceWidth;
+          let uri4=global.webApiBaseUrl+'ScalableLine/aaa/'+timeStamp+'/en/';
+          let uri5=global.webApiBaseUrl+'ScalableCBarFW/aaa/'+timeStamp+'/en/'+deviceWidth;
+          let uri6=global.webApiBaseUrl+'BulletinFW/aaa/'+timeStamp+'/en/'+deviceWidth;
+          let uri7=global.webApiBaseUrl+'TableFW/aaa/'+timeStamp+'/en/'+deviceWidth;
           this.fetchImage(uri0,0);
           this.fetchImage(uri1,1);
           this.fetchImage(uri2,2);
@@ -63,18 +82,32 @@ constructor(Props) {
           this.fetchImage(uri7,7);
           AsyncStorage.setItem('hasImage','1');
     }
-   fetchImage(url:string,index:number) {   //working
-          fetch(url)
-            .then( response => response.blob() )
-            .then( blob =>{
-                var reader = new FileReader() ;
-                reader.onload = function(){
-                   // console.log(this.result);// <--- `this.result` contains a base64 data URI
-                    console.log('image'+index);
-                   AsyncStorage.setItem('image'+index, this.result);
-                } ;
-                reader.readAsDataURL(blob) ;
-            }) ;
+   fetchImage(url:string,index:number) {
+          let token=this.fetchJwToken();
+          fetch(url, {
+                    method: 'GET',
+                    headers: {
+                      'Authorization': 'Bearer ' + token
+                    }
+                  })
+          .then( response =>{
+                  if (response.status >= 400 && response.status < 600) {
+                       global.jwToken='';
+                       throw new Error("Access denied, Try again, if same thing would happen again contact StatCan");
+                  }else{
+                       response.blob()
+                       .then(blob =>{
+                             var reader = new FileReader() ;
+                             reader.onload = function(){
+                             // console.log(this.result);// <--- `this.result` contains a base64 data URI
+                             console.log('image'+index);
+                             AsyncStorage.setItem('image'+index, this.result);
+                             } ;
+                             reader.readAsDataURL(blob) ;
+                             })
+                  }
+            })
+          .catch(err => { console.log(err) })
         }
    displaySpinner() {
     return (
@@ -99,7 +132,6 @@ constructor(Props) {
          else
              uri=surveyAUrlFre;
          }
-
     console.log('after choose:'+uri);
     return (
           <View style={{ flex: 1, marginTop: 24 }}>
