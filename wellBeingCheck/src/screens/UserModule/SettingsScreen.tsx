@@ -41,6 +41,7 @@ interface Props {
 }
 
 class SettingsScreen extends React.Component < Props, SettingsState > {
+  _notificationSubscription: any;
 
   constructor(SettingsState) {
     super(SettingsState)

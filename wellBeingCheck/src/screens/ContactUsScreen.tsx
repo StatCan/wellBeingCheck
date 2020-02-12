@@ -1,37 +1,40 @@
 import React, { memo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Provider as PaperProvider, Title, Paragraph } from 'react-native-paper';
+import Button from '../components/Button';
+import { Provider as PaperProvider, Title } from 'react-native-paper';
 import { newTheme } from '../core/theme';
 import AppBanner from '../components/AppBanner';
 import LogoClearSmall from '../components/LogoClearSmall';
-import {
-  NavigationParams,
-  NavigationScreenProp,
-  NavigationState,
-} from 'react-navigation';
+import { resources } from '../../GlobalResources';
+import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
+import BackgroundWhite from '../components/BackgroundWhite';
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
 
-class ContactUsScreen extends React.Component<Props> {
+class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
+
+  _onNextBtnHandle = () => {
+    this.props.navigation.navigate('Dashboard');
+  }
 
   render() {
     return (
 
       <PaperProvider theme={newTheme}>
 
-          <AppBanner />
+        <AppBanner />
+
+        <BackgroundWhite>
 
           <View style={styles.logo_container}>
             <LogoClearSmall />
           </View>
 
-          <View>
+          <Title style={styles.title}>Contact Us:</Title>
 
-            <View>
-              <Text style={styles.title}>Contact Us:</Text>
-            </View>
+          <View>
 
             <View style={styles.content}>
               <Text style={styles.content_title}>Email</Text>
@@ -54,6 +57,14 @@ class ContactUsScreen extends React.Component<Props> {
               <Text>K1A 0T6</Text>
             </View>
           </View>
+
+        </BackgroundWhite>
+
+        <Button style={styles.btnNext}
+          mode="contained"
+          onPress={this._onNextBtnHandle}>
+          <Text style={styles.btnText}>{resources.getString("gl.next")}</Text>
+        </Button>
 
       </PaperProvider>
     );
@@ -81,7 +92,17 @@ const styles = StyleSheet.create({
   },
   content_title: {
     color: '#50bfa6'
-  }
+  },
+  btnNext: {
+    color: newTheme.colors.whiteText,
+    width: 100,
+    alignSelf: "flex-end",
+    marginRight: 20,
+    marginBottom: 10,
+  },
+  btnText: {
+    color: newTheme.colors.whiteText,
+  },
 });
 
 export default memo(ContactUsScreen);
