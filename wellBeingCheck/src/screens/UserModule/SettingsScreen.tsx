@@ -21,10 +21,10 @@ import TimePicker from '../../components/TimePicker'
 import {notificationAlgo, scheduleNotification20s} from '../../utils/notificationAlgo'
 import { Notifications } from "expo";
 import * as Permissions from 'expo-permissions';
+import {NavigationParams, NavigationScreenProp, NavigationState} from 'react-navigation';
+import { resources } from '../../../GlobalResources';
 
 var scheduledDateArray = new Array();
-
-import {NavigationParams, NavigationScreenProp, NavigationState} from 'react-navigation';
 
 type SettingsState = {
   notificationState: boolean,
