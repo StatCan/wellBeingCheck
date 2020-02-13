@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import Button from '../components/Button';
-import { Provider as PaperProvider, Title } from 'react-native-paper';
+import { Provider as PaperProvider, Title, Paragraph } from 'react-native-paper';
 import { newTheme } from '../core/theme';
 import AppBanner from '../components/AppBanner';
 import LogoClearSmall from '../components/LogoClearSmall';
@@ -13,7 +13,7 @@ interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
 
-class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
+class AboutScreen extends React.Component<Props, AboutScreen> {
 
   _onNextBtnHandle = () => {
     this.props.navigation.navigate('Dashboard');
@@ -32,31 +32,21 @@ class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
             <LogoClearSmall />
           </View>
 
-          <Title style={styles.title}>Contact Us:</Title>
+          <SafeAreaView style={styles.container}>
+            <ScrollView style={styles.scrollView}>
+              <Title style={styles.title}>{resources.getString("about_title")}</Title>
 
-          <View>
+              <View style={styles.content}>
+                <Text>{resources.getString("about_content")}</Text>
+              </View>
 
-            <View style={styles.content}>
-              <Text style={styles.content_title}>Email</Text>
-              <Text>infostats@canada.ca</Text>
-            </View>
+              <Title style={styles.title}>{resources.getString("about_title_two")}</Title>
 
-            <View style={styles.content}>
-              <Text style={styles.content_title}>Telephone:</Text>
-              <Text>1-877-949-9492</Text>
-            </View>
-
-            <View style={styles.content}>
-              <Text style={styles.content_title}>Mail:</Text>
-              <Text>Chief Statistician of Canada</Text>
-              <Text>Statistics Canada</Text>
-              <Text>Attention of Director Jean Labbe, Collection</Text>
-              <Text>Planning andd Research Division</Text>
-              <Text>150 Tunney's Pasture Driveway</Text>
-              <Text>Ottawa, Ontario</Text>
-              <Text>K1A 0T6</Text>
-            </View>
-          </View>
+              <View style={styles.content}>
+                <Text>{resources.getString("about_content_two")}</Text>
+              </View>
+            </ScrollView>
+          </SafeAreaView>
 
         </BackgroundWhite>
 
@@ -84,8 +74,6 @@ const styles = StyleSheet.create({
   title: {
     marginTop: 20,
     marginLeft: 20,
-    fontWeight: '900',
-    fontSize: 30,
     color: '#707070',
     marginBottom: 20,
     fontFamily: 'sans-serif-medium',
@@ -103,6 +91,22 @@ const styles = StyleSheet.create({
   btnText: {
     color: newTheme.colors.whiteText,
   },
+  container: {
+    // flex: 1,
+    width: '100%',
+    height: '85%'
+  },
+  scrollView: {
+    width: '100%',
+    // marginHorizontal: 20,
+  },
+  paragraph: {
+    alignSelf: 'baseline',
+    fontSize: 15,
+    width: '100%',
+    end: 0,
+    direction: "ltr"
+  },
 });
 
-export default memo(ContactUsScreen);
+export default memo(AboutScreen);
