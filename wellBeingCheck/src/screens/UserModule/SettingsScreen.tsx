@@ -5,6 +5,7 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  ScrollView,
   Platform,
   Switch
 } from 'react-native';
@@ -50,7 +51,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
       notification: true, 
       waketime: '08:00', 
       sleeptime: '21:00', 
-      notificationcount: 5, 
+      notificationcount: 2, 
       culture: 'English' 
     };
     this.wakeTimeHandler = this.wakeTimeHandler.bind(this);
@@ -172,6 +173,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
           <BackButton goBack={() => this._backButtonPressed()}/>
           <Text style={styles.toolbarTitle}>Settings</Text>
         </View>
+        <ScrollView>
 
         <List.Section style={styles.mainStyle}>
           <List.Item
@@ -196,7 +198,6 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
                 onValueChange={n => this.setState({notificationcount:n})}
                 style={{ width: 100, height:100, marginLeft: 30, marginBottom:40, justifyContent:'space-around' }}
                 mode="dropdown">
-              <Picker.Item label="1" value="1" />
               <Picker.Item label="2" value="2" />
               <Picker.Item label="3" value="3" />
               <Picker.Item label="4" value="4" />
@@ -226,7 +227,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
         </List.Section>
 
         {debugButtons}
-
+        </ScrollView>
       </View>
     );
   }
