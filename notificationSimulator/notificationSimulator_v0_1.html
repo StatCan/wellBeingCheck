@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Notification Methodology Simulator</h2>
+
+Awake Hour: <input type="text" id="awakeHour" value="6">
+Sleep Hour: <input type="text" id="sleepHour" value="22">
+Number of Pings: <input type="text" id="numPings" value="2">
+<button onclick="runAndUpdate()">Run</button>
+<br/>
+<br/>
+<h2>Output:</h2>
+<p id="output"></p>
+
+<script>
+
+var output = "";
+
+function notificationAlgo() {
+
+  var awakeHour = parseInt(document.getElementById("awakeHour").value);
+  var sleepHour = parseInt(document.getElementById("sleepHour").value);
+  var numPings = parseInt(document.getElementById("numPings").value);
+
+  output += "The awake hour is: " + awakeHour + '<br/>';
+  output += "The sleep hour is: " + sleepHour + '<br/>';
+  output += "The num pings are: " + numPings + '<br/><br/>';
+
+
+  if (numPings > 5 || numPings < 2) {
+    output += "Invalid value for numPings";
+    return;
+  }
+
+  // Based on defaults awakeInterval is 16
+  awakeInterval = sleepHour - awakeHour;
+
+  //Safety Check
+  if (numPings > awakeInterval) numPings = awakeInterval;
+
+  if (awakeHour > sleepHour) awakeInterval = awakeHour + 24;
+
+  // Now come up with a time to set notifications to
+
+  var awakeOneHourTimeIntervalsBefore = [];
+  var awakeOneHourTimeIntervalsAfter = [];
+
+  console.log ("The awakeOneHourTimeIntervalsBefore empty array is: " + awakeOneHourTimeIntervalsBefore);
+
+  for (i = 0; i <= awakeInterval; i++) {
+    awakeOneHourTimeIntervalsBefore[i] = awakeHour + (i);
+    console.log(awakeOneHourTimeIntervalsBefore[i]);
+    awakeOneHourTimeIntervalsAfter[i] = awakeHour + i;
+  }
+
+  // For testing purposes print to console
+  output += "One Hour Time Intervals i.e. 6h to 7h" + '<br/>';
+  output += awakeOneHourTimeIntervalsBefore + '<br/>';
+  output += awakeOneHourTimeIntervalsAfter + '<br/><br/>';
+
+  var chosenHoursBefore = [];
+
+  // Schedule for the next 30 days
+  // For testing purposes, day set to a few days
+
+  output += "Chosen One Hour Time Intervals (24h format):" + '<br/>';
+  output += "---------------------------------------------------------" + '<br/><br/>'
+
+  for (day = 0; day < 30; day++) {
+
+    // Now choose number of random hours based on number of pings
+    for (i = 0; i < numPings; i++ ){
+      chosenHoursBefore[i] = Math.floor(Math.random() * awakeOneHourTimeIntervalsBefore.length);
+      while (checkForDuplicates(chosenHoursBefore)){
+          chosenHoursBefore[i] = Math.floor(Math.random() * awakeOneHourTimeIntervalsBefore.length);
+      }
+    }
+
+    var outputDay = day + 1;
+
+    output += "Chosen Intervals for Day: " + outputDay + '<br/>';
+    output += chosenHoursBefore + '<br/>';
+
+    // TODO:  Have randomization between 'Before' and 'After' time intervals
+    // i.e. Between 6h and 7h (currently set to on the hour above)
+
+  }
+
+  return;
+}
+
+function checkForDuplicates(array) {
+  var values = Object.create(null);
+  for (var i = 0; i < array.length; ++i) {
+      var value = array[i];
+      if (value in values) {
+          return true;
+      }
+      values[value] = true;
+  }
+  return false;
+}
+
+function runAndUpdate(){
+    output = "";
+    notificationAlgo();
+    document.getElementById("output").innerHTML = output;
+}
+
+</script>
+
+</body>
+</html>
