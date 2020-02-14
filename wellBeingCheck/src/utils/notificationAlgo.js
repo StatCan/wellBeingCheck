@@ -104,6 +104,9 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5) {
     // Now choose number of random hours based on number of pings
     for (i = 0; i < numPings; i++ ){
       chosenHoursBefore[i] = Math.floor(Math.random() * awakeOneHourTimeIntervalsBefore.length);
+      while (checkForDuplicates(chosenHoursBefore)){
+          chosenHoursBefore[i] = Math.floor(Math.random() * awakeOneHourTimeIntervalsBefore.length);
+      }
     }
 
     if (global.debugMode) console.log("Chosen One Hour Time Intervals for Day: " + day);
@@ -117,6 +120,18 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5) {
       this.scheduleNotificationBasedOnTime(item, day);
     });
   }
+}
+
+function checkForDuplicates(array) {
+  var values = Object.create(null);
+  for (var i = 0; i < array.length; ++i) {
+      var value = array[i];
+      if (value in values) {
+          return true;
+      }
+      values[value] = true;
+  }
+  return false;
 }
 
 export function scheduleNotification20s() {
