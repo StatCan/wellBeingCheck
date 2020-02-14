@@ -26,7 +26,7 @@ constructor(Props) {
     this.state=({Sacode:'',jsCode:jsCode});
     this._bootstarp();
     console.log(global.doneSurveyA);
- console.log('userToken1:'+global.userToken);
+    console.log('userToken1:'+global.userToken);
   }
 _bootstarp = () => {
     AsyncStorage.getItem('EsmSurveyACode', (err, result) => {
@@ -35,7 +35,7 @@ _bootstarp = () => {
       this.setState({Sacode:result})
     });
   }
-   componentDidMount(){this.fetchImages();}
+ //  componentDidMount(){this.fetchImages();}  //Test only
    fetchSacCode() {
              let url='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/GetSacCode/'+global.userToken;
     return fetch(url)
@@ -51,6 +51,7 @@ _bootstarp = () => {
       });
            }
    fetchImages(){
+          console.log('Fetch images....');
           let timeStamp='';
           let d=new Date();
           timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
@@ -70,7 +71,7 @@ _bootstarp = () => {
           this.fetchImage(uri5,5);
           this.fetchImage(uri6,6);
           this.fetchImage(uri7,7);
-          AsyncStorage.setItem('hasImage','1');
+          AsyncStorage.setItem('hasImage','1'); console.log('Fetch images Down');
     }
    fetchImage(url:string,index:number) {   //working
           fetch(url)
@@ -162,7 +163,7 @@ _bootstarp = () => {
                                 //    AsyncStorage.setItem('EsmSurveyACode', 'fakeSacode');
                                     //global.surveyACode = 'fakeSacode';global.doneSurveyA=true;
                                 }
-                                else this.fetchImage();
+                                else this.fetchImages();
 
 
                               //  this.props.navigation.navigate('Dashboard');

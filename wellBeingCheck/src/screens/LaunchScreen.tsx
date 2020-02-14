@@ -36,8 +36,9 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
     super(LaunchState)
     this.state = {
     };
-    this._bootstarp();
     this.bootstrapA();
+    this._bootstarp();
+
 
   }
   //determine if user already has an account
@@ -96,25 +97,22 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
       let userToken = await AsyncStorage.getItem('EsmUserToken');
       if (userToken == null)userToken= Constants.deviceId;   //   global.userToken=this.generateShortGuid(24);
       global.userToken=userToken;
-      let doneSurveyA = await AsyncStorage.getItem('doneSurveyA');
+      let doneSurveyA = await AsyncStorage.getItem('doneSurveyA');console.log('SuvetA:'+doneSurveyA);
       if(doneSurveyA==null)global.doneSurveyA=false;else global.doneSurveyA=true;
-      global.doneSurveyA=true;
-      let url = global.webApiBaseUrl+'GetConfiguration';
-      let token=this.fetchJwToken();console.log(token);console.log(url);
+      console.log('SuvetAa:'+global.doneSurveyA);
+      let url = global.webApiBaseUrl+'GetConfiguration';console.log(url);
       fetch(url)
-            .then((response) =>{
+            .then((response) =>{console.log(url);
                if (response.status >= 400 && response.status < 600) {
-                  global.jwToken='';
                   throw new Error("Access denied(1), Try again, if same thing would happen again contact StatCan");
                }else{
                   response.json().then((responseJson) => {
-                         global.jwToken=responseJson[0];
-                         global.surveyAUrlEng=responseJson[1];
-                         global.surveyAUrlFre=responseJson[2];
-                         global.surveyThkUrlEng=responseJson[3];
-                         global.surveyThkUrlFre=responseJson[4];
-                         global.surveyBUrlEng=responseJson[5];
-                         global.surveyBUrlFre=responseJson[6];
+                         global.surveyAUrlEng=responseJson[0];
+                         global.surveyAUrlFre=responseJson[1];
+                         global.surveyThkUrlEng=responseJson[2];
+                         global.surveyThkUrlFre=responseJson[3];
+                         global.surveyBUrlEng=responseJson[4];
+                         global.surveyBUrlFre=responseJson[5];
                     })
               }
             })
@@ -140,25 +138,6 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
 
           return buf.join('');
       }
-  fetchJwToken() {
-          console.log('global.jwt:'+global.jwToken);
-          if(global.jwToken!='')return global.jwToken;
-          if(global.userToken!='' && global.password!=''){
-             let url=global.webApiBaseUrl+'Token/'+global.userToken+'/'+global.password;
-             return fetch(url)
-             .then((response) => response.json())
-             .then((responseJson) => {
-                 global.jwToken=responseJson;
-             })
-             .catch((error) => {
-                  console.error(error);
-             });
-          }
-          else {
-             alert("Not registered");
-          }
-
-                                      }
   render() {
     return (
       <PaperProvider theme={newTheme}>

@@ -14,7 +14,7 @@ import {
   NavigationScreenProp,
   NavigationState,
 } from 'react-navigation';
-
+import {fetchJwToken} from '../utils/fetchJwToken';
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
@@ -41,27 +41,8 @@ class Dashboard extends React.Component<Props> {
           // Error retrieving data
         }
     }
-    fetchJwToken() {
-        console.log('global.jwt:'+global.jwToken);
-        if(global.jwToken!='')return global.jwToken;
-        if(global.userToken!='' && global.password!=''){
-           let url=global.webApiBaseUrl+'Token/'+global.userToken+'/'+global.password;
-           return fetch(url)
-           .then((response) => response.json())
-           .then((responseJson) => {
-               global.jwToken=responseJson;
-           })
-           .catch((error) => {
-                console.error(error);
-           });
-        }
-        else {
-           alert("Not registered");
-        }
-
-                                    }
-    sendRequest(){
-        let token=this.fetchJwToken();
+ async sendRequest(){
+        let token=await fetchJwToken();console.log('send:'+token);
         let url=global.webApiBaseUrl+'api/Values';
         console.log(url);
         fetch(url, {
@@ -71,18 +52,15 @@ class Dashboard extends React.Component<Props> {
           }
         })
         .then(res =>{
-        console.log(res.status);
-                 if (res.status >= 400 && res.status < 600) {
-                         global.jwToken='';
-                         throw new Error("Access denied, Try again later, if same thing would happen again contact StatCan");
-
-                       }
-                  else{
+           console.log(res.status);
+           if(res.status==200){
                      res.json().then(data => { console.log(data);alert('Received data successfully'); })
                      }
-                  }
-              )
-   //     .then(data => { console.log(data) })
+             else {   //401
+                    throw new Error("Access denied, Try again later, if same thing would happen again contact StatCan");
+
+                                   }
+            })
         .catch(err => { console.log(err) })
     }
   render() {
@@ -98,13 +76,15 @@ class Dashboard extends React.Component<Props> {
               </View>
             </View>
           </TouchableOpacity>
-          <View style={[styles.homeContainer, { marginBottom: 10 }, { flexDirection: 'row', flex: 1 }]}>
+          <View style={[styles.homeButtonContainer, { marginBottom: 0 }, { flexDirection: 'row'}]}>
             <TouchableOpacity onPress={() =>{if(hasImage=='1')this.props.navigation.navigate('ResultScreen');else alert('No data found,you have to complete the survey at least once.');}} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>Dashboard</Text></TouchableOpacity>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')} style={styles.smallButton}><EvilIcons name="question" size={40} color="white" /><Text style={styles.smallButtonText}>About</Text></TouchableOpacity>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}><Feather name="phone" size={40} color="white" /><Text style={styles.smallButtonText}>Contact</Text></TouchableOpacity>
-            <TouchableOpacity onPress={() => this.sendRequest()} style={styles.smallButton}><Text style={styles.smallButtonText}>Test</Text></TouchableOpacity>
+           <TouchableOpacity onPress={() => this.sendRequest()} style={{width:40,height:20,marginLeft:-20}}><Text style={styles.smallButtonText}>Test</Text></TouchableOpacity>
           </View>
+
         </View>
+
       </Background>
     );
   }
@@ -202,3 +182,6 @@ export default memo(Dashboard);
 //                    }
 //                     }
 //               style={styles.smallButton}><Text style={{fontSize:20}}>Test</Text></TouchableOpacity>
+
+
+// <TouchableOpacity onPress={() => this.sendRequest()} style={styles.smallButton}><Text style={styles.smallButtonText}>Test</Text></TouchableOpacity>

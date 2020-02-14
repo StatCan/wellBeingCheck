@@ -4,8 +4,9 @@ import { AsyncStorage } from 'react-native';
 import { Ionicons,EvilIcons,Feather } from '@expo/vector-icons';
 import WebView from 'react-native-webview';
 import { resources } from '../../../GlobalResources';
-const deviceHeight = Dimensions.get('window').height;
-const deviceWidth = Dimensions.get('window').width;
+import {fetchJwToken} from '../../utils/fetchJwToken';
+const deviceHeight =Math.floor(Dimensions.get('window').height);
+const deviceWidth =Math.floor(Dimensions.get('window').width);
 
 import {
   NavigationParams,
@@ -19,6 +20,7 @@ interface Props {
 type ScreenState={
     Sacode:string,jsCode:string
 }
+let count=0;//temporarily limit to get image just once, because eq will show exception page twice.
 export default class EQSurveyScreen extends React.Component<Props, ScreenState> {
   constructor(Props) {
     super(Props)
@@ -41,26 +43,9 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
         console.error(error);
       });
            }
-   fetchJwToken() {
-           if(global.jwToken!='')return global.jwToken;
-           if(global.userToken!='' && global.password!=''){
-              let url=global.webApiBaseUrl+'Token/'+global.userToken+'/'+global.password;
-              return fetch(url)
-              .then((response) => response.json())
-              .then((responseJson) => {
-                  global.jwToken=responseJson;
-              })
-              .catch((error) => {
-                   console.error(error);
-              });
-           }
-           else {
-              alert("Not registered");
-           }
-
-                                       }
    fetchImages(){
-
+          console.log(count); if(count>0)return;
+          console.log('Fetch images....');
           let timeStamp='';
           let d=new Date();
           timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
@@ -80,10 +65,11 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
           this.fetchImage(uri5,5);
           this.fetchImage(uri6,6);
           this.fetchImage(uri7,7);
-          AsyncStorage.setItem('hasImage','1');
+          AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');
+          //count=1;
     }
-   fetchImage(url:string,index:number) {
-          let token=this.fetchJwToken();console.log(token);console.log(url);
+   fetchImage111(url:string,index:number) {
+          let token=fetchJwToken();
           fetch(url, {
                     method: 'GET',
                     headers: {
@@ -91,10 +77,12 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                     }
                   })
           .then( response =>{
-                  if (response.status >= 400 && response.status < 600) {
+           //       if(response.status==440){utility.General(,,,fetchImage(url,index));}   //TODO:
+           //       else                                   let
+                  if (response.status >= 400 && response.status < 600) {   //TODO:
                        global.jwToken='';
                        throw new Error("Access denied(G"+index+"), Try again, if same thing would happen again contact StatCan");
-                  }else{
+                  }else{   //200
                        response.blob()
                        .then(blob =>{
                              var reader = new FileReader() ;
@@ -109,6 +97,29 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
             })
           .catch(err => { console.log(err) })
         }
+   async fetchImage(url:string,index:number) {
+                   let token=await fetchJwToken();console.log(url);
+                   fetch(url, {
+                             method: 'GET',
+                             headers: {'Authorization': 'Bearer ' + token}
+                           })
+                   .then( response =>{
+                       if(response.status==200){
+                             response.blob()
+                             .then(blob =>{
+                                   var reader = new FileReader() ;
+                                   reader.onload = function(){
+                                   // console.log(this.result);// <--- `this.result` contains a base64 data URI
+                                   console.log('image'+index);
+                                   AsyncStorage.setItem('image'+index, this.result);
+                                   } ;
+                                   reader.readAsDataURL(blob) ;
+                             })
+                       }
+                       else { throw new Error("Access denied, Try again later, if same thing would happen again contact StatCan");}
+                       })
+                   .catch(err => { console.log(err) })
+                 }
    displaySpinner() {
     return (
       <View>
@@ -117,31 +128,30 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     );
   }
    render() {
-     let uri='http://barabasy.eastus.cloudapp.azure.com/anonymous-anonyme/en/login-connexion/load-charger/eqgsd0ed709a7df0465da7cb4881b290ff22';
+     let uri='';//http://barabasy.eastus.cloudapp.azure.com/anonymous-anonyme/en/login-connexion/load-charger/eqgsd0ed709a7df0465da7cb4881b290ff22';
      if(global.doneSurveyA){
-       if(resources.culture=='en')
-            uri=global.surveyBUrlEng;
-       else
+         if(global.culture=='en')
+              uri=global.surveyBUrlEng;
+         else
             uri=global.surveyBUrlFre;
-       }
+     }
      else{
-         if(resources.culture=='en')
+         if(global.culture=='en')
              uri=global.surveyAUrlEng;
          else
              uri=global.surveyAUrlFre;
          }
-    console.log('after choose:'+uri);this.fetchImages();
     return (
           <View style={{ flex: 1, marginTop: 24 }}>
            <View style={{height:24}}>
                   <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                       <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{marginLeft:0}}><EvilIcons name="arrow-left" size={32} color="black" /></TouchableOpacity>
                        <Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:34,height:34}} />
-                      <TouchableOpacity onPress={() => this.webView.postMessage('test')} style={{alignSelf:'flex-end'}}><Ionicons name="ios-globe" size={30} color="black" /></TouchableOpacity>
+                     <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{marginRight:0}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
                   </View>
               </View>
                 <WebView
-                          ref={(view) => this.webView = view}
+                          ref={(view) => this.webView = view} incognito={true}
                           style={styles.webview}
                           userAgent={global.userToken}
                           scrollEnabled={true}
@@ -156,19 +166,20 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                             return this.displaySpinner();
                           }}
                           onNavigationStateChange={(navState) => {
-                          console.log(navState.url);
-                            if (navState.url ==uri+"/ReturntoQuestionnaire") { // You must validate url to enter or navigate
 
-                            //  this.webView.stopLoading();
-
+                            if (navState.url =='') { // You must validate url to enter or navigate
+                              this.webView.stopLoading();
                             }
                             console.log(navState.url);
-                            if(navState.url==global.surveyThkUrlEng ||navState.url==global.surveyThkUrlFre){
+                            if(navState.url.indexOf('submiterror-erreursoumission')>0||navState.url==global.surveyThkUrlEng ||navState.url==global.surveyThkUrlFre){
+                                  console.log('count in b:'+count);
                                  if(global.doneSurveyA){
-                                      this.fetchImages();
+                                     if(count>0){count=0;return;}
+                                      console.log('redady to fetch image');
+                                      this.fetchImages();count=1;
                                  }
                                  else {
-                                    global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
+                                    console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');count=1;
                                  }
                                 this.props.navigation.navigate('Dashboard');
                             }
@@ -197,3 +208,4 @@ const styles = StyleSheet.create({
 // <TouchableOpacity onPress={() => this.webView.postMessage('test')} style={{alignSelf:'flex-end'}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
 
 //  <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{marginRight:0}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
+// <TouchableOpacity onPress={() => this.webView.postMessage('test')} style={{alignSelf:'flex-end'}}><Ionicons name="ios-globe" size={30} color="black" /></TouchableOpacity>
