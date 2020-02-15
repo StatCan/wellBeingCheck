@@ -79,7 +79,7 @@ class EQSurveyScreen extends React.Component<Props, ScreenState> {
           </View>
         </View>
         <WebView
-          ref={(view) => this.webView = view}
+          ref={(view) => this.webView = view} incognito={true}
           style={styles.webview}
           userAgent={global.userToken}
           //   source={{ uri: 'https://www68.statcan.gc.ca/ecp-pce/en/load-init/Test_Test/' }}
@@ -101,7 +101,7 @@ class EQSurveyScreen extends React.Component<Props, ScreenState> {
               this.webView.stopLoading();
             }
             console.log(navState.url);
-            if (navState.url == "http://barabasy.eastus.cloudapp.azure.com/anonymous-anonyme/en/operations/submitconfirmation-confirmationsoumission" || navState.url == "http://barabasy.eastus.cloudapp.azure.com/anonymous-anonyme/fr/operations/submitconfirmation-confirmationsoumission") {
+            if (navState.url.indexOf('submiterror-erreursoumission')>0||navState.url == "http://barabasy.eastus.cloudapp.azure.com/anonymous-anonyme/en/operations/submitconfirmation-confirmationsoumission" || navState.url == "http://barabasy.eastus.cloudapp.azure.com/anonymous-anonyme/fr/operations/submitconfirmation-confirmationsoumission") {
               //    http://barabasy.eastus.cloudapp.azure.com/anonymous-anonyme/en/operations/submitconfirmation-confirmationsoumission
               console.log("sacode:" + global.surveyACode);
               if (global.surveyACode == '' || global.surveyACode == 'none') {
