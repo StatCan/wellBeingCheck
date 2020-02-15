@@ -63,7 +63,7 @@ class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
         <Button style={styles.btnNext}
           mode="contained"
           onPress={this._onNextBtnHandle}>
-          <Text style={styles.btnText}>{resources.getString("gl.next")}</Text>
+          <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
         </Button>
 
       </PaperProvider>
