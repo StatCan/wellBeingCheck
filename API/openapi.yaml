@@ -1,0 +1,357 @@
+openapi: 3.0.0
+info:
+  title: Pilot Mobile App API
+  description: API to support retreiving config data, submit app paradata and obtain graphs to be used by the WellBeringCheck mobile app.
+  version: 1.0.0
+
+tags:
+  - name: config
+    description: Retrieving configuration used by the mobile app but stored on the server
+  - name: security
+    description: Password and security related operations
+  - name: dashboard
+    description: Operations related to retrieving rendered graphs
+  - name: paradata
+    description: Operations related to submitting paradata to the back-end
+    
+servers:
+  - url: http://localhost:8090/wellbeingcheck-bienetre/api
+    description: Local machine
+
+paths:
+  /config/links:
+    get:
+      summary: Returns the URL of the two questionnaires A & B and confirmation page
+      description: The mobile app collects responses through EQ anonymous portal. The returned URI are the EQ anonymous references to Questionnaire A & B and confirmation page
+      tags:
+        - config
+      responses:
+        '200':
+          description: a JSON object with Questionnaire A & B URI
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  questionnaireA:
+                    $ref: '#/components/schemas/BilingualLink'
+                  questionnaireB:
+                    $ref: '#/components/schemas/BilingualLink'
+                  confirmationPage:
+                    $ref: '#/components/schemas/BilingualLink'
+                  exceptionPage:
+                    $ref: '#/components/schemas/BilingualLink'
+                example:
+                  questionnaireA:
+                    enUrl: https://surveys-enquetes-test.statcan.ca/form-formulaire/en/login-connexion/load-charger/eqgs2g4d9121e0734541a5c0dbcb6e4713f7
+                    enFr: https://surveys-enquetes-test.statcan.ca/form-formulaire/fr/login-connexion/load-charger/eqgs2g4d9121e0734541a5c0dbcb6e4713f7
+                  questionnaireB:
+                    enUrl: https://surveys-enquetes-test.statcan.ca/form-formulaire/en/login-connexion/load-charger/eqgs2g4d9121e0734541a5c0dbcb6e4713f7
+                    enFr: https://surveys-enquetes-test.statcan.ca/form-formulaire/fr/login-connexion/load-charger/eqgs2g4d9121e0734541a5c0dbcb6e4713f7
+                  confirmation:
+                    enUrl: https://surveys-enquetes-test.statcan.ca/form-formulaire/en/login-connexion/load-charger/eqgs2g4d9121e0734541a5c0dbcb6e4713f7
+                    enFr: https://surveys-enquetes-test.statcan.ca/form-formulaire/fr/login-connexion/load-charger/eqgs2g4d9121e0734541a5c0dbcb6e4713f7
+
+
+  /config/flags:
+    get:
+      summary: Returns a list of configuration flags
+      description: If there are some functionnalities on the Mobile App that can be enabled or disabled from the server. The Mobile App will check from time to time and adjusts itself accordingly
+      tags:
+        - config
+      responses:
+        '200':
+          description: An associative array of flag/value
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: string
+                example:
+                  populationDashboard: false
+                  enableDarkMode: true
+  /security/token:
+    post:
+      summary: Authenticate and get a JWT token for subsequent use
+      description: |
+        In order to interact with the API a security token is required to keep the interaction between the mobile 
+        app and the back-end server. 
+        
+        This operation authenticates the mobile app and returns a security token that is valid for 20 minutes.
+      tags:
+        - security
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - deviceId
+                - password
+              properties:
+                deviceId:
+                  description: Unique Id generated when setting up the mobile app
+                  type: string
+                  maxLength: 20
+                password:
+                  description: Hashed password
+                  type: string
+      responses:
+        '200':
+          description: Provided credentials are correct and a token is succesfully issued.
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          description: Incorrect credentials
+
+  /security/password:
+    post:
+      summary: Sets the password and security answer for a deviceId
+      description: |
+        Once a device onboarded, it must secure access by setting a password. This can only be done once, Right after 
+        the submission of Quesionnaire A.
+        
+        Any attempt to set the password once the password is already set will fail.
+      security:
+        - bearerAuth: []
+      tags:
+        - security
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - salt
+                - passwordHash
+                - securityQuestionId
+                - securityQuestionSalt
+                - securityQuestionHash
+              properties:
+                salt:
+                  description: Salt used to hash the password
+                  type: string
+                passwordHash:
+                  description: Hashed password
+                  type: string
+                securityQuestionId:
+                  description: Id of the security question chosen by respondent
+                  type: integer
+                securityAnswerSalt:
+                  description: Salt used to hash the security question answer
+                  type: string
+                securityAnswerHash:
+                  description: Hashed security question
+                  type: string
+      responses:
+        '200':
+          description: Password correctly set for the deviceId
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/UnauthorizedAccess'
+        '403':
+          description: The password is already set for the device. Use reset password flow instead.
+
+    put:
+      summary: Reset the password for a deviceId
+      description: |
+        When the mobile app user forgot the password it can be reset by providing the correct 
+        answer to the security question. This is an un-authenticated call since the password is only reset when the 
+        respondent could not remember the password.
+      tags:
+        - security
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - deviceId
+                - sac
+                - newSalt
+                - newPasswordHash
+                - securityQuestionHash
+              properties:
+                deviceId:
+                  description: Id of the device from the mobile app
+                  type: string
+                  maxLength: 20
+                sac:
+                  description: SAC associated to the device
+                  type: string
+                  maxLength: 16
+                newSalt:
+                  description: Salt used to hash the new password
+                  type: string
+                newPasswordHash:
+                  description: Hashed password
+                  type: string
+                securityAnswerHash:
+                  description: Hashed security question answer to match against what is stored on the server
+                  type: string
+      responses:
+        '200':
+          description: Password correctly reset to new value
+        '403':
+          description: The answer to recovery question doesn't match
+  
+  /dashboard/graphs:
+    get:
+      summary: Returns URLs to all dashboard graphs that the mobile will display
+      description: |
+        Since no data per se is sent to the mobile app, all dashboard graphics are rendered on the server. The list of
+        graphs to be displayed controlled by the server. This operation returns that list and the mobile app will
+        retrieve each one of them right away.
+      security:
+        - bearerAuth: []
+      tags:
+        - dashboard
+      responses: 
+        '200':
+          description: An array of graph image URLs
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/GraphLink'
+                example:
+                  - type: mood
+                    url: https://surveys-enquetes-test.statcan.ca/wellbeing-bienetre/api/dashboard/mood
+                  - type: activity
+                    url: https://surveys-enquetes-test.statcan.ca/wellbeing-bienetre/api/dashboard/activity
+        '401':
+          $ref: '#/components/responses/UnauthorizedAccess'
+     
+  /dashboard/graph/{type}:
+    get:
+      summary: Retrieve a graph image in the given type and style
+      description: |
+        Renders the current dahsboard data in the request type and style. The screen resolution given as parameters
+        will be used to optimize the rendering for the device.
+      security:
+        - bearerAuth: []
+      tags:
+        - dashboard
+      parameters:
+        - in: path
+          name: type
+          required: true
+          schema:
+            $ref: '#/components/schemas/GraphType'
+          description: Type of graph to render
+        - in: query
+          name: style
+          required: false
+          schema:
+            $ref: '#/components/schemas/GraphStyle'
+          description: Style in which to render the graph type
+        - in: query
+          name: width
+          required: false
+          schema: 
+            type: integer
+          description: Screen width of the device
+        - in: query
+          name: height
+          required: false
+          schema:
+            type: integer
+          description: Screen width of the device
+        - in: header
+          name: Accept-Language
+          required: false
+          schema: 
+            type: string
+            default: en-CA
+          description: Language in which to render graph labels
+      responses: 
+        '200':
+          description: A binary image file of graph rendered in the requested type and style
+          content: 
+            image/png:
+              schema: 
+                type: string
+                format: binary
+        '401':
+          $ref: '#/components/responses/UnauthorizedAccess'
+
+  /paradata:
+    post:
+      summary: Submit paradata collected on the device to the back-end
+      description: |
+        The mobile app collects data related to how scheduled notification were actioned. That data cannot be submitted
+        through EQ so there is a need to send that over and link to the deviceId in the back-end.
+      security:
+        - bearerAuth: []
+      tags:
+        - paradata
+      requestBody: 
+        required: true
+        content:
+          application/json:
+            schema: 
+              type: object
+      responses: 
+        '200':
+          description: Paradata correctly saved
+        '401':
+          $ref: '#/components/responses/UnauthorizedAccess'
+        '403':
+          description: Submission denied by back-end. Mismatch in token data
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    BilingualLink:
+      type: object
+      properties:
+        enUrl:
+          description: English link
+          type: string
+        frUrl:
+          description: French link
+          type: string
+    GraphType:
+      description: Type of graph that will be produced for the dashboard
+      type: string
+      enum:
+        - mood
+        - activity
+        - location
+        - people
+    GraphStyle:
+      description: Style of a given graph type. This allows to try options if needed
+      type: string
+      enum:
+        - line
+        - pie
+        - table
+    GraphLink:
+      description: Link to a graph
+      type: object
+      properties: 
+        type:
+          $ref: '#/components/schemas/GraphType'
+        url:
+          type: string
+      example: 
+        type: line
+        url: https://surveys-enquetes-test.statcan.ca/wellbeing-bienetre/api/dashboard/mood
+  responses: 
+    UnauthorizedAccess:
+      description: Unauthenticated access. Make sure a valid token is present.
+    BadRequest:
+      description: Invalid input parameters.
