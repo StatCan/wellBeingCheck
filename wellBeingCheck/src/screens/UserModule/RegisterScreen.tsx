@@ -241,10 +241,30 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                     <EvilIcons name="check" />
                   </TouchableOpacity>
                 </View>
+                <View style={styles.pr_view}>
                 <Text style={styles.pr_text}>1 Upper case</Text>
+                  <TouchableOpacity style={styles.pr_btn}>
+                    <EvilIcons name="check" />
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.pr_view}>
                 <Text style={styles.pr_text}>1 Special character</Text>
+                  <TouchableOpacity style={styles.pr_btn}>
+                    <EvilIcons name="check" />
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.pr_view}>
                 <Text style={styles.pr_text}>1 Lower case</Text>
+                  <TouchableOpacity style={styles.pr_btn}>
+                    <EvilIcons name="check" />
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.pr_view}>
                 <Text style={styles.pr_text}>1 Number</Text>
+                  <TouchableOpacity style={styles.pr_btn}>
+                    <EvilIcons name="check" />
+                  </TouchableOpacity>
+                </View>
               </Dialog.Content>
               <Dialog.Actions>
                 <Button onPress={this._hideModal}>Ok</Button>
@@ -261,16 +281,20 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 
 const styles = StyleSheet.create({
   pr_view: {
-    flexDirection: 'row',
-    width: '100%',
   },
   pr_text: {
     marginBottom: 8,
     fontSize: 15,
+    color: 'grey',
   },
   pr_btn: {
     flexDirection: 'row',
     alignSelf: "flex-end",
+    position: 'relative',
+    right: 0,
+    bottom: 20,
+    fontSize: 50,
+    color: 'green'
   },
   customBtnText: {
     fontSize: 18,
