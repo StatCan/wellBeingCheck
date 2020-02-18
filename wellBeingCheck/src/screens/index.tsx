@@ -9,5 +9,6 @@ export { default as SettingsScreen } from './UserModule/SettingsScreen';
 export { default as ContactUsScreen } from '././ContactUsScreen';
 export { default as AboutScreen } from '././AboutScreen';
 export { default as ResultScreen } from './UserModule/ResultScreen';
+export { default as ResultSummaryScreen } from './UserModule/ResultSummaryScreen';
 export { default as EQSurveyScreen } from './UserModule/EQSurveyScreen';
 export { default as Dashboard } from './Dashboard';

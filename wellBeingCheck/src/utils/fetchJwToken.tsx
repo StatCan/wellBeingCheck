@@ -1,3 +1,4 @@
+import NetInfo from '@react-native-community/netinfo';
 export function fetchJwToken2() {
    console.log('global.jwt:'+global.jwToken);
    var now=new Date();
@@ -88,4 +89,34 @@ export function fetchJwToken() {
           }
       }
   });
+}
+
+export function checkConnection() {
+     return new Promise(resolve => {
+               NetInfo.fetch().then(state => {
+                     console.log('Connection type', state.type);
+                     console.log('Is connected?', state.isConnected);
+                   //  alert('Connection type:'+ state.type+'->Is connected?'+state.isConnected);
+                   resolve(state.isConnected);
+                   });
+      });
+}
+
+
+export function checkConnection1() {
+     return new Promise(resolve => {
+               let url=global.webApiBaseUrl+'CheckConnection';console.log(url);
+               fetch(url,{method: 'GET'})
+               .then((response)=>{
+                   if(response.status==200){
+                        response.json().then((responseJson) => {
+                                if(responseJson=="OK"){console.log('OK'); global.connectivity=true; resolve(true);}
+                                else  { global.connectivity=false;console.log('Bad'); resolve(false);}
+                                                              });
+                   }
+                  else { global.connectivity=false;console.log('Bad');
+                   resolve(false);}
+               })
+               .catch((error) => { console.error('Bad: '+error);resolve(false) });
+      });
 }

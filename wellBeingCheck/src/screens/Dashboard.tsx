@@ -7,14 +7,14 @@ import Header from '../components/Header';
 import Paragraph from '../components/Paragraph';
 import Button from '../components/Button';
 import { Navigation } from '../types';
-import { EvilIcons, Feather } from '@expo/vector-icons';
+import { EvilIcons, Feather} from '@expo/vector-icons';
 import LogoClearSmall from '../components/LogoClearSmall';
 import {
   NavigationParams,
   NavigationScreenProp,
   NavigationState,
 } from 'react-navigation';
-import {fetchJwToken} from '../utils/fetchJwToken';
+import {fetchJwToken,checkConnection} from '../utils/fetchJwToken';
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
@@ -63,21 +63,27 @@ class Dashboard extends React.Component<Props> {
             })
         .catch(err => { console.log(err) })
     }
+    async conductSurvey(){
+        let isConnected=await checkConnection();
+        if(!isConnected){alert('You are offline, try it later');return;}
+        global.needReload1=true;global.needReload2=true;global.needReload3=true;global.needReload4=true;global.needReload5=true;global.needReload6=true;global.needReload7=true;
+        this.props.navigation.navigate('EQSurveyScreen');
+    }
   render() {
 
     return (
       <Background>
         <View style={styles.homeContainer}>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{alignSelf:'flex-end'}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
-          <TouchableOpacity onPress={() =>{global.needReload1=true;global.needReload2=true;global.needReload3=true;global.needReload4=true;global.needReload5=true;global.needReload6=true;global.needReload7=true;   this.props.navigation.navigate('EQSurveyScreen');} } style={{flex:2,justifyContent:'center'}}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{alignSelf:'flex-end',marginRight:8}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
+          <TouchableOpacity onPress={() =>this.conductSurvey()} style={{flex:2,justifyContent:'center'}}>
             <View style={styles.outer}>
               <View style={styles.inner}>
                 <Text style={styles.startButtonText}>START MY SURVEY</Text>
               </View>
             </View>
           </TouchableOpacity>
-          <View style={[styles.homeButtonContainer, { marginBottom: 0 }, { flexDirection: 'row'}]}>
-            <TouchableOpacity onPress={() =>{if(hasImage=='1')this.props.navigation.navigate('ResultScreen');else alert('No data found,you have to complete the survey at least once.');}} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>Dashboard</Text></TouchableOpacity>
+          <View style={[styles.homeButtonContainer, { marginBottom: 0,marginTop:50 }, { flexDirection: 'row'}]}>
+            <TouchableOpacity onPress={() =>{if(hasImage=='1')this.props.navigation.navigate('ResultSummaryScreen');else alert('No data found,you have to complete the survey at least once.');}} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>Dashboard</Text></TouchableOpacity>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')} style={styles.smallButton}><EvilIcons name="question" size={40} color="white" /><Text style={styles.smallButtonText}>About</Text></TouchableOpacity>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}><Feather name="phone" size={40} color="white" /><Text style={styles.smallButtonText}>Contact</Text></TouchableOpacity>
            <TouchableOpacity onPress={() => this.sendRequest()} style={{width:40,height:20,marginLeft:-20}}><Text style={styles.smallButtonText}>Test</Text></TouchableOpacity>
@@ -94,7 +100,7 @@ class Dashboard extends React.Component<Props> {
 const styles = StyleSheet.create({
   startButtonText: { fontSize: 25, color: '#fff', textAlign: 'center', fontWeight: '700' },
   background: { flex: 1, width: deviceWidth, height: null, },
-  homeContainer: { flex: 1, alignItems: 'center', justifyContent: 'space-between', marginTop: 40 },
+  homeContainer: { flex: 1, alignItems: 'center', justifyContent: 'space-between', marginTop: 0 },
   logo: { width: 300, height: 100 },
   homeButtonContainer: { flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignContent: 'space-between' },
   homeButtonColumn: { width: 150, height: 150, justifyContent: 'space-between', alignContent: 'space-between' },

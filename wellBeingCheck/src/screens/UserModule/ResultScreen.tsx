@@ -32,7 +32,7 @@ export default class App extends React.Component<Props,ScreenState> {
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{marginLeft:0}}><EvilIcons name="arrow-left" size={32} color="black" /></TouchableOpacity>
 
                  <Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:34,height:34}} />
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{marginRight:0}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('ResultSummaryScreen')} style={{marginRight:0}}><EvilIcons name="image" size={32} color="black" /></TouchableOpacity>
           </View>
          <Loader loading={this.state.loading} />
          <TabNavigator />

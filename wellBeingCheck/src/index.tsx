@@ -14,6 +14,7 @@ import {
   ContactUsScreen,
   AboutScreen,
   ResultScreen,
+  ResultSummaryScreen,
   EQSurveyScreen,
 } from './screens';
 
@@ -31,6 +32,7 @@ const Router = createStackNavigator(
     ContactUsScreen,
     AboutScreen,
     ResultScreen,
+    ResultSummaryScreen,
     EQSurveyScreen
   },
   {

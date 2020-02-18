@@ -4,7 +4,7 @@ import { AsyncStorage } from 'react-native';
 import { Ionicons,EvilIcons,Feather } from '@expo/vector-icons';
 import WebView from 'react-native-webview';
 import { resources } from '../../../GlobalResources';
-import {fetchJwToken} from '../../utils/fetchJwToken';
+import {fetchJwToken,checkConnection} from '../../utils/fetchJwToken';
 const deviceHeight =Math.floor(Dimensions.get('window').height);
 const deviceWidth =Math.floor(Dimensions.get('window').width);
 
@@ -24,23 +24,25 @@ let count=0;//temporarily limit to get image just once, because eq will show exc
 export default class EQSurveyScreen extends React.Component<Props, ScreenState> {
   constructor(Props) {
     super(Props)
+    let disCode= 'const meta = document.createElement("meta"); meta.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"); meta.setAttribute("name", "viewport"); document.getElementsByTagName("head")[0].appendChild(meta);';
+
     let clearCookie='document.cookie.split(";").forEach(function(c) {document.cookie = c.trim().split("=")[0] + "=;" + "expires=Thu, 01 Jan 1970 00:00:00 UTC;";});';
     let jsCode=clearCookie+'document.addEventListener("message", function (message) { document.getElementById("langtest").click(); });var btn = document.createElement("button");btn.style.visibility ="hidden";btn.onclick = switchlang;btn.setAttribute("id", "langtest");document.body.appendChild(btn);    function switchlang() { var a = document.querySelector("a.sc-js-langchange");var href = a.href;if (href.indexOf("/q/fr")>0) {var res = href.replace("/q/fr", "/q/en");a.setAttribute("href", res);a.click();} else if (href.indexOf("/q/en")>0) {var res = href.replace("/q/en", "/q/fr");a.setAttribute("href", res);a.click();} }';
-    this.state=({Sacode:'',jsCode:jsCode});
+    this.state=({Sacode:'',jsCode:disCode+jsCode});
   }
   // componentDidMount(){this.fetchImages();}
-   fetchSacCode() {
-             let url='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/GetSacCode/'+global.userToken;
-    return fetch(url)
+   fetchJwToken() {
+      let url=global.webApiBaseUrl+'Token/'+global.userToken+'/'+global.password;
+      return fetch(url)
       .then((response) => response.json())
       .then((responseJson) => {
         console.log(responseJson);
-        global.surveyACode=responseJson;
-        AsyncStorage.setItem('EsmSurveyACode',responseJson);
-        console.log('Sac:'+global.surveyACode);
+        global.jwToken=responseJson;
+        AsyncStorage.setItem('EsmSurveyJWT',responseJson);
+        console.log('JWT:'+global.jwToken);
       })
       .catch((error) => {
-        console.error(error);
+        console.error(error);global.configurationReady=false;
       });
            }
    fetchImages(){
@@ -49,7 +51,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
           let timeStamp='';
           let d=new Date();
           timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-          let uri0=global.webApiBaseUrl+'WarnFW/en/'+deviceWidth;
+          let uri0=global.webApiBaseUrl+'Spaghetti/aaa/'+timeStamp+'/en/'+deviceWidth+'/'+deviceHeight;
           let uri1=global.webApiBaseUrl+'MacaroniFW/aaa/'+timeStamp+'/en/'+deviceWidth;
           let uri2=global.webApiBaseUrl+'ScalableBarFW/aaa/'+timeStamp+'/en/'+deviceWidth;
           let uri3=global.webApiBaseUrl+'ScalableLineFW/aaa/'+timeStamp+'/en/'+deviceWidth;
@@ -68,37 +70,10 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
           AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');
           //count=1;
     }
-   fetchImage111(url:string,index:number) {
-          let token=fetchJwToken();
-          fetch(url, {
-                    method: 'GET',
-                    headers: {
-                      'Authorization': 'Bearer ' + token
-                    }
-                  })
-          .then( response =>{
-           //       if(response.status==440){utility.General(,,,fetchImage(url,index));}   //TODO:
-           //       else                                   let
-                  if (response.status >= 400 && response.status < 600) {   //TODO:
-                       global.jwToken='';
-                       throw new Error("Access denied(G"+index+"), Try again, if same thing would happen again contact StatCan");
-                  }else{   //200
-                       response.blob()
-                       .then(blob =>{
-                             var reader = new FileReader() ;
-                             reader.onload = function(){
-                             // console.log(this.result);// <--- `this.result` contains a base64 data URI
-                             console.log('image'+index);
-                             AsyncStorage.setItem('image'+index, this.result);
-                             } ;
-                             reader.readAsDataURL(blob) ;
-                             })
-                  }
-            })
-          .catch(err => { console.log(err) })
-        }
    async fetchImage(url:string,index:number) {
-                   let token=await fetchJwToken();console.log(url);
+       let isConnected=await checkConnection();
+       if(!isConnected){alert('You are offline, try it later');return;}
+                   let token=global.jwToken;   console.log(url);     //await fetchJwToken();console.log(url);
                    fetch(url, {
                              method: 'GET',
                              headers: {'Authorization': 'Bearer ' + token}
@@ -142,16 +117,16 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
              uri=global.surveyAUrlFre;
          }
     return (
-          <View style={{ flex: 1, marginTop: 24 }}>
-           <View style={{height:24}}>
+          <View style={{ flex: 1, marginTop: 0 }}>
+           <View>
                   <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                       <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{marginLeft:0}}><EvilIcons name="arrow-left" size={32} color="black" /></TouchableOpacity>
                        <Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:34,height:34}} />
-                     <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{marginRight:0}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
+                       <TouchableOpacity onPress={() => this.webView.postMessage('test')} style={{alignSelf:'flex-end'}}><Ionicons name="ios-globe" size={30} color="black" /></TouchableOpacity>
                   </View>
               </View>
                 <WebView
-                          ref={(view) => this.webView = view} incognito={true}
+                          ref={(view) => this.webView = view} incognito={true} pointerEvents="none"
                           style={styles.webview}
                           userAgent={global.userToken}
                           scrollEnabled={true}
@@ -180,6 +155,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                                  }
                                  else {
                                     console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');count=1;
+
                                  }
                                 this.props.navigation.navigate('Dashboard');
                             }

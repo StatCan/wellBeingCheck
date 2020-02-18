@@ -1,6 +1,7 @@
 import React, { memo, useState, useCallback } from 'react';
 import { Picker, View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { AsyncStorage } from 'react-native';
+import NetInfo from '@react-native-community/netinfo';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
@@ -10,7 +11,7 @@ import BackButton from '../components/BackButton';
 import { newTheme } from '../core/theme';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 //import { Navigation } from '../../types';
-
+import {checkConnection} from '../utils/fetchJwToken';
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -34,6 +35,8 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
 
   constructor(LaunchState) {
     super(LaunchState)
+  //  this.chechConnection();
+  //  this.getDeviceConnectionInfo();
     this.state = {
     };
     this.bootstrapA();
@@ -97,13 +100,20 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
       let userToken = await AsyncStorage.getItem('EsmUserToken');
       if (userToken == null)userToken= Constants.deviceId;   //   global.userToken=this.generateShortGuid(24);
       global.userToken=userToken;
-      let doneSurveyA = await AsyncStorage.getItem('doneSurveyA');console.log('SuvetA:'+doneSurveyA);
-      if(doneSurveyA==null)global.doneSurveyA=false;else global.doneSurveyA=true;
+      let jwt=await AsyncStorage.getItem('EsmSurveyJWT');
+      let doneSurveyA = await AsyncStorage.getItem('doneSurveyA');console.log('SuvetA:'+doneSurveyA);global.doneSurveyA=doneSurveyA;
+      if(jwt!=null)global.jwToken=jwt;
+    //  if(jwt==null)global.doneSurveyA=false;else {global.doneSurveyA=true;global.jwToken=jwt;}
       console.log('SuvetAa:'+global.doneSurveyA);
+
+   //   if(!global.connectivity){alert('You are offline, try it later');return;}
+   let isConnected=await checkConnection();
+   if(!isConnected){alert('You are offline, try it later');return;}
       let url = global.webApiBaseUrl+'GetConfiguration';console.log(url);
       fetch(url)
             .then((response) =>{console.log(url);
                if (response.status >= 400 && response.status < 600) {
+                  global.configurationReady=false;
                   throw new Error("Access denied(1), Try again, if same thing would happen again contact StatCan");
                }else{
                   response.json().then((responseJson) => {
@@ -113,11 +123,20 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
                          global.surveyThkUrlFre=responseJson[3];
                          global.surveyBUrlEng=responseJson[4];
                          global.surveyBUrlFre=responseJson[5];
+                         global.graphType0=responseJson[6];
+                         global.graphType1=responseJson[7];
+                         global.graphType2=responseJson[8];
+                         global.graphType3=responseJson[9];
+                         global.graphType4=responseJson[10];
+                         global.graphType5=responseJson[11];
+                         global.graphType6=responseJson[12];
+                         global.graphType7=responseJson[13];
+                         global.configurationReady=true;
                     })
               }
             })
             .catch((error) => {
-              console.error(error);
+              console.error(error);global.configurationReady=false; alert("Network error");
             });
     };
   generateGuid() {
