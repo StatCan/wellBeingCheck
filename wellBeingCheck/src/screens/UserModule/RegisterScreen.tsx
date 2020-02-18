@@ -8,6 +8,7 @@ import Button from '../../components/Button';
 import TextInput from '../../components/TextInput';
 import BackButton from '../../components/BackButton';
 import { theme, newTheme } from '../../core/theme';
+import { resources } from '../../../GlobalResources';
 //import { Navigation } from '../../types';
 
 import {
@@ -173,9 +174,12 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
           selectedValue={this.state.securityQuestion}
           style={[styles.picker]} itemStyle={styles.pickerItem}
           onValueChange={value => this.setState({ securityQuestion: value })}>
-          <Picker.Item label="Select question" value="" />
-          <Picker.Item label="Mother's Maiden name" value="Mother's Maiden name" />
-          <Picker.Item label="Year of Birth" value="Year of Birth" />
+          <Picker.Item label={resources.getString("reg.ques.select")} value="" />
+          <Picker.Item label={resources.getString("reg.ques.mother")} value="reg.ques.mother" />
+          <Picker.Item label={resources.getString("reg.ques.school")} value="reg.ques.school" />
+          <Picker.Item label={resources.getString("reg.ques.car")} value="reg.ques.car" />
+          <Picker.Item label={resources.getString("reg.ques.sport")} value="reg.ques.sport" />
+          <Picker.Item label={resources.getString("reg.ques.job")} value="reg.ques.job" />
         </Picker>
         {this.state.securityQuestionError != '' ? (
           <Text style={styles.errorTest}>{this.state.securityQuestionError}</Text>
