@@ -21,7 +21,8 @@
       "bundleIdentifier": "com.statcan.wellbeingcheck"
     },
     "android": {
-      "package": "com.statcan.wellbeingcheck"
+      "package": "com.statcan.wellbeingcheck",
+      "versionCode": 2
     }
   }
 }
