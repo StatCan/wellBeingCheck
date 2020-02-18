@@ -133,6 +133,10 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     }
   }
 
+  _onPasswordHelpPressed = () => {
+    alert("help");
+  }
+
   render() {
     return (
       <Background>
@@ -142,25 +146,30 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 
         <Title style={styles.title}>Secure your account</Title>
 
-        <TextInput
-          label="Enter password"
-          returnKeyType="next"
-          selectionColor = {newTheme.colors.primary}
-          underlineColor = {newTheme.colors.primary}
-          theme = {newTheme}
-          value={this.state.password}
-          onChangeText={text => this.setState({ password: text })}
-          error={!!this.state.passwordError}
-          errorText={this.state.passwordError}
-          secureTextEntry={true}
-        />
+        <View style={styles.passwordView}>
+          <TextInput
+            label="Enter password"
+            returnKeyType="next"
+            selectionColor={newTheme.colors.primary}
+            underlineColor={newTheme.colors.primary}
+            theme={newTheme}
+            value={this.state.password}
+            onChangeText={text => this.setState({ password: text })}
+            error={!!this.state.passwordError}
+            errorText={this.state.passwordError}
+            secureTextEntry={true}
+          />
+          <Button mode="outlined" onPress={this._onPasswordHelpPressed} style={styles.btnHelp}>
+            ?
+          </Button>
+        </View>
 
         <TextInput
           label="Confirm password"
           returnKeyType="next"
-          selectionColor = {newTheme.colors.primary}
-          underlineColor = {newTheme.colors.primary}
-          theme = {newTheme}
+          selectionColor={newTheme.colors.primary}
+          underlineColor={newTheme.colors.primary}
+          theme={newTheme}
           value={this.state.passwordConfirm}
           onChangeText={text => this.setState({ passwordConfirm: text })}
           error={!!this.state.passwordConfirmError}
@@ -183,15 +192,15 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
         </Picker>
         {this.state.securityQuestionError != '' ? (
           <Text style={styles.errorTest}>{this.state.securityQuestionError}</Text>
-          ): null
+        ) : null
         }
 
         <TextInput
           label="Answer"
           returnKeyType="next"
-          selectionColor = {newTheme.colors.primary}
-          underlineColor = {newTheme.colors.primary}
-          theme = {newTheme}
+          selectionColor={newTheme.colors.primary}
+          underlineColor={newTheme.colors.primary}
+          theme={newTheme}
           value={this.state.securityAnswer}
           onChangeText={text => this.setState({ securityAnswer: text })}
           error={!!this.state.securityAnswerError}
@@ -214,6 +223,19 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 }
 
 const styles = StyleSheet.create({
+  passwordView: {
+    flexDirection: 'row',
+    marginLeft: 30,
+    marginRight: 30,
+  },
+  btnHelp: {
+    width: 20,
+    height: 59,
+    position: 'relative',
+    top: 8,
+    borderStyle: 'solid',
+    borderWidth: 2,
+  },
   title: {
     fontSize: 22,
     fontWeight: 'bold',
@@ -250,7 +272,7 @@ const styles = StyleSheet.create({
   pickerItem: {
     color: 'red',
     width: '80%'
-  },
+  }
 });
 
 export default memo(RegisterScreen);
