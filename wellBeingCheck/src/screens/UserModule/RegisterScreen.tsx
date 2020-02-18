@@ -1,5 +1,5 @@
 import React, { memo, useState, useCallback } from 'react';
-import { Picker, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Picker, View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Background from '../../components/Background';
 import Logo from '../../components/Logo';
@@ -10,6 +10,7 @@ import BackButton from '../../components/BackButton';
 import { theme, newTheme } from '../../core/theme';
 import { resources } from '../../../GlobalResources';
 //import { Navigation } from '../../types';
+import { EvilIcons, Feather } from '@expo/vector-icons';
 
 import {
   NavigationParams,
@@ -23,7 +24,7 @@ import {
   securityQuestionValidator,
   securityAnswerValidator,
 } from '../../core/utils';
-import { Drawer, Title } from 'react-native-paper';
+import { Drawer, Title, Provider, Portal, Dialog, Paragraph } from 'react-native-paper';
 import LogoClear from '../../components/LogoClear';
 import LogoClearSmall from '../../components/LogoClearSmall';
 
@@ -36,6 +37,7 @@ type RegisterState = {
   securityQuestionError: string,
   securityAnswer: string,
   securityAnswerError: string,
+  modalShow: boolean,
 }
 
 interface Props {
@@ -55,6 +57,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
       securityQuestionError: "",
       securityAnswer: "",
       securityAnswerError: "",
+      modalShow: false,
     };
     //this._retrieveData('user_password');
     this._accountAlreadyExists();
@@ -133,9 +136,8 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     }
   }
 
-  _onPasswordHelpPressed = () => {
-    alert("help");
-  }
+  _showModal = () => this.setState({ modalShow: true });
+  _hideModal = () => this.setState({ modalShow: false });
 
   render() {
     return (
@@ -159,9 +161,17 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
             errorText={this.state.passwordError}
             secureTextEntry={true}
           />
-          <Button mode="outlined" onPress={this._onPasswordHelpPressed} style={styles.btnHelp}>
+
+          <TouchableOpacity
+            style={styles.customBtnBG}
+            onPress={this._showModal}
+          >
+            <Text style={styles.customBtnText}>?</Text>
+          </TouchableOpacity>
+
+          {/* <Button mode="outlined" onPress={this._onPasswordHelpPressed} style={styles.btnHelp}>
             ?
-          </Button>
+          </Button> */}
         </View>
 
         <TextInput
@@ -217,12 +227,68 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
             <Text style={styles.link}>Login</Text>
           </TouchableOpacity>
         </View> */}
+
+        <View>
+          <Portal>
+            <Dialog
+              visible={this.state.modalShow}
+              onDismiss={this._hideModal}>
+              <Dialog.Title>Password Requirments</Dialog.Title>
+              <Dialog.Content>
+                <View style={styles.pr_view}>
+                  <Text style={styles.pr_text}>8 Characters</Text>
+                  <TouchableOpacity style={styles.pr_btn}>
+                    <EvilIcons name="check" />
+                  </TouchableOpacity>
+                </View>
+                <Text style={styles.pr_text}>1 Upper case</Text>
+                <Text style={styles.pr_text}>1 Special character</Text>
+                <Text style={styles.pr_text}>1 Lower case</Text>
+                <Text style={styles.pr_text}>1 Number</Text>
+              </Dialog.Content>
+              <Dialog.Actions>
+                <Button onPress={this._hideModal}>Ok</Button>
+              </Dialog.Actions>
+            </Dialog>
+          </Portal>
+        </View>
+
       </Background>
+
     );
   }
 }
 
 const styles = StyleSheet.create({
+  pr_view: {
+    flexDirection: 'row',
+    width: '100%',
+  },
+  pr_text: {
+    marginBottom: 8,
+    fontSize: 15,
+  },
+  pr_btn: {
+    flexDirection: 'row',
+    alignSelf: "flex-end",
+  },
+  customBtnText: {
+    fontSize: 18,
+    color: "black",
+  },
+  customBtnBG: {
+    backgroundColor: "white",
+    paddingHorizontal: 24,
+    paddingVertical: 15,
+    borderRadius: 2,
+    height: 58,
+    position: 'relative',
+    top: 18,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: 'grey',
+    marginLeft: 1,
+  },
   passwordView: {
     flexDirection: 'row',
     marginLeft: 30,
