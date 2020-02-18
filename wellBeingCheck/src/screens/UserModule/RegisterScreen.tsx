@@ -242,32 +242,36 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                   </TouchableOpacity>
                 </View>
                 <View style={styles.pr_view}>
-                <Text style={styles.pr_text}>1 Upper case</Text>
+                  <Text style={styles.pr_text}>1 Upper case</Text>
                   <TouchableOpacity style={styles.pr_btn}>
                     <EvilIcons name="check" />
                   </TouchableOpacity>
                 </View>
                 <View style={styles.pr_view}>
-                <Text style={styles.pr_text}>1 Special character</Text>
+                  <Text style={styles.pr_text}>1 Special character</Text>
                   <TouchableOpacity style={styles.pr_btn}>
                     <EvilIcons name="check" />
                   </TouchableOpacity>
                 </View>
                 <View style={styles.pr_view}>
-                <Text style={styles.pr_text}>1 Lower case</Text>
+                  <Text style={styles.pr_text}>1 Lower case</Text>
                   <TouchableOpacity style={styles.pr_btn}>
                     <EvilIcons name="check" />
                   </TouchableOpacity>
                 </View>
                 <View style={styles.pr_view}>
-                <Text style={styles.pr_text}>1 Number</Text>
+                  <Text style={styles.pr_text}>1 Number</Text>
                   <TouchableOpacity style={styles.pr_btn}>
                     <EvilIcons name="check" />
                   </TouchableOpacity>
                 </View>
               </Dialog.Content>
               <Dialog.Actions>
-                <Button onPress={this._hideModal}>Ok</Button>
+                <Button
+                  style={styles.pr_action_btn}
+                  onPress={this._hideModal}>
+                  Ok
+                  </Button>
               </Dialog.Actions>
             </Dialog>
           </Portal>
@@ -280,6 +284,11 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 }
 
 const styles = StyleSheet.create({
+  pr_action_btn: {
+    flexDirection: 'row',
+    alignSelf: 'flex-end',
+    position: 'relative',
+  },
   pr_view: {
   },
   pr_text: {
