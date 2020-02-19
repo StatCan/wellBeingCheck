@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   ScrollView,
   Platform,
-  Switch
+  Switch,
+  AsyncStorage
 } from 'react-native';
-import {AsyncStorage} from 'react-native';
 import Background from '../../components/Background';
 import Logo from '../../components/Logo';
 import Header from '../../components/Header';
@@ -52,7 +52,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
       waketime: '08:00', 
       sleeptime: '21:00', 
       notificationcount: 2, 
-      culture: 'English' 
+      culture: '1' 
     };
     this.wakeTimeHandler = this.wakeTimeHandler.bind(this);
     this.sleepTimeHandler = this.sleepTimeHandler.bind(this);
@@ -99,6 +99,8 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
     if (global.debugMode) console.log("Settings Screen Component Mounted");
     this.askPermissions();
     this._notificationSubscription = Notifications.addListener(this._handleNotification);
+
+    this._retrieveData('settings');
   }
 
   _handleNotification = (notification) => {
@@ -131,7 +133,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
 
   _backButtonPressed(){
 
-    if (debugMode) console.log("Back button Pressed");
+    if (global.debugMode) console.log("Back button Pressed");
 
     notificationAlgo(this.state.waketime, this.state.sleeptime, this.state.notificationcount);
 
@@ -149,7 +151,39 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
     if (global.debugMode) console.log("Notification Count: " + this.state.notificationcount);
     if (global.debugMode) console.log("Scheduled Notification Times: " + scheduledDateArray);
 
+    this._storeSettings();
+
     this.props.navigation.navigate('Dashboard');
+  }
+
+  _storeSettings = () => {
+    //validation passed lets store user
+    let settingsObj = {
+      notificationState: this.state.notificationState,
+      wakeTime: this.state.waketime,
+      sleepTime: this.state.sleeptime,
+      notificationCount: this.state.notificationcount,
+      culture: this.state.culture
+    };
+
+    AsyncStorage.setItem('settings', JSON.stringify(settingsObj), () => {
+      if (global.debugMode) console.log("Storing Settings: " , settingsObj);
+    });
+  }
+
+  _retrieveData = async (key) => {
+
+    await AsyncStorage.getItem(key, (err, result) => {
+      if (global.debugMode) console.log("The result of getItem is: ", result);
+      if (result) {
+        let resultAsObj = JSON.parse(result);
+        this.setState({ notificationState: resultAsObj.notificationState });
+        this.setState({ notificationcount: resultAsObj.notificationCount });
+        this.setState({ waketime: resultAsObj.wakeTime });
+        this.setState({ sleeptime: resultAsObj.sleepTime });
+        this.setState({ culture: resultAsObj.culture });
+      }
+    });
   }
 
   render() {
