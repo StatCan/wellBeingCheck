@@ -163,10 +163,10 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
           />
 
           <TouchableOpacity
-            style={styles.customBtnBG}
+            style={styles.passwordHelpBtnBg}
             onPress={this._showModal}
           >
-            <Text style={styles.customBtnText}>?</Text>
+            <Text style={styles.passwordHelpBtnText}>?</Text>
           </TouchableOpacity>
 
           {/* <Button mode="outlined" onPress={this._onPasswordHelpPressed} style={styles.btnHelp}>
@@ -271,7 +271,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                   style={styles.pr_action_btn}
                   onPress={this._hideModal}>
                   Ok
-                  </Button>
+                </Button>
               </Dialog.Actions>
             </Dialog>
           </Portal>
@@ -305,14 +305,14 @@ const styles = StyleSheet.create({
     fontSize: 50,
     color: 'green'
   },
-  customBtnText: {
-    fontSize: 18,
+  passwordHelpBtnText: {
+    fontSize: 25,
     color: "black",
   },
-  customBtnBG: {
+  passwordHelpBtnBg: {
     backgroundColor: "white",
     paddingHorizontal: 24,
-    paddingVertical: 15,
+    paddingVertical: 10,
     borderRadius: 2,
     height: 58,
     position: 'relative',

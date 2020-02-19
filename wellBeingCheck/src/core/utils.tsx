@@ -15,8 +15,13 @@ export const nameValidator = (name: string) => {
 
 export const passwordValidator = (password: string) => {
   if (!password || password.length <= 0) return 'Password cannot be empty.';
-  if (password.length < 4) return 'Password must be at least 4 characters';
+  if (password.length < 8) return 'Password must be at least 8 characters';
+  if (!/[A-Z]/.test(password)) return 'Password must containt at least 1 upper case';
 
+  if (!/[@!#$%^&*(),.?:{}|<>]/.test(password)) return 'Password must containt at least 1 special character';
+
+  if (!/[a-z]/.test(password)) return 'Password must containt at least 1 lower case';
+  if (!/[0-9]/.test(password)) return 'Password must containt at least 1 number';
   return '';
 };
 
