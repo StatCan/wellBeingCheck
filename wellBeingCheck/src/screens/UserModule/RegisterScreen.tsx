@@ -72,13 +72,44 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     }
   }
 
+  _getPasswordErrorText(errorCode) {
+    switch (errorCode) {
+      case 200:
+        return '';
+      break;
+      case 10:
+        return resources.getString("reg.pass.validation.empty")
+      break;
+      case 20:
+        return resources.getString("reg.pass.validation.min_eight")
+      break;
+      case 30:
+        return resources.getString("reg.pass.validation.upper")
+      break;
+      case 40:
+        return resources.getString("reg.pass.validation.special")
+      break;
+      case 50:
+        return resources.getString("reg.pass.validation.lower")
+      break;
+      case 50:
+        return resources.getString("reg.pass.validation.number")
+      break;
+      default:
+        return '';
+    }  
+  }
+
   _validateForm = () => {
     const isPasswordValid = passwordValidator(this.state.password);
     const isPasswordConfirmValid = passwordConfirmValidator(this.state.password, this.state.passwordConfirm);
     const isSecurityQuestionValid = securityQuestionValidator(this.state.securityQuestion);
     const isSecurityAnswerValid = securityAnswerValidator(this.state.securityAnswer);
 
-    if ((isPasswordValid == '') && (isPasswordConfirmValid == '') && (isSecurityQuestionValid == '') && (isSecurityAnswerValid == '')) {
+    //translate password error
+    let passwordErrorText = this._getPasswordErrorText(isPasswordValid)
+
+    if ((isPasswordValid == 200) && (isPasswordConfirmValid == '') && (isSecurityQuestionValid == '') && (isSecurityAnswerValid == '')) {
       this.setState({ passwordError: '' });
       this.setState({ passwordConfirmError: '' });
       this.setState({ securityQuestionError: '' });
@@ -86,7 +117,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
       return true;
     }
     else {
-      this.setState({ passwordError: isPasswordValid });
+      this.setState({ passwordError: passwordErrorText });
       this.setState({ passwordConfirmError: isPasswordConfirmValid });
       this.setState({ securityQuestionError: isSecurityQuestionValid });
       this.setState({ securityAnswerError: isSecurityAnswerValid });
