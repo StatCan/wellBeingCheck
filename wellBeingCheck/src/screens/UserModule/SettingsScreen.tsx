@@ -186,6 +186,18 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
     });
   }
 
+  _changeLanguage(c){
+
+    this.setState({culture:c});
+    if (global.debugMode) console.log("Changing language to: " + c);
+
+    if(c === "2"){
+      resources.culture ='fr';
+    } else if (c === "1"){
+      resources.culture ='en';
+    }
+  }
+
   render() {
 
     let debugButtons;
@@ -205,13 +217,13 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
       <View>
         <View style={styles.toolbar}>
           <BackButton goBack={() => this._backButtonPressed()}/>
-          <Text style={styles.toolbarTitle}>Settings</Text>
+          <Text style={styles.toolbarTitle}>{resources.getString("settings")}</Text>
         </View>
         <ScrollView>
 
         <List.Section style={styles.mainStyle}>
           <List.Item
-            title="Notifications"
+            title={resources.getString("notifications")}
             left={() => <List.Icon icon="bell-alert"/>}
             right={() => <Switch
             style={{margin: 10}}
@@ -224,7 +236,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
           <Divider></Divider>
           <List.Item
             style={styles.listStyle}
-            title="Number of notifications"
+            title={resources.getString("number_notifications")}
           />
           {/* Temporary Implementation */}
           <Picker  
@@ -239,19 +251,19 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
           </Picker>
 
           <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-            <Text style={styles.label}>Wake Time:</Text>
+            <Text style={styles.label}>{resources.getString("wake_time")}</Text>
             <TimePicker time={this.state.waketime} timeType="wakeTime" handler = {this.wakeTimeHandler} />
           </View>
           <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-            <Text style={styles.label}>Sleep Time:</Text>
+            <Text style={styles.label}>{resources.getString("sleep_time")}</Text>
             <TimePicker time={this.state.sleeptime} timeType="sleepTime" handler = {this.sleepTimeHandler} />
           </View>
 
           <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-            <Text style={{marginLeft: 38, fontSize: 16, marginTop: 60}}>Language:</Text>
+            <Text style={{marginLeft: 38, fontSize: 16, marginTop: 60}}>{resources.getString("language")}</Text>
             <Picker  
                 selectedValue={this.state.culture}
-                onValueChange={c => this.setState({culture:c})}
+                onValueChange={c => this._changeLanguage(c)}
                 style={{ width: 100, height:100, marginBottom:20, marginTop:40, justifyContent:'space-around' }}
                 mode="dropdown">
                 <Picker.Item label="English" value="1" />
