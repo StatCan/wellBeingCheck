@@ -1,7 +1,7 @@
 
 import React, { memo } from 'react';
 import Background from '../components/Background';
-import { View, Text, TextInput, Image, StyleSheet,ImageBackground,Dimensions,TouchableOpacity,AsyncStorage } from 'react-native';
+import { View, Text, TextInput, Image, StyleSheet, ImageBackground, Dimensions, TouchableOpacity, AsyncStorage } from 'react-native';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
 import Paragraph from '../components/Paragraph';
@@ -28,8 +28,8 @@ class Dashboard extends React.Component<Props> {
     return (
       <Background>
         <View style={styles.homeContainer}>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{alignSelf:'flex-end'}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
-          <TouchableOpacity onPress={() =>{global.needReload1=true;global.needReload2=true;global.needReload3=true;global.needReload4=true;global.needReload5=true;global.needReload6=true;global.needReload7=true;   this.props.navigation.navigate('EQSurveyScreen');} } style={{flex:2,justifyContent:'center'}}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{ alignSelf: 'flex-end' }}><EvilIcons name="gear" style={styles.gearIcon} size={32} color="black" /></TouchableOpacity>
+          <TouchableOpacity onPress={() => { global.needReload1 = true; global.needReload2 = true; global.needReload3 = true; global.needReload4 = true; global.needReload5 = true; global.needReload6 = true; global.needReload7 = true; this.props.navigation.navigate('EQSurveyScreen'); }} style={{ flex: 2, justifyContent: 'center' }}>
             <View style={styles.outer}>
               <View style={styles.inner}>
                 <Text style={styles.startButtonText}>START MY SURVEY</Text>
@@ -49,14 +49,48 @@ class Dashboard extends React.Component<Props> {
 
 
 const styles = StyleSheet.create({
-  startButtonText: { fontSize: 25, color: '#fff', textAlign: 'center', fontWeight: '700' },
-  background: { flex: 1, width: deviceWidth, height: null, },
-  homeContainer: { flex: 1, alignItems: 'center', justifyContent: 'space-between', marginTop: 40 },
-  logo: { width: 300, height: 100 },
-  homeButtonContainer: { flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignContent: 'space-between' },
-  homeButtonColumn: { width: 150, height: 150, justifyContent: 'space-between', alignContent: 'space-between' },
-  homeButton: { width: 100 },
-  homeSeperator: { width: 20, height: 150 },
+  gearIcon: {
+  },
+  startButtonText: {
+    fontSize: 25,
+    color: '#fff',
+    textAlign: 'center',
+    fontWeight: '700'
+  },
+  background: {
+    flex: 1,
+    width: deviceWidth,
+    height: null,
+  },
+  homeContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 40
+  },
+  logo: {
+    width: 300,
+    height: 100
+  },
+  homeButtonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignContent: 'space-between'
+  },
+  homeButtonColumn: {
+    width: 150,
+    height: 150,
+    justifyContent: 'space-between',
+    alignContent: 'space-between'
+  },
+  homeButton: {
+    width: 100
+  },
+  homeSeperator: {
+    width: 20,
+    height: 150
+  },
   inner: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -73,7 +107,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: 220, height: 220,
     alignSelf: 'center',
-
     shadowColor: "gray",
     shadowOffset: {
       width: 10,
@@ -82,8 +115,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 5,
     elevation: 16,
-
-    // boxShadow:15px 5px 10px grey;
     backgroundColor: 'lightgray'
   },
   smallButton: {
