@@ -75,7 +75,7 @@ class FirstPage extends React.Component {
    	        {this.state.pictureBase64 && (
                 <View onLayout={this._onLayout.bind(this)}>
                     <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                             <Title style={styles.title}>{resources.getString("Your feeling this week")}</Title>
+                             <Title style={styles.title}>{resources.getString("How you are feeling by location")}</Title>
                              <TouchableOpacity onPress={() => this.helpClick()} style={{marginRight:0}}><EvilIcons name="question" size={34} color="black" /></TouchableOpacity>
                     </View>
                    <View>
@@ -133,7 +133,7 @@ class SecondPage extends React.Component {
    	        {this.state.pictureBase64 && (
                 <View onLayout={this._onLayout.bind(this)}>
                     <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                             <Title style={styles.title}>{resources.getString("Your feeling this week")}</Title>
+                             <Title style={styles.title}>{resources.getString("How you are feeling with others")}</Title>
                              <TouchableOpacity onPress={() => this.helpClick()} style={{marginRight:0}}><EvilIcons name="question" size={34} color="black" /></TouchableOpacity>
                     </View>
                    <View>
@@ -191,7 +191,7 @@ class ThirdPage extends React.Component {
    	        {this.state.pictureBase64 && (
                 <View onLayout={this._onLayout.bind(this)}>
                     <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                             <Title style={styles.title}>{resources.getString("Your feeling this week")}</Title>
+                             <Title style={styles.title}>{resources.getString("How you are feeling by activity")}</Title>
                              <TouchableOpacity onPress={() => this.helpClick()} style={{marginRight:0}}><EvilIcons name="question" size={34} color="black" /></TouchableOpacity>
                     </View>
                    <View>

@@ -40,6 +40,9 @@ export const resources = {
             "Your feeling this week":"Your feeling this week",
              "Detail":"Detail",
              "Summary":"Summary",
+              "How you are feeling by location": "How you are feeling by location",
+              "How you are feeling with others":"How you are feeling with others",
+              "How you are feeling by activity":"How you are feeling by activity",
         },
         fr: {
             //global
@@ -77,6 +80,9 @@ export const resources = {
             "Your feeling this week":"Votre ressenti cette semaine",
             "Detail":"Détail",
             "Summary":"Sommaire",
+            "How you are feeling by location":"Comment vous vous sentez par emplacement",
+            "How you are feeling with others":"Comment vous vous sentez avec les autres",
+            "How you are feeling by activity":"Comment vous vous sentez par activité",
         }
 
     }
