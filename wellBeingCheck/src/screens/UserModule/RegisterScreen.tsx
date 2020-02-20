@@ -92,7 +92,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
       case 50:
         return resources.getString("reg.pass.validation.lower")
       break;
-      case 50:
+      case 60:
         return resources.getString("reg.pass.validation.number")
       break;
       default:
