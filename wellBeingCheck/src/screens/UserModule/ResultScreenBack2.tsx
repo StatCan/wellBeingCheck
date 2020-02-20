@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View,ScrollView, StyleSheet,TouchableOpacity,Dimensions,Image,ActivityIndicator ,Modal,ImageBackground} from 'react-native';
+import { Text, View,ScrollView, StyleSheet,TouchableOpacity,Dimensions,Image,ActivityIndicator ,Modal} from 'react-native';
 import TabNavigator from './TabPageScreen';
 import { Provider as PaperProvider, Title, Paragraph } from 'react-native-paper';
 import Button from '../../components/Button';
@@ -35,10 +35,6 @@ export default class App extends React.Component<Props,ScreenState> {
   render() {
     return (
      <PaperProvider theme={newTheme}>
-       <ImageBackground
-         source={require('../../assets/white.png')}
-          style={{ backgroundColor: 'white',flex:1}}
-       >
       <View style={styles.logo_container}>
                    <LogoClearSmall />
                  </View>
@@ -47,7 +43,7 @@ export default class App extends React.Component<Props,ScreenState> {
          <TabNavigator />
 
       </View>
-</ImageBackground>
+
       <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                        <Button style={styles.btnSummary}  onPress={() => this.props.navigation.navigate('ResultSummaryScreen')}  mode="contained"   >
                                <Text style={styles.btnText}>{resources.getString("Summary")}</Text>
@@ -64,8 +60,8 @@ export default class App extends React.Component<Props,ScreenState> {
 }
 const styles = StyleSheet.create({
   container: {
-    flex:1,backgroundColor: 'white',
-   // marginTop:Constants.statusBarHeight,
+    flex:1,
+    marginTop:Constants.statusBarHeight,
    // backgroundColor: 'white',
   },
   touchable:{ width: deviceWidth/3, height: 50,  alignItems: 'center', justifyContent: 'center',backgroundColor: 'lightgray'},
@@ -109,7 +105,7 @@ const styles = StyleSheet.create({
     logo_container: {
         position: 'relative',
         marginTop: 20,
-        marginLeft: 20,backgroundColor: 'white'
+        marginLeft: 20,
       },
 });
 

@@ -12,7 +12,7 @@ global.needReload4=true;
 global.needReload5=true;
 global.needReload6=true;
 global.needReload7=true;
-
+global.culture='fr';
 
 global.jwToken='';
 global.userToken='12345';

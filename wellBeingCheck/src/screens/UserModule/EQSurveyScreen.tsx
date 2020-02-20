@@ -52,13 +52,13 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
           let d=new Date();
           timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
           let uri0=global.webApiBaseUrl+'Spaghetti/aaa/'+timeStamp+'/en/'+deviceWidth+'/'+deviceHeight;
-          let uri1=global.webApiBaseUrl+'MacaroniFW/aaa/'+timeStamp+'/en/'+deviceWidth;
-          let uri2=global.webApiBaseUrl+'ScalableBarFW/aaa/'+timeStamp+'/en/'+deviceWidth;
-          let uri3=global.webApiBaseUrl+'ScalableLineFW/aaa/'+timeStamp+'/en/'+deviceWidth;
-          let uri4=global.webApiBaseUrl+'ScalableLine/aaa/'+timeStamp+'/en/';
-          let uri5=global.webApiBaseUrl+'ScalableCBarFW/aaa/'+timeStamp+'/en/'+deviceWidth;
-          let uri6=global.webApiBaseUrl+'BulletinFW/aaa/'+timeStamp+'/en/'+deviceWidth;
-          let uri7=global.webApiBaseUrl+'TableFW/aaa/'+timeStamp+'/en/'+deviceWidth;
+          let uri1=global.webApiBaseUrl+'Spaghetti/aaa/'+timeStamp+'/fr/'+deviceWidth+'/'+deviceHeight;
+          let uri2=global.webApiBaseUrl+'ScalableCBarFW/aaa/'+timeStamp+'/en/'+deviceWidth;
+          let uri3=global.webApiBaseUrl+'ScalableCBarFW/aaa/'+timeStamp+'/fr/'+deviceWidth;
+          let uri4=global.webApiBaseUrl+'ScalableCBarFW/aaa/'+timeStamp+'/en/'+deviceWidth;
+          let uri5=global.webApiBaseUrl+'ScalableCBarFW/aaa/'+timeStamp+'/fr/'+deviceWidth;
+          let uri6=global.webApiBaseUrl+'ScalableCBarFW/aaa/'+timeStamp+'/en/'+deviceWidth;
+          let uri7=global.webApiBaseUrl+'ScalableCBarFW/aaa/'+timeStamp+'/fr/'+deviceWidth;
           this.fetchImage(uri0,0);
           this.fetchImage(uri1,1);
           this.fetchImage(uri2,2);
@@ -76,7 +76,10 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                    let token=global.jwToken;   console.log(url);     //await fetchJwToken();console.log(url);
                    fetch(url, {
                              method: 'GET',
-                             headers: {'Authorization': 'Bearer ' + token}
+                             headers: {'Authorization': 'Bearer ' + token,
+                                        'Accept-language':global.culture
+                             },
+
                            })
                    .then( response =>{
                        if(response.status==200){

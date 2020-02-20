@@ -43,12 +43,13 @@ class Dashboard extends React.Component<Props> {
     }
  async sendRequest(){
         let token=await fetchJwToken();console.log('send:'+token);
-        let url=global.webApiBaseUrl+'api/Values';
+        let url=global.webApiBaseUrl+'api/Values';let cul=global.culture;console.log(cul);
         console.log(url);
         fetch(url, {
           method: 'GET',
           headers: {
-            'Authorization': 'Bearer ' + token
+            'Authorization': 'Bearer ' + token,
+             'Accept-language':cul
           }
         })
         .then(res =>{

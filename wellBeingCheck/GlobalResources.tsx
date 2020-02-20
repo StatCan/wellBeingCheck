@@ -37,6 +37,9 @@ export const resources = {
             "match_password_error": "You must provide matched password and secrity question and answer !",
             "ok": "Ok",
             "term_and condition_content": "When you continue use this app, that means you automatically agree on this Term and condition.",
+            "Your feeling this week":"Your feeling this week",
+             "Detail":"Detail",
+             "Summary":"Summary",
         },
         fr: {
             //global
@@ -71,6 +74,10 @@ export const resources = {
             "match_password_error": "Vous devez fournir un mot de passe, une question de sécurité et une réponse correspondants!",
             "ok": "D'accord",
             "term_and condition_content": "Lorsque vous continuez à utiliser cette application, cela signifie que vous acceptez automatiquement ces conditions générales.",
+            "Your feeling this week":"Votre ressenti cette semaine",
+            "Detail":"Détail",
+            "Summary":"Sommaire",
         }
+
     }
 };

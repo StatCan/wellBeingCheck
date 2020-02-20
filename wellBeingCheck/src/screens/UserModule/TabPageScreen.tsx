@@ -1,11 +1,14 @@
 //This is an example of React Native Tab
 import React from 'react';
-import { Image,View,Button,Text,ScrollView,Dimensions,AsyncStorage} from 'react-native';
+import { Image,View,Button,Text,ScrollView,Dimensions,AsyncStorage,StyleSheet,TouchableOpacity} from 'react-native';
 import {createAppContainer} from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
 import { Ionicons,EvilIcons,Feather } from '@expo/vector-icons';
+import { Provider as PaperProvider, Title, Paragraph } from 'react-native-paper';
 import FullWidthImage from './FullWidthScreen';
+import { newTheme } from '../../core/theme';
+import { resources } from '../../../GlobalResources';
 
 import {
   NavigationParams,
@@ -34,7 +37,8 @@ class FirstPage extends React.Component {
    	    this.state = {pictureBase64: null, width: 0,height: 0};
     }
    loadImage() {
-   	    AsyncStorage.getItem('image1', (error, result) => {
+        let imageId='image2';if(global.culture=='fr')imageId='image3';
+   	    AsyncStorage.getItem(imageId, (error, result) => {
    	      if (!error && result != null){
                    this.setState({ pictureBase64: result });
               }
@@ -55,6 +59,7 @@ class FirstPage extends React.Component {
         });
              this.loadImage();
         }
+    helpClick(){alert("asdfasdfasdf");}
    _onLayout(event) {
            const containerWidth = event.nativeEvent.layout.width;
             Image.getSize(this.state.pictureBase64, (w, h) => {
@@ -66,9 +71,15 @@ class FirstPage extends React.Component {
        }
    render() {
    	    return (
-   	      <View style={{ flex: 1,marginTop:10 }}>
+   	      <View style={{ flex: 1,backgroundColor:'white' }}>
    	        {this.state.pictureBase64 && (
                 <View onLayout={this._onLayout.bind(this)}>
+                    <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                             <Title style={styles.title}>{resources.getString("Your feeling this week")}</Title>
+                             <TouchableOpacity onPress={() => this.helpClick()} style={{marginRight:0}}><EvilIcons name="question" size={34} color="black" /></TouchableOpacity>
+                    </View>
+                   <View>
+                   </View>
                    <ScrollView  maximumZoomScale={4} minimumZoomScale={1}  bouncesZoom={true}>
                    <Image source={{ uri: this.state.pictureBase64 }}  style={{width: this.state.width,height: this.state.height }} />
                    </ScrollView>
@@ -84,13 +95,14 @@ class SecondPage extends React.Component {
    	    this.state = {pictureBase64: null, width: 0,height: 0};
     }
    loadImage() {
-   	    AsyncStorage.getItem('image2', (error, result) => {
-   	     if (!error && result != null){
-                            this.setState({ pictureBase64: result });
-                       }
-                       else {
-                           // do something else
-                       }
+        let imageId='image4';if(global.culture=='fr')imageId='image5';
+   	    AsyncStorage.getItem(imageId, (error, result) => {
+   	      if (!error && result != null){
+                   this.setState({ pictureBase64: result });
+              }
+              else {
+                  // do something else
+              }
    	    })
    	  }
     componentDidMount() {
@@ -105,6 +117,7 @@ class SecondPage extends React.Component {
         });
              this.loadImage();
         }
+    helpClick(){alert("asdfasdfasdf");}
    _onLayout(event) {
            const containerWidth = event.nativeEvent.layout.width;
             Image.getSize(this.state.pictureBase64, (w, h) => {
@@ -116,12 +129,18 @@ class SecondPage extends React.Component {
        }
    render() {
    	    return (
-   	      <View style={{ flex: 1,marginTop:10 }}>
+   	      <View style={{ flex: 1,backgroundColor:'white' }}>
    	        {this.state.pictureBase64 && (
                 <View onLayout={this._onLayout.bind(this)}>
-                <ScrollView  maximumZoomScale={4} minimumZoomScale={1}  bouncesZoom={true}>
-                   <Image source={{ uri: this.state.pictureBase64 }} style={{width: this.state.width,height: this.state.height }} />
-                 </ScrollView>
+                    <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                             <Title style={styles.title}>{resources.getString("Your feeling this week")}</Title>
+                             <TouchableOpacity onPress={() => this.helpClick()} style={{marginRight:0}}><EvilIcons name="question" size={34} color="black" /></TouchableOpacity>
+                    </View>
+                   <View>
+                   </View>
+                   <ScrollView  maximumZoomScale={4} minimumZoomScale={1}  bouncesZoom={true}>
+                   <Image source={{ uri: this.state.pictureBase64 }}  style={{width: this.state.width,height: this.state.height }} />
+                   </ScrollView>
                   </View>
    	        )}
    	      </View>
@@ -134,13 +153,14 @@ class ThirdPage extends React.Component {
    	    this.state = {pictureBase64: null, width: 0,height: 0};
     }
    loadImage() {
-   	    AsyncStorage.getItem('image3', (error, result) => {
+        let imageId='image6';if(global.culture=='fr')imageId='image7';
+   	    AsyncStorage.getItem(imageId, (error, result) => {
    	      if (!error && result != null){
-                             this.setState({ pictureBase64: result });
-                        }
-                        else {
-                            // do something else
-                        }
+                   this.setState({ pictureBase64: result });
+              }
+              else {
+                  // do something else
+              }
    	    })
    	  }
     componentDidMount() {
@@ -155,6 +175,7 @@ class ThirdPage extends React.Component {
         });
              this.loadImage();
         }
+    helpClick(){alert("asdfasdfasdf");}
    _onLayout(event) {
            const containerWidth = event.nativeEvent.layout.width;
             Image.getSize(this.state.pictureBase64, (w, h) => {
@@ -166,209 +187,15 @@ class ThirdPage extends React.Component {
        }
    render() {
    	    return (
-   	      <View style={{ flex: 1,marginTop:10 }}>
+   	      <View style={{ flex: 1,backgroundColor:'white' }}>
    	        {this.state.pictureBase64 && (
                 <View onLayout={this._onLayout.bind(this)}>
-                 <ScrollView  maximumZoomScale={4} minimumZoomScale={1}  bouncesZoom={true}>
-                   <Image source={{ uri: this.state.pictureBase64 }} style={{width: this.state.width,height: this.state.height }} />
-                  </ScrollView>
-                 </View>
-   	        )}
-   	      </View>
-   	    );
-   	  }
-   	}
-class ThirdAPage extends React.Component {
-   constructor(props) {
-   	    super(props);
-   	    this.state = {pictureBase64: null, width: 0,height: 0};
-    }
-   loadImage() {
-   	    AsyncStorage.getItem('image4', (error, result) => {
-   	     if (!error && result != null){
-                            this.setState({ pictureBase64: result });
-                       }
-                       else {
-                           // do something else
-                       }
-   	    })
-   	  }
-    componentDidMount() {
-             this.props.navigation.addListener('didFocus', () => {
-             if(global.needReload1){
-                  d=new Date();
-                  timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-                  global.needReload1=false;
-                  this.setState({timeStamp:timeStamp});
-             }
-
-        });
-             this.loadImage();
-        }
-   _onLayout(event) {
-           const containerWidth = event.nativeEvent.layout.width;
-            Image.getSize(this.state.pictureBase64, (w, h) => {
-                           this.setState({
-                               width: height*w/h,
-                               height: height
-                           });
-                       });
-       }
-   render() {
-   	    return (
-   	      <View style={{ flex: 1,marginTop:10 }}>
-   	        {this.state.pictureBase64 && (
-                <View onLayout={this._onLayout.bind(this)}>
-                   <ScrollView horizontal   style={{height:height,padding:10}}  maximumZoomScale={2} minimumZoomScale={1}  bouncesZoom={true}>
-                   <Image source={{ uri: this.state.pictureBase64 }} style={{width: this.state.width,height: this.state.height }} />
-                   </ScrollView>
-                  </View>
-   	        )}
-   	      </View>
-   	    );
-   	  }
-   	}
-class ThirdBPage extends React.Component {
-   constructor(props) {
-   	    super(props);
-   	    this.state = {pictureBase64: null, width: 0,height: 0};
-    }
-   loadImage() {
-   	    AsyncStorage.getItem('image5', (error, result) => {
-   	    if (!error && result != null){
-                           this.setState({ pictureBase64: result });
-                      }
-                      else {
-                          // do something else
-                      }
-   	    })
-   	  }
-    componentDidMount() {
-             this.props.navigation.addListener('didFocus', () => {
-             if(global.needReload1){
-                  d=new Date();
-                  timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-                  global.needReload1=false;
-                  this.setState({timeStamp:timeStamp});
-             }
-
-        });
-             this.loadImage();
-        }
-   _onLayout(event) {
-           const containerWidth = event.nativeEvent.layout.width;
-            Image.getSize(this.state.pictureBase64, (w, h) => {
-                           this.setState({
-                               width: width,
-                               height: width * h / w
-                           });
-                       });
-       }
-   render() {
-   	    return (
-   	      <View style={{ flex: 1,marginTop:10 }}>
-   	        {this.state.pictureBase64 && (
-                <View onLayout={this._onLayout.bind(this)}>
-                 <ScrollView  maximumZoomScale={4} minimumZoomScale={1}  bouncesZoom={true}>
-                   <Image source={{ uri: this.state.pictureBase64 }} style={{width: this.state.width,height: this.state.height }} />
-                  </ScrollView>
-                 </View>
-   	        )}
-   	      </View>
-   	    );
-   	  }
-   	}
-class ForthPage extends React.Component {
-   constructor(props) {
-   	    super(props);
-   	    this.state = {pictureBase64: null, width: 0,height: 0};
-    }
-   loadImage() {
-   	    AsyncStorage.getItem('image6', (error, result) => {
-   	     if (!error && result != null){
-                            this.setState({ pictureBase64: result });
-                       }
-                       else {
-                           // do something else
-                       }
-   	    })
-   	  }
-    componentDidMount() {
-             this.props.navigation.addListener('didFocus', () => {
-             if(global.needReload1){
-                  d=new Date();
-                  timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-                  global.needReload1=false;
-                  this.setState({timeStamp:timeStamp});
-             }
-
-        });
-             this.loadImage();
-        }
-   _onLayout(event) {
-           const containerWidth = event.nativeEvent.layout.width;
-            Image.getSize(this.state.pictureBase64, (w, h) => {
-                           this.setState({
-                               width: width,
-                               height: width * h / w
-                           });
-                       });
-       }
-   render() {
-   	    return (
-   	      <View style={{ flex: 1,marginTop:10 }}>
-   	        {this.state.pictureBase64 && (
-                <View onLayout={this._onLayout.bind(this)}>
-                   <ScrollView  maximumZoomScale={4} minimumZoomScale={1}  bouncesZoom={true}>
-                   <Image source={{ uri: this.state.pictureBase64 }}  style={{width: this.state.width,height: this.state.height }} />
-                   </ScrollView>
-                  </View>
-   	        )}
-   	      </View>
-   	    );
-   	  }
-   	}
-class FifthPage extends React.Component {
-   constructor(props) {
-   	    super(props);
-   	    this.state = {pictureBase64: null, width: 0,height: 0};
-    }
-   loadImage() {
-   	    AsyncStorage.getItem('image7', (error, result) => {
-   	      if (!error && result != null){
-                             this.setState({ pictureBase64: result });
-                        }
-                        else {
-                            // do something else
-                        }
-   	    })
-   	  }
-    componentDidMount() {
-             this.props.navigation.addListener('didFocus', () => {
-             if(global.needReload1){
-                  d=new Date();
-                  timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-                  global.needReload1=false;
-                  this.setState({timeStamp:timeStamp});
-             }
-
-        });
-             this.loadImage();
-        }
-   _onLayout(event) {
-           const containerWidth = event.nativeEvent.layout.width;
-            Image.getSize(this.state.pictureBase64, (w, h) => {
-                           this.setState({
-                               width: width,
-                               height: width * h / w
-                           });
-                       });
-       }
-   render() {
-   	    return (
-   	      <View style={{ flex: 1,marginTop:10 }}>
-   	        {this.state.pictureBase64 && (
-                <View onLayout={this._onLayout.bind(this)}>
+                    <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                             <Title style={styles.title}>{resources.getString("Your feeling this week")}</Title>
+                             <TouchableOpacity onPress={() => this.helpClick()} style={{marginRight:0}}><EvilIcons name="question" size={34} color="black" /></TouchableOpacity>
+                    </View>
+                   <View>
+                   </View>
                    <ScrollView  maximumZoomScale={4} minimumZoomScale={1}  bouncesZoom={true}>
                    <Image source={{ uri: this.state.pictureBase64 }}  style={{width: this.state.width,height: this.state.height }} />
                    </ScrollView>
@@ -381,81 +208,38 @@ class FifthPage extends React.Component {
 
 let TabScreen = createMaterialTopTabNavigator(
   {
-        Home: {
+        Location: {
             screen: FirstPage,
             navigationOptions: {
-                    tabBarLabel:"☹",
+                    tabBarLabel:"□",
                     tabBarIcon: ({ tintColor }) => (
                       <Feather name="airplay" size={20} color="black" />
                      // <AntDesign name="meh" size={25} color="green" />
                     ),
-                    tabBarOnPress:({navigation,defaultHandler})=>{
-                       //alert(navigation)
-                    }
 
                   },
 
              },
-        Settings: {
+        People: {
              screen: SecondPage,
              navigationOptions: {
-                                               tabBarLabel:"◻",
+                                               tabBarLabel:"△",
                                                tabBarIcon: ({ tintColor }) => (
                                                //  <Icon name="users" size={30} color="black" />
                                                // <EvilIcons name="gear" size={32} color="green" />
                                                <Feather name="bar-chart" size={20} color="black" />
                                                )
                                              } },
-        Mood: {
+        Activity: {
                  screen: ThirdPage,
                  navigationOptions: {
-                                                   tabBarLabel:"☈",
+                                                   tabBarLabel:"◯",
                                                    tabBarIcon: ({ tintColor }) => (
                                                    //  <Icon name="users" size={30} color="black" />
                                                    // <EvilIcons name="gear" size={32} color="green" />
                                                    <Feather name="crosshair" size={20} color="black" />
                                                    )
                                                  } },
-        MoodA: {
-                                                                  screen: ThirdAPage,
-                                                                  navigationOptions: {
-                                                                                                    tabBarLabel:"⇉",
-                                                                                                    tabBarIcon: ({ tintColor }) => (
-                                                                                                    //  <Icon name="users" size={30} color="black" />
-                                                                                                    // <EvilIcons name="gear" size={32} color="green" />
-                                                                                                    <Feather name="crosshair" size={20} color="black" />
-                                                                                                    )
-                                                                                                  } },
-        MoodB: {
-                         screen: ThirdBPage,
-                         navigationOptions: {
-                                                           tabBarLabel:"↯",
-                                                           tabBarIcon: ({ tintColor }) => (
-                                                           //  <Icon name="users" size={30} color="black" />
-                                                           // <EvilIcons name="gear" size={32} color="green" />
-                                                           <Feather name="crosshair" size={20} color="black" />
-                                                           )
-                                                         } },
-        Activity: {
-                                                              screen: ForthPage,
-                                                              navigationOptions: {
-                                                                                                tabBarLabel:"⛯",
-                                                                                                tabBarIcon: ({ tintColor }) => (
-                                                                                                //  <Icon name="users" size={30} color="black" />
-                                                                                                // <EvilIcons name="gear" size={32} color="green" />
-                                                                                                <Feather name="activity" size={20} color="black" />
-                                                                                                )
-                                                                                              } },
-        Table: {
-                                                              screen: FifthPage,
-                                                              navigationOptions: {
-                                                                                                tabBarLabel:"☶",
-                                                                                                tabBarIcon: ({ tintColor }) => (
-                                                                                                //  <Icon name="users" size={30} color="black" />
-                                                                                                // <EvilIcons name="gear" size={32} color="green" />
-                                                                                                <Feather name="grid" size={20} color="black" />
-                                                                                                )
-                                                                                              } },
   },
   {
   // pagerComponent: ViewPagerAdapter,
@@ -506,6 +290,60 @@ const App = createStackNavigator({
   },
 });
 
+const styles = StyleSheet.create({
+  content: {
+    marginLeft: 20,
+    marginBottom: 20,
+  },
+  logo_container: {
+    position: 'relative',
+    marginTop: 20,
+    marginLeft: 20,
+  },
+  title: {
+    marginTop: 20,
+    marginLeft: 20,
+    color: '#707070',
+    marginBottom: 20,
+    fontFamily: 'sans-serif-medium',
+  },
+  content_title: {
+    color: '#50bfa6'
+  },
+  btnNext: {
+    color: newTheme.colors.whiteText,
+    width: 100,
+    alignSelf: "flex-end",
+    marginRight: 20,
+    marginBottom: 10,
+  },
+  btnDetail: {
+      color: 'white',
+      width: 100,
+      alignSelf: "center",
+      marginLeft: 20,
+      marginBottom: 10,
+    },
+  btnText: {
+    color: newTheme.colors.whiteText,
+  },
+  container: {
+    // flex: 1,
+    width: '100%',
+    height: '85%'
+  },
+  scrollView: {
+    width: '100%',
+    // marginHorizontal: 20,
+  },
+  paragraph: {
+    alignSelf: 'baseline',
+    fontSize: 15,
+    width: '100%',
+    end: 0,
+    direction: "ltr"
+  },
+});
 export default createAppContainer(App);
 
 

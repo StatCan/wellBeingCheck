@@ -1,90 +1,167 @@
-import React from 'react';
-import { Text, View,ScrollView, StyleSheet,TouchableOpacity,Dimensions,Image,ActivityIndicator ,AsyncStorage} from 'react-native';
-import { Ionicons,EvilIcons,Feather,AntDesign } from '@expo/vector-icons';
-import Constants from 'expo-constants';
+import React, { memo } from 'react';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView,AsyncStorage,Dimensions,Image } from 'react-native';
 import Button from '../../components/Button';
+import { Provider as PaperProvider, Title, Paragraph } from 'react-native-paper';
 import { newTheme } from '../../core/theme';
+import AppBanner from '../../components/AppBanner';
+import LogoClearSmall from '../../components/LogoClearSmall';
+import { resources } from '../../../GlobalResources';
+import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
+import BackgroundWhite from '../../components/BackgroundWhite';
 
-const deviceHeight =Math.floor(Dimensions.get('window').height);
-const deviceWidth =Math.floor(Dimensions.get('window').width);
-import {
-  NavigationParams,
-  NavigationScreenProp,
-  NavigationState,Model,
-} from 'react-navigation';
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
-export default class App extends React.Component {
-      constructor(props) {
-      super(props);
-      this.state = {pictureBase64: null, width: 0,height: 0};
-      }
-    loadImage() {
-       	    AsyncStorage.getItem('image0', (error, result) => {
+const deviceHeight =Math.floor(Dimensions.get('window').height);
+const deviceWidth =Math.floor(Dimensions.get('window').width);
 
-       	      if (!error && result != null){
-                       this.setState({ pictureBase64: result });
-                  }
-                  else {
-                      // do something else
-                  }
-       	    })
-       	  }
-    componentDidMount() {
-               this.props.navigation.addListener('didFocus', () => {
-               if(global.needReload1){
-                    d=new Date();
-                    timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-                    global.needReload1=false;
-                    this.setState({timeStamp:timeStamp});
-               }
+export default class ResultSummaryScreen extends React.Component<Props, AboutScreen> {
+    constructor(props) {
+       super(props);
+       this.state = {pictureBase64: null, width: 0,height: 0};
+       }
+     loadImage() {
+         let imageId='image0';if(global.culture=='fr')imageId='image1';
+        	    AsyncStorage.getItem(imageId, (error, result) => {
 
-          });
-               this.loadImage();
-               if(this.myScroll!=null)this.myScroll.scrollTo({ x: 0, y: 100, animated: true });
+        	      if (!error && result != null){
+                        this.setState({ pictureBase64: result });
+                   }
+                   else {
+                       // do something else
+                   }
+        	    })
+        	  }
+     componentDidMount() {
+                this.props.navigation.addListener('didFocus', () => {
+                if(global.needReload1){
+                     let d=new Date();
+                     timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
+                     global.needReload1=false;
+                     this.setState({timeStamp:timeStamp});
+                }
+
+           });
+                this.loadImage();
+                if(this.myScroll!=null)this.myScroll.scrollTo({ x: 0, y: 100, animated: true });
+           }
+     _onLayout(event) {
+              const containerWidth = event.nativeEvent.layout.width;
+               Image.getSize(this.state.pictureBase64, (w, h) => {
+                              this.setState({
+                                  width: (deviceHeight-100)*w/h,
+                                  height:(deviceHeight-100)
+                              });
+                          });
           }
-    _onLayout(event) {
-             const containerWidth = event.nativeEvent.layout.width;
-              Image.getSize(this.state.pictureBase64, (w, h) => {
-                             this.setState({
-                                 width: (deviceHeight-100)*w/h,
-                                 height:(deviceHeight-100)
-                             });
-                         });
-         }
+
+
+
+  _onNextBtnHandle = () => {
+    this.props.navigation.navigate('Dashboard');
+  }
+
   render() {
     return (
-       <View style={{ flex: 1,marginTop:10 }}>
-         <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{marginLeft:0}}><EvilIcons name="arrow-left" size={32} color="black" /></TouchableOpacity>
-                <Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:34,height:34}} />
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('ResultScreen')} style={{marginRight:0}}><AntDesign name="switcher" size={28} color="black" /></TouchableOpacity>
+
+      <PaperProvider theme={newTheme}>
+
+
+        <BackgroundWhite>
+
+          <View style={styles.logo_container}>
+            <LogoClearSmall />
           </View>
-              {this.state.pictureBase64 && (
-                       <View onLayout={this._onLayout.bind(this)} style={{height:deviceHeight-100,justifyContent:'center'}}>
+
+          <SafeAreaView style={styles.container}>
+            <ScrollView style={styles.scrollView}>
+              <Title style={styles.title}>{resources.getString("Your feeling this week")}</Title>
+
+              <View style={styles.content}>
+                     {this.state.pictureBase64 && (
+                       <View onLayout={this._onLayout.bind(this)} style={{height:deviceHeight-150,justifyContent:'center'}}>
                             <ScrollView  maximumZoomScale={4} minimumZoomScale={1}  bouncesZoom={true} contentContainerStyle={{justifyContent:'center'}}>
                                 <View>
                                    <Image source={{ uri: this.state.pictureBase64 }}  style={{width: deviceWidth,height: deviceHeight,marginTop:-60 }} />
                                </View>
-
                             </ScrollView>
                        </View>
                )}
-          <View style={{flex:1,width:100,height:30,justifyContent:'center',alignItems:'center',alignSelf:'center'}}>
-             <Button mode="contained" onPress={() => this.props.navigation.navigate('ResultScreen')}>
-                <Text style={styles.whiteText}>Detail</Text>
-             </Button>
-          </View>
-       </View>
-          );
+              </View>
+
+
+            </ScrollView>
+          </SafeAreaView>
+
+        </BackgroundWhite>
+        <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+        <Button style={styles.btnDetail}  onPress={() => this.props.navigation.navigate('ResultScreen')}  mode="contained"   >
+                <Text style={styles.btnText}>{resources.getString("Detail")}</Text>
+                </Button>
+        <Button style={styles.btnNext}
+          mode="contained"
+          onPress={this._onNextBtnHandle}>
+          <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
+        </Button>
+</View>
+      </PaperProvider>
+    );
   }
 }
 
 const styles = StyleSheet.create({
-  whiteText: {
-    color: newTheme.colors.whiteText
-  }
+  content: {
+    marginLeft: 20,
+    marginBottom: 20,
+  },
+  logo_container: {
+    position: 'relative',
+    marginTop: 20,
+    marginLeft: 20,
+  },
+  title: {
+    marginTop: 20,
+    marginLeft: 20,
+    color: '#707070',
+    marginBottom: 20,
+    fontFamily: 'sans-serif-medium',
+  },
+  content_title: {
+    color: '#50bfa6'
+  },
+  btnNext: {
+    color: newTheme.colors.whiteText,
+    width: 100,
+    alignSelf: "flex-end",
+    marginRight: 20,
+    marginBottom: 10,
+  },
+  btnDetail: {
+      color: 'white',
+      width: 100,
+      alignSelf: "center",
+      marginLeft: 20,
+      marginBottom: 10,
+    },
+  btnText: {
+    color: newTheme.colors.whiteText,
+  },
+  container: {
+    // flex: 1,
+    width: '100%',
+    height: '85%'
+  },
+  scrollView: {
+    width: '100%',
+    // marginHorizontal: 20,
+  },
+  paragraph: {
+    alignSelf: 'baseline',
+    fontSize: 15,
+    width: '100%',
+    end: 0,
+    direction: "ltr"
+  },
 });
 
-//<TouchableOpacity style={{height:24,width:100,borderColor:'lightblue'}} onPress={() => this.props.navigation.navigate('ResultScreen')}><Text style={{fontSize:12}}>Detail</Text></TouchableOpacity>
+//export default memo(AboutScreen);
