@@ -14,6 +14,7 @@ import {
   NavigationScreenProp,
   NavigationState,
 } from 'react-navigation';
+import { resources } from '../../GlobalResources';
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
@@ -22,24 +23,46 @@ interface Props {
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
 
-class Dashboard extends React.Component<Props> {
+type HomeState = {
+  refresh: string 
+}
+
+class Dashboard extends React.Component<Props, HomeState> {
+
+  constructor(HomeState) {
+    super(HomeState)
+    this.state = {
+      refresh: '1' 
+    };
+    this._refresh = this._refresh.bind(this);
+  }
+
+  _refresh(){
+
+    // Force refresh Home Screen as a Back action on Stack Navigator does not call
+    // any lifecycle methods including render()
+    if (global.debugMode) console.log("Refreshing Home Screen...");
+    if (global.debugMode) console.log("The language set is: " + resources.culture);
+    this.setState({ refresh: '1' });
+  }
+
   render() {
 
     return (
       <Background>
         <View style={styles.homeContainer}>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{ alignSelf: 'flex-end' }}><EvilIcons name="gear" style={styles.gearIcon} size={32} color="black" /></TouchableOpacity>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen', { refresh: this._refresh })} style={{ alignSelf: 'flex-end' }}><EvilIcons name="gear" style={styles.gearIcon} size={32} color="black" /></TouchableOpacity>
           <TouchableOpacity onPress={() => { global.needReload1 = true; global.needReload2 = true; global.needReload3 = true; global.needReload4 = true; global.needReload5 = true; global.needReload6 = true; global.needReload7 = true; this.props.navigation.navigate('EQSurveyScreen'); }} style={{ flex: 2, justifyContent: 'center' }}>
             <View style={styles.outer}>
               <View style={styles.inner}>
-                <Text style={styles.startButtonText}>START MY SURVEY</Text>
+                <Text style={styles.startButtonText}>{resources.getString("start_survey")}</Text>
               </View>
             </View>
           </TouchableOpacity>
           <View style={[styles.homeContainer, { marginBottom: 10 }, { flexDirection: 'row', flex: 1 }]}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('ResultScreen')} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>Dashboard</Text></TouchableOpacity>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')} style={styles.smallButton}><EvilIcons name="question" size={40} color="white" /><Text style={styles.smallButtonText}>About</Text></TouchableOpacity>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}><Feather name="phone" size={40} color="white" /><Text style={styles.smallButtonText}>Contact</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('ResultScreen')} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("result")}</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')} style={styles.smallButton}><EvilIcons name="question" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("about")}</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}><Feather name="phone" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("contact_us")}</Text></TouchableOpacity>
           </View>
         </View>
       </Background>
