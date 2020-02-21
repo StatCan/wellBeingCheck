@@ -1,5 +1,5 @@
 import React, { memo, useState, useCallback } from 'react';
-import { Picker, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Picker, View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Background from '../../components/Background';
 import Logo from '../../components/Logo';
@@ -10,6 +10,7 @@ import BackButton from '../../components/BackButton';
 import { theme, newTheme } from '../../core/theme';
 import { resources } from '../../../GlobalResources';
 //import { Navigation } from '../../types';
+import { EvilIcons, Feather } from '@expo/vector-icons';
 
 import {
   NavigationParams,
@@ -23,7 +24,7 @@ import {
   securityQuestionValidator,
   securityAnswerValidator,
 } from '../../core/utils';
-import { Drawer, Title } from 'react-native-paper';
+import { Drawer, Title, Provider, Portal, Dialog, Paragraph } from 'react-native-paper';
 import LogoClear from '../../components/LogoClear';
 import LogoClearSmall from '../../components/LogoClearSmall';
 
@@ -36,6 +37,7 @@ type RegisterState = {
   securityQuestionError: string,
   securityAnswer: string,
   securityAnswerError: string,
+  modalShow: boolean,
 }
 
 interface Props {
@@ -55,6 +57,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
       securityQuestionError: "",
       securityAnswer: "",
       securityAnswerError: "",
+      modalShow: false,
     };
     //this._retrieveData('user_password');
     this._accountAlreadyExists();
@@ -69,13 +72,44 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     }
   }
 
+  _getPasswordErrorText(errorCode) {
+    switch (errorCode) {
+      case 200:
+        return '';
+      break;
+      case 10:
+        return resources.getString("reg.pass.validation.empty")
+      break;
+      case 20:
+        return resources.getString("reg.pass.validation.min_eight")
+      break;
+      case 30:
+        return resources.getString("reg.pass.validation.upper")
+      break;
+      case 40:
+        return resources.getString("reg.pass.validation.special")
+      break;
+      case 50:
+        return resources.getString("reg.pass.validation.lower")
+      break;
+      case 60:
+        return resources.getString("reg.pass.validation.number")
+      break;
+      default:
+        return '';
+    }  
+  }
+
   _validateForm = () => {
     const isPasswordValid = passwordValidator(this.state.password);
     const isPasswordConfirmValid = passwordConfirmValidator(this.state.password, this.state.passwordConfirm);
     const isSecurityQuestionValid = securityQuestionValidator(this.state.securityQuestion);
     const isSecurityAnswerValid = securityAnswerValidator(this.state.securityAnswer);
 
-    if ((isPasswordValid == '') && (isPasswordConfirmValid == '') && (isSecurityQuestionValid == '') && (isSecurityAnswerValid == '')) {
+    //translate password error
+    let passwordErrorText = this._getPasswordErrorText(isPasswordValid)
+
+    if ((isPasswordValid == 200) && (isPasswordConfirmValid == '') && (isSecurityQuestionValid == '') && (isSecurityAnswerValid == '')) {
       this.setState({ passwordError: '' });
       this.setState({ passwordConfirmError: '' });
       this.setState({ securityQuestionError: '' });
@@ -83,7 +117,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
       return true;
     }
     else {
-      this.setState({ passwordError: isPasswordValid });
+      this.setState({ passwordError: passwordErrorText });
       this.setState({ passwordConfirmError: isPasswordConfirmValid });
       this.setState({ securityQuestionError: isSecurityQuestionValid });
       this.setState({ securityAnswerError: isSecurityAnswerValid });
@@ -133,6 +167,9 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     }
   }
 
+  _showModal = () => this.setState({ modalShow: true });
+  _hideModal = () => this.setState({ modalShow: false });
+
   render() {
     return (
       <Background>
@@ -142,25 +179,38 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 
         <Title style={styles.title}>Secure your account</Title>
 
-        <TextInput
-          label="Enter password"
-          returnKeyType="next"
-          selectionColor = {newTheme.colors.primary}
-          underlineColor = {newTheme.colors.primary}
-          theme = {newTheme}
-          value={this.state.password}
-          onChangeText={text => this.setState({ password: text })}
-          error={!!this.state.passwordError}
-          errorText={this.state.passwordError}
-          secureTextEntry={true}
-        />
+        <View style={styles.passwordView}>
+          <TextInput
+            label="Enter password"
+            returnKeyType="next"
+            selectionColor={newTheme.colors.primary}
+            underlineColor={newTheme.colors.primary}
+            theme={newTheme}
+            value={this.state.password}
+            onChangeText={text => this.setState({ password: text })}
+            error={!!this.state.passwordError}
+            errorText={this.state.passwordError}
+            secureTextEntry={true}
+          />
+
+          <TouchableOpacity
+            style={styles.passwordHelpBtnBg}
+            onPress={this._showModal}
+          >
+            <Text style={styles.passwordHelpBtnText}>?</Text>
+          </TouchableOpacity>
+
+          {/* <Button mode="outlined" onPress={this._onPasswordHelpPressed} style={styles.btnHelp}>
+            ?
+          </Button> */}
+        </View>
 
         <TextInput
           label="Confirm password"
           returnKeyType="next"
-          selectionColor = {newTheme.colors.primary}
-          underlineColor = {newTheme.colors.primary}
-          theme = {newTheme}
+          selectionColor={newTheme.colors.primary}
+          underlineColor={newTheme.colors.primary}
+          theme={newTheme}
           value={this.state.passwordConfirm}
           onChangeText={text => this.setState({ passwordConfirm: text })}
           error={!!this.state.passwordConfirmError}
@@ -183,15 +233,15 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
         </Picker>
         {this.state.securityQuestionError != '' ? (
           <Text style={styles.errorTest}>{this.state.securityQuestionError}</Text>
-          ): null
+        ) : null
         }
 
         <TextInput
           label="Answer"
           returnKeyType="next"
-          selectionColor = {newTheme.colors.primary}
-          underlineColor = {newTheme.colors.primary}
-          theme = {newTheme}
+          selectionColor={newTheme.colors.primary}
+          underlineColor={newTheme.colors.primary}
+          theme={newTheme}
           value={this.state.securityAnswer}
           onChangeText={text => this.setState({ securityAnswer: text })}
           error={!!this.state.securityAnswerError}
@@ -208,12 +258,114 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
             <Text style={styles.link}>Login</Text>
           </TouchableOpacity>
         </View> */}
+
+        <View>
+          <Portal>
+            <Dialog
+              visible={this.state.modalShow}
+              onDismiss={this._hideModal}>
+              <Dialog.Title>Password Requirments</Dialog.Title>
+              <Dialog.Content>
+                <View style={styles.pr_view}>
+                  <Text style={styles.pr_text}>8 Characters</Text>
+                  <TouchableOpacity style={styles.pr_btn}>
+                    <EvilIcons name="check" />
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.pr_view}>
+                  <Text style={styles.pr_text}>1 Upper case</Text>
+                  <TouchableOpacity style={styles.pr_btn}>
+                    <EvilIcons name="check" />
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.pr_view}>
+                  <Text style={styles.pr_text}>1 Special character</Text>
+                  <TouchableOpacity style={styles.pr_btn}>
+                    <EvilIcons name="check" />
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.pr_view}>
+                  <Text style={styles.pr_text}>1 Lower case</Text>
+                  <TouchableOpacity style={styles.pr_btn}>
+                    <EvilIcons name="check" />
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.pr_view}>
+                  <Text style={styles.pr_text}>1 Number</Text>
+                  <TouchableOpacity style={styles.pr_btn}>
+                    <EvilIcons name="check" />
+                  </TouchableOpacity>
+                </View>
+              </Dialog.Content>
+              <Dialog.Actions>
+                <Button
+                  style={styles.pr_action_btn}
+                  onPress={this._hideModal}>
+                  Ok
+                </Button>
+              </Dialog.Actions>
+            </Dialog>
+          </Portal>
+        </View>
+
       </Background>
+
     );
   }
 }
 
 const styles = StyleSheet.create({
+  pr_action_btn: {
+    flexDirection: 'row',
+    alignSelf: 'flex-end',
+    position: 'relative',
+  },
+  pr_view: {
+  },
+  pr_text: {
+    marginBottom: 8,
+    fontSize: 15,
+    color: 'grey',
+  },
+  pr_btn: {
+    flexDirection: 'row',
+    alignSelf: "flex-end",
+    position: 'relative',
+    right: 0,
+    bottom: 20,
+    fontSize: 50,
+    color: 'green'
+  },
+  passwordHelpBtnText: {
+    fontSize: 25,
+    color: "black",
+  },
+  passwordHelpBtnBg: {
+    backgroundColor: "white",
+    paddingHorizontal: 24,
+    paddingVertical: 10,
+    borderRadius: 2,
+    height: 58,
+    position: 'relative',
+    top: 18,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: 'grey',
+    marginLeft: 1,
+  },
+  passwordView: {
+    flexDirection: 'row',
+    marginLeft: 30,
+    marginRight: 30,
+  },
+  btnHelp: {
+    width: 20,
+    height: 59,
+    position: 'relative',
+    top: 8,
+    borderStyle: 'solid',
+    borderWidth: 2,
+  },
   title: {
     fontSize: 22,
     fontWeight: 'bold',
@@ -250,7 +402,7 @@ const styles = StyleSheet.create({
   pickerItem: {
     color: 'red',
     width: '80%'
-  },
+  }
 });
 
 export default memo(RegisterScreen);
