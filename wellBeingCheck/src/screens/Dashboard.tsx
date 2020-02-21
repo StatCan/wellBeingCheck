@@ -1,7 +1,7 @@
 
 import React, { memo } from 'react';
 import Background from '../components/Background';
-import { View, Text, TextInput, Image, StyleSheet, ImageBackground, Dimensions, TouchableOpacity, AsyncStorage } from 'react-native';
+import { View, Text, TextInput, Image, StyleSheet, ImageBackground, Dimensions, TouchableOpacity, BackHandler } from 'react-native';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
 import Paragraph from '../components/Paragraph';
@@ -37,6 +37,18 @@ class Dashboard extends React.Component<Props, HomeState> {
     this._refresh = this._refresh.bind(this);
   }
 
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+  }
+  
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+  }
+  
+  handleBackButton() {
+    return true;
+  }
+
   _refresh(){
 
     // Force refresh Home Screen as a Back action on Stack Navigator does not call
@@ -50,6 +62,7 @@ class Dashboard extends React.Component<Props, HomeState> {
 
     return (
       <Background>
+        <LogoClearSmall/>
         <View style={styles.homeContainer}>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen', { refresh: this._refresh })} style={{ alignSelf: 'flex-end' }}><EvilIcons name="gear" style={styles.gearIcon} size={32} color="black" /></TouchableOpacity>
           <TouchableOpacity onPress={() => { global.needReload1 = true; global.needReload2 = true; global.needReload3 = true; global.needReload4 = true; global.needReload5 = true; global.needReload6 = true; global.needReload7 = true; this.props.navigation.navigate('EQSurveyScreen'); }} style={{ flex: 2, justifyContent: 'center' }}>

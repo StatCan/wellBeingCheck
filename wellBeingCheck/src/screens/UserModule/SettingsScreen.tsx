@@ -24,6 +24,7 @@ import { Notifications } from "expo";
 import * as Permissions from 'expo-permissions';
 import {NavigationParams, NavigationScreenProp, NavigationState} from 'react-navigation';
 import { resources } from '../../../GlobalResources';
+import { Provider as PaperProvider, Title } from 'react-native-paper';
 
 var scheduledDateArray = new Array();
 
@@ -131,7 +132,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
     }
   }
 
-  _backButtonPressed(){
+  _backButtonPressed = () => {
 
     if (global.debugMode) console.log("Back button Pressed");
 
@@ -218,9 +219,10 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
       </View>);
     }
     return (
+      <PaperProvider theme={newTheme}>
       <View>
         <View style={styles.toolbar}>
-          <BackButton goBack={() => this._backButtonPressed()}/>
+          {/* <BackButton goBack={() => this._backButtonPressed()}/> */}
           <Text style={styles.toolbarTitle}>{resources.getString("settings")}</Text>
         </View>
         <ScrollView>
@@ -279,19 +281,40 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
         {debugButtons}
         </ScrollView>
       </View>
+      <Button style={styles.btnNext}
+          mode="contained"
+          onPress={this._backButtonPressed}>
+          <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
+      </Button>
+      </PaperProvider>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  bottom: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    marginBottom: 36
+  },
   mainStyle: {
     marginTop: 20
   },
   toolbar: {
     backgroundColor: '#F4D2D1',
-    paddingTop: 68,
+    paddingTop: 40,
     paddingBottom: 15,
     flexDirection: 'row'
+  },
+  btnNext: {
+    color: newTheme.colors.whiteText,
+    width: 120,
+    alignSelf: "flex-end",
+    marginRight: 20,
+    marginBottom: 10,
+  },
+  btnText: {
+    color: newTheme.colors.whiteText,
   },
   toolbarButton: {
     width: 50,
