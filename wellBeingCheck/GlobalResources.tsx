@@ -49,6 +49,7 @@ export const resources = {
             "sleep_time": "Sleep Time",
             "number_notifications": "Number of Notifications",
             "language": "Language:",
+            "about": "About"
         },
         fr: {
             //global
@@ -95,6 +96,7 @@ export const resources = {
             "sleep_time": "Temps de sommeil",
             "number_notifications" : "Nombre de Notifications",
             "language": "Langue:",
+            "about": "About_FR"
         }
     }
 };

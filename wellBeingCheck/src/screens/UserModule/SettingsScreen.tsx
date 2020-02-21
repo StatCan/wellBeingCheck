@@ -137,8 +137,11 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
 
     notificationAlgo(this.state.waketime, this.state.sleeptime, this.state.notificationcount);
 
-    if(this.state.culture==2) resources.culture ='fr';
-    else resources.culture ='en';
+    if(this.state.culture === "2"){
+      resources.culture ='fr';
+    } else if (this.state.culture === "1"){
+      resources.culture ='en';
+    }
 
     if (global.debugMode) console.log("Platform version: " + Platform.Version);
     if (global.debugMode) console.log("Device Name: " + Expo.Constants.deviceName);
@@ -152,8 +155,6 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
     if (global.debugMode) console.log("Scheduled Notification Times: " + scheduledDateArray);
 
     this._storeSettings();
-
-    this.props.navigation.navigate('Dashboard');
   }
 
   _storeSettings = () => {
@@ -168,6 +169,9 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
 
     AsyncStorage.setItem('settings', JSON.stringify(settingsObj), () => {
       if (global.debugMode) console.log("Storing Settings: " , settingsObj);
+
+      this.props.navigation.state.params.refresh();
+      this.props.navigation.navigate('Dashboard');
     });
   }
 
