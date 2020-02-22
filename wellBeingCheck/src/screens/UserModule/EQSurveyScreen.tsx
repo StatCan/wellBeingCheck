@@ -49,7 +49,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
           console.log(count); if(count>0)return;
           console.log('Fetch images....');
           let timeStamp='';
-          let d=new Date();let hh=deviceHeight-220;let hh1=deviceHeight-360;let ww=deviceWidth-60;
+          let d=new Date();let hh=deviceHeight-220;let hh1=deviceHeight-390;let ww=deviceWidth-80;
           timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
           let uri0=global.webApiBaseUrl+'Mood/aaa/'+timeStamp+'/en/'+ww+'/'+hh1;
           let uri1=global.webApiBaseUrl+'Mood/aaa/'+timeStamp+'/fr/'+ww+'/'+hh1;

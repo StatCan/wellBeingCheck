@@ -33,6 +33,7 @@ export default class App extends React.Component<Props,ScreenState> {
       	    this.state = {picture1Base64:null,
                images: [],current:0,title:resources.getString("How you are feeling by location"),helpText:resources.getString("How you are feeling by location help"),
       	     width: 0,height: 0};
+      	     console.log('deviceWid:'+deviceWidth);console.log('deviceWHeight:'+deviceHeight);
        }
      _onNextBtnHandle = () => {
        this.props.navigation.navigate('Dashboard');
@@ -128,7 +129,7 @@ export default class App extends React.Component<Props,ScreenState> {
                                      <TouchableOpacity onPress={() => this.helpClick()} style={{marginRight:0}}><EvilIcons name="question" size={34} color="black" /></TouchableOpacity>
                             </View>
                             <View style={{height:this.state.height}}>
-                            <ScrollView horizontal ref={ref => {this.sv = ref;}} contentContainerStyle={{ paddingVertical: 20,justifyContent:'center', }} onTouchStart={this.log} onScrollEndDrag={this.handleScroll.bind(this)}>
+                            <ScrollView horizontal showsHorizontalScrollIndicator={false} ref={ref => {this.sv = ref;}} contentContainerStyle={{ paddingVertical: 20,justifyContent:'center', }} onTouchStart={this.log} onScrollEndDrag={this.handleScroll.bind(this)}>
                                 {this.state.images.map((item, index) => (
                                   <View onLayout={this._onLayout.bind(this)} style={{height:this.state.height}} key={index}>
                                             <Image source={{ uri: item }}  style={{width: this.state.width,height: this.state.height-60,resizeMode:'stretch'}} />

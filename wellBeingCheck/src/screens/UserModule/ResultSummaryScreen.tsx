@@ -50,8 +50,8 @@ export default class ResultSummaryScreen extends React.Component<Props, AboutScr
               const containerWidth = event.nativeEvent.layout.width;
                Image.getSize(this.state.pictureBase64, (w, h) => {
                               this.setState({
-                                  width: (deviceHeight-100)*w/h,
-                                  height:(deviceHeight-100)
+                                  width: w,
+                                  height:h
                               });
                           });
           }
@@ -77,9 +77,9 @@ export default class ResultSummaryScreen extends React.Component<Props, AboutScr
               <View style={styles.content}>
                      {this.state.pictureBase64 && (
                        <View onLayout={this._onLayout.bind(this)} style={{height:this.state.height,justifyContent:'center'}}>
-                            <ScrollView  maximumZoomScale={4} minimumZoomScale={1}  bouncesZoom={true} contentContainerStyle={{justifyContent:'center'}}>
-                                <View style={{width:this.state.width-240,height:this.state.height-200 }}>
-                                   <Image source={{ uri: this.state.pictureBase64 }}  style={{width:this.state.width-240,height:this.state.height-200,resizeMode:'stretch' }} />
+                            <ScrollView  maximumZoomScale={4} minimumZoomScale={1}  bouncesZoom={true} contentContainerStyle={{justifyContent:'center'}} showsHorizontalScrollIndicator={false}>
+                                <View style={{width:this.state.width,height:this.state.height}}>
+                                   <Image source={{ uri: this.state.pictureBase64 }}  style={{width:this.state.width,height:this.state.height,resizeMode:'stretch' }} />
                                </View>
                             </ScrollView>
                        </View>
