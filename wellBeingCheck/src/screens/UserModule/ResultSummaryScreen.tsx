@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView,AsyncStorage,Dimensions,Image } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView,AsyncStorage,Dimensions,Image,TouchableOpacity } from 'react-native';
 import Button from '../../components/Button';
 import { Provider as PaperProvider, Title, Paragraph } from 'react-native-paper';
 import { newTheme } from '../../core/theme';
@@ -8,6 +8,7 @@ import LogoClearSmall from '../../components/LogoClearSmall';
 import { resources } from '../../../GlobalResources';
 import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
 import BackgroundWhite from '../../components/BackgroundWhite';
+import { Ionicons,EvilIcons,Feather } from '@expo/vector-icons';
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
@@ -25,7 +26,7 @@ export default class ResultSummaryScreen extends React.Component<Props, AboutScr
         	    AsyncStorage.getItem(imageId, (error, result) => {
 
         	      if (!error && result != null){
-                        this.setState({ pictureBase64: result });
+                        this.setState({ pictureBase64: result });console.log('get new graph0');
                    }
                    else {
                        // do something else
@@ -43,7 +44,7 @@ export default class ResultSummaryScreen extends React.Component<Props, AboutScr
 
            });
                 this.loadImage();
-                if(this.myScroll!=null)this.myScroll.scrollTo({ x: 0, y: 100, animated: true });
+                if(this.myScroll!=null)this.myScroll.scrollTo({ x: 0, y: 0, animated: true });
            }
      _onLayout(event) {
               const containerWidth = event.nativeEvent.layout.width;
@@ -65,24 +66,20 @@ export default class ResultSummaryScreen extends React.Component<Props, AboutScr
     return (
 
       <PaperProvider theme={newTheme}>
-
-
         <BackgroundWhite>
-
-          <View style={styles.logo_container}>
-            <LogoClearSmall />
-          </View>
-
+                   <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{marginLeft:0}}><Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:38,height:38}} /></TouchableOpacity>
+                         <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{marginRight:0}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
+                   </View>
           <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.scrollView}>
               <Title style={styles.title}>{resources.getString("Your feeling this week")}</Title>
 
               <View style={styles.content}>
                      {this.state.pictureBase64 && (
-                       <View onLayout={this._onLayout.bind(this)} style={{height:deviceHeight-150,justifyContent:'center'}}>
+                       <View onLayout={this._onLayout.bind(this)} style={{height:this.state.height,justifyContent:'center'}}>
                             <ScrollView  maximumZoomScale={4} minimumZoomScale={1}  bouncesZoom={true} contentContainerStyle={{justifyContent:'center'}}>
-                                <View>
-                                   <Image source={{ uri: this.state.pictureBase64 }}  style={{width: deviceWidth,height: deviceHeight,marginTop:-60 }} />
+                                <View style={{width:this.state.width-240,height:this.state.height-200 }}>
+                                   <Image source={{ uri: this.state.pictureBase64 }}  style={{width:this.state.width-240,height:this.state.height-200,resizeMode:'stretch' }} />
                                </View>
                             </ScrollView>
                        </View>
@@ -90,11 +87,10 @@ export default class ResultSummaryScreen extends React.Component<Props, AboutScr
               </View>
 
 
-            </ScrollView>
           </SafeAreaView>
 
         </BackgroundWhite>
-        <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+
         <Button style={styles.btnDetail}  onPress={() => this.props.navigation.navigate('ResultScreen')}  mode="contained"   >
                 <Text style={styles.btnText}>{resources.getString("Detail")}</Text>
                 </Button>
@@ -103,7 +99,7 @@ export default class ResultSummaryScreen extends React.Component<Props, AboutScr
           onPress={this._onNextBtnHandle}>
           <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
         </Button>
-</View>
+
       </PaperProvider>
     );
   }

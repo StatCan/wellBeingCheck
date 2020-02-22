@@ -43,6 +43,9 @@ export const resources = {
               "How you are feeling by location": "How you are feeling by location",
               "How you are feeling with others":"How you are feeling with others",
               "How you are feeling by activity":"How you are feeling by activity",
+              "How you are feeling by location help":"This is your feeling by location",
+              "How you are feeling with others help":"This is your feeling with others",
+              "How you are feeling by activity help":"This is your feeling by activity",
         },
         fr: {
             //global
@@ -83,6 +86,9 @@ export const resources = {
             "How you are feeling by location":"Comment vous vous sentez par emplacement",
             "How you are feeling with others":"Comment vous vous sentez avec les autres",
             "How you are feeling by activity":"Comment vous vous sentez par activité",
+            "How you are feeling by location help":"C'est votre sentiment par emplacement",
+            "How you are feeling with others help":"C'est votre sentiment avec les autres",
+            "How you are feeling by activity help":"C'est votre sentiment par activité",
         }
 
     }
