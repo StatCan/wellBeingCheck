@@ -41,7 +41,7 @@ class Dashboard extends React.Component<Props> {
           // Error retrieving data
         }
     }
- async sendRequest(){
+    async sendRequest(){
         let token=await fetchJwToken();console.log('send:'+token);
         let url=global.webApiBaseUrl+'api/Values';let cul=global.culture;console.log(cul);
         console.log(url);
@@ -70,9 +70,8 @@ class Dashboard extends React.Component<Props> {
         global.needReload1=true;global.needReload2=true;global.needReload3=true;global.needReload4=true;global.needReload5=true;global.needReload6=true;global.needReload7=true;
         this.props.navigation.navigate('EQSurveyScreen');
     }
-  render() {
-
-    return (
+    render() {
+       return (
       <Background>
         <View style={styles.homeContainer}>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{alignSelf:'flex-end',marginRight:8}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>

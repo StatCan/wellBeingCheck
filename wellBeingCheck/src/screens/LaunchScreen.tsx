@@ -97,6 +97,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
     });
   }
   bootstrapA = async () => {
+      console.log('Prepare confiuration');
       let userToken = await AsyncStorage.getItem('EsmUserToken');
       if (userToken == null)userToken= Constants.deviceId;   //   global.userToken=this.generateShortGuid(24);
       global.userToken=userToken;
@@ -138,6 +139,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
             .catch((error) => {
               console.error(error);global.configurationReady=false; alert("Network error");
             });
+      console.log('Confiuration is ready');
     };
   generateGuid() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {

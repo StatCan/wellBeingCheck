@@ -30,7 +30,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     let jsCode=clearCookie+'document.addEventListener("message", function (message) { document.getElementById("langtest").click(); });var btn = document.createElement("button");btn.style.visibility ="hidden";btn.onclick = switchlang;btn.setAttribute("id", "langtest");document.body.appendChild(btn);    function switchlang() { var a = document.querySelector("a.sc-js-langchange");var href = a.href;if (href.indexOf("/q/fr")>0) {var res = href.replace("/q/fr", "/q/en");a.setAttribute("href", res);a.click();} else if (href.indexOf("/q/en")>0) {var res = href.replace("/q/en", "/q/fr");a.setAttribute("href", res);a.click();} }';
     this.state=({Sacode:'',jsCode:disCode+jsCode});
   }
-  // componentDidMount(){this.fetchImages();}
+ //  componentDidMount(){this.fetchImages();}
    fetchJwToken() {
       let url=global.webApiBaseUrl+'Token/'+global.userToken+'/'+global.password;
       return fetch(url)
@@ -49,7 +49,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
           console.log(count); if(count>0)return;
           console.log('Fetch images....');
           let timeStamp='';
-          let d=new Date();let hh=deviceHeight-220;let hh1=deviceHeight-390;let ww=deviceWidth-80;
+          let d=new Date();let hh=deviceHeight-220;let hh1=deviceHeight-300;let ww=deviceWidth-80;
           timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
           let uri0=global.webApiBaseUrl+'Mood/aaa/'+timeStamp+'/en/'+ww+'/'+hh1;
           let uri1=global.webApiBaseUrl+'Mood/aaa/'+timeStamp+'/fr/'+ww+'/'+hh1;
@@ -82,6 +82,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
 
                            })
                    .then( response =>{
+                       console.log(response.status);
                        if(response.status==200){
                              response.blob()
                              .then(blob =>{
@@ -119,6 +120,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
          else
              uri=global.surveyAUrlFre;
          }
+         console.log('Beofore eq:'+uri);
     return (
           <View style={{ flex: 1, marginTop: 0 }}>
            <View>
