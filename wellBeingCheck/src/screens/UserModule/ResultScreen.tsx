@@ -33,7 +33,6 @@ export default class App extends React.Component<Props,ScreenState> {
       	    this.state = {picture1Base64:null,
                images: [],current:0,title:resources.getString("How you are feeling by location"),helpText:resources.getString("How you are feeling by location help"),
       	     width: 0,height: 0};
-      	     console.log('deviceWid:'+deviceWidth);console.log('deviceWHeight:'+deviceHeight);
        }
      _onNextBtnHandle = () => {
        this.props.navigation.navigate('Dashboard');
@@ -45,7 +44,7 @@ export default class App extends React.Component<Props,ScreenState> {
                     this.setState({ picture1Base64: result });
                     let newArray = [...this.state.images];
                     newArray[0] = result;
-                    this.setState({images: newArray});console.log('get new graph1');
+                    this.setState({images: newArray});
                }
                else {
                    // do something else
@@ -57,7 +56,7 @@ export default class App extends React.Component<Props,ScreenState> {
                          //    this.setState({ picture2Base64: result });
                               let newArray = [...this.state.images];
                                                  newArray[1] = result;
-                                                 this.setState({images: newArray});console.log('get new graph2');
+                                                 this.setState({images: newArray});
                         }
                         else {
                             // do something else
@@ -69,7 +68,7 @@ export default class App extends React.Component<Props,ScreenState> {
                                    //    this.setState({ picture3Base64: result });
                                         let newArray = [...this.state.images];
                                                            newArray[2] = result;
-                                                           this.setState({images: newArray});console.log('get new graph3');
+                                                           this.setState({images: newArray});
                                   }
                                   else {
                                       // do something else
@@ -82,7 +81,7 @@ export default class App extends React.Component<Props,ScreenState> {
   handleScroll(event){
       let width1=this.state.width;
       let x=event.nativeEvent.contentOffset.x;
-      let index=Math.round(x/width1);console.log('Current Page:'+index);
+      let index=Math.round(x/width1);
       let xd=index*width1;
       this.setState({current:index});
       if(index==0){this.setState({helpText:resources.getString("How you are feeling by location help"),title:resources.getString("How you are feeling by location")});}

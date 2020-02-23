@@ -62,9 +62,7 @@ class Dashboard extends React.Component<Props, HomeState> {
   }
 
     async hasImage(){
-        console.log('Check......');
         let value = await AsyncStorage.getItem('hasImage');
-        console.log('check has image:'+value);
            if (value != null){
               hasImage='1';
            }
