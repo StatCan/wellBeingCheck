@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   ScrollView,
   Platform,
-  Switch
+  Switch,
+  AsyncStorage
 } from 'react-native';
-import {AsyncStorage} from 'react-native';
 import Background from '../../components/Background';
 import Logo from '../../components/Logo';
 import Header from '../../components/Header';
@@ -24,6 +24,7 @@ import { Notifications } from "expo";
 import * as Permissions from 'expo-permissions';
 import {NavigationParams, NavigationScreenProp, NavigationState} from 'react-navigation';
 import { resources } from '../../../GlobalResources';
+import { Provider as PaperProvider, Title } from 'react-native-paper';
 
 var scheduledDateArray = new Array();
 
@@ -52,7 +53,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
       waketime: '08:00', 
       sleeptime: '21:00', 
       notificationcount: 2, 
-      culture: 'English' 
+      culture: '1' 
     };
     this.wakeTimeHandler = this.wakeTimeHandler.bind(this);
     this.sleepTimeHandler = this.sleepTimeHandler.bind(this);
@@ -99,6 +100,8 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
     if (global.debugMode) console.log("Settings Screen Component Mounted");
     this.askPermissions();
     this._notificationSubscription = Notifications.addListener(this._handleNotification);
+
+    this._retrieveData('settings');
   }
 
   _handleNotification = (notification) => {
@@ -130,14 +133,17 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
     }
   }
 
-  _backButtonPressed(){
+  _backButtonPressed = () => {
 
-    if (debugMode) console.log("Back button Pressed");
+    if (global.debugMode) console.log("Back button Pressed");
 
     notificationAlgo(this.state.waketime, this.state.sleeptime, this.state.notificationcount);
 
-    if(this.state.culture==2) resources.culture ='fr';
-    else resources.culture ='en';
+    if(this.state.culture === "2"){
+      resources.culture ='fr';
+    } else if (this.state.culture === "1"){
+      resources.culture ='en';
+    }
 
     if (global.debugMode) console.log("Platform version: " + Platform.Version);
     if (global.debugMode) console.log("Device Name: " + Expo.Constants.deviceName);
@@ -150,7 +156,52 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
     if (global.debugMode) console.log("Notification Count: " + this.state.notificationcount);
     if (global.debugMode) console.log("Scheduled Notification Times: " + scheduledDateArray);
 
-    this.props.navigation.navigate('Dashboard');
+    this._storeSettings();
+  }
+
+  _storeSettings = () => {
+    //validation passed lets store user
+    let settingsObj = {
+      notificationState: this.state.notificationState,
+      wakeTime: this.state.waketime,
+      sleepTime: this.state.sleeptime,
+      notificationCount: this.state.notificationcount,
+      culture: this.state.culture
+    };
+
+    AsyncStorage.setItem('settings', JSON.stringify(settingsObj), () => {
+      if (global.debugMode) console.log("Storing Settings: " , settingsObj);
+
+      this.props.navigation.state.params.refresh();
+      this.props.navigation.navigate('Dashboard');
+    });
+  }
+
+  _retrieveData = async (key) => {
+
+    await AsyncStorage.getItem(key, (err, result) => {
+      if (global.debugMode) console.log("The result of getItem is: ", result);
+      if (result) {
+        let resultAsObj = JSON.parse(result);
+        this.setState({ notificationState: resultAsObj.notificationState });
+        this.setState({ notificationcount: resultAsObj.notificationCount });
+        this.setState({ waketime: resultAsObj.wakeTime });
+        this.setState({ sleeptime: resultAsObj.sleepTime });
+        this.setState({ culture: resultAsObj.culture });
+      }
+    });
+  }
+
+  _changeLanguage(c){
+
+    this.setState({culture:c});
+    if (global.debugMode) console.log("Changing language to: " + c);
+
+    if(c === "2"){
+      resources.culture ='fr';
+    } else if (c === "1"){
+      resources.culture ='en';
+    }
   }
 
   render() {
@@ -169,16 +220,17 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
       </View>);
     }
     return (
-      <View>{debugButtons}
+      <PaperProvider theme={newTheme}>
+      <View>
         <View style={styles.toolbar}>
-          <BackButton goBack={() => this._backButtonPressed()}/>
-          <Text style={styles.toolbarTitle}>Settings</Text>
+          {/* <BackButton goBack={() => this._backButtonPressed()}/> */}
+          <Text style={styles.toolbarTitle}>{resources.getString("settings")}</Text>
         </View>
         <ScrollView>
 
         <List.Section style={styles.mainStyle}>
           <List.Item
-            title="Notifications"
+            title={resources.getString("notifications")}
             left={() => <List.Icon icon="bell-alert"/>}
             right={() => <Switch
             style={{margin: 10}}
@@ -191,7 +243,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
           <Divider></Divider>
           <List.Item
             style={styles.listStyle}
-            title="Number of notifications"
+            title={resources.getString("number_notifications")}
           />
           {/* Temporary Implementation */}
           <Picker  
@@ -206,19 +258,19 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
           </Picker>
 
           <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-            <Text style={styles.label}>Wake Time:</Text>
+            <Text style={styles.label}>{resources.getString("wake_time")}</Text>
             <TimePicker time={this.state.waketime} timeType="wakeTime" handler = {this.wakeTimeHandler} />
           </View>
           <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-            <Text style={styles.label}>Sleep Time:</Text>
+            <Text style={styles.label}>{resources.getString("sleep_time")}</Text>
             <TimePicker time={this.state.sleeptime} timeType="sleepTime" handler = {this.sleepTimeHandler} />
           </View>
 
           <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-            <Text style={{marginLeft: 38, fontSize: 16, marginTop: 60}}>Language:</Text>
+            <Text style={{marginLeft: 38, fontSize: 16, marginTop: 60}}>{resources.getString("language")}</Text>
             <Picker  
                 selectedValue={this.state.culture}
-                onValueChange={c => this.setState({culture:c})}
+                onValueChange={c => this._changeLanguage(c)}
                 style={{ width: 100, height:100, marginBottom:20, marginTop:40, justifyContent:'space-around' }}
                 mode="dropdown">
                 <Picker.Item label="English" value="1" />
@@ -229,19 +281,40 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
         {debugButtons}
         </ScrollView>
       </View>
+      <Button style={styles.btnNext}
+          mode="contained"
+          onPress={this._backButtonPressed}>
+          <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
+      </Button>
+      </PaperProvider>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  bottom: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    marginBottom: 36
+  },
   mainStyle: {
     marginTop: 20
   },
   toolbar: {
     backgroundColor: '#F4D2D1',
-    paddingTop: 68,
+    paddingTop: 40,
     paddingBottom: 15,
     flexDirection: 'row'
+  },
+  btnNext: {
+    color: newTheme.colors.whiteText,
+    width: 120,
+    alignSelf: "flex-end",
+    marginRight: 20,
+    marginBottom: 10,
+  },
+  btnText: {
+    color: newTheme.colors.whiteText,
   },
   toolbarButton: {
     width: 50,

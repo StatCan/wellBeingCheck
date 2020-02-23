@@ -76,7 +76,6 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     color: '#707070',
     marginBottom: 20,
-    fontFamily: 'sans-serif-medium',
   },
   content_title: {
     color: '#50bfa6'

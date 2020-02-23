@@ -1,7 +1,7 @@
 
 import React, { memo } from 'react';
 import Background from '../components/Background';
-import { View, Text, TextInput, Image, StyleSheet,ImageBackground,Dimensions,TouchableOpacity,AsyncStorage } from 'react-native';
+import { View, Text, TextInput, Image, StyleSheet, ImageBackground, Dimensions, TouchableOpacity, BackHandler } from 'react-native';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
 import Paragraph from '../components/Paragraph';
@@ -15,19 +15,52 @@ import {
   NavigationState,
 } from 'react-navigation';
 import {fetchJwToken,checkConnection} from '../utils/fetchJwToken';
+import { resources } from '../../GlobalResources';
+
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
 
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
-let hasImage='0';
-class Dashboard extends React.Component<Props> {
-    constructor(props) {
-   	    super(props);
 
-   	    this.hasImage();
-    }
+let hasImage='0';
+type HomeState = {
+  refresh: string 
+}
+
+class Dashboard extends React.Component<Props, HomeState> {
+
+  constructor(HomeState) {
+    super(HomeState);
+     this.hasImage();
+    this.state = {
+      refresh: '1' 
+    };
+    this._refresh = this._refresh.bind(this);
+  }
+
+  componentDidMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+  }
+  
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+  }
+  
+  handleBackButton() {
+    return true;
+  }
+
+  _refresh(){
+
+    // Force refresh Home Screen as a Back action on Stack Navigator does not call
+    // any lifecycle methods including render()
+    if (global.debugMode) console.log("Refreshing Home Screen...");
+    if (global.debugMode) console.log("The language set is: " + resources.culture);
+    this.setState({ refresh: '1' });
+  }
+
     async hasImage(){
         try {
            let value = await AsyncStorage.getItem('hasImage');console.log(value);
@@ -73,12 +106,13 @@ class Dashboard extends React.Component<Props> {
     render() {
        return (
       <Background>
+        <LogoClearSmall/>
         <View style={styles.homeContainer}>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{alignSelf:'flex-end',marginRight:8}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
-          <TouchableOpacity onPress={() =>this.conductSurvey()} style={{flex:2,justifyContent:'center'}}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen', { refresh: this._refresh })} style={{ alignSelf: 'flex-end' }}><EvilIcons name="gear" style={styles.gearIcon} size={32} color="black" /></TouchableOpacity>
+          <TouchableOpacity onPress={() => { global.needReload1 = true; global.needReload2 = true; global.needReload3 = true; global.needReload4 = true; global.needReload5 = true; global.needReload6 = true; global.needReload7 = true; this.props.navigation.navigate('EQSurveyScreen'); }} style={{ flex: 2, justifyContent: 'center' }}>
             <View style={styles.outer}>
               <View style={styles.inner}>
-                <Text style={styles.startButtonText}>START MY SURVEY</Text>
+                <Text style={styles.startButtonText}>{resources.getString("start_survey")}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -86,8 +120,7 @@ class Dashboard extends React.Component<Props> {
             <TouchableOpacity onPress={() =>{if(hasImage=='1')this.props.navigation.navigate('ResultSummaryScreen');else alert('No data found,you have to complete the survey at least once.');}} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>Dashboard</Text></TouchableOpacity>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')} style={styles.smallButton}><EvilIcons name="question" size={40} color="white" /><Text style={styles.smallButtonText}>About</Text></TouchableOpacity>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}><Feather name="phone" size={40} color="white" /><Text style={styles.smallButtonText}>Contact</Text></TouchableOpacity>
-           <TouchableOpacity onPress={() => this.sendRequest()} style={{width:40,height:20,marginLeft:-20}}><Text style={styles.smallButtonText}>Test</Text></TouchableOpacity>
-          </View>
+           </View>
 
         </View>
 
@@ -98,14 +131,46 @@ class Dashboard extends React.Component<Props> {
 
 
 const styles = StyleSheet.create({
-  startButtonText: { fontSize: 25, color: '#fff', textAlign: 'center', fontWeight: '700' },
-  background: { flex: 1, width: deviceWidth, height: null, },
-  homeContainer: { flex: 1, alignItems: 'center', justifyContent: 'space-between', marginTop: 0 },
-  logo: { width: 300, height: 100 },
-  homeButtonContainer: { flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignContent: 'space-between' },
-  homeButtonColumn: { width: 150, height: 150, justifyContent: 'space-between', alignContent: 'space-between' },
-  homeButton: { width: 100 },
-  homeSeperator: { width: 20, height: 150 },
+  gearIcon: {
+  },
+  startButtonText: {
+    fontSize: 25,
+    color: '#fff',
+    textAlign: 'center',
+    fontWeight: '700'
+  },
+  background: {
+    flex: 1,
+    width: deviceWidth,
+    height: null,
+  },
+  homeContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 40
+  },
+  logo: {
+    width: 300,
+    height: 100
+  },
+  homeButtonContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignContent: 'space-between'
+  },
+  homeButtonColumn: {
+    width: 150,
+    height: 150,
+    justifyContent: 'space-between',
+    alignContent: 'space-between'
+  },
+  homeButton: {width: 100  },
+  homeSeperator: {
+    width: 20,
+    height: 150
+  },
   inner: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -122,7 +187,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     width: 220, height: 220,
     alignSelf: 'center',
-
     shadowColor: "gray",
     shadowOffset: {
       width: 10,
@@ -131,8 +195,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 5,
     elevation: 16,
-
-    // boxShadow:15px 5px 10px grey;
     backgroundColor: 'lightgray'
   },
   smallButton: {

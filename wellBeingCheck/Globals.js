@@ -4,7 +4,10 @@ global.question='';
 global.answer='';
 global.timeStamp=0;
 global.surveyACode='';
-global.debugMode=true;
+
+global.doneSurveyA=false;
+global.debugMode=false;
+
 global.needReload1=true;
 global.needReload2=true;
 global.needReload3=true;
