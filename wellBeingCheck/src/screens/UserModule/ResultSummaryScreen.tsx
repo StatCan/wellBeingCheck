@@ -26,7 +26,7 @@ export default class ResultSummaryScreen extends React.Component<Props, AboutScr
         	    AsyncStorage.getItem(imageId, (error, result) => {
 
         	      if (!error && result != null){
-                        this.setState({ pictureBase64: result });console.log('get new graph0');
+                        this.setState({ pictureBase64: result });
                    }
                    else {
                        // do something else
