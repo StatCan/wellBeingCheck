@@ -1,7 +1,7 @@
 
 import React, { memo } from 'react';
 import Background from '../components/Background';
-import { View, Text, TextInput, Image, StyleSheet, ImageBackground, Dimensions, TouchableOpacity, BackHandler } from 'react-native';
+import { View, Text, TextInput, Image, StyleSheet, ImageBackground, Dimensions, TouchableOpacity, BackHandler,AsyncStorage } from 'react-native';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
 import Paragraph from '../components/Paragraph';
@@ -33,7 +33,7 @@ class Dashboard extends React.Component<Props, HomeState> {
 
   constructor(HomeState) {
     super(HomeState);
-     this.hasImage();
+    this.hasImage();
     this.state = {
       refresh: '1' 
     };
@@ -62,17 +62,12 @@ class Dashboard extends React.Component<Props, HomeState> {
   }
 
     async hasImage(){
-        try {
-           let value = await AsyncStorage.getItem('hasImage');console.log(value);
+        console.log('Check......');
+        let value = await AsyncStorage.getItem('hasImage');
+        console.log('check has image:'+value);
            if (value != null){
               hasImage='1';
            }
-           else {
-              // do something else
-          }
-        } catch (error) {
-          // Error retrieving data
-        }
     }
     async sendRequest(){
         let token=await fetchJwToken();console.log('send:'+token);
