@@ -31,45 +31,44 @@ export default class App extends React.Component<Props,ScreenState> {
     constructor(props) {
       	    super(props);
       	    this.state = {picture1Base64:null,
-               images: [],current:0,title:resources.getString("How you are feeling by location"),helpText:resources.getString("How you are feeling by location help"),
+               images: [],current:0,
       	     width: 0,height: 0};
-      	     console.log('deviceWid:'+deviceWidth);console.log('deviceWHeight:'+deviceHeight);
        }
      _onNextBtnHandle = () => {
        this.props.navigation.navigate('Dashboard');
      }
  loadImage() {
-            let imageId='image2';if(global.culture=='fr')imageId='image3';
+         let imageId='image2';if(global.culture=='fr')imageId='image3';
     	    AsyncStorage.getItem(imageId, (error, result) => {
     	      if (!error && result != null){
                     this.setState({ picture1Base64: result });
                     let newArray = [...this.state.images];
                     newArray[0] = result;
-                    this.setState({images: newArray});console.log('get new graph1');
+                    this.setState({images: newArray});
                }
                else {
                    // do something else
                }
     	    })
-    	  imageId='image4';if(global.culture=='fr')imageId='image5';
+    	  imageId='image2';if(global.culture=='fr')imageId='image5';
              AsyncStorage.getItem(imageId, (error, result) => {
              	      if (!error && result != null){
                          //    this.setState({ picture2Base64: result });
                               let newArray = [...this.state.images];
                                                  newArray[1] = result;
-                                                 this.setState({images: newArray});console.log('get new graph2');
+                                                 this.setState({images: newArray});
                         }
                         else {
                             // do something else
                         }
              	    })
-          imageId='image6';if(global.culture=='fr')imageId='image7';
+          imageId='image2';if(global.culture=='fr')imageId='image7';
                        AsyncStorage.getItem(imageId, (error, result) => {
                        	      if (!error && result != null){
                                    //    this.setState({ picture3Base64: result });
                                         let newArray = [...this.state.images];
                                                            newArray[2] = result;
-                                                           this.setState({images: newArray});console.log('get new graph3');
+                                                           this.setState({images: newArray});
                                   }
                                   else {
                                       // do something else
@@ -85,9 +84,6 @@ export default class App extends React.Component<Props,ScreenState> {
       let index=Math.round(x/width1);console.log('Current Page:'+index);
       let xd=index*width1;
       this.setState({current:index});
-      if(index==0){this.setState({helpText:resources.getString("How you are feeling by location help"),title:resources.getString("How you are feeling by location")});}
-      else if(index==1){this.setState({helpText:resources.getString("How you are feeling with others help"),title:resources.getString("How you are feeling with others")});}
-      else if(index==2){this.setState({helpText:resources.getString("How you are feeling by activity help"),title:resources.getString("How you are feeling by activity")});}
       InteractionManager.runAfterInteractions(()=>this.sv.scrollTo({x:xd}))
       }
    _onLayout(event) {
@@ -99,9 +95,6 @@ export default class App extends React.Component<Props,ScreenState> {
                              });
                          });
          }
-   helpClick(){
-        alert(this.state.helpText);
-   }
   render() {
       let indicator = this.state.images.map((item, index) => {
 
@@ -112,39 +105,26 @@ export default class App extends React.Component<Props,ScreenState> {
         });
     return (
           <PaperProvider theme={newTheme}>
-          <ImageBackground
-                   source={require('../../assets/white.png')}
-                    style={{ backgroundColor: 'white',flex:1}}
-                 >
-           <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{marginLeft:0}}><Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:38,height:38}} /></TouchableOpacity>
-                                   <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{marginRight:0}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
-                             </View>
-                  <View style={{ flex: 1 }}>
-                            <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-                              {indicator}
-                            </View>
-                            <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                                    <Title style={styles.title}>{this.state.title}</Title>
-                                     <TouchableOpacity onPress={() => this.helpClick()} style={{marginRight:0}}><EvilIcons name="question" size={34} color="black" /></TouchableOpacity>
-                            </View>
-                            <View style={{height:this.state.height}}>
-                            <ScrollView horizontal showsHorizontalScrollIndicator={false} ref={ref => {this.sv = ref;}} contentContainerStyle={{ paddingVertical: 20,justifyContent:'center', }} onTouchStart={this.log} onScrollEndDrag={this.handleScroll.bind(this)}>
-                                {this.state.images.map((item, index) => (
-                                  <View onLayout={this._onLayout.bind(this)} style={{height:this.state.height}} key={index}>
-                                            <Image source={{ uri: item }}  style={{width: this.state.width,height: this.state.height-60,resizeMode:'stretch'}} />
-                                   </View>
-                                          ))}
 
-                            </ScrollView>
-                            </View>
-                          </View>
-                 </ImageBackground>
-                                <Button style={styles.btnNext}
-                                  mode="contained"
-                                   onPress={() => this.props.navigation.navigate('ResultSummaryScreen')}>
-                                  <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
-                                </Button>
+         <View style={{ flex: 1 }}>
+           <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+             {indicator}
+           </View>
+           <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                   <Title style={styles.title}>{resources.getString("How you are feeling by location")}</Title>
+                    <TouchableOpacity onPress={() => this.helpClick()} style={{marginRight:0}}><EvilIcons name="question" size={34} color="black" /></TouchableOpacity>
+           </View>
+           <View style={{height:this.state.height}}>
+           <ScrollView horizontal ref={ref => {this.sv = ref;}} contentContainerStyle={{ paddingVertical: 20,justifyContent:'center', }} onTouchStart={this.log} onScrollEndDrag={this.handleScroll.bind(this)}>
+               {this.state.images.map((item, index) => (
+                 <View onLayout={this._onLayout.bind(this)} style={{height:this.state.height}} key={index}>
+                           <Image source={{ uri: item }}  style={{width: this.state.width,height: this.state.height }} />
+                  </View>
+                         ))}
+
+           </ScrollView>
+           </View>
+         </View>
           </PaperProvider>
        );
   }

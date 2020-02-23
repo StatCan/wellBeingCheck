@@ -50,12 +50,24 @@ export const resources = {
             "match_password_error": "You must provide matched password and secrity question and answer !",
             "ok": "Ok",
             "term_and condition_content": "When you continue use this app, that means you automatically agree on this Term and condition.",
+
+            "Your feeling this week":"Your feeling this week",
+             "Detail":"Detail",
+             "Summary":"Summary",
+              "How you are feeling by location": "How you are feeling by location",
+              "How you are feeling with others":"How you are feeling with others",
+              "How you are feeling by activity":"How you are feeling by activity",
+              "How you are feeling by location help":"This is your feeling by location",
+              "How you are feeling with others help":"This is your feeling with others",
+              "How you are feeling by activity help":"This is your feeling by activity",
+
             "notifications": "Notifications",
             "wake_time": "Wake-up time",
             "sleep_time": "Bedtime",
             "number_notifications": "Number of Notifications",
             "language": "Language:",
             "about": "Information"
+
         },
         fr: {
             //global
@@ -103,6 +115,17 @@ export const resources = {
             "match_password_error": "Vous devez fournir un mot de passe, une question de sécurité et une réponse correspondants!",
             "ok": "D'accord",
             "term_and condition_content": "Lorsque vous continuez à utiliser cette application, cela signifie que vous acceptez automatiquement ces conditions générales.",
+
+            "Your feeling this week":"Votre ressenti cette semaine",
+            "Detail":"Détail",
+            "Summary":"Sommaire",
+            "How you are feeling by location":"Comment vous vous sentez par emplacement",
+            "How you are feeling with others":"Comment vous vous sentez avec les autres",
+            "How you are feeling by activity":"Comment vous vous sentez par activité",
+            "How you are feeling by location help":"C'est votre sentiment par emplacement",
+            "How you are feeling with others help":"C'est votre sentiment avec les autres",
+            "How you are feeling by activity help":"C'est votre sentiment par activité",
+
             "notifications": "Notifications",
             "wake_time": "Heure du lever",
             "sleep_time": "Heure du coucher",
@@ -110,5 +133,6 @@ export const resources = {
             "language": "Langue:",
             "about": "Information"
         }
+
     }
 };

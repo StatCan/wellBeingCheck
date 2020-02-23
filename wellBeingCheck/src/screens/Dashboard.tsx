@@ -1,19 +1,20 @@
 
 import React, { memo } from 'react';
 import Background from '../components/Background';
-import { View, Text, TextInput, Image, StyleSheet, ImageBackground, Dimensions, TouchableOpacity, BackHandler } from 'react-native';
+import { View, Text, TextInput, Image, StyleSheet, ImageBackground, Dimensions, TouchableOpacity, BackHandler,AsyncStorage } from 'react-native';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
 import Paragraph from '../components/Paragraph';
 import Button from '../components/Button';
 import { Navigation } from '../types';
-import { EvilIcons, Feather } from '@expo/vector-icons';
+import { EvilIcons, Feather} from '@expo/vector-icons';
 import LogoClearSmall from '../components/LogoClearSmall';
 import {
   NavigationParams,
   NavigationScreenProp,
   NavigationState,
 } from 'react-navigation';
+import {fetchJwToken,checkConnection} from '../utils/fetchJwToken';
 import { resources } from '../../GlobalResources';
 
 interface Props {
@@ -23,6 +24,7 @@ interface Props {
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
 
+let hasImage='0';
 type HomeState = {
   refresh: string 
 }
@@ -30,7 +32,8 @@ type HomeState = {
 class Dashboard extends React.Component<Props, HomeState> {
 
   constructor(HomeState) {
-    super(HomeState)
+    super(HomeState);
+    this.hasImage();
     this.state = {
       refresh: '1' 
     };
@@ -58,9 +61,45 @@ class Dashboard extends React.Component<Props, HomeState> {
     this.setState({ refresh: '1' });
   }
 
-  render() {
+    async hasImage(){
+        console.log('Check......');
+        let value = await AsyncStorage.getItem('hasImage');
+        console.log('check has image:'+value);
+           if (value != null){
+              hasImage='1';
+           }
+    }
+    async sendRequest(){
+        let token=await fetchJwToken();console.log('send:'+token);
+        let url=global.webApiBaseUrl+'api/Values';let cul=global.culture;console.log(cul);
+        console.log(url);
+        fetch(url, {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer ' + token,
+             'Accept-language':cul
+          }
+        })
+        .then(res =>{
+           console.log(res.status);
+           if(res.status==200){
+                     res.json().then(data => { console.log(data);alert('Received data successfully'); })
+                     }
+             else {   //401
+                    throw new Error("Access denied, Try again later, if same thing would happen again contact StatCan");
 
-    return (
+                                   }
+            })
+        .catch(err => { console.log(err) })
+    }
+    async conductSurvey(){
+        let isConnected=await checkConnection();
+        if(!isConnected){alert('You are offline, try it later');return;}
+        global.needReload1=true;global.needReload2=true;global.needReload3=true;global.needReload4=true;global.needReload5=true;global.needReload6=true;global.needReload7=true;
+        this.props.navigation.navigate('EQSurveyScreen');
+    }
+    render() {
+       return (
       <Background>
         <LogoClearSmall/>
         <View style={styles.homeContainer}>
@@ -72,12 +111,14 @@ class Dashboard extends React.Component<Props, HomeState> {
               </View>
             </View>
           </TouchableOpacity>
-          <View style={[styles.homeContainer, { marginBottom: 10 }, { flexDirection: 'row', flex: 1 }]}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('ResultScreen')} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("result")}</Text></TouchableOpacity>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')} style={styles.smallButton}><EvilIcons name="question" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("about")}</Text></TouchableOpacity>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}><Feather name="phone" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("contact_us")}</Text></TouchableOpacity>
-          </View>
+          <View style={[styles.homeButtonContainer, { marginBottom: 0,marginTop:50 }, { flexDirection: 'row'}]}>
+            <TouchableOpacity onPress={() =>{if(hasImage=='1')this.props.navigation.navigate('ResultSummaryScreen');else alert('No data found,you have to complete the survey at least once.');}} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>Dashboard</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')} style={styles.smallButton}><EvilIcons name="question" size={40} color="white" /><Text style={styles.smallButtonText}>About</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}><Feather name="phone" size={40} color="white" /><Text style={styles.smallButtonText}>Contact</Text></TouchableOpacity>
+           </View>
+
         </View>
+
       </Background>
     );
   }
@@ -120,9 +161,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignContent: 'space-between'
   },
-  homeButton: {
-    width: 100
-  },
+  homeButton: {width: 100  },
   homeSeperator: {
     width: 20,
     height: 150
@@ -206,3 +245,6 @@ export default memo(Dashboard);
 //                    }
 //                     }
 //               style={styles.smallButton}><Text style={{fontSize:20}}>Test</Text></TouchableOpacity>
+
+
+// <TouchableOpacity onPress={() => this.sendRequest()} style={styles.smallButton}><Text style={styles.smallButtonText}>Test</Text></TouchableOpacity>
