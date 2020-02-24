@@ -18,7 +18,7 @@ global.needReload7=true;
 global.culture='fr';
 
 global.jwToken='';
-global.userToken='12345';
+global.userToken='';
 global.password='1234';
 global.surveyAUrlEng='';
 global.surveyAUrlFre='';
@@ -26,11 +26,16 @@ global.surveyBUrlEng='';
 global.surveyBUrlFre='';
 global.surveyThkUrlEng='';
 global.surveyThkUrlFre='';
+global.surveyExceptionUrlEng='';
+global.surveyExceptionUrlFre='';
 global.doneSurveyA=false;
-global.webApiBaseUrl='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsmDev/';  //'http://localhost:49159/';   //'http://barabasy.eastus.cloudapp.azure.com/WebApiForEsmDev/';      //'http://localhost:49159/'   //'http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/';//'http://localhost:49159/'
+global.webApiBaseUrl='http://localhost:50170/';   //http://barabasy.eastus.cloudapp.azure.com/WebApiForEsmDev/';  //'http://localhost:49159/';   //'http://barabasy.eastus.cloudapp.azure.com/WebApiForEsmDev/';      //'http://localhost:49159/'   //'http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/';//'http://localhost:49159/'
 global.culture='en';
 global.tokenDoB=new Date(2020,1,1,0,0,0,0);
 global.connectivity=false;
+global.configurationReady=false;
+
+
 global.graphType0='WarnFW';
 global.graphType1='MacaroniFW';
 global.graphType2='ScalableBarFW';
@@ -39,4 +44,3 @@ global.graphType4='ScalableLine';
 global.graphType5='ScalableCBarFW';
 global.graphType6='BulletinFW';
 global.graphType7='';
-global.configurationReady=false;

@@ -30,21 +30,74 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     let jsCode=clearCookie+'document.addEventListener("message", function (message) { document.getElementById("langtest").click(); });var btn = document.createElement("button");btn.style.visibility ="hidden";btn.onclick = switchlang;btn.setAttribute("id", "langtest");document.body.appendChild(btn);    function switchlang() { var a = document.querySelector("a.sc-js-langchange");var href = a.href;if (href.indexOf("/q/fr")>0) {var res = href.replace("/q/fr", "/q/en");a.setAttribute("href", res);a.click();} else if (href.indexOf("/q/en")>0) {var res = href.replace("/q/en", "/q/fr");a.setAttribute("href", res);a.click();} }';
     this.state=({Sacode:'',jsCode:disCode+jsCode});
   }
- //  componentDidMount(){this.fetchImages();}
+//   componentDidMount(){this.handleSurveyAdone();}
+   async handleSurveyAdone(){
+        let jwt=await this.fetchJwToken1();
+        let result=false;
+        if(jwt!='')result=await this.setPassword(jwt);
+        if(!result)alert("Internal server error, Try again, if same thing would happen again contact StatCan");
+        console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
+   }
+   async handleSurveyBdone(){
+         let jwt=await this.fetchJwToken1();
+         if(jwt=='')alert("Internal server error, Try again, if same thing would happen again contact StatCan");
+         global.jwToken=jwt;
+         this.fetchImages();
+         let result=false;
+   }
+   fetchJwToken1() {
+         let url=global.webApiBaseUrl+'api/security/token';
+         let data={deviceId:global.userToken,password:global.password}
+         return fetch(url,{
+               method: 'POST',
+                 headers: {
+                   'Content-Type': 'application/json',
+                 },
+                 body: JSON.stringify(data),
+         })
+         .then((response) => response.json())
+         .then((responseData) => {
+               return responseData;
+             })
+         .catch(error => console.warn(error));
+     }
    fetchJwToken() {
-      let url=global.webApiBaseUrl+'Token/'+global.userToken+'/'+global.password;
-      return fetch(url)
+      let url=global.webApiBaseUrl+'api/security/token';
+     let data={deviceId:global.userToken,password:global.password}
+      return fetch(url,{
+            method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(data),
+      })
       .then((response) => response.json())
       .then((responseJson) => {
         console.log(responseJson);
-        global.jwToken=responseJson;
-        AsyncStorage.setItem('EsmSurveyJWT',responseJson);
+        if(responseJson!=null && responseJson!=''){global.jwToken=responseJson;}
+        else console.log('failed getting token ');
+
         console.log('JWT:'+global.jwToken);
       })
       .catch((error) => {
-        console.error(error);global.configurationReady=false;
+        console.error(error);
       });
            }
+   setPassword(jwt) {
+         let url=global.webApiBaseUrl+'api/security/password';
+         let data={salt:'1234',passwordHash:'45678',securityQuestionId:'11',securityAnswerSalt:'4321',securityAnswerHash:'4444'}
+         return fetch(url,{
+               method: 'POST',
+                 headers: {
+                   'Content-Type': 'application/json',
+                   'Authorization': 'Bearer ' + jwt,
+                 },
+                 body: JSON.stringify(data),
+         })
+         .then((response) => response.json())
+         .then((responseJson) => {console.log('setPassword:'+responseJson);return responseJson;})
+         .catch((error) => {console.error(error);});
+    }
    fetchImages(){
           console.log(count); if(count>0)return;
           console.log('Fetch images....');
@@ -156,10 +209,11 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                                  if(global.doneSurveyA){
                                      if(count>0){count=0;return;}
                                       console.log('redady to fetch image');
-                                      this.fetchImages();count=1;
+                                      this.handleSurveyBdone();count=1;
                                  }
                                  else {
-                                    console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');count=1;
+                                      this.handleSurveyAdone();
+                                      count=1;
 
                                  }
                                 this.props.navigation.navigate('Dashboard');
