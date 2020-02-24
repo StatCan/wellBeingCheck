@@ -119,14 +119,14 @@ export default class App extends React.Component<Props,ScreenState> {
                                   <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{marginLeft:0}}><Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:38,height:38}} /></TouchableOpacity>
                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{marginRight:0}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
                              </View>
-                  <View style={{ flex: 1 }}>
-                            <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-                              {indicator}
-                            </View>
-                            <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                                    <Title style={styles.title}>{this.state.title}</Title>
-                                     <TouchableOpacity onPress={() => this.helpClick()} style={{marginRight:0}}><EvilIcons name="question" size={34} color="black" /></TouchableOpacity>
-                            </View>
+            <View style={{ flex: 1 }}>
+                    <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
+                          {indicator}
+                    </View>
+                    <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                          <Title style={styles.title}>{resources.getString("Your feelings")}</Title>
+                          <TouchableOpacity onPress={() => this.helpClick()} style={{marginRight:0}}><EvilIcons name="question" size={34} color="black" /></TouchableOpacity>
+                    </View>
                             <View style={{height:this.state.height}}>
                             <ScrollView horizontal showsHorizontalScrollIndicator={false} ref={ref => {this.sv = ref;}} contentContainerStyle={{ paddingVertical: 20,justifyContent:'center', }} onTouchStart={this.log} onScrollEndDrag={this.handleScroll.bind(this)}>
                                 {this.state.images.map((item, index) => (
