@@ -52,6 +52,7 @@ export const resources = {
             "term_and condition_content": "When you continue use this app, that means you automatically agree on this Term and condition.",
 
             "Your feeling this week":"Your feeling this week",
+             "Your feelings":"Your feelings",
              "Detail":"Detail",
              "Summary":"Summary",
               "How you are feeling by location": "How you are feeling by location",
@@ -60,6 +61,7 @@ export const resources = {
               "How you are feeling by location help":"This is your feeling by location",
               "How you are feeling with others help":"This is your feeling with others",
               "How you are feeling by activity help":"This is your feeling by activity",
+              "Your feeling help":"This is your feelings",
 
             "notifications": "Notifications",
             "wake_time": "Wake-up time",
@@ -117,6 +119,7 @@ export const resources = {
             "term_and condition_content": "Lorsque vous continuez à utiliser cette application, cela signifie que vous acceptez automatiquement ces conditions générales.",
 
             "Your feeling this week":"Votre ressenti cette semaine",
+            "Your feelings":"Tes sentiments",
             "Detail":"Détail",
             "Summary":"Sommaire",
             "How you are feeling by location":"Comment vous vous sentez par emplacement",
@@ -125,6 +128,7 @@ export const resources = {
             "How you are feeling by location help":"C'est votre sentiment par emplacement",
             "How you are feeling with others help":"C'est votre sentiment avec les autres",
             "How you are feeling by activity help":"C'est votre sentiment par activité",
+            "Your feeling help":"Ce sont tes sentiments",
 
             "notifications": "Notifications",
             "wake_time": "Heure du lever",

@@ -26,7 +26,7 @@ export default class ResultSummaryScreen extends React.Component<Props, AboutScr
         	    AsyncStorage.getItem(imageId, (error, result) => {
 
         	      if (!error && result != null){
-                        this.setState({ pictureBase64: result });console.log('get new graph0');
+                        this.setState({ pictureBase64: result });
                    }
                    else {
                        // do something else
@@ -55,7 +55,7 @@ export default class ResultSummaryScreen extends React.Component<Props, AboutScr
                               });
                           });
           }
-
+      helpClick(){ alert(resources.getString("Your feeling help")); }
 
 
   _onNextBtnHandle = () => {
@@ -72,8 +72,10 @@ export default class ResultSummaryScreen extends React.Component<Props, AboutScr
                          <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{marginRight:0}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
                    </View>
           <SafeAreaView style={styles.container}>
-              <Title style={styles.title}>{resources.getString("Your feeling this week")}</Title>
-
+                   <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                            <Title style={styles.title}>{resources.getString("Your feelings")}</Title>
+                            <TouchableOpacity onPress={() => this.helpClick()} style={{marginRight:0,marginTop:20}}><EvilIcons name="question" size={34} color="black" /></TouchableOpacity>
+                   </View>
               <View style={styles.content}>
                      {this.state.pictureBase64 && (
                        <View onLayout={this._onLayout.bind(this)} style={{height:this.state.height,justifyContent:'center'}}>
