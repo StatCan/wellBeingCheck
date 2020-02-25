@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Button from '../components/Button';
 import { newTheme } from '../core/theme';
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     alignSelf: 'baseline',
     fontSize: 22,
     fontWeight: 'bold',
-    marginTop: 10,
+    marginTop: 80,
   },
   label: {
     color: newTheme.colors.secondary,
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    width: '100%',
+    width: (Dimensions.get('window').width)-50,
   },
   paragraph: {
     alignSelf: 'baseline',
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     direction: "ltr"
   },
   scrollView: {
-    width: '100%',
+    width: (Dimensions.get('window').width)-50,
     marginHorizontal: 20,
   },
   text: {

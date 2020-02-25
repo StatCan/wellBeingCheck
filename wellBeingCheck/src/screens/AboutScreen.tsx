@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   title: {
-    marginTop: 20,
+    marginTop: 120,
     marginLeft: 20,
     color: '#707070',
     marginBottom: 20,
