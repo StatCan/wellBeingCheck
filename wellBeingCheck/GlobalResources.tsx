@@ -69,7 +69,9 @@ export const resources = {
             "number_notifications": "Number of Notifications",
             "language": "Language",
             "about": "Information",
-            "num_pings_dialog_title": "Number of notifications per day"
+            "num_pings_dialog_title": "Number of notifications per day",
+            "ThankYouA":"Thank you for completing this survey!",
+            "ThankYouB":"Thank you for completing this survey! You can review your Well-being Check in the Results menu.",
 
         },
         fr: {
@@ -137,7 +139,10 @@ export const resources = {
             "number_notifications" : "Nombre de Notifications",
             "language": "Langue",
             "about": "Information",
-            "num_pings_dialog_title": "Nombre de notifications par jour"
+            "num_pings_dialog_title": "Nombre de notifications par jour",
+            "ThankYouA":"Nous vous remercions d’avoir participé à l’enquête!",
+            "ThankYouB":"Nous vous remercions d’avoir participé à l’enquête! Vous pouvez consulter votre Bilan bien-être dans le menu Résultats.",
+
         }
 
     }
