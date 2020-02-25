@@ -6,7 +6,7 @@ global.timeStamp=0;
 global.surveyACode='';
 
 global.doneSurveyA=false;
-global.debugMode=false;
+global.debugMode=true;
 
 global.needReload1=true;
 global.needReload2=true;

@@ -24,7 +24,7 @@ import { Notifications } from "expo";
 import * as Permissions from 'expo-permissions';
 import {NavigationParams, NavigationScreenProp, NavigationState} from 'react-navigation';
 import { resources } from '../../../GlobalResources';
-import { Provider as PaperProvider, Title } from 'react-native-paper';
+import { Provider as PaperProvider, Title, Portal, Dialog, RadioButton } from 'react-native-paper';
 
 var scheduledDateArray = new Array();
 
@@ -34,7 +34,8 @@ type SettingsState = {
   waketime: string, 
   sleeptime: string, 
   notificationcount: number, 
-  culture: string 
+  culture: string,
+  languageModalShow: boolean
 }
 
 interface Props {
@@ -53,7 +54,8 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
       waketime: '08:00', 
       sleeptime: '21:00', 
       notificationcount: 2, 
-      culture: '1' 
+      culture: '1',
+      languageModalShow: false
     };
     this.wakeTimeHandler = this.wakeTimeHandler.bind(this);
     this.sleepTimeHandler = this.sleepTimeHandler.bind(this);
@@ -204,6 +206,9 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
     }
   }
 
+  _showModal = () => this.setState({ languageModalShow: true });
+  _hideModal = () => this.setState({ languageModalShow: false });
+
   render() {
 
     let debugButtons;
@@ -244,19 +249,13 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
           <List.Item
             style={styles.listStyle}
             title={resources.getString("number_notifications")}
+            onPress={this._showModal}
           />
-          {/* Temporary Implementation */}
-          <Picker  
-                selectedValue={this.state.notificationcount}
-                onValueChange={n => this.setState({notificationcount:n})}
-                style={{ width: 100, height:100, marginLeft: 30, marginBottom:40, justifyContent:'space-around' }}
-                mode="dropdown">
-              <Picker.Item label="2" value="2" />
-              <Picker.Item label="3" value="3" />
-              <Picker.Item label="4" value="4" />
-              <Picker.Item label="5" value="5" />
-          </Picker>
-
+          <List.Item
+            style={styles.listStyle}
+            title={this.state.notificationcount}
+            onPress={this._showModal}
+          />
           <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
             <Text style={styles.label}>{resources.getString("wake_time")}</Text>
             <TimePicker time={this.state.waketime} timeType="wakeTime" handler = {this.wakeTimeHandler} />
@@ -280,6 +279,44 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
         </List.Section>
         {debugButtons}
         </ScrollView>
+        <View>
+          <Portal>
+            <Dialog
+              visible={this.state.languageModalShow}
+              onDismiss={this._hideModal}>
+              <Dialog.Title>{resources.getString("num_pings_dialog_title")}</Dialog.Title>
+              <Dialog.Content>
+                <RadioButton.Group
+                  onValueChange={n => this.setState({notificationcount:parseInt(n)})}
+                  value={this.state.notificationcount.toString()}>
+                  <View>
+                    <Text>2</Text>
+                    <RadioButton value="2" />
+                  </View>
+                  <View>
+                    <Text>3</Text>
+                    <RadioButton value="3" />
+                  </View>
+                  <View>
+                    <Text>4</Text>
+                    <RadioButton value="4" />
+                  </View>
+                  <View>
+                    <Text>5</Text>
+                    <RadioButton value="5" />
+                  </View>
+                </RadioButton.Group>
+              </Dialog.Content>
+              <Dialog.Actions>
+                <Button
+                  style={styles.dialog_action_btn}
+                  onPress={this._hideModal}>
+                  Ok
+                </Button>
+              </Dialog.Actions>
+            </Dialog>
+          </Portal>
+        </View>
       </View>
       <Button style={styles.btnNext}
           mode="contained"
@@ -292,6 +329,9 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
 }
 
 const styles = StyleSheet.create({
+  dialog_action_btn: {
+
+  },
   bottom: {
     flex: 1,
     justifyContent: 'flex-end',
