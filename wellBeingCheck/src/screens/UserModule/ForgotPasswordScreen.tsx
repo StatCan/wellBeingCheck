@@ -103,6 +103,7 @@ class ForgotPasswordScreen extends React.Component<Props, ForgotPasswordState> {
 
         <View style={styles.footer}>
           <Button
+            color={theme.colors.secondary}
             style={styles.btnCancel}
             mode="contained"
             onPress={() => this.props.navigation.navigate('LoginScreen')}
@@ -111,6 +112,7 @@ class ForgotPasswordScreen extends React.Component<Props, ForgotPasswordState> {
           </Button>
 
           <Button
+            color={newTheme.colors.primary}
             style={styles.btnNext}
             mode="contained"
             onPress={this._onResetPasswordPressed}
@@ -147,7 +149,7 @@ const styles = StyleSheet.create({
   whiteText: {
     color: newTheme.colors.whiteText
   },
-  btnCancel : {
+  btnCancel: {
     color: newTheme.colors.whiteText,
     width: 100,
     alignSelf: "flex-end",
