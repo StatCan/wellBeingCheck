@@ -9,12 +9,8 @@ const TimePicker = (props) => {
 
   isDarkModeEnabled = Appearance.getColorScheme() === 'dark'
 
- const showTimePicker = () => {
-    setTimePickerVisibility(true);
-  };
-
   const hideTimePicker = () => {
-    setTimePickerVisibility(false);
+    props.cancelHandler();
   };
 
   const handleConfirm = time => {
@@ -39,11 +35,10 @@ const TimePicker = (props) => {
 
   return (
     <View>
-        <Text style={styles.label} onPress={showTimePicker}>{props.time}</Text>
         <DateTimePickerModal
-            isVisible={isTimePickerVisible}
             mode="time"
             isDarkModeEnabled={isDarkModeEnabled}
+            isVisible={props.isVisible}
             onConfirm={handleConfirm}
             onCancel={hideTimePicker}
         />
@@ -52,14 +47,8 @@ const TimePicker = (props) => {
 };
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: "#fff",
-      alignItems: "center",
-      justifyContent: "center"
-    },
     input:{borderWidth: 1, width:100, paddingLeft: 4},
-    label:{color:'black', fontSize: 16, padding:10}
+    label:{color:'black', fontSize: 16, padding:10, alignItems: "flex-start"}
   });
 
 export default TimePicker;

@@ -35,7 +35,8 @@ type SettingsState = {
   sleeptime: string, 
   notificationcount: number, 
   culture: string,
-  languageModalShow: boolean
+  languageModalShow: boolean,
+  wakeTimePickerShow: boolean
 }
 
 interface Props {
@@ -46,6 +47,8 @@ interface Props {
 class SettingsScreen extends React.Component < Props, SettingsState > {
   _notificationSubscription: any;
 
+  wakeTimePickerChild;
+
   constructor(SettingsState) {
     super(SettingsState)
     this.state = {
@@ -55,16 +58,23 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
       sleeptime: '21:00', 
       notificationcount: 2, 
       culture: '1',
-      languageModalShow: false
+      languageModalShow: false,
+      wakeTimePickerShow: false
     };
     this.wakeTimeHandler = this.wakeTimeHandler.bind(this);
     this.sleepTimeHandler = this.sleepTimeHandler.bind(this);
+    this.cancelTimeHandler = this.cancelTimeHandler.bind(this);
   }
 
   wakeTimeHandler(time) {
     this.setState({
       waketime: time
     })
+    this.setState({ wakeTimePickerShow: false })
+  }
+
+  cancelTimeHandler(time) {
+    this.setState({ wakeTimePickerShow: false })
   }
 
   sleepTimeHandler(time) {
@@ -209,6 +219,9 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
   _showModal = () => this.setState({ languageModalShow: true });
   _hideModal = () => this.setState({ languageModalShow: false });
 
+  _showWakeTimePicker = () => this.setState({ wakeTimePickerShow: true });
+  _hideWakeTimePicker = () => this.setState({ wakeTimePickerShow: false });
+
   render() {
 
     let debugButtons;
@@ -256,10 +269,25 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
             title={this.state.notificationcount}
             onPress={this._showModal}
           />
-          <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-            <Text style={styles.label}>{resources.getString("wake_time")}</Text>
-            <TimePicker time={this.state.waketime} timeType="wakeTime" handler = {this.wakeTimeHandler} />
-          </View>
+          <List.Item
+            style={styles.listStyle}
+            title={resources.getString("wake_time")}
+            onPress={this._showModal}
+          />
+          <List.Item
+            style={styles.listStyle}
+            title={this.state.waketime}
+            onPress={this._showWakeTimePicker}
+            />
+          <TimePicker 
+            showTimePicker={this.state.wakeTimePickerShow} 
+            style={styles.timePicker} 
+            time={this.state.waketime} 
+            timeType="wakeTime"
+            isVisible={this.state.wakeTimePickerShow}
+            handler = {this.wakeTimeHandler}
+            cancelHandler = {this.cancelTimeHandler}
+            />
           <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
             <Text style={styles.label}>{resources.getString("sleep_time")}</Text>
             <TimePicker time={this.state.sleeptime} timeType="sleepTime" handler = {this.sleepTimeHandler} />
@@ -329,6 +357,10 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
 }
 
 const styles = StyleSheet.create({
+  timePicker: {
+    width:100,
+    paddingRight:100
+  },
   dialog_action_btn: {
 
   },
