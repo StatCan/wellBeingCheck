@@ -83,14 +83,14 @@ const styles = StyleSheet.create({
     alignSelf: 'baseline',
     fontSize: 22,
     fontWeight: 'bold',
-    marginTop: 10,
+    marginTop: 80,
   },
   paragraph: {
     alignSelf: 'baseline',
     fontSize: 15,
     width: '100%',
     end: 0,
-    direction: "ltr"
+    direction: "ltr",
   },
   label: {
     color: newTheme.colors.secondary,

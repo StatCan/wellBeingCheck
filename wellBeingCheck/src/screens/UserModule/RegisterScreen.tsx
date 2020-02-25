@@ -299,6 +299,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
               </Dialog.Content>
               <Dialog.Actions>
                 <Button
+                  color = {newTheme.colors.primary}
                   style={styles.pr_action_btn}
                   onPress={this._hideModal}>
                   Ok
@@ -334,7 +335,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 20,
     fontSize: 50,
-    color: 'green'
+    color: 'green',
   },
   passwordHelpBtnText: {
     fontSize: 25,

@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     alignSelf: 'baseline',
     fontSize: 22,
     fontWeight: 'bold',
-    marginTop: 10,
+    marginTop: 80,
   },
   label: {
     color: newTheme.colors.secondary,
