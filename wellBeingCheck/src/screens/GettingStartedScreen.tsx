@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet, Dimensions } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Button from '../components/Button';
 import { newTheme } from '../core/theme';
@@ -107,10 +107,10 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    width: '100%',
+    width: (Dimensions.get('window').width)-50,
   },
   scrollView: {
-    width: '100%',
+    width: (Dimensions.get('window').width)-50,
     marginHorizontal: 20,
   },
   text: {
