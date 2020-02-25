@@ -220,9 +220,9 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 
         {/* mode can also be dropdown - dialog will allow more space */}
         <Picker
-          mode='dialog'
           selectedValue={this.state.securityQuestion}
-          style={[styles.picker]} itemStyle={styles.pickerItem}
+          style={[styles.picker]}
+          itemStyle={styles.pickerItem}
           onValueChange={value => this.setState({ securityQuestion: value })}>
           <Picker.Item label={resources.getString("reg.ques.select")} value="" />
           <Picker.Item label={resources.getString("reg.ques.mother")} value="reg.ques.mother" />
@@ -397,12 +397,11 @@ const styles = StyleSheet.create({
   picker: {
     width: '100%',
     backgroundColor: '#ffff',
-    borderColor: '#330033',
-    borderWidth: 10,
+    borderColor: 'grey',
+    borderWidth: 1,
   },
   pickerItem: {
-    color: 'red',
-    width: '80%'
+    height: 50,
   }
 });
 
