@@ -68,7 +68,9 @@ export const resources = {
             "sleep_time": "Bedtime",
             "number_notifications": "Number of Notifications",
             "language": "Language:",
-            "about": "Information"
+            "about": "Information",
+            "ThankYouA":"Thank you for completing this survey!",
+            "ThankYouB":"Thank you for completing this survey! You can review your Well-being Check in the Results menu.",
 
         },
         fr: {
@@ -135,7 +137,9 @@ export const resources = {
             "sleep_time": "Heure du coucher",
             "number_notifications" : "Nombre de Notifications",
             "language": "Langue:",
-            "about": "Information"
+            "about": "Information",
+            "ThankYouA":"Nous vous remercions d’avoir participé à l’enquête!",
+            "ThankYouB":"Nous vous remercions d’avoir participé à l’enquête! Vous pouvez consulter votre Bilan bien-être dans le menu Résultats.",
         }
 
     }
