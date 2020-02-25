@@ -67,8 +67,9 @@ export const resources = {
             "wake_time": "Wake-up time",
             "sleep_time": "Bedtime",
             "number_notifications": "Number of Notifications",
-            "language": "Language:",
-            "about": "Information"
+            "language": "Language",
+            "about": "Information",
+            "num_pings_dialog_title": "Number of notifications per day"
 
         },
         fr: {
@@ -134,8 +135,9 @@ export const resources = {
             "wake_time": "Heure du lever",
             "sleep_time": "Heure du coucher",
             "number_notifications" : "Nombre de Notifications",
-            "language": "Langue:",
-            "about": "Information"
+            "language": "Langue",
+            "about": "Information",
+            "num_pings_dialog_title": "Nombre de notifications par jour"
         }
 
     }
