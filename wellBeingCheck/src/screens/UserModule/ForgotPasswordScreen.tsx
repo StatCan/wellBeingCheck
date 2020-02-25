@@ -1,14 +1,11 @@
 import React, { memo, useState, useCallback } from 'react';
-import { Picker, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Background from '../../components/Background';
-import Logo from '../../components/Logo';
-import Header from '../../components/Header';
+import LogoClearSmall from '../../components/LogoClearSmall';
 import Button from '../../components/Button';
 import TextInput from '../../components/TextInput';
-import BackButton from '../../components/BackButton';
-import { theme } from '../../core/theme';
-//import { Navigation } from '../../types';
+import { theme, newTheme } from '../../core/theme';
 
 import {
   NavigationParams,
@@ -23,6 +20,7 @@ import {
   securityAnswerValidator,
 } from '../../core/utils';
 import { Drawer } from 'react-native-paper';
+import { resources } from '../../../GlobalResources';
 
 type ForgotPasswordState = {
   securityQuestion: string,
@@ -83,18 +81,19 @@ class ForgotPasswordScreen extends React.Component<Props, ForgotPasswordState> {
   }
 
   render() {
+    const securityQuestionValue = this.state.securityQuestion;
+    const securityQuestion = resources.getString(securityQuestionValue);
+
     return (
       <Background>
-        <BackButton goBack={() => this.props.navigation.navigate('LoginScreen')} />
+        <LogoClearSmall></LogoClearSmall>
 
-        <Logo />
+        <Text style={styles.header}>{resources.getString("password_recovery.title")}</Text>
 
-        <Header>Restore Password</Header>
-
-        <Text style={styles.label}>{this.state.securityQuestion}</Text>
+        <Text style={styles.securityQuestionText}>{securityQuestion}</Text>
 
         <TextInput
-          label="Security Answer"
+          label="Answer"
           returnKeyType="next"
           value={this.state.securityAnswer}
           onChangeText={text => this.setState({ securityAnswer: text })}
@@ -102,16 +101,26 @@ class ForgotPasswordScreen extends React.Component<Props, ForgotPasswordState> {
           errorText={this.state.securityAnswerError}
         />
 
-        <Button mode="contained" onPress={this._onResetPasswordPressed} style={styles.button}>
-          Reset Password
-        </Button>
+        <View style={styles.footer}>
+          <Button
+            color={theme.colors.secondary}
+            style={styles.btnCancel}
+            mode="contained"
+            onPress={() => this.props.navigation.navigate('LoginScreen')}
+          >
+            <Text style={styles.whiteText}>Cancel</Text>
+          </Button>
 
-        <TouchableOpacity
-          style={styles.back}
-          onPress={() => this.props.navigation.navigate('LoginScreen')}
-        >
-          <Text style={styles.label}>← Back to login</Text>
-        </TouchableOpacity>
+          <Button
+            color={newTheme.colors.primary}
+            style={styles.btnNext}
+            mode="contained"
+            onPress={this._onResetPasswordPressed}
+          >
+
+            <Text style={styles.whiteText}>Next</Text>
+          </Button>
+        </View>
       </Background>
     );
   }
@@ -128,6 +137,36 @@ const styles = StyleSheet.create({
   label: {
     color: theme.colors.secondary,
     width: '100%',
+  },
+  header: {
+    color: 'black',
+    fontSize: 25,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  securityQuestionText: {
+  },
+  whiteText: {
+    color: newTheme.colors.whiteText
+  },
+  btnCancel: {
+    color: newTheme.colors.whiteText,
+    width: 100,
+    alignSelf: "flex-end",
+    marginRight: 20,
+  },
+  btnNext: {
+    color: newTheme.colors.whiteText,
+    width: 100,
+    alignSelf: "flex-end",
+    marginRight: -20,
+  },
+  footer: {
+    flexDirection: 'row',
+    width: '100%',
+    alignItems: "flex-end",
+    justifyContent: 'flex-end',
+    paddingRight: 20,
   },
 });
 

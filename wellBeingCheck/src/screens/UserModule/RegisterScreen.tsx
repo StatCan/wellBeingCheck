@@ -220,9 +220,9 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 
         {/* mode can also be dropdown - dialog will allow more space */}
         <Picker
-          mode='dialog'
           selectedValue={this.state.securityQuestion}
-          style={[styles.picker]} itemStyle={styles.pickerItem}
+          style={[styles.picker]}
+          itemStyle={styles.pickerItem}
           onValueChange={value => this.setState({ securityQuestion: value })}>
           <Picker.Item label={resources.getString("reg.ques.select")} value="" />
           <Picker.Item label={resources.getString("reg.ques.mother")} value="reg.ques.mother" />
@@ -299,6 +299,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
               </Dialog.Content>
               <Dialog.Actions>
                 <Button
+                  color = {newTheme.colors.primary}
                   style={styles.pr_action_btn}
                   onPress={this._hideModal}>
                   Ok
@@ -334,7 +335,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 20,
     fontSize: 50,
-    color: 'green'
+    color: 'green',
   },
   passwordHelpBtnText: {
     fontSize: 25,
@@ -396,12 +397,11 @@ const styles = StyleSheet.create({
   picker: {
     width: '100%',
     backgroundColor: '#ffff',
-    borderColor: '#330033',
-    borderWidth: 10,
+    borderColor: 'grey',
+    borderWidth: 1,
   },
   pickerItem: {
-    color: 'red',
-    width: '80%'
+    height: 50,
   }
 });
 
