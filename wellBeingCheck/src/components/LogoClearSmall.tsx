@@ -9,9 +9,7 @@ const styles = StyleSheet.create({
   image: {
     width: 40,
     height: 40,
-    position: 'absolute',
-    top: 40,
-    left: 0,
+    position: 'relative',
   },
 });
 

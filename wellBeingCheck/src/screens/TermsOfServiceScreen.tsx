@@ -82,12 +82,10 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
       <PaperProvider theme={newTheme}>
         <BackgroundWide>
 
-          <LogoClearSmall />
-
-          <Title style={styles.title}>{resources.getString("terms_and_conditions")}</Title>
-
           <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}>
+              <LogoClearSmall />
+              <Title style={styles.title}>{resources.getString("terms_and_conditions")}</Title>
               <Paragraph style={styles.paragraph}>
                 {resources.getString("terms_and_conditions_content")}
               </Paragraph>
@@ -134,10 +132,8 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
   },
   title: {
-    alignSelf: 'baseline',
     fontSize: 22,
     fontWeight: 'bold',
-    marginTop: 80,
   },
   label: {
     color: newTheme.colors.secondary,
@@ -147,7 +143,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    width: (Dimensions.get('window').width)-50,
+    width: (Dimensions.get('window').width) - 50,
   },
   paragraph: {
     alignSelf: 'baseline',
@@ -157,7 +153,7 @@ const styles = StyleSheet.create({
     direction: "ltr"
   },
   scrollView: {
-    width: (Dimensions.get('window').width)-50,
+    width: (Dimensions.get('window').width) - 50,
     marginHorizontal: 20,
   },
   text: {

@@ -52,13 +52,10 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
         <AppBanner />
 
         <BackgroundWide>
-
-          <LogoClearSmall />
-
-          <Title style={styles.title}>{resources.getString("getting_started")}</Title>
-
           <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}>
+              <LogoClearSmall />
+              <Title style={styles.title}>{resources.getString("getting_started")}</Title>
               <Paragraph style={styles.paragraph}>
                 {resources.getString("getting_started_content")}
               </Paragraph>
@@ -83,14 +80,10 @@ const styles = StyleSheet.create({
     alignSelf: 'baseline',
     fontSize: 22,
     fontWeight: 'bold',
-    marginTop: 80,
   },
   paragraph: {
-    alignSelf: 'baseline',
     fontSize: 15,
     width: '100%',
-    end: 0,
-    direction: "ltr",
   },
   label: {
     color: newTheme.colors.secondary,
@@ -106,12 +99,8 @@ const styles = StyleSheet.create({
     color: newTheme.colors.whiteText,
   },
   container: {
-    flex: 1,
-    width: (Dimensions.get('window').width)-50,
   },
   scrollView: {
-    width: (Dimensions.get('window').width)-50,
-    marginHorizontal: 20,
   },
   text: {
   },
