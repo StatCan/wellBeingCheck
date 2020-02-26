@@ -57,7 +57,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
       securityQuestionError: "",
       securityAnswer: "",
       securityAnswerError: "",
-      modalShow: false,
+      modalShow: true,
     };
     //this._retrieveData('user_password');
     this._accountAlreadyExists();
@@ -358,7 +358,7 @@ const styles = StyleSheet.create({
   },
   passwordHelpBtnBg: {
     backgroundColor: "white",
-    paddingHorizontal: 24,
+    paddingHorizontal: 23,
     paddingVertical: 10,
     borderRadius: 2,
     height: 58,
@@ -367,14 +367,12 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderWidth: 1,
     borderColor: 'grey',
-    marginLeft: 1,
   },
   passwordView: {
     flexDirection: 'row',
     width: 238,
   },
   btnHelp: {
-    width: 20,
     height: 60,
     position: 'relative',
     top: 8,
