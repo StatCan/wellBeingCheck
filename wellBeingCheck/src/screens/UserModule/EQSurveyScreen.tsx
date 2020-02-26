@@ -25,7 +25,6 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
   constructor(Props) {
     super(Props)
     let disCode= 'const meta = document.createElement("meta"); meta.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"); meta.setAttribute("name", "viewport"); document.getElementsByTagName("head")[0].appendChild(meta);';
-
     let clearCookie='document.cookie.split(";").forEach(function(c) {document.cookie = c.trim().split("=")[0] + "=;" + "expires=Thu, 01 Jan 1970 00:00:00 UTC;";});';
     let jsCode=clearCookie+'document.addEventListener("message", function (message) { document.getElementById("langtest").click(); });var btn = document.createElement("button");btn.style.visibility ="hidden";btn.onclick = switchlang;btn.setAttribute("id", "langtest");document.body.appendChild(btn);    function switchlang() { var a = document.querySelector("a.sc-js-langchange");var href = a.href;if (href.indexOf("/q/fr")>0) {var res = href.replace("/q/fr", "/q/en");a.setAttribute("href", res);a.click();} else if (href.indexOf("/q/en")>0) {var res = href.replace("/q/en", "/q/fr");a.setAttribute("href", res);a.click();} }';
     this.state=({Sacode:'',jsCode:disCode+jsCode});
@@ -96,6 +95,18 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
          .then((responseJson) => {console.log('setPassword:'+responseJson);return responseJson;})
          .catch((error) => {console.error(error);});
     }
+   resetPassword() {
+              let url=global.webApiBaseUrl+'api/security/password';console.log(url);
+              let data={deviceId:global.userToken,newSalt:'1234',newPasswordHash:'45678',securityAnswerHash:'4444'}
+              return fetch(url,{
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json',},
+                    body: JSON.stringify(data),
+              })
+               .then((response) => response.json())
+               .then((responseJson) => {console.log('resetPassword:'+responseJson);return responseJson;})
+              .catch((error) => {console.error(error);});
+         }
    fetchGraphTypes(){
         let url=global.webApiBaseUrl+'api/dashboard/graphs';
         return fetch(url)
@@ -129,8 +140,8 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     }
    fetchAllImages(){
       let url='http://localhost:49159/'+'AllImages/aaa/'+timeStamp+'/en/'+deviceWidth+'/'+deviceHeight;
-                            fetch(url)
-                                     .then( response => console.log(response));}
+      fetch(url).then( response => console.log(response));
+      }
    async fetchImage(url:string,index:number,culture:string) {
        let isConnected=await checkConnection();
        if(!isConnected){alert('You are offline, try it later');return;}
