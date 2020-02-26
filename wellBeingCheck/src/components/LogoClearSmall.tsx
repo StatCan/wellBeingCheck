@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { Image, StyleSheet } from 'react-native';
 
-const LogoClear = () => (
+const LogoClearSmall = () => (
   <Image source={require('../assets/logo_clear.png')} style={styles.image} />
 );
 
@@ -9,9 +9,10 @@ const styles = StyleSheet.create({
   image: {
     width: 40,
     height: 40,
-    alignSelf: "flex-start",
-    end: 0,
+    position: 'absolute',
+    top: 40,
+    left: 0,
   },
 });
 
-export default memo(LogoClear);
+export default memo(LogoClearSmall);

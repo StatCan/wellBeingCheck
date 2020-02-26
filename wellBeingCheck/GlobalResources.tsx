@@ -17,7 +17,7 @@ export const resources = {
             "terms_and_conditions": "Terms and conditions",
             "terms_and_conditions_content": "The following Terms and Conditions arise from Statistics Canada's character as a public institution that must operate transparently and in conformity with the provisions of federal legislation Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
             //Register screen
-            "reg.pass.validation.empty": "Password cannot be empty.",
+            "reg.pass.validation.empty": "Password cannot be empty",
             "reg.pass.validation.min_eight": "Password must be at least 8 characters",
             "reg.pass.validation.upper": "Password must containt at least 1 upper case",
             "reg.pass.validation.special": "Password must containt at least 1 special character",
@@ -29,6 +29,8 @@ export const resources = {
             "reg.ques.car": "What was your first car?",
             "reg.ques.sport": "What is your favourite game or sport?",
             "reg.ques.job": "What was your first job?",
+            //password recovery
+            "password_recovery.title": "Password recovery",
             //about
             "about_title": "Why are we conducting this study?",
             "about_content": "The purpose of this study is to better Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
@@ -51,17 +53,17 @@ export const resources = {
             "ok": "Ok",
             "term_and condition_content": "When you continue use this app, that means you automatically agree on this Term and condition.",
 
-            "Your feeling this week":"Your feeling this week",
-             "Your feelings":"Your feelings",
-             "Detail":"Detail",
-             "Summary":"Summary",
-              "How you are feeling by location": "How you are feeling by location",
-              "How you are feeling with others":"How you are feeling with others",
-              "How you are feeling by activity":"How you are feeling by activity",
-              "How you are feeling by location help":"This is your feeling by location",
-              "How you are feeling with others help":"This is your feeling with others",
-              "How you are feeling by activity help":"This is your feeling by activity",
-              "Your feeling help":"This is your feelings",
+            "Your feeling this week": "Your feeling this week",
+            "Your feelings": "Your feelings",
+            "Detail": "Detail",
+            "Summary": "Summary",
+            "How you are feeling by location": "How you are feeling by location",
+            "How you are feeling with others": "How you are feeling with others",
+            "How you are feeling by activity": "How you are feeling by activity",
+            "How you are feeling by location help": "This is your feeling by location",
+            "How you are feeling with others help": "This is your feeling with others",
+            "How you are feeling by activity help": "This is your feeling by activity",
+            "Your feeling help": "This is your feelings",
 
             "notifications": "Notifications",
             "wake_time": "Wake-up time",
@@ -69,7 +71,9 @@ export const resources = {
             "number_notifications": "Number of Notifications",
             "language": "Language",
             "about": "Information",
-            "num_pings_dialog_title": "Number of notifications per day"
+            "num_pings_dialog_title": "Number of notifications per day",
+            "ThankYouA":"Thank you for completing this survey!",
+            "ThankYouB":"Thank you for completing this survey! You can review your Well-being Check in the Results menu.",
 
         },
         fr: {
@@ -85,18 +89,20 @@ export const resources = {
             "terms_and_conditions": "FR_Terms and conditions",
             "terms_and_conditions_content": "FR_The following Terms and Conditions arise from Statistics Canada's character as a public institution that must operate transparently and in conformity with the provisions of federal legislation Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
             //Register screen
-            "reg.pass.validation.empty": "FR_Password cannot be empty.",
-            "reg.pass.validation.min_eight": "FR_Password must be at least 8 characters",
-            "reg.pass.validation.upper": "FR_Password must containt at least 1 upper case",
-            "reg.pass.validation.special": "FR_Password must containt at least 1 special character",
-            "reg.pass.validation.lower": "FR_Password must containt at least 1 lower case",
-            "reg.pass.validation.number": "FR_Password must containt at least 1 number",
+            "reg.pass.validation.empty": "Le mot de passe ne peut pas être vide",
+            "reg.pass.validation.min_eight": "Le mot de passe doit comporter au moins 8 caractères",
+            "reg.pass.validation.upper": " Le mot de passe doit contenir au moins une majuscule",
+            "reg.pass.validation.special": "Le mot de passe doit contenir au moins un caractère spécial",
+            "reg.pass.validation.lower": "Le mot de passe doit contenir au moins une minuscule",
+            "reg.pass.validation.number": "Le mot de passe doit contenir au moins une minuscule",
             "reg.ques.select": "FR_Select question",
             "reg.ques.mother": "Quel est le nom de jeune fille de votre mère?",
             "reg.ques.school": "Quel était le nom de votre école primaire?",
             "reg.ques.car": "Quelle a été votre première voiture?",
             "reg.ques.sport": "Quel est votre jeu ou sport préféré?",
             "reg.ques.job": "Quel a été votre premier emploi?",
+            //password recovery
+            "password_recovery.title": "FR_Password recovery",
             //about
             "about_title": "FR_Why are we conducting this study?",
             "about_content": "FR_The purpose of this study is to better Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
@@ -119,17 +125,17 @@ export const resources = {
             "ok": "D'accord",
             "term_and condition_content": "Lorsque vous continuez à utiliser cette application, cela signifie que vous acceptez automatiquement ces conditions générales.",
 
-            "Your feeling this week":"Votre ressenti cette semaine",
-            "Your feelings":"Tes sentiments",
-            "Detail":"Détail",
-            "Summary":"Sommaire",
-            "How you are feeling by location":"Comment vous vous sentez par emplacement",
-            "How you are feeling with others":"Comment vous vous sentez avec les autres",
-            "How you are feeling by activity":"Comment vous vous sentez par activité",
-            "How you are feeling by location help":"C'est votre sentiment par emplacement",
-            "How you are feeling with others help":"C'est votre sentiment avec les autres",
-            "How you are feeling by activity help":"C'est votre sentiment par activité",
-            "Your feeling help":"Ce sont tes sentiments",
+            "Your feeling this week": "Votre ressenti cette semaine",
+            "Your feelings": "Tes sentiments",
+            "Detail": "Détail",
+            "Summary": "Sommaire",
+            "How you are feeling by location": "Comment vous vous sentez par emplacement",
+            "How you are feeling with others": "Comment vous vous sentez avec les autres",
+            "How you are feeling by activity": "Comment vous vous sentez par activité",
+            "How you are feeling by location help": "C'est votre sentiment par emplacement",
+            "How you are feeling with others help": "C'est votre sentiment avec les autres",
+            "How you are feeling by activity help": "C'est votre sentiment par activité",
+            "Your feeling help": "Ce sont tes sentiments",
 
             "notifications": "Notifications",
             "wake_time": "Heure du lever",
@@ -137,7 +143,10 @@ export const resources = {
             "number_notifications" : "Nombre de Notifications",
             "language": "Langue",
             "about": "Information",
-            "num_pings_dialog_title": "Nombre de notifications par jour"
+            "num_pings_dialog_title": "Nombre de notifications par jour",
+            "ThankYouA":"Nous vous remercions d’avoir participé à l’enquête!",
+            "ThankYouB":"Nous vous remercions d’avoir participé à l’enquête! Vous pouvez consulter votre Bilan bien-être dans le menu Résultats.",
+
         }
 
     }
