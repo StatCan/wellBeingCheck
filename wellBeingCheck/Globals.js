@@ -31,6 +31,8 @@ global.webApiBaseUrl='http://barabasy.eastus.cloudapp.azure.com/WebApiForEsmDev/
 global.culture='en';
 global.tokenDoB=new Date(2020,1,1,0,0,0,0);
 global.connectivity=false;
+global.showThankYou=0;
+
 global.graphType0='WarnFW';
 global.graphType1='MacaroniFW';
 global.graphType2='ScalableBarFW';

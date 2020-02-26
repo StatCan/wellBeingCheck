@@ -12,7 +12,7 @@ import LogoClearSmall from '../components/LogoClearSmall';
 import {
   NavigationParams,
   NavigationScreenProp,
-  NavigationState,
+  NavigationState, NavigationEvents,
 } from 'react-navigation';
 import {fetchJwToken,checkConnection} from '../utils/fetchJwToken';
 import { resources } from '../../GlobalResources';
@@ -34,9 +34,12 @@ class Dashboard extends React.Component<Props, HomeState> {
   constructor(HomeState) {
     super(HomeState);
     this.hasImage();
+    let txt='';
+    if(global.showThankYou==1)txt=resources.getString('ThankYouA');else if(global.showThankYou==2)txt=txt=resources.getString('ThankYouB');
     this.state = {
-      refresh: '1' 
-    };
+         refresh: '1',showThankYou:!global.showThankYou==0,
+         thankYouText:txt,
+     };
     this._refresh = this._refresh.bind(this);
   }
 
@@ -47,7 +50,12 @@ class Dashboard extends React.Component<Props, HomeState> {
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
   }
-  
+  checkThankYou(){
+          let txt='';
+          if(global.showThankYou==1)txt=resources.getString('ThankYouA');else if(global.showThankYou==2)txt=txt=resources.getString('ThankYouB');
+          this.setState({showThankYou:!global.showThankYou==0,thankYouText:txt});
+          setTimeout(()=>{global.showThankYou=0;this.setState({showThankYou: false})}, 2000);
+         }
   handleBackButton() {
     return true;
   }
@@ -99,16 +107,21 @@ class Dashboard extends React.Component<Props, HomeState> {
     render() {
        return (
       <Background>
-        <LogoClearSmall/>
+         <View style={{flexDirection:'row',width:'100%',justifyContent:'space-between'}}>
+         <TouchableOpacity style={{marginLeft:0}}><Image source={require('../assets/ic_logo_loginmdpi.png')} style={{width:38,height:38}} /></TouchableOpacity>
+         <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen', { refresh: this._refresh })} style={{ marginRight:0,marginTop:0 }}><EvilIcons name="gear" style={styles.gearIcon} size={32} color="black" /></TouchableOpacity>
+        </View>
         <View style={styles.homeContainer}>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen', { refresh: this._refresh })} style={{ alignSelf: 'flex-end' }}><EvilIcons name="gear" style={styles.gearIcon} size={32} color="black" /></TouchableOpacity>
-          <TouchableOpacity onPress={() => { global.needReload1 = true; global.needReload2 = true; global.needReload3 = true; global.needReload4 = true; global.needReload5 = true; global.needReload6 = true; global.needReload7 = true; this.props.navigation.navigate('EQSurveyScreen'); }} style={{ flex: 2, justifyContent: 'center' }}>
+                   <TouchableOpacity onPress={() => { global.needReload1 = true; global.needReload2 = true; global.needReload3 = true; global.needReload4 = true; global.needReload5 = true; global.needReload6 = true; global.needReload7 = true; this.props.navigation.navigate('EQSurveyScreen'); }} style={{ flex: 2, justifyContent: 'center' }}>
             <View style={styles.outer}>
               <View style={styles.inner}>
                 <Text style={styles.startButtonText}>{resources.getString("start_survey")}</Text>
               </View>
             </View>
           </TouchableOpacity>
+          { this.state.showThankYou &&
+                       <View style={{backgroundColor:'black',width:'80%', position: 'absolute',zIndex: 29,alignSelf:'center',top:'60%',justifyContent:'center',alignItems:'center'}}><Text style={{color:'white',fontSize:14,marginTop:10,marginBottom:10}}>{this.state.thankYouText}</Text></View>
+           }
           <View style={[styles.homeButtonContainer, { marginBottom: 0,marginTop:50 }, { flexDirection: 'row'}]}>
             <TouchableOpacity onPress={() =>{if(hasImage=='1')this.props.navigation.navigate('ResultSummaryScreen');else alert('No data found,you have to complete the survey at least once.');}} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>Dashboard</Text></TouchableOpacity>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')} style={styles.smallButton}><EvilIcons name="question" size={40} color="white" /><Text style={styles.smallButtonText}>About</Text></TouchableOpacity>
@@ -116,7 +129,7 @@ class Dashboard extends React.Component<Props, HomeState> {
            </View>
 
         </View>
-
+        <NavigationEvents onDidFocus={() => this.checkThankYou()} />
       </Background>
     );
   }
@@ -206,6 +219,8 @@ const styles = StyleSheet.create({
 });
 
 export default memo(Dashboard);
+
+ <LogoClearSmall/>
 
 // //         <TouchableOpacity onPress={() =>{
 //                    console.log("asdfgasdfasdfasdfasd");
