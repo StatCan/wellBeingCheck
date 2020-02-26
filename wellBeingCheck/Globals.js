@@ -34,6 +34,7 @@ global.culture='en';
 global.tokenDoB=new Date(2020,1,1,0,0,0,0);
 global.connectivity=false;
 global.configurationReady=false;
+global.showThankYou=0;
 
 
 global.graphType0='WarnFW';

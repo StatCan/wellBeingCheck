@@ -16,6 +16,7 @@ interface Props {
 class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
 
   _onNextBtnHandle = () => {
+
     this.props.navigation.navigate('Dashboard');
   }
 

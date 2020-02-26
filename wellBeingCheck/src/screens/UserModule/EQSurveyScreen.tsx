@@ -45,17 +45,13 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
          if(!isConnected){alert('You are offline, try it later');return;}
 
          let types=await this.fetchGraphTypes();console.log('types:'+types);
-         if(types!=null &&types.length>0){
+         if(types!=null && types.length>0){
              this.fetchGraphs(types);
          }
-
-      //    let jwt=await this.fetchJwToken();
-        //  if(jwt==''){alert("Internal server error, Try again, if same thing would happen again contact StatCan");return;}
-          // global.jwToken=jwt;console.log('bbbbbb:'+jwt);
    }
- async fetchGraphs(types:string[]){
+   async fetchGraphs(types:string[]){
       if(count>0)return;
-      let jwt=await this.fetchJwToken();
+      let jwt=await this.fetchJwToken();console.log('asdfasdfasdfasdf');
       if(jwt==''){alert("Internal server error, Try again, if same thing would happen again contact StatCan");return;}
       global.jwToken=jwt;
       let hh=deviceHeight-220;let hh1=deviceHeight-300;let ww=deviceWidth-80;
@@ -64,11 +60,8 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
           let url=global.webApiBaseUrl+'api/dashboard/graph?type='+types[i];
           if(types[i]=='mood')url+='&width='+ww+'&height='+hh1;
           else url+='&width='+deviceWidth+'&height='+hh;
-          if(types[i]=='mood'){
-               this.fetchImage(url,index,'en');index++;
-               this.fetchImage(url,index,'fr');index++;
-          }
-
+          this.fetchImage(url,index,'en');index++;
+          this.fetchImage(url,index,'fr');index++;
       }
       AsyncStorage.setItem('hasImage','1');console.log('Fetch images done');
    }
@@ -134,6 +127,10 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
           AsyncStorage.setItem('hasImage','1');console.log('Fetch images done');
           //count=1;
     }
+   fetchAllImages(){
+      let url='http://localhost:49159/'+'AllImages/aaa/'+timeStamp+'/en/'+deviceWidth+'/'+deviceHeight;
+                            fetch(url)
+                                     .then( response => console.log(response));}
    async fetchImage(url:string,index:number,culture:string) {
        let isConnected=await checkConnection();
        if(!isConnected){alert('You are offline, try it later');return;}
@@ -190,8 +187,9 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
            <View>
                   <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                       <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{marginLeft:0}}><EvilIcons name="arrow-left" size={32} color="black" /></TouchableOpacity>
-                       <Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:34,height:34}} />
-                       <TouchableOpacity onPress={() => this.webView.postMessage('test')} style={{alignSelf:'flex-end'}}><Ionicons name="ios-globe" size={30} color="black" /></TouchableOpacity>
+                      <TouchableOpacity onPress={()=>this.fetchAllImages()}><Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:34,height:34}} /></TouchableOpacity>
+
+                      <TouchableOpacity onPress={() => this.webView.postMessage('test')} style={{alignSelf:'flex-end'}}><Ionicons name="ios-globe" size={30} color="black" /></TouchableOpacity>
                   </View>
               </View>
                 <WebView
@@ -221,11 +219,11 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                                      if(count>0){count=0;return;}
                                       console.log('redady to fetch image');
                                       this.handleSurveyBdone();count=1;
-                                      alert(resources.getString("ThankYouB"));
+                                       global.showThankYou=2;
                                  }
                                  else {
                                       this.handleSurveyAdone();
-                                      alert(resources.getString("ThankYouA"));
+                                        global.showThankYou=1;
                                       count=1;
 
                                  }
@@ -245,7 +243,7 @@ const styles = StyleSheet.create({
   },
   webview: {
     //  flex: 1,
-    marginTop: 24,
+    marginTop: 0,
     width: deviceWidth,
     height: deviceHeight + 2000
   },
