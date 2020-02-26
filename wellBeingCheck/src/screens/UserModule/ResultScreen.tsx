@@ -4,7 +4,7 @@ import TabNavigator from './TabPageScreen';
 import { Provider as PaperProvider, Title, Paragraph } from 'react-native-paper';
 import Button from '../../components/Button';
 import { resources } from '../../../GlobalResources';
-import { Ionicons,EvilIcons,Feather } from '@expo/vector-icons';
+import { AntDesign,FontAwesome } from '@expo/vector-icons';
 import Constants from 'expo-constants';
 //import Slideshow from 'react-native-image-slider-show';
 //import Slideshow from 'react-native-image-slider-show-razzium';
@@ -116,16 +116,16 @@ export default class App extends React.Component<Props,ScreenState> {
                     style={{ backgroundColor: 'white',flex:1}}
                  >
            <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{marginLeft:0}}><Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:38,height:38}} /></TouchableOpacity>
-                                   <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{marginRight:0}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
+                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{marginLeft:5,marginTop:10}}><Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:38,height:38}} /></TouchableOpacity>
+                                   <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{marginRight:5,marginTop:10}}><FontAwesome name="gear" size={30} color="black" /></TouchableOpacity>
                              </View>
             <View style={{ flex: 1 }}>
                     <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
                           {indicator}
                     </View>
                     <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                          <Title style={styles.title}>{resources.getString("Your feelings")}</Title>
-                          <TouchableOpacity onPress={() => this.helpClick()} style={{marginRight:0}}><EvilIcons name="question" size={34} color="black" /></TouchableOpacity>
+                          <Title style={[styles.title,{marginLeft:5}]}>{this.state.title}</Title>
+                          <TouchableOpacity onPress={() => this.helpClick()} style={{marginRight:0}}><AntDesign name="questioncircle" size={30} style={{color:'#918196',marginRight:5}} color="black" /></TouchableOpacity>
                     </View>
                             <View style={{height:this.state.height}}>
                             <ScrollView horizontal showsHorizontalScrollIndicator={false} ref={ref => {this.sv = ref;}} contentContainerStyle={{ paddingVertical: 20,justifyContent:'center', }} onTouchStart={this.log} onScrollEndDrag={this.handleScroll.bind(this)}>

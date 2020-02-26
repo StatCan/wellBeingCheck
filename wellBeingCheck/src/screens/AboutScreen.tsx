@@ -16,6 +16,7 @@ interface Props {
 class AboutScreen extends React.Component<Props, AboutScreen> {
 
   _onNextBtnHandle = () => {
+    global.showThankYou=2;
     this.props.navigation.navigate('Dashboard',{showThankYou:true});
   }
 

@@ -8,7 +8,7 @@ import LogoClearSmall from '../../components/LogoClearSmall';
 import { resources } from '../../../GlobalResources';
 import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
 import BackgroundWhite from '../../components/BackgroundWhite';
-import { Ionicons,EvilIcons,Feather } from '@expo/vector-icons';
+import { AntDesign,FontAwesome } from '@expo/vector-icons';
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
@@ -68,13 +68,13 @@ export default class ResultSummaryScreen extends React.Component<Props, AboutScr
       <PaperProvider theme={newTheme}>
         <BackgroundWhite>
                    <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{marginLeft:0}}><Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:38,height:38}} /></TouchableOpacity>
-                         <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{marginRight:0}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{marginLeft:5,marginTop:10}}><Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:38,height:38}} /></TouchableOpacity>
+                         <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{marginRight:5,marginTop:10}}><FontAwesome name="gear" size={30} color="black" /></TouchableOpacity>
                    </View>
           <SafeAreaView style={styles.container}>
                    <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                             <Title style={styles.title}>{resources.getString("Your feelings")}</Title>
-                            <TouchableOpacity onPress={() => this.helpClick()} style={{marginRight:0,marginTop:20}}><EvilIcons name="question" size={34} color="black" /></TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.helpClick()} style={{marginRight:0,marginTop:20}}><AntDesign name="questioncircle" size={30} style={{color:'#918196',marginRight:5}} color="black" /></TouchableOpacity>
                    </View>
               <View style={styles.content}>
                      {this.state.pictureBase64 && (
