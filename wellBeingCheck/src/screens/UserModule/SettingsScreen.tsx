@@ -35,8 +35,10 @@ type SettingsState = {
   sleeptime: string, 
   notificationcount: number, 
   culture: string,
+  numPingsModalShow: boolean,
   languageModalShow: boolean,
-  wakeTimePickerShow: boolean
+  wakeTimePickerShow: boolean,
+  sleepTimePickerShow: boolean
 }
 
 interface Props {
@@ -52,6 +54,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
   constructor(SettingsState) {
     super(SettingsState)
     this.state = {
+      numPingsModalShow: false,
       notificationState: true,
       notification: true, 
       waketime: '08:00', 
@@ -59,7 +62,8 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
       notificationcount: 2, 
       culture: '1',
       languageModalShow: false,
-      wakeTimePickerShow: false
+      wakeTimePickerShow: false,
+      sleepTimePickerShow: false
     };
     this.wakeTimeHandler = this.wakeTimeHandler.bind(this);
     this.sleepTimeHandler = this.sleepTimeHandler.bind(this);
@@ -75,12 +79,14 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
 
   cancelTimeHandler(time) {
     this.setState({ wakeTimePickerShow: false })
+    this.setState({ sleepTimePickerShow: false })
   }
 
   sleepTimeHandler(time) {
     this.setState({
       sleeptime: time
     })
+    this.setState({ sleepTimePickerShow: false })
   }
 
   askPermissions = async () => {
@@ -216,11 +222,17 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
     }
   }
 
-  _showModal = () => this.setState({ languageModalShow: true });
-  _hideModal = () => this.setState({ languageModalShow: false });
+  _showNumPingsModal = () => this.setState({ numPingsModalShow: true });
+  _hideNumPingsModal = () => this.setState({ numPingsModalShow: false });
+
+  _showLanguageModal = () => this.setState({ languageModalShow: true });
+  _hideLanguageModal = () => this.setState({ languageModalShow: false });
 
   _showWakeTimePicker = () => this.setState({ wakeTimePickerShow: true });
   _hideWakeTimePicker = () => this.setState({ wakeTimePickerShow: false });
+
+  _showSleepTimePicker = () => this.setState({ sleepTimePickerShow: true });
+  _hideSleepTimePicker = () => this.setState({ sleepTimePickerShow: false });
 
   render() {
 
@@ -262,17 +274,17 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
           <List.Item
             style={styles.listStyle}
             title={resources.getString("number_notifications")}
-            onPress={this._showModal}
+            onPress={this._showNumPingsModal}
           />
           <List.Item
             style={styles.listStyle}
             title={this.state.notificationcount}
-            onPress={this._showModal}
+            onPress={this._showNumPingsModal}
           />
           <List.Item
             style={styles.listStyle}
             title={resources.getString("wake_time")}
-            onPress={this._showModal}
+            onPress={this._showNumPingsModal}
           />
           <List.Item
             style={styles.listStyle}
@@ -288,22 +300,35 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
             handler = {this.wakeTimeHandler}
             cancelHandler = {this.cancelTimeHandler}
             />
-          <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-            <Text style={styles.label}>{resources.getString("sleep_time")}</Text>
-            <TimePicker time={this.state.sleeptime} timeType="sleepTime" handler = {this.sleepTimeHandler} />
-          </View>
-
-          <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-            <Text style={{marginLeft: 38, fontSize: 16, marginTop: 60}}>{resources.getString("language")}</Text>
-            <Picker  
-                selectedValue={this.state.culture}
-                onValueChange={c => this._changeLanguage(c)}
-                style={{ width: 100, height:100, marginBottom:20, marginTop:40, justifyContent:'space-around' }}
-                mode="dropdown">
-                <Picker.Item label="English" value="1" />
-                <Picker.Item label="French" value="2" />
-            </Picker>
-          </View>
+          <List.Item
+            style={styles.listStyle}
+            title={resources.getString("sleep_time")}
+            onPress={this._showSleepTimePicker}
+          />
+          <List.Item
+            style={styles.listStyle}
+            title={this.state.sleeptime}
+            onPress={this._showSleepTimePicker}
+          />
+          <TimePicker 
+            showTimePicker={this.state.sleepTimePickerShow} 
+            style={styles.timePicker} 
+            time={this.state.sleeptime} 
+            timeType="sleepTime" 
+            isVisible={this.state.sleepTimePickerShow}
+            handler = {this.sleepTimeHandler} 
+            cancelHandler = {this.cancelTimeHandler}
+          />
+          <List.Item
+            style={styles.listStyle}
+            title={resources.getString("language")}
+            onPress={this._showLanguageModal}
+          />
+          <List.Item
+            style={styles.listStyle}
+            title={this.state.culture}
+            onPress={this._showLanguageModal}
+          />
         </List.Section>
         {debugButtons}
         </ScrollView>
@@ -311,13 +336,43 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
           <Portal>
             <Dialog
               visible={this.state.languageModalShow}
-              onDismiss={this._hideModal}>
+              onDismiss={this._hideLanguageModal}>
+              <Dialog.Title>{resources.getString("language")}</Dialog.Title>
+              <Dialog.Content>
+                <RadioButton.Group
+                  onValueChange={c => this._changeLanguage(c)}
+                  value={this.state.culture}>
+                  <View>
+                    <Text>English</Text>
+                    <RadioButton value="1" />
+                  </View>
+                  <View>
+                    <Text>French</Text>
+                    <RadioButton value="2" />
+                  </View>
+                </RadioButton.Group>
+              </Dialog.Content>
+              <Dialog.Actions>
+                <Button
+                  style={styles.dialog_action_btn}
+                  onPress={this._hideLanguageModal}>
+                  Ok
+                </Button>
+              </Dialog.Actions>
+            </Dialog>
+          </Portal>
+        </View>
+        <View>
+          <Portal>
+            <Dialog
+              visible={this.state.numPingsModalShow}
+              onDismiss={this._hideNumPingsModal}>
               <Dialog.Title>{resources.getString("num_pings_dialog_title")}</Dialog.Title>
               <Dialog.Content>
                 <RadioButton.Group
                   onValueChange={n => this.setState({notificationcount:parseInt(n)})}
                   value={this.state.notificationcount.toString()}>
-                  <View>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
                     <Text>2</Text>
                     <RadioButton value="2" />
                   </View>
@@ -338,7 +393,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
               <Dialog.Actions>
                 <Button
                   style={styles.dialog_action_btn}
-                  onPress={this._hideModal}>
+                  onPress={this._hideNumPingsModal}>
                   Ok
                 </Button>
               </Dialog.Actions>
