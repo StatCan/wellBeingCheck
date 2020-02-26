@@ -100,6 +100,22 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     }
   }
 
+  _getPasswordConfirmErrorText(errorCode) {
+    switch (errorCode) {
+      case 200:
+        return '';
+        break;
+      case 10:
+        return resources.getString("reg.pass_conf.empty")
+        break;
+      case 20:
+        return resources.getString("reg.pass_conf.match")
+        break;
+      default:
+        return '';
+    }
+  }
+
   _validateForm = () => {
     const isPasswordValid = passwordValidator(this.state.password);
     const isPasswordConfirmValid = passwordConfirmValidator(this.state.password, this.state.passwordConfirm);
@@ -108,6 +124,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 
     //translate password error
     let passwordErrorText = this._getPasswordErrorText(isPasswordValid)
+    let passwordConfirmErrorText = this._getPasswordConfirmErrorText(isPasswordConfirmValid)
 
     if ((isPasswordValid == 200) && (isPasswordConfirmValid == '') && (isSecurityQuestionValid == '') && (isSecurityAnswerValid == '')) {
       this.setState({ passwordError: '' });
@@ -118,7 +135,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     }
     else {
       this.setState({ passwordError: passwordErrorText });
-      this.setState({ passwordConfirmError: isPasswordConfirmValid });
+      this.setState({ passwordConfirmError: passwordConfirmErrorText });
       this.setState({ securityQuestionError: isSecurityQuestionValid });
       this.setState({ securityAnswerError: isSecurityAnswerValid });
       return false;
@@ -173,15 +190,10 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
   render() {
     return (
       <Background>
-        {/* <BackButton goBack={() => this.props.navigation.navigate('HomeScreen')} /> */}
-
         <SafeAreaView style={styles.container}>
           <ScrollView style={styles.scrollView}>
-
             <LogoClearSmall />
-
             <Title style={styles.title}>Secure your account</Title>
-
             <View style={styles.passwordView}>
               <TextInput
                 label="Enter password"
@@ -195,17 +207,12 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                 errorText={this.state.passwordError}
                 secureTextEntry={true}
               />
-
               <TouchableOpacity
                 style={styles.passwordHelpBtnBg}
                 onPress={this._showModal}
               >
                 <Text style={styles.passwordHelpBtnText}>?</Text>
               </TouchableOpacity>
-
-              {/* <Button mode="outlined" onPress={this._onPasswordHelpPressed} style={styles.btnHelp}>
-            ?
-          </Button> */}
             </View>
 
             <TextInput
@@ -257,14 +264,6 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
               </Button>
             </View>
 
-
-            {/* <View style={styles.row}>
-          <Text style={styles.label}>Already have an account? </Text>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('LoginScreen')}>
-            <Text style={styles.link}>Login</Text>
-          </TouchableOpacity>
-        </View> */}
-
             <View>
               <Portal>
                 <Dialog
@@ -273,31 +272,31 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                   <Dialog.Title>Password Requirments</Dialog.Title>
                   <Dialog.Content>
                     <View style={styles.pr_view}>
-                      <Text style={styles.pr_text}>8 Characters</Text>
+                      <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_length")}</Text>
                       <TouchableOpacity style={styles.pr_btn}>
                         <EvilIcons size={25} name="check" />
                       </TouchableOpacity>
                     </View>
                     <View style={styles.pr_view}>
-                      <Text style={styles.pr_text}>1 Upper case</Text>
+                      <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_upper")}</Text>
                       <TouchableOpacity style={styles.pr_btn}>
                         <EvilIcons size={25} name="check" />
                       </TouchableOpacity>
                     </View>
                     <View style={styles.pr_view}>
-                      <Text style={styles.pr_text}>1 Special character</Text>
+                      <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_special")}</Text>
                       <TouchableOpacity style={styles.pr_btn}>
                         <EvilIcons size={25} name="check" />
                       </TouchableOpacity>
                     </View>
                     <View style={styles.pr_view}>
-                      <Text style={styles.pr_text}>1 Lower case</Text>
+                      <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_lower")}</Text>
                       <TouchableOpacity style={styles.pr_btn}>
                         <EvilIcons size={25} name="check" />
                       </TouchableOpacity>
                     </View>
                     <View style={styles.pr_view}>
-                      <Text style={styles.pr_text}>1 Number</Text>
+                      <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_number")}</Text>
                       <TouchableOpacity style={styles.pr_btn}>
                         <EvilIcons size={25} name="check" />
                       </TouchableOpacity>

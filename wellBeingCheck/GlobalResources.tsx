@@ -30,6 +30,13 @@ export const resources = {
             "reg.ques.sport": "What is your favourite game or sport?",
             "reg.ques.job": "What was your first job?",
             "reg.action.create": "CREATE",
+            "reg.pass.hint_length": "8 Characters",
+            "reg.pass.hint_upper": "1 Upper case",
+            "reg.pass.hint_special": "1 Special character",
+            "reg.pass.hint_lower": "1 Lower case",
+            "reg.pass.hint_number": "1 Number",
+            "reg.pass_conf.empty": "Password cannot be empty",
+            "reg.pass_conf.match": "Password's do not match",
             //password recovery
             "password_recovery.title": "Password recovery",
             //about
@@ -103,6 +110,13 @@ export const resources = {
             "reg.ques.sport": "Quel est votre jeu ou sport préféré?",
             "reg.ques.job": "Quel a été votre premier emploi?",
             "reg.action.create": "FR_CREATE",
+            "reg.pass.hint_length": "8 caractères",
+            "reg.pass.hint_upper": "une majuscule",
+            "reg.pass.hint_special": "un caractère spécial",
+            "reg.pass.hint_lower": "une minuscule",
+            "reg.pass.hint_number": "un chiffre",
+            "reg.pass_conf.empty": "FR_Password cannot be empty",
+            "reg.pass_conf.match": "FR_Password's do not match",
             //password recovery
             "password_recovery.title": "FR_Password recovery",
             //about

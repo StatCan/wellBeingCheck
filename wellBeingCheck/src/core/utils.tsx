@@ -24,8 +24,8 @@ export const passwordValidator = (password: string) => {
 };
 
 export const passwordConfirmValidator = (password: string, passwordConfirm: string) => {
-  if (!passwordConfirm || passwordConfirm.length <= 0) return 'Password cannot be empty.';
-  if (password !== passwordConfirm) return "Password's does not match";
+  if (!passwordConfirm || passwordConfirm.length <= 0) return 10;
+  if (password !== passwordConfirm) return 20
   return '';
 };
 
