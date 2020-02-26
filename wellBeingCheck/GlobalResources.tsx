@@ -29,6 +29,7 @@ export const resources = {
             "reg.ques.car": "What was your first car?",
             "reg.ques.sport": "What is your favourite game or sport?",
             "reg.ques.job": "What was your first job?",
+            "reg.action.create": "CREATE",
             //password recovery
             "password_recovery.title": "Password recovery",
             //about
@@ -99,6 +100,7 @@ export const resources = {
             "reg.ques.car": "Quelle a été votre première voiture?",
             "reg.ques.sport": "Quel est votre jeu ou sport préféré?",
             "reg.ques.job": "Quel a été votre premier emploi?",
+            "reg.action.create": "FR_CREATE",
             //password recovery
             "password_recovery.title": "FR_Password recovery",
             //about

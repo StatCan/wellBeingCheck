@@ -1,5 +1,5 @@
 import React, { memo, useState, useCallback } from 'react';
-import { Picker, View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
+import { Picker, View, Text, StyleSheet, TouchableOpacity, Modal, SafeAreaView, ScrollView } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Background from '../../components/Background';
 import Logo from '../../components/Logo';
@@ -76,28 +76,28 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     switch (errorCode) {
       case 200:
         return '';
-      break;
+        break;
       case 10:
         return resources.getString("reg.pass.validation.empty")
-      break;
+        break;
       case 20:
         return resources.getString("reg.pass.validation.min_eight")
-      break;
+        break;
       case 30:
         return resources.getString("reg.pass.validation.upper")
-      break;
+        break;
       case 40:
         return resources.getString("reg.pass.validation.special")
-      break;
+        break;
       case 50:
         return resources.getString("reg.pass.validation.lower")
-      break;
+        break;
       case 60:
         return resources.getString("reg.pass.validation.number")
-      break;
+        break;
       default:
         return '';
-    }  
+    }
   }
 
   _validateForm = () => {
@@ -175,147 +175,163 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
       <Background>
         {/* <BackButton goBack={() => this.props.navigation.navigate('HomeScreen')} /> */}
 
-        <LogoClearSmall />
+        <SafeAreaView style={styles.container}>
+          <ScrollView style={styles.scrollView}>
 
-        <Title style={styles.title}>Secure your account</Title>
+            <LogoClearSmall />
 
-        <View style={styles.passwordView}>
-          <TextInput
-            label="Enter password"
-            returnKeyType="next"
-            selectionColor={newTheme.colors.primary}
-            underlineColor={newTheme.colors.primary}
-            theme={newTheme}
-            value={this.state.password}
-            onChangeText={text => this.setState({ password: text })}
-            error={!!this.state.passwordError}
-            errorText={this.state.passwordError}
-            secureTextEntry={true}
-          />
+            <Title style={styles.title}>Secure your account</Title>
 
-          <TouchableOpacity
-            style={styles.passwordHelpBtnBg}
-            onPress={this._showModal}
-          >
-            <Text style={styles.passwordHelpBtnText}>?</Text>
-          </TouchableOpacity>
+            <View style={styles.passwordView}>
+              <TextInput
+                label="Enter password"
+                returnKeyType="next"
+                selectionColor={newTheme.colors.primary}
+                underlineColor={newTheme.colors.primary}
+                theme={newTheme}
+                value={this.state.password}
+                onChangeText={text => this.setState({ password: text })}
+                error={!!this.state.passwordError}
+                errorText={this.state.passwordError}
+                secureTextEntry={true}
+              />
 
-          {/* <Button mode="outlined" onPress={this._onPasswordHelpPressed} style={styles.btnHelp}>
+              <TouchableOpacity
+                style={styles.passwordHelpBtnBg}
+                onPress={this._showModal}
+              >
+                <Text style={styles.passwordHelpBtnText}>?</Text>
+              </TouchableOpacity>
+
+              {/* <Button mode="outlined" onPress={this._onPasswordHelpPressed} style={styles.btnHelp}>
             ?
           </Button> */}
-        </View>
+            </View>
 
-        <TextInput
-          label="Confirm password"
-          returnKeyType="next"
-          selectionColor={newTheme.colors.primary}
-          underlineColor={newTheme.colors.primary}
-          theme={newTheme}
-          value={this.state.passwordConfirm}
-          onChangeText={text => this.setState({ passwordConfirm: text })}
-          error={!!this.state.passwordConfirmError}
-          errorText={this.state.passwordConfirmError}
-          secureTextEntry={true}
-        />
+            <TextInput
+              label="Confirm password"
+              returnKeyType="next"
+              selectionColor={newTheme.colors.primary}
+              underlineColor={newTheme.colors.primary}
+              theme={newTheme}
+              value={this.state.passwordConfirm}
+              onChangeText={text => this.setState({ passwordConfirm: text })}
+              error={!!this.state.passwordConfirmError}
+              errorText={this.state.passwordConfirmError}
+              secureTextEntry={true}
+            />
 
-        {/* mode can also be dropdown - dialog will allow more space */}
-        <Picker
-          selectedValue={this.state.securityQuestion}
-          style={[styles.picker]}
-          itemStyle={styles.pickerItem}
-          onValueChange={value => this.setState({ securityQuestion: value })}>
-          <Picker.Item label={resources.getString("reg.ques.select")} value="" />
-          <Picker.Item label={resources.getString("reg.ques.mother")} value="reg.ques.mother" />
-          <Picker.Item label={resources.getString("reg.ques.school")} value="reg.ques.school" />
-          <Picker.Item label={resources.getString("reg.ques.car")} value="reg.ques.car" />
-          <Picker.Item label={resources.getString("reg.ques.sport")} value="reg.ques.sport" />
-          <Picker.Item label={resources.getString("reg.ques.job")} value="reg.ques.job" />
-        </Picker>
-        {this.state.securityQuestionError != '' ? (
-          <Text style={styles.errorTest}>{this.state.securityQuestionError}</Text>
-        ) : null
-        }
+            {/* mode can also be dropdown - dialog will allow more space */}
+            <Picker
+              selectedValue={this.state.securityQuestion}
+              style={[styles.picker]}
+              itemStyle={styles.pickerItem}
+              onValueChange={value => this.setState({ securityQuestion: value })}>
+              <Picker.Item label={resources.getString("reg.ques.select")} value="" />
+              <Picker.Item label={resources.getString("reg.ques.mother")} value="reg.ques.mother" />
+              <Picker.Item label={resources.getString("reg.ques.school")} value="reg.ques.school" />
+              <Picker.Item label={resources.getString("reg.ques.car")} value="reg.ques.car" />
+              <Picker.Item label={resources.getString("reg.ques.sport")} value="reg.ques.sport" />
+              <Picker.Item label={resources.getString("reg.ques.job")} value="reg.ques.job" />
+            </Picker>
+            {this.state.securityQuestionError != '' ? (
+              <Text style={styles.errorTest}>{this.state.securityQuestionError}</Text>
+            ) : null
+            }
 
-        <TextInput
-          label="Answer"
-          returnKeyType="next"
-          selectionColor={newTheme.colors.primary}
-          underlineColor={newTheme.colors.primary}
-          theme={newTheme}
-          value={this.state.securityAnswer}
-          onChangeText={text => this.setState({ securityAnswer: text })}
-          error={!!this.state.securityAnswerError}
-          errorText={this.state.securityAnswerError}
-        />
+            <TextInput
+              label="Answer"
+              returnKeyType="next"
+              selectionColor={newTheme.colors.primary}
+              underlineColor={newTheme.colors.primary}
+              theme={newTheme}
+              value={this.state.securityAnswer}
+              onChangeText={text => this.setState({ securityAnswer: text })}
+              error={!!this.state.securityAnswerError}
+              errorText={this.state.securityAnswerError}
+            />
 
-        <Button mode="contained" onPress={this._onSignUpPressed} style={styles.button}>
-          Sign Up
-        </Button>
+            <View style={styles.footer}>
+              <Button color={newTheme.colors.primary} mode="contained" onPress={this._onSignUpPressed} style={styles.button}>
+                <Text style={styles.whiteText}>{resources.getString("reg.action.create")}</Text>
+              </Button>
+            </View>
 
-        {/* <View style={styles.row}>
+
+            {/* <View style={styles.row}>
           <Text style={styles.label}>Already have an account? </Text>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('LoginScreen')}>
             <Text style={styles.link}>Login</Text>
           </TouchableOpacity>
         </View> */}
 
-        <View>
-          <Portal>
-            <Dialog
-              visible={this.state.modalShow}
-              onDismiss={this._hideModal}>
-              <Dialog.Title>Password Requirments</Dialog.Title>
-              <Dialog.Content>
-                <View style={styles.pr_view}>
-                  <Text style={styles.pr_text}>8 Characters</Text>
-                  <TouchableOpacity style={styles.pr_btn}>
-                    <EvilIcons name="check" />
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.pr_view}>
-                  <Text style={styles.pr_text}>1 Upper case</Text>
-                  <TouchableOpacity style={styles.pr_btn}>
-                    <EvilIcons name="check" />
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.pr_view}>
-                  <Text style={styles.pr_text}>1 Special character</Text>
-                  <TouchableOpacity style={styles.pr_btn}>
-                    <EvilIcons name="check" />
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.pr_view}>
-                  <Text style={styles.pr_text}>1 Lower case</Text>
-                  <TouchableOpacity style={styles.pr_btn}>
-                    <EvilIcons name="check" />
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.pr_view}>
-                  <Text style={styles.pr_text}>1 Number</Text>
-                  <TouchableOpacity style={styles.pr_btn}>
-                    <EvilIcons name="check" />
-                  </TouchableOpacity>
-                </View>
-              </Dialog.Content>
-              <Dialog.Actions>
-                <Button
-                  color = {newTheme.colors.primary}
-                  style={styles.pr_action_btn}
-                  onPress={this._hideModal}>
-                  Ok
-                </Button>
-              </Dialog.Actions>
-            </Dialog>
-          </Portal>
-        </View>
+            <View>
+              <Portal>
+                <Dialog
+                  visible={this.state.modalShow}
+                  onDismiss={this._hideModal}>
+                  <Dialog.Title>Password Requirments</Dialog.Title>
+                  <Dialog.Content>
+                    <View style={styles.pr_view}>
+                      <Text style={styles.pr_text}>8 Characters</Text>
+                      <TouchableOpacity style={styles.pr_btn}>
+                        <EvilIcons size={25} name="check" />
+                      </TouchableOpacity>
+                    </View>
+                    <View style={styles.pr_view}>
+                      <Text style={styles.pr_text}>1 Upper case</Text>
+                      <TouchableOpacity style={styles.pr_btn}>
+                        <EvilIcons size={25} name="check" />
+                      </TouchableOpacity>
+                    </View>
+                    <View style={styles.pr_view}>
+                      <Text style={styles.pr_text}>1 Special character</Text>
+                      <TouchableOpacity style={styles.pr_btn}>
+                        <EvilIcons size={25} name="check" />
+                      </TouchableOpacity>
+                    </View>
+                    <View style={styles.pr_view}>
+                      <Text style={styles.pr_text}>1 Lower case</Text>
+                      <TouchableOpacity style={styles.pr_btn}>
+                        <EvilIcons size={25} name="check" />
+                      </TouchableOpacity>
+                    </View>
+                    <View style={styles.pr_view}>
+                      <Text style={styles.pr_text}>1 Number</Text>
+                      <TouchableOpacity style={styles.pr_btn}>
+                        <EvilIcons size={25} name="check" />
+                      </TouchableOpacity>
+                    </View>
+                  </Dialog.Content>
+                  <Dialog.Actions>
+                    <View>
+                      <Button
+                        color={newTheme.colors.primary}
+                        style={styles.pr_action_btn}
+                        onPress={this._hideModal}>
+                        Ok
+                      </Button>
+                    </View>
+                  </Dialog.Actions>
+                </Dialog>
+              </Portal>
+            </View>
 
-      </Background>
+          </ScrollView>
+        </SafeAreaView>
+
+      </Background >
 
     );
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+  },
+  scrollView: {
+  },
   pr_action_btn: {
     flexDirection: 'row',
     alignSelf: 'flex-end',
@@ -334,7 +350,6 @@ const styles = StyleSheet.create({
     position: 'relative',
     right: 0,
     bottom: 20,
-    fontSize: 50,
     color: 'green',
   },
   passwordHelpBtnText: {
@@ -356,12 +371,11 @@ const styles = StyleSheet.create({
   },
   passwordView: {
     flexDirection: 'row',
-    marginLeft: 30,
-    marginRight: 30,
+    width: 238,
   },
   btnHelp: {
     width: 20,
-    height: 59,
+    height: 60,
     position: 'relative',
     top: 8,
     borderStyle: 'solid',
@@ -383,8 +397,10 @@ const styles = StyleSheet.create({
     marginLeft: 4,
   },
   button: {
-    backgroundColor: newTheme.colors.primary,
-    marginTop: 24,
+    color: newTheme.colors.whiteText,
+    width: 100,
+    alignSelf: "flex-end",
+    marginRight: -20,
   },
   row: {
     flexDirection: 'row',
@@ -402,7 +418,17 @@ const styles = StyleSheet.create({
   },
   pickerItem: {
     height: 50,
-  }
+  },
+  footer: {
+    flexDirection: 'row',
+    width: '100%',
+    alignItems: "flex-end",
+    justifyContent: 'flex-end',
+    paddingRight: 20,
+  },
+  whiteText: {
+    color: newTheme.colors.whiteText
+  },
 });
 
 export default memo(RegisterScreen);
