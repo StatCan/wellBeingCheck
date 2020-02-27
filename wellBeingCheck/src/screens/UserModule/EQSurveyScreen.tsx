@@ -68,7 +68,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
           this.fetchImage(uri5,5);
           this.fetchImage(uri6,6);
           this.fetchImage(uri7,7);
-          AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');
+          AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
           //count=1;
     }
    async fetchImage(url:string,index:number) {

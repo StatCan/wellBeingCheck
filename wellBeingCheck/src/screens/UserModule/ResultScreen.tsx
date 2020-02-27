@@ -31,7 +31,7 @@ export default class App extends React.Component<Props,ScreenState> {
     constructor(props) {
       	    super(props);
       	    this.state = {picture1Base64:null,
-               images: [],current:0,title:resources.getString("How you are feeling by location"),helpText:resources.getString("How you are feeling by location help"),
+               images: [],current:0,title:resources.getString("How you are feeling by location"),helpText:resources.getString("Your feeling help"),
       	     width: 0,height: 0};
        }
      _onNextBtnHandle = () => {
@@ -84,9 +84,9 @@ export default class App extends React.Component<Props,ScreenState> {
       let index=Math.round(x/width1);
       let xd=index*width1;
       this.setState({current:index});
-      if(index==0){this.setState({helpText:resources.getString("How you are feeling by location help"),title:resources.getString("How you are feeling by location")});}
-      else if(index==1){this.setState({helpText:resources.getString("How you are feeling with others help"),title:resources.getString("How you are feeling with others")});}
-      else if(index==2){this.setState({helpText:resources.getString("How you are feeling by activity help"),title:resources.getString("How you are feeling by activity")});}
+      if(index==0){this.setState({title:resources.getString("How you are feeling by location")});}
+      else if(index==1){this.setState({title:resources.getString("How you are feeling with others")});}
+      else if(index==2){this.setState({title:resources.getString("How you are feeling by activity")});}
       InteractionManager.runAfterInteractions(()=>this.sv.scrollTo({x:xd}))
       }
    _onLayout(event) {

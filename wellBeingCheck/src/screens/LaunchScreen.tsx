@@ -106,7 +106,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
       if(jwt!=null)global.jwToken=jwt;
     //  if(jwt==null)global.doneSurveyA=false;else {global.doneSurveyA=true;global.jwToken=jwt;}
       console.log('SuvetAa:'+global.doneSurveyA);
-
+     let hasImage = await AsyncStorage.getItem('hasImage');if(hasImage!=null)global.hasImage=hasImage;
    //   if(!global.connectivity){alert('You are offline, try it later');return;}
    let isConnected=await checkConnection();
    if(!isConnected){alert('You are offline, try it later');return;}
