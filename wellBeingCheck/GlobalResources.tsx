@@ -50,7 +50,7 @@ export const resources = {
             "the_answer_is:": "The answer is:",
             "btn_create": "Create",
             "login": "Login",
-            "start_survey": "Start Your Survey",
+            "start_survey": "Start Survey",
             "settings": "Settings",
             "result": "Result",
             "about_the_survey": "About the Survey",
