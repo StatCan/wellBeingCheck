@@ -11,4 +11,5 @@ export { default as AboutScreen } from '././AboutScreen';
 export { default as ResultScreen } from './UserModule/ResultScreen';
 export { default as ResultSummaryScreen } from './UserModule/ResultSummaryScreen';
 export { default as EQSurveyScreen } from './UserModule/EQSurveyScreen';
+export { default as TOSSettingsScreen } from './UserModule/TOSSettingsScreen';
 export { default as Dashboard } from './Dashboard';

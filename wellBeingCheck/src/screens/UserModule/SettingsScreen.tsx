@@ -49,8 +49,6 @@ interface Props {
 class SettingsScreen extends React.Component < Props, SettingsState > {
   _notificationSubscription: any;
 
-  wakeTimePickerChild;
-
   constructor(SettingsState) {
     super(SettingsState)
     this.state = {
@@ -234,6 +232,10 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
   _showSleepTimePicker = () => this.setState({ sleepTimePickerShow: true });
   _hideSleepTimePicker = () => this.setState({ sleepTimePickerShow: false });
 
+  _openTermsConditions = () => {
+    this.props.navigation.navigate('TOSSettingsScreen');
+  }
+
   render() {
 
     let debugButtons;
@@ -278,6 +280,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
           />
           <List.Item
             style={styles.listStyle}
+            titleStyle={styles.listTitleLightStyle}
             title={this.state.notificationcount}
             onPress={this._showNumPingsModal}
           />
@@ -289,6 +292,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
           <List.Item
             style={styles.listStyle}
             title={this.state.waketime}
+            titleStyle={styles.listTitleLightStyle}
             onPress={this._showWakeTimePicker}
             />
           <TimePicker 
@@ -308,6 +312,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
           <List.Item
             style={styles.listStyle}
             title={this.state.sleeptime}
+            titleStyle={styles.listTitleLightStyle}
             onPress={this._showSleepTimePicker}
           />
           <TimePicker 
@@ -319,15 +324,22 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
             handler = {this.sleepTimeHandler} 
             cancelHandler = {this.cancelTimeHandler}
           />
+          <Divider></Divider>
           <List.Item
-            style={styles.listStyle}
+            left={() => <List.Icon icon={require('../../assets/ic_wbc_language.png')}/>}
             title={resources.getString("language")}
             onPress={this._showLanguageModal}
           />
           <List.Item
             style={styles.listStyle}
+            titleStyle={styles.listTitleLightStyle}
             title={this.state.culture}
             onPress={this._showLanguageModal}
+          />
+          <List.Item
+            left={() => <List.Icon icon={require('../../assets/ic_wbc_terms_condition.png')}/>}
+            title={"Terms and Conditions"}
+            onPress={this._openTermsConditions}
           />
         </List.Section>
         {debugButtons}
@@ -401,17 +413,22 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
           </Portal>
         </View>
       </View>
+      <View style={styles.buttonView}>
       <Button style={styles.btnNext}
           mode="contained"
           onPress={this._backButtonPressed}>
           <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
       </Button>
+      </View>
       </PaperProvider>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  buttonView: {
+    marginBottom: 10
+  },
   timePicker: {
     width:100,
     paddingRight:100
@@ -437,8 +454,8 @@ const styles = StyleSheet.create({
     color: newTheme.colors.whiteText,
     width: 120,
     alignSelf: "flex-end",
-    marginRight: 20,
-    marginBottom: 10,
+    
+    marginRight: 20
   },
   btnText: {
     color: newTheme.colors.whiteText,
@@ -458,6 +475,9 @@ const styles = StyleSheet.create({
   },
   listStyle: {
     marginLeft: 60
+  },
+  listTitleLightStyle: {
+    color: "#a7a5a6"
   },
   container: {
     flex: 1,
