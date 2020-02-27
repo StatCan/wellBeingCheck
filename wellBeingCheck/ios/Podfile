@@ -43,4 +43,6 @@ target 'wellBeingCheck' do
 
   # Automatically detect installed unimodules
   use_unimodules!
+  pod 'react-native-wkwebview', :path => '../node_modules/react-native-wkwebview-reborn'
+
 end

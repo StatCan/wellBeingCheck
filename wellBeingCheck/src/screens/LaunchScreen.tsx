@@ -101,8 +101,8 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
       let userToken = await AsyncStorage.getItem('EsmUserToken');
       if (userToken == null ||userToken==''){userToken=this.generateShortGuid(20);AsyncStorage.setItem('EsmUserToken',userToken);}      //userToken= Constants.deviceId;   //   global.userToken=this.generateShortGuid(24);
       global.userToken=userToken;
-      let doneSurveyA = await AsyncStorage.getItem('doneSurveyA');console.log('SuvetA:'+doneSurveyA);global.doneSurveyA=doneSurveyA;
-      console.log('SuvetAa:'+global.doneSurveyA);
+      let doneSurveyA = await AsyncStorage.getItem('doneSurveyA');global.doneSurveyA=doneSurveyA;
+      console.log('SurveyA:'+global.doneSurveyA);
 
    let isConnected=await checkConnection();
    if(!isConnected){alert('You are offline, try it later');return;}

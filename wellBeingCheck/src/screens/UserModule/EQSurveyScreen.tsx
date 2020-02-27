@@ -1,10 +1,12 @@
 import React, { memo, useState, useCallback } from 'react';
 import { Image, View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator,Button } from 'react-native';
 import { AsyncStorage } from 'react-native';
-import { Ionicons,EvilIcons,Feather } from '@expo/vector-icons';
+//import { Ionicons,EvilIcons,Feather } from '@expo/vector-icons';
+import { AntDesign,FontAwesome } from '@expo/vector-icons';
 import WebView from 'react-native-webview';
+//import WKWebView from 'react-native-wkwebview-reborn';
 import { resources } from '../../../GlobalResources';
-import {fetchJwToken,checkConnection} from '../../utils/fetchJwToken';
+import {hashString,checkConnection} from '../../utils/fetchJwToken';
 const deviceHeight =Math.floor(Dimensions.get('window').height);
 const deviceWidth =Math.floor(Dimensions.get('window').width);
 
@@ -29,7 +31,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     let jsCode=clearCookie+'document.addEventListener("message", function (message) { document.getElementById("langtest").click(); });var btn = document.createElement("button");btn.style.visibility ="hidden";btn.onclick = switchlang;btn.setAttribute("id", "langtest");document.body.appendChild(btn);    function switchlang() { var a = document.querySelector("a.sc-js-langchange");var href = a.href;if (href.indexOf("/q/fr")>0) {var res = href.replace("/q/fr", "/q/en");a.setAttribute("href", res);a.click();} else if (href.indexOf("/q/en")>0) {var res = href.replace("/q/en", "/q/fr");a.setAttribute("href", res);a.click();} }';
     this.state=({Sacode:'',jsCode:disCode+jsCode});
   }
-  // componentDidMount(){this.handleSurveyBdone();}
+ //  componentDidMount(){this.resetPassword();}
    async handleSurveyAdone(){
         let isConnected=await checkConnection();
         if(!isConnected){alert('You are offline, try it later');return;}
@@ -66,7 +68,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
    }
    fetchJwToken() {
          let url=global.webApiBaseUrl+'api/security/token';
-         let data={deviceId:global.userToken,password:global.password}
+         let data={deviceId:global.userToken,password:hashString(global.password,global.passwordSalt)}
          return fetch(url,{
                method: 'POST',
                  headers: {
@@ -97,7 +99,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     }
    resetPassword() {
               let url=global.webApiBaseUrl+'api/security/password';console.log(url);
-              let data={deviceId:global.userToken,newSalt:'1234',newPasswordHash:'45678',securityAnswerHash:'4444'}
+              let data={deviceId:global.userToken,newSalt:'1234',newPasswordHash:'1145678',securityAnswerHash:'4444'}
               return fetch(url,{
                     method: 'PUT',
                     headers: {'Content-Type': 'application/json',},
@@ -195,13 +197,9 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
          console.log('Beofore eq:'+uri);
     return (
           <View style={{ flex: 1, marginTop: 0 }}>
-           <View>
-                  <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                      <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{marginLeft:0}}><EvilIcons name="arrow-left" size={32} color="black" /></TouchableOpacity>
-                      <TouchableOpacity onPress={()=>this.fetchAllImages()}><Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:34,height:34}} /></TouchableOpacity>
 
-                      <TouchableOpacity onPress={() => this.webView.postMessage('test')} style={{alignSelf:'flex-end'}}><Ionicons name="ios-globe" size={30} color="black" /></TouchableOpacity>
-                  </View>
+              <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                                  <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{marginLeft:5,marginTop:10}}><Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:38,height:38}} /></TouchableOpacity>
               </View>
                 <WebView
                           ref={(view) => this.webView = view} incognito={true} pointerEvents="none"
@@ -266,3 +264,14 @@ const styles = StyleSheet.create({
 
 //  <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{marginRight:0}}><EvilIcons name="gear" size={32} color="black" /></TouchableOpacity>
 // <TouchableOpacity onPress={() => this.webView.postMessage('test')} style={{alignSelf:'flex-end'}}><Ionicons name="ios-globe" size={30} color="black" /></TouchableOpacity>
+
+
+ //<View style={{flexDirection:'row',justifyContent:'space-between'}}>
+   //                   <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{marginLeft:0}}><EvilIcons name="arrow-left" size={32} color="black" /></TouchableOpacity>
+     //                 <TouchableOpacity onPress={()=>this.fetchAllImages()}><Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:34,height:34}} /></TouchableOpacity>
+//
+  //                    <TouchableOpacity onPress={() => this.webView.postMessage('test')} style={{alignSelf:'flex-end'}}><Ionicons name="ios-globe" size={30} color="black" /></TouchableOpacity>
+    //              </View>
+
+
+//     <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{marginRight:5,marginTop:10}}><FontAwesome name="gear" size={30} color="black" /></TouchableOpacity>
