@@ -103,7 +103,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
       global.userToken=userToken;
       let doneSurveyA = await AsyncStorage.getItem('doneSurveyA');global.doneSurveyA=doneSurveyA;
       console.log('SurveyA:'+global.doneSurveyA);
-
+      let hasImage = await AsyncStorage.getItem('hasImage');if(hasImage!=null)global.hasImage=hasImage;
    let isConnected=await checkConnection();
    if(!isConnected){alert('You are offline, try it later');return;}
       let url = global.webApiBaseUrl+'api/config/links';console.log(url);

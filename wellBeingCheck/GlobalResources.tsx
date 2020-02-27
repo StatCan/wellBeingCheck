@@ -61,7 +61,7 @@ export const resources = {
               "How you are feeling by location help":"This is your feeling by location",
               "How you are feeling with others help":"This is your feeling with others",
               "How you are feeling by activity help":"This is your feeling by activity",
-              "Your feeling help":"This is your feelings",
+              "Your feeling help":"These results have not been validated by Statistics Canada. For more information and help interpreting your results, please see the FAQ on the help page.",
 
             "notifications": "Notifications",
             "wake_time": "Wake-up time",
@@ -130,7 +130,7 @@ export const resources = {
             "How you are feeling by location help":"C'est votre sentiment par emplacement",
             "How you are feeling with others help":"C'est votre sentiment avec les autres",
             "How you are feeling by activity help":"C'est votre sentiment par activité",
-            "Your feeling help":"Ce sont tes sentiments",
+            "Your feeling help":"Ces résultats n’ont pas été validés par Statistique Canada. Pour plus d’informations et pour vous aider à interpréter vos résultats, veuillez consulter la Foire aux questions sur la page d’aide.",
 
             "notifications": "Notifications",
             "wake_time": "Heure du lever",

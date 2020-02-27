@@ -23,6 +23,7 @@ global.surveyThkUrlFre='';
 global.surveyExceptionUrlEng='';
 global.surveyExceptionUrlFre='';
 global.doneSurveyA=false;
+global.hasImage=false;
 global.webApiBaseUrl='http://localhost:50170/';   //http://barabasy.eastus.cloudapp.azure.com/WebApiForEsmDev/';  //'http://localhost:49159/';   //'http://barabasy.eastus.cloudapp.azure.com/WebApiForEsmDev/';      //'http://localhost:49159/'   //'http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/';//'http://localhost:49159/'
 global.culture='en';
 global.tokenDoB=new Date(2020,1,1,0,0,0,0);

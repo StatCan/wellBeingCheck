@@ -24,7 +24,6 @@ interface Props {
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
 
-let hasImage='0';
 type HomeState = {
   refresh: string 
 }
@@ -32,7 +31,6 @@ type HomeState = {
 export default class Dashboard extends React.Component<Props, HomeState> {
   constructor(HomeState) {
     super(HomeState);
-    this.hasImage();
     let txt='';
     if(global.showThankYou==1)txt=resources.getString('ThankYouA');else if(global.showThankYou==2)txt=txt=resources.getString('ThankYouB');
     console.log(txt);
@@ -70,12 +68,6 @@ export default class Dashboard extends React.Component<Props, HomeState> {
     this.setState({ refresh: '1' });
   }
 
-    async hasImage(){
-        let value = await AsyncStorage.getItem('hasImage');
-           if (value != null){
-              hasImage='1';
-           }
-    }
     async sendRequest(){
         let token=await fetchJwToken();console.log('send:'+token);
         let url=global.webApiBaseUrl+'api/Values';let cul=global.culture;console.log(cul);
@@ -124,9 +116,9 @@ export default class Dashboard extends React.Component<Props, HomeState> {
                              <View style={{backgroundColor:'black',width:'80%', position: 'absolute',zIndex: 29,alignSelf:'center',top:'60%',justifyContent:'center',alignItems:'center'}}><Text style={{color:'white',fontSize:14,marginTop:10,marginBottom:10}}>{this.state.thankYouText}</Text></View>
                  }
                 <View style={[styles.homeButtonContainer, { marginBottom: 0,marginTop:50 }, { flexDirection: 'row'}]}>
-                  <TouchableOpacity onPress={() =>{if(hasImage=='1')this.props.navigation.navigate('ResultSummaryScreen');else alert('No data found,you have to complete the survey at least once.');}} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>Dashboard</Text></TouchableOpacity>
-                  <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')} style={styles.smallButton}><EvilIcons name="question" size={40} color="white" /><Text style={styles.smallButtonText}>About</Text></TouchableOpacity>
-                  <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}><Feather name="phone" size={40} color="white" /><Text style={styles.smallButtonText}>Contact</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')} style={styles.smallButton}><EvilIcons name="question" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("about")}</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}><Feather name="phone" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("contact_us")}</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={() =>{if(global.hasImage)this.props.navigation.navigate('ResultSummaryScreen');else alert(resources.getString("NoDataAlert"));}} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("result")}</Text></TouchableOpacity>
                  </View>
 
               </View>

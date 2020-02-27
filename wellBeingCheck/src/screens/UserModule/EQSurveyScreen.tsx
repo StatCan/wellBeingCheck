@@ -29,7 +29,8 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     let disCode= 'const meta = document.createElement("meta"); meta.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"); meta.setAttribute("name", "viewport"); document.getElementsByTagName("head")[0].appendChild(meta);';
     let clearCookie='document.cookie.split(";").forEach(function(c) {document.cookie = c.trim().split("=")[0] + "=;" + "expires=Thu, 01 Jan 1970 00:00:00 UTC;";});';
     let jsCode=clearCookie+'document.addEventListener("message", function (message) { document.getElementById("langtest").click(); });var btn = document.createElement("button");btn.style.visibility ="hidden";btn.onclick = switchlang;btn.setAttribute("id", "langtest");document.body.appendChild(btn);    function switchlang() { var a = document.querySelector("a.sc-js-langchange");var href = a.href;if (href.indexOf("/q/fr")>0) {var res = href.replace("/q/fr", "/q/en");a.setAttribute("href", res);a.click();} else if (href.indexOf("/q/en")>0) {var res = href.replace("/q/en", "/q/fr");a.setAttribute("href", res);a.click();} }';
-    this.state=({Sacode:'',jsCode:disCode+jsCode});
+    this.state=({Sacode:'',jsCode:disCode+jsCode,webviewLoaded: false});
+      setTimeout(()=>{this.setState({webviewLoaded: true})}, 3000);
   }
  //  componentDidMount(){this.resetPassword();}
    async handleSurveyAdone(){
@@ -137,7 +138,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
           this.fetchImage(uri5,5);
           this.fetchImage(uri6,6);
           this.fetchImage(uri7,7);
-          AsyncStorage.setItem('hasImage','1');console.log('Fetch images done');
+          AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
           //count=1;
     }
    fetchAllImages(){
@@ -176,10 +177,13 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
    displaySpinner() {
     return (
       <View>
-        <ActivityIndicator />
+        <ActivityIndicator  />
       </View>
     );
   }
+   onLoadEnd() {
+     //  this.setState({ webviewLoaded: true });
+   }
    render() {
      let uri='';//http://barabasy.eastus.cloudapp.azure.com/anonymous-anonyme/en/login-connexion/load-charger/eqgsd0ed709a7df0465da7cb4881b290ff22';
      if(global.doneSurveyA){
@@ -201,8 +205,9 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
               <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                                   <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{marginLeft:5,marginTop:10}}><Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:38,height:38}} /></TouchableOpacity>
               </View>
+                {(this.state.webviewLoaded) ? null : <ActivityIndicator size="large" color="lightblue" style={{position:'absolute',top:'50%',left:'50%',zIndex:20}}/>}
                 <WebView
-                          ref={(view) => this.webView = view} incognito={true} pointerEvents="none"
+                          ref={(view) => this.webView = view} incognito={true}
                           style={styles.webview}
                           userAgent={global.userToken}
                           scrollEnabled={true}
@@ -213,9 +218,9 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                           scalesPageToFit={true}
                           startInLoadingState={true}
                           injectedJavaScript={this.state.jsCode}
-                          renderLoading={() => {
-                            return this.displaySpinner();
-                          }}
+                          automaticallyAdjustsScrollViewInsets ={false}
+                          renderLoading={() => {return this.displaySpinner();}}
+                          onLoadEnd={this.onLoadEnd()}
                           onNavigationStateChange={(navState) => {
 
                             if (navState.url =='') { // You must validate url to enter or navigate
@@ -275,3 +280,4 @@ const styles = StyleSheet.create({
 
 
 //     <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{marginRight:5,marginTop:10}}><FontAwesome name="gear" size={30} color="black" /></TouchableOpacity>
+//
