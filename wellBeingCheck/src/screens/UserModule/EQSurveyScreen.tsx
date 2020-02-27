@@ -128,7 +128,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                                          <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{marginLeft:5,marginTop:10}}><Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:38,height:38}} /></TouchableOpacity>
                 </View>
                 <WebView
-                          ref={(view) => this.webView = view} incognito={true} pointerEvents="none"
+                          ref={(view) => this.webView = view} incognito={true}
                           style={styles.webview}
                           userAgent={global.userToken}
                           scrollEnabled={true}
