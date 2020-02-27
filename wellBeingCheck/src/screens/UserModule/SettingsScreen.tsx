@@ -35,6 +35,7 @@ type SettingsState = {
   sleeptime: string, 
   notificationcount: number, 
   culture: string,
+  cultureString: string,
   numPingsModalShow: boolean,
   languageModalShow: boolean,
   wakeTimePickerShow: boolean,
@@ -59,6 +60,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
       sleeptime: '21:00', 
       notificationcount: 2, 
       culture: '1',
+      cultureString: 'English',
       languageModalShow: false,
       wakeTimePickerShow: false,
       sleepTimePickerShow: false
@@ -182,7 +184,8 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
       wakeTime: this.state.waketime,
       sleepTime: this.state.sleeptime,
       notificationCount: this.state.notificationcount,
-      culture: this.state.culture
+      culture: this.state.culture,
+      cultureString: this.state.cultureString
     };
 
     AsyncStorage.setItem('settings', JSON.stringify(settingsObj), () => {
@@ -204,6 +207,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
         this.setState({ waketime: resultAsObj.wakeTime });
         this.setState({ sleeptime: resultAsObj.sleepTime });
         this.setState({ culture: resultAsObj.culture });
+        this.setState({ cultureString: resultAsObj.cultureString });
       }
     });
   }
@@ -215,8 +219,10 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
 
     if(c === "2"){
       resources.culture ='fr';
+      this.setState({ cultureString: 'French' });
     } else if (c === "1"){
       resources.culture ='en';
+      this.setState({ cultureString: 'English' });
     }
   }
 
@@ -317,7 +323,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
             left={() => <List.Icon icon={require('../../assets/ic_wbc_language.png')}/>}
             title={resources.getString("language")}
             onPress={this._showLanguageModal}
-            description={this.state.culture}
+            description={this.state.cultureString}
             descriptionStyle={styles.descriptionStyle}
           />
           <List.Item
