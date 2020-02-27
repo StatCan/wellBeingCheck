@@ -9,7 +9,7 @@
     "slug": "WellBeingCheck",
     "privacy": "unlisted",
     "sdkVersion": "36.0.0",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "entryPoint": "node_modules/expo/AppEntry.js",
     "platforms": [
       "ios",
@@ -22,7 +22,7 @@
     },
     "android": {
       "package": "com.statcan.wellbeingcheck",
-      "versionCode": 3
+      "versionCode": 4
     }
   }
 }

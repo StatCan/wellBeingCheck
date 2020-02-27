@@ -50,7 +50,7 @@ export const resources = {
             "the_answer_is:": "The answer is:",
             "btn_create": "Create",
             "login": "Login",
-            "start_survey": "Start Your Survey",
+            "start_survey": "Start Survey",
             "settings": "Settings",
             "result": "Result",
             "about_the_survey": "About the Survey",
@@ -82,7 +82,7 @@ export const resources = {
             "num_pings_dialog_title": "Number of notifications per day",
             "ThankYouA":"Thank you for completing this survey!",
             "ThankYouB":"Thank you for completing this survey! You can review your Well-being Check in the Results menu.",
-
+            "NoDataAlert":"You have to complete the survey at least once."
         },
         fr: {
             //global
@@ -162,6 +162,7 @@ export const resources = {
             "num_pings_dialog_title": "Nombre de notifications par jour",
             "ThankYouA":"Nous vous remercions d’avoir participé à l’enquête!",
             "ThankYouB":"Nous vous remercions d’avoir participé à l’enquête! Vous pouvez consulter votre Bilan bien-être dans le menu Résultats.",
+            "NoDataAlert":"Vous devez remplir l'enquête au moins une fois."
 
         }
 

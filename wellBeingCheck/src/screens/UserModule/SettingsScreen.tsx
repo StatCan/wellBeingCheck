@@ -35,6 +35,7 @@ type SettingsState = {
   sleeptime: string, 
   notificationcount: number, 
   culture: string,
+  cultureString: string,
   numPingsModalShow: boolean,
   languageModalShow: boolean,
   wakeTimePickerShow: boolean,
@@ -49,8 +50,6 @@ interface Props {
 class SettingsScreen extends React.Component < Props, SettingsState > {
   _notificationSubscription: any;
 
-  wakeTimePickerChild;
-
   constructor(SettingsState) {
     super(SettingsState)
     this.state = {
@@ -61,6 +60,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
       sleeptime: '21:00', 
       notificationcount: 2, 
       culture: '1',
+      cultureString: 'English',
       languageModalShow: false,
       wakeTimePickerShow: false,
       sleepTimePickerShow: false
@@ -184,7 +184,8 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
       wakeTime: this.state.waketime,
       sleepTime: this.state.sleeptime,
       notificationCount: this.state.notificationcount,
-      culture: this.state.culture
+      culture: this.state.culture,
+      cultureString: this.state.cultureString
     };
 
     AsyncStorage.setItem('settings', JSON.stringify(settingsObj), () => {
@@ -206,6 +207,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
         this.setState({ waketime: resultAsObj.wakeTime });
         this.setState({ sleeptime: resultAsObj.sleepTime });
         this.setState({ culture: resultAsObj.culture });
+        this.setState({ cultureString: resultAsObj.cultureString });
       }
     });
   }
@@ -217,8 +219,10 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
 
     if(c === "2"){
       resources.culture ='fr';
+      this.setState({ cultureString: 'French' });
     } else if (c === "1"){
       resources.culture ='en';
+      this.setState({ cultureString: 'English' });
     }
   }
 
@@ -233,6 +237,10 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
 
   _showSleepTimePicker = () => this.setState({ sleepTimePickerShow: true });
   _hideSleepTimePicker = () => this.setState({ sleepTimePickerShow: false });
+
+  _openTermsConditions = () => {
+    this.props.navigation.navigate('TOSSettingsScreen');
+  }
 
   render() {
 
@@ -275,22 +283,16 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
             style={styles.listStyle}
             title={resources.getString("number_notifications")}
             onPress={this._showNumPingsModal}
-          />
-          <List.Item
-            style={styles.listStyle}
-            title={this.state.notificationcount}
-            onPress={this._showNumPingsModal}
+            description={this.state.notificationcount}
+            descriptionStyle={styles.descriptionStyle}
           />
           <List.Item
             style={styles.listStyle}
             title={resources.getString("wake_time")}
-            onPress={this._showNumPingsModal}
-          />
-          <List.Item
-            style={styles.listStyle}
-            title={this.state.waketime}
             onPress={this._showWakeTimePicker}
-            />
+            description={this.state.waketime}
+            descriptionStyle={styles.descriptionStyle}
+          />
           <TimePicker 
             showTimePicker={this.state.wakeTimePickerShow} 
             style={styles.timePicker} 
@@ -304,11 +306,8 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
             style={styles.listStyle}
             title={resources.getString("sleep_time")}
             onPress={this._showSleepTimePicker}
-          />
-          <List.Item
-            style={styles.listStyle}
-            title={this.state.sleeptime}
-            onPress={this._showSleepTimePicker}
+            description={this.state.sleeptime}
+            descriptionStyle={styles.descriptionStyle}
           />
           <TimePicker 
             showTimePicker={this.state.sleepTimePickerShow} 
@@ -319,15 +318,18 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
             handler = {this.sleepTimeHandler} 
             cancelHandler = {this.cancelTimeHandler}
           />
+          <Divider></Divider>
           <List.Item
-            style={styles.listStyle}
+            left={() => <List.Icon icon={require('../../assets/ic_wbc_language.png')}/>}
             title={resources.getString("language")}
             onPress={this._showLanguageModal}
+            description={this.state.cultureString}
+            descriptionStyle={styles.descriptionStyle}
           />
           <List.Item
-            style={styles.listStyle}
-            title={this.state.culture}
-            onPress={this._showLanguageModal}
+            left={() => <List.Icon icon={require('../../assets/ic_wbc_terms_condition.png')}/>}
+            title={"Terms and Conditions"}
+            onPress={this._openTermsConditions}
           />
         </List.Section>
         {debugButtons}
@@ -372,7 +374,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
                 <RadioButton.Group
                   onValueChange={n => this.setState({notificationcount:parseInt(n)})}
                   value={this.state.notificationcount.toString()}>
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                  <View>
                     <Text>2</Text>
                     <RadioButton value="2" />
                   </View>
@@ -401,17 +403,27 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
           </Portal>
         </View>
       </View>
+      <View style={styles.buttonView}>
       <Button style={styles.btnNext}
           mode="contained"
           onPress={this._backButtonPressed}>
           <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
       </Button>
+      </View>
       </PaperProvider>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  descriptionStyle: {
+    marginTop: 10
+  },
+  buttonView: {
+    flex: 1,
+    justifyContent:"flex-end",
+    marginBottom: 10
+  },
   timePicker: {
     width:100,
     paddingRight:100
@@ -435,7 +447,7 @@ const styles = StyleSheet.create({
   },
   btnNext: {
     color: newTheme.colors.whiteText,
-    width: 120,
+    width: 100,
     alignSelf: "flex-end",
     marginRight: 20,
     marginBottom: 10,
@@ -458,6 +470,9 @@ const styles = StyleSheet.create({
   },
   listStyle: {
     marginLeft: 60
+  },
+  listTitleLightStyle: {
+    color: "#a7a5a6"
   },
   container: {
     flex: 1,
