@@ -38,7 +38,7 @@ export default class App extends React.Component<Props,ScreenState> {
        this.props.navigation.navigate('Dashboard');
      }
  loadImage() {
-            let imageId='image2';if(global.culture=='fr')imageId='image3';
+            let imageId='image2';if(resources.culture=='fr')imageId='image3';
     	    AsyncStorage.getItem(imageId, (error, result) => {
     	      if (!error && result != null){
                     this.setState({ picture1Base64: result });
@@ -50,7 +50,7 @@ export default class App extends React.Component<Props,ScreenState> {
                    // do something else
                }
     	    })
-    	  imageId='image4';if(global.culture=='fr')imageId='image5';
+    	  imageId='image4';if(resources.culture=='fr')imageId='image5';
              AsyncStorage.getItem(imageId, (error, result) => {
              	      if (!error && result != null){
                          //    this.setState({ picture2Base64: result });
@@ -62,7 +62,7 @@ export default class App extends React.Component<Props,ScreenState> {
                             // do something else
                         }
              	    })
-          imageId='image6';if(global.culture=='fr')imageId='image7';
+          imageId='image6';if(resources.culture=='fr')imageId='image7';
                        AsyncStorage.getItem(imageId, (error, result) => {
                        	      if (!error && result != null){
                                    //    this.setState({ picture3Base64: result });

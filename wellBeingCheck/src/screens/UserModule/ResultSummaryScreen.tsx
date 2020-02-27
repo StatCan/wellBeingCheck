@@ -22,7 +22,7 @@ export default class ResultSummaryScreen extends React.Component<Props, AboutScr
        this.state = {pictureBase64: null, width: 0,height: 0};
        }
      loadImage() {
-         let imageId='image0';if(global.culture=='fr')imageId='image1';
+         let imageId='image0';if(resources.culture=='fr')imageId='image1';
         	    AsyncStorage.getItem(imageId, (error, result) => {
 
         	      if (!error && result != null){
