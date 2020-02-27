@@ -420,6 +420,8 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   buttonView: {
+    flex: 1,
+    justifyContent:"flex-end",
     marginBottom: 10
   },
   timePicker: {
@@ -445,10 +447,10 @@ const styles = StyleSheet.create({
   },
   btnNext: {
     color: newTheme.colors.whiteText,
-    width: 120,
+    width: 100,
     alignSelf: "flex-end",
-    
-    marginRight: 20
+    marginRight: 20,
+    marginBottom: 10,
   },
   btnText: {
     color: newTheme.colors.whiteText,
