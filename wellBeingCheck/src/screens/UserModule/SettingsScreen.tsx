@@ -277,24 +277,16 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
             style={styles.listStyle}
             title={resources.getString("number_notifications")}
             onPress={this._showNumPingsModal}
-          />
-          <List.Item
-            style={styles.listStyle}
-            titleStyle={styles.listTitleLightStyle}
-            title={this.state.notificationcount}
-            onPress={this._showNumPingsModal}
+            description={this.state.notificationcount}
+            descriptionStyle={styles.descriptionStyle}
           />
           <List.Item
             style={styles.listStyle}
             title={resources.getString("wake_time")}
             onPress={this._showNumPingsModal}
+            description={this.state.waketime}
+            descriptionStyle={styles.descriptionStyle}
           />
-          <List.Item
-            style={styles.listStyle}
-            title={this.state.waketime}
-            titleStyle={styles.listTitleLightStyle}
-            onPress={this._showWakeTimePicker}
-            />
           <TimePicker 
             showTimePicker={this.state.wakeTimePickerShow} 
             style={styles.timePicker} 
@@ -308,12 +300,8 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
             style={styles.listStyle}
             title={resources.getString("sleep_time")}
             onPress={this._showSleepTimePicker}
-          />
-          <List.Item
-            style={styles.listStyle}
-            title={this.state.sleeptime}
-            titleStyle={styles.listTitleLightStyle}
-            onPress={this._showSleepTimePicker}
+            description={this.state.sleeptime}
+            descriptionStyle={styles.descriptionStyle}
           />
           <TimePicker 
             showTimePicker={this.state.sleepTimePickerShow} 
@@ -329,12 +317,8 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
             left={() => <List.Icon icon={require('../../assets/ic_wbc_language.png')}/>}
             title={resources.getString("language")}
             onPress={this._showLanguageModal}
-          />
-          <List.Item
-            style={styles.listStyle}
-            titleStyle={styles.listTitleLightStyle}
-            title={this.state.culture}
-            onPress={this._showLanguageModal}
+            description={this.state.culture}
+            descriptionStyle={styles.descriptionStyle}
           />
           <List.Item
             left={() => <List.Icon icon={require('../../assets/ic_wbc_terms_condition.png')}/>}
@@ -384,7 +368,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
                 <RadioButton.Group
                   onValueChange={n => this.setState({notificationcount:parseInt(n)})}
                   value={this.state.notificationcount.toString()}>
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
+                  <View>
                     <Text>2</Text>
                     <RadioButton value="2" />
                   </View>
@@ -426,6 +410,9 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
 }
 
 const styles = StyleSheet.create({
+  descriptionStyle: {
+    marginTop: 10
+  },
   buttonView: {
     marginBottom: 10
   },
