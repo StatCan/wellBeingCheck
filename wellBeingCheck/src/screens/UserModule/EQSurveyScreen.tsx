@@ -1,7 +1,8 @@
 import React, { memo, useState, useCallback } from 'react';
 import { Image, View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator,Button } from 'react-native';
 import { AsyncStorage } from 'react-native';
-import { Ionicons,EvilIcons,Feather } from '@expo/vector-icons';
+//import { Ionicons,EvilIcons,Feather } from '@expo/vector-icons';
+import { AntDesign,FontAwesome } from '@expo/vector-icons';
 import WebView from 'react-native-webview';
 import { resources } from '../../../GlobalResources';
 import {fetchJwToken,checkConnection} from '../../utils/fetchJwToken';
@@ -123,13 +124,9 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
          console.log('Beofore eq:'+uri);
     return (
           <View style={{ flex: 1, marginTop: 0 }}>
-           <View>
-                  <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-                      <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{marginLeft:0}}><EvilIcons name="arrow-left" size={32} color="black" /></TouchableOpacity>
-                       <Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:34,height:34}} />
-                       <TouchableOpacity onPress={() => this.webView.postMessage('test')} style={{alignSelf:'flex-end'}}><Ionicons name="ios-globe" size={30} color="black" /></TouchableOpacity>
-                  </View>
-              </View>
+                <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                                         <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{marginLeft:5,marginTop:10}}><Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:38,height:38}} /></TouchableOpacity>
+                </View>
                 <WebView
                           ref={(view) => this.webView = view} incognito={true} pointerEvents="none"
                           style={styles.webview}
