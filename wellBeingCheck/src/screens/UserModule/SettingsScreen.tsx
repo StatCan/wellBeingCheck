@@ -283,7 +283,7 @@ class SettingsScreen extends React.Component < Props, SettingsState > {
           <List.Item
             style={styles.listStyle}
             title={resources.getString("wake_time")}
-            onPress={this._showNumPingsModal}
+            onPress={this._showWakeTimePicker}
             description={this.state.waketime}
             descriptionStyle={styles.descriptionStyle}
           />
