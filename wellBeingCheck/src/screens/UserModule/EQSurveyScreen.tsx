@@ -26,7 +26,6 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
   constructor(Props) {
     super(Props)
     let disCode= 'const meta = document.createElement("meta"); meta.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"); meta.setAttribute("name", "viewport"); document.getElementsByTagName("head")[0].appendChild(meta);';
-
     let clearCookie='document.cookie.split(";").forEach(function(c) {document.cookie = c.trim().split("=")[0] + "=;" + "expires=Thu, 01 Jan 1970 00:00:00 UTC;";});';
     let jsCode=clearCookie+'document.addEventListener("message", function (message) { document.getElementById("langtest").click(); });var btn = document.createElement("button");btn.style.visibility ="hidden";btn.onclick = switchlang;btn.setAttribute("id", "langtest");document.body.appendChild(btn);    function switchlang() { var a = document.querySelector("a.sc-js-langchange");var href = a.href;if (href.indexOf("/q/fr")>0) {var res = href.replace("/q/fr", "/q/en");a.setAttribute("href", res);a.click();} else if (href.indexOf("/q/en")>0) {var res = href.replace("/q/en", "/q/fr");a.setAttribute("href", res);a.click();} }';
     this.state=({Sacode:'',jsCode:disCode+jsCode});
@@ -139,11 +138,11 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                           scalesPageToFit={true}
                           startInLoadingState={true}
                           injectedJavaScript={this.state.jsCode}
+                          automaticallyAdjustsScrollViewInsets ={false}
                           renderLoading={() => {
                             return this.displaySpinner();
                           }}
                           onNavigationStateChange={(navState) => {
-
                             if (navState.url =='') { // You must validate url to enter or navigate
                               this.webView.stopLoading();
                             }
@@ -161,6 +160,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                                  }
                                 this.props.navigation.navigate('Dashboard');
                             }
+                         //   this.webView.scrollTo({y:0});
                           }}
                         />
       </View>
