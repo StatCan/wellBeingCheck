@@ -108,8 +108,8 @@ class Dashboard extends React.Component<Props, HomeState> {
        return (
       <Background>
          <View style={{flexDirection:'row',width:'100%',justifyContent:'space-between'}}>
-         <TouchableOpacity style={{marginLeft:5,marginTop:10}}><Image source={require('../assets/ic_logo_loginmdpi.png')} style={{width:38,height:38}} /></TouchableOpacity>
-         <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen', { refresh: this._refresh })} style={{ marginRight:5,marginTop:10 }}><FontAwesome name="gear" size={30} color="gray" /></TouchableOpacity>
+         <TouchableOpacity style={{marginLeft:5,marginTop:50}}><Image source={require('../assets/ic_logo_loginmdpi.png')} style={{width:38,height:38}} /></TouchableOpacity>
+         <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen', { refresh: this._refresh })} style={{ marginRight:5,marginTop:50 }}><FontAwesome name="gear" size={30} color="gray" /></TouchableOpacity>
         </View>
         <View style={styles.homeContainer}>
                    <TouchableOpacity onPress={() => { global.needReload1 = true; global.needReload2 = true; global.needReload3 = true; global.needReload4 = true; global.needReload5 = true; global.needReload6 = true; global.needReload7 = true; this.props.navigation.navigate('EQSurveyScreen'); }} style={{ flex: 2, justifyContent: 'center' }}>
