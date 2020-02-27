@@ -16,6 +16,7 @@ import {
   ResultScreen,
   ResultSummaryScreen,
   EQSurveyScreen,
+  TOSSettingsScreen
 } from './screens';
 
 const Router = createStackNavigator(
@@ -33,7 +34,8 @@ const Router = createStackNavigator(
     AboutScreen,
     ResultScreen,
     ResultSummaryScreen,
-    EQSurveyScreen
+    EQSurveyScreen,
+    TOSSettingsScreen
   },
   {
     initialRouteName: 'LaunchScreen',
