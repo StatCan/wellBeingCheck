@@ -6,6 +6,7 @@ export const resources = {
     data: {
         en: {
             //global
+            "app.name": "Well-Being Check",
             "gl.next": "Next",
             "gl.decline": "Decline",
             "gl.agree": "Agree",
@@ -86,6 +87,7 @@ export const resources = {
         },
         fr: {
             //global
+            "app.name": "FR_Well-Being Check",
             "gl.next": "FR_Next",
             "gl.decline": "FR_Decline",
             "gl.agree": "FR_Agree",

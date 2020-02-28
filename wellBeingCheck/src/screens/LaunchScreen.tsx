@@ -1,17 +1,15 @@
-import React, { memo, useState, useCallback } from 'react';
-import { Picker, View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import React, { memo } from 'react';
+import { StyleSheet } from 'react-native';
 import { AsyncStorage } from 'react-native';
-import NetInfo from '@react-native-community/netinfo';
 import Background from '../components/Background';
-import Logo from '../components/Logo';
-import Header from '../components/Header';
-import Button from '../components/Button';
-import TextInput from '../components/TextInput';
-import BackButton from '../components/BackButton';
+
 import { newTheme } from '../core/theme';
-import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
-//import { Navigation } from '../../types';
-import {checkConnection} from '../utils/fetchJwToken';
+import { Provider as PaperProvider, Title } from 'react-native-paper';
+import { checkConnection } from '../utils/fetchJwToken';
+import Constants from 'expo-constants';
+import { resources } from '../../GlobalResources';
+import LogoClear from '../components/LogoClear';
+import AppBanner from '../components/AppBanner';
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -19,11 +17,6 @@ import {
   NavigationEvents,
 } from 'react-navigation';
 
-import {
-
-} from '../core/utils';
-import { Drawer } from 'react-native-paper';
-import Constants from 'expo-constants';
 type LaunchState = {
 }
 
@@ -35,15 +28,22 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
 
   constructor(LaunchState) {
     super(LaunchState)
-  //  this.chechConnection();
-  //  this.getDeviceConnectionInfo();
+    //  this.chechConnection();
+    //  this.getDeviceConnectionInfo();
     this.state = {
     };
-    this.bootstrapA();
-    this._bootstarp();
 
-
+    this.delay(3000).then(any => {
+      //splach screen forced show 3000 = 3 seconds!
+      this.bootstrapA();
+      this._bootstarp();
+    });
   }
+
+  async delay(ms: number) {
+    await new Promise(resolve => setTimeout(() => resolve(), ms)).then(() => console.log("splash screen complete"));
+  }
+
   //determine if user already has an account
   _bootstarp = () => {
     console.log("_bootstarp");
@@ -53,7 +53,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
       let currentPassword = null
       if (userAccountResultObj) {
         currentPassword = userAccountResultObj.password;
-        global.password=currentPassword;
+        global.password = currentPassword;
       }
 
       AsyncStorage.getItem('user_getting_started', (err, userGettingStartedResult) => {
@@ -92,80 +92,85 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
         });
       });
     });
-    AsyncStorage.getItem('userToken',(err,result)=>{
+    AsyncStorage.getItem('userToken', (err, result) => {
 
     });
   }
+
   bootstrapA = async () => {
-      console.log('Prepare confiuration');
-      let userToken = await AsyncStorage.getItem('EsmUserToken');
-      if (userToken == null)userToken= Constants.deviceId;   //   global.userToken=this.generateShortGuid(24);
-      global.userToken=userToken;
-      let jwt=await AsyncStorage.getItem('EsmSurveyJWT');
-      let doneSurveyA = await AsyncStorage.getItem('doneSurveyA');console.log('SuvetA:'+doneSurveyA);global.doneSurveyA=doneSurveyA;
-      if(jwt!=null)global.jwToken=jwt;
+    console.log('Prepare confiuration');
+    let userToken = await AsyncStorage.getItem('EsmUserToken');
+    if (userToken == null) userToken = Constants.deviceId;   //   global.userToken=this.generateShortGuid(24);
+    global.userToken = userToken;
+    let jwt = await AsyncStorage.getItem('EsmSurveyJWT');
+    let doneSurveyA = await AsyncStorage.getItem('doneSurveyA'); console.log('SuvetA:' + doneSurveyA); global.doneSurveyA = doneSurveyA;
+    if (jwt != null) global.jwToken = jwt;
     //  if(jwt==null)global.doneSurveyA=false;else {global.doneSurveyA=true;global.jwToken=jwt;}
-      console.log('SuvetAa:'+global.doneSurveyA);
-     let hasImage = await AsyncStorage.getItem('hasImage');if(hasImage!=null)global.hasImage=hasImage;
-   //   if(!global.connectivity){alert('You are offline, try it later');return;}
-   let isConnected=await checkConnection();
-   if(!isConnected){alert('You are offline, try it later');return;}
-      let url = global.webApiBaseUrl+'GetConfiguration';console.log(url);
-      fetch(url)
-            .then((response) =>{console.log(url);
-               if (response.status >= 400 && response.status < 600) {
-                  global.configurationReady=false;
-                  throw new Error("Access denied(1), Try again, if same thing would happen again contact StatCan");
-               }else{
-                  response.json().then((responseJson) => {
-                         global.surveyAUrlEng=responseJson[0];
-                         global.surveyAUrlFre=responseJson[1];
-                         global.surveyThkUrlEng=responseJson[2];
-                         global.surveyThkUrlFre=responseJson[3];
-                         global.surveyBUrlEng=responseJson[4];
-                         global.surveyBUrlFre=responseJson[5];
-                         global.graphType0=responseJson[6];
-                         global.graphType1=responseJson[7];
-                         global.graphType2=responseJson[8];
-                         global.graphType3=responseJson[9];
-                         global.graphType4=responseJson[10];
-                         global.graphType5=responseJson[11];
-                         global.graphType6=responseJson[12];
-                         global.graphType7=responseJson[13];
-                         global.configurationReady=true;
-                    })
-              }
-            })
-            .catch((error) => {
-              console.error(error);global.configurationReady=false; alert("Network error");
-            });
-      console.log('Confiuration is ready');
-    };
+    console.log('SuvetAa:' + global.doneSurveyA);
+
+    //   if(!global.connectivity){alert('You are offline, try it later');return;}
+    let isConnected = await checkConnection();
+    if (!isConnected) { alert('You are offline, try it later'); return; }
+    let url = global.webApiBaseUrl + 'GetConfiguration'; console.log(url);
+    fetch(url)
+      .then((response) => {
+        console.log(url);
+        if (response.status >= 400 && response.status < 600) {
+          global.configurationReady = false;
+          throw new Error("Access denied(1), Try again, if same thing would happen again contact StatCan");
+        } else {
+          response.json().then((responseJson) => {
+            global.surveyAUrlEng = responseJson[0];
+            global.surveyAUrlFre = responseJson[1];
+            global.surveyThkUrlEng = responseJson[2];
+            global.surveyThkUrlFre = responseJson[3];
+            global.surveyBUrlEng = responseJson[4];
+            global.surveyBUrlFre = responseJson[5];
+            global.graphType0 = responseJson[6];
+            global.graphType1 = responseJson[7];
+            global.graphType2 = responseJson[8];
+            global.graphType3 = responseJson[9];
+            global.graphType4 = responseJson[10];
+            global.graphType5 = responseJson[11];
+            global.graphType6 = responseJson[12];
+            global.graphType7 = responseJson[13];
+            global.configurationReady = true;
+          })
+        }
+      })
+      .catch((error) => {
+        console.error(error); global.configurationReady = false; alert("Network error");
+      });
+    console.log('Confiuration is ready');
+  };
   generateGuid() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
       var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
       return v.toString(16);
     });
   }
   generateShortGuid(len) {
-          var buf = [],
-              chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
-              charlen = chars.length,
-              length = len || 32;
+    var buf = [],
+      chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
+      charlen = chars.length,
+      length = len || 32;
 
-          for (var i = 0; i < length; i++) {
-              buf[i] = chars.charAt(Math.floor(Math.random() * charlen));
-          }
+    for (var i = 0; i < length; i++) {
+      buf[i] = chars.charAt(Math.floor(Math.random() * charlen));
+    }
 
-          return buf.join('');
-      }
+    return buf.join('');
+  }
   render() {
     return (
       <PaperProvider theme={newTheme}>
+        <AppBanner />
         <Background>
+          <LogoClear />
+          <Title>{resources.getString("app.name")}</Title>
         </Background>
         <NavigationEvents
-          onDidFocus={() => this._bootstarp()}
+          // onDidFocus={() => this._bootstarp()}
         />
       </PaperProvider>
     );
