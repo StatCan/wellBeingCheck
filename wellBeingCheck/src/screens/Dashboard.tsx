@@ -1,21 +1,19 @@
 
 import React, { memo } from 'react';
 import Background from '../components/Background';
-import { View, Text, TextInput, Image, StyleSheet, ImageBackground, Dimensions, TouchableOpacity, BackHandler,AsyncStorage } from 'react-native';
-import Logo from '../components/Logo';
-import Header from '../components/Header';
-import Paragraph from '../components/Paragraph';
-import Button from '../components/Button';
-import { Navigation } from '../types';
-import { EvilIcons, Feather,FontAwesome} from '@expo/vector-icons';
+import { View, Text, TextInput, Image, StyleSheet, ImageBackground, Dimensions, TouchableOpacity, BackHandler, AsyncStorage } from 'react-native';
+import { EvilIcons, Feather, FontAwesome } from '@expo/vector-icons';
 import LogoClearSmall from '../components/LogoClearSmall';
+import { fetchJwToken, checkConnection } from '../utils/fetchJwToken';
+import { resources } from '../../GlobalResources';
+import { SafeAreaConsumer } from 'react-native-safe-area-context';
+import { Provider as PaperProvider } from 'react-native-paper';
+import { newTheme } from '../core/theme';
 import {
   NavigationParams,
   NavigationScreenProp,
   NavigationState, NavigationEvents,
 } from 'react-navigation';
-import {fetchJwToken,checkConnection} from '../utils/fetchJwToken';
-import { resources } from '../../GlobalResources';
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
@@ -25,40 +23,40 @@ const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
 
 type HomeState = {
-  refresh: string 
+  refresh: string
 }
 
 class Dashboard extends React.Component<Props, HomeState> {
 
   constructor(HomeState) {
     super(HomeState);
-    let txt='';
-    if(global.showThankYou==1)txt=resources.getString('ThankYouA');else if(global.showThankYou==2)txt=txt=resources.getString('ThankYouB');
+    let txt = '';
+    if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2) txt = txt = resources.getString('ThankYouB');
     this.state = {
-         refresh: '1',showThankYou:!global.showThankYou==0,
-         thankYouText:txt,
-     };
+      refresh: '1', showThankYou: !global.showThankYou == 0,
+      thankYouText: txt,
+    };
     this._refresh = this._refresh.bind(this);
   }
 
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   }
-  
+
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
   }
-  checkThankYou(){
-          let txt='';
-          if(global.showThankYou==1)txt=resources.getString('ThankYouA');else if(global.showThankYou==2)txt=txt=resources.getString('ThankYouB');
-          this.setState({showThankYou:!global.showThankYou==0,thankYouText:txt});
-          setTimeout(()=>{global.showThankYou=0;this.setState({showThankYou: false})}, 2000);
-         }
+  checkThankYou() {
+    let txt = '';
+    if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2) txt = txt = resources.getString('ThankYouB');
+    this.setState({ showThankYou: !global.showThankYou == 0, thankYouText: txt });
+    setTimeout(() => { global.showThankYou = 0; this.setState({ showThankYou: false }) }, 2000);
+  }
   handleBackButton() {
     return true;
   }
 
-  _refresh(){
+  _refresh() {
 
     // Force refresh Home Screen as a Back action on Stack Navigator does not call
     // any lifecycle methods including render()
@@ -66,61 +64,65 @@ class Dashboard extends React.Component<Props, HomeState> {
     if (global.debugMode) console.log("The language set is: " + resources.culture);
     this.setState({ refresh: '1' });
   }
-    async sendRequest(){
-        let token=await fetchJwToken();console.log('send:'+token);
-        let url=global.webApiBaseUrl+'api/Values';let cul=global.culture;console.log(cul);
-        console.log(url);
-        fetch(url, {
-          method: 'GET',
-          headers: {
-            'Authorization': 'Bearer ' + token,
-             'Accept-language':cul
-          }
-        })
-        .then(res =>{
-           console.log(res.status);
-           if(res.status==200){
-                     res.json().then(data => { console.log(data);alert('Received data successfully'); })
-                     }
-             else {   //401
-                    throw new Error("Access denied, Try again later, if same thing would happen again contact StatCan");
+  async sendRequest() {
+    let token = await fetchJwToken(); console.log('send:' + token);
+    let url = global.webApiBaseUrl + 'api/Values'; let cul = global.culture; console.log(cul);
+    console.log(url);
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Accept-language': cul
+      }
+    })
+      .then(res => {
+        console.log(res.status);
+        if (res.status == 200) {
+          res.json().then(data => { console.log(data); alert('Received data successfully'); })
+        }
+        else {   //401
+          throw new Error("Access denied, Try again later, if same thing would happen again contact StatCan");
 
-                                   }
-            })
-        .catch(err => { console.log(err) })
-    }
-    async conductSurvey(){
-        let isConnected=await checkConnection();
-        if(!isConnected){alert('You are offline, try it later');return;}
-        global.needReload1=true;global.needReload2=true;global.needReload3=true;global.needReload4=true;global.needReload5=true;global.needReload6=true;global.needReload7=true;
-        this.props.navigation.navigate('EQSurveyScreen');
-    }
-    render() {
-       return (
-      <Background>
-         <View style={{flexDirection:'row',width:'100%',justifyContent:'space-between'}}>
-         <TouchableOpacity style={{marginLeft:5,marginTop:50}}><Image source={require('../assets/ic_logo_loginmdpi.png')} style={{width:38,height:38}} /></TouchableOpacity>
-         <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen', { refresh: this._refresh })} style={{ marginRight:5,marginTop:50 }}><FontAwesome name="gear" size={30} color="gray" /></TouchableOpacity>
-        </View>
-        <View style={styles.homeContainer}>
-                   <TouchableOpacity onPress={() => { global.needReload1 = true; global.needReload2 = true; global.needReload3 = true; global.needReload4 = true; global.needReload5 = true; global.needReload6 = true; global.needReload7 = true; this.props.navigation.navigate('EQSurveyScreen'); }} style={{ flex: 2, justifyContent: 'center' }}>
-            <View style={styles.outer}>
-              <View style={styles.inner}>
-                <Text style={styles.startButtonText}>{resources.getString("start_survey")}</Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-          { this.state.showThankYou &&
-                       <View style={{backgroundColor:'black',width:'80%', position: 'absolute',zIndex: 29,alignSelf:'center',top:'60%',justifyContent:'center',alignItems:'center'}}><Text style={{color:'white',fontSize:14,marginTop:10,marginBottom:10}}>{this.state.thankYouText}</Text></View>
-           }
-          <View style={[styles.homeButtonContainer, { marginBottom: 0,marginTop:50 }, { flexDirection: 'row'}]}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')} style={styles.smallButton}><EvilIcons name="question" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("about")}</Text></TouchableOpacity>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}><Feather name="phone" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("contact_us")}</Text></TouchableOpacity>
-            <TouchableOpacity onPress={() =>{if(global.hasImage)this.props.navigation.navigate('ResultSummaryScreen');else alert(resources.getString("NoDataAlert"));}} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("result")}</Text></TouchableOpacity>
+        }
+      })
+      .catch(err => { console.log(err) })
+  }
+  async conductSurvey() {
+    let isConnected = await checkConnection();
+    if (!isConnected) { alert('You are offline, try it later'); return; }
+    global.needReload1 = true; global.needReload2 = true; global.needReload3 = true; global.needReload4 = true; global.needReload5 = true; global.needReload6 = true; global.needReload7 = true;
+    this.props.navigation.navigate('EQSurveyScreen');
+  }
+  render() {
+    return (
+      <PaperProvider theme={newTheme}>
+        <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
+        <Background>
+          <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
+            <TouchableOpacity style={{ marginLeft: 5, marginTop: 50 }}><Image source={require('../assets/ic_logo_loginmdpi.png')} style={{ width: 38, height: 38 }} /></TouchableOpacity>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen', { refresh: this._refresh })} style={{ marginRight: 5, marginTop: 50 }}><FontAwesome name="gear" size={30} color="gray" /></TouchableOpacity>
           </View>
-        </View>
-        <NavigationEvents onDidFocus={() => this.checkThankYou()} />
-      </Background>
+          <View style={styles.homeContainer}>
+            <TouchableOpacity onPress={() => { global.needReload1 = true; global.needReload2 = true; global.needReload3 = true; global.needReload4 = true; global.needReload5 = true; global.needReload6 = true; global.needReload7 = true; this.props.navigation.navigate('EQSurveyScreen'); }} style={{ flex: 2, justifyContent: 'center' }}>
+              <View style={styles.outer}>
+                <View style={styles.inner}>
+                  <Text style={styles.startButtonText}>{resources.getString("start_survey")}</Text>
+                </View>
+              </View>
+            </TouchableOpacity>
+            {this.state.showThankYou &&
+              <View style={{ backgroundColor: 'black', width: '80%', position: 'absolute', zIndex: 29, alignSelf: 'center', top: '60%', justifyContent: 'center', alignItems: 'center' }}><Text style={{ color: 'white', fontSize: 14, marginTop: 10, marginBottom: 10 }}>{this.state.thankYouText}</Text></View>
+            }
+            <View style={[styles.homeButtonContainer, { marginBottom: 0, marginTop: 50 }, { flexDirection: 'row' }]}>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')} style={styles.smallButton}><EvilIcons name="question" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("about")}</Text></TouchableOpacity>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}><Feather name="phone" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("contact_us")}</Text></TouchableOpacity>
+              <TouchableOpacity onPress={() => { if (global.hasImage) this.props.navigation.navigate('ResultSummaryScreen'); else alert(resources.getString("NoDataAlert")); }} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("result")}</Text></TouchableOpacity>
+            </View>
+          </View>
+          <NavigationEvents onDidFocus={() => this.checkThankYou()} />
+        </Background>
+        <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
+      </PaperProvider>
     );
   }
 }
@@ -162,7 +164,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignContent: 'space-between'
   },
-  homeButton: {width: 100  },
+  homeButton: { width: 100 },
   homeSeperator: {
     width: 20,
     height: 150
@@ -210,7 +212,7 @@ const styles = StyleSheet.create({
 
 export default memo(Dashboard);
 
- <LogoClearSmall/>
+<LogoClearSmall />
 
 // //         <TouchableOpacity onPress={() =>{
 //                    console.log("asdfgasdfasdfasdfasd");

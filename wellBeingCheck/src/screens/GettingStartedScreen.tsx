@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Text, StyleSheet, Dimensions } from 'react-native';
+import { Text, StyleSheet, Dimensions, View } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Button from '../components/Button';
 import { newTheme } from '../core/theme';
@@ -15,6 +15,7 @@ import {
   SafeAreaView,
   ScrollView,
 } from 'react-navigation';
+import { SafeAreaConsumer } from 'react-native-safe-area-context';
 
 type GettingStartedState = {
   gettingStarted: boolean,
@@ -49,8 +50,8 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
   render() {
     return (
       <PaperProvider theme={newTheme}>
+        <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
         <AppBanner />
-
         <BackgroundWide>
           <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}>
@@ -61,15 +62,13 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
               </Paragraph>
             </ScrollView>
           </SafeAreaView>
-
         </BackgroundWide>
-
         <Button style={styles.btnNext}
           mode="contained"
           onPress={this._onGettingStartedNext}>
           <Text style={styles.btnText}>{resources.getString("gl.next")}</Text>
         </Button>
-
+        <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
       </PaperProvider>
     );
   }

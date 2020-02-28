@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, StatusBar, View } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Background from '../components/Background';
 
@@ -16,6 +16,7 @@ import {
   NavigationState,
   NavigationEvents,
 } from 'react-navigation';
+import { SafeAreaConsumer } from 'react-native-safe-area-context';
 
 type LaunchState = {
 }
@@ -164,13 +165,14 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
   render() {
     return (
       <PaperProvider theme={newTheme}>
+        <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
         <AppBanner />
         <Background>
           <LogoClear />
           <Title>{resources.getString("app.name")}</Title>
         </Background>
         <NavigationEvents
-          // onDidFocus={() => this._bootstarp()}
+          onDidFocus={() => this._bootstarp()}
         />
       </PaperProvider>
     );

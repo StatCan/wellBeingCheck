@@ -15,6 +15,7 @@ import {
   SafeAreaView,
   ScrollView,
 } from 'react-navigation';
+import { SafeAreaConsumer } from 'react-native-safe-area-context';
 
 type TermsOfServiceState = {
   termsOfService: boolean,
@@ -40,8 +41,8 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
   render() {
     return (
       <PaperProvider theme={newTheme}>
+        <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
         <BackgroundWide>
-
           <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}>
               <LogoClearSmall />
@@ -51,15 +52,13 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
               </Paragraph>
             </ScrollView>
           </SafeAreaView>
-
         </BackgroundWide>
-
         <Button style={styles.btnNext}
           mode="contained"
           onPress={this._openSettingsScreen}>
           <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
         </Button>
-
+        <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
       </PaperProvider>
     );
   }

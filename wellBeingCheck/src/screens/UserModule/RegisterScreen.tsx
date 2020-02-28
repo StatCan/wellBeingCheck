@@ -1,32 +1,27 @@
-import React, { memo, useState, useCallback } from 'react';
+import React, { memo } from 'react';
 import { Picker, View, Text, StyleSheet, TouchableOpacity, Modal, SafeAreaView, ScrollView } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Background from '../../components/Background';
-import Logo from '../../components/Logo';
-import Header from '../../components/Header';
 import Button from '../../components/Button';
 import TextInput from '../../components/TextInput';
-import BackButton from '../../components/BackButton';
 import { theme, newTheme } from '../../core/theme';
 import { resources } from '../../../GlobalResources';
-//import { Navigation } from '../../types';
+import { Provider as PaperProvider } from 'react-native-paper';
 import { EvilIcons, Feather } from '@expo/vector-icons';
-
+import { Drawer, Title, Provider, Portal, Dialog } from 'react-native-paper';
+import LogoClearSmall from '../../components/LogoClearSmall';
+import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import {
   NavigationParams,
   NavigationScreenProp,
   NavigationState,
 } from 'react-navigation';
-
 import {
   passwordValidator,
   passwordConfirmValidator,
   securityQuestionValidator,
   securityAnswerValidator,
 } from '../../core/utils';
-import { Drawer, Title, Provider, Portal, Dialog, Paragraph } from 'react-native-paper';
-import LogoClear from '../../components/LogoClear';
-import LogoClearSmall from '../../components/LogoClearSmall';
 
 type RegisterState = {
   password: string,
@@ -189,138 +184,141 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 
   render() {
     return (
-      <Background>
-        <SafeAreaView style={styles.container}>
-          <ScrollView style={styles.scrollView}>
-            <LogoClearSmall />
-            <Title style={styles.title}>Secure your account</Title>
-            <View style={styles.passwordView}>
+      <PaperProvider theme={newTheme}>
+        <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
+        <Background>
+          <SafeAreaView style={styles.container}>
+            <ScrollView style={styles.scrollView}>
+              <LogoClearSmall />
+              <Title style={styles.title}>Secure your account</Title>
+              <View style={styles.passwordView}>
+                <TextInput
+                  label="Enter password"
+                  returnKeyType="next"
+                  selectionColor={newTheme.colors.primary}
+                  underlineColor={newTheme.colors.primary}
+                  theme={newTheme}
+                  value={this.state.password}
+                  onChangeText={text => this.setState({ password: text })}
+                  error={!!this.state.passwordError}
+                  errorText={this.state.passwordError}
+                  secureTextEntry={true}
+                />
+                <TouchableOpacity
+                  style={styles.passwordHelpBtnBg}
+                  onPress={this._showModal}
+                >
+                  <Text style={styles.passwordHelpBtnText}>?</Text>
+                </TouchableOpacity>
+              </View>
+
               <TextInput
-                label="Enter password"
+                label="Confirm password"
                 returnKeyType="next"
                 selectionColor={newTheme.colors.primary}
                 underlineColor={newTheme.colors.primary}
                 theme={newTheme}
-                value={this.state.password}
-                onChangeText={text => this.setState({ password: text })}
-                error={!!this.state.passwordError}
-                errorText={this.state.passwordError}
+                value={this.state.passwordConfirm}
+                onChangeText={text => this.setState({ passwordConfirm: text })}
+                error={!!this.state.passwordConfirmError}
+                errorText={this.state.passwordConfirmError}
                 secureTextEntry={true}
               />
-              <TouchableOpacity
-                style={styles.passwordHelpBtnBg}
-                onPress={this._showModal}
-              >
-                <Text style={styles.passwordHelpBtnText}>?</Text>
-              </TouchableOpacity>
-            </View>
 
-            <TextInput
-              label="Confirm password"
-              returnKeyType="next"
-              selectionColor={newTheme.colors.primary}
-              underlineColor={newTheme.colors.primary}
-              theme={newTheme}
-              value={this.state.passwordConfirm}
-              onChangeText={text => this.setState({ passwordConfirm: text })}
-              error={!!this.state.passwordConfirmError}
-              errorText={this.state.passwordConfirmError}
-              secureTextEntry={true}
-            />
+              {/* mode can also be dropdown - dialog will allow more space */}
+              <Picker
+                selectedValue={this.state.securityQuestion}
+                style={[styles.picker]}
+                itemStyle={styles.pickerItem}
+                onValueChange={value => this.setState({ securityQuestion: value })}>
+                <Picker.Item label={resources.getString("reg.ques.select")} value="" />
+                <Picker.Item label={resources.getString("reg.ques.mother")} value="reg.ques.mother" />
+                <Picker.Item label={resources.getString("reg.ques.school")} value="reg.ques.school" />
+                <Picker.Item label={resources.getString("reg.ques.car")} value="reg.ques.car" />
+                <Picker.Item label={resources.getString("reg.ques.sport")} value="reg.ques.sport" />
+                <Picker.Item label={resources.getString("reg.ques.job")} value="reg.ques.job" />
+              </Picker>
+              {this.state.securityQuestionError != '' ? (
+                <Text style={styles.errorTest}>{this.state.securityQuestionError}</Text>
+              ) : null
+              }
 
-            {/* mode can also be dropdown - dialog will allow more space */}
-            <Picker
-              selectedValue={this.state.securityQuestion}
-              style={[styles.picker]}
-              itemStyle={styles.pickerItem}
-              onValueChange={value => this.setState({ securityQuestion: value })}>
-              <Picker.Item label={resources.getString("reg.ques.select")} value="" />
-              <Picker.Item label={resources.getString("reg.ques.mother")} value="reg.ques.mother" />
-              <Picker.Item label={resources.getString("reg.ques.school")} value="reg.ques.school" />
-              <Picker.Item label={resources.getString("reg.ques.car")} value="reg.ques.car" />
-              <Picker.Item label={resources.getString("reg.ques.sport")} value="reg.ques.sport" />
-              <Picker.Item label={resources.getString("reg.ques.job")} value="reg.ques.job" />
-            </Picker>
-            {this.state.securityQuestionError != '' ? (
-              <Text style={styles.errorTest}>{this.state.securityQuestionError}</Text>
-            ) : null
-            }
+              <TextInput
+                label="Answer"
+                returnKeyType="next"
+                selectionColor={newTheme.colors.primary}
+                underlineColor={newTheme.colors.primary}
+                theme={newTheme}
+                value={this.state.securityAnswer}
+                onChangeText={text => this.setState({ securityAnswer: text })}
+                error={!!this.state.securityAnswerError}
+                errorText={this.state.securityAnswerError}
+              />
 
-            <TextInput
-              label="Answer"
-              returnKeyType="next"
-              selectionColor={newTheme.colors.primary}
-              underlineColor={newTheme.colors.primary}
-              theme={newTheme}
-              value={this.state.securityAnswer}
-              onChangeText={text => this.setState({ securityAnswer: text })}
-              error={!!this.state.securityAnswerError}
-              errorText={this.state.securityAnswerError}
-            />
+              <View style={styles.footer}>
+                <Button color={newTheme.colors.primary} mode="contained" onPress={this._onSignUpPressed} style={styles.button}>
+                  <Text style={styles.whiteText}>{resources.getString("reg.action.create")}</Text>
+                </Button>
+              </View>
 
-            <View style={styles.footer}>
-              <Button color={newTheme.colors.primary} mode="contained" onPress={this._onSignUpPressed} style={styles.button}>
-                <Text style={styles.whiteText}>{resources.getString("reg.action.create")}</Text>
-              </Button>
-            </View>
-
-            <View>
-              <Portal>
-                <Dialog
-                  visible={this.state.modalShow}
-                  onDismiss={this._hideModal}>
-                  <Dialog.Title>Password Requirments</Dialog.Title>
-                  <Dialog.Content>
-                    <View style={styles.pr_view}>
-                      <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_length")}</Text>
-                      <TouchableOpacity style={styles.pr_btn}>
-                        <EvilIcons size={25} name="check" />
-                      </TouchableOpacity>
-                    </View>
-                    <View style={styles.pr_view}>
-                      <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_upper")}</Text>
-                      <TouchableOpacity style={styles.pr_btn}>
-                        <EvilIcons size={25} name="check" />
-                      </TouchableOpacity>
-                    </View>
-                    <View style={styles.pr_view}>
-                      <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_special")}</Text>
-                      <TouchableOpacity style={styles.pr_btn}>
-                        <EvilIcons size={25} name="check" />
-                      </TouchableOpacity>
-                    </View>
-                    <View style={styles.pr_view}>
-                      <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_lower")}</Text>
-                      <TouchableOpacity style={styles.pr_btn}>
-                        <EvilIcons size={25} name="check" />
-                      </TouchableOpacity>
-                    </View>
-                    <View style={styles.pr_view}>
-                      <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_number")}</Text>
-                      <TouchableOpacity style={styles.pr_btn}>
-                        <EvilIcons size={25} name="check" />
-                      </TouchableOpacity>
-                    </View>
-                  </Dialog.Content>
-                  <Dialog.Actions>
-                    <View>
-                      <Button
-                        color={newTheme.colors.primary}
-                        style={styles.pr_action_btn}
-                        onPress={this._hideModal}>
-                        Ok
+              <View>
+                <Portal>
+                  <Dialog
+                    visible={this.state.modalShow}
+                    onDismiss={this._hideModal}>
+                    <Dialog.Title>Password Requirments</Dialog.Title>
+                    <Dialog.Content>
+                      <View style={styles.pr_view}>
+                        <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_length")}</Text>
+                        <TouchableOpacity style={styles.pr_btn}>
+                          <EvilIcons size={25} name="check" />
+                        </TouchableOpacity>
+                      </View>
+                      <View style={styles.pr_view}>
+                        <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_upper")}</Text>
+                        <TouchableOpacity style={styles.pr_btn}>
+                          <EvilIcons size={25} name="check" />
+                        </TouchableOpacity>
+                      </View>
+                      <View style={styles.pr_view}>
+                        <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_special")}</Text>
+                        <TouchableOpacity style={styles.pr_btn}>
+                          <EvilIcons size={25} name="check" />
+                        </TouchableOpacity>
+                      </View>
+                      <View style={styles.pr_view}>
+                        <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_lower")}</Text>
+                        <TouchableOpacity style={styles.pr_btn}>
+                          <EvilIcons size={25} name="check" />
+                        </TouchableOpacity>
+                      </View>
+                      <View style={styles.pr_view}>
+                        <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_number")}</Text>
+                        <TouchableOpacity style={styles.pr_btn}>
+                          <EvilIcons size={25} name="check" />
+                        </TouchableOpacity>
+                      </View>
+                    </Dialog.Content>
+                    <Dialog.Actions>
+                      <View>
+                        <Button
+                          color={newTheme.colors.primary}
+                          style={styles.pr_action_btn}
+                          onPress={this._hideModal}>
+                          Ok
                       </Button>
-                    </View>
-                  </Dialog.Actions>
-                </Dialog>
-              </Portal>
-            </View>
+                      </View>
+                    </Dialog.Actions>
+                  </Dialog>
+                </Portal>
+              </View>
 
-          </ScrollView>
-        </SafeAreaView>
+            </ScrollView>
+          </SafeAreaView>
 
-      </Background >
-
+        </Background >
+        <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
+      </PaperProvider>
     );
   }
 }
