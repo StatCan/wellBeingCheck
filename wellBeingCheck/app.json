@@ -1,6 +1,6 @@
 {
   "name": "wellBeingCheck",
-  "displayName": "Well-Being Check",
+  "displayName": "Well-being Check",
   "expo": {
     "androidStatusBar": {
       "backgroundColor": "#000000"
