@@ -61,7 +61,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
     };
 
     AsyncStorage.setItem('user_terms_and_conditions', JSON.stringify(userTermsAndConditionsObj), () => {
-      this.props.navigation.navigate('LaunchScreen');
+      this.props.navigation.navigate('RegisterScreen');
     });
   }
 
