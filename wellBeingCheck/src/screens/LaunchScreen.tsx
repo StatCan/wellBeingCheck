@@ -47,7 +47,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
 
   //determine if user already has an account
   _bootstarp = () => {
-    console.log("_bootstarp");
+    console.log("_bootstarp");resources.culture='fr';
     AsyncStorage.getItem('user_account', (err, userAccountResult) => {
       console.log(userAccountResult);
       let userAccountResultObj = JSON.parse(userAccountResult)
@@ -169,7 +169,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
         <AppBanner />
         <Background>
           <LogoClear />
-          <Title>{resources.getString("app.name")}</Title>
+          <Title>{resources.getString("Well-Being Check")}</Title>
         </Background>
         <NavigationEvents
           onDidFocus={() => this._bootstarp()}

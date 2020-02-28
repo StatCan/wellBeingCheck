@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
   },
   smallButtonText: {
     color: '#fff',
-    fontSize: 15
+    fontSize: 15,textAlign: 'center',
   }
 });
 

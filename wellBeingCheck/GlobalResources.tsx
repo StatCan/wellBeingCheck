@@ -51,9 +51,9 @@ export const resources = {
             "the_answer_is:": "The answer is:",
             "btn_create": "Create",
             "login": "Login",
-            "start_survey": "Start Survey",
+            "start_survey": "START",
             "settings": "Settings",
-            "result": "Result",
+            "result": "Results",
             "about_the_survey": "About the Survey",
             "term_and_condition": "Term & Condition",
             "contact_us": "Contact us",
@@ -83,7 +83,13 @@ export const resources = {
             "num_pings_dialog_title": "Number of notifications per day",
             "ThankYouA":"Thank you for completing this survey!",
             "ThankYouB":"Thank you for completing this survey! You can review your Well-being Check in the Results menu.",
-            "NoDataAlert":"You have to complete the survey at least once."
+            "NoDataAlert":"You have to complete the survey at least once.",
+            "Enter password":"Enter password",
+            "Well-Being Check":"Well-being Check",
+            "Forgot your password":"Forgot your password?",
+            "Login":"Login",
+            "Language":"Français",
+            "Secure your account":"Secure your account",
         },
         fr: {
             //global
@@ -111,7 +117,7 @@ export const resources = {
             "reg.ques.car": "Quelle a été votre première voiture?",
             "reg.ques.sport": "Quel est votre jeu ou sport préféré?",
             "reg.ques.job": "Quel a été votre premier emploi?",
-            "reg.action.create": "FR_CREATE",
+            "reg.action.create": "Créer",
             "reg.pass.hint_length": "8 caractères",
             "reg.pass.hint_upper": "une majuscule",
             "reg.pass.hint_special": "un caractère spécial",
@@ -132,9 +138,9 @@ export const resources = {
             "the_answer_is:": "La réponse est:",
             "btn_create": "Créer",
             "login": "S'identifier",
-            "start_survey": "Commencer l'enquête",
+            "start_survey": "COMMENCER",
             "settings": "Paramètres",
-            "result": "Résultat",
+            "result": "Résultats",
             "about_the_survey": "A propos de l'enquête",
             "term_and_condition": "Terme et condition",
             "contact_us": "Contactez nous",
@@ -164,8 +170,13 @@ export const resources = {
             "num_pings_dialog_title": "Nombre de notifications par jour",
             "ThankYouA":"Nous vous remercions d’avoir participé à l’enquête!",
             "ThankYouB":"Nous vous remercions d’avoir participé à l’enquête! Vous pouvez consulter votre Bilan bien-être dans le menu Résultats.",
-            "NoDataAlert":"Vous devez remplir l'enquête au moins une fois."
-
+            "NoDataAlert":"Vous devez remplir l'enquête au moins une fois.",
+            "Enter password":"Entrer un mot de passe",
+            "Well-Being Check":"Bilan bien-être",
+            "Forgot your password":"Mot de passe oublié?",
+            "Login":"Entrer",
+            "Language":"English",
+            "Secure your account":"Sécuriser votre compte",
         }
 
     }
