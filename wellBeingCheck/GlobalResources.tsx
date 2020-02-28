@@ -6,7 +6,7 @@ export const resources = {
     data: {
         en: {
             //global
-            "app.name": "Well-Being Check",
+            "app.name": "Well-being Check",
             "gl.next": "Next",
             "gl.decline": "Decline",
             "gl.agree": "Agree",
@@ -51,7 +51,7 @@ export const resources = {
             "the_answer_is:": "The answer is:",
             "btn_create": "Create",
             "login": "Login",
-            "start_survey": "Start Survey",
+            "start_survey": "START",
             "settings": "Settings",
             "result": "Result",
             "about_the_survey": "About the Survey",
@@ -87,7 +87,7 @@ export const resources = {
         },
         fr: {
             //global
-            "app.name": "FR_Well-Being Check",
+            "app.name": "FR_Well-being Check",
             "gl.next": "FR_Next",
             "gl.decline": "FR_Decline",
             "gl.agree": "FR_Agree",
@@ -132,7 +132,7 @@ export const resources = {
             "the_answer_is:": "La réponse est:",
             "btn_create": "Créer",
             "login": "S'identifier",
-            "start_survey": "Commencer l'enquête",
+            "start_survey": "COMMENCER",
             "settings": "Paramètres",
             "result": "Résultat",
             "about_the_survey": "A propos de l'enquête",
