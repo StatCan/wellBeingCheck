@@ -201,7 +201,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
               <Title style={styles.title}>{resources.getString("Secure your account")}</Title>
               <View style={styles.passwordView}>
                 <TextInput
-                  label="Enter password"
+                  label={resources.getString("Enter password")}
                   returnKeyType="next"
                   selectionColor={newTheme.colors.primary}
                   underlineColor={newTheme.colors.primary}
@@ -221,7 +221,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
               </View>
 
               <TextInput
-                label="Confirm password"
+                label={resources.getString("confirm_password")}
                 returnKeyType="next"
                 selectionColor={newTheme.colors.primary}
                 underlineColor={newTheme.colors.primary}
@@ -252,7 +252,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
               }
 
               <TextInput
-                label="Answer"
+                 label={resources.getString("the_answer_is:")}
                 returnKeyType="next"
                 selectionColor={newTheme.colors.primary}
                 underlineColor={newTheme.colors.primary}
@@ -274,7 +274,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                   <Dialog
                     visible={this.state.modalShow}
                     onDismiss={this._hideModal}>
-                    <Dialog.Title>Password Requirments</Dialog.Title>
+                    <Dialog.Title>{resources.getString("Password Requirements")}</Dialog.Title>
                     <Dialog.Content>
                       <View style={styles.pr_view}>
                         <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_length")}</Text>
