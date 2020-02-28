@@ -6,6 +6,7 @@ export const resources = {
     data: {
         en: {
             //global
+            "app.name": "Well-being Check",
             "gl.next": "Next",
             "gl.decline": "Decline",
             "gl.agree": "Agree",
@@ -36,7 +37,7 @@ export const resources = {
             "reg.pass.hint_lower": "1 Lower case",
             "reg.pass.hint_number": "1 Number",
             "reg.pass_conf.empty": "Password cannot be empty",
-            "reg.pass_conf.match": "Password's do not match",
+            "reg.pass_conf.match": "Passwords do not match",
             //password recovery
             "password_recovery.title": "Password recovery",
             //about
@@ -86,6 +87,7 @@ export const resources = {
         },
         fr: {
             //global
+            "app.name": "FR_Well-being Check",
             "gl.next": "FR_Next",
             "gl.decline": "FR_Decline",
             "gl.agree": "FR_Agree",
@@ -115,8 +117,8 @@ export const resources = {
             "reg.pass.hint_special": "un caractère spécial",
             "reg.pass.hint_lower": "une minuscule",
             "reg.pass.hint_number": "un chiffre",
-            "reg.pass_conf.empty": "FR_Password cannot be empty",
-            "reg.pass_conf.match": "FR_Password's do not match",
+            "reg.pass_conf.empty": "Le mot de passe ne peut pas être vide",
+            "reg.pass_conf.match": "Les mots de passe ne correspondent pas",
             //password recovery
             "password_recovery.title": "FR_Password recovery",
             //about

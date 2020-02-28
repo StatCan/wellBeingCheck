@@ -8,6 +8,7 @@ import LogoClearSmall from '../components/LogoClearSmall';
 import { resources } from '../../GlobalResources';
 import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
 import BackgroundWhite from '../components/BackgroundWhite';
+import { SafeAreaConsumer } from 'react-native-safe-area-context';
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
@@ -21,41 +22,32 @@ class AboutScreen extends React.Component<Props, AboutScreen> {
 
   render() {
     return (
-
       <PaperProvider theme={newTheme}>
-
+        <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
         <AppBanner />
-
         <BackgroundWhite>
-
           <View style={styles.logo_container}>
             <LogoClearSmall />
           </View>
-
           <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}>
               <Title style={styles.title}>{resources.getString("about_title")}</Title>
-
               <View style={styles.content}>
                 <Text>{resources.getString("about_content")}</Text>
               </View>
-
               <Title style={styles.title}>{resources.getString("about_title_two")}</Title>
-
               <View style={styles.content}>
                 <Text>{resources.getString("about_content_two")}</Text>
               </View>
             </ScrollView>
           </SafeAreaView>
-
         </BackgroundWhite>
-
         <Button style={styles.btnNext}
           mode="contained"
           onPress={this._onNextBtnHandle}>
           <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
         </Button>
-
+        <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
       </PaperProvider>
     );
   }

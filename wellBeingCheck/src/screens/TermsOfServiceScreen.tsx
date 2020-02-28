@@ -15,6 +15,7 @@ import {
   SafeAreaView,
   ScrollView,
 } from 'react-navigation';
+import { SafeAreaConsumer } from 'react-native-safe-area-context';
 
 type TermsOfServiceState = {
   termsOfService: boolean,
@@ -61,7 +62,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
     };
 
     AsyncStorage.setItem('user_terms_and_conditions', JSON.stringify(userTermsAndConditionsObj), () => {
-      this.props.navigation.navigate('LaunchScreen');
+      this.props.navigation.navigate('RegisterScreen');
     });
   }
 
@@ -80,8 +81,8 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
   render() {
     return (
       <PaperProvider theme={newTheme}>
+        <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
         <BackgroundWide>
-
           <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}>
               <LogoClearSmall />
@@ -91,23 +92,20 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
               </Paragraph>
             </ScrollView>
           </SafeAreaView>
-
         </BackgroundWide>
-
         <View style={styles.footer}>
           <Button style={styles.btnDecline}
             mode="contained"
             onPress={this._onTermsDisagree}>
             <Text style={styles.whiteText}>{resources.getString("gl.decline")}</Text>
           </Button>
-
           <Button style={styles.btnAgree}
             mode="contained"
             onPress={this._onTermsAgree}>
             <Text style={styles.whiteText}>{resources.getString("gl.agree")}</Text>
           </Button>
         </View>
-
+        <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
       </PaperProvider>
     );
   }

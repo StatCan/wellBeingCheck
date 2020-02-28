@@ -26,6 +26,7 @@ import {
 import { Drawer } from 'react-native-paper';
 import LogoClear from '../../components/LogoClear';
 import AppBanner from '../../components/AppBanner';
+import { SafeAreaConsumer } from 'react-native-safe-area-context';
 
 type LoginState = {
   password: string,
@@ -71,11 +72,11 @@ class LoginScreen extends React.Component<Props, LoginState> {
   render() {
     return (
       <PaperProvider theme={newTheme}>
+        <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
         <AppBanner />
-
         <Background>
           {/* <BackButton goBack={() => this.props.navigation.navigate('HomeScreen')} /> */}
-          
+
           <LogoClear />
 
           <Text>Well-Being Check</Text>
@@ -105,6 +106,7 @@ class LoginScreen extends React.Component<Props, LoginState> {
           </Button>
 
         </Background>
+        <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
       </PaperProvider>
     );
   }

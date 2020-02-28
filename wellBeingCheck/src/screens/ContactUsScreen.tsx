@@ -8,6 +8,7 @@ import LogoClearSmall from '../components/LogoClearSmall';
 import { resources } from '../../GlobalResources';
 import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
 import BackgroundWhite from '../components/BackgroundWhite';
+import { SafeAreaConsumer } from 'react-native-safe-area-context';
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
@@ -21,31 +22,23 @@ class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
 
   render() {
     return (
-
       <PaperProvider theme={newTheme}>
-
+        <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
         <AppBanner />
-
         <BackgroundWhite>
-
           <View style={styles.logo_container}>
             <LogoClearSmall />
           </View>
-
           <Title style={styles.title}>Contact Us:</Title>
-
           <View>
-
             <View style={styles.content}>
               <Text style={styles.content_title}>Email</Text>
               <Text>infostats@canada.ca</Text>
             </View>
-
             <View style={styles.content}>
               <Text style={styles.content_title}>Telephone:</Text>
               <Text>1-877-949-9492</Text>
             </View>
-
             <View style={styles.content}>
               <Text style={styles.content_title}>Mail:</Text>
               <Text>Chief Statistician of Canada</Text>
@@ -57,15 +50,13 @@ class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
               <Text>K1A 0T6</Text>
             </View>
           </View>
-
         </BackgroundWhite>
-
         <Button style={styles.btnNext}
           mode="contained"
           onPress={this._onNextBtnHandle}>
           <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
         </Button>
-
+        <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
       </PaperProvider>
     );
   }
