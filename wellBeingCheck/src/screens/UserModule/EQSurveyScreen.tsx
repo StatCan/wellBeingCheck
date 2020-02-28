@@ -32,7 +32,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     this.state=({Sacode:'',jsCode:disCode+jsCode,webviewLoaded: false});
       setTimeout(()=>{this.setState({webviewLoaded: true})}, 3000);
   }
- //  componentDidMount(){this.resetPassword();}
+ //  componentDidMount(){this. handleSurveyBdone();}
    async handleSurveyAdone(){
         let isConnected=await checkConnection();
         if(!isConnected){alert('You are offline, try it later');return;}
