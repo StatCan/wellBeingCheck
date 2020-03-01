@@ -417,10 +417,11 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#ffff',
     borderColor: 'grey',
-    borderWidth: 1,
+    borderWidth: 1
   },
   pickerItem: {
     height: 50,
+    fontSize: 17
   },
   footer: {
     flexDirection: 'row',
