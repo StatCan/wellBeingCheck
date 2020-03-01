@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     width: '100%', 
     height: 24, 
     marginLeft: 20, 
-    marginTop: 10, 
+    marginTop: 15, 
     justifyContent:'space-between'
   },
   footer: {

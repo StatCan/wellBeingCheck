@@ -9,7 +9,7 @@ export const resources = {
             "app.name": "Well-being Check",
             "gl.next": "Next",
             "gl.decline": "Decline",
-            "gl.agree": "Agree",
+            "gl.agree": "Accept",
             "gl.return": "Return",
             //getting started
             "getting_started": "Getting Started",
@@ -96,8 +96,8 @@ export const resources = {
             //global
             "app.name": "FR_Well-being Check",
             "gl.next": "FR_Next",
-            "gl.decline": "FR_Decline",
-            "gl.agree": "FR_Agree",
+            "gl.decline": "Décliner",
+            "gl.agree": "Accepter",
             "gl.return": "Retour",
             //getting started
             "getting_started": "FR_Getting Started",
