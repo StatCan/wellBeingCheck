@@ -58,16 +58,16 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
         <AppBanner />
         <BackgroundWide>
           <SafeAreaView style={styles.container}>
+            <View style={styles.headerContainer}>
+              <LogoClearSmall />
+              <TouchableOpacity onPress={() => this.toggleLanguage()} style={{alignSelf:'flex-end',marginRight:0}}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
+            </View>
             <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-                           <View style={{flexDirection:'row', width:'100%', height:24,marginTop:0,justifyContent:'space-between'}}>
-                                    <LogoClearSmall />
-                                  <TouchableOpacity onPress={() => this.toggleLanguage()} style={{alignSelf:'flex-end',marginRight:0}}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
-                           </View>
               <Title style={styles.title}>{resources.getString("getting_started")}</Title>
               <View style={{}}>
-              <Paragraph style={styles.paragraph}>
-                {resources.getString("getting_started_content")}
-              </Paragraph>
+                <Paragraph style={styles.paragraph}>
+                  {resources.getString("getting_started_content")}
+                </Paragraph>
               </View>
             </ScrollView>
           </SafeAreaView>
@@ -84,16 +84,25 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
 }
 
 const styles = StyleSheet.create({
+  headerContainer: {
+    flexDirection:'row', 
+    width: '100%', 
+    height: 24, 
+    marginLeft: 20, 
+    marginTop: 10, 
+    justifyContent:'space-between',
+    marginBottom: 25
+  },
   title: {
     alignSelf: 'baseline',
     fontSize: 22,
-    fontWeight: 'bold',
-    marginTop:20,
+    fontWeight: 'bold'
   },
   paragraph: {
+    alignSelf: 'baseline',
     fontSize: 15,
     width: '100%',
-
+    direction: "ltr"
   },
   label: {
     color: newTheme.colors.secondary,
@@ -109,9 +118,12 @@ const styles = StyleSheet.create({
     color: newTheme.colors.whiteText,
   },
   container: {
+    flex: 1,
+    width: (Dimensions.get('window').width) - 50,
   },
   scrollView: {
-      padding:15,
+    width: (Dimensions.get('window').width) - 50,
+    marginHorizontal: 20,
   },
   text: {
   },
