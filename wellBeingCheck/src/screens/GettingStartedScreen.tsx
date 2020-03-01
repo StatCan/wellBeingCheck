@@ -56,7 +56,6 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
       <PaperProvider theme={newTheme}>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
         <AppBanner />
-        <BackgroundWide>
           <SafeAreaView style={styles.container}>
             <View style={styles.headerContainer}>
               <LogoClearSmall />
@@ -71,7 +70,6 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
               </View>
             </ScrollView>
           </SafeAreaView>
-        </BackgroundWide>
         <Button style={styles.btnNext}
           mode="contained"
           onPress={this._onGettingStartedNext}>
