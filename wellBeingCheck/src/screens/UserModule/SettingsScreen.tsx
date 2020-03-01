@@ -58,7 +58,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       notificationState: true,
       notification: true,
       waketime: '08:00',
-      sleeptime: '21:00',
+      sleeptime: '22:00',
       notificationcount: 2,
       culture: '1',
       cultureString: 'English',
