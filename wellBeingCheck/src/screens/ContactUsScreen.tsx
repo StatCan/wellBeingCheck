@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   title: {
-    marginTop: 120,
+    marginTop: 20,
     marginLeft: 20,
     fontWeight: '900',
     fontSize: 30,

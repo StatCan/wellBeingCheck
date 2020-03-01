@@ -110,13 +110,13 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
    render() {
      let uri='';//http://barabasy.eastus.cloudapp.azure.com/anonymous-anonyme/en/login-connexion/load-charger/eqgsd0ed709a7df0465da7cb4881b290ff22';
      if(global.doneSurveyA){
-         if(global.culture=='en')
+         if(resources.culture=='en')
               uri=global.surveyBUrlEng;
          else
             uri=global.surveyBUrlFre;
      }
      else{
-         if(global.culture=='en')
+         if(resources.culture=='en')
              uri=global.surveyAUrlEng;
          else
              uri=global.surveyAUrlFre;
@@ -157,8 +157,8 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                                       this.fetchImages();count=1;  global.showThankYou=2;
                                  }
                                  else {
-                                    console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');count=1;
-                                      global.showThankYou=1;
+                                    console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
+                                    this.fetchImages();count=1;global.showThankYou=1;
                                  }
                                 this.props.navigation.navigate('Dashboard');
                             }

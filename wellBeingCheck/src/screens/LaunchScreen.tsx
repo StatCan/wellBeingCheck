@@ -169,7 +169,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
         <AppBanner />
         <Background>
           <LogoClear />
-          <Title>{resources.getString("app.name")}</Title>
+          <Title>{resources.getString("Well-Being Check")}</Title>
         </Background>
         <NavigationEvents
           onDidFocus={() => this._bootstarp()}

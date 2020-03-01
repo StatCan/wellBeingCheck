@@ -267,7 +267,6 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
             <Text style={styles.toolbarTitle}>{resources.getString("settings")}</Text>
           </View>
           <ScrollView>
-
             <List.Section style={styles.mainStyle}>
               <List.Item
                 title={resources.getString("notifications")}

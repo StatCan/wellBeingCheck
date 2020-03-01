@@ -53,6 +53,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
       securityAnswer: "",
       securityAnswerError: "",
       modalShow: true,
+       title:resources.getString("Well-Being Check"),
     };
     //this._retrieveData('user_password');
     this._accountAlreadyExists();
@@ -181,19 +182,26 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 
   _showModal = () => this.setState({ modalShow: true });
   _hideModal = () => this.setState({ modalShow: false });
-
+   toggleLanguage(){
+       if(resources.culture=='en')resources.culture='fr';else resources.culture='en';
+       this.setState({title:resources.getString("Well-Being Check")});
+   }
   render() {
     return (
       <PaperProvider theme={newTheme}>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
         <Background>
+
           <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.scrollView}>
-              <LogoClearSmall />
-              <Title style={styles.title}>Secure your account</Title>
+             <ScrollView style={styles.scrollView}>
+               <View style={{flexDirection:'row', width:'100%', height:24,marginTop:0,justifyContent:'space-between'}}>
+                        <LogoClearSmall />
+                      <TouchableOpacity onPress={() => this.toggleLanguage()} style={{alignSelf:'flex-end',marginRight:0}}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
+               </View>
+              <Title style={styles.title}>{resources.getString("Secure your account")}</Title>
               <View style={styles.passwordView}>
                 <TextInput
-                  label="Enter password"
+                  label={resources.getString("Enter password")}
                   returnKeyType="next"
                   selectionColor={newTheme.colors.primary}
                   underlineColor={newTheme.colors.primary}
@@ -213,7 +221,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
               </View>
 
               <TextInput
-                label="Confirm password"
+                label={resources.getString("confirm_password")}
                 returnKeyType="next"
                 selectionColor={newTheme.colors.primary}
                 underlineColor={newTheme.colors.primary}
@@ -244,7 +252,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
               }
 
               <TextInput
-                label="Answer"
+                 label={resources.getString("the_answer_is:")}
                 returnKeyType="next"
                 selectionColor={newTheme.colors.primary}
                 underlineColor={newTheme.colors.primary}
@@ -266,7 +274,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                   <Dialog
                     visible={this.state.modalShow}
                     onDismiss={this._hideModal}>
-                    <Dialog.Title>Password Requirments</Dialog.Title>
+                    <Dialog.Title>{resources.getString("Password Requirements")}</Dialog.Title>
                     <Dialog.Content>
                       <View style={styles.pr_view}>
                         <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_length")}</Text>

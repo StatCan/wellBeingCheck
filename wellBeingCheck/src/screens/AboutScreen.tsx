@@ -60,11 +60,11 @@ const styles = StyleSheet.create({
   },
   logo_container: {
     position: 'relative',
-    marginTop: 20,
+  //  marginTop: 20,
     marginLeft: 20,
   },
   title: {
-    marginTop: 120,
+    marginTop: 20,
     marginLeft: 20,
     color: '#707070',
     marginBottom: 20,

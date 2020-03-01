@@ -8,6 +8,7 @@ import Button from '../../components/Button';
 import TextInput from '../../components/TextInput';
 import BackButton from '../../components/BackButton';
 import { newTheme } from '../../core/theme';
+import { resources } from '../../../GlobalResources';
 import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 //import { Navigation } from '../../types';
 
@@ -44,9 +45,13 @@ class LoginScreen extends React.Component<Props, LoginState> {
     this.state = {
       password: "",
       passwordError: "",
+      title:resources.getString("Well-Being Check")
     };
   }
-
+   toggleLanguage(){
+       if(resources.culture=='en')resources.culture='fr';else resources.culture='en';
+       this.setState({title:resources.getString("Well-Being Check")});
+   }
   _onLoginPressed = () => {
     AsyncStorage.getItem('user_account', (err, result) => {
       console.log(result);
@@ -78,17 +83,20 @@ class LoginScreen extends React.Component<Props, LoginState> {
   render() {
     return (
       <PaperProvider theme={newTheme}>
+
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
         <AppBanner />
         <Background>
           {/* <BackButton goBack={() => this.props.navigation.navigate('HomeScreen')} /> */}
-
+        <View style={{width:'100%', height:24,marginTop:0,alignItems:'flex-end',justifyContent:'flex-end'}}>
+              <TouchableOpacity onPress={() => this.toggleLanguage()} style={{height:60 }}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
+        </View>
           <LogoClear />
 
-          <Text>Well-Being Check</Text>
+          <Text>{resources.getString("Well-Being Check")}</Text>
 
           <TextInput
-            label="Enter password"
+            label={resources.getString("Enter password")}
             returnKeyType="next"
             value={this.state.password}
             onChangeText={text => this.setState({ password: text })}
@@ -101,14 +109,14 @@ class LoginScreen extends React.Component<Props, LoginState> {
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('ForgotPasswordScreen')}
             >
-              <Text style={styles.label}>Forgot your password?</Text>
+              <Text style={styles.label}>{resources.getString("Forgot your password?")}</Text>
             </TouchableOpacity>
           </View>
 
           <Button
             mode="contained"
             onPress={this._onLoginPressed}>
-            <Text style={styles.whiteText}>Login</Text>
+            <Text style={styles.whiteText}>{resources.getString("Login")}</Text>
           </Button>
 
         </Background>
