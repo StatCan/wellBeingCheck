@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { StyleSheet, StatusBar, View } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Background from '../components/Background';
-
+import * as Localization from 'expo-localization';
 import { newTheme } from '../core/theme';
 import { Provider as PaperProvider, Title } from 'react-native-paper';
 import { checkConnection } from '../utils/fetchJwToken';
@@ -37,7 +37,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
     this.delay(3000).then(any => {
       //splach screen forced show 3000 = 3 seconds!
       this.bootstrapA();
-      this._bootstarp();
+      this._bootstrap();
     });
   }
 
@@ -46,8 +46,18 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
   }
 
   //determine if user already has an account
-  _bootstarp = () => {
-    console.log("_bootstarp");resources.culture='fr';
+  _bootstrap = () => {
+    console.log("_bootstrap");
+
+    // Set language based on locale
+    console.log("Locale is: " + Localization.locale);
+
+    if (Localization.locale === "en-CA"){
+      resources.culture = 'en';
+    } else if (Localization.locale === "fr-CA"){
+      resources.culture = 'fr';
+    }
+
     AsyncStorage.getItem('user_account', (err, userAccountResult) => {
       console.log(userAccountResult);
       let userAccountResultObj = JSON.parse(userAccountResult)
@@ -56,7 +66,6 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
         currentPassword = userAccountResultObj.password;
         global.password = currentPassword;
       }
-
       AsyncStorage.getItem('user_getting_started', (err, userGettingStartedResult) => {
         console.log(userGettingStartedResult);
         let userGettingStartedResultObj = JSON.parse(userGettingStartedResult)
@@ -142,7 +151,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
       .catch((error) => {
         console.error(error); global.configurationReady = false; alert("Network error");
       });
-    console.log('Confiuration is ready');
+    console.log('Configuration is ready');
   };
   generateGuid() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -172,7 +181,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           <Title>{resources.getString("Well-Being Check")}</Title>
         </Background>
         <NavigationEvents
-          onDidFocus={() => this._bootstarp()}
+          onDidFocus={() => this._bootstrap()}
         />
       </PaperProvider>
     );

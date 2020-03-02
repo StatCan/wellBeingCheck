@@ -58,7 +58,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       notificationState: true,
       notification: true,
       waketime: '08:00',
-      sleeptime: '21:00',
+      sleeptime: '22:00',
       notificationcount: 2,
       culture: '1',
       cultureString: 'English',
@@ -211,6 +211,16 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
         this.setState({ cultureString: resultAsObj.cultureString });
       }
     });
+
+    if (global.debugMode) console.log("Resources culture is: " + resources.culture);
+
+    if (resources.culture == 'fr') {
+      this.setState({ culture: '2' });
+      this.setState({ cultureString: 'French'});
+    } else if (resources.culture == 'en') {
+      this.setState({ culture: '1' });
+      this.setState({ cultureString: 'English'});
+    }
   }
 
   _changeLanguage(c) {
@@ -345,13 +355,13 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                   <RadioButton.Group
                     onValueChange={c => this._changeLanguage(c)}
                     value={this.state.culture}>
-                    <View>
-                      <Text>English</Text>
+                    <View style={styles.radioButtonContainerStyle}>
                       <RadioButton value="1" />
+                      <Text style={styles.radioButtonTextStyle}>English</Text>
                     </View>
-                    <View>
-                      <Text>French</Text>
+                    <View style={styles.radioButtonContainerStyle}>
                       <RadioButton value="2" />
+                      <Text style={styles.radioButtonTextStyle}>French</Text>
                     </View>
                   </RadioButton.Group>
                 </Dialog.Content>
@@ -375,21 +385,21 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                   <RadioButton.Group
                     onValueChange={n => this.setState({ notificationcount: parseInt(n) })}
                     value={this.state.notificationcount.toString()}>
-                    <View>
-                      <Text>2</Text>
+                    <View style={styles.radioButtonContainerStyle}>
                       <RadioButton value="2" />
+                      <Text style={styles.radioButtonTextStyle}>2</Text>
                     </View>
-                    <View>
-                      <Text>3</Text>
+                    <View style={styles.radioButtonContainerStyle}>
                       <RadioButton value="3" />
+                      <Text style={styles.radioButtonTextStyle}>3</Text>
                     </View>
-                    <View>
-                      <Text>4</Text>
+                    <View style={styles.radioButtonContainerStyle}>
                       <RadioButton value="4" />
+                      <Text style={styles.radioButtonTextStyle}>4</Text>
                     </View>
-                    <View>
-                      <Text>5</Text>
+                    <View style={styles.radioButtonContainerStyle}>
                       <RadioButton value="5" />
+                      <Text style={styles.radioButtonTextStyle}>5</Text>
                     </View>
                   </RadioButton.Group>
                 </Dialog.Content>
@@ -418,6 +428,13 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
 }
 
 const styles = StyleSheet.create({
+  radioButtonContainerStyle:{
+    flexDirection: 'row'
+  },
+  radioButtonTextStyle:{
+    marginTop: 8, 
+    marginLeft: 5
+  },
   descriptionStyle: {
     marginTop: 10
   },

@@ -193,11 +193,11 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
         <Background>
 
           <SafeAreaView style={styles.container}>
-             <ScrollView style={styles.scrollView}>
-               <View style={{flexDirection:'row', width:'100%', height:24,marginTop:0,justifyContent:'space-between'}}>
+          <View style={{flexDirection:'row', width:'100%', height:24,marginTop:0,marginBottom: 10,justifyContent:'space-between'}}>
                         <LogoClearSmall />
                       <TouchableOpacity onPress={() => this.toggleLanguage()} style={{alignSelf:'flex-end',marginRight:0}}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
                </View>
+             <ScrollView style={styles.scrollView}>
               <Title style={styles.title}>{resources.getString("Secure your account")}</Title>
               <View style={styles.passwordView}>
                 <TextInput
@@ -417,10 +417,11 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#ffff',
     borderColor: 'grey',
-    borderWidth: 1,
+    borderWidth: 1
   },
   pickerItem: {
     height: 50,
+    fontSize: 17
   },
   footer: {
     flexDirection: 'row',
