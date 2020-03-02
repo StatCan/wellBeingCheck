@@ -37,7 +37,7 @@ class Dashboard extends React.Component<Props, HomeState> {
     if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2) txt = txt = resources.getString('ThankYouB');
     this.state = {
       refresh: '1',
-      firstTimeLoginModal: true,
+      firstTimeLoginModal: false,
       showThankYou: !global.showThankYou == 0,
       thankYouText: txt,
     };
@@ -55,6 +55,16 @@ class Dashboard extends React.Component<Props, HomeState> {
         let resultAsObj = JSON.parse(result)
         let firstTimeLogin = resultAsObj.firstTimeLogin;
         //object found so no need to check bool value cont.
+        // if (!firstTimeLogin) {
+        //   //show first time dialog
+        //   let firstTimeLoginObj = {
+        //     firstTimeLogin: false,
+        //   };
+        //   AsyncStorage.setItem('first_time_login', JSON.stringify(firstTimeLoginObj), () => {
+        //     //first time login flagged saved - show dialog/alert
+        //     this.setState({ firstTimeLoginModal: true });
+        //   });
+        // }
       }
       else {
         //show first time dialog
@@ -63,7 +73,7 @@ class Dashboard extends React.Component<Props, HomeState> {
         };
         AsyncStorage.setItem('first_time_login', JSON.stringify(firstTimeLoginObj), () => {
           //first time login flagged saved - show dialog/alert
-          
+          this.setState({ firstTimeLoginModal: true });
         });
       }
     });
