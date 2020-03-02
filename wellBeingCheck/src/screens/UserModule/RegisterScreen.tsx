@@ -421,7 +421,7 @@ const styles = StyleSheet.create({
   },
   pickerItem: {
     height: 50,
-    fontSize: 17
+    fontSize: 15
   },
   footer: {
     flexDirection: 'row',

@@ -75,7 +75,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
 
     AsyncStorage.setItem('user_terms_and_conditions', JSON.stringify(userTermsAndConditionsObj), () => {
       //handle disagree
-      alert("We need to handle disagree as user cannot use application");
+      alert(resources.getString("terms_and_conditions_disagree"));
     });
   }
    toggleLanguage(){
