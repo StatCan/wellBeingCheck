@@ -6,12 +6,12 @@
       "backgroundColor": "#000000"
     },
     "name": "Well-being Check",
-    "slug": "Well-being Check",
+    "slug": "wellBeingCheck",
     "privacy": "unlisted",
     "sdkVersion": "36.0.0",
     "version": "1.1.0",
     "orientation": "portrait",
-    "icon": "./src/assets/logo.png",
+    "icon": "./src/assets/icon.png",
     "splash": {
       "image": "./src/assets/splash.png",
       "resizeMode": "contain"
