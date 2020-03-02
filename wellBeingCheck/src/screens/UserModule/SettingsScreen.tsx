@@ -339,7 +339,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
               />
               <List.Item
                 left={() => <List.Icon icon={require('../../assets/ic_wbc_terms_condition.png')} />}
-                title={"Terms and Conditions"}
+                title={resources.getString("terms_and_conditions")}
                 onPress={this._openTermsConditions}
               />
             </List.Section>

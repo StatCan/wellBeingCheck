@@ -16,6 +16,7 @@ export const resources = {
             "getting_started_content": `Why we are conducting this study \n\nThe purpose of this study is to better understand the everyday well-being of Canadians by asking about activities and feelings as they are happening. To do this, participants will download an app on their smartphones and answer a few questions at different intervals throughout the day, over a short period of time. The results will help us to find connections between activities and well-being, and be used to develop programs that enhance people’s lives. In the future, an app could be used as a faster and more convenient way to complete other Statistics Canada surveys. \n\nInformation may also be used by Statistics Canada for other statistical and research purposes. \n\nNotifications \n\nThis app will notify you to complete a Well-being Check 2 to 5 times daily between the time you wake up and the time you go to bed. You can customize these parameters at any time in the settings menu on the app’s home page. If you do not customize the parameters, you will receive a default of 2 daily notifications at various times between 08:00 and 22:00. If you do not allow notifications, you can still complete a Well-being Check whenever you like, but the quality of your results may be impacted. \n\nAuthorization and confidentiality \n\nData are collected under the authority of the Statistics Act, Revised Statutes of Canada, 1985, Chapter S-19. Your information will be kept strictly confidential. \n\nAlthough voluntary, your participation is important so that the information collected is as accurate and complete as possible. \n\nRecord linkages \n\nTo enhance the data from this survey and to reduce the reporting burden, Statistics Canada may combine the information you provide with other survey or administrative data sources. \n\nTime required to complete this questionnaire \n\nThis questionnaire will take about 2 minutes to complete. \n\nPlease note that you will not be able to change any information you reported once you have submitted the questionnaire. \n\nTo navigate the questionnaire \n\nUse the Previous and Next buttons located at the bottom right of each page. \n\nSession timeout\n\nAfter 2 hours of inactivity, your session will time out. You will not be able to access any unsaved information.\n\nAfter 15 minutes of inactivity, Well-Being Check will lock. You will need to enter your password to continue. \n\nDefinitions and explanations\n\nA help button is available for certain questions. Press this button for additional information or clarification.`,
             //terms & conditions
             "terms_and_conditions": "Terms and conditions",
+            "terms_and_conditions_disagree":"You must accept Terms and Conditions to use this app. Select “OK” to revise your preferences, or call us at 1-877-949-9492 for more information.",
             "terms_and_conditions_content": `Disclaimer 
             Information collected through the use of the Well-being Check App falls under the authority of the Statistics Act which ensures that any information provided will be kept confidential and will only be used for statistical and research purposes.  It is your responsibility to keep your phone and access to the App secure. We do not recommend removing software restrictions and limitations imposed by the official operating system of your device. Doing so could compromise your phone’s security features and the security/confidentiality of the information collected by this App.
             
@@ -157,11 +158,17 @@ export const resources = {
             "Login":"Login",
             "Language":"Français",
             "Secure your account":"Secure your account",
+            "contactus_title":"Contact Us",
+            "contactus_email":"Email:",
+            "contactus_telephone":"Telephone:",
+            "contactus_website":"Website:",
+            "contactus_mail":"Mail:",
+            "contactus_text":`Chief Statistician of Canada \nStatistics Canada\nAttention of Director Jean Labbé\n150 Tunney’s Pasture Driveway\nOttawa, ON\nK1A 0T6`
         },
         fr: {
             //global
             "app.name": "FR_Well-being Check",
-            "gl.next": "FR_Next",
+            "gl.next": "Suivant",
             "gl.decline": "Décliner",
             "gl.agree": "Accepter",
             "gl.return": "Retour",
@@ -314,6 +321,7 @@ export const resources = {
             "warning": "Attention",
             "match_password_error": "Vous devez fournir un mot de passe, une question de sécurité et une réponse correspondants!",
             "ok": "D'accord",
+            "terms_and_conditions_disagree":"Vous devez accepter les Conditions générales pour utiliser cette application. Sélectionnez « OK » pour modifier vos préférences, ou appelez-nous au 1-877-949-9492 pour obtenir plus de renseignements.",
             "term_and condition_content": "Lorsque vous continuez à utiliser cette application, cela signifie que vous acceptez automatiquement ces conditions générales.",
 
             "Your feeling this week": "Votre ressenti cette semaine",
@@ -344,7 +352,12 @@ export const resources = {
             "Login":"Entrer",
             "Language":"English",
             "Secure your account":"Sécuriser votre compte",
+            "contactus_title":"Nous Contacter",
+            "contactus_email":"Courriel:",
+            "contactus_telephone":"Téléphone:",
+            "contactus_website":"Website:",
+            "contactus_mail":"Site Web:",
+            "contactus_text":`Statisticien en chef du Canada\nStatistique Canada\nÀ l’attention du directeur Jean Labbé\n150, promenade Tunney’s Pasture\nOttawa (Ontario)\nK1A 0T6`
         }
-
     }
 };
