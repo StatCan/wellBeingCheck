@@ -7,7 +7,7 @@ import LogoClearSmall from '../components/LogoClearSmall';
 import { fetchJwToken, checkConnection } from '../utils/fetchJwToken';
 import { resources } from '../../GlobalResources';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { Provider as PaperProvider, Portal, Dialog, Paragraph, Button } from 'react-native-paper';
 import { newTheme } from '../core/theme';
 import {
   NavigationParams,
@@ -23,7 +23,10 @@ const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
 
 type HomeState = {
-  refresh: string
+  refresh: string,
+  firstTimeLoginModal: boolean,
+  showThankYou: boolean,
+  thankYouText: string,
 }
 
 class Dashboard extends React.Component<Props, HomeState> {
@@ -33,10 +36,37 @@ class Dashboard extends React.Component<Props, HomeState> {
     let txt = '';
     if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2) txt = txt = resources.getString('ThankYouB');
     this.state = {
-      refresh: '1', showThankYou: !global.showThankYou == 0,
+      refresh: '1',
+      firstTimeLoginModal: true,
+      showThankYou: !global.showThankYou == 0,
       thankYouText: txt,
     };
     this._refresh = this._refresh.bind(this);
+    this._firstTimeLogin();
+  }
+
+  _show_firstTimeLoginModal = () => this.setState({ firstTimeLoginModal: true });
+  _hide_firstTimeLoginModal = () => this.setState({ firstTimeLoginModal: false });
+
+  _firstTimeLogin = () => {
+    AsyncStorage.getItem('first_time_login', (err, result) => {
+      console.log(result);
+      if (result) {
+        let resultAsObj = JSON.parse(result)
+        let firstTimeLogin = resultAsObj.firstTimeLogin;
+        //object found so no need to check bool value cont.
+      }
+      else {
+        //show first time dialog
+        let firstTimeLoginObj = {
+          firstTimeLogin: false,
+        };
+        AsyncStorage.setItem('first_time_login', JSON.stringify(firstTimeLoginObj), () => {
+          //first time login flagged saved - show dialog/alert
+          
+        });
+      }
+    });
   }
 
   componentDidMount() {
@@ -120,6 +150,31 @@ class Dashboard extends React.Component<Props, HomeState> {
             </View>
           </View>
           <NavigationEvents onDidFocus={() => this.checkThankYou()} />
+
+          <View>
+            <Portal>
+              <Dialog
+                visible={this.state.firstTimeLoginModal}
+                onDismiss={this._hide_firstTimeLoginModal}>
+                <Dialog.Content>
+                  <Paragraph>
+                    {resources.getString('home_first_time_login_content')}
+                  </Paragraph>
+                </Dialog.Content>
+                <Dialog.Actions>
+                      <View>
+                        <Button
+                          color={newTheme.colors.primary}
+                          style={styles.dialogDismissBtn}
+                          onPress={this._hide_firstTimeLoginModal}>
+                          Ok
+                      </Button>
+                      </View>
+                    </Dialog.Actions>
+              </Dialog>
+            </Portal>
+          </View>
+              
         </Background>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
       </PaperProvider>
@@ -129,6 +184,11 @@ class Dashboard extends React.Component<Props, HomeState> {
 
 
 const styles = StyleSheet.create({
+  dialogDismissBtn: {
+    flexDirection: 'row',
+    alignSelf: 'flex-end',
+    position: 'relative',
+  },
   gearIcon: {
   },
   startButtonText: {
