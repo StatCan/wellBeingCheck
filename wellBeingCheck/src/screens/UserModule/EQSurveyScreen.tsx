@@ -6,7 +6,7 @@ import { AntDesign,FontAwesome } from '@expo/vector-icons';
 import WebView from 'react-native-webview';
 //import WKWebView from 'react-native-wkwebview-reborn';
 import { resources } from '../../../GlobalResources';
-import {hashString,checkConnection} from '../../utils/fetchJwToken';
+import {hashString,checkConnection,fetchJwToken} from '../../utils/fetchJwToken';
 const deviceHeight =Math.floor(Dimensions.get('window').height);
 const deviceWidth =Math.floor(Dimensions.get('window').width);
 
@@ -36,7 +36,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
    async handleSurveyAdone(){
         let isConnected=await checkConnection();
         if(!isConnected){alert('You are offline, try it later');return;}
-        let jwt=await this.fetchJwToken();
+        let jwt=await fetchJwToken();
         let result=false;
         if(jwt!='')result=await this.setPassword(jwt);
         if(!result){alert("Internal server error, Try again, if same thing would happen again contact StatCan");return;}
@@ -53,7 +53,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
    }
    async fetchGraphs(types:string[]){
       if(count>0)return;
-      let jwt=await this.fetchJwToken();console.log('asdfasdfasdfasdf');
+      let jwt=await fetchJwToken();console.log('asdfasdfasdfasdf');
       if(jwt==''){alert("Internal server error, Try again, if same thing would happen again contact StatCan");return;}
       global.jwToken=jwt;
       let hh=deviceHeight-220;let hh1=deviceHeight-300;let ww=deviceWidth-80;
@@ -67,22 +67,6 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
       }
       AsyncStorage.setItem('hasImage','1');console.log('Fetch images done');
    }
-   fetchJwToken() {
-         let url=global.webApiBaseUrl+'api/security/token';
-         let data={deviceId:global.userToken,password:hashString(global.password,global.passwordSalt)}
-         return fetch(url,{
-               method: 'POST',
-                 headers: {
-                   'Content-Type': 'application/json',
-                 },
-                 body: JSON.stringify(data),
-         })
-         .then((response) => response.json())
-         .then((responseData) => {
-               return responseData;
-             })
-         .catch(error => console.warn(error));
-     }
    setPassword(jwt:string) {
          let url=global.webApiBaseUrl+'api/security/password';
          let data={salt:'1234',passwordHash:'45678',securityQuestionId:'11',securityAnswerSalt:'4321',securityAnswerHash:'4444'}
@@ -141,10 +125,6 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
           AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
           //count=1;
     }
-   fetchAllImages(){
-      let url='http://localhost:49159/'+'AllImages/aaa/'+timeStamp+'/en/'+deviceWidth+'/'+deviceHeight;
-      fetch(url).then( response => console.log(response));
-      }
    async fetchImage(url:string,index:number,culture:string) {
        let isConnected=await checkConnection();
        if(!isConnected){alert('You are offline, try it later');return;}

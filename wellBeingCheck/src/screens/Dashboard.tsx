@@ -14,7 +14,7 @@ import {
   NavigationScreenProp,
   NavigationState, NavigationEvents,
 } from 'react-navigation';
-import {fetchJwToken,checkConnection} from '../utils/fetchJwToken';
+import {checkConnection,hashString,fetchJwToken} from '../utils/fetchJwToken';
 import { resources } from '../../GlobalResources';
 
 interface Props {
@@ -33,12 +33,12 @@ export default class Dashboard extends React.Component<Props, HomeState> {
     super(HomeState);
     let txt='';
     if(global.showThankYou==1)txt=resources.getString('ThankYouA');else if(global.showThankYou==2)txt=txt=resources.getString('ThankYouB');
-    console.log(txt);
+  //  console.log(txt);
     this.state = {
       refresh: '1',showThankYou:!global.showThankYou==0,
       thankYouText:txt,
     };
-    console.log(this.state);
+  //  console.log(this.state);
     this._refresh = this._refresh.bind(this);
   }
 
@@ -68,6 +68,37 @@ export default class Dashboard extends React.Component<Props, HomeState> {
     this.setState({ refresh: '1' });
   }
 
+  async saveParaData(){
+         let isConnected=await checkConnection();
+         if(!isConnected){alert('You are offline, try it later');return;}
+         let jwt=await fetchJwToken();
+         var snt = ["2020/02/01 08:10:00", "2020/02/01 12:10:00", "2020/02/01 18:10:00"];
+         let paraData = {
+                                                                  "PlatFormVersion": "1.2",
+                                                                  "DeviceName": "Andoird",
+                                                                  "NativeAppVersion": "2.2",
+                                                                  "NativeBuildVersion": "3.2",
+                                                                  "DeviceYearClass": "4.2",
+                                                                  "SessionID": "5.2",
+                                                                  "WakeTime": "07:12",
+                                                                  "SleepTime": "21.2",
+                                                                  "NotificationCount": "2",
+                                                                  "NotificationEnable":true,
+                                                                  "ScheduledNotificationTimes": snt
+                                                              };
+         let url=global.webApiBaseUrl+'api/paradata';console.log(url);
+         let token=global.jwToken;
+         fetch(url, {
+              method: 'POST',
+              headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + jwt,},
+              body: JSON.stringify(paraData),
+         }).then((response) => {
+
+                                                          return response.json();
+                                                        })
+         .then((myJson) => {console.log('This is '+myJson);})
+         .catch((error)=>{console.log(error.message);});
+  }
     async sendRequest(){
         let token=await fetchJwToken();console.log('send:'+token);
         let url=global.webApiBaseUrl+'api/Values';let cul=global.culture;console.log(cul);
@@ -123,6 +154,7 @@ export default class Dashboard extends React.Component<Props, HomeState> {
 
               </View>
               <NavigationEvents onDidFocus={() => this.checkThankYou()} />
+                       <TouchableOpacity onPress={() =>this.saveParaData()} style={styles.smallButton}><Text style={{fontSize:20}}>Test</Text></TouchableOpacity>
             </Background>
     );
   }
@@ -213,42 +245,7 @@ const styles = StyleSheet.create({
 
 //export default memo(Dashboard);
 
-// //         <TouchableOpacity onPress={() =>{
-//                    console.log("asdfgasdfasdfasdfasd");
-//                    var snt = ["2020/02/01 08:10:00", "2020/02/01 12:10:00", "2020/02/01 18:10:00"];
-//                    let paraData = {
-//                                            "PlatFormVersion": "1.2",
-//                                            "DeviceName": "Andoird",
-//                                            "NativeAppVersion": "2.2",
-//                                            "NativeBuildVersion": "3.2",
-//                                            "DeviceYearClass": "4.2",
-//                                            "SessionID": "5.2",
-//                                            "WakeTime": "07:12",
-//                                            "SleepTime": "21.2",
-//                                            "NotificationCount": "2",
-//                                            "NotificationEnable":true,
-//                                            "ScheduledNotificationTimes": snt
-//                                        };
-//                         fetch('http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/SaveParaData/aaa', {
-//                             method: 'POST',
-//                                            headers: {
-//                                              Accept: 'application/json',
-//                                              'Content-Type': 'application/json',
-//                                            },
-//                                            body:JSON.stringify(paraData),
 
-//                             }).then((response) => {
-//                                    return response.json();
-//                                  })
-//                                  .then((myJson) => {
-//                                    console.log(myJson);
-//                                  }).catch((error)=>{
-//                                    console.log(error.message);
-//                                 });
-
-//                    }
-//                     }
-//               style={styles.smallButton}><Text style={{fontSize:20}}>Test</Text></TouchableOpacity>
 
 
 // <TouchableOpacity onPress={() => this.sendRequest()} style={styles.smallButton}><Text style={styles.smallButtonText}>Test</Text></TouchableOpacity>

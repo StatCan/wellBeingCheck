@@ -1,6 +1,6 @@
 import NetInfo from '@react-native-community/netinfo';
 
-export function fetchJwToken() {
+export function fetchJwToken1() {
   let token='123456';
   return new Promise(resolve => {
        var now=new Date(); var diffTime = Math.abs(now -global.tokenDoB)/1000/60;
@@ -48,3 +48,14 @@ export function checkConnection1() {
                .catch((error) => { console.error('Bad: '+error);resolve(false) });
       });
 }
+export function fetchJwToken() {
+      let url=global.webApiBaseUrl+'api/security/token';
+      let data={deviceId:global.userToken,password:hashString(global.password,global.passwordSalt)}
+      return fetch(url,{
+          method: 'POST',
+          headers: {'Content-Type': 'application/json',},
+          body: JSON.stringify(data),})
+        .then((response) => response.json())
+        .then((responseData) => {return responseData;})
+        .catch(error => console.warn(error));
+    }
