@@ -110,7 +110,34 @@ export const resources = {
             "home_first_time_login_content": "Please visit the settings menu if you would like to customize the number of notifications you receive, and the window of time when you would like to receive them.",
             //about
             "about_title": "Why are we conducting this study?",
-            "about_content": "The purpose of this study is to better Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+            "about_content": `The purpose of this study is to better understand the everyday well-being of Canadians by asking about activities and feelings as they are happening. To do this, participants will download an app on their smartphones and answer a few questions at different intervals throughout the day, over a short period of time. The results will help us to find connections between activities and well-being, and be used to develop programs that enhance people’s lives. In the future, an app could be used as a faster and more convenient way to complete other Statistics Canada surveys. 
+            
+            Information may also be used by Statistics Canada for other statistical and research purposes. 
+            
+            Notifications
+            This app will notify you to complete a Well-being Check 2 to 5 times daily between the time you wake up and the time you go to bed. You can customize these parameters at any time in the settings menu on the app’s home page. If you do not customize the parameters, you will receive a default of 2 daily notifications at various times between 08:00 and 22:00. If you do not allow notifications, you can still complete a Well-being Check whenever you like, but the quality of your results may be impacted. 
+            
+            Authorization and confidentiality 
+            Data are collected under the authority of the Statistics Act, Revised Statutes of Canada, 1985, Chapter S-19. Your information will be kept strictly confidential. 
+            
+            Record linkages 
+            To enhance the data from this survey and to reduce the reporting burden, Statistics Canada may combine the information you provide with other survey or administrative data sources. 
+            
+            Time required to complete this questionnaire 
+            This questionnaire will take about 2 minutes to complete. 
+            
+            Please note that you will not be able to change any information you reported once you have submitted the questionnaire. 
+            
+            To navigate the questionnaire 
+            Use the Previous and Next buttons located at the bottom right of each page. 
+            
+            Session timeout 
+            After 2 hours of inactivity, your session will time out. You will not be able to access any unsaved information. 
+            
+            After 15 minutes of inactivity, Well-Being Check will lock. You will need to enter your password to continue. 
+            
+            Definitions and explanations 
+            A help button is available for certain questions. Press this button for additional information or clarification.`,
             "about_title_two": "Authorization and confidentiality",
             "about_content_two": "Data are collected under the authority Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
             "create_password": "Create Password",
@@ -282,7 +309,7 @@ export const resources = {
             "reg.pass.validation.special": "Le mot de passe doit contenir au moins un caractère spécial",
             "reg.pass.validation.lower": "Le mot de passe doit contenir au moins une minuscule",
             "reg.pass.validation.number": "Le mot de passe doit contenir au moins une minuscule",
-            "reg.ques.select": "FR_Select question",
+            "reg.ques.select": "Choisir une question",
             "reg.ques.mother": "Quel est le nom de jeune fille de votre mère?",
             "reg.ques.school": "Quel était le nom de votre école primaire?",
             "reg.ques.car": "Quelle a été votre première voiture?",
@@ -302,8 +329,33 @@ export const resources = {
             //home screen
             "home_first_time_login_content": "Veuillez consulter le menu des paramètres pour personnaliser le nombre de notifications que vous recevrez et pour déterminer à quels moments vous souhaitez les recevoir.",
             //about
-            "about_title": "FR_Why are we conducting this study?",
-            "about_content": "FR_The purpose of this study is to better Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+            "about_title": "Pourquoi nous menons cette étude?",
+            "about_content": `L’objectif de cette enquête est de mieux comprendre le bien-être au quotidien des Canadiens et des Canadiennes en leur demandant de répondre à des questions sur les activités qu’ils entreprennent et les sentiments qu’ils éprouvent en temps réel. Pour ce faire, les participants devront télécharger une application sur leur téléphone intelligent et répondre à quelques questions à divers intervalles au cours de la journée, sur une courte période de temps. Les résultats obtenus nous aideront à établir des liens entre certaines activités et le bien-être, et nous permettront de développer des programmes qui amélioreront la vie des gens. À l’avenir, ce genre d’application pourrait servir à répondre à d’autres enquêtes de Statistique Canada de façon plus rapide et pratique. 
+            
+            Les renseignements recueillis pourraient aussi être utilisés par Statistique Canada à d’autres fins statistiques et de recherche. 
+            
+            Notifications
+            Cette application vous enverra une notification pour remplir un Bilan bien-être de 2 à 5 fois par jour, entre l’heure de votre réveil et l’heure à laquelle vous vous couchez. Vous pouvez personnaliser ces paramètres à tout moment dans le menu des paramètres sur la page d’accueil de l’application. Si vous ne personnalisez pas les paramètres, vous recevrez par défaut 2 notifications à divers moments entre 8 h et 22 h. Si vous n’acceptez pas les notifications, vous pourrez tout de même remplir un Bilan bien-être quand vous le voudrez, mais la qualité de vos résultats pourrait en être affectée. 
+            
+            Autorisation et confidentialité 
+            Ces données sont recueillies en vertu de la Loi sur la statistique, Lois révisées du Canada (1985), chapitre S-19. V os renseignements demeureront strictement confidentiels. 
+            
+            Couplages d’enregistrements 
+            Afin d’améliorer la qualité des données tirées de cette enquête et de réduire le fardeau de réponse, Statistique Canada pourrait combiner les renseignements que vous fournissez avec ceux provenant d’autres enquêtes ou sources de données administratives. 
+            
+            Temps requis pour remplir ce questionnaire 
+            Ce questionnaire prendra 2 minutes à remplir. Veuillez noter que vous ne serez pas en mesure de modifier les renseignements déclarés une fois votre questionnaire soumis. 
+            
+            Pour parcourir le questionnaire 
+            Utilisez les boutons Précédent et Suivant situés dans le coin inférieur droit de chaque page. 
+            
+            Délai d’inactivité d’une session 
+            Après 2 heures d’inactivité, votre session sera interrompue. Vous ne pourrez accéder à aucun renseignement qui n’a pas été sauvegardé. 
+            
+            Après 15 minutes d’inactivité, Bilan bien-être se verrouille. Vous devrez entrer votre mot de passe pour continuer. 
+            
+            Définitions et explications 
+            Un bouton d’aide est disponible pour certaines questions. Appuyez sur ce bouton pour obtenir plus de renseignements ou des précisions.`,
             "about_title_two": "FR_Authorization and confidentiality",
             "about_content_two": "FR_Data are collected under the authority Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
             "create_password": "Créer un mot de passe",

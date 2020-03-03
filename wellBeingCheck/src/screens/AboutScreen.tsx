@@ -35,10 +35,6 @@ class AboutScreen extends React.Component<Props, AboutScreen> {
               <View style={styles.content}>
                 <Text>{resources.getString("about_content")}</Text>
               </View>
-              <Title style={styles.title}>{resources.getString("about_title_two")}</Title>
-              <View style={styles.content}>
-                <Text>{resources.getString("about_content_two")}</Text>
-              </View>
             </ScrollView>
           </SafeAreaView>
         </BackgroundWhite>
