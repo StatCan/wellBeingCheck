@@ -4,7 +4,7 @@ import Background from '../components/Background';
 import { View, Text, TextInput, Image, StyleSheet, ImageBackground, Dimensions, TouchableOpacity, BackHandler, AsyncStorage } from 'react-native';
 import { EvilIcons, Feather, FontAwesome } from '@expo/vector-icons';
 import LogoClearSmall from '../components/LogoClearSmall';
-import { fetchJwToken, checkConnection } from '../utils/fetchJwToken';
+import {checkConnection,hashString,fetchJwToken} from '../utils/fetchJwToken';
 import { resources } from '../../GlobalResources';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import { Provider as PaperProvider, Portal, Dialog, Paragraph, Button } from 'react-native-paper';
@@ -34,7 +34,7 @@ class Dashboard extends React.Component<Props, HomeState> {
   constructor(HomeState) {
     super(HomeState);
     let txt = '';
-    if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2) txt = txt = resources.getString('ThankYouB');
+    if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2) txt = resources.getString('ThankYouB');
     this.state = {
       refresh: '1',
       firstTimeLoginModal: false,
@@ -104,6 +104,37 @@ class Dashboard extends React.Component<Props, HomeState> {
     if (global.debugMode) console.log("The language set is: " + resources.culture);
     this.setState({ refresh: '1' });
   }
+  async saveParaData(){
+           let isConnected=await checkConnection();
+           if(!isConnected){alert('You are offline, try it later');return;}
+           let jwt=await fetchJwToken();
+           var snt = ["2020/02/01 08:10:00", "2020/02/01 12:10:00", "2020/02/01 18:10:00"];
+           let paraData = {
+                                                                    "PlatFormVersion": "1.2",
+                                                                    "DeviceName": "Andoird",
+                                                                    "NativeAppVersion": "2.2",
+                                                                    "NativeBuildVersion": "3.2",
+                                                                    "DeviceYearClass": "4.2",
+                                                                    "SessionID": "5.2",
+                                                                    "WakeTime": "07:12",
+                                                                    "SleepTime": "21.2",
+                                                                    "NotificationCount": "2",
+                                                                    "NotificationEnable":true,
+                                                                    "ScheduledNotificationTimes": snt
+                                                                };
+           let url=global.webApiBaseUrl+'api/paradata';console.log(url);
+           let token=global.jwToken;
+           fetch(url, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + jwt,},
+                body: JSON.stringify(paraData),
+           }).then((response) => {
+
+                                                            return response.json();
+                                                          })
+           .then((myJson) => {console.log('This is '+myJson);})
+           .catch((error)=>{console.log(error.message);});
+    }
   async sendRequest() {
     let token = await fetchJwToken(); console.log('send:' + token);
     let url = global.webApiBaseUrl + 'api/Values'; let cul = global.culture; console.log(cul);
@@ -160,7 +191,7 @@ class Dashboard extends React.Component<Props, HomeState> {
             </View>
           </View>
           <NavigationEvents onDidFocus={() => this.checkThankYou()} />
-
+          <TouchableOpacity onPress={() =>this.saveParaData()} style={styles.smallButton}><Text style={{fontSize:20}}>Test</Text></TouchableOpacity>
           <View>
             <Portal>
               <Dialog

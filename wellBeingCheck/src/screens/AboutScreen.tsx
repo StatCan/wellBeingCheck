@@ -30,7 +30,7 @@ class AboutScreen extends React.Component<Props, AboutScreen> {
             <LogoClearSmall />
           </View>
           <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.scrollView}>
+            <ScrollView style={styles.scrollView} showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
               <Title style={styles.title}>{resources.getString("about_title")}</Title>
               <View style={styles.content}>
                 <Text>{resources.getString("about_content")}</Text>

@@ -5,7 +5,7 @@ import { AsyncStorage } from 'react-native';
 import { AntDesign,FontAwesome } from '@expo/vector-icons';
 import WebView from 'react-native-webview';
 import { resources } from '../../../GlobalResources';
-import {fetchJwToken,checkConnection} from '../../utils/fetchJwToken';
+import {hashString,checkConnection,fetchJwToken} from '../../utils/fetchJwToken';
 const deviceHeight =Math.floor(Dimensions.get('window').height);
 const deviceWidth =Math.floor(Dimensions.get('window').width);
 
@@ -38,34 +38,87 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
         // console.log(this.webView.userAgent);
         // this.webView.automaticallyAdjustsScrollViewInsets=false;
    }
-   fetchJwToken() {
-      let url=global.webApiBaseUrl+'Token/'+global.userToken+'/'+global.password;
-      return fetch(url)
-      .then((response) => response.json())
-      .then((responseJson) => {
-        console.log(responseJson);
-        global.jwToken=responseJson;
-        AsyncStorage.setItem('EsmSurveyJWT',responseJson);
-        console.log('JWT:'+global.jwToken);
-      })
-      .catch((error) => {
-        console.error(error);global.configurationReady=false;
-      });
-           }
+   async handleSurveyAdone(){
+           let isConnected=await checkConnection();
+           if(!isConnected){alert('You are offline, try it later');return;}
+           let jwt=await fetchJwToken();
+           let result=false;
+           if(jwt!='')result=await this.setPassword(jwt);
+           if(!result){alert("Internal server error, Try again, if same thing would happen again contact StatCan");return;}
+           console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
+      }
+   async handleSurveyBdone(){
+            let isConnected=await checkConnection();
+            if(!isConnected){alert('You are offline, try it later');return;}
+
+            let types=await this.fetchGraphTypes();console.log('types:'+types);
+            if(types!=null && types.length>0){
+                this.fetchGraphs(types);
+            }
+      }
+   async fetchGraphs(types:string[]){
+         if(count>0)return;
+         let jwt=await fetchJwToken();console.log('asdfasdfasdfasdf');
+         if(jwt==''){alert("Internal server error, Try again, if same thing would happen again contact StatCan");return;}
+         global.jwToken=jwt;
+         let hh=deviceHeight-220;let hh1=deviceHeight-300;let ww=deviceWidth-80;
+         let index=0;
+         for(var i=0;i<types.length;i++){
+             let url=global.webApiBaseUrl+'api/dashboard/graph?type='+types[i];
+             if(types[i]=='mood')url+='&width='+ww+'&height='+hh1;
+             else url+='&width='+deviceWidth+'&height='+hh;
+             this.fetchImage(url,index,'en');index++;
+             this.fetchImage(url,index,'fr');index++;
+         }
+         AsyncStorage.setItem('hasImage','1');console.log('Fetch images done');
+      }
+   setPassword(jwt:string) {
+            let url=global.webApiBaseUrl+'api/security/password';
+            let data={salt:'1234',passwordHash:'45678',securityQuestionId:'11',securityAnswerSalt:'4321',securityAnswerHash:'4444'}
+            return fetch(url,{
+                  method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'Authorization': 'Bearer ' + jwt,
+                    },
+                    body: JSON.stringify(data),
+            })
+            .then((response) => response.json())
+            .then((responseJson) => {console.log('setPassword:'+responseJson);return responseJson;})
+            .catch((error) => {console.error(error);});
+       }
+   resetPassword() {
+                 let url=global.webApiBaseUrl+'api/security/password';console.log(url);
+                 let data={deviceId:global.userToken,newSalt:'1234',newPasswordHash:'1145678',securityAnswerHash:'4444'}
+                 return fetch(url,{
+                       method: 'PUT',
+                       headers: {'Content-Type': 'application/json',},
+                       body: JSON.stringify(data),
+                 })
+                  .then((response) => response.json())
+                  .then((responseJson) => {console.log('resetPassword:'+responseJson);return responseJson;})
+                 .catch((error) => {console.error(error);});
+            }
+   fetchGraphTypes(){
+           let url=global.webApiBaseUrl+'api/dashboard/graphs';
+           return fetch(url)
+              .then((response) => response.json())
+              .then((responseData) => {return responseData;})
+              .catch(error => console.warn(error));
+      }
    fetchImages(){
           console.log(count); if(count>0)return;
           console.log('Fetch images....');
-          let timeStamp='';
-          let d=new Date();let hh=deviceHeight-220;let hh1=deviceHeight-300;let ww=deviceWidth-80;
+          let hh=deviceHeight-220;let hh1=deviceHeight-300;let ww=deviceWidth-80;
           timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-          let uri0=global.webApiBaseUrl+'Mood/aaa/'+timeStamp+'/en/'+ww+'/'+hh1;
-          let uri1=global.webApiBaseUrl+'Mood/aaa/'+timeStamp+'/fr/'+ww+'/'+hh1;
-          let uri2=global.webApiBaseUrl+'Location/aaa/'+timeStamp+'/en/'+deviceWidth+'/'+hh;
-          let uri3=global.webApiBaseUrl+'Location/aaa/'+timeStamp+'/fr/'+deviceWidth+'/'+hh;
-          let uri4=global.webApiBaseUrl+'People/aaa/'+timeStamp+'/en/'+deviceWidth+'/'+hh;
-          let uri5=global.webApiBaseUrl+'People/aaa/'+timeStamp+'/fr/'+deviceWidth+'/'+hh;
-          let uri6=global.webApiBaseUrl+'Activity/aaa/'+timeStamp+'/en/'+deviceWidth+'/'+hh;
-          let uri7=global.webApiBaseUrl+'Activity/aaa/'+timeStamp+'/fr/'+deviceWidth+'/'+hh;
+          let uri0=global.webApiBaseUrl+'api/dashboard/graph?type=mood&width='+ww+'&height='+hh1;
+          let uri1=global.webApiBaseUrl+'api/dashboard/graph?type=mood&width='+ww+'&height='+hh1;
+          let uri2=global.webApiBaseUrl+'api/dashboard/graph?type=location&width='+deviceWidth+'/'+hh;
+          let uri3=global.webApiBaseUrl+'api/dashboard/graph?type=location&width='+deviceWidth+'/'+hh;
+          let uri4=global.webApiBaseUrl+'api/dashboard/graph?type=people&width='+deviceWidth+'/'+hh;
+          let uri5=global.webApiBaseUrl+'api/dashboard/graph?type=people&width='+deviceWidth+'/'+hh;
+          let uri6=global.webApiBaseUrl+'api/dashboard/graph?type=activity&width='+deviceWidth+'/'+hh;
+          let uri7=global.webApiBaseUrl+'api/dashboard/graph?type=activity&width='+deviceWidth+'/'+hh;
           this.fetchImage(uri0,0);
           this.fetchImage(uri1,1);
           this.fetchImage(uri2,2);
@@ -77,14 +130,14 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
           AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
           //count=1;
     }
-   async fetchImage(url:string,index:number) {
+   async fetchImage(url:string,index:number,culture:string) {
        let isConnected=await checkConnection();
        if(!isConnected){alert('You are offline, try it later');return;}
                    let token=global.jwToken;   console.log(url);     //await fetchJwToken();console.log(url);
                    fetch(url, {
                              method: 'GET',
                              headers: {'Authorization': 'Bearer ' + token,
-                                        'Accept-language':global.culture
+                                        'Accept-language':culture
                              },
 
                            })
@@ -113,6 +166,8 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
       </View>
     );
   }
+   onLoadEnd() {//  this.setState({ webviewLoaded: true });
+   }
    render() {
      let uri='';//http://barabasy.eastus.cloudapp.azure.com/anonymous-anonyme/en/login-connexion/load-charger/eqgsd0ed709a7df0465da7cb4881b290ff22';
      if(global.doneSurveyA){
@@ -147,28 +202,28 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                           startInLoadingState={true}
                           injectedJavaScript={this.state.jsCode}
                           automaticallyAdjustsScrollViewInsets ={false}
-                          renderLoading={() => {
-                            return this.displaySpinner();
-                          }}
+                          renderLoading={() => {return this.displaySpinner();}}
+                          onLoadEnd={this.onLoadEnd()}
                           onNavigationStateChange={(navState) => {
                             if (navState.url =='') { // You must validate url to enter or navigate
                               this.webView.stopLoading();
                             }
                             console.log(navState.url);
                             if(navState.url.indexOf('submiterror-erreursoumission')>0||navState.url==global.surveyThkUrlEng ||navState.url==global.surveyThkUrlFre){
-                                  console.log('count in b:'+count);
+                                 console.log('count in b:'+count);
                                  if(global.doneSurveyA){
                                      if(count>0){count=0;return;}
-                                      console.log('redady to fetch image');
-                                      this.fetchImages();count=1;  global.showThankYou=2;
+                                     console.log('redady to fetch image');
+                                     this.handleSurveyBdone();count=1;
+                                     global.showThankYou=2;
                                  }
                                  else {
-                                    console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
-                                    this.fetchImages();count=1;global.showThankYou=2;
+                                    this.handleSurveyAdone();
+                                    global.showThankYou=1;
+                                    count=1;
                                  }
                                 this.props.navigation.navigate('Dashboard');
                             }
-                         //   this.webView.scrollTo({y:0});
                           }}
                         />
       </View>
