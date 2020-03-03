@@ -75,7 +75,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
 
     AsyncStorage.setItem('user_terms_and_conditions', JSON.stringify(userTermsAndConditionsObj), () => {
       //handle disagree
-      alert("We need to handle disagree as user cannot use application");
+      alert(resources.getString("terms_and_conditions_disagree"));
     });
   }
    toggleLanguage(){
@@ -86,21 +86,18 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
     return (
       <PaperProvider theme={newTheme}>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
-        <BackgroundWide>
-          <View style={{flexDirection:'row', width:'100%', height:24,marginTop:0,justifyContent:'space-between'}}>
-                                                        <LogoClearSmall />
-                                                      <TouchableOpacity onPress={() => this.toggleLanguage()} style={{alignSelf:'flex-end',marginRight:0}}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
+           <SafeAreaView style={styles.container}>
+          <View style={styles.headerContainer}>
+            <LogoClearSmall />
+            <TouchableOpacity onPress={() => this.toggleLanguage()} style={{alignSelf:'flex-end',marginRight:0}}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
           </View>
-          <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-
               <Title style={styles.title}>{resources.getString("terms_and_conditions")}</Title>
               <Paragraph style={styles.paragraph}>
                 {resources.getString("terms_and_conditions_content")}
               </Paragraph>
             </ScrollView>
           </SafeAreaView>
-        </BackgroundWide>
         <View style={styles.footer}>
           <Button style={styles.btnDecline}
             mode="contained"
@@ -120,6 +117,14 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
 }
 
 const styles = StyleSheet.create({
+  headerContainer: {
+    flexDirection:'row', 
+    width: '100%', 
+    height: 24, 
+    marginLeft: 20, 
+    marginTop: 15, 
+    justifyContent:'space-between'
+  },
   footer: {
     flexDirection: 'row',
     width: '100%',
@@ -140,7 +145,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: 'bold',
-    marginTop:40,
+    marginTop: 40,
   },
   label: {
     color: newTheme.colors.secondary,
@@ -156,12 +161,12 @@ const styles = StyleSheet.create({
     alignSelf: 'baseline',
     fontSize: 15,
     width: '100%',
-    end: 0,
     direction: "ltr"
   },
   scrollView: {
     width: (Dimensions.get('window').width) - 50,
     marginHorizontal: 20,
+    marginTop: 20
   },
   text: {
   },

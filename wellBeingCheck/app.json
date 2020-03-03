@@ -1,17 +1,17 @@
 {
-  "name": "wellBeingCheck",
+  "name": "Well-being Check",
   "displayName": "Well-being Check",
   "expo": {
     "androidStatusBar": {
       "backgroundColor": "#000000"
     },
-    "name": "wellBeingCheck",
-    "slug": "WellBeingCheck",
+    "name": "Well-being Check",
+    "slug": "wellBeingCheck",
     "privacy": "unlisted",
     "sdkVersion": "36.0.0",
-    "version": "1.0.9",
+    "version": "1.1.1",
     "orientation": "portrait",
-    "icon": "./src/assets/logo.png",
+    "icon": "./src/assets/icon.png",
     "splash": {
       "image": "./src/assets/splash.png",
       "resizeMode": "contain"
@@ -28,7 +28,7 @@
     },
     "android": {
       "package": "com.statcan.wellbeingcheck",
-      "versionCode": 4
+      "versionCode": 6
     }
   }
 }

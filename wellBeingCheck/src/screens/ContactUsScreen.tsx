@@ -29,25 +29,21 @@ class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
           <View style={styles.logo_container}>
             <LogoClearSmall />
           </View>
-          <Title style={styles.title}>Contact Us:</Title>
+          <Title style={styles.title}>{resources.getString("contactus_title")}</Title>
           <View>
             <View style={styles.content}>
-              <Text style={styles.content_title}>Email</Text>
+              <Text style={styles.content_title}>{resources.getString("contactus_email")}</Text>
               <Text>infostats@canada.ca</Text>
             </View>
             <View style={styles.content}>
-              <Text style={styles.content_title}>Telephone:</Text>
+              <Text style={styles.content_title}>{resources.getString("contactus_telephone")}</Text>
               <Text>1-877-949-9492</Text>
             </View>
             <View style={styles.content}>
-              <Text style={styles.content_title}>Mail:</Text>
-              <Text>Chief Statistician of Canada</Text>
-              <Text>Statistics Canada</Text>
-              <Text>Attention of Director Jean Labbe, Collection</Text>
-              <Text>Planning andd Research Division</Text>
-              <Text>150 Tunney's Pasture Driveway</Text>
-              <Text>Ottawa, Ontario</Text>
-              <Text>K1A 0T6</Text>
+              <Text style={styles.content_title}>{resources.getString("contactus_mail")}</Text>
+              <Text>
+              {resources.getString("contactus_text")}
+                </Text>
             </View>
           </View>
         </BackgroundWhite>

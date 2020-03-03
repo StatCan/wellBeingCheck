@@ -31,7 +31,13 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     this.state=({Sacode:'',jsCode:disCode+jsCode,webviewLoaded: false});
     setTimeout(()=>{this.setState({webviewLoaded: true})}, 4000);
   }
- //  componentDidMount(){this.fetchImages();}
+   componentDidMount(){
+         // this.fetchImages();
+        // console.log(this.webView.userAgent);
+        // this.webView.userAgent=this.webView.userAgent+";"+global.userToken;
+        // console.log(this.webView.userAgent);
+        // this.webView.automaticallyAdjustsScrollViewInsets=false;
+   }
    fetchJwToken() {
       let url=global.webApiBaseUrl+'Token/'+global.userToken+'/'+global.password;
       return fetch(url)
@@ -158,7 +164,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                                  }
                                  else {
                                     console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
-                                    this.fetchImages();count=1;global.showThankYou=1;
+                                    this.fetchImages();count=1;global.showThankYou=2;
                                  }
                                 this.props.navigation.navigate('Dashboard');
                             }
