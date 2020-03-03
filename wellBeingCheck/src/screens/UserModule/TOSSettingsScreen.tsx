@@ -42,7 +42,6 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
     return (
       <PaperProvider theme={newTheme}>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
-        <BackgroundWide>
           <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}>
               <LogoClearSmall />
@@ -52,7 +51,6 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
               </Paragraph>
             </ScrollView>
           </SafeAreaView>
-        </BackgroundWide>
         <Button style={styles.btnNext}
           mode="contained"
           onPress={this._openSettingsScreen}>
