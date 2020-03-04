@@ -58,7 +58,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
       }
    async fetchGraphs(types:string[]){
          if(count>0)return;
-         let jwt=await fetchJwToken();console.log('asdfasdfasdfasdf');
+         let jwt=await fetchJwToken();console.log('asdfasdfasdfasdf1234');
          if(jwt==''){alert("Internal server error, Try again, if same thing would happen again contact StatCan");return;}
          global.jwToken=jwt;
          let hh=deviceHeight-220;let hh1=deviceHeight-300;let ww=deviceWidth-80;
@@ -74,7 +74,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
       }
    setPassword(jwt:string) {
             let url=global.webApiBaseUrl+'api/security/password';
-            let data={salt:'1234',passwordHash:'45678',securityQuestionId:'11',securityAnswerSalt:'4321',securityAnswerHash:'4444'}
+            let data={salt:global.passwordSalt,passwordHash:'45678',securityQuestionId:'11',securityAnswerSalt:'4321',securityAnswerHash:'4444'}
             return fetch(url,{
                   method: 'POST',
                     headers: {
