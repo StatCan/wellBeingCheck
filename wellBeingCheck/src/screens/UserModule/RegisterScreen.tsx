@@ -53,7 +53,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
       securityAnswer: "",
       securityAnswerError: "",
       modalShow: true,
-       title:resources.getString("Well-Being Check"),
+      title: resources.getString("Well-Being Check"),
     };
     //this._retrieveData('user_password');
     this._accountAlreadyExists();
@@ -182,10 +182,12 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 
   _showModal = () => this.setState({ modalShow: true });
   _hideModal = () => this.setState({ modalShow: false });
-   toggleLanguage(){
-       if(resources.culture=='en')resources.culture='fr';else resources.culture='en';
-       this.setState({title:resources.getString("Well-Being Check")});
-   }
+
+  toggleLanguage() {
+    if (resources.culture == 'en') resources.culture = 'fr'; else resources.culture = 'en';
+    this.setState({ title: resources.getString("Well-Being Check") });
+  }
+  
   render() {
     return (
       <PaperProvider theme={newTheme}>
@@ -193,11 +195,11 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
         <Background>
 
           <SafeAreaView style={styles.container}>
-          <View style={{flexDirection:'row', width:'100%', height:24,marginTop:0,marginBottom: 10,justifyContent:'space-between'}}>
-                        <LogoClearSmall />
-                      <TouchableOpacity onPress={() => this.toggleLanguage()} style={{alignSelf:'flex-end',marginRight:0}}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
-               </View>
-             <ScrollView style={styles.scrollView}>
+            <View style={{ flexDirection: 'row', width: '100%', height: 24, marginTop: 0, marginBottom: 10, justifyContent: 'space-between' }}>
+              <LogoClearSmall />
+              <TouchableOpacity onPress={() => this.toggleLanguage()} style={{ alignSelf: 'flex-end', marginRight: 0 }}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
+            </View>
+            <ScrollView style={styles.scrollView}>
               <Title style={styles.title}>{resources.getString("Secure your account")}</Title>
               <View style={styles.passwordView}>
                 <TextInput
@@ -252,7 +254,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
               }
 
               <TextInput
-                 label={resources.getString("the_answer_is:")}
+                label={resources.getString("the_answer_is:")}
                 returnKeyType="next"
                 selectionColor={newTheme.colors.primary}
                 underlineColor={newTheme.colors.primary}
