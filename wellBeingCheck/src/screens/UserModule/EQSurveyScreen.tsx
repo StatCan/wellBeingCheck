@@ -42,25 +42,35 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
            let isConnected=await checkConnection();
            if(!isConnected){alert('You are offline, try it later');return;}
            let jwt=await fetchJwToken();
+
+           if(jwt==''){alert("Internal server error, Try again, if same thing would happen again contact StatCan");return;}
+           global.jwToken=jwt;
            let result=false;
-           if(jwt!='')result=await this.setPassword(jwt);
+           result=await this.setPassword(jwt);
            if(!result){alert("Internal server error, Try again, if same thing would happen again contact StatCan");return;}
            console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
+           //New flow:A and B will be done at first time
+           let types=await this.fetchGraphTypes();console.log('types:'+types);
+           if(types!=null && types.length>0){
+                           this.fetchGraphs(types);
+           }
+           count=1;global.hasImage=true;
       }
    async handleSurveyBdone(){
             let isConnected=await checkConnection();
             if(!isConnected){alert('You are offline, try it later');return;}
-
+            let jwt=await fetchJwToken();console.log('asdfasdfasdfasdf1234');
+            if(jwt==''){alert("Internal server error, Try again, if same thing would happen again contact StatCan");return;}
+            global.jwToken=jwt;
             let types=await this.fetchGraphTypes();console.log('types:'+types);
             if(types!=null && types.length>0){
                 this.fetchGraphs(types);
             }
+            count=1;global.hasImage=true;
       }
    async fetchGraphs(types:string[]){
          if(count>0)return;
-         let jwt=await fetchJwToken();console.log('asdfasdfasdfasdf1234');
-         if(jwt==''){alert("Internal server error, Try again, if same thing would happen again contact StatCan");return;}
-         global.jwToken=jwt;
+
          let hh=deviceHeight-220;let hh1=deviceHeight-300;let ww=deviceWidth-80;
          let index=0;
          for(var i=0;i<types.length;i++){
@@ -74,7 +84,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
       }
    setPassword(jwt:string) {
             let url=global.webApiBaseUrl+'api/security/password';
-            let data={salt:global.passwordSalt,passwordHash:'45678',securityQuestionId:'11',securityAnswerSalt:'4321',securityAnswerHash:'4444'}
+            let data={salt:global.passwordSalt,passwordHash:hashString(global.password,global.passwordSalt),securityQuestionId:'11',securityAnswerSalt:'4321',securityAnswerHash:'4444'}
             return fetch(url,{
                   method: 'POST',
                     headers: {
@@ -89,7 +99,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
        }
    resetPassword() {
                  let url=global.webApiBaseUrl+'api/security/password';console.log(url);
-                 let data={deviceId:global.userToken,newSalt:'1234',newPasswordHash:'1145678',securityAnswerHash:'4444'}
+                 let data={deviceId:global.userToken,newSalt:global.passwordSalt,newPasswordHash:hashString(global.password,global.passwordSalt),securityAnswerHash:'4444'}
                  return fetch(url,{
                        method: 'PUT',
                        headers: {'Content-Type': 'application/json',},
@@ -133,32 +143,29 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
    async fetchImage(url:string,index:number,culture:string) {
        let isConnected=await checkConnection();
        if(!isConnected){alert('You are offline, try it later');return;}
-                   let token=global.jwToken;   console.log(url);     //await fetchJwToken();console.log(url);
-                   fetch(url, {
-                             method: 'GET',
-                             headers: {'Authorization': 'Bearer ' + token,
-                                        'Accept-language':culture
-                             },
-
-                           })
-                   .then( response =>{
-                       console.log(response.status);
-                       if(response.status==200){
-                             response.blob()
-                             .then(blob =>{
-                                   var reader = new FileReader() ;
-                                   reader.onload = function(){
-                                   // console.log(this.result);// <--- `this.result` contains a base64 data URI
-                                   console.log('image'+index);
-                                   AsyncStorage.setItem('image'+index, this.result);
-                                   } ;
-                                   reader.readAsDataURL(blob) ;
-                             })
-                       }
-                       else { throw new Error("Access denied, Try again later, if same thing would happen again contact StatCan");}
-                       })
-                   .catch(err => { console.log(err) })
-                 }
+       let token=global.jwToken;   console.log(url);     //await fetchJwToken();console.log(url);
+       fetch(url, {
+             method: 'GET',
+             headers: {'Authorization': 'Bearer ' + token,'Accept-language':culture },
+             })
+             .then( response =>{
+                   console.log(response.status);
+                   if(response.status==200){
+                      response.blob()
+                      .then(blob =>{
+                          var reader = new FileReader() ;
+                          reader.onload = function(){
+                       // console.log(this.result);// <--- `this.result` contains a base64 data URI
+                          console.log('image'+index);
+                          AsyncStorage.setItem('image'+index, this.result);
+                          } ;
+                          reader.readAsDataURL(blob) ;
+                      })
+                   }
+                   else { throw new Error("Access denied, Try again later, if same thing would happen again contact StatCan");}
+                   })
+             .catch(err => { console.log(err) })
+   }
    displaySpinner() {
     return (
       <View>
@@ -214,13 +221,13 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                                  if(global.doneSurveyA){
                                      if(count>0){count=0;return;}
                                      console.log('redady to fetch image');
-                                     this.handleSurveyBdone();count=1;
+                                     this.handleSurveyBdone();
                                      global.showThankYou=2;
                                  }
                                  else {
                                     this.handleSurveyAdone();
                                     global.showThankYou=1;
-                                    count=1;
+                                  //  count=1;
                                  }
                                 this.props.navigation.navigate('Dashboard');
                             }
