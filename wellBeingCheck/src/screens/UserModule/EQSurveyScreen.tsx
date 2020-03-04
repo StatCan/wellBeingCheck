@@ -54,7 +54,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
            if(types!=null && types.length>0){
                            this.fetchGraphs(types);
            }
-           count=1;global.hasImage=true;
+           count=1;AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
       }
    async handleSurveyBdone(){
             let isConnected=await checkConnection();
@@ -66,7 +66,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
             if(types!=null && types.length>0){
                 this.fetchGraphs(types);
             }
-            count=1;global.hasImage=true;
+            count=1;AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
       }
    async fetchGraphs(types:string[]){
          if(count>0)return;
@@ -217,6 +217,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                             }
                             console.log(navState.url);
                             if(navState.url.indexOf('submiterror-erreursoumission')>0||navState.url==global.surveyThkUrlEng ||navState.url==global.surveyThkUrlFre){
+                                 if(navState.url.indexOf('submiterror-erreursoumission')>0 && count==0){alert("Internal server error, Try again, if same thing would happen again contact StatCan");}
                                  console.log('count in b:'+count);
                                  if(global.doneSurveyA){
                                      if(count>0){count=0;return;}
