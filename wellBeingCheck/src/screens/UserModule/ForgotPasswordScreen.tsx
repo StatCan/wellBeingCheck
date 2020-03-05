@@ -72,7 +72,7 @@ class ForgotPasswordScreen extends React.Component<Props, ForgotPasswordState> {
         }
         else {
           //user login success - redirect
-          this.props.navigation.navigate('Dashboard');
+          this.props.navigation.navigate('ForgotPasswordChangeScreen');
         }
       }
       else {

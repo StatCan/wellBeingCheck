@@ -106,6 +106,9 @@ export const resources = {
             "reg.pass_conf.match": "Passwords do not match",
             //password recovery
             "password_recovery.title": "Password recovery",
+            "password_recovery_change.title": "Enter New Password",
+            "password_recovery_change.enter_password" : "Enter password",
+            "password_recovery_change.confirm_password" : "Confirm password",
             //home screen
             "home_first_time_login_content": "Please visit the settings menu if you would like to customize the number of notifications you receive, and the window of time when you would like to receive them.",
             //about
@@ -328,6 +331,9 @@ export const resources = {
             "reg.pass_conf.match": "Les mots de passe ne correspondent pas",
             //password recovery
             "password_recovery.title": "FR_Password recovery",
+            "password_recovery_change.title": "FR_Enter New Password",
+            "password_recovery_change.enter_password" : "FR_Enter password",
+            "password_recovery_change.confirm_password" : "FR_Confirm password",
             //home screen
             "home_first_time_login_content": "Veuillez consulter le menu des paramètres pour personnaliser le nombre de notifications que vous recevrez et pour déterminer à quels moments vous souhaitez les recevoir.",
             //about
