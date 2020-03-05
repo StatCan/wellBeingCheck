@@ -32,39 +32,36 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     setTimeout(()=>{this.setState({webviewLoaded: true})}, 4000);
   }
    componentDidMount(){
-         // this.fetchImages();
-        // console.log(this.webView.userAgent);
-        // this.webView.userAgent=this.webView.userAgent+";"+global.userToken;
-        // console.log(this.webView.userAgent);
-        // this.webView.automaticallyAdjustsScrollViewInsets=false;
+    //     global.userToken='123456789';console.log('ssssssssssssssssssssssssssssssss');
+     //    this.handleSurveyBdone();
    }
    async handleSurveyAdone(){
            let isConnected=await checkConnection();
            if(!isConnected){alert('You are offline, try it later');return;}
            let jwt=await fetchJwToken();
-
-           if(jwt==''){alert("Internal server error, Try again, if same thing would happen again contact StatCan");return;}
+           console.log('Token:'+jwt);
+           if(jwt==''){alert("Internal server error(token), Try again, if same thing would happen again contact StatCan");return;}
            global.jwToken=jwt;
            let result=false;
            result=await this.setPassword(jwt);
-           if(!result){alert("Internal server error, Try again, if same thing would happen again contact StatCan");return;}
+           if(!result){alert("Internal server error(set password), Try again, if same thing would happen again contact StatCan");return;}
            console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
            //New flow:A and B will be done at first time
            let types=await this.fetchGraphTypes();console.log('types:'+types);
            if(types!=null && types.length>0){
-                           this.fetchGraphs(types);
+              await this.fetchGraphs(types);
            }
            count=1;AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
       }
    async handleSurveyBdone(){
             let isConnected=await checkConnection();
             if(!isConnected){alert('You are offline, try it later');return;}
-            let jwt=await fetchJwToken();console.log('asdfasdfasdfasdf1234');
-            if(jwt==''){alert("Internal server error, Try again, if same thing would happen again contact StatCan");return;}
-            global.jwToken=jwt;
+       //     let jwt=await fetchJwToken();console.log('asdfasdfasdfasdf1234');
+         //   if(jwt==''){alert("Internal server error(token), Try again, if same thing would happen again contact StatCan");return;}
+       //     global.jwToken=jwt;
             let types=await this.fetchGraphTypes();console.log('types:'+types);
             if(types!=null && types.length>0){
-                this.fetchGraphs(types);
+               await this.fetchGraphs(types);
             }
             count=1;AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
       }
@@ -189,7 +186,8 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
          else
              uri=global.surveyAUrlFre;
          }
-         console.log('Beofore eq:'+uri);
+         console.log('Beofore eq1234:'+uri);
+     //  uri='"http://192.168.1.5:80/anonymous-anonyme/en/login-connexion/load-charger/eqgs2g4d9121e0734541a5c0dbcb6e4713f7';
     return (
           <View style={{ flex: 1, marginTop: 0 }}>
                 <View style={{flexDirection:'row',justifyContent:'space-between'}}>
@@ -217,7 +215,9 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                             }
                             console.log(navState.url);
                             if(navState.url.indexOf('submiterror-erreursoumission')>0||navState.url==global.surveyThkUrlEng ||navState.url==global.surveyThkUrlFre){
-                                 if(navState.url.indexOf('submiterror-erreursoumission')>0 && count==0){alert("Internal server error, Try again, if same thing would happen again contact StatCan");}
+                                 if(navState.url.indexOf('submiterror-erreursoumission')>0)
+                                 {     alert("Internal server error(Exception), Try again, if same thing would happen again contact StatCan"); this.props.navigation.navigate('Dashboard');
+                                 }
                                  console.log('count in b:'+count);
                                  if(global.doneSurveyA){
                                      if(count>0){count=0;return;}

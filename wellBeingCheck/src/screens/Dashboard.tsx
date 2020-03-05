@@ -191,7 +191,6 @@ class Dashboard extends React.Component<Props, HomeState> {
             </View>
           </View>
           <NavigationEvents onDidFocus={() => this.checkThankYou()} />
-          <TouchableOpacity onPress={() =>this.saveParaData()} style={styles.smallButton}><Text style={{fontSize:20}}>Test</Text></TouchableOpacity>
           <View>
             <Portal>
               <Dialog
@@ -354,3 +353,4 @@ export default memo(Dashboard);
 
 
 // <TouchableOpacity onPress={() => this.sendRequest()} style={styles.smallButton}><Text style={styles.smallButtonText}>Test</Text></TouchableOpacity>
+//  <TouchableOpacity onPress={() =>this.saveParaData()} style={styles.smallButton}><Text style={{fontSize:20}}>Test</Text></TouchableOpacity>

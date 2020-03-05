@@ -271,6 +271,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     return (
       <PaperProvider theme={newTheme}>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
+         {debugButtons}
         <View>
           <View style={styles.toolbar}>
             {/* <BackButton goBack={() => this._backButtonPressed()}/> */}
