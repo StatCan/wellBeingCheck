@@ -16,7 +16,7 @@ export const resources = {
             "getting_started_content": `Why we are conducting this study \n\nThe purpose of this study is to better understand the everyday well-being of Canadians by asking about activities and feelings as they are happening. To do this, participants will download an app on their smartphones and answer a few questions at different intervals throughout the day, over a short period of time. The results will help us to find connections between activities and well-being, and be used to develop programs that enhance people’s lives. In the future, an app could be used as a faster and more convenient way to complete other Statistics Canada surveys. \n\nInformation may also be used by Statistics Canada for other statistical and research purposes. \n\nNotifications \n\nThis app will notify you to complete a Well-being Check 2 to 5 times daily between the time you wake up and the time you go to bed. You can customize these parameters at any time in the settings menu on the app’s home page. If you do not customize the parameters, you will receive a default of 2 daily notifications at various times between 08:00 and 22:00. If you do not allow notifications, you can still complete a Well-being Check whenever you like, but the quality of your results may be impacted. \n\nAuthorization and confidentiality \n\nData are collected under the authority of the Statistics Act, Revised Statutes of Canada, 1985, Chapter S-19. Your information will be kept strictly confidential. \n\nAlthough voluntary, your participation is important so that the information collected is as accurate and complete as possible. \n\nRecord linkages \n\nTo enhance the data from this survey and to reduce the reporting burden, Statistics Canada may combine the information you provide with other survey or administrative data sources. \n\nTime required to complete this questionnaire \n\nThis questionnaire will take about 2 minutes to complete. \n\nPlease note that you will not be able to change any information you reported once you have submitted the questionnaire. \n\nTo navigate the questionnaire \n\nUse the Previous and Next buttons located at the bottom right of each page. \n\nSession timeout\n\nAfter 2 hours of inactivity, your session will time out. You will not be able to access any unsaved information.\n\nAfter 15 minutes of inactivity, Well-Being Check will lock. You will need to enter your password to continue. \n\nDefinitions and explanations\n\nA help button is available for certain questions. Press this button for additional information or clarification.`,
             //terms & conditions
             "terms_and_conditions": "Terms and conditions",
-            "terms_and_conditions_disagree":"You must accept Terms and Conditions to use this app. Select “OK” to revise your preferences, or call us at 1-877-949-9492 for more information.",
+            "terms_and_conditions_disagree": "You must accept Terms and Conditions to use this app. Select “OK” to revise your preferences, or call us at 1-877-949-9492 for more information.",
             "terms_and_conditions_content": `Disclaimer 
             Information collected through the use of the Well-being Check App falls under the authority of the Statistics Act which ensures that any information provided will be kept confidential and will only be used for statistical and research purposes.  It is your responsibility to keep your phone and access to the App secure. We do not recommend removing software restrictions and limitations imposed by the official operating system of your device. Doing so could compromise your phone’s security features and the security/confidentiality of the information collected by this App.
             
@@ -96,8 +96,8 @@ export const resources = {
             "reg.ques.sport": "What is your favourite game or sport?",
             "reg.ques.job": "What was your first job?",
             "reg.action.create": "CREATE",
-            "Password Requirements":"Password Requirements",
-            "reg.pass.hint_length": "8 Characters",
+            "Password Requirements": "Password Requirements",
+            "reg.pass.hint_length": "8 Characters minimum",
             "reg.pass.hint_upper": "1 Upper case",
             "reg.pass.hint_special": "1 Special character",
             "reg.pass.hint_lower": "1 Lower case",
@@ -106,6 +106,9 @@ export const resources = {
             "reg.pass_conf.match": "Passwords do not match",
             //password recovery
             "password_recovery.title": "Password recovery",
+            "password_recovery_change.title": "Enter New Password",
+            "password_recovery_change.enter_password" : "Enter password",
+            "password_recovery_change.confirm_password" : "Confirm password",
             //home screen
             "home_first_time_login_content": "Please visit the settings menu if you would like to customize the number of notifications you receive, and the window of time when you would like to receive them.",
             //about
@@ -176,21 +179,23 @@ export const resources = {
             "language": "Language",
             "about": "Information",
             "num_pings_dialog_title": "Number of notifications per day",
-            "ThankYouA":"Thank you for completing this survey!",
-            "ThankYouB":"Thank you for completing this survey! You can review your Well-being Check in the Results menu.",
-            "NoDataAlert":"You have to complete the survey at least once.",
-            "Enter password":"Enter password",
-            "Well-Being Check":"Well-being Check",
-            "Forgot your password":"Forgot your password?",
-            "Login":"Login",
-            "Language":"Français",
-            "Secure your account":"Secure your account",
-            "contactus_title":"Contact Us",
-            "contactus_email":"Email:",
-            "contactus_telephone":"Telephone:",
-            "contactus_website":"Website:",
-            "contactus_mail":"Mail:",
-            "contactus_text":`Chief Statistician of Canada \nStatistics Canada\nAttention of Director Jean Labbé\n150 Tunney’s Pasture Driveway\nOttawa, ON\nK1A 0T6`
+            "ThankYouA": "Thank you for completing this survey!",
+            "ThankYouB": "Thank you for completing this survey! You can review your Well-being Check in the Results menu.",
+            "NoDataAlert": "You have to complete the survey at least once.",
+            "Enter password": "Enter password",
+            "Well-Being Check": "Well-being Check",
+
+            //Login screen
+            "login.forgot_password": "Forgot your password?",
+            "login.login": "Login",
+            "Language": "Français",
+            "Secure your account": "Secure your account",
+            "contactus_title": "Contact Us",
+            "contactus_email": "Email:",
+            "contactus_telephone": "Telephone:",
+            "contactus_website": "Website:",
+            "contactus_mail": "Mail:",
+            "contactus_text": `Chief Statistician of Canada \nStatistics Canada\nAttention of Director Jean Labbé\n150 Tunney’s Pasture Driveway\nOttawa, ON\nK1A 0T6`
         },
         fr: {
             //global
@@ -316,8 +321,8 @@ export const resources = {
             "reg.ques.sport": "Quel est votre jeu ou sport préféré?",
             "reg.ques.job": "Quel a été votre premier emploi?",
             "reg.action.create": "Créer",
-            "Password Requirements":"Exigences de mot de passe",
-            "reg.pass.hint_length": "8 caractères",
+            "Password Requirements": "Exigences de mot de passe",
+            "reg.pass.hint_length": "8 caractères minimum",
             "reg.pass.hint_upper": "une majuscule",
             "reg.pass.hint_special": "un caractère spécial",
             "reg.pass.hint_lower": "une minuscule",
@@ -326,6 +331,9 @@ export const resources = {
             "reg.pass_conf.match": "Les mots de passe ne correspondent pas",
             //password recovery
             "password_recovery.title": "FR_Password recovery",
+            "password_recovery_change.title": "FR_Enter New Password",
+            "password_recovery_change.enter_password" : "FR_Enter password",
+            "password_recovery_change.confirm_password" : "FR_Confirm password",
             //home screen
             "home_first_time_login_content": "Veuillez consulter le menu des paramètres pour personnaliser le nombre de notifications que vous recevrez et pour déterminer à quels moments vous souhaitez les recevoir.",
             //about
@@ -373,7 +381,7 @@ export const resources = {
             "warning": "Attention",
             "match_password_error": "Vous devez fournir un mot de passe, une question de sécurité et une réponse correspondants!",
             "ok": "D'accord",
-            "terms_and_conditions_disagree":"Vous devez accepter les Conditions générales pour utiliser cette application. Sélectionnez « OK » pour modifier vos préférences, ou appelez-nous au 1-877-949-9492 pour obtenir plus de renseignements.",
+            "terms_and_conditions_disagree": "Vous devez accepter les Conditions générales pour utiliser cette application. Sélectionnez « OK » pour modifier vos préférences, ou appelez-nous au 1-877-949-9492 pour obtenir plus de renseignements.",
             "term_and condition_content": "Lorsque vous continuez à utiliser cette application, cela signifie que vous acceptez automatiquement ces conditions générales.",
 
             "Your feeling this week": "Votre ressenti cette semaine",
@@ -388,28 +396,31 @@ export const resources = {
             "How you are feeling by activity help": "C'est votre sentiment par activité",
             "Your feeling help": "Ces résultats n’ont pas été validés par Statistique Canada. Pour plus d’informations et pour vous aider à interpréter vos résultats, veuillez consulter la Foire aux questions sur la page d’aide.",
 
+            //Login screen
+            "login.forgot_password": "FR_Forgot your password?",
+            "login.login": "Entrer",
+
             "notifications": "Notifications",
             "wake_time": "Heure du lever",
             "sleep_time": "Heure du coucher",
-            "number_notifications" : "Nombre de Notifications",
+            "number_notifications": "Nombre de Notifications",
             "language": "Langue",
             "about": "Information",
             "num_pings_dialog_title": "Nombre de notifications par jour",
-            "ThankYouA":"Nous vous remercions d’avoir participé à l’enquête!",
-            "ThankYouB":"Nous vous remercions d’avoir participé à l’enquête! Vous pouvez consulter votre Bilan bien-être dans le menu Résultats.",
-            "NoDataAlert":"Vous devez remplir l'enquête au moins une fois.",
-            "Enter password":"Entrer un mot de passe",
-            "Well-Being Check":"Bilan bien-être",
-            "Forgot your password":"Mot de passe oublié?",
-            "Login":"Entrer",
-            "Language":"English",
-            "Secure your account":"Sécuriser votre compte",
-            "contactus_title":"Nous Contacter",
-            "contactus_email":"Courriel:",
-            "contactus_telephone":"Téléphone:",
-            "contactus_website":"Website:",
-            "contactus_mail":"Site Web:",
-            "contactus_text":`Statisticien en chef du Canada\nStatistique Canada\nÀ l’attention du directeur Jean Labbé\n150, promenade Tunney’s Pasture\nOttawa (Ontario)\nK1A 0T6`
+            "ThankYouA": "Nous vous remercions d’avoir participé à l’enquête!",
+            "ThankYouB": "Nous vous remercions d’avoir participé à l’enquête! Vous pouvez consulter votre Bilan bien-être dans le menu Résultats.",
+            "NoDataAlert": "Vous devez remplir l'enquête au moins une fois.",
+            "Enter password": "Entrer un mot de passe",
+            "Well-Being Check": "Bilan bien-être",
+            "Forgot your password": "Mot de passe oublié?",
+            "Language": "English",
+            "Secure your account": "Sécuriser votre compte",
+            "contactus_title": "Nous Contacter",
+            "contactus_email": "Courriel:",
+            "contactus_telephone": "Téléphone:",
+            "contactus_website": "Website:",
+            "contactus_mail": "Site Web:",
+            "contactus_text": `Statisticien en chef du Canada\nStatistique Canada\nÀ l’attention du directeur Jean Labbé\n150, promenade Tunney’s Pasture\nOttawa (Ontario)\nK1A 0T6`
         }
     }
 };

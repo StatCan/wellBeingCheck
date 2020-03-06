@@ -22,16 +22,13 @@ import {
   securityQuestionValidator,
   securityAnswerValidator,
 } from '../../core/utils';
+import LogoClear from '../../components/LogoClear';
 
-type RegisterState = {
+type ForgotPasswordChangeState = {
   password: string,
   passwordError: string,
   passwordConfirm: string,
   passwordConfirmError: string,
-  securityQuestion: string,
-  securityQuestionError: string,
-  securityAnswer: string,
-  securityAnswerError: string,
   modalShow: boolean,
 }
 
@@ -39,7 +36,7 @@ interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
 
-class RegisterScreen extends React.Component<Props, RegisterState> {
+class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordChangeState> {
 
   constructor(RegisterState) {
     super(RegisterState)
@@ -48,24 +45,8 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
       passwordError: "",
       passwordConfirm: "",
       passwordConfirmError: "",
-      securityQuestion: "",
-      securityQuestionError: "",
-      securityAnswer: "",
-      securityAnswerError: "",
-      modalShow: true,
-      title: resources.getString("Well-Being Check"),
+      modalShow: false,
     };
-    //this._retrieveData('user_password');
-    this._accountAlreadyExists();
-  }
-
-  _accountAlreadyExists() {
-    const currentPassword = this._retrieveData('user_password');
-    if (!!currentPassword) {
-      //user already has account
-      //alert('user account already exixst! - navigation block commented');
-      //this.props.navigation.navigate('HomeScreen');
-    }
   }
 
   _getPasswordErrorText(errorCode) {
@@ -115,46 +96,53 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
   _validateForm = () => {
     const isPasswordValid = passwordValidator(this.state.password);
     const isPasswordConfirmValid = passwordConfirmValidator(this.state.password, this.state.passwordConfirm);
-    const isSecurityQuestionValid = securityQuestionValidator(this.state.securityQuestion);
-    const isSecurityAnswerValid = securityAnswerValidator(this.state.securityAnswer);
 
     //translate password error
     let passwordErrorText = this._getPasswordErrorText(isPasswordValid)
     let passwordConfirmErrorText = this._getPasswordConfirmErrorText(isPasswordConfirmValid)
 
-    if ((isPasswordValid == 200) && (isPasswordConfirmValid == '') && (isSecurityQuestionValid == '') && (isSecurityAnswerValid == '')) {
+    if ((isPasswordValid == 200) && (isPasswordConfirmValid == '')) {
       this.setState({ passwordError: '' });
       this.setState({ passwordConfirmError: '' });
-      this.setState({ securityQuestionError: '' });
-      this.setState({ securityAnswerError: '' });
       return true;
     }
     else {
       this.setState({ passwordError: passwordErrorText });
       this.setState({ passwordConfirmError: passwordConfirmErrorText });
-      this.setState({ securityQuestionError: isSecurityQuestionValid });
-      this.setState({ securityAnswerError: isSecurityAnswerValid });
       return false;
     }
   }
 
-  _CreateAccount = () => {
+  _CreateNewAccount = () => {
     //validation passed lets store user
-    let userAccountObj = {
-      password: this.state.password,
-      security_question: this.state.securityQuestion,
-      security_answer: this.state.securityAnswer,
-    };
 
-    AsyncStorage.setItem('user_account', JSON.stringify(userAccountObj), () => {
-      this.props.navigation.navigate('Dashboard');
+    AsyncStorage.getItem('user_account', (err, result) => {
+      console.log(result);
+      if (result) {
+        let resultAsObj = JSON.parse(result)
+        let secQue = resultAsObj.security_question;
+        let secAnsw = resultAsObj.security_answer;
+
+        let userAccountObj = {
+          password: this.state.password,
+          security_question: secQue,
+          security_answer: secAnsw,
+        };
+    
+        AsyncStorage.setItem('user_account', JSON.stringify(userAccountObj), () => {
+          this.props.navigation.navigate('Dashboard');
+        });
+      }
+      else {
+       alert('Failed to create new account!')
+      }
     });
   }
 
   _onSignUpPressed = () => {
     const isValid = this._validateForm();
     if (isValid) {
-      this._CreateAccount();
+      this._CreateNewAccount();
     }
     else {
     }
@@ -182,25 +170,16 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 
   _showModal = () => this.setState({ modalShow: true });
   _hideModal = () => this.setState({ modalShow: false });
-
-  toggleLanguage() {
-    if (resources.culture == 'en') resources.culture = 'fr'; else resources.culture = 'en';
-    this.setState({ title: resources.getString("Well-Being Check") });
-  }
   
   render() {
     return (
       <PaperProvider theme={newTheme}>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
         <Background>
-
           <SafeAreaView style={styles.container}>
-            <View style={{ flexDirection: 'row', width: '100%', height: 24, marginTop: 0, marginBottom: 10, justifyContent: 'space-between' }}>
-              <LogoClearSmall />
-              <TouchableOpacity onPress={() => this.toggleLanguage()} style={{ alignSelf: 'flex-end', marginRight: 0 }}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
-            </View>
             <ScrollView style={styles.scrollView}>
-              <Title style={styles.title}>{resources.getString("Secure your account")}</Title>
+              <LogoClearSmall/>
+              <Title style={styles.title}>{resources.getString("password_recovery_change.title")}</Title>
               <View style={styles.passwordView}>
                 <TextInput
                   label={resources.getString("Enter password")}
@@ -233,36 +212,6 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                 error={!!this.state.passwordConfirmError}
                 errorText={this.state.passwordConfirmError}
                 secureTextEntry={true}
-              />
-
-              {/* mode can also be dropdown - dialog will allow more space */}
-              <Picker
-                selectedValue={this.state.securityQuestion}
-                style={[styles.picker]}
-                itemStyle={styles.pickerItem}
-                onValueChange={value => this.setState({ securityQuestion: value })}>
-                <Picker.Item label={resources.getString("reg.ques.select")} value="" />
-                <Picker.Item label={resources.getString("reg.ques.mother")} value="reg.ques.mother" />
-                <Picker.Item label={resources.getString("reg.ques.school")} value="reg.ques.school" />
-                <Picker.Item label={resources.getString("reg.ques.car")} value="reg.ques.car" />
-                <Picker.Item label={resources.getString("reg.ques.sport")} value="reg.ques.sport" />
-                <Picker.Item label={resources.getString("reg.ques.job")} value="reg.ques.job" />
-              </Picker>
-              {this.state.securityQuestionError != '' ? (
-                <Text style={styles.errorTest}>{this.state.securityQuestionError}</Text>
-              ) : null
-              }
-
-              <TextInput
-                label={resources.getString("the_answer_is:")}
-                returnKeyType="next"
-                selectionColor={newTheme.colors.primary}
-                underlineColor={newTheme.colors.primary}
-                theme={newTheme}
-                value={this.state.securityAnswer}
-                onChangeText={text => this.setState({ securityAnswer: text })}
-                error={!!this.state.securityAnswerError}
-                errorText={this.state.securityAnswerError}
               />
 
               <View style={styles.footer}>
@@ -437,4 +386,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(RegisterScreen);
+export default memo(ForgotPasswordChangeScreen);
