@@ -1,5 +1,5 @@
 import React, { memo, useState, useCallback } from 'react';
-import { Image, View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator,Button } from 'react-native';
+import { Image, View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator,Button,Platfrom } from 'react-native';
 import { AsyncStorage } from 'react-native';
 //import { Ionicons,EvilIcons,Feather } from '@expo/vector-icons';
 import { AntDesign,FontAwesome } from '@expo/vector-icons';
@@ -32,8 +32,8 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     setTimeout(()=>{this.setState({webviewLoaded: true})}, 4000);
   }
    componentDidMount(){
-    //     global.userToken='123456789';console.log('ssssssssssssssssssssssssssssssss');
-     //    this.handleSurveyBdone();
+     //    global.userToken='123456789';console.log('ssssssssssssssssssssssssssssssss');
+       //  this.handleSurveyBdone();
    }
    async handleSurveyAdone(){
            let isConnected=await checkConnection();
@@ -56,9 +56,9 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
    async handleSurveyBdone(){
             let isConnected=await checkConnection();
             if(!isConnected){alert('You are offline, try it later');return;}
-       //     let jwt=await fetchJwToken();console.log('asdfasdfasdfasdf1234');
-         //   if(jwt==''){alert("Internal server error(token), Try again, if same thing would happen again contact StatCan");return;}
-       //     global.jwToken=jwt;
+            let jwt=await fetchJwToken();console.log('asdfasdfasdfasdf1234');
+            if(jwt==''){alert("Internal server error(token), Try again, if same thing would happen again contact StatCan");return;}
+            global.jwToken=jwt;
             let types=await this.fetchGraphTypes();console.log('types:'+types);
             if(types!=null && types.length>0){
                await this.fetchGraphs(types);
@@ -106,7 +106,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                   .then((responseJson) => {console.log('resetPassword:'+responseJson);return responseJson;})
                  .catch((error) => {console.error(error);});
             }
-   fetchGraphTypes(){
+   async fetchGraphTypes(){
            let url=global.webApiBaseUrl+'api/dashboard/graphs';
            return fetch(url)
               .then((response) => response.json())
@@ -188,6 +188,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
          }
          console.log('Beofore eq1234:'+uri);
      //  uri='"http://192.168.1.5:80/anonymous-anonyme/en/login-connexion/load-charger/eqgs2g4d9121e0734541a5c0dbcb6e4713f7';
+     let userAgent=Platform.OS=='ios'?'Apple deviceId:'+global.userToken:'Android deviceId:'+global.userToken;console.log(userAgent);
     return (
           <View style={{ flex: 1, marginTop: 0 }}>
                 <View style={{flexDirection:'row',justifyContent:'space-between'}}>
@@ -197,7 +198,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                 <WebView
                           ref={(view) => this.webView = view} incognito={true}
                           style={styles.webview}
-                          userAgent={global.userToken}
+                          applicationNameForUserAgent={userAgent}
                           scrollEnabled={true}
                           source={{uri:uri}}
                           javaScriptEnabled={true}

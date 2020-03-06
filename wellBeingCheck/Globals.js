@@ -22,7 +22,7 @@ global.surveyExceptionUrlEng='';
 global.surveyExceptionUrlFre='';
 global.doneSurveyA=false;
 global.hasImage=false;
-global.webApiBaseUrl='http://wellbeingcheck.canadacentral.cloudapp.azure.com/wellbeing-bienetre/';    //'http://localhost:50170/';   //http://barabasy.eastus.cloudapp.azure.com/WebApiForEsmDev/';  //'http://localhost:49159/';   //'http://barabasy.eastus.cloudapp.azure.com/WebApiForEsmDev/';      //'http://localhost:49159/'   //'http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/';//'http://localhost:49159/'
+global.webApiBaseUrl='http://localhost:50170/';    //'http://wellbeingcheck.canadacentral.cloudapp.azure.com/wellbeing-bienetre/';    //   //http://barabasy.eastus.cloudapp.azure.com/WebApiForEsmDev/';  //'http://localhost:49159/';   //'http://barabasy.eastus.cloudapp.azure.com/WebApiForEsmDev/';      //'http://localhost:49159/'   //'http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/';//'http://localhost:49159/'
 
 global.connectivity=false;
 global.configurationReady=false;
