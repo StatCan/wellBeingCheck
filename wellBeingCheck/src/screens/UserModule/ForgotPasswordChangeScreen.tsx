@@ -11,6 +11,7 @@ import { EvilIcons, Feather } from '@expo/vector-icons';
 import { Drawer, Title, Provider, Portal, Dialog } from 'react-native-paper';
 import LogoClearSmall from '../../components/LogoClearSmall';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
+import md5 from "react-native-md5";
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -115,7 +116,6 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
 
   _CreateNewAccount = () => {
     //validation passed lets store user
-
     AsyncStorage.getItem('user_account', (err, result) => {
       console.log(result);
       if (result) {
@@ -123,18 +123,21 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
         let secQue = resultAsObj.security_question;
         let secAnsw = resultAsObj.security_answer;
 
+        //first hash the password as md5
+        let passwordHashed = md5.hex_md5(this.state.password);
+
         let userAccountObj = {
-          password: this.state.password,
+          password: passwordHashed,
           security_question: secQue,
           security_answer: secAnsw,
         };
-    
+
         AsyncStorage.setItem('user_account', JSON.stringify(userAccountObj), () => {
           this.props.navigation.navigate('Dashboard');
         });
       }
       else {
-       alert('Failed to create new account!')
+        alert('Failed to create new account!')
       }
     });
   }
@@ -170,7 +173,7 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
 
   _showModal = () => this.setState({ modalShow: true });
   _hideModal = () => this.setState({ modalShow: false });
-  
+
   render() {
     return (
       <PaperProvider theme={newTheme}>
@@ -178,7 +181,7 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
         <Background>
           <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}>
-              <LogoClearSmall/>
+              <LogoClearSmall />
               <Title style={styles.title}>{resources.getString("password_recovery_change.title")}</Title>
               <View style={styles.passwordView}>
                 <TextInput

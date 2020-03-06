@@ -11,6 +11,8 @@ import { EvilIcons, Feather } from '@expo/vector-icons';
 import { Drawer, Title, Provider, Portal, Dialog } from 'react-native-paper';
 import LogoClearSmall from '../../components/LogoClearSmall';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
+import md5 from "react-native-md5";
+
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -33,6 +35,7 @@ type RegisterState = {
   securityAnswer: string,
   securityAnswerError: string,
   modalShow: boolean,
+  title: string,
 }
 
 interface Props {
@@ -140,8 +143,12 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 
   _CreateAccount = () => {
     //validation passed lets store user
+
+    //first hash the password as md5
+    let passwordHashed = md5.hex_md5( this.state.password );
+
     let userAccountObj = {
-      password: this.state.password,
+      password: passwordHashed,
       security_question: this.state.securityQuestion,
       security_answer: this.state.securityAnswer,
     };
