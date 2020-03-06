@@ -110,6 +110,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
   bootstrapA = async () => {
     console.log('Prepare confiuration');
     let userToken = await AsyncStorage.getItem('EsmUserToken');
+    let hasImage = await AsyncStorage.getItem('hasImage'); if (hasImage == null) hasImage=false;global.hasImage=hasImage;
     if (userToken == null) userToken = Constants.deviceId;   //   global.userToken=this.generateShortGuid(24);
     global.userToken = userToken;
     let jwt = await AsyncStorage.getItem('EsmSurveyJWT');
