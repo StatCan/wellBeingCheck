@@ -40,7 +40,8 @@ type SettingsState = {
   numPingsModalShow: boolean,
   languageModalShow: boolean,
   wakeTimePickerShow: boolean,
-  sleepTimePickerShow: boolean
+  sleepTimePickerShow: boolean,
+  titleBackgroundColor: string
 }
 
 interface Props {
@@ -50,6 +51,7 @@ interface Props {
 
 class SettingsScreen extends React.Component<Props, SettingsState> {
   _notificationSubscription: any;
+  _isDirty: boolean;
 
   constructor(SettingsState) {
     super(SettingsState)
@@ -64,7 +66,8 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       cultureString: 'English',
       languageModalShow: false,
       wakeTimePickerShow: false,
-      sleepTimePickerShow: false
+      sleepTimePickerShow: false,
+      titleBackgroundColor: "#000"
     };
     this.wakeTimeHandler = this.wakeTimeHandler.bind(this);
     this.sleepTimeHandler = this.sleepTimeHandler.bind(this);
@@ -75,19 +78,23 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     this.setState({
       waketime: time
     })
-    this.setState({ wakeTimePickerShow: false })
+    this.setState({ wakeTimePickerShow: false });
+    if (global.debugMode) console.log("Value changed - setting dirty flag");
+    this._isDirty = true;
   }
 
   cancelTimeHandler(time) {
-    this.setState({ wakeTimePickerShow: false })
-    this.setState({ sleepTimePickerShow: false })
+    this.setState({ wakeTimePickerShow: false });
+    this.setState({ sleepTimePickerShow: false });
   }
 
   sleepTimeHandler(time) {
     this.setState({
       sleeptime: time
     })
-    this.setState({ sleepTimePickerShow: false })
+    this.setState({ sleepTimePickerShow: false });
+    if (global.debugMode) console.log("Value changed - setting dirty flag");
+    this._isDirty = true;
   }
 
   askPermissions = async () => {
@@ -101,9 +108,11 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     }
     if (finalStatus !== "granted") {
       if (global.debugMode) console.log("Notifications Permission Not Granted");
+      this.setState({ notificationState: false });
       return false;
     }
     if (global.debugMode) console.log("Notifications Permission Granted");
+    this.setState({ notificationState: true });
     return true;
   };
 
@@ -156,7 +165,15 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
 
     if (global.debugMode) console.log("Back button Pressed");
 
-    notificationAlgo(this.state.waketime, this.state.sleeptime, this.state.notificationcount);
+    if (this._isDirty) {
+      if (this.state.notificationState){
+          if (global.debugMode) console.log("Dirty flag set - scheduling notifications");
+          notificationAlgo(this.state.waketime, this.state.sleeptime, this.state.notificationcount);
+      } else {
+        if (global.debugMode) console.log("Notifications turned off - cancelling all notifications");
+        Notifications.cancelAllScheduledNotificationsAsync();
+      }
+    }
 
     if (this.state.culture === "2") {
       resources.culture = 'fr';
@@ -288,19 +305,44 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                     this.setState({
                       notificationState: !this.state.notificationState
                     });
+
+                    if (global.debugMode) console.log("The notification state is: " + this.state.notificationState);
+
+                    if (!this.state.notificationState){
+                      if (global.debugMode) console.log("Switch ON: Asking for Permissions");
+                      this.askPermissions();
+                      this._isDirty = true;
+                      this.setState({
+                        titleBackgroundColor: "#000"
+                      });
+                    }
+
+                    if (this.state.notificationState){
+                      if (global.debugMode) console.log("Switch OFF: Disabling Notifications");
+                      Notifications.cancelAllScheduledNotificationsAsync();
+                      this._isDirty = true;
+                      this.setState({
+                        titleBackgroundColor: "#777"
+                      });
+                    }
+
                   }} />} />
               <Divider></Divider>
               <List.Item
                 style={styles.listStyle}
+                titleStyle={{color: this.state.titleBackgroundColor}}
                 title={resources.getString("number_notifications")}
                 onPress={this._showNumPingsModal}
+                disabled={!this.state.notificationState}
                 description={this.state.notificationcount}
                 descriptionStyle={styles.descriptionStyle}
               />
               <List.Item
                 style={styles.listStyle}
                 title={resources.getString("wake_time")}
+                titleStyle={{color: this.state.titleBackgroundColor}}
                 onPress={this._showWakeTimePicker}
+                disabled={!this.state.notificationState}
                 description={this.state.waketime}
                 descriptionStyle={styles.descriptionStyle}
               />
@@ -316,7 +358,9 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
               <List.Item
                 style={styles.listStyle}
                 title={resources.getString("sleep_time")}
+                titleStyle={{color: this.state.titleBackgroundColor}}
                 onPress={this._showSleepTimePicker}
+                disabled={!this.state.notificationState}
                 description={this.state.sleeptime}
                 descriptionStyle={styles.descriptionStyle}
               />
@@ -383,7 +427,12 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                 <Dialog.Title>{resources.getString("num_pings_dialog_title")}</Dialog.Title>
                 <Dialog.Content>
                   <RadioButton.Group
-                    onValueChange={n => this.setState({ notificationcount: parseInt(n) })}
+                    onValueChange={n => {
+                        this.setState({ notificationcount: parseInt(n)});
+                        if (global.debugMode) console.log("Value changed - setting dirty flag");
+                        this._isDirty = true;
+                      }
+                    }
                     value={this.state.notificationcount.toString()}>
                     <View style={styles.radioButtonContainerStyle}>
                       <RadioButton value="2" />
