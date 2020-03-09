@@ -16,4 +16,5 @@ module.exports = {
     // This is the only part which you can keep
     // from the above linked tutorial's config:
     cacheDirectory: '.jest/cache',
+    setupFiles: ['./jest.setup.js'],
 };
