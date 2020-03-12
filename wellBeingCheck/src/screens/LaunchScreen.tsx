@@ -116,32 +116,6 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
         let doneSurveyA = await AsyncStorage.getItem('doneSurveyA');global.doneSurveyA=doneSurveyA;
         console.log('SurveyA:'+global.doneSurveyA);
         let hasImage = await AsyncStorage.getItem('hasImage');if(hasImage!=null)global.hasImage=hasImage;
-     let isConnected=await checkConnection();
-     if(!isConnected){alert('You are offline, try it later');return;}
-        let url = global.webApiBaseUrl+'api/config/links';console.log(url);
-        fetch(url)
-              .then((response) =>{console.log(url);
-                 if (response.status >= 400 && response.status < 600) {
-                    global.configurationReady=false;
-                    throw new Error("Access denied(1), Try again, if same thing would happen again contact StatCan");
-                 }else{
-                    response.json().then((responseJson) => {
-                           global.surveyAUrlEng=responseJson.questionnaireA.enUrl;
-                           global.surveyAUrlFre=responseJson.questionnaireA.frUrl;
-                           global.surveyThkUrlEng=responseJson.confirmationPage.enUrl;
-                           global.surveyThkUrlFre=responseJson.confirmationPage.frUrl;
-                           global.surveyBUrlEng=responseJson.questionnaireB.enUrl;
-                           global.surveyBUrlFre=responseJson.questionnaireB.frUrl;
-                           global.surveyExceptionUrlEng=responseJson.exceptionPage.enUrl;
-                           global.surveyExceptionUrlFre=responseJson.exceptionPage.frUrl;
-                           global.configurationReady=true; console.log('Confiuration is ready');
-                      })
-                }
-              })
-              .catch((error) => {
-                console.error(error);global.configurationReady=false; alert("Network error");
-              });
-
       };
   generateGuid() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {

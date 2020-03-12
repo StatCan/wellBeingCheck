@@ -95,7 +95,31 @@ class Dashboard extends React.Component<Props, HomeState> {
   handleBackButton() {
     return true;
   }
-
+ async getConfig(){
+    return new Promise(resolve => {
+         let url = global.webApiBaseUrl+'api/config/links';console.log(url);
+         fetch(url)
+         .then((response) =>{console.log(url);
+                              if (response.status >= 400 && response.status < 600) {
+                                 global.configurationReady=false;
+                                 resolve(false);
+                              }else{
+                                 response.json().then((responseJson) => {
+                                    global.surveyAUrlEng=responseJson.questionnaireA.enUrl;
+                                    global.surveyAUrlFre=responseJson.questionnaireA.frUrl;
+                                    global.surveyThkUrlEng=responseJson.confirmationPage.enUrl;
+                                    global.surveyThkUrlFre=responseJson.confirmationPage.frUrl;
+                                    global.surveyBUrlEng=responseJson.questionnaireB.enUrl;
+                                    global.surveyBUrlFre=responseJson.questionnaireB.frUrl;
+                                    global.surveyExceptionUrlEng=responseJson.exceptionPage.enUrl;
+                                    global.surveyExceptionUrlFre=responseJson.exceptionPage.frUrl;
+                                    global.configurationReady=true; console.log('Configuration is ready');  resolve(true);
+                                   })
+                             }
+                           })
+              .catch((error) => {global.configurationReady=false; resolve(false);});
+          });
+ }
   _refresh() {
 
     // Force refresh Home Screen as a Back action on Stack Navigator does not call
@@ -161,8 +185,9 @@ class Dashboard extends React.Component<Props, HomeState> {
   async conductSurvey() {
     let isConnected = await checkConnection();
     if (!isConnected) { alert('You are offline, try it later'); return; }
-    global.needReload1 = true; global.needReload2 = true; global.needReload3 = true; global.needReload4 = true; global.needReload5 = true; global.needReload6 = true; global.needReload7 = true;
-    this.props.navigation.navigate('EQSurveyScreen');
+    let n=await this.getConfig();
+    if(n)this.props.navigation.navigate('EQSurveyScreen');
+    else {alert('Access denied(Config), Try it later, if same thing would happen again contact StatCan');return;}
   }
   render() {
     return (
@@ -174,7 +199,7 @@ class Dashboard extends React.Component<Props, HomeState> {
             <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen', { refresh: this._refresh })} style={{ marginRight: 5, marginTop: 50 }}><FontAwesome name="gear" size={30} color="gray" /></TouchableOpacity>
           </View>
           <View style={styles.homeContainer}>
-            <TouchableOpacity onPress={() => { global.needReload1 = true; global.needReload2 = true; global.needReload3 = true; global.needReload4 = true; global.needReload5 = true; global.needReload6 = true; global.needReload7 = true; this.props.navigation.navigate('EQSurveyScreen'); }} style={{ flex: 2, justifyContent: 'center' }}>
+            <TouchableOpacity onPress={() =>this.conductSurvey()} style={{ flex: 2, justifyContent: 'center' }}>
               <View style={styles.outer}>
                 <View style={styles.inner}>
                   <Text style={styles.startButtonText}>{resources.getString("start_survey")}</Text>
