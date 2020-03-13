@@ -322,7 +322,7 @@ components:
         - newPasswordHash
         - securityAnswerHash
         - newSecurityQuestionId
-        - newSecuritAnswerSalt
+        - newSecurityAnswerSalt
         - newSecurityAnswerHash
       properties:
         deviceId:

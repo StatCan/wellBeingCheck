@@ -48,7 +48,7 @@ export interface ResetPasswordInput {
      * @type {string}
      * @memberof ResetPasswordInput
      */
-    securityAnswerHash?: string;
+    securityAnswerHash: string;
     /**
      * Id of the new security question chosen by the respondent
      * @type {number}
@@ -60,13 +60,13 @@ export interface ResetPasswordInput {
      * @type {string}
      * @memberof ResetPasswordInput
      */
-    newSecuritQuestionSalt: string;
+    newSecurityAnswerSalt: string;
     /**
      * Hashed new security question answer
      * @type {string}
      * @memberof ResetPasswordInput
      */
-    newSecurityQuestionHash: string;
+    newSecurityAnswerHash: string;
 }
 
 export function ResetPasswordInputFromJSON(json: any): ResetPasswordInput {
@@ -83,10 +83,10 @@ export function ResetPasswordInputFromJSONTyped(json: any, ignoreDiscriminator: 
         'sac': json['sac'],
         'newSalt': json['newSalt'],
         'newPasswordHash': json['newPasswordHash'],
-        'securityAnswerHash': !exists(json, 'securityAnswerHash') ? undefined : json['securityAnswerHash'],
+        'securityAnswerHash': json['securityAnswerHash'],
         'newSecurityQuestionId': json['newSecurityQuestionId'],
-        'newSecuritQuestionSalt': json['newSecuritQuestionSalt'],
-        'newSecurityQuestionHash': json['newSecurityQuestionHash'],
+        'newSecurityAnswerSalt': json['newSecurityAnswerSalt'],
+        'newSecurityAnswerHash': json['newSecurityAnswerHash'],
     };
 }
 
@@ -105,8 +105,8 @@ export function ResetPasswordInputToJSON(value?: ResetPasswordInput | null): any
         'newPasswordHash': value.newPasswordHash,
         'securityAnswerHash': value.securityAnswerHash,
         'newSecurityQuestionId': value.newSecurityQuestionId,
-        'newSecuritQuestionSalt': value.newSecuritQuestionSalt,
-        'newSecurityQuestionHash': value.newSecurityQuestionHash,
+        'newSecurityAnswerSalt': value.newSecurityAnswerSalt,
+        'newSecurityAnswerHash': value.newSecurityAnswerHash,
     };
 }
 

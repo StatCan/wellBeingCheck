@@ -18,7 +18,7 @@
  * @enum {string}
  */
 export enum GraphType {
-    Mood = 'mood',
+    Overall = 'overall',
     Activity = 'activity',
     Location = 'location',
     People = 'people'
