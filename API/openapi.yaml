@@ -320,10 +320,10 @@ components:
         - sac
         - newSalt
         - newPasswordHash
-        - securityQuestionHash
+        - securityAnswerHash
         - newSecurityQuestionId
-        - newSecuritQuestionSalt
-        - newSecurityQuestionHash
+        - newSecuritAnswerSalt
+        - newSecurityAnswerHash
       properties:
         deviceId:
           description: Id of the device from the mobile app
@@ -345,10 +345,10 @@ components:
         newSecurityQuestionId:
           description: Id of the new security question chosen by the respondent
           type: integer
-        newSecuritQuestionSalt:
+        newSecurityAnswerSalt:
           description: Salt used to hash the new security answer
           type: string
-        newSecurityQuestionHash:
+        newSecurityAnswerHash:
           description: Hashed new security question answer
           type: string
 
@@ -364,7 +364,7 @@ components:
       description: Type of graph that will be produced for the dashboard
       type: string
       enum:
-        - mood
+        - overall
         - activity
         - location
         - people
