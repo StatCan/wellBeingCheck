@@ -128,6 +128,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
              uri=global.surveyAUrlFre;
          }
          console.log('Beofore eq:'+uri);
+     let userAgent=Platform.OS=='ios'?'Apple deviceId/'+global.userToken:'Android deviceId/'+global.userToken;console.log(userAgent);
     return (
           <View style={{ flex: 1, marginTop: 0 }}>
                 <View style={{flexDirection:'row',justifyContent:'space-between'}}>
@@ -137,7 +138,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                 <WebView
                           ref={(view) => this.webView = view} incognito={true}
                           style={styles.webview}
-                          userAgent={global.userToken}
+                          applicationNameForUserAgent={userAgent}
                           scrollEnabled={true}
                           source={{uri:uri}}
                           javaScriptEnabled={true}

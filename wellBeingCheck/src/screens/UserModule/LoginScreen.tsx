@@ -84,7 +84,7 @@ class LoginScreen extends React.Component<Props, LoginState> {
 
         <Background>
           {/* <BackButton goBack={() => this.props.navigation.navigate('HomeScreen')} /> */}
-          <View style={{ width: '100%', height: 24, marginTop: 0, alignItems: 'flex-end', justifyContent: 'flex-end' }}>
+          <View style={{ width: '100%', height: 24, marginTop: 40, alignItems: 'flex-end', justifyContent: 'flex-end' }}>
             <TouchableOpacity onPress={() => this.toggleLanguage()} style={{ height: 60 }}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
           </View>
           <ScrollView>
