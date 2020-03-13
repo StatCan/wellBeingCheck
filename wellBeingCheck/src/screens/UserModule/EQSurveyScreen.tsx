@@ -188,7 +188,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
          }
          console.log('Eq:'+uri);
      //  uri='http://localhost/anonymous-anonyme/en/login-connexion/load-charger/eqgs2g4d9121e0734541a5c0dbcb6e4713f7';
-     let userAgent=Platform.OS=='ios'?'Apple deviceId:'+global.userToken:'Android deviceId:'+global.userToken;console.log(userAgent);
+     let userAgent=Platform.OS=='ios'?'Apple deviceId/'+global.userToken:'Android deviceId/'+global.userToken;console.log(userAgent);
     return (
           <View style={{ flex: 1, marginTop: 0 }}>
                 <View style={{flexDirection:'row',justifyContent:'space-between'}}>
