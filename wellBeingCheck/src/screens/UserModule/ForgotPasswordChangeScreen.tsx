@@ -181,12 +181,11 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
     return (
       <PaperProvider theme={newTheme}>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
-        <Background style={{paddingTop:0}}>
+        <Background>
            <View style={styles.logo}>
                                     <LogoClearSmall />
                   <TouchableOpacity onPress={() => this.toggleLanguage()} style={{ height: 60 }}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
                 </View>
-          <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}>
 
               <Title style={styles.title}>{resources.getString("password_recovery_change.title")}</Title>
@@ -287,7 +286,6 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
               </View>
 
             </ScrollView>
-          </SafeAreaView>
 
         </Background >
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
@@ -299,8 +297,8 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
 const styles = StyleSheet.create({
      logo: {
       justifyContent: 'space-between',flexDirection:'row',width:'100%',
-      marginTop: 0,
-      marginBottom: 100,
+      marginTop: 10,
+      marginBottom: 10,
     },
   container: {
     width: '100%',
