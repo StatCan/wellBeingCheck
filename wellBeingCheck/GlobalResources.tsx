@@ -12,6 +12,7 @@ export const resources = {
             "gl.decline": "Decline",
             "gl.agree": "Accept",
             "gl.return": "Return",
+            "answer":"Answer",
             //getting started
             "getting_started": "Getting Started",
             "getting_started_content": `Why we are conducting this study \n\nThe purpose of this study is to better understand the everyday well-being of Canadians by asking about activities and feelings as they are happening. To do this, participants will download an app on their smartphones and answer a few questions at different intervals throughout the day, over a short period of time. The results will help us to find connections between activities and well-being, and be used to develop programs that enhance people’s lives. In the future, an app could be used as a faster and more convenient way to complete other Statistics Canada surveys. \n\nInformation may also be used by Statistics Canada for other statistical and research purposes. \n\nNotifications \n\nThis app will notify you to complete a Well-being Check 2 to 5 times daily between the time you wake up and the time you go to bed. You can customize these parameters at any time in the settings menu on the app’s home page. If you do not customize the parameters, you will receive a default of 2 daily notifications at various times between 08:00 and 22:00. If you do not allow notifications, you can still complete a Well-being Check whenever you like, but the quality of your results may be impacted. \n\nAuthorization and confidentiality \n\nData are collected under the authority of the Statistics Act, Revised Statutes of Canada, 1985, Chapter S-19. Your information will be kept strictly confidential. \n\nAlthough voluntary, your participation is important so that the information collected is as accurate and complete as possible. \n\nRecord linkages \n\nTo enhance the data from this survey and to reduce the reporting burden, Statistics Canada may combine the information you provide with other survey or administrative data sources. \n\nTime required to complete this questionnaire \n\nThis questionnaire will take about 2 minutes to complete. \n\nPlease note that you will not be able to change any information you reported once you have submitted the questionnaire. \n\nTo navigate the questionnaire \n\nUse the Previous and Next buttons located at the bottom right of each page. \n\nSession timeout\n\nAfter 2 hours of inactivity, your session will time out. You will not be able to access any unsaved information.\n\nAfter 15 minutes of inactivity, Well-Being Check will lock. You will need to enter your password to continue. \n\nDefinitions and explanations\n\nA help button is available for certain questions. Press this button for additional information or clarification.`,
@@ -206,6 +207,7 @@ export const resources = {
             "gl.decline": "Décliner",
             "gl.agree": "Accepter",
             "gl.return": "Retour",
+             "answer":"Répondre",
             //getting started
             "getting_started": "Pour commencer",
             "getting_started_content": `Pour Commencer

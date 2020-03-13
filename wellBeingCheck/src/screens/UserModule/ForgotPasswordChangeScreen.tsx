@@ -46,7 +46,7 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
       passwordError: "",
       passwordConfirm: "",
       passwordConfirmError: "",
-      modalShow: false,
+      modalShow: false,title: resources.getString("Well-Being Check")
     };
   }
 
@@ -173,15 +173,22 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
 
   _showModal = () => this.setState({ modalShow: true });
   _hideModal = () => this.setState({ modalShow: false });
-
+  toggleLanguage() {
+    if (resources.culture == 'en') resources.culture = 'fr'; else resources.culture = 'en';
+    this.setState({ title: resources.getString("Well-Being Check") });
+  }
   render() {
     return (
       <PaperProvider theme={newTheme}>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
-        <Background>
+        <Background style={{paddingTop:0}}>
+           <View style={styles.logo}>
+                                    <LogoClearSmall />
+                  <TouchableOpacity onPress={() => this.toggleLanguage()} style={{ height: 60 }}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
+                </View>
           <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}>
-              <LogoClearSmall />
+
               <Title style={styles.title}>{resources.getString("password_recovery_change.title")}</Title>
               <View style={styles.passwordView}>
                 <TextInput
@@ -218,9 +225,13 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
               />
 
               <View style={styles.footer}>
-                <Button color={newTheme.colors.primary} mode="contained" onPress={this._onSignUpPressed} style={styles.button}>
+                <Button  color={theme.colors.secondary} mode="contained" onPress={() => this.props.navigation.navigate('ForgotPasswordScreen')} style={styles.btnCancel}>
+                                                <Text style={styles.whiteText}>{resources.getString("gl.cancel")}</Text>
+                </Button>
+                <Button color={newTheme.colors.primary} mode="contained" onPress={this._onSignUpPressed} style={styles.btnNext}>
                   <Text style={styles.whiteText}>{resources.getString("reg.action.create")}</Text>
                 </Button>
+
               </View>
 
               <View>
@@ -286,6 +297,11 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
 }
 
 const styles = StyleSheet.create({
+     logo: {
+      justifyContent: 'space-between',flexDirection:'row',width:'100%',
+      marginTop: 0,
+      marginBottom: 100,
+    },
   container: {
     width: '100%',
   },
@@ -359,6 +375,18 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     marginRight: -20,
   },
+  btnCancel: {
+      color: newTheme.colors.whiteText,
+      width: 140,
+      alignSelf: "flex-end",
+      marginRight: 20,
+    },
+    btnNext: {
+      color: newTheme.colors.whiteText,
+      width: 140,
+      alignSelf: "flex-end",
+      marginRight: -20,
+    },
   row: {
     flexDirection: 'row',
     marginTop: 4,

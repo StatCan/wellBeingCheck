@@ -1,5 +1,5 @@
 import React, { memo, useState, useCallback } from 'react';
-import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, View,ScrollView } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
@@ -43,7 +43,7 @@ class ForgotPasswordScreen extends React.Component<Props, ForgotPasswordState> {
     this.state = {
       securityQuestion: "",
       securityAnswer: "",
-      securityAnswerError: "",
+      securityAnswerError: "",title: resources.getString("Well-Being Check")
     };
     this._accountAlreadyExists();
   }
@@ -83,7 +83,10 @@ class ForgotPasswordScreen extends React.Component<Props, ForgotPasswordState> {
       }
     });
   }
-
+  toggleLanguage() {
+    if (resources.culture == 'en') resources.culture = 'fr'; else resources.culture = 'en';
+    this.setState({ title: resources.getString("Well-Being Check") });
+  }
   render() {
     const securityQuestionValue = this.state.securityQuestion;
     const securityQuestion = resources.getString(securityQuestionValue);
@@ -92,16 +95,21 @@ class ForgotPasswordScreen extends React.Component<Props, ForgotPasswordState> {
      <PaperProvider theme={newTheme}>
 
             <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
-            <AppBanner />
+
+
       <Background>
-        <LogoClearSmall></LogoClearSmall>
+  <View style={styles.logo}>
+                          <LogoClearSmall />
+                           <TouchableOpacity onPress={() => this.toggleLanguage()} style={{ height: 60 }}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
+      </View>
+      <ScrollView showsVerticalScrollIndicator={false} style={{minHeight:100}}>
 
         <Text style={styles.header}>{resources.getString("password_recovery.title")}</Text>
 
         <Text style={styles.securityQuestionText}>{securityQuestion}</Text>
 
         <TextInput
-          label="Answer"
+          label={resources.getString("answer")}
           returnKeyType="next"
           value={this.state.securityAnswer}
           onChangeText={text => this.setState({ securityAnswer: text })}
@@ -129,6 +137,7 @@ class ForgotPasswordScreen extends React.Component<Props, ForgotPasswordState> {
             <Text style={styles.whiteText}>{resources.getString("gl.next")}</Text>
           </Button>
         </View>
+        </ScrollView>
       </Background>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
       </PaperProvider>
@@ -137,6 +146,11 @@ class ForgotPasswordScreen extends React.Component<Props, ForgotPasswordState> {
 }
 
 const styles = StyleSheet.create({
+   logo: {
+    justifyContent: 'space-between',flexDirection:'row',width:'100%',
+    marginTop: 10,
+    marginBottom: 100,
+  },
   back: {
     width: '100%',
     marginTop: 12,
