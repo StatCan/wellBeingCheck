@@ -1,6 +1,10 @@
 import React, { memo, useState, useCallback } from 'react';
 import { Text, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { AsyncStorage } from 'react-native';
+import { Provider as PaperProvider } from 'react-native-paper';
+import { SafeAreaConsumer } from 'react-native-safe-area-context';
+import LogoClear from '../../components/LogoClear';
+import AppBanner from '../../components/AppBanner';
 import Background from '../../components/Background';
 import LogoClearSmall from '../../components/LogoClearSmall';
 import Button from '../../components/Button';
@@ -85,6 +89,10 @@ class ForgotPasswordScreen extends React.Component<Props, ForgotPasswordState> {
     const securityQuestion = resources.getString(securityQuestionValue);
 
     return (
+     <PaperProvider theme={newTheme}>
+
+            <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
+            <AppBanner />
       <Background>
         <LogoClearSmall></LogoClearSmall>
 
@@ -108,7 +116,7 @@ class ForgotPasswordScreen extends React.Component<Props, ForgotPasswordState> {
             mode="contained"
             onPress={() => this.props.navigation.navigate('LoginScreen')}
           >
-            <Text style={styles.whiteText}>Cancel</Text>
+            <Text style={styles.whiteText}>{resources.getString("gl.cancel")}</Text>
           </Button>
 
           <Button
@@ -118,10 +126,12 @@ class ForgotPasswordScreen extends React.Component<Props, ForgotPasswordState> {
             onPress={this._onResetPasswordPressed}
           >
 
-            <Text style={styles.whiteText}>Next</Text>
+            <Text style={styles.whiteText}>{resources.getString("gl.next")}</Text>
           </Button>
         </View>
       </Background>
+        <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
+      </PaperProvider>
     );
   }
 }
@@ -151,13 +161,13 @@ const styles = StyleSheet.create({
   },
   btnCancel: {
     color: newTheme.colors.whiteText,
-    width: 100,
+    width: 140,
     alignSelf: "flex-end",
     marginRight: 20,
   },
   btnNext: {
     color: newTheme.colors.whiteText,
-    width: 100,
+    width: 140,
     alignSelf: "flex-end",
     marginRight: -20,
   },

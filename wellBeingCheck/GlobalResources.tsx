@@ -8,6 +8,7 @@ export const resources = {
             //global
             "app.name": "Well-being Check",
             "gl.next": "Next",
+            "gl.cancel": "Cancel",
             "gl.decline": "Decline",
             "gl.agree": "Accept",
             "gl.return": "Return",
@@ -186,7 +187,7 @@ export const resources = {
             "Well-Being Check": "Well-being Check",
 
             //Login screen
-            "login.forgot_password": "Forgot your password?",
+            "login.forgot_password": "Forgot password?",
             "login.login": "Login",
             "Language": "Français",
             "Secure your account": "Secure your account",
@@ -201,6 +202,7 @@ export const resources = {
             //global
             "app.name": "FR_Well-being Check",
             "gl.next": "Suivant",
+            "gl.cancel": "Annuler",
             "gl.decline": "Décliner",
             "gl.agree": "Accepter",
             "gl.return": "Retour",
@@ -330,10 +332,10 @@ export const resources = {
             "reg.pass_conf.empty": "Le mot de passe ne peut pas être vide",
             "reg.pass_conf.match": "Les mots de passe ne correspondent pas",
             //password recovery
-            "password_recovery.title": "FR_Password recovery",
-            "password_recovery_change.title": "FR_Enter New Password",
-            "password_recovery_change.enter_password" : "FR_Enter password",
-            "password_recovery_change.confirm_password" : "FR_Confirm password",
+            "password_recovery.title": "Récupération de mot de passe",
+            "password_recovery_change.title": "Entrez un nouveau mot de passe",
+            "password_recovery_change.enter_password" : "Entrer le mot de passe",
+            "password_recovery_change.confirm_password" : "Confirmez le mot de passe",
             //home screen
             "home_first_time_login_content": "Veuillez consulter le menu des paramètres pour personnaliser le nombre de notifications que vous recevrez et pour déterminer à quels moments vous souhaitez les recevoir.",
             //about
@@ -397,7 +399,7 @@ export const resources = {
             "Your feeling help": "Ces résultats n’ont pas été validés par Statistique Canada. Pour plus d’informations et pour vous aider à interpréter vos résultats, veuillez consulter la Foire aux questions sur la page d’aide.",
 
             //Login screen
-            "login.forgot_password": "FR_Forgot your password?",
+            "login.forgot_password": "Mot de passe oublié?",
             "login.login": "Entrer",
 
             "notifications": "Notifications",
