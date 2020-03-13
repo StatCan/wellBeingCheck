@@ -103,9 +103,9 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5) {
 
     // Now choose number of random hours based on number of pings
     for (i = 0; i < numPings; i++ ){
-      chosenHoursBefore[i] = Math.floor(Math.random() * awakeOneHourTimeIntervalsBefore.length);
+      chosenHoursBefore[i] = awakeOneHourTimeIntervalsBefore[Math.floor(Math.random() * awakeOneHourTimeIntervalsBefore.length)];
       while (checkForDuplicates(chosenHoursBefore)){
-          chosenHoursBefore[i] = Math.floor(Math.random() * awakeOneHourTimeIntervalsBefore.length);
+          chosenHoursBefore[i] = awakeOneHourTimeIntervalsBefore[Math.floor(Math.random() * awakeOneHourTimeIntervalsBefore.length)];
       }
     }
 

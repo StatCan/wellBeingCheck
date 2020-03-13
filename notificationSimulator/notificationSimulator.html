@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Notification Methodology Simulator v0.2</h2>
+
+Awake Hour: <input type="text" id="awakeHour" value="6">
+Sleep Hour: <input type="text" id="sleepHour" value="22">
+Number of Pings: <input type="text" id="numPings" value="2">
+<button onclick="runAndUpdate()">Run</button>
+<br/>
+<br/>
+<h2>Output:</h2>
+<p id="output"></p>
+
+<script>
+
+// Methodology: Selection Probabilities
+// For Weekdays and Weekends
+const primeTimeAwakeIntervals = [
+{ 
+  awakeHourBefore: 16,
+  weekDayPercentage: 5,  // A
+  weekendPercentage: 5   // F
+},
+{ 
+  awakeHourBefore: 17,
+  weekDayPercentage: 10, // B
+  weekendPercentage: 10  // G
+},
+{ 
+  awakeHourBefore: 18,
+  weekDayPercentage: 10, // C
+  weekendPercentage: 10  // H
+},
+{ 
+  awakeHourBefore: 19,
+  weekDayPercentage: 25, // D
+  weekendPercentage: 20  // I
+},
+{ 
+  awakeHourBefore: 20,
+  weekDayPercentage: 25, // E
+  weekendPercentage: 20  // J
+}];
+
+var output = "";
+
+function notificationAlgo() {
+
+  var awakeHour = parseInt(document.getElementById("awakeHour").value);
+  var sleepHour = parseInt(document.getElementById("sleepHour").value);
+  var numPings = parseInt(document.getElementById("numPings").value);
+
+  output += "The awake hour is: " + awakeHour + '<br/>';
+  output += "The sleep hour is: " + sleepHour + '<br/>';
+  output += "The num pings are: " + numPings + '<br/><br/>';
+
+
+  if (numPings > 5 || numPings < 2) {
+    output += "Invalid value for numPings";
+    return;
+  }
+
+  // Based on defaults awakeInterval is 16
+  awakeInterval = sleepHour - awakeHour;
+
+  //Safety Check
+  if (numPings > awakeInterval) numPings = awakeInterval;
+
+  if (awakeHour > sleepHour) awakeInterval = awakeHour + 24;
+
+  // Now come up with a time to set notifications to
+
+  var awakeOneHourTimeIntervalsBefore = [];
+  var awakeOneHourTimeIntervalsAfter = [];
+
+  console.log ("The awakeOneHourTimeIntervalsBefore empty array is: " + awakeOneHourTimeIntervalsBefore);
+
+  for (i = 0; i <= awakeInterval; i++) {
+    awakeOneHourTimeIntervalsBefore[i] = awakeHour + (i);
+    console.log(awakeOneHourTimeIntervalsBefore[i]);
+    awakeOneHourTimeIntervalsAfter[i] = awakeHour + i;
+  }
+
+  // For testing purposes print to console
+  output += "One Hour Time Intervals i.e. 6h to 7h" + '<br/>';
+  output += awakeOneHourTimeIntervalsBefore + '<br/>';
+  output += awakeOneHourTimeIntervalsAfter + '<br/><br/>';
+
+  var chosenHoursBefore = [];
+  var selectionProbabilities = new Array(awakeOneHourTimeIntervalsBefore.length);
+  var remainingProbabilties = 0;
+
+  //output += "Length of selection probabilities array is: " + selectionProbabilities.length + '<br/><br/>';
+
+  // Schedule for the next 30 days
+  // For testing purposes, day set to a few days
+
+  output += "Chosen One Hour Time Intervals (24h format):" + '<br/>';
+  output += "---------------------------------------------------------" + '<br/><br/>'
+
+  // Assign hardcoded selection probabilties (out of 100)
+  var index = 0;
+  primeTimeAwakeIntervals.forEach(element => {
+
+    selectionProbabilities[element.awakeHourBefore] = element.weekDayPercentage;
+    remainingProbabilties += element.weekDayPercentage;
+    output += "Adding selection probability: " + selectionProbabilities[element.awakeHourBefore] + "%" + " at position (24h time): " + element.awakeHourBefore + '<br/>';
+    
+  });
+
+  //output += "Length of selection probabilities array is: " + selectionProbabilities.length + '<br/><br/>';
+
+  remainingProbabilties = 100 - remainingProbabilties;
+
+  output += "Probabilities remaining to be allocated: " + remainingProbabilties + "%" + '<br/>';
+
+  for (i = 0; i < selectionProbabilities.length; i++ ){
+    if (selectionProbabilities[i] == null){
+      selectionProbabilities[i] = remainingProbabilties/(selectionProbabilities.length - primeTimeAwakeIntervals.length);
+    }
+  }
+
+  output += "The selection probability array is: " + selectionProbabilities + '<br/>';
+
+  for (day = 0; day < 30; day++) {
+
+    // For each ping, choose a number between 0-100 which would then fall in the array
+    for (i = 0; i < numPings; i++ ){
+      chosenHoursBefore[i] = Math.floor(Math.random() * 100);
+
+      while (checkForDuplicates(chosenHoursBefore)){
+        chosenHoursBefore[i] = Math.floor(Math.random() * 100);
+      }
+    }
+
+    var outputDay = day + 1;
+
+    output += "Chosen Intervals for Day: " + outputDay + '<br/>';
+    output += chosenHoursBefore + '<br/>';
+
+    // TODO:  Have randomization between 'Before' and 'After' time intervals
+    // i.e. Between 6h and 7h (currently set to on the hour above)
+
+  }
+
+  return;
+}
+
+function checkForDuplicates(array) {
+  var values = Object.create(null);
+  for (var i = 0; i < array.length; ++i) {
+      var value = array[i];
+      if (value in values) {
+          return true;
+      }
+      values[value] = true;
+  }
+  return false;
+}
+
+function runAndUpdate(){
+    output = "";
+    notificationAlgo();
+    document.getElementById("output").innerHTML = output;
+}
+
+</script>
+
+</body>
+</html>
