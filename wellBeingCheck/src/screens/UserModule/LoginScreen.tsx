@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView,Image } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Background from '../../components/Background';
 import Button from '../../components/Button';
@@ -76,12 +76,15 @@ class LoginScreen extends React.Component<Props, LoginState> {
   }
 
   render() {
+  const bannerPathEnglish = require('../../assets/statscan_banner.png');
+  const bannerPathFrench = require('../../assets/statscan_banner_fr.png');
     return (
       <PaperProvider theme={newTheme}>
 
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
-        <AppBanner />
-
+        <View style={styles.statusBar}>
+           <Image source={resources.culture == 'fr' ? bannerPathFrench : bannerPathEnglish} style={styles.image} />
+         </View>
         <Background>
           {/* <BackButton goBack={() => this.props.navigation.navigate('HomeScreen')} /> */}
           <View style={{ width: '100%', height: 24, marginTop: 40, alignItems: 'flex-end', justifyContent: 'flex-end' }}>
@@ -168,6 +171,15 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     paddingRight: 20,
   },
+   image: {
+      maxWidth: 300,
+      minWidth: 250,
+      height: 50,
+    },
+    statusBar: {
+      backgroundColor: "#f7f8f9",
+      height: 50,
+    },
 });
 
 export default memo(LoginScreen);
