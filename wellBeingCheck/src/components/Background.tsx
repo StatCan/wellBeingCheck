@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     maxWidth: 340,
     alignSelf: 'center',
     alignItems: 'center',
-    justifyContent: 'center',
+ //   justifyContent: 'center',
   },
 });
 
