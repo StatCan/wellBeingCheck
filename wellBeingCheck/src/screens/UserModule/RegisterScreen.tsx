@@ -6,11 +6,13 @@ import Button from '../../components/Button';
 import TextInput from '../../components/TextInput';
 import { theme, newTheme } from '../../core/theme';
 import { resources } from '../../../GlobalResources';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { Provider as PaperProvider, List } from 'react-native-paper';
 import { EvilIcons, Feather } from '@expo/vector-icons';
 import { Drawer, Title, Provider, Portal, Dialog } from 'react-native-paper';
 import LogoClearSmall from '../../components/LogoClearSmall';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
+import md5 from "react-native-md5";
+
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -33,6 +35,8 @@ type RegisterState = {
   securityAnswer: string,
   securityAnswerError: string,
   modalShow: boolean,
+  modalSecrectQuestionShow: boolean,
+  title: string,
 }
 
 interface Props {
@@ -53,6 +57,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
       securityAnswer: "",
       securityAnswerError: "",
       modalShow: true,
+      modalSecrectQuestionShow: false,
       title: resources.getString("Well-Being Check"),
     };
     //this._retrieveData('user_password');
@@ -140,8 +145,12 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 
   _CreateAccount = () => {
     //validation passed lets store user
+
+    //first hash the password as md5
+    let passwordHashed = md5.hex_md5(this.state.password);
+
     let userAccountObj = {
-      password: this.state.password,
+      password: passwordHashed,
       security_question: this.state.securityQuestion,
       security_answer: this.state.securityAnswer,
     };
@@ -183,11 +192,35 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
   _showModal = () => this.setState({ modalShow: true });
   _hideModal = () => this.setState({ modalShow: false });
 
+  _showSecretQuestionModal = () => this.setState({ modalSecrectQuestionShow: true });
+  _hideSecretQuestionModal = () => this.setState({ modalSecrectQuestionShow: false });
+
   toggleLanguage() {
     if (resources.culture == 'en') resources.culture = 'fr'; else resources.culture = 'en';
     this.setState({ title: resources.getString("Well-Being Check") });
   }
-  
+
+  _handleSecQuesSelectMother = () => {
+    this.setState({ securityQuestion: 'reg.ques.mother' });
+    this._hideSecretQuestionModal()
+  };
+  _handleSecQuesSelectSchool = () => {
+    this.setState({ securityQuestion: 'reg.ques.school' });
+    this._hideSecretQuestionModal()
+  };
+  _handleSecQuesSelectSport = () => {
+    this.setState({ securityQuestion: 'reg.ques.sport' });
+    this._hideSecretQuestionModal()
+  };
+  _handleSecQuesSelectCar = () => {
+    this.setState({ securityQuestion: 'reg.ques.car' });
+    this._hideSecretQuestionModal()
+  };
+  _handleSecQuesSelectJob = () => {
+    this.setState({ securityQuestion: 'reg.ques.job' });
+    this._hideSecretQuestionModal()
+  };
+
   render() {
     return (
       <PaperProvider theme={newTheme}>
@@ -235,19 +268,15 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                 secureTextEntry={true}
               />
 
-              {/* mode can also be dropdown - dialog will allow more space */}
-              <Picker
-                selectedValue={this.state.securityQuestion}
-                style={[styles.picker]}
-                itemStyle={styles.pickerItem}
-                onValueChange={value => this.setState({ securityQuestion: value })}>
-                <Picker.Item label={resources.getString("reg.ques.select")} value="" />
-                <Picker.Item label={resources.getString("reg.ques.mother")} value="reg.ques.mother" />
-                <Picker.Item label={resources.getString("reg.ques.school")} value="reg.ques.school" />
-                <Picker.Item label={resources.getString("reg.ques.car")} value="reg.ques.car" />
-                <Picker.Item label={resources.getString("reg.ques.sport")} value="reg.ques.sport" />
-                <Picker.Item label={resources.getString("reg.ques.job")} value="reg.ques.job" />
-              </Picker>
+              <TouchableOpacity
+                onPress={this._showSecretQuestionModal}
+              >
+                <View style={styles.secretQuestionView}>
+                  <Text style={styles.secretQuestionViewInput}>
+                    {this.state.securityQuestion == '' ? resources.getString('reg.ques.select') : resources.getString(this.state.securityQuestion)}
+                  </Text>
+                </View>
+              </TouchableOpacity>
               {this.state.securityQuestionError != '' ? (
                 <Text style={styles.errorTest}>{this.state.securityQuestionError}</Text>
               ) : null
@@ -271,6 +300,64 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                 </Button>
               </View>
 
+              {/* secret question dialog */}
+              <View>
+                <Portal>
+                  <Dialog
+                    visible={this.state.modalSecrectQuestionShow}
+                    onDismiss={this._hideSecretQuestionModal}>
+                    <Dialog.Content>
+                      <TouchableOpacity
+                        onPress={this._handleSecQuesSelectMother}
+                      >
+                        <View>
+                          <List.Item
+                            title={resources.getString("reg.ques.mother")}
+                          />
+                        </View>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={this._handleSecQuesSelectSchool}
+                      >
+                        <View>
+                          <List.Item
+                            title={resources.getString("reg.ques.school")}
+                          />
+                        </View>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={this._handleSecQuesSelectCar}
+                      >
+                        <View>
+                          <List.Item
+                            title={resources.getString("reg.ques.car")}
+                          />
+                        </View>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={this._handleSecQuesSelectSport}
+                      >
+                        <View>
+                          <List.Item
+                            title={resources.getString("reg.ques.sport")}
+                          />
+                        </View>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={this._handleSecQuesSelectJob}
+                      >
+                        <View>
+                          <List.Item
+                            title={resources.getString("reg.ques.job")}
+                          />
+                        </View>
+                      </TouchableOpacity>
+                    </Dialog.Content>
+                  </Dialog>
+                </Portal>
+              </View>
+
+              {/* password help dialog */}
               <View>
                 <Portal>
                   <Dialog
@@ -334,6 +421,20 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 }
 
 const styles = StyleSheet.create({
+  secretQuestionViewInput: {
+    color: 'grey',
+    fontSize: 16,
+    top: 15,
+    left: 10,
+  },
+  secretQuestionView: {
+    backgroundColor: 'white',
+    height: 55,
+    borderStyle: 'solid',
+    borderWidth: 1.5,
+    borderColor: '#a7a6a5',
+    borderRadius: 2,
+  },
   container: {
     width: '100%',
   },

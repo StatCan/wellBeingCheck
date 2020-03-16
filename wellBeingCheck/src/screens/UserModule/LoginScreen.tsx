@@ -1,30 +1,18 @@
-import React, { memo, useState, useCallback } from 'react';
-import { Picker, View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import React, { memo } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView,Image } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Background from '../../components/Background';
-import Logo from '../../components/Logo';
-import Header from '../../components/Header';
 import Button from '../../components/Button';
 import TextInput from '../../components/TextInput';
-import BackButton from '../../components/BackButton';
-import { newTheme, theme } from '../../core/theme';
+import { newTheme } from '../../core/theme';
 import { resources } from '../../../GlobalResources';
-import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
-//import { Navigation } from '../../types';
-
+import { Provider as PaperProvider } from 'react-native-paper';
+import md5 from "react-native-md5";
 import {
   NavigationParams,
   NavigationScreenProp,
   NavigationState,
 } from 'react-navigation';
-
-import {
-  passwordValidator,
-  passwordConfirmValidator,
-  securityQuestionValidator,
-  securityAnswerValidator,
-} from '../../core/utils';
-import { Drawer } from 'react-native-paper';
 import LogoClear from '../../components/LogoClear';
 import AppBanner from '../../components/AppBanner';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
@@ -32,6 +20,7 @@ import { SafeAreaConsumer } from 'react-native-safe-area-context';
 type LoginState = {
   password: string,
   passwordError: string,
+  title: string,
 }
 
 interface Props {
@@ -68,7 +57,10 @@ class LoginScreen extends React.Component<Props, LoginState> {
           return;
         }
 
-        if (currentPassword !== inputPassword) {
+        //first hash the password as md5
+        let passwordHashed = md5.hex_md5(inputPassword);
+
+        if (currentPassword !== passwordHashed) {
           //incorrect pasword
           this.setState({ passwordError: 'incorrect password' });
         }
@@ -84,18 +76,22 @@ class LoginScreen extends React.Component<Props, LoginState> {
   }
 
   render() {
+  const bannerPathEnglish = require('../../assets/statscan_banner.png');
+  const bannerPathFrench = require('../../assets/statscan_banner_fr.png');
     return (
       <PaperProvider theme={newTheme}>
 
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
-        <AppBanner />
-
+        <View style={styles.statusBar}>
+           <Image source={resources.culture == 'fr' ? bannerPathFrench : bannerPathEnglish} style={styles.image} />
+         </View>
         <Background>
           {/* <BackButton goBack={() => this.props.navigation.navigate('HomeScreen')} /> */}
-          <View style={{ width: '100%', height: 24, marginTop: 0, alignItems: 'flex-end', justifyContent: 'flex-end' }}>
+          <View style={{ width: '100%', height: 24, marginTop: 40, alignItems: 'flex-end', justifyContent: 'flex-end' }}>
             <TouchableOpacity onPress={() => this.toggleLanguage()} style={{ height: 60 }}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
           </View>
-          <ScrollView>
+
+          <ScrollView showsVerticalScrollIndicator={false}>
 
             <View style={styles.logo}>
               <LogoClear />
@@ -175,6 +171,15 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     paddingRight: 20,
   },
+   image: {
+      maxWidth: 300,
+      minWidth: 250,
+      height: 50,
+    },
+    statusBar: {
+      backgroundColor: "#f7f8f9",
+      height: 50,
+    },
 });
 
 export default memo(LoginScreen);

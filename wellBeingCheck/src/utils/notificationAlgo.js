@@ -99,13 +99,13 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5) {
 
   // Schedule for the next 30 days
   // For testing purposes, day set to a few days
-  for (day = 0; day < 2; day++) {
+  for (day = 0; day < 30; day++) {
 
     // Now choose number of random hours based on number of pings
     for (i = 0; i < numPings; i++ ){
-      chosenHoursBefore[i] = Math.floor(Math.random() * awakeOneHourTimeIntervalsBefore.length);
+      chosenHoursBefore[i] = awakeOneHourTimeIntervalsBefore[Math.floor(Math.random() * awakeOneHourTimeIntervalsBefore.length)];
       while (checkForDuplicates(chosenHoursBefore)){
-          chosenHoursBefore[i] = Math.floor(Math.random() * awakeOneHourTimeIntervalsBefore.length);
+          chosenHoursBefore[i] = awakeOneHourTimeIntervalsBefore[Math.floor(Math.random() * awakeOneHourTimeIntervalsBefore.length)];
       }
     }
 
@@ -172,10 +172,10 @@ scheduleNotificationBasedOnTime = async (hour, day) => {
   if (global.debugMode) console.log("The current date is: " + Date.now());
 
   var currentDate = new Date();
-  var currentYear = currentDate.getFullYear();
-  var currentMonth = currentDate.getMonth();
-  var currentDay = currentDate.getDate();
-  var currentHour = currentDate.getHours();
+  var currentYear = currentDate.getUTCFullYear();
+  var currentMonth = currentDate.getUTCMonth();
+  var currentDay = currentDate.getUTCDate();
+  var currentHour = currentDate.getUTCHours();
 
   // Round up the minutes, seconds and milliseconds as per requirements
   // Add day and hour offset

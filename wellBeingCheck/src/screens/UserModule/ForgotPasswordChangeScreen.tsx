@@ -11,6 +11,7 @@ import { EvilIcons, Feather } from '@expo/vector-icons';
 import { Drawer, Title, Provider, Portal, Dialog } from 'react-native-paper';
 import LogoClearSmall from '../../components/LogoClearSmall';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
+import md5 from "react-native-md5";
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -45,7 +46,7 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
       passwordError: "",
       passwordConfirm: "",
       passwordConfirmError: "",
-      modalShow: false,
+      modalShow: false,title: resources.getString("Well-Being Check")
     };
   }
 
@@ -115,7 +116,6 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
 
   _CreateNewAccount = () => {
     //validation passed lets store user
-
     AsyncStorage.getItem('user_account', (err, result) => {
       console.log(result);
       if (result) {
@@ -123,18 +123,21 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
         let secQue = resultAsObj.security_question;
         let secAnsw = resultAsObj.security_answer;
 
+        //first hash the password as md5
+        let passwordHashed = md5.hex_md5(this.state.password);
+
         let userAccountObj = {
-          password: this.state.password,
+          password: passwordHashed,
           security_question: secQue,
           security_answer: secAnsw,
         };
-    
+
         AsyncStorage.setItem('user_account', JSON.stringify(userAccountObj), () => {
           this.props.navigation.navigate('Dashboard');
         });
       }
       else {
-       alert('Failed to create new account!')
+        alert('Failed to create new account!')
       }
     });
   }
@@ -170,15 +173,21 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
 
   _showModal = () => this.setState({ modalShow: true });
   _hideModal = () => this.setState({ modalShow: false });
-  
+  toggleLanguage() {
+    if (resources.culture == 'en') resources.culture = 'fr'; else resources.culture = 'en';
+    this.setState({ title: resources.getString("Well-Being Check") });
+  }
   render() {
     return (
       <PaperProvider theme={newTheme}>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
         <Background>
-          <SafeAreaView style={styles.container}>
+           <View style={styles.logo}>
+                                    <LogoClearSmall />
+                  <TouchableOpacity onPress={() => this.toggleLanguage()} style={{ height: 60 }}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
+                </View>
             <ScrollView style={styles.scrollView}>
-              <LogoClearSmall/>
+
               <Title style={styles.title}>{resources.getString("password_recovery_change.title")}</Title>
               <View style={styles.passwordView}>
                 <TextInput
@@ -215,9 +224,13 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
               />
 
               <View style={styles.footer}>
-                <Button color={newTheme.colors.primary} mode="contained" onPress={this._onSignUpPressed} style={styles.button}>
+                <Button  color={theme.colors.secondary} mode="contained" onPress={() => this.props.navigation.navigate('ForgotPasswordScreen')} style={styles.btnCancel}>
+                                                <Text style={styles.whiteText}>{resources.getString("gl.cancel")}</Text>
+                </Button>
+                <Button color={newTheme.colors.primary} mode="contained" onPress={this._onSignUpPressed} style={styles.btnNext}>
                   <Text style={styles.whiteText}>{resources.getString("reg.action.create")}</Text>
                 </Button>
+
               </View>
 
               <View>
@@ -273,7 +286,6 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
               </View>
 
             </ScrollView>
-          </SafeAreaView>
 
         </Background >
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
@@ -283,6 +295,11 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
 }
 
 const styles = StyleSheet.create({
+     logo: {
+      justifyContent: 'space-between',flexDirection:'row',width:'100%',
+      marginTop: 10,
+      marginBottom: 10,
+    },
   container: {
     width: '100%',
   },
@@ -356,6 +373,18 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
     marginRight: -20,
   },
+  btnCancel: {
+      color: newTheme.colors.whiteText,
+      width: 140,
+      alignSelf: "flex-end",
+      marginRight: 20,
+    },
+    btnNext: {
+      color: newTheme.colors.whiteText,
+      width: 140,
+      alignSelf: "flex-end",
+      marginRight: -20,
+    },
   row: {
     flexDirection: 'row',
     marginTop: 4,
