@@ -471,8 +471,8 @@ const styles = StyleSheet.create({
   passwordEyeIconBg: {
     right: 1,
     backgroundColor: 'white',
-    height: 59,
-    top: 18,
+    height: 58.6,
+    top: 17.8,
     width: 50,
     borderStyle: 'solid',
     borderColor: '#a7a6a5',
