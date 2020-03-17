@@ -7,7 +7,7 @@ import TextInput from '../../components/TextInput';
 import { theme, newTheme } from '../../core/theme';
 import { resources } from '../../../GlobalResources';
 import { Provider as PaperProvider, List } from 'react-native-paper';
-import { EvilIcons, Feather } from '@expo/vector-icons';
+import { EvilIcons, Feather, FontAwesome } from '@expo/vector-icons';
 import { Drawer, Title, Provider, Portal, Dialog } from 'react-native-paper';
 import LogoClearSmall from '../../components/LogoClearSmall';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
@@ -27,6 +27,7 @@ import {
 
 type RegisterState = {
   password: string,
+  passwordIsHidden: boolean,
   passwordError: string,
   passwordConfirm: string,
   passwordConfirmError: string,
@@ -49,6 +50,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     super(RegisterState)
     this.state = {
       password: "",
+      passwordIsHidden: true,
       passwordError: "",
       passwordConfirm: "",
       passwordConfirmError: "",
@@ -56,7 +58,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
       securityQuestionError: "",
       securityAnswer: "",
       securityAnswerError: "",
-      modalShow: true,
+      modalShow: false,
       modalSecrectQuestionShow: false,
       title: resources.getString("Well-Being Check"),
     };
@@ -221,6 +223,24 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     this._hideSecretQuestionModal()
   };
 
+  _togglePasswordHidden = () => {
+    if (this.state.passwordIsHidden) {
+      this.setState({ passwordIsHidden: false });
+    }
+    else {
+      this.setState({ passwordIsHidden: true });
+    }
+  }
+
+  _passwordEyeSlashState = () => {
+    if (this.state.passwordIsHidden) {
+      this.setState({ passwordIsHidden: false });
+    }
+    else {
+      this.setState({ passwordIsHidden: true });
+    }
+  }
+
   render() {
     return (
       <PaperProvider theme={newTheme}>
@@ -233,26 +253,45 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
               <TouchableOpacity onPress={() => this.toggleLanguage()} style={{ alignSelf: 'flex-end', marginRight: 0 }}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
             </View>
             <ScrollView style={styles.scrollView}>
+
               <Title style={styles.title}>{resources.getString("Secure your account")}</Title>
-              <View style={styles.passwordView}>
-                <TextInput
-                  label={resources.getString("Enter password")}
-                  returnKeyType="next"
-                  selectionColor={newTheme.colors.primary}
-                  underlineColor={newTheme.colors.primary}
-                  theme={newTheme}
-                  value={this.state.password}
-                  onChangeText={text => this.setState({ password: text })}
-                  error={!!this.state.passwordError}
-                  errorText={this.state.passwordError}
-                  secureTextEntry={true}
-                />
-                <TouchableOpacity
-                  style={styles.passwordHelpBtnBg}
-                  onPress={this._showModal}
-                >
-                  <Text style={styles.passwordHelpBtnText}>?</Text>
-                </TouchableOpacity>
+
+              <View style={{ flex: 1, flexDirection: 'row' }}>
+                <View style={styles.passwordInput}>
+                  <TextInput
+                    label={resources.getString("Enter password")}
+                    returnKeyType="next"
+                    selectionColor={newTheme.colors.primary}
+                    underlineColor={newTheme.colors.primary}
+                    theme={newTheme}
+                    value={this.state.password}
+                    onChangeText={text => this.setState({ password: text })}
+                    error={!!this.state.passwordError}
+                    errorText={this.state.passwordError}
+                    secureTextEntry={this.state.passwordIsHidden}
+                  />
+                </View>
+
+                <View>
+                  <TouchableOpacity
+                    style={styles.passwordEyeIconBg}
+                    onPress={this._togglePasswordHidden}
+                  >
+                    <Feather
+                      style={styles.passwordEyeIcon}
+                      size={20} name={this.state.passwordIsHidden ? "eye-off" : "eye" }
+                    />
+                  </TouchableOpacity>
+                </View>
+
+                <View>
+                  <TouchableOpacity
+                    style={styles.passwordHelpBtnBg}
+                    onPress={this._showModal}
+                  >
+                    <Text style={styles.passwordHelpBtnText}>?</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
 
               <TextInput
@@ -415,12 +454,35 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 
         </Background >
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
-      </PaperProvider>
+      </PaperProvider >
     );
   }
 }
 
 const styles = StyleSheet.create({
+  passwordInput: {
+    width: 190,
+    borderRightWidth: 0,
+  },
+  passwordEyeIcon: {
+    top: 18,
+    left: 12,
+  },
+  passwordEyeIconBg: {
+    right: 1,
+    backgroundColor: 'white',
+    height: 58.5,
+    top: 18,
+    width: 50,
+    borderStyle: 'solid',
+    borderColor: '#a7a6a5',
+    borderRadius: 2,
+    borderTopWidth: 1.5,
+    borderBottomWidth: 1.5,
+    borderLeftWidth: 0,
+    // position: 'absolute',
+
+  },
   secretQuestionViewInput: {
     color: 'grey',
     fontSize: 16,
@@ -470,15 +532,17 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 2,
     height: 58,
-    position: 'relative',
+    // position: 'relative',
     top: 18,
     borderStyle: 'solid',
     borderWidth: 1,
     borderColor: 'grey',
+    right: 1,
   },
   passwordView: {
     flexDirection: 'row',
-    width: 238,
+    width: 200,
+    backgroundColor: 'blue'
   },
   btnHelp: {
     height: 60,
