@@ -58,8 +58,8 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
           let timeStamp='';
           let d=new Date();let hh=deviceHeight-220;let hh1=deviceHeight-300;let ww=deviceWidth-80;
           timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-          let uri0=global.webApiBaseUrl+'Mood/aaa/'+timeStamp+'/en/'+ww+'/'+hh1;
-          let uri1=global.webApiBaseUrl+'Mood/aaa/'+timeStamp+'/fr/'+ww+'/'+hh1;
+          let uri0=global.webApiBaseUrl+'Mood/aaa/'+timeStamp+'/en/'+deviceWidth+'/'+hh;
+          let uri1=global.webApiBaseUrl+'Mood/aaa/'+timeStamp+'/fr/'+deviceWidth+'/'+hh;
           let uri2=global.webApiBaseUrl+'Location/aaa/'+timeStamp+'/en/'+deviceWidth+'/'+hh;
           let uri3=global.webApiBaseUrl+'Location/aaa/'+timeStamp+'/fr/'+deviceWidth+'/'+hh;
           let uri4=global.webApiBaseUrl+'People/aaa/'+timeStamp+'/en/'+deviceWidth+'/'+hh;
@@ -130,7 +130,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
          console.log('Beofore eq:'+uri);
      let userAgent=Platform.OS=='ios'?'Apple deviceId/'+global.userToken:'Android deviceId/'+global.userToken;console.log(userAgent);
     return (
-          <View style={{ flex: 1, marginTop: 0 }}>
+          <View style={{ flex: 1, marginTop: 40}}>
                 <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{marginLeft:5,marginTop:10}}><Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:38,height:38}} /></TouchableOpacity>
                 </View>
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
   },
   webview: {
     //  flex: 1,
-    marginTop: 24,
+    marginTop:0,
     width: deviceWidth,
     height: deviceHeight + 2000
   },
