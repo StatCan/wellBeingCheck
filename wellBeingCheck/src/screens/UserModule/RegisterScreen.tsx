@@ -471,16 +471,14 @@ const styles = StyleSheet.create({
   passwordEyeIconBg: {
     right: 1,
     backgroundColor: 'white',
-    height: 58.5,
+    height: 59,
     top: 18,
     width: 50,
     borderStyle: 'solid',
     borderColor: '#a7a6a5',
-    borderRadius: 2,
     borderTopWidth: 1.5,
     borderBottomWidth: 1.5,
     borderLeftWidth: 0,
-    // position: 'absolute',
 
   },
   secretQuestionViewInput: {
