@@ -276,10 +276,11 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                   <TouchableOpacity
                     style={styles.passwordEyeIconBg}
                     onPress={this._togglePasswordHidden}
+                    activeOpacity={1}
                   >
                     <Feather
                       style={styles.passwordEyeIcon}
-                      size={20} name={this.state.passwordIsHidden ? "eye-off" : "eye" }
+                      size={20} name={this.state.passwordIsHidden ? "eye-off" : "eye"}
                     />
                   </TouchableOpacity>
                 </View>
