@@ -31,14 +31,14 @@ export default class App extends React.Component<Props,ScreenState> {
     constructor(props) {
       	    super(props);
       	    this.state = {picture1Base64:null,
-               images: [],current:0,title:resources.getString("How you are feeling by location"),helpText:resources.getString("Your feeling help"),
+               images: [],current:0,title:resources.getString("Your feelings"),helpText:resources.getString("Your feeling help"),
       	     width: 0,height: 0};
        }
-     _onNextBtnHandle = () => {
+    _onNextBtnHandle = () => {
        this.props.navigation.navigate('Dashboard');
      }
  loadImage() {
-            let imageId='image2';if(resources.culture=='fr')imageId='image3';
+            let imageId='image0';if(resources.culture=='fr')imageId='image1';
     	    AsyncStorage.getItem(imageId, (error, result) => {
     	      if (!error && result != null){
                     this.setState({ picture1Base64: result });
@@ -50,24 +50,36 @@ export default class App extends React.Component<Props,ScreenState> {
                    // do something else
                }
     	    })
-    	  imageId='image4';if(resources.culture=='fr')imageId='image5';
-             AsyncStorage.getItem(imageId, (error, result) => {
+    	    imageId='image2';if(resources.culture=='fr')imageId='image3';
+            AsyncStorage.getItem(imageId, (error, result) => {
+                	      if (!error && result != null){
+                                this.setState({ picture1Base64: result });
+                                let newArray = [...this.state.images];
+                                newArray[1] = result;
+                                this.setState({images: newArray});
+                           }
+                           else {
+                               // do something else
+                           }
+                	    })
+    	    imageId='image4';if(resources.culture=='fr')imageId='image5';
+            AsyncStorage.getItem(imageId, (error, result) => {
              	      if (!error && result != null){
                          //    this.setState({ picture2Base64: result });
                               let newArray = [...this.state.images];
-                                                 newArray[1] = result;
+                                                 newArray[2] = result;
                                                  this.setState({images: newArray});
                         }
                         else {
                             // do something else
                         }
              	    })
-          imageId='image6';if(resources.culture=='fr')imageId='image7';
-                       AsyncStorage.getItem(imageId, (error, result) => {
+            imageId='image6';if(resources.culture=='fr')imageId='image7';
+            AsyncStorage.getItem(imageId, (error, result) => {
                        	      if (!error && result != null){
                                    //    this.setState({ picture3Base64: result });
                                         let newArray = [...this.state.images];
-                                                           newArray[2] = result;
+                                                           newArray[3] = result;
                                                            this.setState({images: newArray});
                                   }
                                   else {
@@ -84,9 +96,10 @@ export default class App extends React.Component<Props,ScreenState> {
       let index=Math.round(x/width1);
       let xd=index*width1;
       this.setState({current:index});
-      if(index==0){this.setState({title:resources.getString("How you are feeling by location")});}
-      else if(index==1){this.setState({title:resources.getString("How you are feeling with others")});}
-      else if(index==2){this.setState({title:resources.getString("How you are feeling by activity")});}
+      if(index==0){this.setState({title:resources.getString("Your feelings")});}
+      else if(index==1){this.setState({title:resources.getString("How you are feeling by location")});}
+      else if(index==2){this.setState({title:resources.getString("How you are feeling with others")});}
+      else if(index==3){this.setState({title:resources.getString("How you are feeling by activity")});}
       InteractionManager.runAfterInteractions(()=>this.sv.scrollTo({x:xd}))
       }
    _onLayout(event) {
@@ -115,14 +128,13 @@ export default class App extends React.Component<Props,ScreenState> {
                    source={require('../../assets/white.png')}
                     style={{ backgroundColor: 'white',flex:1}}
                  >
-           <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+           <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:40}}>
                  <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{marginLeft:5,marginTop:10}}><Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:38,height:38}} /></TouchableOpacity>
+                 <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>{indicator}</View>
                  <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{marginRight:5,marginTop:10}}><FontAwesome name="gear" size={30} color="black" /></TouchableOpacity>
            </View>
             <View style={{ flex: 1 }}>
-                    <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>
-                          {indicator}
-                    </View>
+
                     <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                          <Title style={[styles.title,{marginLeft:5}]}>{this.state.title}</Title>
                           <TouchableOpacity onPress={() => this.helpClick()} style={{marginRight:0}}><AntDesign name="questioncircle" size={30} style={{color:'#918196',marginRight:5}} color="black" /></TouchableOpacity>
