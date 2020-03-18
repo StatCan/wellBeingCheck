@@ -1,5 +1,5 @@
 import React, { memo, useState, useCallback } from 'react';
-import { Text, StyleSheet, TouchableOpacity, View,ScrollView } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, View, ScrollView } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
@@ -30,6 +30,7 @@ type ForgotPasswordState = {
   securityQuestion: string,
   securityAnswer: string,
   securityAnswerError: string,
+  title: string,
 }
 
 interface Props {
@@ -43,7 +44,8 @@ class ForgotPasswordScreen extends React.Component<Props, ForgotPasswordState> {
     this.state = {
       securityQuestion: "",
       securityAnswer: "",
-      securityAnswerError: "",title: resources.getString("Well-Being Check")
+      securityAnswerError: "",
+      title: resources.getString("Well-Being Check"),
     };
     this._accountAlreadyExists();
   }
@@ -83,62 +85,65 @@ class ForgotPasswordScreen extends React.Component<Props, ForgotPasswordState> {
       }
     });
   }
+
   toggleLanguage() {
     if (resources.culture == 'en') resources.culture = 'fr'; else resources.culture = 'en';
     this.setState({ title: resources.getString("Well-Being Check") });
   }
+
   render() {
     const securityQuestionValue = this.state.securityQuestion;
     const securityQuestion = resources.getString(securityQuestionValue);
 
     return (
-     <PaperProvider theme={newTheme}>
+      <PaperProvider theme={newTheme}>
+        <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
+        <Background>
+          <View style={styles.logo}>
+            <LogoClearSmall />
+            <TouchableOpacity
+              onPress={() => this.toggleLanguage()}
+              style={{ height: 60 }}
+            >
+              <Text>{resources.getString("Language")}</Text>
+            </TouchableOpacity>
+          </View>
+          <ScrollView showsVerticalScrollIndicator={false} style={{ minHeight: 100 }}>
 
-            <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
+            <Text style={styles.header}>{resources.getString("password_recovery.title")}</Text>
 
+            <Text style={styles.securityQuestionText}>{securityQuestion}</Text>
 
-      <Background>
-  <View style={styles.logo}>
-                          <LogoClearSmall />
-                           <TouchableOpacity onPress={() => this.toggleLanguage()} style={{ height: 60 }}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
-      </View>
-      <ScrollView showsVerticalScrollIndicator={false} style={{minHeight:100}}>
+            <TextInput
+              label={resources.getString("answer")}
+              returnKeyType="next"
+              value={this.state.securityAnswer}
+              onChangeText={text => this.setState({ securityAnswer: text })}
+              error={!!this.state.securityAnswerError}
+              errorText={this.state.securityAnswerError}
+            />
 
-        <Text style={styles.header}>{resources.getString("password_recovery.title")}</Text>
+            <View style={styles.footer}>
+              <Button
+                color={theme.colors.secondary}
+                style={styles.btnCancel}
+                mode="contained"
+                onPress={() => this.props.navigation.navigate('LoginScreen')}
+              >
+                <Text style={styles.whiteText}>{resources.getString("gl.cancel")}</Text>
+              </Button>
 
-        <Text style={styles.securityQuestionText}>{securityQuestion}</Text>
-
-        <TextInput
-          label={resources.getString("answer")}
-          returnKeyType="next"
-          value={this.state.securityAnswer}
-          onChangeText={text => this.setState({ securityAnswer: text })}
-          error={!!this.state.securityAnswerError}
-          errorText={this.state.securityAnswerError}
-        />
-
-        <View style={styles.footer}>
-          <Button
-            color={theme.colors.secondary}
-            style={styles.btnCancel}
-            mode="contained"
-            onPress={() => this.props.navigation.navigate('LoginScreen')}
-          >
-            <Text style={styles.whiteText}>{resources.getString("gl.cancel")}</Text>
-          </Button>
-
-          <Button
-            color={newTheme.colors.primary}
-            style={styles.btnNext}
-            mode="contained"
-            onPress={this._onResetPasswordPressed}
-          >
-
-            <Text style={styles.whiteText}>{resources.getString("gl.next")}</Text>
-          </Button>
-        </View>
-        </ScrollView>
-      </Background>
+              <Button
+                color={newTheme.colors.primary}
+                style={styles.btnNext}
+                mode="contained"
+                onPress={this._onResetPasswordPressed}
+              >
+                <Text style={styles.whiteText}>{resources.getString("gl.next")}</Text>
+              </Button>
+            </View>
+          </ScrollView>
+        </Background>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
       </PaperProvider>
     );
@@ -146,8 +151,8 @@ class ForgotPasswordScreen extends React.Component<Props, ForgotPasswordState> {
 }
 
 const styles = StyleSheet.create({
-   logo: {
-    justifyContent: 'space-between',flexDirection:'row',width:'100%',
+  logo: {
+    justifyContent: 'space-between', flexDirection: 'row', width: '100%',
     marginTop: 10,
     marginBottom: 100,
   },
