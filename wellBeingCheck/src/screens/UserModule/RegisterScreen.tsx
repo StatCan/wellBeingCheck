@@ -289,6 +289,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                   <TouchableOpacity
                     style={styles.passwordHelpBtnBg}
                     onPress={this._showModal}
+                    activeOpacity={1}
                   >
                     <Text style={styles.passwordHelpBtnText}>?</Text>
                   </TouchableOpacity>
