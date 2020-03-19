@@ -27,10 +27,12 @@ import LogoClear from '../../components/LogoClear';
 
 type ForgotPasswordChangeState = {
   password: string,
+  passwordIsHidden: boolean,
   passwordError: string,
   passwordConfirm: string,
   passwordConfirmError: string,
   modalShow: boolean,
+  title: string,
 }
 
 interface Props {
@@ -43,10 +45,12 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
     super(RegisterState)
     this.state = {
       password: "",
+      passwordIsHidden: true,
       passwordError: "",
       passwordConfirm: "",
       passwordConfirmError: "",
-      modalShow: false,title: resources.getString("Well-Being Check")
+      modalShow: false,
+      title: resources.getString("Well-Being Check"),
     };
   }
 
@@ -173,23 +177,45 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
 
   _showModal = () => this.setState({ modalShow: true });
   _hideModal = () => this.setState({ modalShow: false });
+
   toggleLanguage() {
     if (resources.culture == 'en') resources.culture = 'fr'; else resources.culture = 'en';
     this.setState({ title: resources.getString("Well-Being Check") });
   }
+
+  _togglePasswordHidden = () => {
+    if (this.state.passwordIsHidden) {
+      this.setState({ passwordIsHidden: false });
+    }
+    else {
+      this.setState({ passwordIsHidden: true });
+    }
+  }
+
+  _passwordEyeSlashState = () => {
+    if (this.state.passwordIsHidden) {
+      this.setState({ passwordIsHidden: false });
+    }
+    else {
+      this.setState({ passwordIsHidden: true });
+    }
+  }
+
   render() {
     return (
       <PaperProvider theme={newTheme}>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
         <Background>
-           <View style={styles.logo}>
-                                    <LogoClearSmall />
-                  <TouchableOpacity onPress={() => this.toggleLanguage()} style={{ height: 60 }}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
-                </View>
-            <ScrollView style={styles.scrollView}>
+          <View style={styles.logo}>
+            <LogoClearSmall />
+            <TouchableOpacity onPress={() => this.toggleLanguage()} style={{ height: 60 }}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
+          </View>
+          <ScrollView style={styles.scrollView}>
 
-              <Title style={styles.title}>{resources.getString("password_recovery_change.title")}</Title>
-              <View style={styles.passwordView}>
+            <Title style={styles.title}>{resources.getString("password_recovery_change.title")}</Title>
+
+            <View style={{ flex: 1, flexDirection: 'row' }}>
+              <View style={styles.passwordInput}>
                 <TextInput
                   label={resources.getString("Enter password")}
                   returnKeyType="next"
@@ -200,92 +226,110 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
                   onChangeText={text => this.setState({ password: text })}
                   error={!!this.state.passwordError}
                   errorText={this.state.passwordError}
-                  secureTextEntry={true}
+                  secureTextEntry={this.state.passwordIsHidden}
                 />
+              </View>
+
+              <View>
+                <TouchableOpacity
+                  style={styles.passwordEyeIconBg}
+                  onPress={this._togglePasswordHidden}
+                  activeOpacity={1}
+                >
+                  <Feather
+                    style={styles.passwordEyeIcon}
+                    size={20} name={this.state.passwordIsHidden ? "eye-off" : "eye"}
+                  />
+                </TouchableOpacity>
+              </View>
+
+              <View>
                 <TouchableOpacity
                   style={styles.passwordHelpBtnBg}
                   onPress={this._showModal}
+                  activeOpacity={1}
                 >
                   <Text style={styles.passwordHelpBtnText}>?</Text>
                 </TouchableOpacity>
               </View>
+            </View>
 
-              <TextInput
-                label={resources.getString("confirm_password")}
-                returnKeyType="next"
-                selectionColor={newTheme.colors.primary}
-                underlineColor={newTheme.colors.primary}
-                theme={newTheme}
-                value={this.state.passwordConfirm}
-                onChangeText={text => this.setState({ passwordConfirm: text })}
-                error={!!this.state.passwordConfirmError}
-                errorText={this.state.passwordConfirmError}
-                secureTextEntry={true}
-              />
+            <TextInput
+              label={resources.getString("confirm_password")}
+              returnKeyType="next"
+              selectionColor={newTheme.colors.primary}
+              underlineColor={newTheme.colors.primary}
+              theme={newTheme}
+              value={this.state.passwordConfirm}
+              onChangeText={text => this.setState({ passwordConfirm: text })}
+              error={!!this.state.passwordConfirmError}
+              errorText={this.state.passwordConfirmError}
+              secureTextEntry={true}
+            />
 
-              <View style={styles.footer}>
-                <Button  color={theme.colors.secondary} mode="contained" onPress={() => this.props.navigation.navigate('ForgotPasswordScreen')} style={styles.btnCancel}>
-                                                <Text style={styles.whiteText}>{resources.getString("gl.cancel")}</Text>
-                </Button>
-                <Button color={newTheme.colors.primary} mode="contained" onPress={this._onSignUpPressed} style={styles.btnNext}>
-                  <Text style={styles.whiteText}>{resources.getString("reg.action.create")}</Text>
-                </Button>
+            <View style={styles.footer}>
+              <Button color={theme.colors.secondary} mode="contained" onPress={() => this.props.navigation.navigate('ForgotPasswordScreen')} style={styles.btnCancel}>
+                <Text style={styles.whiteText}>{resources.getString("gl.cancel")}</Text>
+              </Button>
+              <Button color={newTheme.colors.primary} mode="contained" onPress={this._onSignUpPressed} style={styles.btnNext}>
+                <Text style={styles.whiteText}>{resources.getString("reg.action.create")}</Text>
+              </Button>
 
-              </View>
+            </View>
 
-              <View>
-                <Portal>
-                  <Dialog
-                    visible={this.state.modalShow}
-                    onDismiss={this._hideModal}>
-                    <Dialog.Title>{resources.getString("Password Requirements")}</Dialog.Title>
-                    <Dialog.Content>
-                      <View style={styles.pr_view}>
-                        <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_length")}</Text>
-                        <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check" />
-                        </TouchableOpacity>
-                      </View>
-                      <View style={styles.pr_view}>
-                        <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_upper")}</Text>
-                        <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check" />
-                        </TouchableOpacity>
-                      </View>
-                      <View style={styles.pr_view}>
-                        <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_special")}</Text>
-                        <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check" />
-                        </TouchableOpacity>
-                      </View>
-                      <View style={styles.pr_view}>
-                        <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_lower")}</Text>
-                        <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check" />
-                        </TouchableOpacity>
-                      </View>
-                      <View style={styles.pr_view}>
-                        <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_number")}</Text>
-                        <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check" />
-                        </TouchableOpacity>
-                      </View>
-                    </Dialog.Content>
-                    <Dialog.Actions>
-                      <View>
-                        <Button
-                          color={newTheme.colors.primary}
-                          style={styles.pr_action_btn}
-                          onPress={this._hideModal}>
-                          Ok
+            <View>
+              <Portal>
+                <Dialog
+                  visible={this.state.modalShow}
+                  onDismiss={this._hideModal}>
+                  <Dialog.Title>{resources.getString("Password Requirements")}</Dialog.Title>
+                  <Dialog.Content>
+                    <View style={styles.pr_view}>
+                      <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_length")}</Text>
+                      <TouchableOpacity style={styles.pr_btn}>
+                        <EvilIcons size={25} name="check" />
+                      </TouchableOpacity>
+                    </View>
+                    <View style={styles.pr_view}>
+                      <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_upper")}</Text>
+                      <TouchableOpacity style={styles.pr_btn}>
+                        <EvilIcons size={25} name="check" />
+                      </TouchableOpacity>
+                    </View>
+                    <View style={styles.pr_view}>
+                      <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_special")}</Text>
+                      <TouchableOpacity style={styles.pr_btn}>
+                        <EvilIcons size={25} name="check" />
+                      </TouchableOpacity>
+                    </View>
+                    <View style={styles.pr_view}>
+                      <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_lower")}</Text>
+                      <TouchableOpacity style={styles.pr_btn}>
+                        <EvilIcons size={25} name="check" />
+                      </TouchableOpacity>
+                    </View>
+                    <View style={styles.pr_view}>
+                      <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_number")}</Text>
+                      <TouchableOpacity style={styles.pr_btn}>
+                        <EvilIcons size={25} name="check" />
+                      </TouchableOpacity>
+                    </View>
+                  </Dialog.Content>
+                  <Dialog.Actions>
+                    <View>
+                      <Button
+                        color={newTheme.colors.primary}
+                        style={styles.pr_action_btn}
+                        onPress={this._hideModal}>
+                        Ok
                       </Button>
-                      </View>
-                    </Dialog.Actions>
-                  </Dialog>
-                </Portal>
-              </View>
+                    </View>
+                  </Dialog.Actions>
+                </Dialog>
+              </Portal>
+            </View>
 
-            </ScrollView>
+          </ScrollView>
 
         </Background >
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
@@ -295,11 +339,31 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
 }
 
 const styles = StyleSheet.create({
-     logo: {
-      justifyContent: 'space-between',flexDirection:'row',width:'100%',
-      marginTop: 10,
-      marginBottom: 10,
-    },
+  passwordInput: {
+    width: 190,
+    borderRightWidth: 0,
+  },
+  passwordEyeIcon: {
+    top: 18,
+    left: 12,
+  },
+  passwordEyeIconBg: {
+    right: 1,
+    backgroundColor: 'white',
+    height: 58.6,
+    top: 17.8,
+    width: 50,
+    borderStyle: 'solid',
+    borderColor: '#a7a6a5',
+    borderTopWidth: 1.5,
+    borderBottomWidth: 1.5,
+    borderLeftWidth: 0,
+  },
+  logo: {
+    justifyContent: 'space-between', flexDirection: 'row', width: '100%',
+    marginTop: 10,
+    marginBottom: 10,
+  },
   container: {
     width: '100%',
   },
@@ -374,17 +438,17 @@ const styles = StyleSheet.create({
     marginRight: -20,
   },
   btnCancel: {
-      color: newTheme.colors.whiteText,
-      width: 140,
-      alignSelf: "flex-end",
-      marginRight: 20,
-    },
-    btnNext: {
-      color: newTheme.colors.whiteText,
-      width: 140,
-      alignSelf: "flex-end",
-      marginRight: -20,
-    },
+    color: newTheme.colors.whiteText,
+    width: 140,
+    alignSelf: "flex-end",
+    marginRight: 20,
+  },
+  btnNext: {
+    color: newTheme.colors.whiteText,
+    width: 140,
+    alignSelf: "flex-end",
+    marginRight: -20,
+  },
   row: {
     flexDirection: 'row',
     marginTop: 4,
