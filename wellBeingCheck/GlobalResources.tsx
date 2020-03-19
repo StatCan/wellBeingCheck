@@ -210,37 +210,35 @@ export const resources = {
              "answer":"Répondre",
             //getting started
             "getting_started": "Pour commencer",
-            "getting_started_content": `Pour Commencer
+            "getting_started_content": `Pourquoi nous menons cette étude \n\n`+
+                                        `L’objectif de cette enquête est de mieux comprendre le bien-être au quotidien des Canadiens et des Canadiennes en leur demandant de répondre à des questions sur les activités qu’ils entreprennent et les sentiments qu’ils éprouvent en temps réel. Pour ce faire, les participants devront télécharger une application sur leur téléphone intelligent et répondre à quelques questions à divers intervalles au cours de la journée, sur une courte période de temps. Les résultats obtenus nous aideront à établir des liens entre certaines activités et le bien-être, et nous permettront de développer des programmes qui amélioreront la vie des gens. À l’avenir, ce genre d’application pourrait servir à répondre à d’autres enquêtes de Statistique Canada de façon plus rapide et pratique. \n\n`+
 
-            Pourquoi nous menons cette étude 
-            L’objectif de cette enquête est de mieux comprendre le bien-être au quotidien des Canadiens et des Canadiennes en leur demandant de répondre à des questions sur les activités qu’ils entreprennent et les sentiments qu’ils éprouvent en temps réel. Pour ce faire, les participants devront télécharger une application sur leur téléphone intelligent et répondre à quelques questions à divers intervalles au cours de la journée, sur une courte période de temps. Les résultats obtenus nous aideront à établir des liens entre certaines activités et le bien-être, et nous permettront de développer des programmes qui amélioreront la vie des gens. À l’avenir, ce genre d’application pourrait servir à répondre à d’autres enquêtes de Statistique Canada de façon plus rapide et pratique. 
-            
-            Les renseignements recueillis pourraient aussi être utilisés par Statistique Canada à d’autres fins statistiques et de recherche. 
-            
-            Notifications
-            Cette application vous enverra une notification pour remplir un Bilan bien-être de 2 à 5 fois par jour, entre l’heure de votre réveil et l’heure à laquelle vous vous couchez. Vous pouvez personnaliser ces paramètres à tout moment dans le menu des paramètres sur la page d’accueil de l’application. Si vous ne personnalisez pas les paramètres, vous recevrez par défaut 2 notifications à divers moments entre 8 h et 22 h. Si vous n’acceptez pas les notifications, vous pourrez tout de même remplir un Bilan bien-être quand vous le voudrez, mais la qualité de vos résultats pourrait en être affectée. 
-            
-            Autorisation et confidentialité 
-            Ces données sont recueillies en vertu de la Loi sur la statistique, Lois révisées du Canada (1985), chapitre S-19. V os renseignements demeureront strictement confidentiels. 
-            
-            Bien qu’elle soit volontaire, votre participation est importante afin que les renseignements recueillis soient les plus exacts et les plus complets possible.
-            
-            Couplages d’enregistrements 
-            Afin d’améliorer la qualité des données tirées de cette enquête et de réduire le fardeau de réponse, Statistique Canada pourrait combiner les renseignements que vous fournissez avec ceux provenant d’autres enquêtes ou sources de données administratives. 
-            
-            Temps requis pour remplir ce questionnaire 
-            Ce questionnaire prendra 2 minutes à remplir. Veuillez noter que vous ne serez pas en mesure de modifier les renseignements déclarés une fois votre questionnaire soumis. 
-            
-            Pour parcourir le questionnaire 
-            Utilisez les boutons Précédent et Suivant situés dans le coin inférieur droit de chaque page. 
-            
-            Délai d’inactivité d’une session 
-            Après 2 heures d’inactivité, votre session sera interrompue. Vous ne pourrez accéder à aucun renseignement qui n’a pas été sauvegardé. 
-            
-            Après 15 minutes d’inactivité, Bilan bien-être se verrouille. Vous devrez entrer votre mot de passe pour continuer. 
-            
-            Définitions et explications 
-            Un bouton d’aide est disponible pour certaines questions. Appuyez sur ce bouton pour obtenir plus de renseignements ou des précisions.`,
+                                        `Les renseignements recueillis pourraient aussi être utilisés par Statistique Canada à d’autres fins statistiques et de recherche. \n\n`+
+
+                                        `Notifications \n\n`+
+                                        `Cette application vous enverra une notification pour remplir un Bilan bien-être de 2 à 5 fois par jour, entre l’heure de votre réveil et l’heure à laquelle vous vous couchez. Vous pouvez personnaliser ces paramètres à tout moment dans le menu des paramètres sur la page d’accueil de l’application. Si vous ne personnalisez pas les paramètres, vous recevrez par défaut 2 notifications à divers moments entre 8 h et 22 h. Si vous n’acceptez pas les notifications, vous pourrez tout de même remplir un Bilan bien-être quand vous le voudrez, mais la qualité de vos résultats pourrait en être affectée. \n\n`+
+
+                                        `Autorisation et confidentialité \n\n`+
+                                        `Ces données sont recueillies en vertu de la Loi sur la statistique, Lois révisées du Canada (1985), chapitre S-19. V os renseignements demeureront strictement confidentiels. \n\n`+
+
+                                        `Bien qu’elle soit volontaire, votre participation est importante afin que les renseignements recueillis soient les plus exacts et les plus complets possible. \n\n`+
+
+                                        `Couplages d’enregistrements \n\n`+
+                                        `Afin d’améliorer la qualité des données tirées de cette enquête et de réduire le fardeau de réponse, Statistique Canada pourrait combiner les renseignements que vous fournissez avec ceux provenant d’autres enquêtes ou sources de données administratives. \n\n`+
+
+                                        `Temps requis pour remplir ce questionnaire \n\n`+
+                                        `Ce questionnaire prendra 2 minutes à remplir. Veuillez noter que vous ne serez pas en mesure de modifier les renseignements déclarés une fois votre questionnaire soumis. \n\n`+
+
+                                        `Pour parcourir le questionnaire \n\n`+
+                                        `Utilisez les boutons Précédent et Suivant situés dans le coin inférieur droit de chaque page. \n\n`+
+
+                                        `Délai d’inactivité d’une session \n\n`+
+                                        `Après 2 heures d’inactivité, votre session sera interrompue. Vous ne pourrez accéder à aucun renseignement qui n’a pas été sauvegardé. \n\n`+
+
+                                        `Après 15 minutes d’inactivité, Bilan bien-être se verrouille. Vous devrez entrer votre mot de passe pour continuer. \n\n`+
+
+                                        `Définitions et explications \n\n`+
+                                        `Un bouton d’aide est disponible pour certaines questions. Appuyez sur ce bouton pour obtenir plus de renseignements ou des précisions.`,
             //terms & conditions
             "terms_and_conditions": "Conditions générales",
             "terms_and_conditions_content": `Désistement

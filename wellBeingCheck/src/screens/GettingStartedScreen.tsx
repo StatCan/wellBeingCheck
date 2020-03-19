@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   },
   btnNext: {
     color: newTheme.colors.whiteText,
-    width: 100,
+    width: 120,
     alignSelf: "flex-end",
     marginRight: 20,
     marginBottom: 10,
