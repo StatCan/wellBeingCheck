@@ -157,9 +157,11 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                             }
                             console.log('nav changed:'+navState.url);
                             if(navState.url.indexOf('submiterror-erreursoumission')>0||navState.url==global.surveyThkUrlEng ||navState.url==global.surveyThkUrlFre){
+                            //     let jsCode=' var button = document.createElement("button");button.innerHTML = "Back"; button.className += "btn"; button.className += " btn-primary";button.onclick = function () {var sac ="1234566789";sac= document.querySelector("div.sc-box-main p span.ecf-bold").innerText; alert(sac);window.ReactNativeWebView.postMessage(sac); return false;};document.body.appendChild(button);';
                                  let jsCode=' var sac ="1234566789";sac= document.querySelector("div.sc-box-main p span.ecf-bold").innerText; window.ReactNativeWebView.postMessage(sac);';
                                  this.setState({jsCode:jsCode});
                             }
+
                           }}
 
                           onMessage={event => {
@@ -172,9 +174,9 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                                     this.fetchImages();count=1;  global.showThankYou=2;
                                 }
                                 else {
-                                    console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
-                                    this.fetchImages();count=1;global.showThankYou=2;
-                                    }
+                                                                    console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
+                                                                    this.fetchImages();count=1;global.showThankYou=2;
+                                                                 }
                                 this.props.navigation.navigate('Dashboard');
                              }}
 
