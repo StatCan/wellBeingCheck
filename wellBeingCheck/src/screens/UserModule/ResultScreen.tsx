@@ -153,7 +153,7 @@ export default class App extends React.Component<Props,ScreenState> {
                  </ImageBackground>
                                 <Button style={styles.btnNext}
                                   mode="contained"
-                                   onPress={() => this.props.navigation.navigate('ResultSummaryScreen')}>
+                                   onPress={() => this.props.navigation.navigate('Dashboard')}>
                                   <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
                                 </Button>
           </PaperProvider>
