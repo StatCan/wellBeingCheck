@@ -276,10 +276,11 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                   <TouchableOpacity
                     style={styles.passwordEyeIconBg}
                     onPress={this._togglePasswordHidden}
+                    activeOpacity={1}
                   >
                     <Feather
                       style={styles.passwordEyeIcon}
-                      size={20} name={this.state.passwordIsHidden ? "eye-off" : "eye" }
+                      size={20} name={this.state.passwordIsHidden ? "eye-off" : "eye"}
                     />
                   </TouchableOpacity>
                 </View>
@@ -288,6 +289,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                   <TouchableOpacity
                     style={styles.passwordHelpBtnBg}
                     onPress={this._showModal}
+                    activeOpacity={1}
                   >
                     <Text style={styles.passwordHelpBtnText}>?</Text>
                   </TouchableOpacity>
@@ -479,7 +481,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 1.5,
     borderBottomWidth: 1.5,
     borderLeftWidth: 0,
-
   },
   secretQuestionViewInput: {
     color: 'grey',

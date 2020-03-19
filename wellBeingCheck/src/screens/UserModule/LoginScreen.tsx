@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView,Image } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, SafeAreaView } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Background from '../../components/Background';
 import Button from '../../components/Button';
@@ -76,64 +76,88 @@ class LoginScreen extends React.Component<Props, LoginState> {
   }
 
   render() {
-  const bannerPathEnglish = require('../../assets/statscan_banner.png');
-  const bannerPathFrench = require('../../assets/statscan_banner_fr.png');
+    const bannerPathEnglish = require('../../assets/statscan_banner.png');
+    const bannerPathFrench = require('../../assets/statscan_banner_fr.png');
     return (
       <PaperProvider theme={newTheme}>
-
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
         <View style={styles.statusBar}>
-           <Image source={resources.culture == 'fr' ? bannerPathFrench : bannerPathEnglish} style={styles.image} />
-         </View>
+          <Image source={resources.culture == 'fr' ? bannerPathFrench : bannerPathEnglish} style={styles.image} />
+        </View>
         <Background>
-          {/* <BackButton goBack={() => this.props.navigation.navigate('HomeScreen')} /> */}
-          <View style={{ width: '100%', height: 24, marginTop: 40, alignItems: 'flex-end', justifyContent: 'flex-end' }}>
-            <TouchableOpacity onPress={() => this.toggleLanguage()} style={{ height: 60 }}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
-          </View>
+          <SafeAreaView style={styles.container}>
+            <ScrollView style={styles.scrollView}>
 
-          <ScrollView showsVerticalScrollIndicator={false}>
+              <View style={styles.logoClear}>
+                <LogoClear />
+              </View>
 
-            <View style={styles.logo}>
-              <LogoClear />
-              <Text>{resources.getString("Well-Being Check")}</Text>
-            </View>
+              <View style={styles.toggleLink}>
+                <TouchableOpacity
+                  onPress={() => this.toggleLanguage()}
+                >
+                  <Text>{resources.getString("Language")}</Text>
+                </TouchableOpacity>
+              </View>
 
-            <TextInput
-              label={resources.getString("Enter password")}
-              returnKeyType="next"
-              value={this.state.password}
-              onChangeText={text => this.setState({ password: text })}
-              error={!!this.state.passwordError}
-              errorText={this.state.passwordError}
-              secureTextEntry={true}
-            />
+              <View style={styles.logo}>
+                <Text>{resources.getString("Well-Being Check")}</Text>
+              </View>
 
-            <View style={styles.forgotPassword}>
-              <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('ForgotPasswordScreen')}
-              >
-                <Text style={styles.label}>{resources.getString("login.forgot_password")}</Text>
-              </TouchableOpacity>
-            </View>
+              <TextInput
+                label={resources.getString("Enter password")}
+                returnKeyType="next"
+                value={this.state.password}
+                onChangeText={text => this.setState({ password: text })}
+                error={!!this.state.passwordError}
+                errorText={this.state.passwordError}
+                secureTextEntry={true}
+              />
 
-            <View style={styles.footer}>
-              <Button
-                color={newTheme.colors.primary}
-                style={styles.btnLogin}
-                mode="contained"
-                onPress={this._onLoginPressed}>
-                <Text style={styles.whiteText}>{resources.getString("login.login")}</Text>
-              </Button>
-            </View>
-          </ScrollView>
-        </Background>
+              <View style={styles.forgotPassword}>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate('ForgotPasswordScreen')}
+                >
+                  <Text style={styles.label}>{resources.getString("login.forgot_password")}</Text>
+                </TouchableOpacity>
+              </View>
+
+              <View style={styles.footer}>
+                <Button
+                  color={newTheme.colors.primary}
+                  style={styles.btnLogin}
+                  mode="contained"
+                  onPress={this._onLoginPressed}>
+                  <Text style={styles.whiteText}>{resources.getString("login.login")}</Text>
+                </Button>
+              </View>
+            </ScrollView>
+          </SafeAreaView>
+
+        </Background >
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
-      </PaperProvider>
+      </PaperProvider >
     );
   }
 }
 
 const styles = StyleSheet.create({
+  toggleLink: {
+    position: 'relative',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    bottom: 140,
+  },
+  logoClear: {
+    flexDirection: 'row',
+    flex: 1,
+    justifyContent: 'center'
+  },
+  container: {
+    width: '100%',
+  },
+  scrollView: {
+  },
   forgotPassword: {
     width: '100%',
     alignItems: 'flex-end',
@@ -171,15 +195,15 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     paddingRight: 20,
   },
-   image: {
-      maxWidth: 300,
-      minWidth: 250,
-      height: 50,
-    },
-    statusBar: {
-      backgroundColor: "#f7f8f9",
-      height: 50,
-    },
+  image: {
+    maxWidth: 300,
+    minWidth: 250,
+    height: 50,
+  },
+  statusBar: {
+    backgroundColor: "#f7f8f9",
+    height: 50,
+  },
 });
 
 export default memo(LoginScreen);
