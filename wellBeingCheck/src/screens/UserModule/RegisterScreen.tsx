@@ -481,7 +481,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 1.5,
     borderBottomWidth: 1.5,
     borderLeftWidth: 0,
-
   },
   secretQuestionViewInput: {
     color: 'grey',
