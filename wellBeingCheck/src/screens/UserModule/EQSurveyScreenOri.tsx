@@ -155,31 +155,22 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                             if (navState.url =='') { // You must validate url to enter or navigate
                               this.webView.stopLoading();
                             }
-                            console.log('nav changed:'+navState.url);
+                            console.log(navState.url);
                             if(navState.url.indexOf('submiterror-erreursoumission')>0||navState.url==global.surveyThkUrlEng ||navState.url==global.surveyThkUrlFre){
-                                 let jsCode=' var sac ="1234566789";sac= document.querySelector("div.sc-box-main p span.ecf-bold").innerText; window.ReactNativeWebView.postMessage(sac);';
-                                 this.setState({jsCode:jsCode});
-                            }
-                          }}
-
-                          onMessage={event => {
-                                console.log('sa-code======='+event.nativeEvent.data);
-                                global.sac=event.nativeEvent.data;
-                                console.log('count in b:'+count);
-                                if(global.doneSurveyA){
-                                    if(count>0){count=0;return;}
-                                    console.log('redady to fetch image');
-                                    this.fetchImages();count=1;  global.showThankYou=2;
-                                }
-                                else {
+                                  console.log('count in b:'+count);
+                                 if(global.doneSurveyA){
+                                     if(count>0){count=0;return;}
+                                      console.log('redady to fetch image');
+                                      this.fetchImages();count=1;  global.showThankYou=2;
+                                 }
+                                 else {
                                     console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
                                     this.fetchImages();count=1;global.showThankYou=2;
-                                    }
+                                 }
                                 this.props.navigation.navigate('Dashboard');
-                             }}
-
-
-
+                            }
+                         //   this.webView.scrollTo({y:0});
+                          }}
                         />
       </View>
     );
