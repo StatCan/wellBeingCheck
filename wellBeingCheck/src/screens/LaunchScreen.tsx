@@ -34,10 +34,9 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
     this.state = {
     };
 
-    this.delay(9000).then(any => {
+    this.delay(2000).then(any => {
       //splach screen forced show 3000 = 3 seconds!
       this.bootstrapA();
-      this._bootstrap();
     });
   }
 
@@ -148,6 +147,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
             global.configurationReady = true;
           })
         }
+        this._bootstrap();
       })
       .catch((error) => {
         console.error(error); global.configurationReady = false; alert("Network error");
@@ -182,7 +182,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           <Title>{resources.getString("Well-Being Check")}</Title>
         </Background>
         <NavigationEvents
-          onDidFocus={() => this._bootstrap()}
+          // onDidFocus={() => this.bootstrapA()}
         />
          <View style={{backgroundColor:'#f7f8f9',width:'100%',height:48,borderColor:'red',bordertWidth:1,alignItems:'flex-end'}}>
                    <Image source={require('../assets/img_canadamdpi.png')} style={{ width: 128, height: 40,resizeMode:'stretch'}} />
