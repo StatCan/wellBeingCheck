@@ -58,8 +58,8 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
           let timeStamp='';
           let d=new Date();let hh=deviceHeight-220;let hh1=deviceHeight-300;let ww=deviceWidth-80;
           timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-          let uri0=global.webApiBaseUrl+'Mood/aaa/'+timeStamp+'/en/'+ww+'/'+hh1;
-          let uri1=global.webApiBaseUrl+'Mood/aaa/'+timeStamp+'/fr/'+ww+'/'+hh1;
+          let uri0=global.webApiBaseUrl+'Mood/aaa/'+timeStamp+'/en/'+deviceWidth+'/'+hh;
+          let uri1=global.webApiBaseUrl+'Mood/aaa/'+timeStamp+'/fr/'+deviceWidth+'/'+hh;
           let uri2=global.webApiBaseUrl+'Location/aaa/'+timeStamp+'/en/'+deviceWidth+'/'+hh;
           let uri3=global.webApiBaseUrl+'Location/aaa/'+timeStamp+'/fr/'+deviceWidth+'/'+hh;
           let uri4=global.webApiBaseUrl+'People/aaa/'+timeStamp+'/en/'+deviceWidth+'/'+hh;
@@ -128,16 +128,17 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
              uri=global.surveyAUrlFre;
          }
          console.log('Beofore eq:'+uri);
+     let userAgent=Platform.OS=='ios'?'Apple deviceId/'+global.userToken:'Android deviceId/'+global.userToken;console.log(userAgent);
     return (
-          <View style={{ flex: 1, marginTop: 0 }}>
+          <View style={{ flex: 1, marginTop: 40}}>
                 <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{marginLeft:5,marginTop:10}}><Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:38,height:38}} /></TouchableOpacity>
                 </View>
                  {(this.state.webviewLoaded) ? null : <ActivityIndicator size="large" color="lightblue" style={{position:'absolute',top:'50%',left:'50%',zIndex:20}}/>}
                 <WebView
-                          ref={(view) => this.webView = view} incognito={true}
+                          ref={(view) => this.webView = view} incognito={true} useWebKit={true}
                           style={styles.webview}
-                          userAgent={global.userToken}
+                          applicationNameForUserAgent={userAgent}
                           scrollEnabled={true}
                           source={{uri:uri}}
                           javaScriptEnabled={true}
@@ -154,22 +155,31 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                             if (navState.url =='') { // You must validate url to enter or navigate
                               this.webView.stopLoading();
                             }
-                            console.log(navState.url);
+                            console.log('nav changed:'+navState.url);
                             if(navState.url.indexOf('submiterror-erreursoumission')>0||navState.url==global.surveyThkUrlEng ||navState.url==global.surveyThkUrlFre){
-                                  console.log('count in b:'+count);
-                                 if(global.doneSurveyA){
-                                     if(count>0){count=0;return;}
-                                      console.log('redady to fetch image');
-                                      this.fetchImages();count=1;  global.showThankYou=2;
-                                 }
-                                 else {
+                                 let jsCode=' var sac ="1234566789";sac= document.querySelector("div.sc-box-main p span.ecf-bold").innerText; window.ReactNativeWebView.postMessage(sac);';
+                                 this.setState({jsCode:jsCode});
+                            }
+                          }}
+
+                          onMessage={event => {
+                                console.log('sa-code======='+event.nativeEvent.data);
+                                global.sac=event.nativeEvent.data;
+                                console.log('count in b:'+count);
+                                if(global.doneSurveyA){
+                                    if(count>0){count=0;return;}
+                                    console.log('redady to fetch image');
+                                    this.fetchImages();count=1;  global.showThankYou=2;
+                                }
+                                else {
                                     console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
                                     this.fetchImages();count=1;global.showThankYou=2;
-                                 }
+                                    }
                                 this.props.navigation.navigate('Dashboard');
-                            }
-                         //   this.webView.scrollTo({y:0});
-                          }}
+                             }}
+
+
+
                         />
       </View>
     );
@@ -183,7 +193,7 @@ const styles = StyleSheet.create({
   },
   webview: {
     //  flex: 1,
-    marginTop: 24,
+    marginTop:0,
     width: deviceWidth,
     height: deviceHeight + 2000
   },

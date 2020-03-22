@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Notification Methodology Simulator v0.2</h2>
+
+Awake Hour: <input type="text" id="awakeHour" value="6">
+Sleep Hour: <input type="text" id="sleepHour" value="22">
+Number of Pings: <input type="text" id="numPings" value="2">
+<button onclick="runAndUpdate()">Run</button>
+<br/>
+<br/>
+<h2>Output:</h2>
+<p id="output"></p>
+
+<script>
+
+// Methodology: Selection Probabilities
+// For Weekdays and Weekends
+const primeTimeAwakeIntervals = [
+{ 
+  awakeHourBefore: 16,
+  weekDayPercentage: 5,  // A
+  weekendPercentage: 5   // F
+},
+{ 
+  awakeHourBefore: 17,
+  weekDayPercentage: 10, // B
+  weekendPercentage: 10  // G
+},
+{ 
+  awakeHourBefore: 18,
+  weekDayPercentage: 10, // C
+  weekendPercentage: 10  // H
+},
+{ 
+  awakeHourBefore: 19,
+  weekDayPercentage: 25, // D
+  weekendPercentage: 20  // I
+},
+{ 
+  awakeHourBefore: 20,
+  weekDayPercentage: 25, // E
+  weekendPercentage: 20  // J
+}];
+
+var output = "";
+
+function notificationAlgo() {
+
+  var awakeHour = parseInt(document.getElementById("awakeHour").value);
+  var sleepHour = parseInt(document.getElementById("sleepHour").value);
+  var numPings = parseInt(document.getElementById("numPings").value);
+
+  output += "The awake hour is: " + awakeHour + '<br/>';
+  output += "The sleep hour is: " + sleepHour + '<br/>';
+  output += "The num pings are: " + numPings + '<br/><br/>';
+
+
+  if (numPings > 5 || numPings < 2) {
+    output += "Invalid value for numPings";
+    return;
+  }
+
+  // Based on defaults awakeInterval is 16
+  awakeInterval = sleepHour - awakeHour;
+
+  //Safety Check
+  if (numPings > awakeInterval) numPings = awakeInterval;
+
+  if (awakeHour > sleepHour) awakeInterval = awakeHour + 24;
+
+  // Now come up with a time to set notifications to
+
+  var awakeOneHourTimeIntervalsBefore = [];
+  var awakeOneHourTimeIntervalsAfter = [];
+
+  console.log ("The awakeOneHourTimeIntervalsBefore empty array is: " + awakeOneHourTimeIntervalsBefore);
+
+  for (i = 0; i <= awakeInterval; i++) {
+    awakeOneHourTimeIntervalsBefore[i] = awakeHour + (i);
+    console.log(awakeOneHourTimeIntervalsBefore[i]);
+    awakeOneHourTimeIntervalsAfter[i] = awakeHour + i;
+  }
+
+  // For testing purposes print to console
+  output += "One Hour Time Intervals" + '<br/>';
+  output += awakeOneHourTimeIntervalsBefore + '<br/>';
+  output += awakeOneHourTimeIntervalsAfter + '<br/><br/>';
+
+  output += "Length of awake hour array is: " + awakeOneHourTimeIntervalsBefore.length + '<br/><br/>';
+
+  var chosenHoursBefore = [];
+  var chosenProbability = [];
+  var selectionProbabilitiesAwakeHour = new Array(awakeOneHourTimeIntervalsBefore.length);
+  var selectionProbabilities24h = new Array(24);
+  var remainingProbabilties = 0;
+
+  output += "Length of selection probabilities array is: " + selectionProbabilities24h.length + '<br/><br/>';
+
+  // Schedule for the next 30 days
+  // For testing purposes, day set to a few days
+
+  output += "Chosen One Hour Time Intervals (24h format):" + '<br/>';
+  output += "---------------------------------------------------------" + '<br/><br/>'
+
+  // Assign hardcoded selection probabilties (out of 100)
+  var index = 0;
+  primeTimeAwakeIntervals.forEach(element => {
+
+    selectionProbabilities24h[element.awakeHourBefore] = element.weekDayPercentage;
+    remainingProbabilties += element.weekDayPercentage;
+    output += "Adding selection probability: " + selectionProbabilities24h[element.awakeHourBefore] + "%" + " at position (24h time): " + element.awakeHourBefore + '<br/>';
+    
+  });
+
+  output += "Output of selection probabilities array is: " + selectionProbabilities24h + '<br/><br/>';
+
+  output += "Length of selection probabilities array is: " + selectionProbabilities24h.length + '<br/><br/>';
+
+  remainingProbabilties = 100 - remainingProbabilties;
+
+  output += "Probabilities remaining to be allocated: " + remainingProbabilties + "%" + '<br/>';
+
+  // Now only allocate to empty areas in union with the awake Interval
+  for (i = 0; i < selectionProbabilities24h.length; i++ ){
+    if (awakeOneHourTimeIntervalsBefore.includes(i)){
+      if (selectionProbabilities24h[i] == null){
+        // For now, limit awakeHour
+        selectionProbabilities24h[i] = remainingProbabilties/(selectionProbabilitiesAwakeHour.length - primeTimeAwakeIntervals.length);
+      }
+    }
+  }
+  // 0 to 21h
+  output += "The selection probability array is: " + selectionProbabilities24h + '<br/>';
+
+  // Validate
+  var sum = 0;
+  selectionProbabilities24h.forEach(element => {
+    sum += element;
+  });
+
+  output += "Validate:  The sum of the selection probability array is: " + sum + '%<br/>';
+
+  for (day = 0; day < 30; day++) {
+
+    // For each ping, choose a number between 0-100 which would then fall in the array
+    for (i = 0; i < numPings; i++ ){
+      chosenProbability[i] = Math.floor(Math.random() * 100);
+
+      while (checkForDuplicates(chosenProbability)){
+        chosenProbability[i] = Math.floor(Math.random() * 100);
+      }
+
+      var marginalSum = 0;
+      var done = false;
+      
+      for (j = 0; j < selectionProbabilities24h.length; j++) {
+        // Keep adding to marginalSum until it exceeds chosenProbability[i] so then we know which hour to choose
+        if (selectionProbabilities24h[j] != null) {
+          marginalSum += selectionProbabilities24h[j];
+        }
+        if (marginalSum > chosenProbability[i] && !done) {
+          //output += "Marginal Sum is: " + marginalSum + '<br/>';
+          //output += "Chosen Probability is: " + chosenProbability[i] + '<br/>';
+          chosenHoursBefore[i] = j;
+          while (checkForDuplicates(chosenHoursBefore)){
+            chosenHoursBefore[i] = awakeOneHourTimeIntervalsBefore[Math.floor(Math.random() * awakeOneHourTimeIntervalsBefore.length)];
+          }
+          done = true;
+        }
+      }
+
+      /*
+      var index = 0;
+      while (marginalSum < chosenProbability[i]){
+        marginalSum += 0.5;
+        if (selectionProbabilities24h[index] < marginalSum) index++;
+      }
+
+      output += "Marginal Sum is: " + marginalSum + '<br/>';
+      output += "Chosen Probability is: " + chosenProbability[i] + '<br/>';
+      */
+      // Now marginalSum should have a value that is 
+
+
+      
+    }
+
+    var outputDay = day + 1;
+
+    output += "Chosen Probabilities (0-100) for Day: " + outputDay + '<br/>';
+    output += chosenProbability + '<br/>';
+
+    output += "Chosen Hours for Day: " + outputDay + '<br/>';
+    output += chosenHoursBefore + '<br/>';
+
+
+
+    // TODO:  Have randomization between 'Before' and 'After' time intervals
+    // i.e. Between 6h and 7h (currently set to on the hour above)
+
+
+  }
+
+  return;
+}
+
+function checkForDuplicates(array) {
+  var values = Object.create(null);
+  for (var i = 0; i < array.length; ++i) {
+      var value = array[i];
+      if (value in values) {
+          return true;
+      }
+      values[value] = true;
+  }
+  return false;
+}
+
+function runAndUpdate(){
+    output = "";
+    notificationAlgo();
+    document.getElementById("output").innerHTML = output;
+}
+
+</script>
+
+</body>
+</html>

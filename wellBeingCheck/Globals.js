@@ -6,7 +6,7 @@ global.timeStamp=0;
 global.surveyACode='';
 
 global.doneSurveyA=false;
-global.debugMode=false;
+global.debugMode=true;
 
 global.needReload1=true;
 global.needReload2=true;
@@ -32,6 +32,7 @@ global.tokenDoB=new Date(2020,1,1,0,0,0,0);
 global.connectivity=false;
 global.showThankYou=0;
 global.hasImage=false;
+global.sac='';
 
 global.graphType0='WarnFW';
 global.graphType1='MacaroniFW';

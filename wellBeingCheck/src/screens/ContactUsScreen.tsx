@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet,TouchableOpacity,Linking } from 'react-native';
 import Button from '../components/Button';
 import { Provider as PaperProvider, Title } from 'react-native-paper';
 import { newTheme } from '../core/theme';
@@ -33,11 +33,15 @@ class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
           <View>
             <View style={styles.content}>
               <Text style={styles.content_title}>{resources.getString("contactus_email")}</Text>
-              <Text>infostats@canada.ca</Text>
+              <TouchableOpacity onPress={()=>Linking.openURL('mailto:infostats@canada.ca')}><Text>infostats@canada.ca</Text></TouchableOpacity>
             </View>
             <View style={styles.content}>
               <Text style={styles.content_title}>{resources.getString("contactus_telephone")}</Text>
-              <Text>1-877-949-9492</Text>
+               <TouchableOpacity onPress={()=>Linking.openURL('tel:187779499492')}><Text>1-877-949-9492</Text></TouchableOpacity>
+            </View>
+            <View style={styles.content}>
+                 <Text style={styles.content_title}>{resources.getString("contactus_website")}</Text>
+                 <TouchableOpacity onPress={()=>Linking.openURL('https://www.statcan.gc.ca')}><Text>www.statcan.gc.ca</Text></TouchableOpacity>
             </View>
             <View style={styles.content}>
               <Text style={styles.content_title}>{resources.getString("contactus_mail")}</Text>
