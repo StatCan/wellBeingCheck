@@ -96,31 +96,95 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5) {
   if (global.debugMode) console.log(awakeOneHourTimeIntervalsAfter);
 
   var chosenHoursBefore = [];
+  var chosenProbability = [];
+  var selectionProbabilitiesAwakeHour = new Array(awakeOneHourTimeIntervalsBefore.length);
+  var selectionProbabilities24h = new Array(24);
+  var remainingProbabilties = 0;
 
+  if (global.debugMode) console.log("Length of selection probabilities array is: " + selectionProbabilities24h.length);
+
+  if (global.debugMode) console.log("Chosen One Hour Time Intervals (24h format):");
+  if (global.debugMode) console.log("-----------------------------------------------");
+
+  // Assign hardcoded selection probabilties (out of 100)
+  var index = 0;
+  primeTimeAwakeIntervals.forEach(element => {
+    selectionProbabilities24h[element.awakeHourBefore] = element.weekDayPercentage;
+    remainingProbabilties += element.weekDayPercentage;
+    if (global.debugMode) console.log("Adding selection probability: " + selectionProbabilities24h[element.awakeHourBefore] + "%" + " at position (24h time): " + element.awakeHourBefore);
+  });
+
+
+  if (global.debugMode) console.log("Output of selection probabilities array is: " + selectionProbabilities24h);
+
+  if (global.debugMode) console.log("Length of selection probabilities array is: " + selectionProbabilities24h.length);
+  remainingProbabilties = 100 - remainingProbabilties;
+
+  if (global.debugMode) console.log("Probabilities remaining to be allocated: " + remainingProbabilties + "%");
+
+  // Now only allocate to empty areas in union with the awake Interval
+  for (i = 0; i < selectionProbabilities24h.length; i++ ){
+    if (awakeOneHourTimeIntervalsBefore.includes(i)){
+      if (selectionProbabilities24h[i] == null){
+        // For now, limit awakeHour
+        selectionProbabilities24h[i] = remainingProbabilties/(selectionProbabilitiesAwakeHour.length - primeTimeAwakeIntervals.length);
+      }
+    }
+  }
+  // 0 to 21h
+  if (global.debugMode) console.log("The selection probability array is: " + selectionProbabilities24h);
+
+  // Validate
+  var sum = 0;
+  selectionProbabilities24h.forEach(element => {
+    sum += element;
+  });
+
+  if (global.debugMode) console.log("Validate:  The sum of the selection probability array is: " + sum);
   // Schedule for the next 30 days
   // For testing purposes, day set to a few days
-  for (day = 0; day < 30; day++) {
 
-    // Now choose number of random hours based on number of pings
+  for (day = 0; day < 2; day++) {
+    // For each ping, choose a number between 0-100 which would then fall in the array
     for (i = 0; i < numPings; i++ ){
-      chosenHoursBefore[i] = awakeOneHourTimeIntervalsBefore[Math.floor(Math.random() * awakeOneHourTimeIntervalsBefore.length)];
-      while (checkForDuplicates(chosenHoursBefore)){
-          chosenHoursBefore[i] = awakeOneHourTimeIntervalsBefore[Math.floor(Math.random() * awakeOneHourTimeIntervalsBefore.length)];
+      chosenProbability[i] = Math.floor(Math.random() * 100);
+
+      while (checkForDuplicates(chosenProbability)){
+        chosenProbability[i] = Math.floor(Math.random() * 100);
+      }
+
+      var marginalSum = 0;
+      var done = false;
+      
+      for (j = 0; j < selectionProbabilities24h.length; j++) {
+        // Keep adding to marginalSum until it exceeds chosenProbability[i] so then we know which hour to choose
+        if (selectionProbabilities24h[j] != null) {
+          marginalSum += selectionProbabilities24h[j];
+        }
+        if (marginalSum > chosenProbability[i] && !done) {
+          chosenHoursBefore[i] = j;
+          while (checkForDuplicates(chosenHoursBefore)){
+            chosenHoursBefore[i] = awakeOneHourTimeIntervalsBefore[Math.floor(Math.random() * awakeOneHourTimeIntervalsBefore.length)];
+          }
+          done = true;
+        }
       }
     }
 
-    if (global.debugMode) console.log("Chosen One Hour Time Intervals for Day: " + day);
-    if (global.debugMode) console.log(chosenHoursBefore);
+    var outputDay = day + 1;
 
-    // TODO:  Have randomization between 'Before' and 'After' time intervals
-    // i.e. Between 6h and 7h (currently set to on the hour above)
+    if (global.debugMode) console.log("Chosen Probabilities (0-100) for Day: " + outputDay);
+    if (global.debugMode) console.log(chosenProbability);
+    
+    if (global.debugMode) console.log("Chosen Hours for Day: " + outputDay);
+    if (global.debugMode) console.log(chosenHoursBefore);
 
     // Now schedule for each day the chosen random hours
     chosenHoursBefore.forEach(item => {
       this.scheduleNotificationBasedOnTime(item, day);
     });
   }
-}
+};
 
 function checkForDuplicates(array) {
   var values = Object.create(null);
@@ -175,11 +239,13 @@ scheduleNotificationBasedOnTime = async (hour, day) => {
   var currentYear = currentDate.getUTCFullYear();
   var currentMonth = currentDate.getUTCMonth();
   var currentDay = currentDate.getUTCDate();
+  //currentDate.setHours(hour);
   var currentHour = currentDate.getUTCHours();
+  //console.log("THE CURRENT DATE UTC HOURS ARE" + currentDate.getUTCHours());
 
   // Round up the minutes, seconds and milliseconds as per requirements
   // Add day and hour offset
-  scheduledTime = new Date(currentYear, currentMonth, currentDay + day, currentHour + hour, 0, 0, 0);
+  scheduledTime = new Date(currentYear, currentMonth, currentDay + day, hour, 0, 0, 0);
 
   //We can do it this way as well but less control
   //scheduledTime = new Date().getTime() + 1000 /*sec*/ * 60 /*min*/ * 60 /*hour*/ * 24 /*day*/ * day + 1000 * 60 * hour;
