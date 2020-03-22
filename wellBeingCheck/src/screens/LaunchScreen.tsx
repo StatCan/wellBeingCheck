@@ -125,8 +125,8 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
     let isConnected = await checkConnection();
     if (!isConnected) { alert('You are offline, try it later'); return; }
 
-    var test=new BackEndService().getLinks();
-    console.log('service test:'+test);
+/*    var test=new BackEndService().getLinks();
+    console.log('service test:'+test);*/
 
 
     let url = global.webApiBaseUrl + 'GetConfiguration'; console.log(url);
