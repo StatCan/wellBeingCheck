@@ -13,7 +13,9 @@
  */
 
 
-export const BASE_PATH = "http://localhost:8090/wellbeingcheck-bienetre/api".replace(/\/+$/, "");
+//export const BASE_PATH = "http://localhost:8090/wellbeingcheck-bienetre/api".replace(/\/+$/, "");
+
+export const BASE_PATH = "http://wellbeingcheck.canadacentral.cloudapp.azure.com/wellbeing-bienetre/api".replace(/\/+$/, "");
 
 const isBlob = (value: any) => typeof Blob !== 'undefined' && value instanceof Blob;
 

@@ -10,6 +10,9 @@ import Constants from 'expo-constants';
 import { resources } from '../../GlobalResources';
 import LogoClear from '../components/LogoClear';
 import AppBanner from '../components/AppBanner';
+
+import {BackEndService} from '../api/back-end.service';
+
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -121,6 +124,11 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
     //   if(!global.connectivity){alert('You are offline, try it later');return;}
     let isConnected = await checkConnection();
     if (!isConnected) { alert('You are offline, try it later'); return; }
+
+    var test=new BackEndService().getLinks();
+    console.log('service test:'+test);
+
+
     let url = global.webApiBaseUrl + 'GetConfiguration'; console.log(url);
     fetch(url)
       .then((response) => {
