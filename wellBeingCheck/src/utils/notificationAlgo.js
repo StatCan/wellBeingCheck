@@ -239,11 +239,13 @@ scheduleNotificationBasedOnTime = async (hour, day) => {
   var currentYear = currentDate.getUTCFullYear();
   var currentMonth = currentDate.getUTCMonth();
   var currentDay = currentDate.getUTCDate();
+  //currentDate.setHours(hour);
   var currentHour = currentDate.getUTCHours();
+  //console.log("THE CURRENT DATE UTC HOURS ARE" + currentDate.getUTCHours());
 
   // Round up the minutes, seconds and milliseconds as per requirements
   // Add day and hour offset
-  scheduledTime = new Date(currentYear, currentMonth, currentDay + day, currentHour + hour, 0, 0, 0);
+  scheduledTime = new Date(currentYear, currentMonth, currentDay + day, hour, 0, 0, 0);
 
   //We can do it this way as well but less control
   //scheduledTime = new Date().getTime() + 1000 /*sec*/ * 60 /*min*/ * 60 /*hour*/ * 24 /*day*/ * day + 1000 * 60 * hour;
