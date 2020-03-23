@@ -1,7 +1,7 @@
 
 import React, { memo } from 'react';
 import Background from '../components/Background';
-import { View, Text, TextInput, Image, StyleSheet, ImageBackground, Dimensions, TouchableOpacity, BackHandler, AsyncStorage } from 'react-native';
+import { View, Text, TextInput, Image, StyleSheet, ImageBackground, Dimensions, TouchableOpacity, BackHandler, AsyncStorage,YellowBox } from 'react-native';
 import { EvilIcons, Feather, FontAwesome } from '@expo/vector-icons';
 import LogoClearSmall from '../components/LogoClearSmall';
 import { fetchJwToken, checkConnection } from '../utils/fetchJwToken';
@@ -9,6 +9,7 @@ import { resources } from '../../GlobalResources';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import { Provider as PaperProvider, Portal, Dialog, Paragraph, Button } from 'react-native-paper';
 import { newTheme } from '../core/theme';
+import {BackEndService} from '../api/back-end.service';
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -28,7 +29,7 @@ type HomeState = {
   showThankYou: boolean,
   thankYouText: string,
 }
-
+YellowBox.ignoreWarnings(['Require cycle:'])
 class Dashboard extends React.Component<Props, HomeState> {
 
   constructor(HomeState) {
@@ -84,7 +85,46 @@ class Dashboard extends React.Component<Props, HomeState> {
   handleBackButton() {
     return true;
   }
-
+   async getConfig(){
+      var links=await new BackEndService().getLinks();
+      if(links.hasOwnProperty('exception'))return false;
+      global.surveyAUrlEng=links.questionnaireA.enUrl;
+      global.surveyAUrlFre=links.questionnaireA.frUrl;
+      global.surveyThkUrlEng=links.confirmationPage.enUrl;
+      global.surveyThkUrlFre=links.confirmationPage.frUrl;
+      global.surveyBUrlEng=links.questionnaireB.enUrl;
+      global.surveyBUrlFre=links.questionnaireB.frUrl;
+      global.surveyExceptionUrlEng=links.exceptionPage.enUrl;
+      global.surveyExceptionUrlFre=links.exceptionPage.frUrl;
+      global.configurationReady=true; console.log('Configuration is ready');  return true;
+   }
+   async getConfigOld(){
+         var links=await new BackEndService().getLinks();console.log('Links:'+links.questionnaireA.enUrl);
+         if(links.hasOwnProperty('exception')) console.log('good');else console.log('bad');
+         return new Promise(resolve => {
+              let url = global.webApiBaseUrl+'api/config/links';console.log(url);
+              fetch(url)
+              .then((response) =>{console.log(url);
+                                   if (response.status >= 400 && response.status < 600) {
+                                      global.configurationReady=false;
+                                      resolve(false);
+                                   }else{
+                                      response.json().then((responseJson) => {
+                                         global.surveyAUrlEng=responseJson.questionnaireA.enUrl;
+                                         global.surveyAUrlFre=responseJson.questionnaireA.frUrl;
+                                         global.surveyThkUrlEng=responseJson.confirmationPage.enUrl;
+                                         global.surveyThkUrlFre=responseJson.confirmationPage.frUrl;
+                                         global.surveyBUrlEng=responseJson.questionnaireB.enUrl;
+                                         global.surveyBUrlFre=responseJson.questionnaireB.frUrl;
+                                         global.surveyExceptionUrlEng=responseJson.exceptionPage.enUrl;
+                                         global.surveyExceptionUrlFre=responseJson.exceptionPage.frUrl;
+                                         global.configurationReady=true; console.log('Configuration is ready');  resolve(true);
+                                        })
+                                  }
+                                })
+                   .catch((error) => {global.configurationReady=false; resolve(false);});
+               });
+      }
   _refresh() {
 
     // Force refresh Home Screen as a Back action on Stack Navigator does not call
@@ -93,6 +133,37 @@ class Dashboard extends React.Component<Props, HomeState> {
     if (global.debugMode) console.log("The language set is: " + resources.culture);
     this.setState({ refresh: '1' });
   }
+  async saveParaData(){
+             let isConnected=await checkConnection();
+             if(!isConnected){alert('You are offline, try it later');return;}
+             let jwt=await fetchJwToken();
+             var snt = ["2020/02/01 08:10:00", "2020/02/01 12:10:00", "2020/02/01 18:10:00"];
+             let paraData = {
+                                                                      "PlatFormVersion": "1.2",
+                                                                      "DeviceName": "Andoird",
+                                                                      "NativeAppVersion": "2.2",
+                                                                      "NativeBuildVersion": "3.2",
+                                                                      "DeviceYearClass": "4.2",
+                                                                      "SessionID": "5.2",
+                                                                      "WakeTime": "07:12",
+                                                                      "SleepTime": "21.2",
+                                                                      "NotificationCount": "2",
+                                                                      "NotificationEnable":true,
+                                                                      "ScheduledNotificationTimes": snt
+                                                                  };
+             let url=global.webApiBaseUrl+'api/paradata';console.log(url);
+             let token=global.jwToken;
+             fetch(url, {
+                  method: 'POST',
+                  headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + jwt,},
+                  body: JSON.stringify(paraData),
+             }).then((response) => {
+
+                                                              return response.json();
+                                                            })
+             .then((myJson) => {console.log('This is '+myJson);})
+             .catch((error)=>{console.log(error.message);});
+      }
   async sendRequest() {
     let token = await fetchJwToken(); console.log('send:' + token);
     let url = global.webApiBaseUrl + 'api/Values'; let cul = global.culture; console.log(cul);
@@ -117,10 +188,12 @@ class Dashboard extends React.Component<Props, HomeState> {
       .catch(err => { console.log(err) })
   }
   async conductSurvey() {
-    let isConnected = await checkConnection();
-    if (!isConnected) { alert('You are offline, try it later'); return; }
-    global.needReload1 = true; global.needReload2 = true; global.needReload3 = true; global.needReload4 = true; global.needReload5 = true; global.needReload6 = true; global.needReload7 = true;
-    this.props.navigation.navigate('EQSurveyScreen');
+   let isConnected = await checkConnection();
+       if (!isConnected) { alert('You are offline, try it later'); return; }
+       let n=await this.getConfig();
+       if(n)this.props.navigation.navigate('EQSurveyScreen');
+       else {alert('Access denied(Config), Try it later, if same thing would happen again contact StatCan');return;}
+
   }
   render() {
     return (
@@ -132,7 +205,7 @@ class Dashboard extends React.Component<Props, HomeState> {
             <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen', { refresh: this._refresh })} style={{ marginRight: 5, marginTop: 50 }}><FontAwesome name="gear" size={30} color="gray" /></TouchableOpacity>
           </View>
           <View style={styles.homeContainer}>
-            <TouchableOpacity onPress={() => { global.needReload1 = true; global.needReload2 = true; global.needReload3 = true; global.needReload4 = true; global.needReload5 = true; global.needReload6 = true; global.needReload7 = true; this.props.navigation.navigate('EQSurveyScreen'); }} style={{ flex: 2, justifyContent: 'center' }}>
+            <TouchableOpacity onPress={() =>this.conductSurvey()} style={{ flex: 2, justifyContent: 'center' }}>
               <View style={styles.outer}>
                 <View style={styles.inner}>
                   <Text style={styles.startButtonText}>{resources.getString("start_survey")}</Text>

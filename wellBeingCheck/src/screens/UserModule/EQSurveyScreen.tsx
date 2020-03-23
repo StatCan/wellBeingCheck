@@ -52,6 +52,85 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
         console.error(error);global.configurationReady=false;
       });
            }
+
+      async handleSurveyAdone(){
+              let isConnected=await checkConnection();
+              if(!isConnected){alert('You are offline, try it later');return;}
+              let jwt=await fetchJwToken();
+              console.log('Token:'+jwt);
+              if(jwt==''){alert("Internal server error(token), Try again, if same thing would happen again contact StatCan");return;}
+              global.jwToken=jwt;
+              let result=false;
+              result=await this.setPassword(jwt);
+              if(!result){alert("Internal server error(set password), Try again, if same thing would happen again contact StatCan");return;}
+              console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
+              //New flow:A and B will be done at first time
+              let types=await this.fetchGraphTypes();console.log('types:'+types);
+              if(types!=null && types.length>0){
+                 await this.fetchGraphs(types);
+              }
+              count=1;AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
+         }
+      async handleSurveyBdone(){
+               let isConnected=await checkConnection();
+               if(!isConnected){alert('You are offline, try it later');return;}
+               let jwt=await fetchJwToken();console.log('asdfasdfasdfasdf1234');
+               if(jwt==''){alert("Internal server error(token), Try again, if same thing would happen again contact StatCan");return;}
+               global.jwToken=jwt;
+               let types=await this.fetchGraphTypes();console.log('types:'+types);
+               if(types!=null && types.length>0){
+                  await this.fetchGraphs(types);
+               }
+               count=1;AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
+         }
+      async fetchGraphs(types:string[]){
+            if(count>0)return;
+
+            let hh=deviceHeight-220;let hh1=deviceHeight-300;let ww=deviceWidth-80;
+            let index=0;
+            for(var i=0;i<types.length;i++){
+                let url=global.webApiBaseUrl+'api/dashboard/graph?type='+types[i];
+                if(types[i]=='mood')url+='&width='+ww+'&height='+hh1;
+                else url+='&width='+deviceWidth+'&height='+hh;
+                this.fetchImage(url,index,'en');index++;
+                this.fetchImage(url,index,'fr');index++;
+            }
+            AsyncStorage.setItem('hasImage','1');console.log('Fetch images done');
+         }
+      setPassword(jwt:string) {
+               let url=global.webApiBaseUrl+'api/security/password';
+               let data={salt:global.passwordSalt,passwordHash:hashString(global.password,global.passwordSalt),securityQuestionId:'11',securityAnswerSalt:'4321',securityAnswerHash:'4444'}
+               return fetch(url,{
+                     method: 'POST',
+                       headers: {
+                         'Content-Type': 'application/json',
+                         'Authorization': 'Bearer ' + jwt,
+                       },
+                       body: JSON.stringify(data),
+               })
+               .then((response) => response.json())
+               .then((responseJson) => {console.log('setPassword:'+responseJson);return responseJson;})
+               .catch((error) => {console.error(error);});
+          }
+      resetPassword() {
+                    let url=global.webApiBaseUrl+'api/security/password';console.log(url);
+                    let data={deviceId:global.userToken,newSalt:global.passwordSalt,newPasswordHash:hashString(global.password,global.passwordSalt),securityAnswerHash:'4444'}
+                    return fetch(url,{
+                          method: 'PUT',
+                          headers: {'Content-Type': 'application/json',},
+                          body: JSON.stringify(data),
+                    })
+                     .then((response) => response.json())
+                     .then((responseJson) => {console.log('resetPassword:'+responseJson);return responseJson;})
+                    .catch((error) => {console.error(error);});
+               }
+      async fetchGraphTypes(){
+              let url=global.webApiBaseUrl+'api/dashboard/graphs';
+              return fetch(url)
+                 .then((response) => response.json())
+                 .then((responseData) => {return responseData;})
+                 .catch(error => console.warn(error));
+         }
    fetchImages(){
           console.log(count); if(count>0)return;
           console.log('Fetch images....');
@@ -169,11 +248,15 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                                 if(global.doneSurveyA){
                                     if(count>0){count=0;return;}
                                     console.log('redady to fetch image');
-                                    this.fetchImages();count=1;  global.showThankYou=2;
+                                   // this.fetchImages();
+                                    this.handleSurveyBdone();
+                                    count=1;  global.showThankYou=2;
                                 }
                                 else {
                                     console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
-                                    this.fetchImages();count=1;global.showThankYou=2;
+                                   // this.fetchImages();
+                                    this.handleSurveyAdone();
+                                    count=1;global.showThankYou=2;
                                     }
                                 this.props.navigation.navigate('Dashboard');
                              }}
