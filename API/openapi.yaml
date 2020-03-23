@@ -278,12 +278,17 @@ components:
       type: object
       required:
         - deviceId
+        - sac
         - password
       properties:
         deviceId:
           description: Unique Id generated when setting up the mobile app
           type: string
           maxLength: 20
+        sac:
+          description: Secure Access Code distributed from EQ confirmation page
+          type: string
+          maxLength: 16
         password:
           description: Hashed password
           type: string
