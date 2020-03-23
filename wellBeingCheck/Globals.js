@@ -6,7 +6,7 @@ global.timeStamp=0;
 global.surveyACode='';
 
 global.doneSurveyA=false;
-global.debugMode=true;
+global.debugMode=false;
 
 global.needReload1=true;
 global.needReload2=true;
@@ -43,3 +43,4 @@ global.graphType5='ScalableCBarFW';
 global.graphType6='BulletinFW';
 global.graphType7='';
 global.configurationReady=false;
+global.currentView=0;
