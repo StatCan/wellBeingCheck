@@ -86,8 +86,11 @@ class Dashboard extends React.Component<Props, HomeState> {
     return true;
   }
    async getConfig(){
-      var links=await new BackEndService().getLinks();
-      if(links.hasOwnProperty('exception'))return false;
+      var service=new BackEndService();
+      var links=await service.getLinks();
+      if(service.isResultFailure(links))return false;
+   //   var links=await new BackEndService().getLinks();
+   //   if(links.hasOwnProperty('exception'))return false;
       global.surveyAUrlEng=links.questionnaireA.enUrl;
       global.surveyAUrlFre=links.questionnaireA.frUrl;
       global.surveyThkUrlEng=links.confirmationPage.enUrl;

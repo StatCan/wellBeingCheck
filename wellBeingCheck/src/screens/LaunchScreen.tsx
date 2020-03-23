@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { StyleSheet, StatusBar, View,Image } from 'react-native';
+import { StyleSheet, StatusBar, View,Image,YellowBox} from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Background from '../components/Background';
 import * as Localization from 'expo-localization';
@@ -10,7 +10,7 @@ import Constants from 'expo-constants';
 import { resources } from '../../GlobalResources';
 import LogoClear from '../components/LogoClear';
 import AppBanner from '../components/AppBanner';
-
+import {generateNewDeviceId,isValidDeviceId} from '../api/device-id.service';
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -25,7 +25,7 @@ type LaunchState = {
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
-
+YellowBox.ignoreWarnings(['Require cycle:'])
 class LaunchScreen extends React.Component<Props, LaunchState> {
 
   constructor(LaunchState) {
@@ -108,7 +108,9 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
   }
 
   bootstrapA = async () => {
-          console.log('Prepare confiuration')
+          console.log('Prepare confiuration');
+          var deviceId=generateNewDeviceId();console.log('new deviceId:'+deviceId);   //24 digits >20, use this one later after confirm thew 24 length
+          var valid=isValidDeviceId(deviceId);console.log('is valid:'+valid);
           let userToken = await AsyncStorage.getItem('EsmUserToken');
           if (userToken == null ||userToken==''){userToken=this.generateShortGuid(20);AsyncStorage.setItem('EsmUserToken',userToken);}      //userToken= Constants.deviceId;   //   global.userToken=this.generateShortGuid(24);
           global.userToken=userToken;
