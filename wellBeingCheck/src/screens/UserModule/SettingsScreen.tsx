@@ -41,7 +41,8 @@ type SettingsState = {
   languageModalShow: boolean,
   wakeTimePickerShow: boolean,
   sleepTimePickerShow: boolean,
-  titleBackgroundColor: string
+  titleBackgroundColor: string,
+  settingsFirstTime: boolean
 }
 
 interface Props {
@@ -67,7 +68,8 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       languageModalShow: false,
       wakeTimePickerShow: false,
       sleepTimePickerShow: false,
-      titleBackgroundColor: "#000"
+      titleBackgroundColor: "#000",
+      settingsFirstTime: true
     };
     this.wakeTimeHandler = this.wakeTimeHandler.bind(this);
     this.sleepTimeHandler = this.sleepTimeHandler.bind(this);
@@ -169,7 +171,8 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
 
     if (global.debugMode) console.log("Back button Pressed");
 
-    if (this._isDirty) {
+    //if (this._isDirty || this.state.settingsFirstTime) {
+      this.setState({ settingsFirstTime: false });
       if (this.state.notificationState){
           if (global.debugMode) console.log("Dirty flag set - scheduling notifications");
           notificationAlgo(this.state.waketime, this.state.sleeptime, this.state.notificationcount);
@@ -177,7 +180,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
         if (global.debugMode) console.log("Notifications turned off - cancelling all notifications");
         Notifications.cancelAllScheduledNotificationsAsync();
       }
-    }
+    //}
 
     if (this.state.culture === "2") {
       resources.culture = 'fr';
@@ -207,7 +210,8 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       sleepTime: this.state.sleeptime,
       notificationCount: this.state.notificationcount,
       culture: this.state.culture,
-      cultureString: this.state.cultureString
+      cultureString: this.state.cultureString,
+      settingsFirstTime: this.state.settingsFirstTime
     };
 
     AsyncStorage.setItem('settings', JSON.stringify(settingsObj), () => {
@@ -230,6 +234,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
         this.setState({ sleeptime: resultAsObj.sleepTime });
         this.setState({ culture: resultAsObj.culture });
         this.setState({ cultureString: resultAsObj.cultureString });
+        this.setState({ settingsFirstTime: resultAsObj.settingsFirstTime});
       }
     });
 
