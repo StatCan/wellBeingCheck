@@ -16,3 +16,9 @@ test('Modulus 63 Radix 8 (octal check)', () => {
     expect(Modulus61Radix8.isCorrect('23425')).toBeTruthy();
     expect(Modulus61Radix8.isCorrect('32425')).toBeFalsy();
 });
+
+test('Get a bunch of test device Ids with their checksummed form', () => {
+    for(let device of ['iphone5', 'iphone5s', 'iphone6', 'iphone6s', 'iphone7', 'iphone8', 'iphoneX', 'iphone11']) {
+        console.log(`${device}-->${Modulus2833Radix62.generateFullCheckedForm(device)}`);
+    }
+});

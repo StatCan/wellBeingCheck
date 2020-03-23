@@ -11,6 +11,8 @@ it('Retrieve Links', async () => {
 
    let backEndService = new BackEndService(
        WEB_API_BASE_URL,
+       'en-CA',
+       null,
        null,
        null,
        fetch
@@ -50,6 +52,8 @@ it('Retrieve Links', async () => {
 it('Retrieve Flags', async () => {
    let backEndService = new BackEndService(
        WEB_API_BASE_URL,
+       'fr-CA',
+       null,
        null,
        null,
        fetch
@@ -66,7 +70,9 @@ it('Retrieve Flags', async () => {
 
 test('Decode JWT token', () => {
    let backEndService = new BackEndService(
-       WEB_API_BASE_URL,
+        WEB_API_BASE_URL,
+       'fr-CA',
+       null,
        null,
        null,
        fetch
@@ -79,5 +85,24 @@ test('Decode JWT token', () => {
       expect(result.deviceId).toBe('myIphone6seM')
       expect(result.sac).toBe('6480760521785344');
       expect(result.secured).toBe('False');
+   }
+});
+
+it('Set Password', async () => {
+   // Since once the password is set the server would not allow it to be set again then we have to change the
+   // deviceId, Sac combination each we run this test. It is not the ideal but this is a common problem with integration testing
+   let backEndService = new BackEndService(
+       WEB_API_BASE_URL,
+       'fr-CA',
+       'iphone5yu',
+       '6881265148395520',
+       'null',
+       fetch
+   );
+   let result = await backEndService.setPassword('salty', 'hashedPotatoeWithSalt', 1, 'sour', 'sourCream');
+   expect(backEndService.isResultFailure(result)).toBeFalsy();
+
+   if (!backEndService.isResultFailure(result)) {
+      expect(result).toBeUndefined();
    }
 });

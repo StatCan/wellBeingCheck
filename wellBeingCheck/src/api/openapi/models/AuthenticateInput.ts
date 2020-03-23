@@ -26,6 +26,12 @@ export interface AuthenticateInput {
      */
     deviceId: string;
     /**
+     * Secure Access Code distributed from EQ confirmation page
+     * @type {string}
+     * @memberof AuthenticateInput
+     */
+    sac: string;
+    /**
      * Hashed password
      * @type {string}
      * @memberof AuthenticateInput
@@ -44,6 +50,7 @@ export function AuthenticateInputFromJSONTyped(json: any, ignoreDiscriminator: b
     return {
         
         'deviceId': json['deviceId'],
+        'sac': json['sac'],
         'password': json['password'],
     };
 }
@@ -58,6 +65,7 @@ export function AuthenticateInputToJSON(value?: AuthenticateInput | null): any {
     return {
         
         'deviceId': value.deviceId,
+        'sac': value.sac,
         'password': value.password,
     };
 }
