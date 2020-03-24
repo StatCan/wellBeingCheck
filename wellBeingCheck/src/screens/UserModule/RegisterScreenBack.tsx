@@ -351,37 +351,47 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                       <TouchableOpacity
                         onPress={this._handleSecQuesSelectMother}
                       >
-                        <View style={styles.secretQuestion}>
-                          <Text style={[styles.pr_text,{color:'black'}]}>{resources.getString("reg.ques.mother")}</Text>
+                        <View>
+                          <List.Item
+                            title={resources.getString("reg.ques.mother")}
+                          />
                         </View>
                       </TouchableOpacity>
                       <TouchableOpacity
                         onPress={this._handleSecQuesSelectSchool}
                       >
-                       <View style={styles.secretQuestion}>
-                            <Text style={[styles.pr_text,{color:'black'}]}>{resources.getString("reg.ques.school")}</Text>
-                       </View>
+                        <View>
+                          <List.Item
+                            title={resources.getString("reg.ques.school")}
+                          />
+                        </View>
                       </TouchableOpacity>
                       <TouchableOpacity
                         onPress={this._handleSecQuesSelectCar}
                       >
-                      <View style={styles.secretQuestion}>
-                          <Text style={[styles.pr_text,{color:'black'}]}>{resources.getString("reg.ques.car")}</Text>
-                      </View>
+                        <View>
+                          <List.Item
+                            title={resources.getString("reg.ques.car")}
+                          />
+                        </View>
                       </TouchableOpacity>
                       <TouchableOpacity
                         onPress={this._handleSecQuesSelectSport}
                       >
-                      <View style={styles.secretQuestion}>
-                          <Text style={[styles.pr_text,{color:'black'}]}>{resources.getString("reg.ques.sport")}</Text>
-                      </View>
+                        <View>
+                          <List.Item
+                            title={resources.getString("reg.ques.sport")}
+                          />
+                        </View>
                       </TouchableOpacity>
                       <TouchableOpacity
                         onPress={this._handleSecQuesSelectJob}
                       >
-                      <View style={styles.secretQuestion}>
-                          <Text style={[styles.pr_text,{color:'black'}]}>{resources.getString("reg.ques.job")}</Text>
-                      </View>
+                        <View>
+                          <List.Item
+                            title={resources.getString("reg.ques.job")}
+                          />
+                        </View>
                       </TouchableOpacity>
                     </Dialog.Content>
                   </Dialog>
@@ -589,9 +599,6 @@ const styles = StyleSheet.create({
   whiteText: {
     color: newTheme.colors.whiteText
   },
-  secretQuestion:{
-     flexDirection:'row',flexWrap: 'wrap',paddingRight:2,paddingLeft:2,
-  }
 });
 
 export default memo(RegisterScreen);

@@ -33,7 +33,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
     //  this.getDeviceConnectionInfo();
     this.state = {
     };
-
+   
     this.delay(2000).then(any => {
       //splach screen forced show 3000 = 3 seconds!
       this.bootstrapA();
