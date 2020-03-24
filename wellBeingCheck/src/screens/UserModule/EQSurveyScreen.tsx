@@ -1,5 +1,5 @@
 import React, { memo, useState, useCallback } from 'react';
-import { Image, View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator,Button } from 'react-native';
+import { Image, View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator,Button,YellowBox } from 'react-native';
 import { AsyncStorage } from 'react-native';
 //import { Ionicons,EvilIcons,Feather } from '@expo/vector-icons';
 import { AntDesign,FontAwesome } from '@expo/vector-icons';
@@ -8,7 +8,7 @@ import { resources } from '../../../GlobalResources';
 import {fetchJwToken,checkConnection} from '../../utils/fetchJwToken';
 const deviceHeight =Math.floor(Dimensions.get('window').height);
 const deviceWidth =Math.floor(Dimensions.get('window').width);
-
+import {BackEndService} from '../../api/back-end.service';
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -21,6 +21,7 @@ interface Props {
 type ScreenState={
     Sacode:string,jsCode:string
 }
+YellowBox.ignoreWarnings(['Require cycle:']);
 let count=0;//temporarily limit to get image just once, because eq will show exception page twice.
 export default class EQSurveyScreen extends React.Component<Props, ScreenState> {
   constructor(Props) {
@@ -37,21 +38,8 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
         // this.webView.userAgent=this.webView.userAgent+";"+global.userToken;
         // console.log(this.webView.userAgent);
         // this.webView.automaticallyAdjustsScrollViewInsets=false;
+         let jwt=await fetchJwToken();console.log('Token:'+jwt);
    }
-   fetchJwToken() {
-      let url=global.webApiBaseUrl+'Token/'+global.userToken+'/'+global.password;
-      return fetch(url)
-      .then((response) => response.json())
-      .then((responseJson) => {
-        console.log(responseJson);
-        global.jwToken=responseJson;
-        AsyncStorage.setItem('EsmSurveyJWT',responseJson);
-        console.log('JWT:'+global.jwToken);
-      })
-      .catch((error) => {
-        console.error(error);global.configurationReady=false;
-      });
-           }
 
       async handleSurveyAdone(){
               let isConnected=await checkConnection();
