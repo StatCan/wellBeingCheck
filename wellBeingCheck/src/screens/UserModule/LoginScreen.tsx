@@ -7,6 +7,7 @@ import TextInput from '../../components/TextInput';
 import { newTheme } from '../../core/theme';
 import { resources } from '../../../GlobalResources';
 import { Provider as PaperProvider } from 'react-native-paper';
+import { EvilIcons, Feather, FontAwesome } from '@expo/vector-icons';
 import md5 from "react-native-md5";
 import {
   NavigationParams,
@@ -21,6 +22,7 @@ type LoginState = {
   password: string,
   passwordError: string,
   title: string,
+  passwordIsHidden: boolean,
 }
 
 interface Props {
@@ -34,7 +36,8 @@ class LoginScreen extends React.Component<Props, LoginState> {
     this.state = {
       password: "",
       passwordError: "",
-      title: resources.getString("Well-Being Check")
+      title: resources.getString("Well-Being Check"),
+      passwordIsHidden: true,
     };
   }
 
@@ -75,6 +78,24 @@ class LoginScreen extends React.Component<Props, LoginState> {
     });
   }
 
+  _togglePasswordHidden = () => {
+    if (this.state.passwordIsHidden) {
+      this.setState({ passwordIsHidden: false });
+    }
+    else {
+      this.setState({ passwordIsHidden: true });
+    }
+  }
+
+  _passwordEyeSlashState = () => {
+    if (this.state.passwordIsHidden) {
+      this.setState({ passwordIsHidden: false });
+    }
+    else {
+      this.setState({ passwordIsHidden: true });
+    }
+  }
+
   render() {
     const bannerPathEnglish = require('../../assets/statscan_banner.png');
     const bannerPathFrench = require('../../assets/statscan_banner_fr.png');
@@ -104,15 +125,32 @@ class LoginScreen extends React.Component<Props, LoginState> {
                 <Text>{resources.getString("Well-Being Check")}</Text>
               </View>
 
-              <TextInput
-                label={resources.getString("Enter password")}
-                returnKeyType="next"
-                value={this.state.password}
-                onChangeText={text => this.setState({ password: text })}
-                error={!!this.state.passwordError}
-                errorText={this.state.passwordError}
-                secureTextEntry={true}
-              />
+              <View style={{ flex: 1, flexDirection: 'row' }}>
+                <View style={styles.passwordInput}>
+                  <TextInput
+                    label={resources.getString("Enter password")}
+                    returnKeyType="next"
+                    value={this.state.password}
+                    onChangeText={text => this.setState({ password: text })}
+                    error={!!this.state.passwordError}
+                    errorText={this.state.passwordError}
+                    secureTextEntry={this.state.passwordIsHidden}
+                  />
+                </View>
+
+                <View>
+                  <TouchableOpacity
+                    style={styles.passwordEyeIconBg}
+                    onPress={this._togglePasswordHidden}
+                    activeOpacity={1}
+                  >
+                    <Feather
+                      style={styles.passwordEyeIcon}
+                      size={20} name={this.state.passwordIsHidden ? "eye-off" : "eye"}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
 
               <View style={styles.forgotPassword}>
                 <TouchableOpacity
@@ -142,6 +180,27 @@ class LoginScreen extends React.Component<Props, LoginState> {
 }
 
 const styles = StyleSheet.create({
+  passwordInput: {
+    width: 250,
+    borderRightWidth: 0,
+  },
+  passwordEyeIcon: {
+    top: 18,
+    left: 12,
+  },
+  passwordEyeIconBg: {
+    right: 1,
+    backgroundColor: 'white',
+    height: 58.6,
+    top: 17.8,
+    width: 50,
+    borderStyle: 'solid',
+    borderColor: '#a7a6a5',
+    borderTopWidth: 1.5,
+    borderBottomWidth: 1.5,
+    borderRightWidth: 1.5,
+    borderLeftWidth: 0,
+  },
   toggleLink: {
     position: 'relative',
     flexDirection: 'row',
