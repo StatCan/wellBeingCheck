@@ -5,7 +5,7 @@ import { AsyncStorage } from 'react-native';
 import { AntDesign,FontAwesome } from '@expo/vector-icons';
 import WebView from 'react-native-webview';
 import { resources } from '../../../GlobalResources';
-import {fetchJwToken,checkConnection} from '../../utils/fetchJwToken';
+import {fetchJwToken,checkConnection,hashString} from '../../utils/fetchJwToken';
 const deviceHeight =Math.floor(Dimensions.get('window').height);
 const deviceWidth =Math.floor(Dimensions.get('window').width);
 import {BackEndService} from '../../api/back-end.service';
@@ -33,12 +33,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     setTimeout(()=>{this.setState({webviewLoaded: true})}, 4000);
   }
    componentDidMount(){
-         // this.fetchImages();
-        // console.log(this.webView.userAgent);
-        // this.webView.userAgent=this.webView.userAgent+";"+global.userToken;
-        // console.log(this.webView.userAgent);
-        // this.webView.automaticallyAdjustsScrollViewInsets=false;
-         let jwt=await fetchJwToken();console.log('Token:'+jwt);
+        // this.handleSurveyAdone();
    }
 
       async handleSurveyAdone(){
@@ -50,6 +45,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
               global.jwToken=jwt;
               let result=false;
               result=await this.setPassword(jwt);
+             // result=await this.setPasswordNew();
               if(!result){alert("Internal server error(set password), Try again, if same thing would happen again contact StatCan");return;}
               console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
               //New flow:A and B will be done at first time
@@ -62,10 +58,12 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
       async handleSurveyBdone(){
                let isConnected=await checkConnection();
                if(!isConnected){alert('You are offline, try it later');return;}
-               let jwt=await fetchJwToken();console.log('asdfasdfasdfasdf1234');
+               let jwt=await fetchJwToken();  console.log('Token:'+jwt);
                if(jwt==''){alert("Internal server error(token), Try again, if same thing would happen again contact StatCan");return;}
                global.jwToken=jwt;
-               let types=await this.fetchGraphTypes();console.log('types:'+types);
+               let types=await this.fetchGraphTypes();
+          //   let types=['mood','activity','location','people'];
+               console.log('types:'+types);
                if(types!=null && types.length>0){
                   await this.fetchGraphs(types);
                }
@@ -85,6 +83,17 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
             }
             AsyncStorage.setItem('hasImage','1');console.log('Fetch images done');
          }
+/*      async setPasswordNew() {
+            var service=new BackEndService();
+                    var result= await service.setPassword(
+                             salt: '4321',
+                             hashedPassword: '1234567890',
+                             securityQuestionId: 11,
+                             securityAnswerSalt: '4321',
+                             hashedSecurityAnswer: '4444');
+             if(service.isResultFailure(result))return false;
+             else return true;
+      }*/
       setPassword(jwt:string) {
                let url=global.webApiBaseUrl+'api/security/password';
                let data={salt:global.passwordSalt,passwordHash:hashString(global.password,global.passwordSalt),securityQuestionId:'11',securityAnswerSalt:'4321',securityAnswerHash:'4444'}
@@ -114,7 +123,13 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                }
       async fetchGraphTypes(){
               let url=global.webApiBaseUrl+'api/dashboard/graphs';
-              return fetch(url)
+              return fetch(url,{
+                 method: 'GET',
+                                     headers: {
+                                       'Content-Type': 'application/json',
+                                       'Authorization': 'Bearer ' + global.jwToken,
+                                     }
+              })
                  .then((response) => response.json())
                  .then((responseData) => {return responseData;})
                  .catch(error => console.warn(error));
