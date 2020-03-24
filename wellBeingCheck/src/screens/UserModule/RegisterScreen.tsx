@@ -326,7 +326,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                 onChangeText={text => this.setState({ passwordConfirm: text })}
                 error={!!this.state.passwordConfirmError}
                 errorText={this.state.passwordConfirmError}
-                secureTextEntry={true}
+                secureTextEntry={this.state.passwordIsHidden}
               />
 
               <TouchableOpacity
