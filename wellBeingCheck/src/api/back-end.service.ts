@@ -4,7 +4,6 @@ import {
     Links,
     ConfigApi,
     SecurityApi,
-    AuthenticateRequest,
     ConfigurationParameters
 } from "./openapi";
 import base64 from 'react-native-base64';
@@ -24,6 +23,13 @@ export type TokenClaims = {
  * The enumeration is listed in alphabetical order.
  */
 export enum FailureType {
+
+    /**
+     * Application level failire. The respondent provided credentials do not match what is on the server. This is different
+     * from credentials stored on the device and automatically sent to the server without the user providing it.
+     */
+    CredentialsFailure,
+
     /**
      * Communication level failure. It happened when querying the remote resource and failed to get any response from
      * the server.
@@ -50,6 +56,12 @@ export enum FailureType {
      * Application level failure. It happened while decoding the JWT token.
      */
     TokenDecodingFailure,
+
+    /**
+     * Application level failure. We do our best to identify what can go wrong but sometimes we don't know.
+     * This type of failure is the last resort that we can bubble up to the caller and plan for a UI logic to handle it.
+     */
+    UnknownFailure
 }
 
 export type Failure = {
@@ -58,7 +70,24 @@ export type Failure = {
     exception?: Error
 }
 
+/**
+ * For a reason that will be looked at at later time, the value of a json string retrieve from the server still
+ * contains the double quotes from the server. It is not clear which fault is it? server or client but for now
+ * the client will remove the two double quotes at the beginning and the end.
+ *
+ * @param token as obtained from the authentication webapi
+ */
+export function removeWrappingQuotes(token: string): string {
+    if (token) {
+        const regex = /\"(.*)\"/gm;
+        let match = regex.exec(token);
+        if (match !== null) {
+            return match[1];
+        }
+    }
 
+    return token;
+}
 /**
  * Class that handles the interaction with the WellBeingCheck WebApi.
  * This is a stateful service as it keeps track of the JWT token being used to allow conversational flow with the
@@ -102,10 +131,7 @@ export class BackEndService {
         let configApi = new ConfigApi(new Configuration(this.getCommonConfiguration()));
 
         try {
-            let response = await configApi.getLinksRaw();
-            if (response.raw.ok) {
-                return response.value();
-            }
+            return await configApi.getLinks();
         } catch (e) {
             if (e instanceof Error) {
                 return {type: FailureType.FetchFailure, context: 'configApi.getLinks', exception: e};
@@ -123,10 +149,7 @@ export class BackEndService {
         let configApi = new ConfigApi(new Configuration(this.getCommonConfiguration()));
 
         try {
-            let response = await configApi.getFlagsRaw();
-            if (response.raw.ok) {
-                return response.value();
-            }
+            return await configApi.getFlags();
         } catch (e) {
             if (e instanceof Error) {
                 return {type: FailureType.FetchFailure, context: 'configApi.getFlags', exception: e};
@@ -150,13 +173,14 @@ export class BackEndService {
         securityAnswerSalt: string,
         hashedSecurityAnswer: string): Promise<void | Failure> {
 
+        // We create a task to be executed once authentication is done
         let setPasswordTask = async function (jwtToken:string): Promise<void | Failure> {
             let configurationParameters = this.getCommonConfiguration();
             configurationParameters.accessToken = jwtToken;
             let securityApi = new SecurityApi(new Configuration(configurationParameters));
 
             try {
-                let setPasswordResponse = await securityApi.setPasswordRaw({
+                return await securityApi.setPassword({
                     setPasswordInput: {
                         salt: salt,
                         passwordHash: hashedPassword,
@@ -165,37 +189,96 @@ export class BackEndService {
                         securityAnswerHash: hashedSecurityAnswer
                     }
                 });
-
-                if (setPasswordResponse.raw.ok) {
-                    return;
-                }
-
-                if (BackEndService.HTTP_INTERNAL_SERVER_ERROR(setPasswordResponse.raw.status)) {
-                    return {
-                        type: FailureType.ServerFailure,
-                        context: 'securityApi.setPassword',
-                        exception: new Error(`Authentication failure. HTTP status=${setPasswordResponse.raw.status} text=${setPasswordResponse.raw.statusText}`)
-                    }
-                }
-
-                // The normal flow should allow for setting the password once. Setting the password a second time
-                // is not a normal flow so when this condition arises then the security may have been compromised.
-                // Since the respondent is locally authenticated before setting the password there should be no
-                // application level error from the server
-                return {
-                    type: FailureType.SecurityProtocolFailure,
-                    context: 'securityApi.setPassword',
-                    exception: new Error(`Password already set on the server. HTTP status=${setPasswordResponse.raw.status} text=${setPasswordResponse.raw.statusText}`)
-                }
             } catch(e) {
                 if (e instanceof Error) {
                     return {type: FailureType.FetchFailure, context: 'securityApi.setPassword', exception: e};
                 }
+                if (this.isResponse(e)) {
+                    if (BackEndService.HTTP_INTERNAL_SERVER_ERROR(e.status)) {
+                        return {
+                            type: FailureType.ServerFailure,
+                            context: 'securityApi.setPassword',
+                            exception: new Error(`SetPassword internal server error. HTTP status=${e.status} text=${e.statusText}`)
+                        }
+                    }
+
+                    // The normal flow should allow for setting the password once. Setting the password a second time
+                    // is not a normal flow so when this condition arises then the security may have been compromised.
+                    // Since the respondent is locally authenticated before setting the password there should be no
+                    // application level error from the server
+                    return {
+                        type: FailureType.SecurityProtocolFailure,
+                        context: 'securityApi.setPassword',
+                        exception: new Error(`Server did not set password due to input parameters. HTTP status=${e.status} text=${e.statusText}`)
+                    }
+                }
+
+                return this.unknownFailure('securApi.setPassword', e);
             }
         };
 
         // We have to bind this instance as the this of the anonymous function as we reference this to access method of the class
         return await this.authenticateThen(setPasswordTask.bind(this));
+    }
+
+    /**
+     * Reset the password and security on the server if the respondent forgot the password.
+     * The server uses the hashed security question answer to allow the re-setting of the credentials.
+     *
+     * This is not an authenticated operation so no JWT token
+     *
+     * @param newSalt salt used to hash the new password
+     * @param newHashedPassword hashed form of the new password
+     * @param hashedSecurityAnswer hashed form of the current security question answer
+     * @param newSecurityQuestionId the ide of the new security question chosen by the respondent
+     * @param newSecurityAnswerSalt the salt used to hash the new security question answer
+     * @param newHashedSecurityAnswer the hashed form of the new security question answer
+     */
+    async resetPassword(
+        newSalt: string,
+        newHashedPassword: string,
+        hashedSecurityAnswer: string,
+        newSecurityQuestionId: number,
+        newSecurityAnswerSalt: string,
+        newHashedSecurityAnswer: string):  Promise<void | Failure> {
+
+        let securityApi = new SecurityApi(new Configuration(this.getCommonConfiguration()));
+        try {
+            return await securityApi.resetPassword({
+                resetPasswordInput: {
+                    deviceId: this.deviceId,
+                    sac: this.sac,
+                    newSalt: newSalt,
+                    newPasswordHash: newHashedPassword,
+                    securityAnswerHash: hashedSecurityAnswer,
+                    newSecurityQuestionId: newSecurityQuestionId,
+                    newSecurityAnswerSalt: newSecurityAnswerSalt,
+                    newSecurityAnswerHash: newHashedSecurityAnswer
+                }
+            });
+        } catch (e) {
+            if (e instanceof Error) {
+                return {type: FailureType.FetchFailure, context: 'securityApi.reSetPassword', exception: e};
+            }
+            if (this.isResponse(e)) {
+                if (BackEndService.HTTP_INTERNAL_SERVER_ERROR(e.status)) {
+                    return {
+                        type: FailureType.ServerFailure,
+                        context: 'securityApi.reSetPassword',
+                        exception: new Error(`reSetPassword internal server error. HTTP status=${e.status} text=${e.statusText}`)
+                    }
+                }
+
+                // Anything that is not internal server error is declined reset
+                return {
+                    type: FailureType.CredentialsFailure,
+                    context: 'securityApi.reSetPassword',
+                    exception: new Error(`Server did not reset password due to input parameters. HTTP status=${e.status} text=${e.statusText}`)
+                }
+            }
+
+            return this.unknownFailure('secureApi.restPassword', e);
+        }
     }
 
     /**
@@ -229,7 +312,7 @@ export class BackEndService {
      * @param result can be a proper result or a failure
      */
     isResultFailure<R>(result: R | Failure): result is Failure {
-        return (result as Failure).exception !== undefined;
+        return result !== undefined && (result as Failure).exception !== undefined;
     }
 
     /**
@@ -254,7 +337,7 @@ export class BackEndService {
 
         try {
             // First step is to authenticate to get a JWT token
-            let authenticateResponse = await securityApi.authenticateRaw({
+            let jwtToken = await securityApi.authenticate({
                 authenticateInput: {
                     deviceId: this.deviceId,
                     sac: this.sac,
@@ -262,27 +345,50 @@ export class BackEndService {
                 }
             });
 
-            if (authenticateResponse.raw.ok) {
-                let jwtToken = await authenticateResponse.value();
-
-                // Execute the authenticated task if credentials are good
-                return authenticatedTask(jwtToken);
-            }
-
-            if (BackEndService.HTTP_INTERNAL_SERVER_ERROR(authenticateResponse.raw.status)) {
-                return {
-                    type: FailureType.ServerFailure,
-                    context: 'securityApi.authenticate',
-                    exception: new Error(`Authentication failure. HTTP status=${authenticateResponse.raw.status} text=${authenticateResponse.raw.statusText}`)
-                }
-            }
-
-            // Since the respondent is locally authenticated anything other than server error is a security protocol violation
-            return {type: FailureType.SecurityProtocolFailure, context: 'securityApi.authenticate', exception: new Error('Bad credentials sent to the server')}
+            return await authenticatedTask(removeWrappingQuotes(jwtToken));
         } catch (e) {
             if (e instanceof Error) {
                 return {type: FailureType.FetchFailure, context: 'securityApi.(authenticate | setPassword)', exception: e};
             }
+            if (this.isResponse(e)) {
+                if (BackEndService.HTTP_INTERNAL_SERVER_ERROR(e.status)) {
+                    return {
+                        type: FailureType.ServerFailure,
+                        context: 'securityApi.authenticate',
+                        exception: new Error(`Authentication failure. HTTP status=${e.status} text=${e.statusText}`)
+                    }
+                }
+
+                // Since the respondent is locally authenticated anything other than server error is a security protocol violation
+                return {
+                    type: FailureType.SecurityProtocolFailure,
+                    context: 'securityApi.authenticate',
+                    exception: new Error(`Bad credentials sent to the server. HTTP status=${e.status} text=${e.statusText}`)
+                }
+            }
+
+            return this.unknownFailure('secureApi.authenticate', e);
         }
+    }
+
+    /**
+     * Type guard to detect if an exception is a fetch Response
+     * @param response
+     */
+    private isResponse(response: any): response is {status:number, statusText?:string} {
+        return "status" in response;
+    }
+
+    /**
+     * Creates an unknown failure from available info
+     * @param context the context of where it happened
+     * @param o any object that can help understaning the error
+     */
+    private unknownFailure(context: string, o: any): Failure {
+        return {
+            type: FailureType.UnknownFailure,
+            context: context,
+            exception: new Error(`Unknown error from value=${o}`)
+        };
     }
 }

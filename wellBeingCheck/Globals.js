@@ -6,7 +6,7 @@ global.timeStamp=0;
 global.surveyACode='';
 
 global.doneSurveyA=false;
-global.debugMode=true;
+global.debugMode=false;
 
 global.jwToken='';
 global.userToken='';
@@ -38,3 +38,5 @@ global.graphType4='ScalableLine';
 global.graphType5='ScalableCBarFW';
 global.graphType6='BulletinFW';
 global.graphType7='';
+global.configurationReady=false;
+global.currentView=0;
