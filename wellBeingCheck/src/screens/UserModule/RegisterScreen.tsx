@@ -38,6 +38,11 @@ type RegisterState = {
   modalShow: boolean,
   modalSecrectQuestionShow: boolean,
   title: string,
+  pasVal_length: boolean,
+  passVal_Upper: boolean,
+  passVal_Special: boolean,
+  passVal_Lower: boolean,
+  passVal_Number: boolean,
 }
 
 interface Props {
@@ -58,9 +63,14 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
       securityQuestionError: "",
       securityAnswer: "",
       securityAnswerError: "",
-      modalShow: false,
+      modalShow: true,
       modalSecrectQuestionShow: false,
       title: resources.getString("Well-Being Check"),
+      pasVal_length: false,
+      passVal_Upper: false,
+      passVal_Special: false,
+      passVal_Lower: false,
+      passVal_Number: false,
     };
     //this._retrieveData('user_password');
     this._accountAlreadyExists();
@@ -241,6 +251,16 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     }
   }
 
+  //We had to move the validation form utils to here since they cannot be constatnts. The updates would not take effect instantly
+  _passwordInputChange = (text) => {
+    this.setState({ password: text });
+    this.setState({ pasVal_length: text.length >= 8 ? true : false });
+    this.setState({ passVal_Upper: (!/[A-Z]/.test(text)) ? false : true });
+    this.setState({ passVal_Special: (!/[@!#$%^&*(),.?:{}|<>]/.test(text)) ? false : true });
+    this.setState({ passVal_Lower:  (!/[a-z]/.test(text)) ? false :true });
+    this.setState({ passVal_Number:  (!/[0-9]/.test(text)) ? false :true });
+  }
+
   render() {
     return (
       <PaperProvider theme={newTheme}>
@@ -265,7 +285,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                     underlineColor={newTheme.colors.primary}
                     theme={newTheme}
                     value={this.state.password}
-                    onChangeText={text => this.setState({ password: text })}
+                    onChangeText={text => this._passwordInputChange(text)}
                     error={!!this.state.passwordError}
                     errorText={this.state.passwordError}
                     secureTextEntry={this.state.passwordIsHidden}
@@ -306,7 +326,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                 onChangeText={text => this.setState({ passwordConfirm: text })}
                 error={!!this.state.passwordConfirmError}
                 errorText={this.state.passwordConfirmError}
-                secureTextEntry={true}
+                secureTextEntry={this.state.passwordIsHidden}
               />
 
               <TouchableOpacity
@@ -399,31 +419,31 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                       <View style={styles.pr_view}>
                         <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_length")}</Text>
                         <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check" />
+                          <EvilIcons size={25} name="check" color={this.state.pasVal_length ? "green" : ""} />
                         </TouchableOpacity>
                       </View>
                       <View style={styles.pr_view}>
                         <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_upper")}</Text>
                         <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check" />
+                          <EvilIcons size={25} name="check" color={this.state.passVal_Upper ? "green" : ""} />
                         </TouchableOpacity>
                       </View>
                       <View style={styles.pr_view}>
                         <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_special")}</Text>
                         <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check" />
+                          <EvilIcons size={25} name="check" color={this.state.passVal_Special ? "green" : ""} />
                         </TouchableOpacity>
                       </View>
                       <View style={styles.pr_view}>
                         <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_lower")}</Text>
                         <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check" />
+                          <EvilIcons size={25} name="check" color={this.state.passVal_Lower ? "green" : ""} />
                         </TouchableOpacity>
                       </View>
                       <View style={styles.pr_view}>
                         <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_number")}</Text>
                         <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check" />
+                          <EvilIcons size={25} name="check" color={this.state.passVal_Number ? "green" : ""} />
                         </TouchableOpacity>
                       </View>
                     </Dialog.Content>
