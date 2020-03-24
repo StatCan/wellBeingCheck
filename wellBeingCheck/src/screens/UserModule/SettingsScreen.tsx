@@ -8,7 +8,7 @@ import {
   ScrollView,
   Platform,
   Switch,
-  AsyncStorage
+  AsyncStorage,Dimensions
 } from 'react-native';
 import Background from '../../components/Background';
 import Logo from '../../components/Logo';
@@ -49,7 +49,7 @@ interface Props {
   navigation: NavigationScreenProp<NavigationState,
     NavigationParams>;
 }
-
+const deviceHeight = Dimensions.get('window').height-145;
 class SettingsScreen extends React.Component<Props, SettingsState> {
   _notificationSubscription: any;
   _isDirty: boolean;
@@ -216,9 +216,11 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
 
     AsyncStorage.setItem('settings', JSON.stringify(settingsObj), () => {
       if (global.debugMode) console.log("Storing Settings: ", settingsObj);
-
+      console.log('current View:'+global.currentView);
+      if(global.currentView==1)this.props.navigation.navigate('ResultScreen');
+      else {
       this.props.navigation.state.params.refresh();
-      this.props.navigation.navigate('Dashboard');
+      this.props.navigation.navigate('Dashboard');}
     });
   }
 
@@ -285,7 +287,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
 
     if (global.debugMode) {
       debugButtons =
-        (<View style={{ alignItems: 'center', marginTop: 20, justifyContent: 'space-around' }}>
+        (<View>
           <Button mode="contained" onPress={this._debugClearAllLocalData}>
             (Debug) Delete user account
         </Button>
@@ -297,188 +299,191 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     return (
       <PaperProvider theme={newTheme}>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
-        <View>
-          <View style={styles.toolbar}>
-            {/* <BackButton goBack={() => this._backButtonPressed()}/> */}
-            <Text style={styles.toolbarTitle}>{resources.getString("settings")}</Text>
-          </View>
-          <ScrollView>
-            <List.Section style={styles.mainStyle}>
-              <List.Item
-                title={resources.getString("notifications")}
-                left={() => <List.Icon icon="bell-alert" />}
-                right={() => <Switch
-                  style={{ margin: 10 }}
-                  value={this.state.notificationState}
-                  onValueChange={() => {
-                    this.setState({
-                      notificationState: !this.state.notificationState
-                    });
+        <View style={{flex:1,justifyContent:'space-between'}}>
+            <View style={styles.toolbar}>
+                       {/* <BackButton goBack={() => this._backButtonPressed()}/> */}
+                   <Text style={styles.toolbarTitle}>{resources.getString("settings")}</Text>
+            </View>
 
-                    if (global.debugMode) console.log("The notification state is: " + this.state.notificationState);
+        <View style={{justifyContent: "flex-start",height:deviceHeight}}>
+           <ScrollView>
+               <List.Section style={styles.mainStyle}>
+                            <List.Item
+                              title={resources.getString("notifications")}
+                              left={() => <List.Icon icon="bell-alert" />}
+                              right={() => <Switch
+                                style={{ margin: 10 }}
+                                value={this.state.notificationState}
+                                onValueChange={() => {
+                                  this.setState({
+                                    notificationState: !this.state.notificationState
+                                  });
 
-                    if (!this.state.notificationState){
-                      if (global.debugMode) console.log("Switch ON: Asking for Permissions");
-                      this.askPermissions();
-                      this._isDirty = true;
-                      this.setState({
-                        titleBackgroundColor: "#000"
-                      });
-                    }
+                                  if (global.debugMode) console.log("The notification state is: " + this.state.notificationState);
 
-                    if (this.state.notificationState){
-                      if (global.debugMode) console.log("Switch OFF: Disabling Notifications");
-                      Notifications.cancelAllScheduledNotificationsAsync();
-                      this._isDirty = true;
-                      this.setState({
-                        titleBackgroundColor: "#777"
-                      });
-                    }
+                                  if (!this.state.notificationState){
+                                    if (global.debugMode) console.log("Switch ON: Asking for Permissions");
+                                    this.askPermissions();
+                                    this._isDirty = true;
+                                    this.setState({
+                                      titleBackgroundColor: "#000"
+                                    });
+                                  }
 
-                  }} />} />
-              <Divider></Divider>
-              <List.Item
-                style={styles.listStyle}
-                titleStyle={{color: this.state.titleBackgroundColor}}
-                title={resources.getString("number_notifications")}
-                onPress={this._showNumPingsModal}
-                disabled={!this.state.notificationState}
-                description={this.state.notificationcount}
-                descriptionStyle={styles.descriptionStyle}
-              />
-              <List.Item
-                style={styles.listStyle}
-                title={resources.getString("wake_time")}
-                titleStyle={{color: this.state.titleBackgroundColor}}
-                onPress={this._showWakeTimePicker}
-                disabled={!this.state.notificationState}
-                description={this.state.waketime}
-                descriptionStyle={styles.descriptionStyle}
-              />
-              <TimePicker
-                showTimePicker={this.state.wakeTimePickerShow}
-                style={styles.timePicker}
-                time={this.state.waketime}
-                timeType="wakeTime"
-                isVisible={this.state.wakeTimePickerShow}
-                handler={this.wakeTimeHandler}
-                cancelHandler={this.cancelTimeHandler}
-              />
-              <List.Item
-                style={styles.listStyle}
-                title={resources.getString("sleep_time")}
-                titleStyle={{color: this.state.titleBackgroundColor}}
-                onPress={this._showSleepTimePicker}
-                disabled={!this.state.notificationState}
-                description={this.state.sleeptime}
-                descriptionStyle={styles.descriptionStyle}
-              />
-              <TimePicker
-                showTimePicker={this.state.sleepTimePickerShow}
-                style={styles.timePicker}
-                time={this.state.sleeptime}
-                timeType="sleepTime"
-                isVisible={this.state.sleepTimePickerShow}
-                handler={this.sleepTimeHandler}
-                cancelHandler={this.cancelTimeHandler}
-              />
-              <Divider></Divider>
-              <List.Item
-                left={() => <List.Icon icon={require('../../assets/ic_wbc_language.png')} />}
-                title={resources.getString("language")}
-                onPress={this._showLanguageModal}
-                description={this.state.cultureString}
-                descriptionStyle={styles.descriptionStyle}
-              />
-              <List.Item
-                left={() => <List.Icon icon={require('../../assets/ic_wbc_terms_condition.png')} />}
-                title={resources.getString("terms_and_conditions")}
-                onPress={this._openTermsConditions}
-              />
-            </List.Section>
-            {debugButtons}
-          </ScrollView>
-          <View>
-            <Portal>
-              <Dialog
-                visible={this.state.languageModalShow}
-                onDismiss={this._hideLanguageModal}>
-                <Dialog.Title>{resources.getString("language")}</Dialog.Title>
-                <Dialog.Content>
-                  <RadioButton.Group
-                    onValueChange={c => this._changeLanguage(c)}
-                    value={this.state.culture}>
-                    <View style={styles.radioButtonContainerStyle}>
-                      <RadioButton value="1" />
-                      <Text style={styles.radioButtonTextStyle}>English</Text>
-                    </View>
-                    <View style={styles.radioButtonContainerStyle}>
-                      <RadioButton value="2" />
-                      <Text style={styles.radioButtonTextStyle}>French</Text>
-                    </View>
-                  </RadioButton.Group>
-                </Dialog.Content>
-                <Dialog.Actions>
-                  <Button
-                    style={styles.dialog_action_btn}
-                    onPress={this._hideLanguageModal}>
-                    Ok
-                </Button>
-                </Dialog.Actions>
-              </Dialog>
-            </Portal>
-          </View>
-          <View>
-            <Portal>
-              <Dialog
-                visible={this.state.numPingsModalShow}
-                onDismiss={this._hideNumPingsModal}>
-                <Dialog.Title>{resources.getString("num_pings_dialog_title")}</Dialog.Title>
-                <Dialog.Content>
-                  <RadioButton.Group
-                    onValueChange={n => {
-                        this.setState({ notificationcount: parseInt(n)});
-                        if (global.debugMode) console.log("Value changed - setting dirty flag");
-                        this._isDirty = true;
-                      }
-                    }
-                    value={this.state.notificationcount.toString()}>
-                    <View style={styles.radioButtonContainerStyle}>
-                      <RadioButton value="2" />
-                      <Text style={styles.radioButtonTextStyle}>2</Text>
-                    </View>
-                    <View style={styles.radioButtonContainerStyle}>
-                      <RadioButton value="3" />
-                      <Text style={styles.radioButtonTextStyle}>3</Text>
-                    </View>
-                    <View style={styles.radioButtonContainerStyle}>
-                      <RadioButton value="4" />
-                      <Text style={styles.radioButtonTextStyle}>4</Text>
-                    </View>
-                    <View style={styles.radioButtonContainerStyle}>
-                      <RadioButton value="5" />
-                      <Text style={styles.radioButtonTextStyle}>5</Text>
-                    </View>
-                  </RadioButton.Group>
-                </Dialog.Content>
-                <Dialog.Actions>
-                  <Button
-                    style={styles.dialog_action_btn}
-                    onPress={this._hideNumPingsModal}>
-                    Ok
-                </Button>
-                </Dialog.Actions>
-              </Dialog>
-            </Portal>
-          </View>
+                                  if (this.state.notificationState){
+                                    if (global.debugMode) console.log("Switch OFF: Disabling Notifications");
+                                    Notifications.cancelAllScheduledNotificationsAsync();
+                                    this._isDirty = true;
+                                    this.setState({
+                                      titleBackgroundColor: "#777"
+                                    });
+                                  }
+
+                                }} />} />
+                            <Divider></Divider>
+                            <List.Item
+                              style={styles.listStyle}
+                              titleStyle={{color: this.state.titleBackgroundColor}}
+                              title={resources.getString("number_notifications")}
+                              onPress={this._showNumPingsModal}
+                              disabled={!this.state.notificationState}
+                              description={this.state.notificationcount}
+                              descriptionStyle={styles.descriptionStyle}
+                            />
+                            <List.Item
+                              style={styles.listStyle}
+                              title={resources.getString("wake_time")}
+                              titleStyle={{color: this.state.titleBackgroundColor}}
+                              onPress={this._showWakeTimePicker}
+                              disabled={!this.state.notificationState}
+                              description={this.state.waketime}
+                              descriptionStyle={styles.descriptionStyle}
+                            />
+                            <TimePicker
+                              showTimePicker={this.state.wakeTimePickerShow}
+                              style={styles.timePicker}
+                              time={this.state.waketime}
+                              timeType="wakeTime"
+                              isVisible={this.state.wakeTimePickerShow}
+                              handler={this.wakeTimeHandler}
+                              cancelHandler={this.cancelTimeHandler}
+                            />
+                            <List.Item
+                              style={styles.listStyle}
+                              title={resources.getString("sleep_time")}
+                              titleStyle={{color: this.state.titleBackgroundColor}}
+                              onPress={this._showSleepTimePicker}
+                              disabled={!this.state.notificationState}
+                              description={this.state.sleeptime}
+                              descriptionStyle={styles.descriptionStyle}
+                            />
+                            <TimePicker
+                              showTimePicker={this.state.sleepTimePickerShow}
+                              style={styles.timePicker}
+                              time={this.state.sleeptime}
+                              timeType="sleepTime"
+                              isVisible={this.state.sleepTimePickerShow}
+                              handler={this.sleepTimeHandler}
+                              cancelHandler={this.cancelTimeHandler}
+                            />
+                            <Divider></Divider>
+                            <List.Item
+                              left={() => <List.Icon icon={require('../../assets/ic_wbc_language.png')} />}
+                              title={resources.getString("language")}
+                              onPress={this._showLanguageModal}
+                              description={this.state.cultureString}
+                              descriptionStyle={styles.descriptionStyle}
+                            />
+                            <List.Item
+                              left={() => <List.Icon icon={require('../../assets/ic_wbc_terms_condition.png')} />}
+                              title={resources.getString("terms_and_conditions")}
+                              onPress={this._openTermsConditions}
+                            />
+                          </List.Section>
+             {debugButtons}
+            </ScrollView>
+                    <View>
+                       <Portal>
+                         <Dialog
+                           visible={this.state.languageModalShow}
+                           onDismiss={this._hideLanguageModal}>
+                           <Dialog.Title>{resources.getString("language")}</Dialog.Title>
+                           <Dialog.Content>
+                             <RadioButton.Group
+                               onValueChange={c => this._changeLanguage(c)}
+                               value={this.state.culture}>
+                               <View style={styles.radioButtonContainerStyle}>
+                                 <RadioButton value="1" />
+                                 <Text style={styles.radioButtonTextStyle}>English</Text>
+                               </View>
+                               <View style={styles.radioButtonContainerStyle}>
+                                 <RadioButton value="2" />
+                                 <Text style={styles.radioButtonTextStyle}>French</Text>
+                               </View>
+                             </RadioButton.Group>
+                           </Dialog.Content>
+                           <Dialog.Actions>
+                             <Button
+                               style={styles.dialog_action_btn}
+                               onPress={this._hideLanguageModal}>
+                               Ok
+                           </Button>
+                           </Dialog.Actions>
+                         </Dialog>
+                       </Portal>
+                     </View>
+                     <View>
+                                 <Portal>
+                                   <Dialog
+                                     visible={this.state.numPingsModalShow}
+                                     onDismiss={this._hideNumPingsModal}>
+                                     <Dialog.Title>{resources.getString("num_pings_dialog_title")}</Dialog.Title>
+                                     <Dialog.Content>
+                                       <RadioButton.Group
+                                         onValueChange={n => {
+                                             this.setState({ notificationcount: parseInt(n)});
+                                             if (global.debugMode) console.log("Value changed - setting dirty flag");
+                                             this._isDirty = true;
+                                           }
+                                         }
+                                         value={this.state.notificationcount.toString()}>
+                                         <View style={styles.radioButtonContainerStyle}>
+                                           <RadioButton value="2" />
+                                           <Text style={styles.radioButtonTextStyle}>2</Text>
+                                         </View>
+                                         <View style={styles.radioButtonContainerStyle}>
+                                           <RadioButton value="3" />
+                                           <Text style={styles.radioButtonTextStyle}>3</Text>
+                                         </View>
+                                         <View style={styles.radioButtonContainerStyle}>
+                                           <RadioButton value="4" />
+                                           <Text style={styles.radioButtonTextStyle}>4</Text>
+                                         </View>
+                                         <View style={styles.radioButtonContainerStyle}>
+                                           <RadioButton value="5" />
+                                           <Text style={styles.radioButtonTextStyle}>5</Text>
+                                         </View>
+                                       </RadioButton.Group>
+                                     </Dialog.Content>
+                                     <Dialog.Actions>
+                                       <Button
+                                         style={styles.dialog_action_btn}
+                                         onPress={this._hideNumPingsModal}>
+                                         Ok
+                                     </Button>
+                                     </Dialog.Actions>
+                                   </Dialog>
+                                 </Portal>
+                               </View>
         </View>
-        <View style={styles.buttonView}>
-          <Button style={styles.btnNext}
-            mode="contained"
-            onPress={this._backButtonPressed}>
-            <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
-          </Button>
-        </View>
+ <View style={styles.buttonView}>
+                              <Button style={styles.btnNext}
+                                mode="contained"
+                                onPress={this._backButtonPressed}>
+                                <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
+                              </Button>
+                    </View>
+         </View>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
       </PaperProvider>
     );
@@ -497,9 +502,9 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   buttonView: {
-    flex: 1,
+  //  flex: 1,
     justifyContent: "flex-end",
-    marginBottom: 10
+    marginBottom: 0
   },
   timePicker: {
     width: 100,

@@ -79,7 +79,7 @@ class Dashboard extends React.Component<Props, HomeState> {
     let txt = '';
     if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2) txt = txt = resources.getString('ThankYouB');
     this.setState({ showThankYou: !global.showThankYou == 0, thankYouText: txt });
-    setTimeout(() => { global.showThankYou = 0; this.setState({ showThankYou: false }) }, 2000);
+    setTimeout(() => { global.showThankYou = 0; this.setState({ showThankYou: false }) }, 4000);
   }
   handleBackButton() {
     return true;

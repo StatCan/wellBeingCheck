@@ -33,6 +33,7 @@ export default class App extends React.Component<Props,ScreenState> {
       	    this.state = {picture1Base64:null,
                images: [],current:0,title:resources.getString("Your feelings"),helpText:resources.getString("Your feeling help"),
       	     width: 0,height: 0};
+      	     global.currentView=1;
        }
     _onNextBtnHandle = () => {
        this.props.navigation.navigate('Dashboard');
@@ -129,7 +130,7 @@ export default class App extends React.Component<Props,ScreenState> {
                     style={{ backgroundColor: 'white',flex:1}}
                  >
            <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:40}}>
-                 <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{marginLeft:5,marginTop:10}}><Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:38,height:38}} /></TouchableOpacity>
+                 <TouchableOpacity onPress={() =>{global.currentView=0; this.props.navigation.navigate('Dashboard')}} style={{marginLeft:5,marginTop:10}}><Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:38,height:38}} /></TouchableOpacity>
                  <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>{indicator}</View>
                  <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{marginRight:5,marginTop:10}}><FontAwesome name="gear" size={30} color="black" /></TouchableOpacity>
            </View>
@@ -153,7 +154,7 @@ export default class App extends React.Component<Props,ScreenState> {
                  </ImageBackground>
                                 <Button style={styles.btnNext}
                                   mode="contained"
-                                   onPress={() => this.props.navigation.navigate('Dashboard')}>
+                                   onPress={() =>{global.currentView=0;this.props.navigation.navigate('Dashboard')}}>
                                   <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
                                 </Button>
           </PaperProvider>
