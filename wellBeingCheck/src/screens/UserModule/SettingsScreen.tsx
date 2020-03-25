@@ -25,7 +25,7 @@ import * as Permissions from 'expo-permissions';
 import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
 import { resources } from '../../../GlobalResources';
 import { Provider as PaperProvider, Title, Portal, Dialog, RadioButton } from 'react-native-paper';
-import { SafeAreaConsumer } from 'react-native-safe-area-context';
+import { SafeAreaConsumer} from 'react-native-safe-area-context';
 
 var scheduledDateArray = new Array();
 
@@ -49,6 +49,7 @@ interface Props {
   navigation: NavigationScreenProp<NavigationState,
     NavigationParams>;
 }
+let insetsTop = 0;
 const deviceHeight = Dimensions.get('window').height-145;
 class SettingsScreen extends React.Component<Props, SettingsState> {
   _notificationSubscription: any;
@@ -298,14 +299,14 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     }
     return (
       <PaperProvider theme={newTheme}>
-        <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
+        <SafeAreaConsumer>{insets =>{insetsTop=insets.top; <View style={{ paddingTop: insets.top }} />}}</SafeAreaConsumer>
         <View style={{flex:1,justifyContent:'space-between'}}>
             <View style={styles.toolbar}>
                        {/* <BackButton goBack={() => this._backButtonPressed()}/> */}
                    <Text style={styles.toolbarTitle}>{resources.getString("settings")}</Text>
             </View>
 
-        <View style={{justifyContent: "flex-start",height:deviceHeight}}>
+        <View style={{justifyContent: "flex-start",height:deviceHeight-2*insetsTop}}>
            <ScrollView>
                <List.Section style={styles.mainStyle}>
                             <List.Item
