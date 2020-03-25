@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
     margin: 10
   },
   smallButtonText: {
-    color: '#fff',
+    color: '#000000',
     fontSize: 15,textAlign: 'center',
   }
 });
