@@ -25,7 +25,7 @@ import * as Permissions from 'expo-permissions';
 import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
 import { resources } from '../../../GlobalResources';
 import { Provider as PaperProvider, Title, Portal, Dialog, RadioButton } from 'react-native-paper';
-import { SafeAreaConsumer,useSafeArea } from 'react-native-safe-area-context';
+import { SafeAreaConsumer} from 'react-native-safe-area-context';
 
 var scheduledDateArray = new Array();
 
