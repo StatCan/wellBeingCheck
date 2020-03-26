@@ -296,8 +296,10 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
         </Button>
         </View>);
     }
+    
     return (
       <PaperProvider theme={newTheme}>
+        
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
         <View style={{flex:1,justifyContent:'space-between'}}>
             <View style={styles.toolbar}>
@@ -475,14 +477,16 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                                    </Dialog>
                                  </Portal>
                                </View>
-        </View>
- <View style={styles.buttonView}>
+                  <View style={styles.buttonView}>
                               <Button style={styles.btnNext}
                                 mode="contained"
                                 onPress={this._backButtonPressed}>
                                 <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
                               </Button>
                     </View>
+
+        </View>
+ 
          </View>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
       </PaperProvider>
