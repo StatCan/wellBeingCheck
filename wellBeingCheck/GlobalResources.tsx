@@ -196,7 +196,7 @@ export const resources = {
             "contactus_telephone": "Telephone:",
             "contactus_website": "Website:",
             "contactus_mail": "Mail:",
-            "contactus_text": `Chief Statistician of Canada \nStatistics Canada\nAttention of Director Jean Labbé\n150 Tunney’s Pasture Driveway\nOttawa, ON\nK1A 0T6`
+            "contactus_text": `Statistics Canada\nAttention of Director Jean Labbé\n150 Tunney’s Pasture Driveway\nOttawa, ON\nK1A 0T6`
         },
         fr: {
             //global
@@ -419,9 +419,9 @@ export const resources = {
             "contactus_title": "Nous Contacter",
             "contactus_email": "Courriel:",
             "contactus_telephone": "Téléphone:",
-            "contactus_website": "Website:",
-            "contactus_mail": "Site Web:",
-            "contactus_text": `Statisticien en chef du Canada\nStatistique Canada\nÀ l’attention du directeur Jean Labbé\n150, promenade Tunney’s Pasture\nOttawa (Ontario)\nK1A 0T6`
+            "contactus_website": "Site Web:",
+            "contactus_mail": "Courrier:",
+            "contactus_text": `Statistique Canada\nÀ l’attention du directeur Jean Labbé\n150, promenade Tunney’s Pasture\nOttawa (Ontario)\nK1A 0T6`
         }
     }
 };
