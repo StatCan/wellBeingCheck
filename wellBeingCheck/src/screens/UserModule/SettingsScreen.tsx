@@ -8,7 +8,8 @@ import {
   ScrollView,
   Platform,
   Switch,
-  AsyncStorage,Dimensions
+  AsyncStorage,Dimensions,
+  Linking
 } from 'react-native';
 import Background from '../../components/Background';
 import Logo from '../../components/Logo';
@@ -110,6 +111,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     }
     if (finalStatus !== "granted") {
       if (global.debugMode) console.log("Notifications Permission Not Granted");
+      Linking.openURL('app-settings://notification/com.statcan.wellbeingcheck');
       this.setState({ notificationState: false });
       return false;
     }
