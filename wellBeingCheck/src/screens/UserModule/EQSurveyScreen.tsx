@@ -32,8 +32,11 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     setTimeout(()=>{this.setState({webviewLoaded: true})}, 4000);
   }
    componentDidMount(){
-     //    global.userToken='123456789';console.log('ssssssssssssssssssssssssssssssss');
-       //  this.handleSurveyBdone();
+     //    global.userToken='123456789';
+         console.log('ssssssssssssssssssssssssssssssss');
+         this.handleSurveyBdone();
+       /* let jwt=fetchJwToken();
+        console.log('Token:'+jwt);*/
    }
    async handleSurveyAdone(){
            let isConnected=await checkConnection();

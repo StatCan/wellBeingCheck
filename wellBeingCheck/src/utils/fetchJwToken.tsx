@@ -49,7 +49,7 @@ export function checkConnection1() {
       });
 }
 export function fetchJwToken() {
-      let url=global.webApiBaseUrl+'api/security/token';
+      let url=global.webApiBaseUrl+'api/security/token';  console.log(url);
       let data={deviceId:global.userToken,password:hashString(global.password,global.passwordSalt)}
       return fetch(url,{
           method: 'POST',
