@@ -62,7 +62,6 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                if(jwt==''){alert("Internal server error(token), Try again, if same thing would happen again contact StatCan");return;}
                global.jwToken=jwt;
                let types=await this.fetchGraphTypes();
-          //   let types=['mood','activity','location','people'];
                console.log('types:'+types);
                if(types!=null && types.length>0){
                   await this.fetchGraphs(types);
@@ -76,7 +75,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
             let index=0;
             for(var i=0;i<types.length;i++){
                 let url=global.webApiBaseUrl+'api/dashboard/graph/'+types[i].type;
-                if(types[i].type=='overall')url+='&width='+ww+'&height='+hh1;
+                if(types[i].type=='overall')url+='?width='+ww+'&height='+hh1;
                 else url+='?width='+deviceWidth+'&height='+hh;
                 this.fetchImage(url,index,'en');index++;
                 this.fetchImage(url,index,'fr');index++;
@@ -134,60 +133,32 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                  .then((responseData) => {return responseData;})
                  .catch(error => console.warn(error));
          }
-   fetchImages(){
-          console.log(count); if(count>0)return;
-          console.log('Fetch images....');
-          let timeStamp='';
-          let d=new Date();let hh=deviceHeight-220;let hh1=deviceHeight-300;let ww=deviceWidth-80;
-          timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-          let uri0=global.webApiBaseUrl+'Mood/aaa/'+timeStamp+'/en/'+deviceWidth+'/'+hh;
-          let uri1=global.webApiBaseUrl+'Mood/aaa/'+timeStamp+'/fr/'+deviceWidth+'/'+hh;
-          let uri2=global.webApiBaseUrl+'Location/aaa/'+timeStamp+'/en/'+deviceWidth+'/'+hh;
-          let uri3=global.webApiBaseUrl+'Location/aaa/'+timeStamp+'/fr/'+deviceWidth+'/'+hh;
-          let uri4=global.webApiBaseUrl+'People/aaa/'+timeStamp+'/en/'+deviceWidth+'/'+hh;
-          let uri5=global.webApiBaseUrl+'People/aaa/'+timeStamp+'/fr/'+deviceWidth+'/'+hh;
-          let uri6=global.webApiBaseUrl+'Activity/aaa/'+timeStamp+'/en/'+deviceWidth+'/'+hh;
-          let uri7=global.webApiBaseUrl+'Activity/aaa/'+timeStamp+'/fr/'+deviceWidth+'/'+hh;
-          this.fetchImage(uri0,0);
-          this.fetchImage(uri1,1);
-          this.fetchImage(uri2,2);
-          this.fetchImage(uri3,3);
-          this.fetchImage(uri4,4);
-          this.fetchImage(uri5,5);
-          this.fetchImage(uri6,6);
-          this.fetchImage(uri7,7);
-          AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
-          //count=1;
-    }
-   async fetchImage(url:string,index:number) {
-       let isConnected=await checkConnection();
-       if(!isConnected){alert('You are offline, try it later');return;}
-                   let token=global.jwToken;   console.log(url);     //await fetchJwToken();console.log(url);
-                   fetch(url, {
-                             method: 'GET',
-                             headers: {'Authorization': 'Bearer ' + token,
-                                        'Accept-language':global.culture
-                             },
-
-                           })
-                   .then( response =>{
-                       console.log(response.status);
-                       if(response.status==200){
-                             response.blob()
-                             .then(blob =>{
-                                   var reader = new FileReader() ;
-                                   reader.onload = function(){
-                                   // console.log(this.result);// <--- `this.result` contains a base64 data URI
-                                   console.log('image'+index);
-                                   AsyncStorage.setItem('image'+index, this.result);
-                                   } ;
-                                   reader.readAsDataURL(blob) ;
-                             })
-                       }
-                       else { throw new Error("Access denied, Try again later, if same thing would happen again contact StatCan");}
-                       })
-                   .catch(err => { console.log(err) })
-                 }
+   async fetchImage(url:string,index:number,culture:string) {
+          let isConnected=await checkConnection();
+          if(!isConnected){alert('You are offline, try it later');return;}
+          let token=global.jwToken;   console.log(url);     //await fetchJwToken();console.log(url);
+          fetch(url, {
+                method: 'GET',
+                headers: {'Authorization': 'Bearer ' + token,'Accept-language':culture },
+                })
+                .then( response =>{
+                      console.log(response.status);
+                      if(response.status==200){
+                         response.blob()
+                         .then(blob =>{
+                             var reader = new FileReader() ;
+                             reader.onload = function(){
+                          // console.log(this.result);// <--- `this.result` contains a base64 data URI
+                             console.log('image'+index);
+                             AsyncStorage.setItem('image'+index, this.result);
+                             } ;
+                             reader.readAsDataURL(blob) ;
+                         })
+                      }
+                      else { throw new Error("Access denied, Try again later, if same thing would happen again contact StatCan");}
+                      })
+                .catch(err => { console.log(err) })
+      }
    displaySpinner() {
     return (
       <View>
