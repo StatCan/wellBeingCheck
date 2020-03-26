@@ -505,7 +505,7 @@ const styles = StyleSheet.create({
   buttonView: {
   //  flex: 1,
     justifyContent: "flex-end",
-    marginBottom: 0
+    marginBottom: 5
   },
   timePicker: {
     width: 100,

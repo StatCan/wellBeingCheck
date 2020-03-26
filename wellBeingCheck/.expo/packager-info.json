@@ -2,8 +2,8 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 7532,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "packagerPid": 7856,
+  "expoServerNgrokUrl": "https://qf-hur.heikako.wellbeingcheck.exp.direct",
+  "packagerNgrokUrl": "https://packager.qf-hur.heikako.wellbeingcheck.exp.direct",
+  "ngrokPid": 8432
 }
