@@ -60,3 +60,8 @@ export function fetchJwToken() {
         .then((responseData) => {return responseData;})
         .catch(error => console.warn(error));
     }
+
+export function parseJwt (token) {
+       var jwtDecode = require('jwt-decode');
+      return jwtDecode(token);
+    };

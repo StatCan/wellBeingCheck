@@ -5,7 +5,7 @@ import { AsyncStorage } from 'react-native';
 import { AntDesign,FontAwesome } from '@expo/vector-icons';
 import WebView from 'react-native-webview';
 import { resources } from '../../../GlobalResources';
-import {fetchJwToken,checkConnection,hashString} from '../../utils/fetchJwToken';
+import {fetchJwToken,checkConnection,hashString,parseJwt} from '../../utils/fetchJwToken';
 const deviceHeight =Math.floor(Dimensions.get('window').height);
 const deviceWidth =Math.floor(Dimensions.get('window').width);
 import {BackEndService} from '../../api/back-end.service';
@@ -61,9 +61,13 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                let jwt=await fetchJwToken();  console.log('Token:'+jwt);
                if(jwt==''){alert("Internal server error(token), Try again, if same thing would happen again contact StatCan");return;}
                global.jwToken=jwt;
-                var service=new BackEndService();
+              /* var service=new BackEndService();
                var claim=service.decodeJwtToken(jwt);  //not working
+               */
+               var claim=parseJwt(jwt);
+               console.log(claim);
                console.log(claim.deviceId+"--"+claim.sac+"--"+claim.password);
+
 
                let types=await this.fetchGraphTypes();
                console.log('types:'+types);
@@ -79,8 +83,9 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
             let index=0;
             for(var i=0;i<types.length;i++){
                 let url=global.webApiBaseUrl+'api/dashboard/graph/'+types[i].type;
-                if(types[i].type=='overall')url+='?width='+ww+'&height='+hh1;
-                else url+='?width='+deviceWidth+'&height='+hh;
+              //  if(types[i].type=='overall')url+='?width='+deviceWidth+'&height='+hh;
+              //  else url+='?width='+deviceWidth+'&height='+hh;
+                url+='?width='+deviceWidth+'&height='+hh;
                 this.fetchImage(url,index,'en');index++;
                 this.fetchImage(url,index,'fr');index++;
             }
@@ -137,7 +142,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                  .then((responseData) => {return responseData;})
                  .catch(error => console.warn(error));
          }
-   async fetchImage(url:string,index:number,culture:string) {
+      async fetchImage(url:string,index:number,culture:string) {
           let isConnected=await checkConnection();
           if(!isConnected){alert('You are offline, try it later');return;}
           let token=global.jwToken;   console.log(url);     //await fetchJwToken();console.log(url);
@@ -163,7 +168,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                       })
                 .catch(err => { console.log(err) })
       }
-   displaySpinner() {
+      displaySpinner() {
     return (
       <View>
         <ActivityIndicator />
