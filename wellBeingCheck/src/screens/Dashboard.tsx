@@ -136,16 +136,15 @@ class Dashboard extends React.Component<Props, HomeState> {
          <View>
               <View>
                 <TouchableOpacity onPress={()=>this.props.navigation.navigate('SettingsScreen',{ refresh: this._refresh })} 
-              style={{ marginRight: 5, marginTop: 50 }}>
+                                  style={{ marginRight: 5, marginTop: 50 }}>
                   <Image source={require('../assets/ic_setting.png')} />  
                 </TouchableOpacity>
               </View>
-            
-            </View>
+         </View>
 
          {/* --------------------*/}
          
-          </View>
+        </View>
           <View style={styles.homeContainer}>
             <TouchableOpacity onPress={() => { global.needReload1 = true; global.needReload2 = true; global.needReload3 = true; global.needReload4 = true; global.needReload5 = true; global.needReload6 = true; global.needReload7 = true; this.props.navigation.navigate('EQSurveyScreen'); }} style={{ flex: 2, justifyContent: 'center' }}>
               <View style={styles.outer}>
@@ -157,7 +156,7 @@ class Dashboard extends React.Component<Props, HomeState> {
             {this.state.showThankYou &&
               <View style={{ backgroundColor: 'black', width: '80%', position: 'absolute', zIndex: 29, alignSelf: 'center', top: '60%', justifyContent: 'center', alignItems: 'center' }}><Text style={{ color: 'white', fontSize: 14, marginTop: 10, marginBottom: 10 }}>{this.state.thankYouText}</Text></View>
             }
-            <View style={[styles.homeButtonContainer, { marginBottom: 0, marginTop: 50 }, { flexDirection: 'row' }]}>
+          <View style={[styles.homeButtonContainer, { marginBottom: 0, marginTop: 50 }, { flexDirection: 'row' }]}>
 
              {/*  <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')} style={styles.smallButton}><EvilIcons name="question" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("about")}</Text></TouchableOpacity>
               <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}><Feather name="phone" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("contact_us")}</Text></TouchableOpacity>

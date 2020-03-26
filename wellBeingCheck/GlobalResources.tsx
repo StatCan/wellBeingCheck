@@ -263,7 +263,7 @@ export const resources = {
             `Statistique Canada respecte la Loi sur les langues officielles et s'engage à ce que les produits d'information disponibles soient d'égale qualité en français et en anglais. \n`+
             `http://www.statcan.gc.ca/fra/rb/blogue2 \n\n`+
             
-            `Avis de l’accessibiité \n\n`+
+            `Avis de l’accessibilité \n\n`+
             `Le gouvernement du Canada est déterminé à maintenir une norme d'accessibilité élevée conformément à la Norme sur l’optimisation des sites Web et des applications pour appareils mobiles. Veuillez communiquer avec nous si vous éprouvez des difficultés à utiliser nos pages Web, les applications ou les applications mobiles axées sur l'appareil, ou si vous désirez obtenir des formats de substitution comme le caractère ordinaire, le Braille ou un autre format approprié. \n`+
             `http://www.statcan.gc.ca/fra/reference/avisaccess \n\n`+
             

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View,ScrollView, StyleSheet,TouchableOpacity,Dimensions,Image,ActivityIndicator ,Modal,ImageBackground,NativeEventEmitter, Animated,InteractionManager,AsyncStorage} from 'react-native';
+import { Text, View,ScrollView, StyleSheet,TouchableOpacity,Dimensions,Image,ActivityIndicator ,Modal,ImageBackground,NativeEventEmitter, Animated,InteractionManager,AsyncStorage, Alert} from 'react-native';
 import TabNavigator from './TabPageScreen';
 import { Provider as PaperProvider, Title, Paragraph } from 'react-native-paper';
 import Button from '../../components/Button';
@@ -31,7 +31,8 @@ export default class App extends React.Component<Props,ScreenState> {
     constructor(props) {
       	    super(props);
       	    this.state = {picture1Base64:null,
-               images: [],current:0,title:resources.getString("Your feelings"),helpText:resources.getString("Your feeling help"),
+               images: [],current:0,title:resources.getString("Your feelings"),
+               helpText:resources.getString("Your feeling help"),
       	     width: 0,height: 0};
       	     global.currentView=1;
        }
@@ -113,7 +114,7 @@ export default class App extends React.Component<Props,ScreenState> {
                          });
          }
    helpClick(){
-        alert(this.state.helpText);
+       Alert.alert('',this.state.helpText);
    }
   render() {
       let indicator = this.state.images.map((item, index) => {
@@ -137,28 +138,32 @@ export default class App extends React.Component<Props,ScreenState> {
                    <FontAwesome name="gear" size={30} color="black" />
                  </TouchableOpacity> */}
              
-            
                 <TouchableOpacity onPress={()=>this.props.navigation.navigate('SettingsScreen',{ refresh: this._refresh })} 
-              style={{ marginRight: 5, marginTop: 10 }}>
+                                  style={{ marginRight: 5, marginTop: 10 }}>
                   <Image source={require('../../assets/ic_setting.png')} />  
-                </TouchableOpacity>
-            
-           
+                </TouchableOpacity>     
            </View>
             <View style={{ flex: 1 }}>
-
                     <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                          <Title style={[styles.title,{marginLeft:5}]}>{this.state.title}</Title>
-                          <TouchableOpacity onPress={() => this.helpClick()} style={{marginRight:0}}><AntDesign name="questioncircle" size={30} style={{color:'#918196',marginRight:5}} color="black" /></TouchableOpacity>
-                    </View>
+                       {/*<TouchableOpacity onPress={() => this.helpClick()} style={{marginRight:0}}>
+                            <AntDesign name="questioncircle" size={30} style={{color:'#918196',marginRight:5}} color="black" />
+                          </TouchableOpacity> */}
+
+                        <TouchableOpacity onPress={()=>this.helpClick()} 
+                        style={{ marginRight: 5, marginTop: 5 }}>
+                          <Image source={require('../../assets/ic_wbc_help.png')} />  
+                        </TouchableOpacity>
+                        </View>
                             <View style={{height:this.state.height}}>
-                            <ScrollView horizontal showsHorizontalScrollIndicator={false} ref={ref => {this.sv = ref;}} contentContainerStyle={{ paddingVertical: 20,justifyContent:'center', }} onTouchStart={this.log} onScrollEndDrag={this.handleScroll.bind(this)}>
+                            <ScrollView horizontal showsHorizontalScrollIndicator={false} ref={ref => {this.sv = ref;}} 
+                                        contentContainerStyle={{ paddingVertical: 20,justifyContent:'center', }} 
+                                        onTouchStart={this.log} onScrollEndDrag={this.handleScroll.bind(this)}>
                                 {this.state.images.map((item, index) => (
                                   <View onLayout={this._onLayout.bind(this)} style={{height:this.state.height}} key={index}>
                                             <Image source={{ uri: item }}  style={{width: this.state.width,height: this.state.height-60,resizeMode:'stretch'}} />
                                    </View>
                                           ))}
-
                             </ScrollView>
                             </View>
                           </View>
