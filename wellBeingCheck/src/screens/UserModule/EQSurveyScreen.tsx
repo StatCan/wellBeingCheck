@@ -61,10 +61,14 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                let jwt=await fetchJwToken();  console.log('Token:'+jwt);
                if(jwt==''){alert("Internal server error(token), Try again, if same thing would happen again contact StatCan");return;}
                global.jwToken=jwt;
+                var service=new BackEndService();
+               var claim=service.decodeJwtToken(jwt);  //not working
+               console.log(claim.deviceId+"--"+claim.sac+"--"+claim.password);
+
                let types=await this.fetchGraphTypes();
                console.log('types:'+types);
                if(types!=null && types.length>0){
-                  await this.fetchGraphs(types);
+              //    await this.fetchGraphs(types);
                }
                count=1;AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
          }

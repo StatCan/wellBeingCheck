@@ -112,7 +112,11 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           var deviceId=generateNewDeviceId();console.log('new deviceId:'+deviceId);   //24 digits >20, use this one later after confirm thew 24 length
           var valid=isValidDeviceId(deviceId);console.log('is valid:'+valid);
           let userToken = await AsyncStorage.getItem('EsmUserToken');
-          if (userToken == null ||userToken==''){userToken=this.generateShortGuid(20);AsyncStorage.setItem('EsmUserToken',userToken);}      //userToken= Constants.deviceId;   //   global.userToken=this.generateShortGuid(24);
+          if (userToken == null ||userToken==''){
+             // userToken=this.generateShortGuid(20);
+              userToken= deviceId;
+              AsyncStorage.setItem('EsmUserToken',userToken);
+          }      //userToken= Constants.deviceId;   //   global.userToken=this.generateShortGuid(24);
           global.userToken=userToken;
           let doneSurveyA = await AsyncStorage.getItem('doneSurveyA');global.doneSurveyA=doneSurveyA;
           console.log('SurveyA:'+global.doneSurveyA);
