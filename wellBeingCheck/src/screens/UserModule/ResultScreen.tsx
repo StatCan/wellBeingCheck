@@ -132,7 +132,18 @@ export default class App extends React.Component<Props,ScreenState> {
            <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:40}}>
                  <TouchableOpacity onPress={() =>{global.currentView=0; this.props.navigation.navigate('Dashboard')}} style={{marginLeft:5,marginTop:10}}><Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:38,height:38}} /></TouchableOpacity>
                  <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>{indicator}</View>
-                 <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} style={{marginRight:5,marginTop:10}}><FontAwesome name="gear" size={30} color="black" /></TouchableOpacity>
+               {/*   <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} 
+                                   style={{marginRight:5,marginTop:10}}>
+                   <FontAwesome name="gear" size={30} color="black" />
+                 </TouchableOpacity> */}
+             
+            
+                <TouchableOpacity onPress={()=>this.props.navigation.navigate('SettingsScreen',{ refresh: this._refresh })} 
+              style={{ marginRight: 5, marginTop: 10 }}>
+                  <Image source={require('../../assets/ic_setting.png')} />  
+                </TouchableOpacity>
+            
+           
            </View>
             <View style={{ flex: 1 }}>
 
