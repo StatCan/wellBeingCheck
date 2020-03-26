@@ -8,6 +8,8 @@ import * as Permissions from 'expo-permissions';
 import BackgroundWide from '../../components/BackgroundWide';
 import LogoClearSmall from '../../components/LogoClearSmall';
 import { resources } from '../../../GlobalResources';
+import AppBanner from '../../components/AppBanner';
+
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -42,6 +44,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
     return (
       <PaperProvider theme={newTheme}>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
+        <AppBanner />
           <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}>
               <LogoClearSmall />
