@@ -50,8 +50,8 @@ export function checkConnection1() {
 }
 export function fetchJwToken() {
       let url=global.webApiBaseUrl+'api/security/token';
-      let data={deviceId:global.userToken,password:hashString(global.password,global.passwordSalt)}
-   //  let data={deviceId:'iphone5yu',sac:'6881265148395520',password:'patateHacheAvecSel'}
+  //    let data={deviceId:global.userToken,password:hashString(global.password,global.passwordSalt)}
+     let data={deviceId:'iphone5yu',sac:'6881265148395520',password:'patateHacheAvecSel'}
       return fetch(url,{
           method: 'POST',
           headers: {'Content-Type': 'application/json',},

@@ -33,7 +33,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     setTimeout(()=>{this.setState({webviewLoaded: true})}, 4000);
   }
    componentDidMount(){
-        // this.handleSurveyAdone();
+        this.handleSurveyBdone();
    }
 
       async handleSurveyAdone(){
@@ -75,9 +75,9 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
             let hh=deviceHeight-220;let hh1=deviceHeight-300;let ww=deviceWidth-80;
             let index=0;
             for(var i=0;i<types.length;i++){
-                let url=global.webApiBaseUrl+'api/dashboard/graph?type='+types[i];
-                if(types[i]=='mood')url+='&width='+ww+'&height='+hh1;
-                else url+='&width='+deviceWidth+'&height='+hh;
+                let url=global.webApiBaseUrl+'api/dashboard/graph/'+types[i].type;
+                if(types[i].type=='overall')url+='&width='+ww+'&height='+hh1;
+                else url+='?width='+deviceWidth+'&height='+hh;
                 this.fetchImage(url,index,'en');index++;
                 this.fetchImage(url,index,'fr');index++;
             }
