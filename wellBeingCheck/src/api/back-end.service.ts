@@ -4,7 +4,7 @@ import {
     Links,
     ConfigApi,
     SecurityApi,
-    ConfigurationParameters, ParadataApi
+    ConfigurationParameters, ParadataApi, DashboardApi, GraphLink
 } from "./openapi";
 import base64 from 'react-native-base64';
 
@@ -68,6 +68,12 @@ export type Failure = {
     type: FailureType,
     context: string,
     exception?: Error
+}
+
+export type GraphList = {
+    timeStamp: string,
+    token: string
+    graphs: GraphLink[]
 }
 
 /**
@@ -174,7 +180,7 @@ export class BackEndService {
         hashedSecurityAnswer: string): Promise<void | Failure> {
 
         // We create a task to be executed once authentication is done
-        let setPasswordTask = async function (jwtToken:string): Promise<void | Failure> {
+        let setPasswordTask = async function (jwtToken: string): Promise<void | Failure> {
             let configurationParameters = this.getCommonConfiguration();
             configurationParameters.accessToken = jwtToken;
             let securityApi = new SecurityApi(new Configuration(configurationParameters));
@@ -282,6 +288,54 @@ export class BackEndService {
     }
 
     /**
+     * Retrieve all english and french graphs for all types available. If there is an error to retrieve one particular
+     * graph then it will be null.
+     */
+    async retrieveGraphLinks(): Promise<GraphList | Failure> {
+        // We create a task to be executed once the authentication is done
+        let retrieveGraphsTask = async function (jwtToken: string): Promise<GraphList | Failure> {
+            let configurationParameters = this.getCommonConfiguration();
+            configurationParameters.accessToken = jwtToken;
+            let dashboardApi = new DashboardApi(new Configuration(configurationParameters));
+
+            try {
+                // Retrieve the list of urls first
+                let graphLinks = await dashboardApi.getGraphUrls();
+                return {
+                    timeStamp: new Date().toDateString(),
+                    token: jwtToken,
+                    graphs: graphLinks
+                };
+            } catch (e) {
+                if (e instanceof Error) {
+                    return {type: FailureType.FetchFailure, context: 'dashboardApi', exception: e};
+                }
+                if (this.isResponse(e)) {
+                    if (BackEndService.HTTP_INTERNAL_SERVER_ERROR(e.status)) {
+                        return {
+                            type: FailureType.ServerFailure,
+                            context: 'dashboardApi',
+                            exception: new Error(`retrieveGraphs internal server error. HTTP status=${e.status} text=${e.statusText}`)
+                        }
+                    }
+
+                    // Anything that is not internal server error is permission problem
+                    return {
+                        type: FailureType.CredentialsFailure,
+                        context: 'dashboardApi',
+                        exception: new Error(`Server did not return graphs because of authorization problem. HTTP status=${e.status} text=${e.statusText}`)
+                    }
+                }
+
+                return this.unknownFailure('dashboardApi', e);
+            }
+        };
+
+        // We have to bind this instance as the this of the anonymous function as we reference this to access method of the class
+        return await this.authenticateThen(retrieveGraphsTask.bind(this));
+    }
+
+    /**
      * Submits any paradata to the back-end for storage
      *
      * @param padaData any free-form json object. The object will be sent through wire as json and stored in CMP as an
@@ -289,7 +343,7 @@ export class BackEndService {
      */
     async submitParadata(padaData: any): Promise<void | Failure> {
         // We create a task to be executed once authentication is done
-        let submitParadataTask = async function (jwtToken:string): Promise<void | Failure> {
+        let submitParadataTask = async function (jwtToken: string): Promise<void | Failure> {
             let configurationParameters = this.getCommonConfiguration();
             configurationParameters.accessToken = jwtToken;
             let paradataApi = new ParadataApi(new Configuration(configurationParameters));
@@ -311,7 +365,7 @@ export class BackEndService {
                         }
                     }
 
-                    // Either token expired or token tampered
+                    // Either token expired or token tampered with
                     return {
                         type: FailureType.SecurityProtocolFailure,
                         context: 'paradataApi.submitParadata',

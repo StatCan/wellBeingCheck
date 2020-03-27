@@ -1,13 +1,14 @@
 import {BackEndService, removeWrappingQuotes} from "./back-end.service";
 import {NavigationActions} from "react-navigation";
 import back = NavigationActions.back;
+import {GraphType} from "./openapi/models";
 
 /**
  * Points to the WebApi server to use for integration testing
  */
 const WEB_API_BASE_URL = 'http://wellbeingcheck.canadacentral.cloudapp.azure.com/wellbeing-bienetre/api';
 
-it('Retrieve Links', async () => {
+it('Retrieve Config Links', async () => {
 
    let backEndService = new BackEndService(
        WEB_API_BASE_URL,
@@ -49,7 +50,7 @@ it('Retrieve Links', async () => {
    }
 }, 60_000);
 
-it('Retrieve Flags', async () => {
+it('Retrieve Config Flags', async () => {
    let backEndService = new BackEndService(
        WEB_API_BASE_URL,
        'fr-CA',
@@ -138,6 +139,43 @@ it('Submit Paradata', async () => {
 
    if (!backEndService.isResultFailure(result)) {
       expect(result).toBeUndefined();
+   }
+}, 60_000);
+
+it('Retrieve Graph Links', async () => {
+   let backEndService = new BackEndService(
+       WEB_API_BASE_URL,
+       'fr-CA',
+       'iphone5yu',
+       '6881265148395520',
+       'patateHacheAvecSel',
+       fetch
+   );
+   let result = await backEndService.retrieveGraphLinks();
+   expect(backEndService.isResultFailure(result)).toBeFalsy();
+
+   if (!backEndService.isResultFailure(result)) {
+      expect(result.token).not.toBeNull();
+      expect(result.timeStamp).not.toBeNull();
+      expect(result.graphs).not.toBeNull();
+      expect(result.graphs.length).toBe(4);
+
+      result.graphs.forEach(function (graphLink) {
+         switch (graphLink.type) {
+            case GraphType.Activity:
+               expect(graphLink.url).toBe('http://wellbeingcheck.canadacentral.cloudapp.azure.com/wellbeing-bienetre/api/dashboard/graph/activity');
+               break;
+            case GraphType.Location:
+               expect(graphLink.url).toBe('http://wellbeingcheck.canadacentral.cloudapp.azure.com/wellbeing-bienetre/api/dashboard/graph/location');
+               break;
+            case GraphType.People:
+               expect(graphLink.url).toBe('http://wellbeingcheck.canadacentral.cloudapp.azure.com/wellbeing-bienetre/api/dashboard/graph/people');
+               break;
+            case GraphType.Overall:
+               expect(graphLink.url).toBe('http://wellbeingcheck.canadacentral.cloudapp.azure.com/wellbeing-bienetre/api/dashboard/graph/overall');
+               break;
+         }
+      });
    }
 }, 60_000);
 
