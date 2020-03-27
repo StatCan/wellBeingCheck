@@ -70,10 +70,10 @@ const styles = StyleSheet.create({
   },
   btnNext: {
     color: newTheme.colors.whiteText,
-    width: 100,
+    width: 100,height:40,
     alignSelf: "flex-end",
     marginRight: 20,
-    marginBottom: 10,
+     marginBottom: 4,marginTop:4
   },
   btnText: {
     color: newTheme.colors.whiteText,
