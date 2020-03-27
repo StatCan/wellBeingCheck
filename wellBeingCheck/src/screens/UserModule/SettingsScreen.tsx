@@ -27,6 +27,7 @@ import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-n
 import { resources } from '../../../GlobalResources';
 import { Provider as PaperProvider, Title, Portal, Dialog, RadioButton } from 'react-native-paper';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
+import * as IntentLauncher from 'expo-intent-launcher';
 
 var scheduledDateArray = new Array();
 
@@ -111,7 +112,14 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     }
     if (finalStatus !== "granted") {
       if (global.debugMode) console.log("Notifications Permission Not Granted");
-      Linking.openURL('app-settings://notification/com.statcan.wellbeingcheck');
+
+      if (Platform.OS === 'ios') {
+        Linking.openURL('app-settings://notification/com.statcan.wellbeingcheck');
+      } else {
+        if (global.debugMode) console.log("Opening Android Settings Screen");
+        IntentLauncher.startActivityAsync(IntentLauncher.ACTION_APPLICATION_DETAILS_SETTINGS, {
+          data: 'package:com.statcan.wellbeingcheck'});
+      }
       this.setState({ notificationState: false });
       return false;
     }
@@ -307,7 +315,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                    <Text style={styles.toolbarTitle}>{resources.getString("settings")}</Text>
             </View>
 
-        <View style={{justifyContent: "flex-start",height:deviceHeight}}>
+        <View style={styles.containerStyle}>
            <ScrollView>
                <List.Section style={styles.mainStyle}>
                             <List.Item
@@ -403,7 +411,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                             />
                           </List.Section>
              {debugButtons}
-            </ScrollView>
+            
                     <View>
                        <Portal>
                          <Dialog
@@ -477,22 +485,28 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                                    </Dialog>
                                  </Portal>
                                </View>
-        </View>
- <View style={styles.buttonView}>
-                              <Button style={styles.btnNext}
-                                mode="contained"
-                                onPress={this._backButtonPressed}>
-                                <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
-                              </Button>
-                    </View>
+                               </ScrollView>
+          </View>
+          <View style={styles.buttonView}>
+            <Button style={styles.btnNext}
+              mode="contained"
+              onPress={this._backButtonPressed}>
+              <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
+            </Button>
+          </View>
+          <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
          </View>
-        <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
+        
       </PaperProvider>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  containerStyle:{
+    justifyContent: "flex-start", 
+    height: deviceHeight - 60
+  },
   radioButtonContainerStyle:{
     flexDirection: 'row'
   },
@@ -504,9 +518,7 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   buttonView: {
-  //  flex: 1,
-    justifyContent: "flex-end",
-    marginBottom: 0
+    justifyContent: "flex-end"
   },
   timePicker: {
     width: 100,
