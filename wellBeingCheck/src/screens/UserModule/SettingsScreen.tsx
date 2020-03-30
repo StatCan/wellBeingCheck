@@ -9,7 +9,8 @@ import {
   Platform,
   Switch,
   AsyncStorage,Dimensions,
-  Linking
+  Linking,
+  Alert
 } from 'react-native';
 import Background from '../../components/Background';
 import Logo from '../../components/Logo';
@@ -111,21 +112,41 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       finalStatus = status;
     }
     if (finalStatus !== "granted") {
+      // In final status, we asked for permission of the OS and we were denied, so we need to ask
       if (global.debugMode) console.log("Notifications Permission Not Granted");
 
-      if (Platform.OS === 'ios') {
-        Linking.openURL('app-settings://notification/com.statcan.wellbeingcheck');
-      } else {
-        if (global.debugMode) console.log("Opening Android Settings Screen");
-        IntentLauncher.startActivityAsync(IntentLauncher.ACTION_APPLICATION_DETAILS_SETTINGS, {
-          data: 'package:com.statcan.wellbeingcheck'});
-      }
-      this.setState({ notificationState: false });
-      return false;
+      Alert.alert(
+        'Notification Alerts',
+        'Would you like to turn on notifications?',
+        [
+          {
+            text: 'Cancel',
+            onPress: () => {
+              console.log('Cancel Pressed');
+              this.setState({ notificationState: false });
+              return false;
+            },
+            style: 'cancel',
+          },
+          { text: 'OK', onPress: () => {
+            console.log('OK Pressed');
+            if (Platform.OS === 'ios') {
+              Linking.openURL('app-settings://notification/com.statcan.wellbeingcheck');
+            } else {
+              if (global.debugMode) console.log("Opening Android Settings Screen");
+              IntentLauncher.startActivityAsync(IntentLauncher.ACTION_APPLICATION_DETAILS_SETTINGS, {
+                data: 'package:com.statcan.wellbeingcheck'});
+            }
+          }
+          },
+        ],
+        { cancelable: false }
+      );
+    }else{
+      if (global.debugMode) console.log("Notifications Permission Granted");
+      this.setState({ notificationState: true });
+      return true;
     }
-    if (global.debugMode) console.log("Notifications Permission Granted");
-    this.setState({ notificationState: true });
-    return true;
   };
 
   componentDidMount() {
@@ -142,6 +163,45 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     this._notificationSubscription = Notifications.addListener(this._handleNotification);
 
     this._retrieveData('settings');
+  }
+
+  handleBackAction = async () => {
+    if (global.debugMode) console.log("Component will unmount");
+
+    //if (this._isDirty || this.state.settingsFirstTime) {
+      this.setState({ settingsFirstTime: false });
+      if (this.state.notificationState){
+          if (global.debugMode) console.log("Dirty flag set - scheduling notifications");
+          notificationAlgo(this.state.waketime, this.state.sleeptime, this.state.notificationcount);
+      } else {
+        if (global.debugMode) console.log("Notifications turned off - cancelling all notifications");
+        Notifications.cancelAllScheduledNotificationsAsync();
+      }
+    //}
+
+    if (this.state.culture === "2") {
+      resources.culture = 'fr';
+    } else if (this.state.culture === "1") {
+      resources.culture = 'en';
+    }
+
+    if (global.debugMode) console.log("Platform version: " + Platform.Version);
+    if (global.debugMode) console.log("Device Name: " + Expo.Constants.deviceName);
+    if (global.debugMode) console.log("Native App Version: " + Expo.Constants.nativeAppVersion);
+    if (global.debugMode) console.log("Native Build Version: " + Expo.Constants.nativeBuildVersion);
+    if (global.debugMode) console.log("Device Year Class: " + Expo.Constants.deviceYearClass);
+    if (global.debugMode) console.log("Session ID: " + Expo.Constants.sessionId);
+    if (global.debugMode) console.log("Wake Time: " + this.state.waketime);
+    if (global.debugMode) console.log("Sleep Time: " + this.state.sleeptime);
+    if (global.debugMode) console.log("Notification Count: " + this.state.notificationcount);
+    if (global.debugMode) console.log("Scheduled Notification Times: " + scheduledDateArray);
+
+    this._storeSettings();
+  }
+
+  componentWillUnmount() {
+    if (global.debugMode) console.log("Component will unmount");
+    this.handleBackAction();
   }
 
   _handleNotification = (notification) => {
@@ -178,38 +238,8 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   }
 
   _backButtonPressed = () => {
-
     if (global.debugMode) console.log("Back button Pressed");
-
-    //if (this._isDirty || this.state.settingsFirstTime) {
-      this.setState({ settingsFirstTime: false });
-      if (this.state.notificationState){
-          if (global.debugMode) console.log("Dirty flag set - scheduling notifications");
-          notificationAlgo(this.state.waketime, this.state.sleeptime, this.state.notificationcount);
-      } else {
-        if (global.debugMode) console.log("Notifications turned off - cancelling all notifications");
-        Notifications.cancelAllScheduledNotificationsAsync();
-      }
-    //}
-
-    if (this.state.culture === "2") {
-      resources.culture = 'fr';
-    } else if (this.state.culture === "1") {
-      resources.culture = 'en';
-    }
-
-    if (global.debugMode) console.log("Platform version: " + Platform.Version);
-    if (global.debugMode) console.log("Device Name: " + Expo.Constants.deviceName);
-    if (global.debugMode) console.log("Native App Version: " + Expo.Constants.nativeAppVersion);
-    if (global.debugMode) console.log("Native Build Version: " + Expo.Constants.nativeBuildVersion);
-    if (global.debugMode) console.log("Device Year Class: " + Expo.Constants.deviceYearClass);
-    if (global.debugMode) console.log("Session ID: " + Expo.Constants.sessionId);
-    if (global.debugMode) console.log("Wake Time: " + this.state.waketime);
-    if (global.debugMode) console.log("Sleep Time: " + this.state.sleeptime);
-    if (global.debugMode) console.log("Notification Count: " + this.state.notificationcount);
-    if (global.debugMode) console.log("Scheduled Notification Times: " + scheduledDateArray);
-
-    this._storeSettings();
+    this.handleBackAction();
   }
 
   _storeSettings = () => {
