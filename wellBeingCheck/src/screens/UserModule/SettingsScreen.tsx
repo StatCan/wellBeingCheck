@@ -34,6 +34,7 @@ var scheduledDateArray = new Array();
 
 type SettingsState = {
   notificationState: boolean,
+  chosenNotificationState: boolean,
   notification: boolean,
   waketime: string,
   sleeptime: string,
@@ -62,6 +63,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     this.state = {
       numPingsModalShow: false,
       notificationState: true,
+      chosenNotificationState: true,
       notification: true,
       waketime: '08:00',
       sleeptime: '22:00',
@@ -110,10 +112,14 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     if (existingStatus !== "granted") {
       const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
       finalStatus = status;
+      Notifications.cancelAllScheduledNotificationsAsync();
     }
     if (finalStatus !== "granted") {
+
       // In final status, we asked for permission of the OS and we were denied, so we need to ask
       if (global.debugMode) console.log("Notifications Permission Not Granted");
+      this.setState({ notificationState: false });
+      Notifications.cancelAllScheduledNotificationsAsync();
 
       Alert.alert(
         'Notification Alerts',
@@ -159,7 +165,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
 
     if (global.debugMode) console.log("DEBUGMODE ON - Outputting Console Logs");
     if (global.debugMode) console.log("Settings Screen Component Mounted");
-    this.askPermissions();
+
     this._notificationSubscription = Notifications.addListener(this._handleNotification);
 
     this._retrieveData('settings');
@@ -246,6 +252,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     //validation passed lets store user
     let settingsObj = {
       notificationState: this.state.notificationState,
+      chosenNotificationState: this.state.notificationState,
       wakeTime: this.state.waketime,
       sleepTime: this.state.sleeptime,
       notificationCount: this.state.notificationcount,
@@ -271,6 +278,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       if (result) {
         let resultAsObj = JSON.parse(result);
         this.setState({ notificationState: resultAsObj.notificationState });
+        this.setState({ chosenNotificationState: resultAsObj.chosenNotificationState });
         this.setState({ notificationcount: resultAsObj.notificationCount });
         this.setState({ waketime: resultAsObj.wakeTime });
         this.setState({ sleeptime: resultAsObj.sleepTime });
@@ -279,6 +287,11 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
         this.setState({ settingsFirstTime: resultAsObj.settingsFirstTime});
       }
     });
+
+    if (this.state.chosenNotificationState){
+      if (global.debugMode) console.log("Asking permissions...");
+      this.askPermissions();
+    }
 
     if (global.debugMode) console.log("Resources culture is: " + resources.culture);
 
