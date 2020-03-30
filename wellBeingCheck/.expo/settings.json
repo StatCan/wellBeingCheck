@@ -3,6 +3,6 @@
   "lanType": "ip",
   "dev": true,
   "minify": false,
-  "urlRandomness": "9j-gxt",
+  "urlRandomness": null,
   "https": false
 }

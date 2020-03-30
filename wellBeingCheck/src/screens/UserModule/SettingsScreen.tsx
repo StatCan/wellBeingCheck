@@ -8,7 +8,9 @@ import {
   ScrollView,
   Platform,
   Switch,
-  AsyncStorage,Dimensions
+  AsyncStorage,Dimensions,
+  Linking,
+  Alert
 } from 'react-native';
 import Background from '../../components/Background';
 import Logo from '../../components/Logo';
@@ -25,12 +27,14 @@ import * as Permissions from 'expo-permissions';
 import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
 import { resources } from '../../../GlobalResources';
 import { Provider as PaperProvider, Title, Portal, Dialog, RadioButton } from 'react-native-paper';
-import { SafeAreaConsumer} from 'react-native-safe-area-context';
+import { SafeAreaConsumer } from 'react-native-safe-area-context';
+import * as IntentLauncher from 'expo-intent-launcher';
 
 var scheduledDateArray = new Array();
 
 type SettingsState = {
   notificationState: boolean,
+  chosenNotificationState: boolean,
   notification: boolean,
   waketime: string,
   sleeptime: string,
@@ -49,7 +53,6 @@ interface Props {
   navigation: NavigationScreenProp<NavigationState,
     NavigationParams>;
 }
-let insetsTop = 0;
 const deviceHeight = Dimensions.get('window').height-145;
 class SettingsScreen extends React.Component<Props, SettingsState> {
   _notificationSubscription: any;
@@ -60,6 +63,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     this.state = {
       numPingsModalShow: false,
       notificationState: true,
+      chosenNotificationState: true,
       notification: true,
       waketime: '08:00',
       sleeptime: '22:00',
@@ -108,15 +112,47 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     if (existingStatus !== "granted") {
       const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
       finalStatus = status;
+      Notifications.cancelAllScheduledNotificationsAsync();
     }
     if (finalStatus !== "granted") {
+
+      // In final status, we asked for permission of the OS and we were denied, so we need to ask
       if (global.debugMode) console.log("Notifications Permission Not Granted");
       this.setState({ notificationState: false });
-      return false;
+      Notifications.cancelAllScheduledNotificationsAsync();
+
+      Alert.alert(
+        'Notification Alerts',
+        'Would you like to turn on notifications?',
+        [
+          {
+            text: 'Cancel',
+            onPress: () => {
+              console.log('Cancel Pressed');
+              this.setState({ notificationState: false });
+              return false;
+            },
+            style: 'cancel',
+          },
+          { text: 'OK', onPress: () => {
+            console.log('OK Pressed');
+            if (Platform.OS === 'ios') {
+              Linking.openURL('app-settings://notification/com.statcan.wellbeingcheck');
+            } else {
+              if (global.debugMode) console.log("Opening Android Settings Screen");
+              IntentLauncher.startActivityAsync(IntentLauncher.ACTION_APPLICATION_DETAILS_SETTINGS, {
+                data: 'package:com.statcan.wellbeingcheck'});
+            }
+          }
+          },
+        ],
+        { cancelable: false }
+      );
+    }else{
+      if (global.debugMode) console.log("Notifications Permission Granted");
+      this.setState({ notificationState: true });
+      return true;
     }
-    if (global.debugMode) console.log("Notifications Permission Granted");
-    this.setState({ notificationState: true });
-    return true;
   };
 
   componentDidMount() {
@@ -129,10 +165,49 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
 
     if (global.debugMode) console.log("DEBUGMODE ON - Outputting Console Logs");
     if (global.debugMode) console.log("Settings Screen Component Mounted");
-    this.askPermissions();
+
     this._notificationSubscription = Notifications.addListener(this._handleNotification);
 
     this._retrieveData('settings');
+  }
+
+  handleBackAction = async () => {
+    if (global.debugMode) console.log("Component will unmount");
+
+    //if (this._isDirty || this.state.settingsFirstTime) {
+      this.setState({ settingsFirstTime: false });
+      if (this.state.notificationState){
+          if (global.debugMode) console.log("Dirty flag set - scheduling notifications");
+          notificationAlgo(this.state.waketime, this.state.sleeptime, this.state.notificationcount);
+      } else {
+        if (global.debugMode) console.log("Notifications turned off - cancelling all notifications");
+        Notifications.cancelAllScheduledNotificationsAsync();
+      }
+    //}
+
+    if (this.state.culture === "2") {
+      resources.culture = 'fr';
+    } else if (this.state.culture === "1") {
+      resources.culture = 'en';
+    }
+
+    if (global.debugMode) console.log("Platform version: " + Platform.Version);
+    if (global.debugMode) console.log("Device Name: " + Expo.Constants.deviceName);
+    if (global.debugMode) console.log("Native App Version: " + Expo.Constants.nativeAppVersion);
+    if (global.debugMode) console.log("Native Build Version: " + Expo.Constants.nativeBuildVersion);
+    if (global.debugMode) console.log("Device Year Class: " + Expo.Constants.deviceYearClass);
+    if (global.debugMode) console.log("Session ID: " + Expo.Constants.sessionId);
+    if (global.debugMode) console.log("Wake Time: " + this.state.waketime);
+    if (global.debugMode) console.log("Sleep Time: " + this.state.sleeptime);
+    if (global.debugMode) console.log("Notification Count: " + this.state.notificationcount);
+    if (global.debugMode) console.log("Scheduled Notification Times: " + scheduledDateArray);
+
+    this._storeSettings();
+  }
+
+  componentWillUnmount() {
+    if (global.debugMode) console.log("Component will unmount");
+    this.handleBackAction();
   }
 
   _handleNotification = (notification) => {
@@ -169,44 +244,15 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   }
 
   _backButtonPressed = () => {
-
     if (global.debugMode) console.log("Back button Pressed");
-
-    //if (this._isDirty || this.state.settingsFirstTime) {
-      this.setState({ settingsFirstTime: false });
-      if (this.state.notificationState){
-          if (global.debugMode) console.log("Dirty flag set - scheduling notifications");
-          notificationAlgo(this.state.waketime, this.state.sleeptime, this.state.notificationcount);
-      } else {
-        if (global.debugMode) console.log("Notifications turned off - cancelling all notifications");
-        Notifications.cancelAllScheduledNotificationsAsync();
-      }
-    //}
-
-    if (this.state.culture === "2") {
-      resources.culture = 'fr';
-    } else if (this.state.culture === "1") {
-      resources.culture = 'en';
-    }
-
-    if (global.debugMode) console.log("Platform version: " + Platform.Version);
-    if (global.debugMode) console.log("Device Name: " + Expo.Constants.deviceName);
-    if (global.debugMode) console.log("Native App Version: " + Expo.Constants.nativeAppVersion);
-    if (global.debugMode) console.log("Native Build Version: " + Expo.Constants.nativeBuildVersion);
-    if (global.debugMode) console.log("Device Year Class: " + Expo.Constants.deviceYearClass);
-    if (global.debugMode) console.log("Session ID: " + Expo.Constants.sessionId);
-    if (global.debugMode) console.log("Wake Time: " + this.state.waketime);
-    if (global.debugMode) console.log("Sleep Time: " + this.state.sleeptime);
-    if (global.debugMode) console.log("Notification Count: " + this.state.notificationcount);
-    if (global.debugMode) console.log("Scheduled Notification Times: " + scheduledDateArray);
-
-    this._storeSettings();
+    this.handleBackAction();
   }
 
   _storeSettings = () => {
     //validation passed lets store user
     let settingsObj = {
       notificationState: this.state.notificationState,
+      chosenNotificationState: this.state.notificationState,
       wakeTime: this.state.waketime,
       sleepTime: this.state.sleeptime,
       notificationCount: this.state.notificationcount,
@@ -232,6 +278,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       if (result) {
         let resultAsObj = JSON.parse(result);
         this.setState({ notificationState: resultAsObj.notificationState });
+        this.setState({ chosenNotificationState: resultAsObj.chosenNotificationState });
         this.setState({ notificationcount: resultAsObj.notificationCount });
         this.setState({ waketime: resultAsObj.wakeTime });
         this.setState({ sleeptime: resultAsObj.sleepTime });
@@ -240,6 +287,11 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
         this.setState({ settingsFirstTime: resultAsObj.settingsFirstTime});
       }
     });
+
+    if (this.state.chosenNotificationState){
+      if (global.debugMode) console.log("Asking permissions...");
+      this.askPermissions();
+    }
 
     if (global.debugMode) console.log("Resources culture is: " + resources.culture);
 
@@ -299,14 +351,14 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     }
     return (
       <PaperProvider theme={newTheme}>
-        <SafeAreaConsumer>{insets =>{insetsTop=insets.top; <View style={{ paddingTop: insets.top }} />}}</SafeAreaConsumer>
+        <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
         <View style={{flex:1,justifyContent:'space-between'}}>
             <View style={styles.toolbar}>
                        {/* <BackButton goBack={() => this._backButtonPressed()}/> */}
                    <Text style={styles.toolbarTitle}>{resources.getString("settings")}</Text>
             </View>
 
-        <View style={{justifyContent: "flex-start",height:deviceHeight-2*insetsTop}}>
+        <View style={styles.containerStyle}>
            <ScrollView>
                <List.Section style={styles.mainStyle}>
                             <List.Item
@@ -402,7 +454,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                             />
                           </List.Section>
              {debugButtons}
-            </ScrollView>
+            
                     <View>
                        <Portal>
                          <Dialog
@@ -476,22 +528,28 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                                    </Dialog>
                                  </Portal>
                                </View>
-        </View>
- <View style={styles.buttonView}>
-                              <Button style={styles.btnNext}
-                                mode="contained"
-                                onPress={this._backButtonPressed}>
-                                <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
-                              </Button>
-                    </View>
+                               </ScrollView>
+          </View>
+          <View style={styles.buttonView}>
+            <Button style={styles.btnNext}
+              mode="contained"
+              onPress={this._backButtonPressed}>
+              <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
+            </Button>
+          </View>
+          <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
          </View>
-        <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
+        
       </PaperProvider>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  containerStyle:{
+    justifyContent: "flex-start", 
+    height: deviceHeight - 60
+  },
   radioButtonContainerStyle:{
     flexDirection: 'row'
   },
@@ -503,9 +561,7 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   buttonView: {
-  //  flex: 1,
-    justifyContent: "flex-end",
-    marginBottom: 0
+    justifyContent: "flex-end"
   },
   timePicker: {
     width: 100,

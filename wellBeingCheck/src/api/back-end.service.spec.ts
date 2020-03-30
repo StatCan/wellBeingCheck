@@ -1,13 +1,14 @@
 import {BackEndService, removeWrappingQuotes} from "./back-end.service";
 import {NavigationActions} from "react-navigation";
 import back = NavigationActions.back;
+import {GraphType} from "./openapi/models";
 
 /**
  * Points to the WebApi server to use for integration testing
  */
 const WEB_API_BASE_URL = 'http://wellbeingcheck.canadacentral.cloudapp.azure.com/wellbeing-bienetre/api';
 
-it('Retrieve Links', async () => {
+it('Retrieve Config Links', async () => {
 
    let backEndService = new BackEndService(
        WEB_API_BASE_URL,
@@ -47,9 +48,9 @@ it('Retrieve Links', async () => {
       expect(result.exceptionPage.frUrl)
           .toBe('http://wellbeingcheck.canadacentral.cloudapp.azure.com/anonymous-anonyme/fr/exception/');
    }
-});
+}, 60_000);
 
-it('Retrieve Flags', async () => {
+it('Retrieve Config Flags', async () => {
    let backEndService = new BackEndService(
        WEB_API_BASE_URL,
        'fr-CA',
@@ -66,7 +67,7 @@ it('Retrieve Flags', async () => {
       expect(result['enablePopulationDashboard']).toBe('false');
       expect(result['enableDarkMode']).toBe('false');
    }
-});
+}, 60_000);
 
 it('Set Password', async () => {
    // Since once the password is set the server would not allow it to be set again then we have to change the
@@ -91,7 +92,7 @@ it('Set Password', async () => {
    if (!backEndService.isResultFailure(result)) {
       expect(result).toBeUndefined();
    }
-});
+}, 60_000);
 
 it('Reset Password', async () => {
    let backEndService = new BackEndService(
@@ -115,7 +116,68 @@ it('Reset Password', async () => {
    if (!backEndService.isResultFailure(result)) {
       expect(result).toBeUndefined();
    }
-});
+}, 60_000);
+
+it('Submit Paradata', async () => {
+   let backEndService = new BackEndService(
+       WEB_API_BASE_URL,
+       'fr-CA',
+       'iphone5yu',
+       '6881265148395520',
+       'patateHacheAvecSel',
+       fetch
+   );
+   let result = await backEndService.submitParadata({
+      deviceId: 'iphone5yu',
+      questionnaireB:[
+         {time:'2020-03-25 10:03:19', notificationTime:'2020-03-25- 9:18:00'},
+         {time:'2020-03-25 15:23:29', notificationTime: null},
+         {time:'2020-03-26 7:33:39', notificationTime:'2020-03-25- 21:18:00'},
+      ]
+    });
+   expect(backEndService.isResultFailure(result)).toBeFalsy();
+
+   if (!backEndService.isResultFailure(result)) {
+      expect(result).toBeUndefined();
+   }
+}, 60_000);
+
+it('Retrieve Graph Links', async () => {
+   let backEndService = new BackEndService(
+       WEB_API_BASE_URL,
+       'fr-CA',
+       'iphone5yu',
+       '6881265148395520',
+       'patateHacheAvecSel',
+       fetch
+   );
+   let result = await backEndService.retrieveGraphLinks();
+   expect(backEndService.isResultFailure(result)).toBeFalsy();
+
+   if (!backEndService.isResultFailure(result)) {
+      expect(result.token).not.toBeNull();
+      expect(result.timeStamp).not.toBeNull();
+      expect(result.graphs).not.toBeNull();
+      expect(result.graphs.length).toBe(4);
+
+      result.graphs.forEach(function (graphLink) {
+         switch (graphLink.type) {
+            case GraphType.Activity:
+               expect(graphLink.url).toBe('http://wellbeingcheck.canadacentral.cloudapp.azure.com/wellbeing-bienetre/api/dashboard/graph/activity');
+               break;
+            case GraphType.Location:
+               expect(graphLink.url).toBe('http://wellbeingcheck.canadacentral.cloudapp.azure.com/wellbeing-bienetre/api/dashboard/graph/location');
+               break;
+            case GraphType.People:
+               expect(graphLink.url).toBe('http://wellbeingcheck.canadacentral.cloudapp.azure.com/wellbeing-bienetre/api/dashboard/graph/people');
+               break;
+            case GraphType.Overall:
+               expect(graphLink.url).toBe('http://wellbeingcheck.canadacentral.cloudapp.azure.com/wellbeing-bienetre/api/dashboard/graph/overall');
+               break;
+         }
+      });
+   }
+}, 60_000);
 
 test('Decode JWT token', () => {
    let backEndService = new BackEndService(
@@ -127,7 +189,11 @@ test('Decode JWT token', () => {
        fetch
    );
 
-   let result = backEndService.decodeJwtToken('"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJkZXZpY2VJZCI6Im15SXBob25lNnNlTSIsImdyYXBoVG9rZW4iOiJOL0EiLCJzYWMiOiI2NDgwNzYwNTIxNzg1MzQ0Iiwic2VjdXJlZCI6IkZhbHNlIiwibmJmIjoxNTgzNjQ3NjQ0LCJleHAiOjE1ODM2NDg4NDQsImlhdCI6MTU4MzY0NzY0NH0.scvs3e44fEs4rkrYK9zwiNY0o_HVzTn0IYUj7fYbuPhWQx8FpBtXsAVm7i552uYEDstzoN6XtIVFRVTypwLZYQ"');
+   let result = backEndService.decodeJwtToken(
+       '"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.' +
+       'eyJkZXZpY2VJZCI6Im15SXBob25lNnNlTSIsImdyYXBoVG9rZW4iOiJOL0EiLCJzYWMiOiI2NDgwNzYwNTIxNzg1MzQ0Iiwic2VjdXJlZCI6IkZhbHNlIiwibmJmIjoxNTgzNjQ3NjQ0LCJleHAiOjE1ODM2NDg4NDQsImlhdCI6MTU4MzY0NzY0NH0.' +
+       'scvs3e44fEs4rkrYK9zwiNY0o_HVzTn0IYUj7fYbuPhWQx8FpBtXsAVm7i552uYEDstzoN6XtIVFRVTypwLZYQ"');
+
    expect(backEndService.isResultFailure(result)).toBeFalsy();
 
    if (!backEndService.isResultFailure(result)) {
