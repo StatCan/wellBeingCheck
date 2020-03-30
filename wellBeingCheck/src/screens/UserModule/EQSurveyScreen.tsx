@@ -169,11 +169,13 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                                 if(global.doneSurveyA){
                                     if(count>0){count=0;return;}
                                     console.log('redady to fetch image');
-                                    this.fetchImages();count=1;  global.showThankYou=2;
+                                    this.fetchImages();
+                                    count=1;  global.showThankYou=2;
                                 }
                                 else {
                                     console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
-                                    this.fetchImages();count=1;global.showThankYou=2;
+                                  //  this.fetchImages();
+                                    count=1;global.showThankYou=2;
                                     }
                                 this.props.navigation.navigate('Dashboard');
                              }}

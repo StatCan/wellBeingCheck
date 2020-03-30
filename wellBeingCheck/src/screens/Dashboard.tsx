@@ -119,7 +119,6 @@ class Dashboard extends React.Component<Props, HomeState> {
   async conductSurvey() {
     let isConnected = await checkConnection();
     if (!isConnected) { alert('You are offline, try it later'); return; }
-    global.needReload1 = true; global.needReload2 = true; global.needReload3 = true; global.needReload4 = true; global.needReload5 = true; global.needReload6 = true; global.needReload7 = true;
     this.props.navigation.navigate('EQSurveyScreen');
   }
   render() {
