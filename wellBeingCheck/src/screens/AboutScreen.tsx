@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ScrollView } from 'react-native';
 import Button from '../components/Button';
-import { Provider as PaperProvider, Title, Paragraph } from 'react-native-paper';
+import { Provider as PaperProvider, Title, Paragraph, List } from 'react-native-paper';
 import { newTheme } from '../core/theme';
 import AppBanner from '../components/AppBanner';
 import LogoClearSmall from '../components/LogoClearSmall';
@@ -10,15 +10,54 @@ import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-n
 import BackgroundWhite from '../components/BackgroundWhite';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 
+type AboutState = {
+  faqMainExpanded: boolean,
+  faqA1Expanded: boolean,
+  faqA2Expanded: boolean,
+  faqA3Expanded: boolean,
+}
+
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
 
-class AboutScreen extends React.Component<Props, AboutScreen> {
+class AboutScreen extends React.Component<Props, AboutState> {
+
+  constructor(AboutScreen) {
+    super(AboutScreen)
+    this.state = {
+      faqMainExpanded: false,
+      faqA1Expanded: false,
+      faqA2Expanded: false,
+      faqA3Expanded: false,
+    };
+  }
+
+  faqMainExpanded
 
   _onNextBtnHandle = () => {
     this.props.navigation.navigate('Dashboard');
   }
+
+  _handleFaqMainExpand = () =>
+    this.setState({
+      faqMainExpanded: !this.state.faqMainExpanded
+    });
+
+  _handleFaqA1 = () =>
+    this.setState({
+      faqA1Expanded: !this.state.faqA1Expanded
+    });
+
+  _handleFaqA2 = () =>
+    this.setState({
+      faqA2Expanded: !this.state.faqA2Expanded
+    });
+
+  _handleFaqA3 = () =>
+    this.setState({
+      faqA3Expanded: !this.state.faqA3Expanded
+    });
 
   render() {
     return (
@@ -29,6 +68,47 @@ class AboutScreen extends React.Component<Props, AboutScreen> {
           <View style={styles.logo_container}>
             <LogoClearSmall />
           </View>
+
+          <List.Section>
+            <View style={styles.faqView}>
+              <List.Accordion
+                title={resources.getString("faq.title")}
+                expanded={this.state.faqMainExpanded}
+                onPress={this._handleFaqMainExpand}
+              >
+                <View style={styles.faqViewAns}>
+                  <List.Accordion
+                    title={resources.getString("faq.q1")}
+                    expanded={this.state.faqA1Expanded}
+                    onPress={this._handleFaqA1}
+                  >
+                    <View style={styles.faqListItem}>
+                      <Text>{resources.getString("faq.a1")}</Text>
+                    </View>
+                  </List.Accordion>
+                  <List.Accordion
+                    title={resources.getString("faq.q2")}
+                    expanded={this.state.faqA2Expanded}
+                    onPress={this._handleFaqA2}
+                  >
+                    <View style={styles.faqListItem}>
+                      <Text>{resources.getString("faq.a2")}</Text>
+                    </View>
+                  </List.Accordion>
+                  <List.Accordion
+                    title={resources.getString("faq.q3")}
+                    expanded={this.state.faqA3Expanded}
+                    onPress={this._handleFaqA3}
+                  >
+                    <View style={styles.faqListItem}>
+                      <Text>{resources.getString("faq.a3")}</Text>
+                    </View>
+                  </List.Accordion>
+                </View>
+              </List.Accordion>
+            </View>
+          </List.Section>
+
           <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}>
               <Title style={styles.title}>{resources.getString("about_title")}</Title>
@@ -50,13 +130,35 @@ class AboutScreen extends React.Component<Props, AboutScreen> {
 }
 
 const styles = StyleSheet.create({
+  faqListItem: {
+    borderStyle: 'solid',
+    borderColor: '#f8f8f8',
+    borderWidth: 2,
+    padding: 10,
+    backgroundColor: '#f8f8f8'
+  },
+  faqView: {
+    borderStyle: 'solid',
+    borderColor: '#f8f8f8',
+    borderWidth: 2,
+    marginTop: 15,
+    marginLeft: 15,
+    marginRight: 15,
+    backgroundColor: '#f8f8f8'
+  },
+  faqViewAns: {
+    borderStyle: 'solid',
+    borderColor: 'gray',
+    borderBottomWidth: 2,
+    backgroundColor: 'white',
+  },
   content: {
     marginLeft: 20,
     marginBottom: 20,
   },
   logo_container: {
     position: 'relative',
-  //  marginTop: 20,
+    //  marginTop: 20,
     marginLeft: 20,
   },
   title: {
@@ -70,10 +172,10 @@ const styles = StyleSheet.create({
   },
   btnNext: {
     color: newTheme.colors.whiteText,
-    width: 100,height:40,
+    width: 100, height: 40,
     alignSelf: "flex-end",
     marginRight: 20,
-     marginBottom: 4,marginTop:4
+    marginBottom: 4, marginTop: 4
   },
   btnText: {
     color: newTheme.colors.whiteText,

@@ -1,7 +1,7 @@
 
 import React, { memo } from 'react';
 import Background from '../components/Background';
-import { View, Text, TextInput, Image, StyleSheet, ImageBackground, Dimensions, TouchableOpacity, BackHandler, AsyncStorage,YellowBox } from 'react-native';
+import { View, Text, TextInput, Image, StyleSheet, ImageBackground, Dimensions, TouchableOpacity, BackHandler, AsyncStorage ,Alert, YellowBox} from 'react-native';
 import { EvilIcons, Feather, FontAwesome } from '@expo/vector-icons';
 import LogoClearSmall from '../components/LogoClearSmall';
 import { fetchJwToken, checkConnection } from '../utils/fetchJwToken';
@@ -219,9 +219,67 @@ class Dashboard extends React.Component<Props, HomeState> {
               <View style={{ backgroundColor: 'black', width: '80%', position: 'absolute', zIndex: 29, alignSelf: 'center', top: '60%', justifyContent: 'center', alignItems: 'center' }}><Text style={{ color: 'white', fontSize: 14, marginTop: 10, marginBottom: 10 }}>{this.state.thankYouText}</Text></View>
             }
             <View style={[styles.homeButtonContainer, { marginBottom: 0, marginTop: 50 }, { flexDirection: 'row' }]}>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')} style={styles.smallButton}><EvilIcons name="question" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("about")}</Text></TouchableOpacity>
+
+             {/*  <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')} style={styles.smallButton}><EvilIcons name="question" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("about")}</Text></TouchableOpacity>
               <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}><Feather name="phone" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("contact_us")}</Text></TouchableOpacity>
               <TouchableOpacity onPress={() => { if (global.hasImage) this.props.navigation.navigate('ResultScreen'); else alert(resources.getString("NoDataAlert")); }} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("result")}</Text></TouchableOpacity>
+             <TouchableOpacity onPress={() => { if (global.hasImage) this.props.navigation.navigate('ResultSummaryScreen'); else alert(resources.getString("NoDataAlert")); }} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("result")}</Text></TouchableOpacity>
+
+            */}
+
+
+            {/*-----------Information button using UX logo ic_wbc_about_survey--------*/}
+            <View>
+              <View>
+                <TouchableOpacity onPress={()=>this.props.navigation.navigate('AboutScreen')} style={styles.smallButton}>
+                  <Image source={require('../assets/ic_wbc_about_survey.png')} />
+                </TouchableOpacity>
+              </View>
+              <View>
+                    <Text style={styles.smallButtonText}>{resources.getString("about")}</Text>
+              </View>
+            </View>
+
+
+              {/* <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')}
+                                style={styles.smallButton}><EvilIcons name="question" size={40} color="white" />
+              <Text style={styles.smallButtonText}>{resources.getString("about")}</Text>
+              </TouchableOpacity> */}
+
+            {/* ----------Contact us button using UX logo ic_wbc_contact_us----------- */}
+            <View>
+              <View>
+                <TouchableOpacity onPress={()=>this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}>
+                  <Image source={require('../assets/ic_wbc_contact_us.png')} />
+                </TouchableOpacity>
+              </View>
+              <View>
+                  <Text style={styles.smallButtonText}>{resources.getString("contact_us")}</Text>
+              </View>
+            </View>
+
+
+            {/*  <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')}
+            style={styles.smallButton}><Feather name="phone" size={40} color="white" />
+            <Text style={styles.smallButtonText}>{resources.getString("contact_us")}</Text></TouchableOpacity>
+             */}
+
+             {/*------------Result button using UX logo ic_wbc_dashboard----------*/}
+             <View>
+              <View>
+                <TouchableOpacity onPress={() => { if (global.hasImage) this.props.navigation.navigate('ResultScreen');
+                                                   else Alert.alert('',resources.getString("NoDataAlert")); }}
+                                  style={styles.smallButton}>
+                  <Image source={require('../assets/ic_wbc_dashboard.png')} />
+                </TouchableOpacity>
+              </View>
+              <View>
+                  <Text style={styles.smallButtonText}>{resources.getString("result")}</Text>
+              </View>
+            </View>
+
+              {/* <TouchableOpacity onPress={() => { if (global.hasImage) this.props.navigation.navigate('ResultScreen'); else alert(resources.getString("NoDataAlert")); }} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("result")}</Text></TouchableOpacity> */}
+
             </View>
           </View>
           <NavigationEvents onDidFocus={() => this.checkThankYou()} />
@@ -331,16 +389,16 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgray'
   },
   smallButton: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 70,
+    height: 70,
+    borderRadius: 35,
     backgroundColor: '#66cc99',
     justifyContent: 'center',
     alignItems: 'center',
     margin: 10
   },
   smallButtonText: {
-    color: '#fff',
+    color: '#000000',
     fontSize: 15,textAlign: 'center',
   }
 });
