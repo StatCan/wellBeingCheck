@@ -196,7 +196,7 @@ export const resources = {
             "contactus_telephone": "Telephone:",
             "contactus_website": "Website:",
             "contactus_mail": "Mail:",
-            "contactus_text": `Statistics Canada\nAttention of Director Jean Labbé\n150 Tunney’s Pasture Driveway\nOttawa, ON\nK1A 0T6`
+            "contactus_text": `Statistics Canada\nAttention of Director Jean Labbé\n150 Tunney’s Pasture Driveway\nOttawa, ON\nK1A 0T6`,
             //FAQ
             "faq.title": "FAQ",
             "faq.q1": "FAQ question 1",
