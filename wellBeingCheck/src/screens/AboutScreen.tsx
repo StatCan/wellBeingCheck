@@ -14,6 +14,7 @@ type AboutState = {
   faqMainExpanded: boolean,
   faqA1Expanded: boolean,
   faqA2Expanded: boolean,
+  faqA3Expanded: boolean,
 }
 
 interface Props {
@@ -28,6 +29,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
       faqMainExpanded: false,
       faqA1Expanded: false,
       faqA2Expanded: false,
+      faqA3Expanded: false,
     };
   }
 
@@ -52,6 +54,11 @@ class AboutScreen extends React.Component<Props, AboutState> {
       faqA2Expanded: !this.state.faqA2Expanded
     });
 
+  _handleFaqA3 = () =>
+    this.setState({
+      faqA3Expanded: !this.state.faqA3Expanded
+    });
+
   render() {
     return (
       <PaperProvider theme={newTheme}>
@@ -65,29 +72,37 @@ class AboutScreen extends React.Component<Props, AboutState> {
           <List.Section>
             <View style={styles.faqView}>
               <List.Accordion
-                title="FAQ"
+                title={resources.getString("faq.title")}
                 expanded={this.state.faqMainExpanded}
                 onPress={this._handleFaqMainExpand}
               >
                 <View style={styles.faqViewAns}>
                   <List.Accordion
-                    title="Why should I use this?"
+                    title={resources.getString("faq.q1")}
                     expanded={this.state.faqA1Expanded}
                     onPress={this._handleFaqA1}
                   >
-                    <View
-                      style={styles.faqListItem}
-                    ><Text>"Good question, the answer is also very important to us"</Text></View>
+                    <View style={styles.faqListItem}>
+                      <Text>{resources.getString("faq.a1")}</Text>
+                    </View>
                   </List.Accordion>
                   <List.Accordion
-                    title="Is this only for canadians?"
+                    title={resources.getString("faq.q2")}
                     expanded={this.state.faqA2Expanded}
                     onPress={this._handleFaqA2}
                   >
-                    <List.Item
-                      style={styles.faqListItem}
-                      title="Yes, statistics canada is only intrested Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release "
-                    />
+                    <View style={styles.faqListItem}>
+                      <Text>{resources.getString("faq.a2")}</Text>
+                    </View>
+                  </List.Accordion>
+                  <List.Accordion
+                    title={resources.getString("faq.q3")}
+                    expanded={this.state.faqA3Expanded}
+                    onPress={this._handleFaqA3}
+                  >
+                    <View style={styles.faqListItem}>
+                      <Text>{resources.getString("faq.a3")}</Text>
+                    </View>
                   </List.Accordion>
                 </View>
               </List.Accordion>
@@ -119,6 +134,8 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderColor: '#f8f8f8',
     borderWidth: 2,
+    padding: 10,
+    backgroundColor: '#f8f8f8'
   },
   faqView: {
     borderStyle: 'solid',
@@ -155,10 +172,10 @@ const styles = StyleSheet.create({
   },
   btnNext: {
     color: newTheme.colors.whiteText,
-    width: 100,height:40,
+    width: 100, height: 40,
     alignSelf: "flex-end",
     marginRight: 20,
-     marginBottom: 4,marginTop:4
+    marginBottom: 4, marginTop: 4
   },
   btnText: {
     color: newTheme.colors.whiteText,
