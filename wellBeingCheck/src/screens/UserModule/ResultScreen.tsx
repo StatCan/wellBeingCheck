@@ -130,7 +130,7 @@ export default class App extends React.Component<Props,ScreenState> {
                    source={require('../../assets/white.png')}
                     style={{ backgroundColor: 'white',flex:1}}
                  >
-           <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:40}}>
+           <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:40,height:50}}>
                  <TouchableOpacity onPress={() =>{global.currentView=0; this.props.navigation.navigate('Dashboard')}} style={{marginLeft:5,marginTop:10}}><Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:38,height:38}} /></TouchableOpacity>
                  <View style={{flexDirection:'row',justifyContent:'center',alignItems:'center'}}>{indicator}</View>
                {/*   <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} 
@@ -206,10 +206,10 @@ const styles = StyleSheet.create({
       },
   btnNext: {
       color: newTheme.colors.whiteText,
-      width: 100,
+      width: 100,height:40,
       alignSelf: "flex-end",
       marginRight: 20,
-      marginBottom: 10,
+      marginBottom: 4,marginTop:4
     },
     btnSummary: {
         color: 'white',

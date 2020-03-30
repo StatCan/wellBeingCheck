@@ -69,11 +69,11 @@ const styles = StyleSheet.create({
   },
   logo_container: {
     position: 'relative',
-    marginTop: 20,
-    marginLeft: 20,
+    marginTop: 10,
+    marginLeft: 10,
   },
   title: {
-    marginTop: 20,
+    marginTop: 10,
     marginLeft: 20,
     fontWeight: '900',
     fontSize: 30,
@@ -85,10 +85,10 @@ const styles = StyleSheet.create({
   },
   btnNext: {
     color: newTheme.colors.whiteText,
-    width: 100,
+    width: 100,height:40,
     alignSelf: "flex-end",
     marginRight: 20,
-    marginBottom: 10,
+    marginBottom: 4,marginTop:4
   },
   btnText: {
     color: newTheme.colors.whiteText,
