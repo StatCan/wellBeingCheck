@@ -24,31 +24,71 @@ const options = [
 // Methodology: Selection Probabilities
 // For Weekdays and Weekends
 const primeTimeAwakeIntervals = [
-{ 
-  awakeHourBefore: 16,
-  weekDayPercentage: 5,  // A
-  weekendPercentage: 5   // F
-},
-{ 
-  awakeHourBefore: 17,
-  weekDayPercentage: 10, // B
-  weekendPercentage: 10  // G
-},
-{ 
-  awakeHourBefore: 18,
-  weekDayPercentage: 10, // C
-  weekendPercentage: 10  // H
-},
-{ 
-  awakeHourBefore: 19,
-  weekDayPercentage: 25, // D
-  weekendPercentage: 20  // I
-},
-{ 
-  awakeHourBefore: 20,
-  weekDayPercentage: 25, // E
-  weekendPercentage: 20  // J
-}];
+  { 
+    awakeHourBefore: 10,
+    weekDayPercentage: 4,  // A
+    weekendPercentage: 4   // N 
+  },
+  { 
+    awakeHourBefore: 11,
+    weekDayPercentage: 5, // B
+    weekendPercentage: 5  // O
+  },
+  { 
+    awakeHourBefore: 12,
+    weekDayPercentage: 5, // C
+    weekendPercentage: 8  // P
+  },
+  { 
+    awakeHourBefore: 13,
+    weekDayPercentage: 5, // D
+    weekendPercentage: 10  // Q
+  },
+  { 
+    awakeHourBefore: 14,
+    weekDayPercentage: 5, // E
+    weekendPercentage: 11  // R
+  },
+  { 
+    awakeHourBefore: 15,
+    weekDayPercentage: 5, // F
+    weekendPercentage: 8  // S
+  },
+  { 
+    awakeHourBefore: 16,
+    weekDayPercentage: 4, // G
+    weekendPercentage: 7  // T
+  },
+  { 
+    awakeHourBefore: 17,
+    weekDayPercentage: 5, // H
+    weekendPercentage: 5  // U
+  },
+  { 
+    awakeHourBefore: 18,
+    weekDayPercentage: 10, // I
+    weekendPercentage: 7  // V
+  },
+  { 
+    awakeHourBefore: 19,
+    weekDayPercentage: 13, // J
+    weekendPercentage: 9  // W
+  },
+  { 
+    awakeHourBefore: 20,
+    weekDayPercentage: 15, // K
+    weekendPercentage: 9  // X
+  },
+  { 
+    awakeHourBefore: 21,
+    weekDayPercentage: 12, // L
+    weekendPercentage: 7  // Y
+  },
+  { 
+    awakeHourBefore: 22,
+    weekDayPercentage: 6, // M
+    weekendPercentage: 4  // Z
+  }];
 
 var scheduledDateArray = new Array();
 

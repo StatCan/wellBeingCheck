@@ -196,8 +196,7 @@ export const resources = {
             "contactus_telephone": "Telephone:",
             "contactus_website": "Website:",
             "contactus_mail": "Mail:",
-            "contactus_text": `Chief Statistician of Canada \nStatistics Canada\nAttention of Director Jean Labbé\n150 Tunney’s Pasture Driveway\nOttawa, ON\nK1A 0T6`,
-
+            "contactus_text": `Statistics Canada\nAttention of Director Jean Labbé\n150 Tunney’s Pasture Driveway\nOttawa, ON\nK1A 0T6`,
             //FAQ
             "faq.title": "FAQ",
             "faq.q1": "FAQ question 1",
@@ -272,7 +271,7 @@ export const resources = {
                 `Statistique Canada respecte la Loi sur les langues officielles et s'engage à ce que les produits d'information disponibles soient d'égale qualité en français et en anglais. \n` +
                 `http://www.statcan.gc.ca/fra/rb/blogue2 \n\n` +
 
-                `Avis de l’accessibiité \n\n` +
+                `Avis de l’accessibilité \n\n` +
                 `Le gouvernement du Canada est déterminé à maintenir une norme d'accessibilité élevée conformément à la Norme sur l’optimisation des sites Web et des applications pour appareils mobiles. Veuillez communiquer avec nous si vous éprouvez des difficultés à utiliser nos pages Web, les applications ou les applications mobiles axées sur l'appareil, ou si vous désirez obtenir des formats de substitution comme le caractère ordinaire, le Braille ou un autre format approprié. \n` +
                 `http://www.statcan.gc.ca/fra/reference/avisaccess \n\n` +
 
@@ -428,9 +427,9 @@ export const resources = {
             "contactus_title": "Nous Contacter",
             "contactus_email": "Courriel:",
             "contactus_telephone": "Téléphone:",
-            "contactus_website": "Website:",
-            "contactus_mail": "Site Web:",
-            "contactus_text": `Statisticien en chef du Canada\nStatistique Canada\nÀ l’attention du directeur Jean Labbé\n150, promenade Tunney’s Pasture\nOttawa (Ontario)\nK1A 0T6`,
+            "contactus_website": "Site Web:",
+            "contactus_mail": "Courrier:",
+            "contactus_text": `Statistique Canada\nÀ l’attention du directeur Jean Labbé\n150, promenade Tunney’s Pasture\nOttawa (Ontario)\nK1A 0T6`,
 
             //FAQ
             "faq.title": "FR_FAQ",

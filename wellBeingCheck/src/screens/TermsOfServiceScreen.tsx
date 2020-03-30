@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet, Dimensions,TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Dimensions,TouchableOpacity,Alert } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Button from '../components/Button';
 import { newTheme } from '../core/theme';
@@ -8,6 +8,8 @@ import * as Permissions from 'expo-permissions';
 import BackgroundWide from '../components/BackgroundWide';
 import LogoClearSmall from '../components/LogoClearSmall';
 import { resources } from '../../GlobalResources';
+import AppBanner from '../components/AppBanner';
+
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -75,7 +77,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
 
     AsyncStorage.setItem('user_terms_and_conditions', JSON.stringify(userTermsAndConditionsObj), () => {
       //handle disagree
-      alert(resources.getString("terms_and_conditions_disagree"));
+      Alert.alert('',resources.getString("terms_and_conditions_disagree"));
     });
   }
    toggleLanguage(){
@@ -86,6 +88,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
     return (
       <PaperProvider theme={newTheme}>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
+        <AppBanner />
            <SafeAreaView style={styles.container}>
           <View style={styles.headerContainer}>
             <LogoClearSmall />
