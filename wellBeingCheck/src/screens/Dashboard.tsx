@@ -15,6 +15,7 @@ import {
   NavigationScreenProp,
   NavigationState, NavigationEvents,
 } from 'react-navigation';
+import {FetchAPI} from "../api/openapi";
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
@@ -86,9 +87,20 @@ class Dashboard extends React.Component<Props, HomeState> {
     return true;
   }
    async getConfig(){
-      var service=new BackEndService();
-      var links=await service.getLinks();
-      if(service.isResultFailure(links))return false;
+      let service = new BackEndService(
+          'http://wellbeingcheck.canadacentral.cloudapp.azure.com/wellbeing-bienetre/api',
+          'en-CA',
+          null,
+          null,
+          null,
+          fetch
+      );
+
+      let links = await service.getLinks();
+      if (service.isResultFailure(links)) {
+          return false;
+      }
+
    //   var links=await new BackEndService().getLinks();
    //   if(links.hasOwnProperty('exception'))return false;
       global.surveyAUrlEng=links.questionnaireA.enUrl;

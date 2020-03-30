@@ -190,7 +190,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
              uri=global.surveyAUrlFre;
          }
          console.log('Beofore eq:'+uri);
-     let userAgent=Platform.OS=='ios'?'Apple deviceId/'+global.userToken:'Android deviceId/'+global.userToken;console.log(userAgent);
+     let userAgent=Platform.OS=='ios'?'Apple DeviceId/'+global.userToken:'Android DeviceId/'+global.userToken;console.log(userAgent);
     return (
           <View style={{ flex: 1, marginTop: 40}}>
                 <View style={{flexDirection:'row',justifyContent:'space-between'}}>
