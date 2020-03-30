@@ -33,7 +33,9 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     setTimeout(()=>{this.setState({webviewLoaded: true})}, 4000);
   }
    componentDidMount(){
-        this.handleSurveyBdone();
+       // this.handleSurveyAdone();
+      // this.setPasswordNew();
+    //  this.resetPassword();
    }
 
       async handleSurveyAdone(){
@@ -51,7 +53,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
               //New flow:A and B will be done at first time
               let types=await this.fetchGraphTypes();console.log('types:'+types);
               if(types!=null && types.length>0){
-                 await this.fetchGraphs(types);
+              //   await this.fetchGraphs(types);
               }
               count=1;AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
          }
@@ -91,17 +93,26 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
             }
             AsyncStorage.setItem('hasImage','1');console.log('Fetch images done');
          }
-/*      async setPasswordNew() {
-            var service=new BackEndService();
+     /* async setPasswordNew() {
+            var service=new BackEndService(
+                WEB_API_BASE_URL,
+                                   'fr-CA',
+                                   'iphone5yu',
+                                   '6881265148395520',
+                                   'null',
+                                   fetch
+            );
                     var result= await service.setPassword(
-                             salt: '4321',
-                             hashedPassword: '1234567890',
-                             securityQuestionId: 11,
-                             securityAnswerSalt: '4321',
-                             hashedSecurityAnswer: '4444');
+                             salt:  'salty',
+                             hashedPassword:'hashedPotatoeWithSalt',
+                             securityQuestionId: 1,
+                             securityAnswerSalt: 'sour',
+                             hashedSecurityAnswer: 'sourCream');
              if(service.isResultFailure(result))return false;
              else return true;
+
       }*/
+
       setPassword(jwt:string) {
                let url=global.webApiBaseUrl+'api/security/password';
                let data={salt:global.passwordSalt,passwordHash:hashString(global.password,global.passwordSalt),securityQuestionId:'11',securityAnswerSalt:'4321',securityAnswerHash:'4444'}
@@ -113,21 +124,30 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                        },
                        body: JSON.stringify(data),
                })
-               .then((response) => response.json())
-               .then((responseJson) => {console.log('setPassword:'+responseJson);return responseJson;})
-               .catch((error) => {console.error(error);});
+               .then((response) =>{ if(response.status==200){return true;}} )          // response.json())
+              // .then((responseJson) => {console.log('setPassword:'+responseJson);return responseJson;})
+               .catch((error) => {console.error(error);return false;});
           }
       resetPassword() {
                     let url=global.webApiBaseUrl+'api/security/password';console.log(url);
-                    let data={deviceId:global.userToken,newSalt:global.passwordSalt,newPasswordHash:hashString(global.password,global.passwordSalt),securityAnswerHash:'4444'}
+                    let data={
+                           deviceId:global.userToken,
+                           sac:global.sac,
+                           newSalt:global.passwordSalt,
+                           newPasswordHash:hashString(global.password,global.passwordSalt),
+                           securityAnswerHash:hashString(global.securityAnswer,global.securityAnswerSalt),
+                           newSecurityQuestionId:1,
+                           newSecurityAnswerSalt:global.securityAnswerSalt,
+                           newSecurityAnswerHash:hashString('newanswerhere',global.securityAnswerSalt)
+                           }
                     return fetch(url,{
                           method: 'PUT',
                           headers: {'Content-Type': 'application/json',},
                           body: JSON.stringify(data),
                     })
-                     .then((response) => response.json())
-                     .then((responseJson) => {console.log('resetPassword:'+responseJson);return responseJson;})
-                    .catch((error) => {console.error(error);});
+                     .then((response) =>{ if(response.status==200){console.log('good'); return true;}} )    // .then((response) => response.json())
+                   //  .then((responseJson) => {console.log('resetPassword:'+responseJson);    return responseJson;})
+                    .catch((error) => {console.error(error);return false;});
                }
       async fetchGraphTypes(){
               let url=global.webApiBaseUrl+'api/dashboard/graphs';
