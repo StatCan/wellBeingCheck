@@ -146,7 +146,15 @@ class Dashboard extends React.Component<Props, HomeState> {
          
         </View>
           <View style={styles.homeContainer}>
-            <TouchableOpacity onPress={() => { global.needReload1 = true; global.needReload2 = true; global.needReload3 = true; global.needReload4 = true; global.needReload5 = true; global.needReload6 = true; global.needReload7 = true; this.props.navigation.navigate('EQSurveyScreen'); }} style={{ flex: 2, justifyContent: 'center' }}>
+            <TouchableOpacity onPress={() => { global.needReload1 = true; 
+                                               global.needReload2 = true; 
+                                               global.needReload3 = true; 
+                                               global.needReload4 = true; 
+                                               global.needReload5 = true; 
+                                               global.needReload6 = true; 
+                                               global.needReload7 = true; 
+                                               this.props.navigation.navigate('EQSurveyScreen'); }} 
+                                               style={{ flex: 2, justifyContent: 'center' }}>
               <View style={styles.outer}>
                 <View style={styles.inner}>
                   <Text style={styles.startButtonText}>{resources.getString("start_survey")}</Text>
@@ -328,8 +336,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgray'
   },
   smallButton: {
-    width: 70,
-    height: 70,
+    width: 80,
+    height: 80,
     borderRadius: 35,
     backgroundColor: '#66cc99',
     justifyContent: 'center',
