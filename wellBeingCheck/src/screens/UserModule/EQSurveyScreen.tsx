@@ -33,9 +33,9 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     setTimeout(()=>{this.setState({webviewLoaded: true})}, 4000);
   }
    componentDidMount(){
-       // this.handleSurveyAdone();
+      //  this.handleSurveyAdone();
       // this.setPasswordNew();
-    //  this.resetPassword();
+     // this.resetPassword();
    }
 
       async handleSurveyAdone(){
@@ -50,12 +50,13 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
              // result=await this.setPasswordNew();
               if(!result){alert("Internal server error(set password), Try again, if same thing would happen again contact StatCan");return;}
               console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
-              //New flow:A and B will be done at first time
-              let types=await this.fetchGraphTypes();console.log('types:'+types);
+              //New flow:A and B will be done at first time, But Don't show image at this time
+            /*  let types=await this.fetchGraphTypes();console.log('types:'+types);
               if(types!=null && types.length>0){
-              //   await this.fetchGraphs(types);
-              }
-              count=1;AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
+                 await this.fetchGraphs(types);
+              }*/
+              count=1;
+            //  AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
          }
       async handleSurveyBdone(){
                let isConnected=await checkConnection();
@@ -74,7 +75,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                let types=await this.fetchGraphTypes();
                console.log('types:'+types);
                if(types!=null && types.length>0){
-              //    await this.fetchGraphs(types);
+                  await this.fetchGraphs(types);
                }
                count=1;AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
          }
@@ -124,7 +125,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                        },
                        body: JSON.stringify(data),
                })
-               .then((response) =>{ if(response.status==200){return true;}} )          // response.json())
+               .then((response) =>{ if(response.status==200){return true;}  else {console.log('Bad:'+response.status);return false;}} )          // response.json())
               // .then((responseJson) => {console.log('setPassword:'+responseJson);return responseJson;})
                .catch((error) => {console.error(error);return false;});
           }
@@ -145,9 +146,12 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                           headers: {'Content-Type': 'application/json',},
                           body: JSON.stringify(data),
                     })
-                     .then((response) =>{ if(response.status==200){console.log('good'); return true;}} )    // .then((response) => response.json())
+                     .then((response) =>{
+                          if(response.status==200){console.log('good'); return true;}
+                          else {console.log('Bad:'+response.status);return false;}
+                     } )    // .then((response) => response.json())
                    //  .then((responseJson) => {console.log('resetPassword:'+responseJson);    return responseJson;})
-                    .catch((error) => {console.error(error);return false;});
+                    .catch((error) => {console.error(error);console.log('Bad');return false;});
                }
       async fetchGraphTypes(){
               let url=global.webApiBaseUrl+'api/dashboard/graphs';
