@@ -38,7 +38,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
    componentDidMount(){
      //   this.handleSurveyAdone();
     //  this.fetchGraphTypesNew();
-      this.handleSurveyBdone();
+    //  this.handleSurveyBdone();
       // this.setPasswordNew();
      // this.resetPassword();
 
