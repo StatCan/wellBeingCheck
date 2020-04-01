@@ -44,6 +44,7 @@ test('Generated device ids are unique', () => {
 
    for (let i = 0; i < 10; i++) {
       let newDeviceId = DeviceIdService.generateNewDeviceId();
+      console.log(`deviceId[${i}] = ${newDeviceId}`);
       expect(DeviceIdService.isValidDeviceId(newDeviceId)).toBeTruthy();
       expect(previousDeviceId == newDeviceId).toBeFalsy();
       previousDeviceId = newDeviceId;

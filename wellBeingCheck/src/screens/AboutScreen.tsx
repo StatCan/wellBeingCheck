@@ -64,53 +64,55 @@ class AboutScreen extends React.Component<Props, AboutState> {
       <PaperProvider theme={newTheme}>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
         <AppBanner />
+
         <BackgroundWhite>
           <View style={styles.logo_container}>
             <LogoClearSmall />
           </View>
 
-          <List.Section>
-            <View style={styles.faqView}>
-              <List.Accordion
-                title={resources.getString("faq.title")}
-                expanded={this.state.faqMainExpanded}
-                onPress={this._handleFaqMainExpand}
-              >
-                <View style={styles.faqViewAns}>
+          <SafeAreaView style={styles.container}>
+            <ScrollView style={styles.scrollView}>
+
+              <List.Section>
+                <View style={styles.faqView}>
                   <List.Accordion
-                    title={resources.getString("faq.q1")}
-                    expanded={this.state.faqA1Expanded}
-                    onPress={this._handleFaqA1}
+                    title={resources.getString("faq.title")}
+                    expanded={this.state.faqMainExpanded}
+                    onPress={this._handleFaqMainExpand}
                   >
-                    <View style={styles.faqListItem}>
-                      <Text>{resources.getString("faq.a1")}</Text>
-                    </View>
-                  </List.Accordion>
-                  <List.Accordion
-                    title={resources.getString("faq.q2")}
-                    expanded={this.state.faqA2Expanded}
-                    onPress={this._handleFaqA2}
-                  >
-                    <View style={styles.faqListItem}>
-                      <Text>{resources.getString("faq.a2")}</Text>
-                    </View>
-                  </List.Accordion>
-                  <List.Accordion
-                    title={resources.getString("faq.q3")}
-                    expanded={this.state.faqA3Expanded}
-                    onPress={this._handleFaqA3}
-                  >
-                    <View style={styles.faqListItem}>
-                      <Text>{resources.getString("faq.a3")}</Text>
+                    <View style={styles.faqViewAns}>
+                      <List.Accordion
+                        title={resources.getString("faq.q1")}
+                        expanded={this.state.faqA1Expanded}
+                        onPress={this._handleFaqA1}
+                      >
+                        <View style={styles.faqListItem}>
+                          <Text>{resources.getString("faq.a1")}</Text>
+                        </View>
+                      </List.Accordion>
+                      <List.Accordion
+                        title={resources.getString("faq.q2")}
+                        expanded={this.state.faqA2Expanded}
+                        onPress={this._handleFaqA2}
+                      >
+                        <View style={styles.faqListItem}>
+                          <Text>{resources.getString("faq.a2")}</Text>
+                        </View>
+                      </List.Accordion>
+                      <List.Accordion
+                        title={resources.getString("faq.q3")}
+                        expanded={this.state.faqA3Expanded}
+                        onPress={this._handleFaqA3}
+                      >
+                        <View style={styles.faqListItem}>
+                          <Text>{resources.getString("faq.a3")}</Text>
+                        </View>
+                      </List.Accordion>
                     </View>
                   </List.Accordion>
                 </View>
-              </List.Accordion>
-            </View>
-          </List.Section>
+              </List.Section>
 
-          <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.scrollView} showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false}>
               <Title style={styles.title}>{resources.getString("about_title")}</Title>
               <View style={styles.content}>
                 <Text>{resources.getString("about_content")}</Text>
@@ -158,7 +160,8 @@ const styles = StyleSheet.create({
   },
   logo_container: {
     position: 'relative',
-    //  marginTop: 20,
+    marginTop: 20,
+    marginBottom: 20,
     marginLeft: 20,
   },
   title: {
