@@ -52,8 +52,8 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
               if(jwt==''){alert("Internal server error(token), Try again, if same thing would happen again contact StatCan");return;}
               global.jwToken=jwt;
               let result=false;
-            //  result=await this.setPassword(jwt);
-              result=await this.setPasswordNew();
+              result=await this.setPassword(jwt);
+            //  result=await this.setPasswordNew();
               if(!result){alert("Internal server error(set password), Try again, if same thing would happen again contact StatCan");return;}
               console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
               //New flow:A and B will be done at first time, But Don't show image at this time
@@ -64,6 +64,14 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
               count=1;
             //  AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
          }
+      async handleSurveyAdoneNew(){
+            let isConnected=await checkConnection();
+            if(!isConnected){alert('You are offline, try it later');return;}
+            result=await this.setPasswordNew();
+            if(!result){alert("Internal server error(set password), Try again, if same thing would happen again contact StatCan");return;}
+            console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
+            count=1;
+       }
       async handleSurveyBdone(){
                let isConnected=await checkConnection();console.log('In handle B');
                if(!isConnected){alert('You are offline, try it later');return;}
@@ -80,6 +88,16 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                }
                count=1;AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
          }
+      async handleSurveyBdoneNew(){
+            let isConnected=await checkConnection();console.log('In handle B');
+            if(!isConnected){alert('You are offline, try it later');return;}
+            let types=await this.fetchGraphTypesNew();             //  let types=['overall','activity','people','location'];
+             console.log('types:'+types);
+             if(types!=null && types.length>0){
+                  await this.fetchGraphs(types);
+             }
+             count=1;AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
+      }
       async fetchGraphs(types:string[]){
          //   if(count>0)return;
 
@@ -187,7 +205,8 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
               );
               let result = await backEndService.retrieveGraphLinks();
               if (!backEndService.isResultFailure(result)) {
-              //   global.jwToken=result.token; console.log(result.token);
+                 global.jwToken=result.token;
+                 //console.log(result.token);
                  result.graphs.forEach(function (graphLink) {
                    types.push(graphLink.type);
                  });

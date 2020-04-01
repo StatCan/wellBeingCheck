@@ -86,7 +86,7 @@ class Dashboard extends React.Component<Props, HomeState> {
   handleBackButton() {
     return true;
   }
-   async getConfig(){
+   async getConfigNew(){
       let service = new BackEndService(
           'http://wellbeingcheck.canadacentral.cloudapp.azure.com/wellbeing-bienetre/api',
           'en-CA',
@@ -113,9 +113,7 @@ class Dashboard extends React.Component<Props, HomeState> {
       global.surveyExceptionUrlFre=links.exceptionPage.frUrl;
       global.configurationReady=true; console.log('Configuration is ready');  return true;
    }
-   async getConfigOld(){
-         var links=await new BackEndService().getLinks();console.log('Links:'+links.questionnaireA.enUrl);
-         if(links.hasOwnProperty('exception')) console.log('good');else console.log('bad');
+   async getConfig(){
          return new Promise(resolve => {
               let url = global.webApiBaseUrl+'api/config/links';console.log(url);
               fetch(url)
@@ -206,6 +204,7 @@ class Dashboard extends React.Component<Props, HomeState> {
    let isConnected = await checkConnection();
        if (!isConnected) { alert('You are offline, try it later'); return; }
        let n=await this.getConfig();
+     //  let n=await getConfigNew();
        if(n)this.props.navigation.navigate('EQSurveyScreen');
        else {alert('Access denied(Config), Try it later, if same thing would happen again contact StatCan');return;}
 
