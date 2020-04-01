@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { StyleSheet, StatusBar, View } from 'react-native';
+import { StyleSheet, StatusBar, View,Image,YellowBox} from 'react-native';
 import { AsyncStorage } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 import Background from '../components/Background';
@@ -11,6 +11,8 @@ import Constants from 'expo-constants';
 import { resources } from '../../GlobalResources';
 import LogoClear from '../components/LogoClear';
 import AppBanner from '../components/AppBanner';
+//import {generateNewDeviceId,isValidDeviceId} from '../api/device-id.service';
+import {generateNewDeviceId,isValidDeviceId} from '../utils/device-id.service';
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -25,7 +27,7 @@ type LaunchState = {
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
-
+YellowBox.ignoreWarnings(['Require cycle:'])
 class LaunchScreen extends React.Component<Props, LaunchState> {
 
   constructor(LaunchState) {
@@ -34,11 +36,10 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
     //  this.getDeviceConnectionInfo();
     this.state = {
     };
-
-    this.delay(3000).then(any => {
+   
+    this.delay(2000).then(any => {
       //splach screen forced show 3000 = 3 seconds!
       this.bootstrapA();
-      this._bootstrap();
     });
   }
 
@@ -108,15 +109,26 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
     });
   }
 
-   bootstrapA = async () => {
-        console.log('Prepare confiuration')
-        let userToken = await AsyncStorage.getItem('EsmUserToken');
-        if (userToken == null ||userToken==''){userToken=this.generateShortGuid(20);AsyncStorage.setItem('EsmUserToken',userToken);}      //userToken= Constants.deviceId;   //   global.userToken=this.generateShortGuid(24);
-        global.userToken=userToken;
-        let doneSurveyA = await AsyncStorage.getItem('doneSurveyA');global.doneSurveyA=doneSurveyA;
-        console.log('SurveyA:'+global.doneSurveyA);
-        let hasImage = await AsyncStorage.getItem('hasImage');if(hasImage!=null)global.hasImage=hasImage;
-      };
+  bootstrapA = async () => {
+          console.log('Prepare confiuration');
+  //          var deviceId=generateNewDeviceId();
+    //        var valid=isValidDeviceId(deviceId);console.log('is valid:'+valid);
+          let userToken = await AsyncStorage.getItem('EsmUserToken');
+          let sac = await AsyncStorage.getItem('SacCode');
+          if (userToken == null ||userToken==''){
+              var deviceId=generateNewDeviceId();
+              var valid=isValidDeviceId(deviceId);console.log('is valid:'+valid);
+             // userToken=this.generateShortGuid(20);
+              userToken= deviceId;
+              AsyncStorage.setItem('EsmUserToken',userToken);
+          }
+          else global.sac=sac;
+          global.userToken=userToken;console.log('DeviceId:'+global.userToken);console.log('Sac:'+global.sac);
+          let doneSurveyA = await AsyncStorage.getItem('doneSurveyA');global.doneSurveyA=doneSurveyA;
+          console.log('SurveyA:'+global.doneSurveyA);
+          let hasImage = await AsyncStorage.getItem('hasImage');if(hasImage!=null)global.hasImage=hasImage;
+          this._bootstrap();
+        };
   generateGuid() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
       var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
@@ -145,8 +157,11 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           <Title>{resources.getString("Well-Being Check")}</Title>
         </Background>
         <NavigationEvents
-          onDidFocus={() => this._bootstrap()}
+          // onDidFocus={() => this.bootstrapA()}
         />
+         <View style={{backgroundColor:'#f7f8f9',width:'100%',height:48,borderColor:'red',bordertWidth:1,alignItems:'flex-end'}}>
+                   <Image source={require('../assets/img_canadamdpi.png')} style={{ width: 128, height: 40,resizeMode:'stretch'}} />
+          </View>
       </PaperProvider>
     );
   }

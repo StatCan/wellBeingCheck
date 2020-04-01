@@ -92,10 +92,12 @@ export default class ResultSummaryScreen extends React.Component<Props, AboutScr
           </SafeAreaView>
 
         </BackgroundWhite>
-
+        <View style={{backgroundColor:'white'}}>
         <Button style={styles.btnDetail}  onPress={() => this.props.navigation.navigate('ResultScreen')}  mode="contained"   >
-                <Text style={styles.btnText}>{resources.getString("Detail")}</Text>
-                </Button>
+                        <Text style={styles.btnText}>{resources.getString("Detail")}</Text>
+                        </Button>
+        </View>
+
         <Button style={styles.btnNext}
           mode="contained"
           onPress={this._onNextBtnHandle}>

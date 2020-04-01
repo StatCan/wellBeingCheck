@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet,TouchableOpacity,Linking} from 'react-native';
+import { View, Text, StyleSheet,TouchableOpacity,Linking } from 'react-native';
 import Button from '../components/Button';
 import { Provider as PaperProvider, Title } from 'react-native-paper';
 import { newTheme } from '../core/theme';
@@ -39,6 +39,10 @@ class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
               <Text style={styles.content_title}>{resources.getString("contactus_telephone")}</Text>
                <TouchableOpacity onPress={()=>Linking.openURL('tel:187779499492')}><Text>1-877-949-9492</Text></TouchableOpacity>
             </View>
+            <View style={styles.content}>
+                 <Text style={styles.content_title}>{resources.getString("contactus_website")}</Text>
+                 <TouchableOpacity onPress={()=>Linking.openURL('https://www.statcan.gc.ca')}><Text>www.statcan.gc.ca</Text></TouchableOpacity>
+            </View>
              <View style={styles.content}>
                    <Text style={styles.content_title}>{resources.getString("contactus_website")}</Text>
                    <TouchableOpacity onPress={()=>Linking.openURL('https://www.statcan.gc.ca')}><Text>www.statcan.gc.ca</Text></TouchableOpacity>
@@ -69,11 +73,11 @@ const styles = StyleSheet.create({
   },
   logo_container: {
     position: 'relative',
-    marginTop: 20,
-    marginLeft: 20,
+    marginTop: 10,
+    marginLeft: 10,
   },
   title: {
-    marginTop: 20,
+    marginTop: 10,
     marginLeft: 20,
     fontWeight: '900',
     fontSize: 30,
@@ -85,10 +89,10 @@ const styles = StyleSheet.create({
   },
   btnNext: {
     color: newTheme.colors.whiteText,
-    width: 100,
+    width: 100,height:40,
     alignSelf: "flex-end",
     marginRight: 20,
-    marginBottom: 10,
+    marginBottom: 4,marginTop:4
   },
   btnText: {
     color: newTheme.colors.whiteText,

@@ -6,11 +6,13 @@ import Button from '../../components/Button';
 import TextInput from '../../components/TextInput';
 import { theme, newTheme } from '../../core/theme';
 import { resources } from '../../../GlobalResources';
-import { Provider as PaperProvider } from 'react-native-paper';
-import { EvilIcons, Feather } from '@expo/vector-icons';
+import { Provider as PaperProvider, List } from 'react-native-paper';
+import { EvilIcons, Feather, FontAwesome } from '@expo/vector-icons';
 import { Drawer, Title, Provider, Portal, Dialog } from 'react-native-paper';
 import LogoClearSmall from '../../components/LogoClearSmall';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
+import md5 from "react-native-md5";
+
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -25,6 +27,7 @@ import {
 
 type RegisterState = {
   password: string,
+  passwordIsHidden: boolean,
   passwordError: string,
   passwordConfirm: string,
   passwordConfirmError: string,
@@ -33,6 +36,13 @@ type RegisterState = {
   securityAnswer: string,
   securityAnswerError: string,
   modalShow: boolean,
+  modalSecrectQuestionShow: boolean,
+  title: string,
+  pasVal_length: boolean,
+  passVal_Upper: boolean,
+  passVal_Special: boolean,
+  passVal_Lower: boolean,
+  passVal_Number: boolean,
 }
 
 interface Props {
@@ -45,6 +55,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     super(RegisterState)
     this.state = {
       password: "",
+      passwordIsHidden: true,
       passwordError: "",
       passwordConfirm: "",
       passwordConfirmError: "",
@@ -53,7 +64,13 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
       securityAnswer: "",
       securityAnswerError: "",
       modalShow: true,
-       title:resources.getString("Well-Being Check"),
+      modalSecrectQuestionShow: false,
+      title: resources.getString("Well-Being Check"),
+      pasVal_length: false,
+      passVal_Upper: false,
+      passVal_Special: false,
+      passVal_Lower: false,
+      passVal_Number: false,
     };
     //this._retrieveData('user_password');
     this._accountAlreadyExists();
@@ -140,13 +157,18 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 
   _CreateAccount = () => {
     //validation passed lets store user
+
+    //first hash the password as md5
+    let passwordHashed = md5.hex_md5(this.state.password);
+
     let userAccountObj = {
-      password: this.state.password,
+      password: passwordHashed,
       security_question: this.state.securityQuestion,
       security_answer: this.state.securityAnswer,
     };
 
     AsyncStorage.setItem('user_account', JSON.stringify(userAccountObj), () => {
+      global.securityAnswer=this.state.securityAnswer;global.password=passwordHashed;global.securityQuestionId=4;
       this.props.navigation.navigate('Dashboard');
     });
   }
@@ -182,10 +204,64 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 
   _showModal = () => this.setState({ modalShow: true });
   _hideModal = () => this.setState({ modalShow: false });
-   toggleLanguage(){
-       if(resources.culture=='en')resources.culture='fr';else resources.culture='en';
-       this.setState({title:resources.getString("Well-Being Check")});
-   }
+
+  _showSecretQuestionModal = () => this.setState({ modalSecrectQuestionShow: true });
+  _hideSecretQuestionModal = () => this.setState({ modalSecrectQuestionShow: false });
+
+  toggleLanguage() {
+    if (resources.culture == 'en') resources.culture = 'fr'; else resources.culture = 'en';
+    this.setState({ title: resources.getString("Well-Being Check") });
+  }
+
+  _handleSecQuesSelectMother = () => {
+    this.setState({ securityQuestion: 'reg.ques.mother' });
+    this._hideSecretQuestionModal()
+  };
+  _handleSecQuesSelectSchool = () => {
+    this.setState({ securityQuestion: 'reg.ques.school' });
+    this._hideSecretQuestionModal()
+  };
+  _handleSecQuesSelectSport = () => {
+    this.setState({ securityQuestion: 'reg.ques.sport' });
+    this._hideSecretQuestionModal()
+  };
+  _handleSecQuesSelectCar = () => {
+    this.setState({ securityQuestion: 'reg.ques.car' });
+    this._hideSecretQuestionModal()
+  };
+  _handleSecQuesSelectJob = () => {
+    this.setState({ securityQuestion: 'reg.ques.job' });
+    this._hideSecretQuestionModal()
+  };
+
+  _togglePasswordHidden = () => {
+    if (this.state.passwordIsHidden) {
+      this.setState({ passwordIsHidden: false });
+    }
+    else {
+      this.setState({ passwordIsHidden: true });
+    }
+  }
+
+  _passwordEyeSlashState = () => {
+    if (this.state.passwordIsHidden) {
+      this.setState({ passwordIsHidden: false });
+    }
+    else {
+      this.setState({ passwordIsHidden: true });
+    }
+  }
+
+  //We had to move the validation form utils to here since they cannot be constatnts. The updates would not take effect instantly
+  _passwordInputChange = (text) => {
+    this.setState({ password: text });
+    this.setState({ pasVal_length: text.length >= 8 ? true : false });
+    this.setState({ passVal_Upper: (!/[A-Z]/.test(text)) ? false : true });
+    this.setState({ passVal_Special: (!/[@!#$%^&*(),.?:{}|<>]/.test(text)) ? false : true });
+    this.setState({ passVal_Lower:  (!/[a-z]/.test(text)) ? false :true });
+    this.setState({ passVal_Number:  (!/[0-9]/.test(text)) ? false :true });
+  }
+
   render() {
     return (
       <PaperProvider theme={newTheme}>
@@ -193,31 +269,52 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
         <Background>
 
           <SafeAreaView style={styles.container}>
-          <View style={{flexDirection:'row', width:'100%', height:24,marginTop:0,marginBottom: 10,justifyContent:'space-between'}}>
-                        <LogoClearSmall />
-                      <TouchableOpacity onPress={() => this.toggleLanguage()} style={{alignSelf:'flex-end',marginRight:0}}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
-               </View>
-             <ScrollView style={styles.scrollView}>
+            <View style={{ flexDirection: 'row', width: '100%', height: 24, marginTop: 0, marginBottom: 10, justifyContent: 'space-between' }}>
+              <LogoClearSmall />
+              <TouchableOpacity onPress={() => this.toggleLanguage()} style={{ alignSelf: 'flex-end', marginRight: 0 }}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
+            </View>
+            <ScrollView style={styles.scrollView}>
+
               <Title style={styles.title}>{resources.getString("Secure your account")}</Title>
-              <View style={styles.passwordView}>
-                <TextInput
-                  label={resources.getString("Enter password")}
-                  returnKeyType="next"
-                  selectionColor={newTheme.colors.primary}
-                  underlineColor={newTheme.colors.primary}
-                  theme={newTheme}
-                  value={this.state.password}
-                  onChangeText={text => this.setState({ password: text })}
-                  error={!!this.state.passwordError}
-                  errorText={this.state.passwordError}
-                  secureTextEntry={true}
-                />
-                <TouchableOpacity
-                  style={styles.passwordHelpBtnBg}
-                  onPress={this._showModal}
-                >
-                  <Text style={styles.passwordHelpBtnText}>?</Text>
-                </TouchableOpacity>
+
+              <View style={{ flex: 1, flexDirection: 'row' }}>
+                <View style={styles.passwordInput}>
+                  <TextInput
+                    label={resources.getString("Enter password")}
+                    returnKeyType="next"
+                    selectionColor={newTheme.colors.primary}
+                    underlineColor={newTheme.colors.primary}
+                    theme={newTheme}
+                    value={this.state.password}
+                    onChangeText={text => this._passwordInputChange(text)}
+                    error={!!this.state.passwordError}
+                    errorText={this.state.passwordError}
+                    secureTextEntry={this.state.passwordIsHidden}
+                  />
+                </View>
+
+                <View>
+                  <TouchableOpacity
+                    style={styles.passwordEyeIconBg}
+                    onPress={this._togglePasswordHidden}
+                    activeOpacity={1}
+                  >
+                    <Feather
+                      style={styles.passwordEyeIcon}
+                      size={20} name={this.state.passwordIsHidden ? "eye-off" : "eye"}
+                    />
+                  </TouchableOpacity>
+                </View>
+
+                <View>
+                  <TouchableOpacity
+                    style={styles.passwordHelpBtnBg}
+                    onPress={this._showModal}
+                    activeOpacity={1}
+                  >
+                    <Text style={styles.passwordHelpBtnText}>?</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
 
               <TextInput
@@ -230,29 +327,25 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                 onChangeText={text => this.setState({ passwordConfirm: text })}
                 error={!!this.state.passwordConfirmError}
                 errorText={this.state.passwordConfirmError}
-                secureTextEntry={true}
+                secureTextEntry={this.state.passwordIsHidden}
               />
 
-              {/* mode can also be dropdown - dialog will allow more space */}
-              <Picker
-                selectedValue={this.state.securityQuestion}
-                style={[styles.picker]}
-                itemStyle={styles.pickerItem}
-                onValueChange={value => this.setState({ securityQuestion: value })}>
-                <Picker.Item label={resources.getString("reg.ques.select")} value="" />
-                <Picker.Item label={resources.getString("reg.ques.mother")} value="reg.ques.mother" />
-                <Picker.Item label={resources.getString("reg.ques.school")} value="reg.ques.school" />
-                <Picker.Item label={resources.getString("reg.ques.car")} value="reg.ques.car" />
-                <Picker.Item label={resources.getString("reg.ques.sport")} value="reg.ques.sport" />
-                <Picker.Item label={resources.getString("reg.ques.job")} value="reg.ques.job" />
-              </Picker>
+              <TouchableOpacity
+                onPress={this._showSecretQuestionModal}
+              >
+                <View style={styles.secretQuestionView}>
+                  <Text style={styles.secretQuestionViewInput}>
+                    {this.state.securityQuestion == '' ? resources.getString('reg.ques.select') : resources.getString(this.state.securityQuestion)}
+                  </Text>
+                </View>
+              </TouchableOpacity>
               {this.state.securityQuestionError != '' ? (
                 <Text style={styles.errorTest}>{this.state.securityQuestionError}</Text>
               ) : null
               }
 
               <TextInput
-                 label={resources.getString("the_answer_is:")}
+                label={resources.getString("the_answer_is:")}
                 returnKeyType="next"
                 selectionColor={newTheme.colors.primary}
                 underlineColor={newTheme.colors.primary}
@@ -269,6 +362,54 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                 </Button>
               </View>
 
+              {/* secret question dialog */}
+              <View>
+                <Portal>
+                  <Dialog
+                    visible={this.state.modalSecrectQuestionShow}
+                    onDismiss={this._hideSecretQuestionModal}>
+                    <Dialog.Content>
+                      <TouchableOpacity
+                        onPress={this._handleSecQuesSelectMother}
+                      >
+                        <View style={styles.secretQuestion}>
+                          <Text style={[styles.pr_text,{color:'black'}]}>{resources.getString("reg.ques.mother")}</Text>
+                        </View>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={this._handleSecQuesSelectSchool}
+                      >
+                       <View style={styles.secretQuestion}>
+                            <Text style={[styles.pr_text,{color:'black'}]}>{resources.getString("reg.ques.school")}</Text>
+                       </View>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={this._handleSecQuesSelectCar}
+                      >
+                      <View style={styles.secretQuestion}>
+                          <Text style={[styles.pr_text,{color:'black'}]}>{resources.getString("reg.ques.car")}</Text>
+                      </View>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={this._handleSecQuesSelectSport}
+                      >
+                      <View style={styles.secretQuestion}>
+                          <Text style={[styles.pr_text,{color:'black'}]}>{resources.getString("reg.ques.sport")}</Text>
+                      </View>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={this._handleSecQuesSelectJob}
+                      >
+                      <View style={styles.secretQuestion}>
+                          <Text style={[styles.pr_text,{color:'black'}]}>{resources.getString("reg.ques.job")}</Text>
+                      </View>
+                      </TouchableOpacity>
+                    </Dialog.Content>
+                  </Dialog>
+                </Portal>
+              </View>
+
+              {/* password help dialog */}
               <View>
                 <Portal>
                   <Dialog
@@ -279,31 +420,31 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                       <View style={styles.pr_view}>
                         <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_length")}</Text>
                         <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check" />
+                          <EvilIcons size={25} name="check" color={this.state.pasVal_length ? "green" : ""} />
                         </TouchableOpacity>
                       </View>
                       <View style={styles.pr_view}>
                         <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_upper")}</Text>
                         <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check" />
+                          <EvilIcons size={25} name="check" color={this.state.passVal_Upper ? "green" : ""} />
                         </TouchableOpacity>
                       </View>
                       <View style={styles.pr_view}>
                         <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_special")}</Text>
                         <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check" />
+                          <EvilIcons size={25} name="check" color={this.state.passVal_Special ? "green" : ""} />
                         </TouchableOpacity>
                       </View>
                       <View style={styles.pr_view}>
                         <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_lower")}</Text>
                         <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check" />
+                          <EvilIcons size={25} name="check" color={this.state.passVal_Lower ? "green" : ""} />
                         </TouchableOpacity>
                       </View>
                       <View style={styles.pr_view}>
                         <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_number")}</Text>
                         <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check" />
+                          <EvilIcons size={25} name="check" color={this.state.passVal_Number ? "green" : ""} />
                         </TouchableOpacity>
                       </View>
                     </Dialog.Content>
@@ -326,12 +467,46 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 
         </Background >
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
-      </PaperProvider>
+      </PaperProvider >
     );
   }
 }
 
 const styles = StyleSheet.create({
+  passwordInput: {
+    width: 190,
+    borderRightWidth: 0,
+  },
+  passwordEyeIcon: {
+    top: 18,
+    left: 12,
+  },
+  passwordEyeIconBg: {
+    right: 1,
+    backgroundColor: 'white',
+    height: 58.6,
+    top: 17.8,
+    width: 50,
+    borderStyle: 'solid',
+    borderColor: '#a7a6a5',
+    borderTopWidth: 1.5,
+    borderBottomWidth: 1.5,
+    borderLeftWidth: 0,
+  },
+  secretQuestionViewInput: {
+    color: 'grey',
+    fontSize: 16,
+    top: 15,
+    left: 10,
+  },
+  secretQuestionView: {
+    backgroundColor: 'white',
+    height: 55,
+    borderStyle: 'solid',
+    borderWidth: 1.5,
+    borderColor: '#a7a6a5',
+    borderRadius: 2,
+  },
   container: {
     width: '100%',
   },
@@ -367,15 +542,17 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 2,
     height: 58,
-    position: 'relative',
+    // position: 'relative',
     top: 18,
     borderStyle: 'solid',
     borderWidth: 1,
     borderColor: 'grey',
+    right: 1,
   },
   passwordView: {
     flexDirection: 'row',
-    width: 238,
+    width: 200,
+    backgroundColor: 'blue'
   },
   btnHelp: {
     height: 60,
@@ -433,6 +610,9 @@ const styles = StyleSheet.create({
   whiteText: {
     color: newTheme.colors.whiteText
   },
+  secretQuestion:{
+     flexDirection:'row',flexWrap: 'wrap',paddingRight:2,paddingLeft:2,
+  }
 });
 
 export default memo(RegisterScreen);

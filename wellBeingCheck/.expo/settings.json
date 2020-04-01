@@ -1,8 +1,8 @@
 {
+  "urlRandomness": "jr-v6g",
   "hostType": "lan",
   "lanType": "ip",
   "dev": true,
   "minify": false,
-  "urlRandomness": "jc-fv7",
   "https": false
 }

@@ -1,7 +1,7 @@
 
 import React, { memo } from 'react';
 import Background from '../components/Background';
-import { View, Text, TextInput, Image, StyleSheet, ImageBackground, Dimensions, TouchableOpacity, BackHandler, AsyncStorage } from 'react-native';
+import { View, Text, TextInput, Image, StyleSheet, ImageBackground, Dimensions, TouchableOpacity, BackHandler, AsyncStorage ,Alert, YellowBox} from 'react-native';
 import { EvilIcons, Feather, FontAwesome } from '@expo/vector-icons';
 import LogoClearSmall from '../components/LogoClearSmall';
 import {checkConnection,hashString,fetchJwToken} from '../utils/fetchJwToken';
@@ -9,11 +9,13 @@ import { resources } from '../../GlobalResources';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import { Provider as PaperProvider, Portal, Dialog, Paragraph, Button } from 'react-native-paper';
 import { newTheme } from '../core/theme';
+import {BackEndService} from '../api/back-end.service';
 import {
   NavigationParams,
   NavigationScreenProp,
   NavigationState, NavigationEvents,
 } from 'react-navigation';
+import {FetchAPI} from "../api/openapi";
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
@@ -28,7 +30,7 @@ type HomeState = {
   showThankYou: boolean,
   thankYouText: string,
 }
-
+YellowBox.ignoreWarnings(['Require cycle:'])
 class Dashboard extends React.Component<Props, HomeState> {
 
   constructor(HomeState) {
@@ -54,17 +56,6 @@ class Dashboard extends React.Component<Props, HomeState> {
       if (result) {
         let resultAsObj = JSON.parse(result)
         let firstTimeLogin = resultAsObj.firstTimeLogin;
-        //object found so no need to check bool value cont.
-        // if (!firstTimeLogin) {
-        //   //show first time dialog
-        //   let firstTimeLoginObj = {
-        //     firstTimeLogin: false,
-        //   };
-        //   AsyncStorage.setItem('first_time_login', JSON.stringify(firstTimeLoginObj), () => {
-        //     //first time login flagged saved - show dialog/alert
-        //     this.setState({ firstTimeLoginModal: true });
-        //   });
-        // }
       }
       else {
         //show first time dialog
@@ -90,36 +81,65 @@ class Dashboard extends React.Component<Props, HomeState> {
     let txt = '';
     if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2) txt = txt = resources.getString('ThankYouB');
     this.setState({ showThankYou: !global.showThankYou == 0, thankYouText: txt });
-    setTimeout(() => { global.showThankYou = 0; this.setState({ showThankYou: false }) }, 2000);
+    setTimeout(() => { global.showThankYou = 0; this.setState({ showThankYou: false }) }, 4000);
   }
   handleBackButton() {
     return true;
   }
- async getConfig(){
-    return new Promise(resolve => {
-         let url = global.webApiBaseUrl+'api/config/links';console.log(url);
-         fetch(url)
-         .then((response) =>{console.log(url);
-                              if (response.status >= 400 && response.status < 600) {
-                                 global.configurationReady=false;
-                                 resolve(false);
-                              }else{
-                                 response.json().then((responseJson) => {
-                                    global.surveyAUrlEng=responseJson.questionnaireA.enUrl;
-                                    global.surveyAUrlFre=responseJson.questionnaireA.frUrl;
-                                    global.surveyThkUrlEng=responseJson.confirmationPage.enUrl;
-                                    global.surveyThkUrlFre=responseJson.confirmationPage.frUrl;
-                                    global.surveyBUrlEng=responseJson.questionnaireB.enUrl;
-                                    global.surveyBUrlFre=responseJson.questionnaireB.frUrl;
-                                    global.surveyExceptionUrlEng=responseJson.exceptionPage.enUrl;
-                                    global.surveyExceptionUrlFre=responseJson.exceptionPage.frUrl;
-                                    global.configurationReady=true; console.log('Configuration is ready');  resolve(true);
-                                   })
-                             }
-                           })
-              .catch((error) => {global.configurationReady=false; resolve(false);});
-          });
- }
+   async getConfig(){
+      let service = new BackEndService(
+          'http://wellbeingcheck.canadacentral.cloudapp.azure.com/wellbeing-bienetre/api',
+          'en-CA',
+          null,
+          null,
+          null,
+          fetch
+      );
+
+      let links = await service.getLinks();
+      if (service.isResultFailure(links)) {
+          return false;
+      }
+
+   //   var links=await new BackEndService().getLinks();
+   //   if(links.hasOwnProperty('exception'))return false;
+      global.surveyAUrlEng=links.questionnaireA.enUrl;
+      global.surveyAUrlFre=links.questionnaireA.frUrl;
+      global.surveyThkUrlEng=links.confirmationPage.enUrl;
+      global.surveyThkUrlFre=links.confirmationPage.frUrl;
+      global.surveyBUrlEng=links.questionnaireB.enUrl;
+      global.surveyBUrlFre=links.questionnaireB.frUrl;
+      global.surveyExceptionUrlEng=links.exceptionPage.enUrl;
+      global.surveyExceptionUrlFre=links.exceptionPage.frUrl;
+      global.configurationReady=true; console.log('Configuration is ready');  return true;
+   }
+   async getConfigOld(){
+         var links=await new BackEndService().getLinks();console.log('Links:'+links.questionnaireA.enUrl);
+         if(links.hasOwnProperty('exception')) console.log('good');else console.log('bad');
+         return new Promise(resolve => {
+              let url = global.webApiBaseUrl+'api/config/links';console.log(url);
+              fetch(url)
+              .then((response) =>{console.log(url);
+                                   if (response.status >= 400 && response.status < 600) {
+                                      global.configurationReady=false;
+                                      resolve(false);
+                                   }else{
+                                      response.json().then((responseJson) => {
+                                         global.surveyAUrlEng=responseJson.questionnaireA.enUrl;
+                                         global.surveyAUrlFre=responseJson.questionnaireA.frUrl;
+                                         global.surveyThkUrlEng=responseJson.confirmationPage.enUrl;
+                                         global.surveyThkUrlFre=responseJson.confirmationPage.frUrl;
+                                         global.surveyBUrlEng=responseJson.questionnaireB.enUrl;
+                                         global.surveyBUrlFre=responseJson.questionnaireB.frUrl;
+                                         global.surveyExceptionUrlEng=responseJson.exceptionPage.enUrl;
+                                         global.surveyExceptionUrlFre=responseJson.exceptionPage.frUrl;
+                                         global.configurationReady=true; console.log('Configuration is ready');  resolve(true);
+                                        })
+                                  }
+                                })
+                   .catch((error) => {global.configurationReady=false; resolve(false);});
+               });
+      }
   _refresh() {
 
     // Force refresh Home Screen as a Back action on Stack Navigator does not call
@@ -129,36 +149,36 @@ class Dashboard extends React.Component<Props, HomeState> {
     this.setState({ refresh: '1' });
   }
   async saveParaData(){
-           let isConnected=await checkConnection();
-           if(!isConnected){alert('You are offline, try it later');return;}
-           let jwt=await fetchJwToken();
-           var snt = ["2020/02/01 08:10:00", "2020/02/01 12:10:00", "2020/02/01 18:10:00"];
-           let paraData = {
-                                                                    "PlatFormVersion": "1.2",
-                                                                    "DeviceName": "Andoird",
-                                                                    "NativeAppVersion": "2.2",
-                                                                    "NativeBuildVersion": "3.2",
-                                                                    "DeviceYearClass": "4.2",
-                                                                    "SessionID": "5.2",
-                                                                    "WakeTime": "07:12",
-                                                                    "SleepTime": "21.2",
-                                                                    "NotificationCount": "2",
-                                                                    "NotificationEnable":true,
-                                                                    "ScheduledNotificationTimes": snt
-                                                                };
-           let url=global.webApiBaseUrl+'api/paradata';console.log(url);
-           let token=global.jwToken;
-           fetch(url, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + jwt,},
-                body: JSON.stringify(paraData),
-           }).then((response) => {
+             let isConnected=await checkConnection();
+             if(!isConnected){alert('You are offline, try it later');return;}
+             let jwt=await fetchJwToken();
+             var snt = ["2020/02/01 08:10:00", "2020/02/01 12:10:00", "2020/02/01 18:10:00"];
+             let paraData = {
+                                                                      "PlatFormVersion": "1.2",
+                                                                      "DeviceName": "Andoird",
+                                                                      "NativeAppVersion": "2.2",
+                                                                      "NativeBuildVersion": "3.2",
+                                                                      "DeviceYearClass": "4.2",
+                                                                      "SessionID": "5.2",
+                                                                      "WakeTime": "07:12",
+                                                                      "SleepTime": "21.2",
+                                                                      "NotificationCount": "2",
+                                                                      "NotificationEnable":true,
+                                                                      "ScheduledNotificationTimes": snt
+                                                                  };
+             let url=global.webApiBaseUrl+'api/paradata';console.log(url);
+             let token=global.jwToken;
+             fetch(url, {
+                  method: 'POST',
+                  headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + jwt,},
+                  body: JSON.stringify(paraData),
+             }).then((response) => {
 
-                                                            return response.json();
-                                                          })
-           .then((myJson) => {console.log('This is '+myJson);})
-           .catch((error)=>{console.log(error.message);});
-    }
+                                                              return response.json();
+                                                            })
+             .then((myJson) => {console.log('This is '+myJson);})
+             .catch((error)=>{console.log(error.message);});
+      }
   async sendRequest() {
     let token = await fetchJwToken(); console.log('send:' + token);
     let url = global.webApiBaseUrl + 'api/Values'; let cul = global.culture; console.log(cul);
@@ -183,11 +203,12 @@ class Dashboard extends React.Component<Props, HomeState> {
       .catch(err => { console.log(err) })
   }
   async conductSurvey() {
-    let isConnected = await checkConnection();
-    if (!isConnected) { alert('You are offline, try it later'); return; }
-    let n=await this.getConfig();
-    if(n)this.props.navigation.navigate('EQSurveyScreen');
-    else {alert('Access denied(Config), Try it later, if same thing would happen again contact StatCan');return;}
+   let isConnected = await checkConnection();
+       if (!isConnected) { alert('You are offline, try it later'); return; }
+       let n=await this.getConfig();
+       if(n)this.props.navigation.navigate('EQSurveyScreen');
+       else {alert('Access denied(Config), Try it later, if same thing would happen again contact StatCan');return;}
+
   }
   render() {
     return (
@@ -196,8 +217,22 @@ class Dashboard extends React.Component<Props, HomeState> {
         <Background>
           <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
             <TouchableOpacity style={{ marginLeft: 5, marginTop: 50 }}><Image source={require('../assets/ic_logo_loginmdpi.png')} style={{ width: 38, height: 38 }} /></TouchableOpacity>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen', { refresh: this._refresh })} style={{ marginRight: 5, marginTop: 50 }}><FontAwesome name="gear" size={30} color="gray" /></TouchableOpacity>
-          </View>
+           {/*  <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen', { refresh: this._refresh })} 
+            style={{ marginRight: 5, marginTop: 50 }}>
+              <FontAwesome name="gear" size={30} color="gray" /></TouchableOpacity> */}
+         {/* --------------------*/}
+         <View>
+              <View>
+                <TouchableOpacity onPress={()=>this.props.navigation.navigate('SettingsScreen',{ refresh: this._refresh })} 
+                                  style={{ marginRight: 5, marginTop: 50 }}>
+                  <Image source={require('../assets/ic_setting.png')} />  
+                </TouchableOpacity>
+              </View>
+         </View>
+
+         {/* --------------------*/}
+         
+        </View>
           <View style={styles.homeContainer}>
             <TouchableOpacity onPress={() =>this.conductSurvey()} style={{ flex: 2, justifyContent: 'center' }}>
               <View style={styles.outer}>
@@ -209,10 +244,69 @@ class Dashboard extends React.Component<Props, HomeState> {
             {this.state.showThankYou &&
               <View style={{ backgroundColor: 'black', width: '80%', position: 'absolute', zIndex: 29, alignSelf: 'center', top: '60%', justifyContent: 'center', alignItems: 'center' }}><Text style={{ color: 'white', fontSize: 14, marginTop: 10, marginBottom: 10 }}>{this.state.thankYouText}</Text></View>
             }
-            <View style={[styles.homeButtonContainer, { marginBottom: 0, marginTop: 50 }, { flexDirection: 'row' }]}>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')} style={styles.smallButton}><EvilIcons name="question" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("about")}</Text></TouchableOpacity>
+          <View style={[styles.homeButtonContainer, { marginBottom: 0, marginTop: 50 }, { flexDirection: 'row' }]}>
+
+             {/*  <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')} style={styles.smallButton}><EvilIcons name="question" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("about")}</Text></TouchableOpacity>
               <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}><Feather name="phone" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("contact_us")}</Text></TouchableOpacity>
+              <TouchableOpacity onPress={() => { if (global.hasImage) this.props.navigation.navigate('ResultScreen'); else alert(resources.getString("NoDataAlert")); }} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("result")}</Text></TouchableOpacity>
               <TouchableOpacity onPress={() => { if (global.hasImage) this.props.navigation.navigate('ResultSummaryScreen'); else alert(resources.getString("NoDataAlert")); }} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("result")}</Text></TouchableOpacity>
+
+            */}
+
+
+            {/*-----------Information button using UX logo ic_wbc_about_survey--------*/}
+            <View>
+              <View>
+                <TouchableOpacity onPress={()=>this.props.navigation.navigate('AboutScreen')} 
+                style={styles.smallButton}>
+                  <Image source={require('../assets/ic_wbc_about_survey.png')} />
+                </TouchableOpacity>
+              </View>
+              <View>
+                    <Text style={styles.smallButtonText}>{resources.getString("about")}</Text>
+              </View>
+            </View>
+
+
+              {/* <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')}
+                                style={styles.smallButton}><EvilIcons name="question" size={40} color="white" />
+              <Text style={styles.smallButtonText}>{resources.getString("about")}</Text>
+              </TouchableOpacity> */}
+
+            {/* ----------Contact us button using UX logo ic_wbc_contact_us----------- */}
+            <View>
+              <View>
+                <TouchableOpacity onPress={()=>this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}>
+                  <Image source={require('../assets/ic_wbc_contact_us.png')} />
+                </TouchableOpacity>
+              </View>
+              <View>
+                  <Text style={styles.smallButtonText}>{resources.getString("contact_us")}</Text>
+              </View>
+            </View>
+
+
+            {/*  <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')}
+            style={styles.smallButton}><Feather name="phone" size={40} color="white" />
+            <Text style={styles.smallButtonText}>{resources.getString("contact_us")}</Text></TouchableOpacity>
+             */}
+
+             {/*------------Result button using UX logo ic_wbc_dashboard----------*/}
+             <View>
+              <View>
+                <TouchableOpacity onPress={() => { if (global.hasImage) this.props.navigation.navigate('ResultScreen');
+                                                   else Alert.alert('',resources.getString("NoDataAlert")); }}
+                                  style={styles.smallButton}>
+                  <Image source={require('../assets/ic_wbc_dashboard.png')} />
+                </TouchableOpacity>
+              </View>
+              <View>
+                  <Text style={styles.smallButtonText}>{resources.getString("result")}</Text>
+              </View>
+            </View>
+
+              {/* <TouchableOpacity onPress={() => { if (global.hasImage) this.props.navigation.navigate('ResultScreen'); else alert(resources.getString("NoDataAlert")); }} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("result")}</Text></TouchableOpacity> */}
+
             </View>
           </View>
           <NavigationEvents onDidFocus={() => this.checkThankYou()} />
@@ -321,16 +415,16 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgray'
   },
   smallButton: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 70,
+    height: 70,
+    borderRadius: 35,
     backgroundColor: '#66cc99',
     justifyContent: 'center',
     alignItems: 'center',
     margin: 10
   },
   smallButtonText: {
-    color: '#fff',
+    color: '#000000',
     fontSize: 15,textAlign: 'center',
   }
 });

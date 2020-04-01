@@ -1,14 +1,14 @@
 import React, { memo, useState, useCallback } from 'react';
-import { Image, View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator,Button,Platfrom } from 'react-native';
+import { Image, View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator,Button,YellowBox } from 'react-native';
 import { AsyncStorage } from 'react-native';
 //import { Ionicons,EvilIcons,Feather } from '@expo/vector-icons';
 import { AntDesign,FontAwesome } from '@expo/vector-icons';
 import WebView from 'react-native-webview';
 import { resources } from '../../../GlobalResources';
-import {hashString,checkConnection,fetchJwToken} from '../../utils/fetchJwToken';
+import {fetchJwToken,checkConnection,hashString,parseJwt} from '../../utils/fetchJwToken';
 const deviceHeight =Math.floor(Dimensions.get('window').height);
 const deviceWidth =Math.floor(Dimensions.get('window').width);
-
+import {BackEndService} from '../../api/back-end.service';
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -21,7 +21,11 @@ interface Props {
 type ScreenState={
     Sacode:string,jsCode:string
 }
+YellowBox.ignoreWarnings(['Require cycle:']);
 let count=0;//temporarily limit to get image just once, because eq will show exception page twice.
+
+const WEB_API_BASE_URL = 'http://wellbeingcheck.canadacentral.cloudapp.azure.com/wellbeing-bienetre/api';
+
 export default class EQSurveyScreen extends React.Component<Props, ScreenState> {
   constructor(Props) {
     super(Props)
@@ -32,141 +36,199 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     setTimeout(()=>{this.setState({webviewLoaded: true})}, 4000);
   }
    componentDidMount(){
-     //    global.userToken='123456789';
-         console.log('ssssssssssssssssssssssssssssssss');
-         this.handleSurveyBdone();
-       /* let jwt=fetchJwToken();
-        console.log('Token:'+jwt);*/
-   }
-   async handleSurveyAdone(){
-           let isConnected=await checkConnection();
-           if(!isConnected){alert('You are offline, try it later');return;}
-           let jwt=await fetchJwToken();
-           console.log('Token:'+jwt);
-           if(jwt==''){alert("Internal server error(token), Try again, if same thing would happen again contact StatCan");return;}
-           global.jwToken=jwt;
-           let result=false;
-           result=await this.setPassword(jwt);
-           if(!result){alert("Internal server error(set password), Try again, if same thing would happen again contact StatCan");return;}
-           console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
-           //New flow:A and B will be done at first time
-           let types=await this.fetchGraphTypes();console.log('types:'+types);
-           if(types!=null && types.length>0){
-              await this.fetchGraphs(types);
-           }
-           count=1;AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
-      }
-   async handleSurveyBdone(){
-            let isConnected=await checkConnection();
-            if(!isConnected){alert('You are offline, try it later');return;}
-            let jwt=await fetchJwToken();console.log('asdfasdfasdfasdf1234');
-            if(jwt==''){alert("Internal server error(token), Try again, if same thing would happen again contact StatCan");return;}
-            global.jwToken=jwt;
-            let types=await this.fetchGraphTypes();console.log('types:'+types);
-            if(types!=null && types.length>0){
-               await this.fetchGraphs(types);
-            }
-            count=1;AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
-      }
-   async fetchGraphs(types:string[]){
-         if(count>0)return;
+     //   this.handleSurveyAdone();
+    //  this.fetchGraphTypesNew();
+      this.handleSurveyBdone();
+      // this.setPasswordNew();
+     // this.resetPassword();
 
-         let hh=deviceHeight-220;let hh1=deviceHeight-300;let ww=deviceWidth-80;
-         let index=0;
-         for(var i=0;i<types.length;i++){
-             let url=global.webApiBaseUrl+'api/dashboard/graph?type='+types[i];
-             if(types[i]=='mood')url+='&width='+ww+'&height='+hh1;
-             else url+='&width='+deviceWidth+'&height='+hh;
-             this.fetchImage(url,index,'en');index++;
-             this.fetchImage(url,index,'fr');index++;
-         }
-         AsyncStorage.setItem('hasImage','1');console.log('Fetch images done');
-      }
-   setPassword(jwt:string) {
-            let url=global.webApiBaseUrl+'api/security/password';
-            let data={salt:global.passwordSalt,passwordHash:hashString(global.password,global.passwordSalt),securityQuestionId:'11',securityAnswerSalt:'4321',securityAnswerHash:'4444'}
-            return fetch(url,{
-                  method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                      'Authorization': 'Bearer ' + jwt,
-                    },
-                    body: JSON.stringify(data),
-            })
-            .then((response) => response.json())
-            .then((responseJson) => {console.log('setPassword:'+responseJson);return responseJson;})
-            .catch((error) => {console.error(error);});
-       }
-   resetPassword() {
-                 let url=global.webApiBaseUrl+'api/security/password';console.log(url);
-                 let data={deviceId:global.userToken,newSalt:global.passwordSalt,newPasswordHash:hashString(global.password,global.passwordSalt),securityAnswerHash:'4444'}
-                 return fetch(url,{
-                       method: 'PUT',
-                       headers: {'Content-Type': 'application/json',},
-                       body: JSON.stringify(data),
-                 })
-                  .then((response) => response.json())
-                  .then((responseJson) => {console.log('resetPassword:'+responseJson);return responseJson;})
-                 .catch((error) => {console.error(error);});
-            }
-   async fetchGraphTypes(){
-           let url=global.webApiBaseUrl+'api/dashboard/graphs';
-           return fetch(url)
-              .then((response) => response.json())
-              .then((responseData) => {return responseData;})
-              .catch(error => console.warn(error));
-      }
-   fetchImages(){
-          console.log(count); if(count>0)return;
-          console.log('Fetch images....');
-          let hh=deviceHeight-220;let hh1=deviceHeight-300;let ww=deviceWidth-80;
-          timeStamp=d.getFullYear().toString()+d.getMonth()+d.getDay()+d.getHours()+d.getMinutes()+d.getSeconds();
-          let uri0=global.webApiBaseUrl+'api/dashboard/graph?type=mood&width='+ww+'&height='+hh1;
-          let uri1=global.webApiBaseUrl+'api/dashboard/graph?type=mood&width='+ww+'&height='+hh1;
-          let uri2=global.webApiBaseUrl+'api/dashboard/graph?type=location&width='+deviceWidth+'/'+hh;
-          let uri3=global.webApiBaseUrl+'api/dashboard/graph?type=location&width='+deviceWidth+'/'+hh;
-          let uri4=global.webApiBaseUrl+'api/dashboard/graph?type=people&width='+deviceWidth+'/'+hh;
-          let uri5=global.webApiBaseUrl+'api/dashboard/graph?type=people&width='+deviceWidth+'/'+hh;
-          let uri6=global.webApiBaseUrl+'api/dashboard/graph?type=activity&width='+deviceWidth+'/'+hh;
-          let uri7=global.webApiBaseUrl+'api/dashboard/graph?type=activity&width='+deviceWidth+'/'+hh;
-          this.fetchImage(uri0,0);
-          this.fetchImage(uri1,1);
-          this.fetchImage(uri2,2);
-          this.fetchImage(uri3,3);
-          this.fetchImage(uri4,4);
-          this.fetchImage(uri5,5);
-          this.fetchImage(uri6,6);
-          this.fetchImage(uri7,7);
-          AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
-          //count=1;
-    }
-   async fetchImage(url:string,index:number,culture:string) {
-       let isConnected=await checkConnection();
-       if(!isConnected){alert('You are offline, try it later');return;}
-       let token=global.jwToken;   console.log(url);     //await fetchJwToken();console.log(url);
-       fetch(url, {
-             method: 'GET',
-             headers: {'Authorization': 'Bearer ' + token,'Accept-language':culture },
-             })
-             .then( response =>{
-                   console.log(response.status);
-                   if(response.status==200){
-                      response.blob()
-                      .then(blob =>{
-                          var reader = new FileReader() ;
-                          reader.onload = function(){
-                       // console.log(this.result);// <--- `this.result` contains a base64 data URI
-                          console.log('image'+index);
-                          AsyncStorage.setItem('image'+index, this.result);
-                          } ;
-                          reader.readAsDataURL(blob) ;
-                      })
-                   }
-                   else { throw new Error("Access denied, Try again later, if same thing would happen again contact StatCan");}
-                   })
-             .catch(err => { console.log(err) })
    }
-   displaySpinner() {
+
+      async handleSurveyAdone(){
+              let isConnected=await checkConnection();
+              if(!isConnected){alert('You are offline, try it later');return;}
+              let jwt=await fetchJwToken();
+              console.log('Token:'+jwt);
+              if(jwt==''){alert("Internal server error(token), Try again, if same thing would happen again contact StatCan");return;}
+              global.jwToken=jwt;
+              let result=false;
+            //  result=await this.setPassword(jwt);
+              result=await this.setPasswordNew();
+              if(!result){alert("Internal server error(set password), Try again, if same thing would happen again contact StatCan");return;}
+              console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
+              //New flow:A and B will be done at first time, But Don't show image at this time
+            /*  let types=await this.fetchGraphTypes();console.log('types:'+types);
+              if(types!=null && types.length>0){
+                 await this.fetchGraphs(types);
+              }*/
+              count=1;
+            //  AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
+         }
+      async handleSurveyBdone(){
+               let isConnected=await checkConnection();console.log('In handle B');
+               if(!isConnected){alert('You are offline, try it later');return;}
+               let jwt=await fetchJwToken();  console.log('Token:'+jwt);
+               if(jwt==''){alert("Internal server error(token), Try again, if same thing would happen again contact StatCan");return;}
+               global.jwToken=jwt;
+              /* var service=new BackEndService();
+               var claim=service.decodeJwtToken(jwt);  //not working
+               */
+               var claim=parseJwt(jwt);
+               console.log(claim);
+               console.log(claim.deviceId+"--"+claim.sac+"--"+claim.password);
+
+
+               let types=await this.fetchGraphTypes();
+             //  let types=await this.fetchGraphTypesNew();
+             //  let types=['overall','activity','people','location'];
+               console.log('types:'+types);
+               if(types!=null && types.length>0){
+                  await this.fetchGraphs(types);
+               }
+               count=1;AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
+         }
+      async fetchGraphs(types:string[]){
+         //   if(count>0)return;
+
+            let hh=deviceHeight-220;let hh1=deviceHeight-300;let ww=deviceWidth-80;
+            let index=0;
+            for(var i=0;i<types.length;i++){
+                let url=global.webApiBaseUrl+'api/dashboard/graph/'+types[i];
+              //  if(types[i].type=='overall')url+='?width='+deviceWidth+'&height='+hh;
+              //  else url+='?width='+deviceWidth+'&height='+hh;
+                url+='?width='+deviceWidth+'&height='+hh;
+                this.fetchImage(url,index,'en');index++;
+                this.fetchImage(url,index,'fr');index++;
+            }
+            AsyncStorage.setItem('hasImage','1');console.log('Fetch images done');
+         }
+     //The new service call has problem
+      async setPasswordNew() {
+            var service=new BackEndService(
+                global.webApiBaseUrl+'api/',
+                                   'fr-CA',
+                                   global.userToken,
+                                   global.sac,
+                                   'null',
+                                   fetch
+            );
+                    var result= await service.setPassword(
+                             global.passwordSalt,
+                             hashString(global.password,global.passwordSalt),
+                             global.securityQuestionId,
+                             global.securityAnswerSalt,
+                             hashString(global.securityAnswer,global.securityAnswerSalt));
+             if(service.isResultFailure(result))return false;
+             else return true;
+
+      }
+
+      setPassword(jwt:string) {
+               let url=global.webApiBaseUrl+'api/security/password';
+               let data={salt:global.passwordSalt,passwordHash:hashString(global.password,global.passwordSalt),securityQuestionId:global.securityQuestionId,securityAnswerSalt:global.securityAnswerSalt,securityAnswerHash:hashString(global.securityAnswer,global.securityAnswerSalt)}
+               return fetch(url,{
+                     method: 'POST',
+                       headers: {
+                         'Content-Type': 'application/json',
+                         'Authorization': 'Bearer ' + jwt,
+                       },
+                       body: JSON.stringify(data),
+               })
+               .then((response) =>{ if(response.status==200){return true;}  else {console.log('Bad:'+response.status);return false;}} )          // response.json())
+              // .then((responseJson) => {console.log('setPassword:'+responseJson);return responseJson;})
+               .catch((error) => {console.error(error);return false;});
+          }
+      resetPassword() {
+                    let url=global.webApiBaseUrl+'api/security/password';console.log(url);
+                    let data={
+                           deviceId:global.userToken,
+                           sac:global.sac,
+                           newSalt:global.passwordSalt,
+                           newPasswordHash:hashString(global.password,global.passwordSalt),
+                           securityAnswerHash:hashString(global.securityAnswer,global.securityAnswerSalt),
+                           newSecurityQuestionId:1,
+                           newSecurityAnswerSalt:global.securityAnswerSalt,
+                           newSecurityAnswerHash:hashString('newanswerhere',global.securityAnswerSalt)
+                           }
+                    return fetch(url,{
+                          method: 'PUT',
+                          headers: {'Content-Type': 'application/json',},
+                          body: JSON.stringify(data),
+                    })
+                     .then((response) =>{
+                          if(response.status==200){console.log('good'); return true;}
+                          else {console.log('Bad:'+response.status);return false;}
+                     } )    // .then((response) => response.json())
+                   //  .then((responseJson) => {console.log('resetPassword:'+responseJson);    return responseJson;})
+                    .catch((error) => {console.error(error);console.log('Bad');return false;});
+               }
+      async fetchGraphTypes(){
+       let types=[];
+              let url=global.webApiBaseUrl+'api/dashboard/graphs';
+              return fetch(url,{
+                 method: 'GET',
+                                     headers: {
+                                       'Content-Type': 'application/json',
+                                       'Authorization': 'Bearer ' + global.jwToken,
+                                     }
+              })
+                 .then((response) => response.json())
+                 .then((result) => {
+                        if(result!=null && result.length>0){
+                           result.forEach(function (graphLink) {
+                                           types.push(graphLink.type);
+                                         });
+                        }
+                       return types;})
+                 .catch(error =>{console.warn(error);return types;});
+         }
+      async fetchGraphTypesNew(){
+           let types=[];
+           let backEndService = new BackEndService(
+                   global.webApiBaseUrl+'api/',
+                  'fr-CA',
+                   global.userToken,
+                   global.sac,
+                   hashString(global.password,global.passwordSalt),
+                  fetch
+              );
+              let result = await backEndService.retrieveGraphLinks();
+              if (!backEndService.isResultFailure(result)) {
+              //   global.jwToken=result.token; console.log(result.token);
+                 result.graphs.forEach(function (graphLink) {
+                   types.push(graphLink.type);
+                 });
+              }
+            return types
+      }
+      async fetchImage(url:string,index:number,culture:string) {
+          let isConnected=await checkConnection();
+          if(!isConnected){alert('You are offline, try it later');return;}
+          let token=global.jwToken;   console.log(url);     //await fetchJwToken();console.log(url);
+       //   console.log(token);
+          fetch(url, {
+                method: 'GET',
+                headers: {'Authorization': 'Bearer ' + token,'Accept-language':culture },
+                })
+                .then( response =>{
+                      console.log(response.status);
+                      if(response.status==200){
+                         response.blob()
+                         .then(blob =>{
+                             var reader = new FileReader() ;
+                             reader.onload = function(){
+                          // console.log(this.result);// <--- `this.result` contains a base64 data URI
+                             console.log('image'+index);
+                             AsyncStorage.setItem('image'+index, this.result);
+                             } ;
+                             reader.readAsDataURL(blob) ;
+                         })
+                      }
+                      else { throw new Error("Access denied, Try again later, if same thing would happen again contact StatCan");}
+                      })
+                .catch(err => { console.log(err) })
+      }
+      displaySpinner() {
     return (
       <View>
         <ActivityIndicator />
@@ -189,17 +251,16 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
          else
              uri=global.surveyAUrlFre;
          }
-         console.log('Eq:'+uri);
-     //  uri='http://localhost/anonymous-anonyme/en/login-connexion/load-charger/eqgs2g4d9121e0734541a5c0dbcb6e4713f7';
-     let userAgent=Platform.OS=='ios'?'Apple deviceId/'+global.userToken:'Android deviceId/'+global.userToken;console.log(userAgent);
+         console.log('Beofore eq:'+uri);
+     let userAgent=Platform.OS=='ios'?'Apple DeviceId/'+global.userToken:'Android DeviceId/'+global.userToken;console.log('EQ userAgent'+userAgent);
     return (
-          <View style={{ flex: 1, marginTop: 0 }}>
+          <View style={{ flex: 1, marginTop: 40}}>
                 <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{marginLeft:5,marginTop:10}}><Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{width:38,height:38}} /></TouchableOpacity>
                 </View>
                  {(this.state.webviewLoaded) ? null : <ActivityIndicator size="large" color="lightblue" style={{position:'absolute',top:'50%',left:'50%',zIndex:20}}/>}
                 <WebView
-                          ref={(view) => this.webView = view} incognito={true}
+                          ref={(view) => this.webView = view} incognito={true} useWebKit={true}
                           style={styles.webview}
                           applicationNameForUserAgent={userAgent}
                           scrollEnabled={true}
@@ -217,26 +278,37 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                             if (navState.url =='') { // You must validate url to enter or navigate
                               this.webView.stopLoading();
                             }
-                            console.log(navState.url);
-                            if(navState.url.indexOf('submiterror-erreursoumission')>0||navState.url==global.surveyThkUrlEng ||navState.url==global.surveyThkUrlFre){
-                                 if(navState.url.indexOf('submiterror-erreursoumission')>0)
-                                 {     alert("Internal server error(Exception), Try again, if same thing would happen again contact StatCan"); this.props.navigation.navigate('Dashboard');
-                                 }
-                                 console.log('count in b:'+count);
-                                 if(global.doneSurveyA){
-                                     if(count>0){count=0;return;}
-                                     console.log('redady to fetch image');
-                                     this.handleSurveyBdone();
-                                     global.showThankYou=2;
-                                 }
-                                 else {
-                                    this.handleSurveyAdone();
-                                    global.showThankYou=1;
-                                  //  count=1;
-                                 }
-                                this.props.navigation.navigate('Dashboard');
+                            console.log('nav changed:'+navState.url);
+                            if(navState.url==global.surveyThkUrlEng ||navState.url==global.surveyThkUrlFre){
+                                 let jsCode=' var sac ="1234566789";sac= document.querySelector("div.sc-box-main p span.ecf-bold").innerText; window.ReactNativeWebView.postMessage(sac);';
+                                 this.setState({jsCode:jsCode});
                             }
                           }}
+
+                          onMessage={event => {
+                                var ss=event.nativeEvent.data;
+                                global.sac=ss.substring(4);
+                                console.log('sa-code======='+global.sac);
+                                AsyncStorage.setItem('SacCode', global.sac);
+                                console.log('done A:'+global.doneSurveyA);
+                                if(global.doneSurveyA){
+                                  //  if(count>0){count=0;return;}
+                                    console.log('redady to fetch image');
+                                   // this.fetchImages();
+                                    this.handleSurveyBdone();
+                                    count=1;  global.showThankYou=2;
+                                }
+                                else {
+                                    console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
+                                   // this.fetchImages();
+                                    this.handleSurveyAdone();
+                                    count=1;global.showThankYou=2;
+                                    }
+                                this.props.navigation.navigate('Dashboard');
+                             }}
+
+
+
                         />
       </View>
     );
@@ -250,7 +322,7 @@ const styles = StyleSheet.create({
   },
   webview: {
     //  flex: 1,
-    marginTop: 24,
+    marginTop:0,
     width: deviceWidth,
     height: deviceHeight + 2000
   },

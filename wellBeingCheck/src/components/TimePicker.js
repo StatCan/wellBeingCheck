@@ -16,10 +16,6 @@ const TimePicker = (props) => {
   const handleConfirm = time => {
     if (global.debugMode) console.log("A time has been picked: ", time);
 
-    // Round up the hours then set minutes to 0
-    time.setHours(time.getHours() + Math.round(time.getMinutes()/60));
-    time.setMinutes(0);
-
     var options = { hour12: false, hour: '2-digit', minute:'2-digit'};
    
     if (props.timeType === "wakeTime"){

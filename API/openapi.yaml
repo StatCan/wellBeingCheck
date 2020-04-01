@@ -21,6 +21,7 @@ servers:
 paths:
   /config/links:
     get:
+      operationId: getLinks
       summary: Returns the URL of the two questionnaires A & B and confirmation page
       description: The mobile app collects responses through EQ anonymous portal. The returned URI are the EQ anonymous references to Questionnaire A & B and confirmation page
       tags:
@@ -31,30 +32,11 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  questionnaireA:
-                    $ref: '#/components/schemas/BilingualLink'
-                  questionnaireB:
-                    $ref: '#/components/schemas/BilingualLink'
-                  confirmationPage:
-                    $ref: '#/components/schemas/BilingualLink'
-                  exceptionPage:
-                    $ref: '#/components/schemas/BilingualLink'
-                example:
-                  questionnaireA:
-                    enUrl: https://surveys-enquetes-test.statcan.ca/form-formulaire/en/login-connexion/load-charger/eqgs2g4d9121e0734541a5c0dbcb6e4713f7
-                    enFr: https://surveys-enquetes-test.statcan.ca/form-formulaire/fr/login-connexion/load-charger/eqgs2g4d9121e0734541a5c0dbcb6e4713f7
-                  questionnaireB:
-                    enUrl: https://surveys-enquetes-test.statcan.ca/form-formulaire/en/login-connexion/load-charger/eqgs2g4d9121e0734541a5c0dbcb6e4713f7
-                    enFr: https://surveys-enquetes-test.statcan.ca/form-formulaire/fr/login-connexion/load-charger/eqgs2g4d9121e0734541a5c0dbcb6e4713f7
-                  confirmation:
-                    enUrl: https://surveys-enquetes-test.statcan.ca/form-formulaire/en/login-connexion/load-charger/eqgs2g4d9121e0734541a5c0dbcb6e4713f7
-                    enFr: https://surveys-enquetes-test.statcan.ca/form-formulaire/fr/login-connexion/load-charger/eqgs2g4d9121e0734541a5c0dbcb6e4713f7
-
+                $ref: '#/components/schemas/Links'
 
   /config/flags:
     get:
+      operationId: getFlags
       summary: Returns a list of configuration flags
       description: If there are some functionnalities on the Mobile App that can be enabled or disabled from the server. The Mobile App will check from time to time and adjusts itself accordingly
       tags:
@@ -65,14 +47,11 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties:
-                  type: string
-                example:
-                  populationDashboard: false
-                  enableDarkMode: true
+                $ref: '#/components/schemas/Flags'
+
   /security/token:
     post:
+      operationId: authenticate
       summary: Authenticate and get a JWT token for subsequent use
       description: |
         In order to interact with the API a security token is required to keep the interaction between the mobile 
@@ -86,18 +65,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - deviceId
-                - password
-              properties:
-                deviceId:
-                  description: Unique Id generated when setting up the mobile app
-                  type: string
-                  maxLength: 20
-                password:
-                  description: Hashed password
-                  type: string
+              $ref: '#/components/schemas/AuthenticateInput'
       responses:
         '200':
           description: Provided credentials are correct and a token is succesfully issued.
@@ -112,6 +80,7 @@ paths:
 
   /security/password:
     post:
+      operationId: setPassword
       summary: Sets the password and security answer for a deviceId
       description: |
         Once a device onboarded, it must secure access by setting a password. This can only be done once, Right after 
@@ -127,29 +96,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - salt
-                - passwordHash
-                - securityQuestionId
-                - securityQuestionSalt
-                - securityQuestionHash
-              properties:
-                salt:
-                  description: Salt used to hash the password
-                  type: string
-                passwordHash:
-                  description: Hashed password
-                  type: string
-                securityQuestionId:
-                  description: Id of the security question chosen by respondent
-                  type: integer
-                securityAnswerSalt:
-                  description: Salt used to hash the security question answer
-                  type: string
-                securityAnswerHash:
-                  description: Hashed security question
-                  type: string
+              $ref: '#/components/schemas/SetPasswordInput'
       responses:
         '200':
           description: Password correctly set for the deviceId
@@ -161,6 +108,7 @@ paths:
           description: The password is already set for the device. Use reset password flow instead.
 
     put:
+      operationId: resetPassword
       summary: Reset the password for a deviceId
       description: |
         When the mobile app user forgot the password it can be reset by providing the correct 
@@ -173,31 +121,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              required:
-                - deviceId
-                - sac
-                - newSalt
-                - newPasswordHash
-                - securityQuestionHash
-              properties:
-                deviceId:
-                  description: Id of the device from the mobile app
-                  type: string
-                  maxLength: 20
-                sac:
-                  description: SAC associated to the device
-                  type: string
-                  maxLength: 16
-                newSalt:
-                  description: Salt used to hash the new password
-                  type: string
-                newPasswordHash:
-                  description: Hashed password
-                  type: string
-                securityAnswerHash:
-                  description: Hashed security question answer to match against what is stored on the server
-                  type: string
+              $ref: '#/components/schemas/ResetPasswordInput'
       responses:
         '200':
           description: Password correctly reset to new value
@@ -206,6 +130,7 @@ paths:
   
   /dashboard/graphs:
     get:
+      operationId: getGraphUrls
       summary: Returns URLs to all dashboard graphs that the mobile will display
       description: |
         Since no data per se is sent to the mobile app, all dashboard graphics are rendered on the server. The list of
@@ -234,6 +159,7 @@ paths:
      
   /dashboard/graph/{type}:
     get:
+      operationId: getChart
       summary: Retrieve a graph image in the given type and style
       description: |
         Renders the current dahsboard data in the request type and style. The screen resolution given as parameters
@@ -287,6 +213,7 @@ paths:
 
   /paradata:
     post:
+      operationId: submitParadata
       summary: Submit paradata collected on the device to the back-end
       description: |
         The mobile app collects data related to how scheduled notification were actioned. That data cannot be submitted
@@ -324,14 +251,129 @@ components:
         frUrl:
           description: French link
           type: string
+
+    Links:
+      type: object
+      properties:
+        questionnaireA:
+          $ref: '#/components/schemas/BilingualLink'
+        questionnaireB:
+          $ref: '#/components/schemas/BilingualLink'
+        confirmationPage:
+          $ref: '#/components/schemas/BilingualLink'
+        exceptionPage:
+          $ref: '#/components/schemas/BilingualLink'
+      example:
+        questionnaireA:
+          enUrl: https://surveys-enquetes-test.statcan.ca/form-formulaire/en/login-connexion/load-charger/eqgs2g4d9121e0734541a5c0dbcb6e4713f7
+          enFr: https://surveys-enquetes-test.statcan.ca/form-formulaire/fr/login-connexion/load-charger/eqgs2g4d9121e0734541a5c0dbcb6e4713f7
+        questionnaireB:
+          enUrl: https://surveys-enquetes-test.statcan.ca/form-formulaire/en/login-connexion/load-charger/eqgs2g4d9121e0734541a5c0dbcb6e4713f7
+          enFr: https://surveys-enquetes-test.statcan.ca/form-formulaire/fr/login-connexion/load-charger/eqgs2g4d9121e0734541a5c0dbcb6e4713f7
+        confirmationPage:
+          enUrl: https://surveys-enquetes-test.statcan.ca/form-formulaire/en/login-connexion/load-charger/eqgs2g4d9121e0734541a5c0dbcb6e4713f7
+          enFr: https://surveys-enquetes-test.statcan.ca/form-formulaire/fr/login-connexion/load-charger/eqgs2g4d9121e0734541a5c0dbcb6e4713f7
+
+    AuthenticateInput:
+      type: object
+      required:
+        - deviceId
+        - sac
+        - password
+      properties:
+        deviceId:
+          description: Unique Id generated when setting up the mobile app
+          type: string
+          maxLength: 20
+        sac:
+          description: Secure Access Code distributed from EQ confirmation page
+          type: string
+          maxLength: 16
+        password:
+          description: Hashed password
+          type: string
+
+    SetPasswordInput:
+      type: object
+      required:
+        - salt
+        - passwordHash
+        - securityQuestionId
+        - securityQuestionSalt
+        - securityQuestionHash
+      properties:
+        salt:
+          description: Salt used to hash the password
+          type: string
+        passwordHash:
+          description: Hashed password
+          type: string
+        securityQuestionId:
+          description: Id of the security question chosen by respondent
+          type: integer
+        securityAnswerSalt:
+          description: Salt used to hash the security question answer
+          type: string
+        securityAnswerHash:
+          description: Hashed security question
+          type: string
+
+    ResetPasswordInput:
+      type: object
+      required:
+        - deviceId
+        - sac
+        - newSalt
+        - newPasswordHash
+        - securityAnswerHash
+        - newSecurityQuestionId
+        - newSecurityAnswerSalt
+        - newSecurityAnswerHash
+      properties:
+        deviceId:
+          description: Id of the device from the mobile app
+          type: string
+          maxLength: 20
+        sac:
+          description: SAC associated to the device
+          type: string
+          maxLength: 16
+        newSalt:
+          description: Salt used to hash the new password
+          type: string
+        newPasswordHash:
+          description: Hashed password
+          type: string
+        securityAnswerHash:
+          description: Hashed security question answer to match against what is stored on the server
+          type: string
+        newSecurityQuestionId:
+          description: Id of the new security question chosen by the respondent
+          type: integer
+        newSecurityAnswerSalt:
+          description: Salt used to hash the new security answer
+          type: string
+        newSecurityAnswerHash:
+          description: Hashed new security question answer
+          type: string
+
+    Flags:
+      type: object
+      additionalProperties:
+        type: string
+      example:
+        populationDashboard: false
+        enableDarkMode: true
+
     GraphType:
       description: Type of graph that will be produced for the dashboard
       type: string
       enum:
-        - mood
+        - overall
         - activity
         - location
         - people
+
     GraphStyle:
       description: Style of a given graph type. This allows to try options if needed
       type: string
