@@ -24,7 +24,7 @@ type ScreenState={
 YellowBox.ignoreWarnings(['Require cycle:']);
 let count=0;//temporarily limit to get image just once, because eq will show exception page twice.
 
-const WEB_API_BASE_URL = 'http://wellbeingcheck.canadacentral.cloudapp.azure.com/wellbeing-bienetre/api';
+const WEB_API_BASE_URL =global.webApiBaseUrl+'api';
 
 export default class EQSurveyScreen extends React.Component<Props, ScreenState> {
   constructor(Props) {
@@ -40,7 +40,8 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     //  this.fetchGraphTypesNew();
     //  this.handleSurveyBdone();
       // this.setPasswordNew();
-     // this.resetPassword();
+    //  this.resetPassword('Esm#12346789');
+       this.resetPasswordNew('Esm#12346789');
 
    }
 
@@ -149,17 +150,17 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
               // .then((responseJson) => {console.log('setPassword:'+responseJson);return responseJson;})
                .catch((error) => {console.error(error);return false;});
           }
-      resetPassword() {
+      resetPassword(newPass) {
                     let url=global.webApiBaseUrl+'api/security/password';console.log(url);
                     let data={
                            deviceId:global.userToken,
                            sac:global.sac,
                            newSalt:global.passwordSalt,
-                           newPasswordHash:hashString(global.password,global.passwordSalt),
+                           newPasswordHash:hashString(newPass,global.passwordSalt),
                            securityAnswerHash:hashString(global.securityAnswer,global.securityAnswerSalt),
-                           newSecurityQuestionId:1,
+                           newSecurityQuestionId:global.securityQuestionId,
                            newSecurityAnswerSalt:global.securityAnswerSalt,
-                           newSecurityAnswerHash:hashString('newanswerhere',global.securityAnswerSalt)
+                           newSecurityAnswerHash:hashString(global.securityAnswer,global.securityAnswerSalt)
                            }
                     return fetch(url,{
                           method: 'PUT',
@@ -167,12 +168,32 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                           body: JSON.stringify(data),
                     })
                      .then((response) =>{
-                          if(response.status==200){console.log('good'); return true;}
+                          if(response.status==200){console.log('good');global.password=newPass; return true;}
                           else {console.log('Bad:'+response.status);return false;}
                      } )    // .then((response) => response.json())
                    //  .then((responseJson) => {console.log('resetPassword:'+responseJson);    return responseJson;})
                     .catch((error) => {console.error(error);console.log('Bad');return false;});
                }
+   async resetPasswordNew(newPass){
+           let service = new BackEndService(
+                 WEB_API_BASE_URL,
+                 'fr-CA',
+                 global.userToken,
+                 global.sac,
+                 'null',
+                 fetch
+             );
+           let result = await service.resetPassword(
+                 global.passwordSalt,
+                 hashString(newPass,global.passwordSalt),
+                 hashString(global.securityAnswer,global.securityAnswerSalt),
+                 global.securityQuestionId,
+                 global.securityAnswerSalt,
+                 hashString(global.securityAnswer,global.securityAnswerSalt)
+             );
+           if(service.isResultFailure(result)){console.log('bad');return false;}
+           else{global.password=newPass;console.log('good');return true;}
+      }
       async fetchGraphTypes(){
        let types=[];
               let url=global.webApiBaseUrl+'api/dashboard/graphs';

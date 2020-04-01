@@ -38,7 +38,7 @@ global.configurationReady=false;
 global.sac='';
 global.passwordSalt='1234';
 global.securityAnswerSalt='4321';
-global.securityAnswer="sdfgsfd";
+global.securityAnswer="aaaa";
 global.securityQuestionId=4,
 
 global.graphType0='WarnFW';

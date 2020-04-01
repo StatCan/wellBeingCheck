@@ -88,7 +88,7 @@ class Dashboard extends React.Component<Props, HomeState> {
   }
    async getConfigNew(){
       let service = new BackEndService(
-          'http://wellbeingcheck.canadacentral.cloudapp.azure.com/wellbeing-bienetre/api',
+          global.webApiBaseUrl+'api',
           'en-CA',
           null,
           null,
