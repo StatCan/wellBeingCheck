@@ -1,9 +1,9 @@
 {
-  "devToolsPort": 19003,
+  "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 16860,
-  "expoServerNgrokUrl": "https://jr-v6g.heikako.wellbeingcheck.exp.direct",
-  "packagerNgrokUrl": "https://packager.jr-v6g.heikako.wellbeingcheck.exp.direct",
-  "ngrokPid": 11296
+  "packagerPid": 888,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }
