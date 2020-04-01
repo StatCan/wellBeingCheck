@@ -41,7 +41,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     //  this.handleSurveyBdone();
       // this.setPasswordNew();
     //  this.resetPassword('Esm#12346789');
-       this.resetPasswordNew('Esm#12346789');
+    //   this.resetPasswordNew('Esm#12346789');
 
    }
 
