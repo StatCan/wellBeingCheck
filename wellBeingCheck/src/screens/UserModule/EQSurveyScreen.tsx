@@ -23,6 +23,9 @@ type ScreenState={
 }
 YellowBox.ignoreWarnings(['Require cycle:']);
 let count=0;//temporarily limit to get image just once, because eq will show exception page twice.
+
+const WEB_API_BASE_URL = 'http://wellbeingcheck.canadacentral.cloudapp.azure.com/wellbeing-bienetre/api';
+
 export default class EQSurveyScreen extends React.Component<Props, ScreenState> {
   constructor(Props) {
     super(Props)
@@ -33,9 +36,12 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     setTimeout(()=>{this.setState({webviewLoaded: true})}, 4000);
   }
    componentDidMount(){
-      //  this.handleSurveyAdone();
+     //   this.handleSurveyAdone();
+    //  this.fetchGraphTypesNew();
+      this.handleSurveyBdone();
       // this.setPasswordNew();
      // this.resetPassword();
+
    }
 
       async handleSurveyAdone(){
@@ -46,8 +52,8 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
               if(jwt==''){alert("Internal server error(token), Try again, if same thing would happen again contact StatCan");return;}
               global.jwToken=jwt;
               let result=false;
-              result=await this.setPassword(jwt);
-             // result=await this.setPasswordNew();
+            //  result=await this.setPassword(jwt);
+              result=await this.setPasswordNew();
               if(!result){alert("Internal server error(set password), Try again, if same thing would happen again contact StatCan");return;}
               console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
               //New flow:A and B will be done at first time, But Don't show image at this time
@@ -59,7 +65,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
             //  AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
          }
       async handleSurveyBdone(){
-               let isConnected=await checkConnection();
+               let isConnected=await checkConnection();console.log('In handle B');
                if(!isConnected){alert('You are offline, try it later');return;}
                let jwt=await fetchJwToken();  console.log('Token:'+jwt);
                if(jwt==''){alert("Internal server error(token), Try again, if same thing would happen again contact StatCan");return;}
@@ -73,6 +79,8 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
 
 
                let types=await this.fetchGraphTypes();
+             //  let types=await this.fetchGraphTypesNew();
+             //  let types=['overall','activity','people','location'];
                console.log('types:'+types);
                if(types!=null && types.length>0){
                   await this.fetchGraphs(types);
@@ -80,12 +88,12 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                count=1;AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
          }
       async fetchGraphs(types:string[]){
-            if(count>0)return;
+         //   if(count>0)return;
 
             let hh=deviceHeight-220;let hh1=deviceHeight-300;let ww=deviceWidth-80;
             let index=0;
             for(var i=0;i<types.length;i++){
-                let url=global.webApiBaseUrl+'api/dashboard/graph/'+types[i].type;
+                let url=global.webApiBaseUrl+'api/dashboard/graph/'+types[i];
               //  if(types[i].type=='overall')url+='?width='+deviceWidth+'&height='+hh;
               //  else url+='?width='+deviceWidth+'&height='+hh;
                 url+='?width='+deviceWidth+'&height='+hh;
@@ -94,29 +102,30 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
             }
             AsyncStorage.setItem('hasImage','1');console.log('Fetch images done');
          }
-     /* async setPasswordNew() {
+     //The new service call has problem
+      async setPasswordNew() {
             var service=new BackEndService(
-                WEB_API_BASE_URL,
+                global.webApiBaseUrl+'api/',
                                    'fr-CA',
-                                   'iphone5yu',
-                                   '6881265148395520',
+                                   global.userToken,
+                                   global.sac,
                                    'null',
                                    fetch
             );
                     var result= await service.setPassword(
-                             salt:  'salty',
-                             hashedPassword:'hashedPotatoeWithSalt',
-                             securityQuestionId: 1,
-                             securityAnswerSalt: 'sour',
-                             hashedSecurityAnswer: 'sourCream');
+                             global.passwordSalt,
+                             hashString(global.password,global.passwordSalt),
+                             global.securityQuestionId,
+                             global.securityAnswerSalt,
+                             hashString(global.securityAnswer,global.securityAnswerSalt));
              if(service.isResultFailure(result))return false;
              else return true;
 
-      }*/
+      }
 
       setPassword(jwt:string) {
                let url=global.webApiBaseUrl+'api/security/password';
-               let data={salt:global.passwordSalt,passwordHash:hashString(global.password,global.passwordSalt),securityQuestionId:'11',securityAnswerSalt:'4321',securityAnswerHash:'4444'}
+               let data={salt:global.passwordSalt,passwordHash:hashString(global.password,global.passwordSalt),securityQuestionId:global.securityQuestionId,securityAnswerSalt:global.securityAnswerSalt,securityAnswerHash:hashString(global.securityAnswer,global.securityAnswerSalt)}
                return fetch(url,{
                      method: 'POST',
                        headers: {
@@ -154,6 +163,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                     .catch((error) => {console.error(error);console.log('Bad');return false;});
                }
       async fetchGraphTypes(){
+       let types=[];
               let url=global.webApiBaseUrl+'api/dashboard/graphs';
               return fetch(url,{
                  method: 'GET',
@@ -163,13 +173,39 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                                      }
               })
                  .then((response) => response.json())
-                 .then((responseData) => {return responseData;})
-                 .catch(error => console.warn(error));
+                 .then((result) => {
+                        if(result!=null && result.length>0){
+                           result.forEach(function (graphLink) {
+                                           types.push(graphLink.type);
+                                         });
+                        }
+                       return types;})
+                 .catch(error =>{console.warn(error);return types;});
          }
+      async fetchGraphTypesNew(){
+           let types=[];
+           let backEndService = new BackEndService(
+                   global.webApiBaseUrl+'api/',
+                  'fr-CA',
+                   global.userToken,
+                   global.sac,
+                   hashString(global.password,global.passwordSalt),
+                  fetch
+              );
+              let result = await backEndService.retrieveGraphLinks();
+              if (!backEndService.isResultFailure(result)) {
+              //   global.jwToken=result.token; console.log(result.token);
+                 result.graphs.forEach(function (graphLink) {
+                   types.push(graphLink.type);
+                 });
+              }
+            return types
+      }
       async fetchImage(url:string,index:number,culture:string) {
           let isConnected=await checkConnection();
           if(!isConnected){alert('You are offline, try it later');return;}
           let token=global.jwToken;   console.log(url);     //await fetchJwToken();console.log(url);
+       //   console.log(token);
           fetch(url, {
                 method: 'GET',
                 headers: {'Authorization': 'Bearer ' + token,'Accept-language':culture },
@@ -214,7 +250,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
              uri=global.surveyAUrlFre;
          }
          console.log('Beofore eq:'+uri);
-     let userAgent=Platform.OS=='ios'?'Apple DeviceId/'+global.userToken:'Android DeviceId/'+global.userToken;console.log(userAgent);
+     let userAgent=Platform.OS=='ios'?'Apple DeviceId/'+global.userToken:'Android DeviceId/'+global.userToken;console.log('EQ userAgent'+userAgent);
     return (
           <View style={{ flex: 1, marginTop: 40}}>
                 <View style={{flexDirection:'row',justifyContent:'space-between'}}>
@@ -242,18 +278,20 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                               this.webView.stopLoading();
                             }
                             console.log('nav changed:'+navState.url);
-                            if(navState.url.indexOf('submiterror-erreursoumission')>0||navState.url==global.surveyThkUrlEng ||navState.url==global.surveyThkUrlFre){
+                            if(navState.url==global.surveyThkUrlEng ||navState.url==global.surveyThkUrlFre){
                                  let jsCode=' var sac ="1234566789";sac= document.querySelector("div.sc-box-main p span.ecf-bold").innerText; window.ReactNativeWebView.postMessage(sac);';
                                  this.setState({jsCode:jsCode});
                             }
                           }}
 
                           onMessage={event => {
-                                console.log('sa-code======='+event.nativeEvent.data);
-                                global.sac=event.nativeEvent.data;
-                                console.log('count in b:'+count);
+                                var ss=event.nativeEvent.data;
+                                global.sac=ss.substring(4);
+                                console.log('sa-code======='+global.sac);
+                                AsyncStorage.setItem('SacCode', global.sac);
+                                console.log('done A:'+global.doneSurveyA);
                                 if(global.doneSurveyA){
-                                    if(count>0){count=0;return;}
+                                  //  if(count>0){count=0;return;}
                                     console.log('redady to fetch image');
                                    // this.fetchImages();
                                     this.handleSurveyBdone();

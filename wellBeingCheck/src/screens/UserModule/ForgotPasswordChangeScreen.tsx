@@ -147,6 +147,7 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
         };
 
         AsyncStorage.setItem('user_account', JSON.stringify(userAccountObj), () => {
+          global.securityAnswer=secAnsw;global.password=passwordHashed;
           this.props.navigation.navigate('Dashboard');
         });
       }

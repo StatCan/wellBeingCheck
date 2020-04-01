@@ -168,6 +168,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     };
 
     AsyncStorage.setItem('user_account', JSON.stringify(userAccountObj), () => {
+      global.securityAnswer=this.state.securityAnswer;global.password=passwordHashed;global.securityQuestionId=4;
       this.props.navigation.navigate('Dashboard');
     });
   }
