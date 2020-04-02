@@ -31,6 +31,7 @@ type HomeState = {
   thankYouText: string,
 }
 YellowBox.ignoreWarnings(['Require cycle:'])
+const WEB_API_BASE_URL =global.webApiBaseUrl+'api';
 class Dashboard extends React.Component<Props, HomeState> {
 
   constructor(HomeState) {
@@ -168,15 +169,38 @@ class Dashboard extends React.Component<Props, HomeState> {
              let token=global.jwToken;
              fetch(url, {
                   method: 'POST',
-                  headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + jwt,},
+                  headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + jwt},
                   body: JSON.stringify(paraData),
-             }).then((response) => {
-
-                                                              return response.json();
-                                                            })
-             .then((myJson) => {console.log('This is '+myJson);})
+             })
+             .then((response) =>{
+                 if(response.status==200){console.log('paradata saved successfully');  return true;}
+                 else {console.log('paradata Bad:'+response.status);return false;}
+                 } )          // response.json())
              .catch((error)=>{console.log(error.message);});
       }
+  async saveParaDataNew(){
+     let isConnected=await checkConnection();
+     if(!isConnected){alert('You are offline, try it later');return false;}
+     let backEndService = new BackEndService(
+          WEB_API_BASE_URL,
+          'fr-CA',
+           global.userToken,
+           global.sac,
+          hashString(global.password,global.passwordSalt),
+          fetch
+     );
+     let result = await backEndService.submitParadata({
+         deviceId: 'iphone5yu',
+         questionnaireB:[
+        {time:'2020-03-25 10:03:19', notificationTime:'2020-03-25- 9:18:00'},
+        {time:'2020-03-25 15:23:29', notificationTime: null},
+        {time:'2020-03-26 7:33:39', notificationTime:'2020-03-25- 21:18:00'},
+           ]
+      });
+      if (backEndService.isResultFailure(result)){
+          console.log('paradata failed');return false;}
+          else{console.log('paradata saved successfully');  return true;}
+        }
   async sendRequest() {
     let token = await fetchJwToken(); console.log('send:' + token);
     let url = global.webApiBaseUrl + 'api/Values'; let cul = global.culture; console.log(cul);
@@ -305,6 +329,7 @@ class Dashboard extends React.Component<Props, HomeState> {
             </View>
 
               {/* <TouchableOpacity onPress={() => { if (global.hasImage) this.props.navigation.navigate('ResultScreen'); else alert(resources.getString("NoDataAlert")); }} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("result")}</Text></TouchableOpacity> */}
+<TouchableOpacity onPress={() =>this.saveParaDataNew()} style={styles.smallButton}><Text style={{fontSize:20}}>Paradata</Text></TouchableOpacity>
 
             </View>
           </View>

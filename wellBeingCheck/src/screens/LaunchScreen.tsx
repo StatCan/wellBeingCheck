@@ -11,8 +11,7 @@ import Constants from 'expo-constants';
 import { resources } from '../../GlobalResources';
 import LogoClear from '../components/LogoClear';
 import AppBanner from '../components/AppBanner';
-//import {generateNewDeviceId,isValidDeviceId} from '../api/device-id.service';
-import {generateNewDeviceId,isValidDeviceId} from '../utils/device-id.service';
+import {generateNewDeviceId,isValidDeviceId} from '../api/device-id.service';
 import {
   NavigationParams,
   NavigationScreenProp,
