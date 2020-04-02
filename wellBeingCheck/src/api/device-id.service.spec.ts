@@ -42,7 +42,7 @@ test('Flag invalid device id', () => {
 test('Generated device ids are unique', () => {
    let previousDeviceId = 'definitelyNotADeviceIdButWhoKnows';
 
-   for (let i = 0; i < 10; i++) {
+   for (let i = 0; i < 50; i++) {
       let newDeviceId = DeviceIdService.generateNewDeviceId();
       console.log(`deviceId[${i}] = ${newDeviceId}`);
       expect(DeviceIdService.isValidDeviceId(newDeviceId)).toBeTruthy();
