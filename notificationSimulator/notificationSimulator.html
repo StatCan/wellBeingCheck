@@ -134,7 +134,9 @@ function notificationAlgo() {
   var chosenProbability = [];
   var selectionProbabilitiesAwakeHour = new Array(awakeOneHourTimeIntervalsBefore.length);
   var selectionProbabilities24h = new Array(24);
+  var selectionProbabilitiesWeekend24h = new Array(24);
   var remainingProbabilties = 0;
+  var remainingProbabiltiesWeekends = 0;
 
   output += "Length of selection probabilities array is: " + selectionProbabilities24h.length + '<br/><br/>';
 
@@ -144,23 +146,39 @@ function notificationAlgo() {
   output += "Chosen One Hour Time Intervals (24h format):" + '<br/>';
   output += "---------------------------------------------------------" + '<br/><br/>'
 
-  // Assign hardcoded selection probabilties (out of 100)
+  // Assign hardcoded selection probabilties (out of 100) for weekdays
   var index = 0;
   primeTimeAwakeIntervals.forEach(element => {
 
     selectionProbabilities24h[element.awakeHourBefore] = element.weekDayPercentage;
     remainingProbabilties += element.weekDayPercentage;
+
     output += "Adding selection probability: " + selectionProbabilities24h[element.awakeHourBefore] + "%" + " at position (24h time): " + element.awakeHourBefore + '<br/>';
     
   });
 
-  output += "Output of selection probabilities array is: " + selectionProbabilities24h + '<br/><br/>';
+  // Assign hardcoded selection probabilties (out of 100) for weekends
+  var index = 0;
+  primeTimeAwakeIntervals.forEach(element => {
 
-  output += "Length of selection probabilities array is: " + selectionProbabilities24h.length + '<br/><br/>';
+    selectionProbabilitiesWeekend24h[element.awakeHourBefore] = element.weekendPercentage;
+    remainingProbabiltiesWeekends += element.weekendPercentage;
+
+    output += "Adding selection probability for weekends: " + selectionProbabilitiesWeekend24h[element.awakeHourBefore] + "%" + " at position (24h time): " + element.awakeHourBefore + '<br/>';
+    
+  });
+
+  output += "Output of selection probabilities array is: " + selectionProbabilitiesWeekend24h + '<br/><br/>';
+
+  output += "Length of selection probabilities array is: " + selectionProbabilitiesWeekend24h.length + '<br/><br/>';
 
   remainingProbabilties = 100 - remainingProbabilties;
 
   output += "Probabilities remaining to be allocated: " + remainingProbabilties + "%" + '<br/>';
+
+  remainingProbabiltiesWeekends = 100 - remainingProbabiltiesWeekends;
+
+  output += "Probabilities remaining to be allocated for weekends: " + remainingProbabiltiesWeekends + "%" + '<br/>';
 
   // Now only allocate to empty areas in union with the awake Interval
   for (i = 0; i < selectionProbabilities24h.length; i++ ){
@@ -180,7 +198,29 @@ function notificationAlgo() {
     sum += element;
   });
 
+  // Weekends ---
+
   output += "Validate:  The sum of the selection probability array is: " + sum + '%<br/>';
+
+    // Now only allocate to empty areas in union with the awake Interval
+    for (i = 0; i < selectionProbabilitiesWeekend24h.length; i++ ){
+    if (awakeOneHourTimeIntervalsBefore.includes(i)){
+      if (selectionProbabilitiesWeekend24h[i] == null){
+        // For now, limit awakeHour
+        selectionProbabilitiesWeekend24h[i] = remainingProbabiltiesWeekends/(selectionProbabilitiesAwakeHour.length - primeTimeAwakeIntervals.length);
+      }
+    }
+  }
+  // 0 to 21h
+  output += "The selection probability array is: " + selectionProbabilitiesWeekend24h + '<br/>';
+
+  // Validate
+  var sum = 0;
+  selectionProbabilitiesWeekend24h.forEach(element => {
+    sum += element;
+  });
+
+  output += "Validate:  The sum of the selection probability weekends array is: " + sum + '%<br/>';
 
   for (day = 0; day < 30; day++) {
 
@@ -194,20 +234,45 @@ function notificationAlgo() {
 
       var marginalSum = 0;
       var done = false;
-      
-      for (j = 0; j < selectionProbabilities24h.length; j++) {
-        // Keep adding to marginalSum until it exceeds chosenProbability[i] so then we know which hour to choose
-        if (selectionProbabilities24h[j] != null) {
-          marginalSum += selectionProbabilities24h[j];
-        }
-        if (marginalSum > chosenProbability[i] && !done) {
-          //output += "Marginal Sum is: " + marginalSum + '<br/>';
-          //output += "Chosen Probability is: " + chosenProbability[i] + '<br/>';
-          chosenHoursBefore[i] = j;
-          while (checkForDuplicates(chosenHoursBefore)){
-            chosenHoursBefore[i] = awakeOneHourTimeIntervalsBefore[Math.floor(Math.random() * awakeOneHourTimeIntervalsBefore.length)];
+
+      var currentDay = new Date();
+      var isWeekend = (day === 6) || (day === 0);   
+      if (isWeekend){
+        //Weekends
+        output += "Weekend!";
+        for (j = 0; j < selectionProbabilitiesWeekend24h.length; j++) {
+          // Keep adding to marginalSum until it exceeds chosenProbability[i] so then we know which hour to choose
+          if (selectionProbabilitiesWeekend24h[j] != null) {
+            marginalSum += selectionProbabilitiesWeekend24h[j];
           }
-          done = true;
+          if (marginalSum > chosenProbability[i] && !done) {
+            //output += "Marginal Sum is: " + marginalSum + '<br/>';
+            //output += "Chosen Probability is: " + chosenProbability[i] + '<br/>';
+            chosenHoursBefore[i] = j;
+            while (checkForDuplicates(chosenHoursBefore)){
+              chosenHoursBefore[i] = awakeOneHourTimeIntervalsBefore[Math.floor(Math.random() * awakeOneHourTimeIntervalsBefore.length)];
+            }
+            done = true;
+          }
+        }
+
+      } else {
+        // Weekday
+        output += "Weekday!";
+        for (j = 0; j < selectionProbabilities24h.length; j++) {
+          // Keep adding to marginalSum until it exceeds chosenProbability[i] so then we know which hour to choose
+          if (selectionProbabilities24h[j] != null) {
+            marginalSum += selectionProbabilities24h[j];
+          }
+          if (marginalSum > chosenProbability[i] && !done) {
+            //output += "Marginal Sum is: " + marginalSum + '<br/>';
+            //output += "Chosen Probability is: " + chosenProbability[i] + '<br/>';
+            chosenHoursBefore[i] = j;
+            while (checkForDuplicates(chosenHoursBefore)){
+              chosenHoursBefore[i] = awakeOneHourTimeIntervalsBefore[Math.floor(Math.random() * awakeOneHourTimeIntervalsBefore.length)];
+            }
+            done = true;
+          }
         }
       }
 
