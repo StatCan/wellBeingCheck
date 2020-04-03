@@ -139,7 +139,9 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5) {
   var chosenProbability = [];
   var selectionProbabilitiesAwakeHour = new Array(awakeOneHourTimeIntervalsBefore.length);
   var selectionProbabilities24h = new Array(24);
+  var selectionProbabilitiesWeekend24h = new Array(24);
   var remainingProbabilties = 0;
+  var remainingProbabiltiesWeekends = 0;
 
   if (global.debugMode) console.log("Length of selection probabilities array is: " + selectionProbabilities24h.length);
 
@@ -147,20 +149,33 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5) {
   if (global.debugMode) console.log("-----------------------------------------------");
 
   // Assign hardcoded selection probabilties (out of 100)
-  var index = 0;
   primeTimeAwakeIntervals.forEach(element => {
     selectionProbabilities24h[element.awakeHourBefore] = element.weekDayPercentage;
     remainingProbabilties += element.weekDayPercentage;
     if (global.debugMode) console.log("Adding selection probability: " + selectionProbabilities24h[element.awakeHourBefore] + "%" + " at position (24h time): " + element.awakeHourBefore);
   });
 
+  // Assign hardcoded selection probabilties (out of 100) for weekends
+  primeTimeAwakeIntervals.forEach(element => {
+
+    selectionProbabilitiesWeekend24h[element.awakeHourBefore] = element.weekendPercentage;
+    remainingProbabiltiesWeekends += element.weekendPercentage;
+
+    if (global.debugMode) console.log("Adding selection probability for weekends: " + selectionProbabilitiesWeekend24h[element.awakeHourBefore] + "%" + " at position (24h time): " + element.awakeHourBefore);
+    
+  });
 
   if (global.debugMode) console.log("Output of selection probabilities array is: " + selectionProbabilities24h);
 
   if (global.debugMode) console.log("Length of selection probabilities array is: " + selectionProbabilities24h.length);
+
   remainingProbabilties = 100 - remainingProbabilties;
 
   if (global.debugMode) console.log("Probabilities remaining to be allocated: " + remainingProbabilties + "%");
+
+  remainingProbabiltiesWeekends = 100 - remainingProbabiltiesWeekends;
+
+  if (global.debugMode) console.log("Probabilities remaining to be allocated for weekends: " + remainingProbabiltiesWeekends + "%");
 
   // Now only allocate to empty areas in union with the awake Interval
   for (i = 0; i < selectionProbabilities24h.length; i++ ){
@@ -181,10 +196,51 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5) {
   });
 
   if (global.debugMode) console.log("Validate:  The sum of the selection probability array is: " + sum);
+
+  // Weekends
+
+  // Now only allocate to empty areas in union with the awake Interval
+  for (i = 0; i < selectionProbabilitiesWeekend24h.length; i++ ){
+    if (awakeOneHourTimeIntervalsBefore.includes(i)){
+      if (selectionProbabilitiesWeekend24h[i] == null){
+        // For now, limit awakeHour
+        selectionProbabilitiesWeekend24h[i] = remainingProbabiltiesWeekends/(selectionProbabilitiesAwakeHour.length - primeTimeAwakeIntervals.length);
+      }
+    }
+  }
+  // 0 to 21h
+  if (global.debugMode) console.log("The selection probability array is: " + selectionProbabilitiesWeekend24h);
+
+  // Validate
+  sum = 0;
+  selectionProbabilitiesWeekend24h.forEach(element => {
+    sum += element;
+  });
+
+  if (global.debugMode) console.log("Validate:  The sum of the selection probability weekends array is: " + sum);
+
   // Schedule for the next 30 days
   // For testing purposes, day set to a few days
 
+  var currentDate;
+
   for (day = 0; day < 2; day++) {
+
+    // Reset the date
+    currentDate = new Date();
+    // Add the offset
+    var offSetDate = new Date(currentDate.setTime(currentDate.getTime() + day * 86400000));
+    if (global.debugMode) console.log("Current Offset Date is: " + offSetDate);
+    var currentDay = offSetDate.getDay();
+    if (global.debugMode) console.log("Current Day is: " + currentDay);
+    var isWeekend = (currentDay === 6) || (currentDay === 0);   
+
+    if (isWeekend){
+      if (global.debugMode) console.log("It's a Weekend");
+    } else {
+      if (global.debugMode) console.log("It's a Weekday");
+    }
+
     // For each ping, choose a number between 0-100 which would then fall in the array
     for (i = 0; i < numPings; i++ ){
       chosenProbability[i] = Math.floor(Math.random() * 100);
@@ -195,18 +251,39 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5) {
 
       var marginalSum = 0;
       var done = false;
-      
-      for (j = 0; j < selectionProbabilities24h.length; j++) {
-        // Keep adding to marginalSum until it exceeds chosenProbability[i] so then we know which hour to choose
-        if (selectionProbabilities24h[j] != null) {
-          marginalSum += selectionProbabilities24h[j];
-        }
-        if (marginalSum > chosenProbability[i] && !done) {
-          chosenHoursBefore[i] = j;
-          while (checkForDuplicates(chosenHoursBefore)){
-            chosenHoursBefore[i] = awakeOneHourTimeIntervalsBefore[Math.floor(Math.random() * awakeOneHourTimeIntervalsBefore.length)];
+
+      if (isWeekend){
+        // Weekends
+        for (j = 0; j < selectionProbabilitiesWeekend24h.length; j++) {
+          // Keep adding to marginalSum until it exceeds chosenProbability[i] so then we know which hour to choose
+          if (selectionProbabilitiesWeekend24h[j] != null) {
+            marginalSum += selectionProbabilitiesWeekend24h[j];
           }
-          done = true;
+          if (marginalSum > chosenProbability[i] && !done) {
+            //output += "Marginal Sum is: " + marginalSum + '<br/>';
+            //output += "Chosen Probability is: " + chosenProbability[i] + '<br/>';
+            chosenHoursBefore[i] = j;
+            while (checkForDuplicates(chosenHoursBefore)){
+              chosenHoursBefore[i] = awakeOneHourTimeIntervalsBefore[Math.floor(Math.random() * awakeOneHourTimeIntervalsBefore.length)];
+            }
+            done = true;
+          }
+        }
+
+      } else {
+        // Weekdays
+        for (j = 0; j < selectionProbabilities24h.length; j++) {
+          // Keep adding to marginalSum until it exceeds chosenProbability[i] so then we know which hour to choose
+          if (selectionProbabilities24h[j] != null) {
+            marginalSum += selectionProbabilities24h[j];
+          }
+          if (marginalSum > chosenProbability[i] && !done) {
+            chosenHoursBefore[i] = j;
+            while (checkForDuplicates(chosenHoursBefore)){
+              chosenHoursBefore[i] = awakeOneHourTimeIntervalsBefore[Math.floor(Math.random() * awakeOneHourTimeIntervalsBefore.length)];
+            }
+            done = true;
+          }
         }
       }
     }

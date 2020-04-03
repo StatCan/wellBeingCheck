@@ -147,7 +147,6 @@ function notificationAlgo() {
   output += "---------------------------------------------------------" + '<br/><br/>'
 
   // Assign hardcoded selection probabilties (out of 100) for weekdays
-  var index = 0;
   primeTimeAwakeIntervals.forEach(element => {
 
     selectionProbabilities24h[element.awakeHourBefore] = element.weekDayPercentage;
@@ -158,7 +157,6 @@ function notificationAlgo() {
   });
 
   // Assign hardcoded selection probabilties (out of 100) for weekends
-  var index = 0;
   primeTimeAwakeIntervals.forEach(element => {
 
     selectionProbabilitiesWeekend24h[element.awakeHourBefore] = element.weekendPercentage;
@@ -198,12 +196,12 @@ function notificationAlgo() {
     sum += element;
   });
 
-  // Weekends ---
-
   output += "Validate:  The sum of the selection probability array is: " + sum + '%<br/>';
 
-    // Now only allocate to empty areas in union with the awake Interval
-    for (i = 0; i < selectionProbabilitiesWeekend24h.length; i++ ){
+  // Weekends
+
+  // Now only allocate to empty areas in union with the awake Interval
+  for (i = 0; i < selectionProbabilitiesWeekend24h.length; i++ ){
     if (awakeOneHourTimeIntervalsBefore.includes(i)){
       if (selectionProbabilitiesWeekend24h[i] == null){
         // For now, limit awakeHour
@@ -215,14 +213,31 @@ function notificationAlgo() {
   output += "The selection probability array is: " + selectionProbabilitiesWeekend24h + '<br/>';
 
   // Validate
-  var sum = 0;
+  sum = 0;
   selectionProbabilitiesWeekend24h.forEach(element => {
     sum += element;
   });
 
   output += "Validate:  The sum of the selection probability weekends array is: " + sum + '%<br/>';
   
+  var currentDate;
+
   for (day = 0; day < 30; day++) {
+
+    // Reset the date
+    currentDate = new Date();
+    // Add the offset
+    var offSetDate = new Date(currentDate.setTime(currentDate.getTime() + day * 86400000));
+    output += "Current Offset Date is: " + offSetDate + "<br/>";
+    var currentDay = offSetDate.getDay();
+    output += "Current Day is: " + currentDay + "<br/>";
+    var isWeekend = (currentDay === 6) || (currentDay === 0);   
+
+    if (isWeekend){
+      output += "It's a Weekend<br/>";
+    } else {
+      output += "It's a Weekday<br/>";
+    }
 
     // For each ping, choose a number between 0-100 which would then fall in the array
     for (i = 0; i < numPings; i++ ){
@@ -235,14 +250,8 @@ function notificationAlgo() {
       var marginalSum = 0;
       var done = false;
 
-      var currentDate = new Date();
-      currentDate = new Date(currentDate.setTime(currentDate.getTime() + day * 86400000));
-      var currentDay = currentDate.getDay();
-      output += "Current Day is: " + currentDay + "<br/>";
-      var isWeekend = (currentDay === 6) || (currentDay === 0);   
       if (isWeekend){
         //Weekends
-        output += "Weekend!";
         for (j = 0; j < selectionProbabilitiesWeekend24h.length; j++) {
           // Keep adding to marginalSum until it exceeds chosenProbability[i] so then we know which hour to choose
           if (selectionProbabilitiesWeekend24h[j] != null) {
@@ -261,7 +270,6 @@ function notificationAlgo() {
 
       } else {
         // Weekday
-        output += "Weekday!";
         for (j = 0; j < selectionProbabilities24h.length; j++) {
           // Keep adding to marginalSum until it exceeds chosenProbability[i] so then we know which hour to choose
           if (selectionProbabilities24h[j] != null) {
