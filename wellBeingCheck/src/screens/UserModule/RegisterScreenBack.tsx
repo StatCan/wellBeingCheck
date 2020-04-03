@@ -32,6 +32,7 @@ type RegisterState = {
   passwordConfirm: string,
   passwordConfirmError: string,
   securityQuestion: string,
+  securityQuestionId: string,
   securityQuestionError: string,
   securityAnswer: string,
   securityAnswerError: string,
@@ -55,6 +56,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
       passwordConfirm: "",
       passwordConfirmError: "",
       securityQuestion: "",
+      securityQuestionId: "",
       securityQuestionError: "",
       securityAnswer: "",
       securityAnswerError: "",
@@ -155,6 +157,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
       password: passwordHashed,
       security_question: this.state.securityQuestion,
       security_answer: this.state.securityAnswer,
+      security_question_id: this.state.securityQuestionId,
     };
 
     AsyncStorage.setItem('user_account', JSON.stringify(userAccountObj), () => {
@@ -203,23 +206,23 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
   }
 
   _handleSecQuesSelectMother = () => {
-    this.setState({ securityQuestion: 'reg.ques.mother' });
+    this.setState({ securityQuestion: 'reg.ques.mother', securityQuestionId: "1" });
     this._hideSecretQuestionModal()
   };
   _handleSecQuesSelectSchool = () => {
-    this.setState({ securityQuestion: 'reg.ques.school' });
+    this.setState({ securityQuestion: 'reg.ques.school', securityQuestionId: "2" });
     this._hideSecretQuestionModal()
   };
   _handleSecQuesSelectSport = () => {
-    this.setState({ securityQuestion: 'reg.ques.sport' });
+    this.setState({ securityQuestion: 'reg.ques.sport', securityQuestionId: "3" });
     this._hideSecretQuestionModal()
   };
   _handleSecQuesSelectCar = () => {
-    this.setState({ securityQuestion: 'reg.ques.car' });
+    this.setState({ securityQuestion: 'reg.ques.car', securityQuestionId: "4" });
     this._hideSecretQuestionModal()
   };
   _handleSecQuesSelectJob = () => {
-    this.setState({ securityQuestion: 'reg.ques.job' });
+    this.setState({ securityQuestion: 'reg.ques.job', securityQuestionId: "5" });
     this._hideSecretQuestionModal()
   };
 
