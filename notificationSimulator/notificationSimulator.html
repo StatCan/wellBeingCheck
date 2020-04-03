@@ -221,7 +221,7 @@ function notificationAlgo() {
   });
 
   output += "Validate:  The sum of the selection probability weekends array is: " + sum + '%<br/>';
-
+  
   for (day = 0; day < 30; day++) {
 
     // For each ping, choose a number between 0-100 which would then fall in the array
@@ -235,8 +235,11 @@ function notificationAlgo() {
       var marginalSum = 0;
       var done = false;
 
-      var currentDay = new Date();
-      var isWeekend = (day === 6) || (day === 0);   
+      var currentDate = new Date();
+      currentDate = new Date(currentDate.setTime(currentDate.getTime() + day * 86400000));
+      var currentDay = currentDate.getDay();
+      output += "Current Day is: " + currentDay + "<br/>";
+      var isWeekend = (currentDay === 6) || (currentDay === 0);   
       if (isWeekend){
         //Weekends
         output += "Weekend!";
@@ -275,21 +278,6 @@ function notificationAlgo() {
           }
         }
       }
-
-      /*
-      var index = 0;
-      while (marginalSum < chosenProbability[i]){
-        marginalSum += 0.5;
-        if (selectionProbabilities24h[index] < marginalSum) index++;
-      }
-
-      output += "Marginal Sum is: " + marginalSum + '<br/>';
-      output += "Chosen Probability is: " + chosenProbability[i] + '<br/>';
-      */
-      // Now marginalSum should have a value that is 
-
-
-      
     }
 
     var outputDay = day + 1;
