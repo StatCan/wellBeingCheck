@@ -76,7 +76,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
       async handleSurveyBdone(){
                let isConnected=await checkConnection();console.log('In handle B');
                if(!isConnected){alert('You are offline, try it later');return;}
-               let jwt=await fetchJwToken(); 
+               let jwt=await fetchJwToken();
                if(jwt==''){alert("Internal server error(token), Try again, if same thing would happen again contact StatCan");return;}
                global.jwToken=jwt;
 
@@ -314,14 +314,15 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                             }
                             console.log('nav changed:'+navState.url);
                             if(navState.url==global.surveyThkUrlEng ||navState.url==global.surveyThkUrlFre){
-                                 let jsCode1=' var sac ="1234566789";sac= document.querySelector("div.sc-box-main p span.ecf-bold").innerText; window.ReactNativeWebView.postMessage(sac);';
+                                 let jsCode1='var sac ="1234566789";sac= document.querySelector("div.sc-box-main p span.ecf-bold").innerText;window.ReactNativeWebView.postMessage(sac);';
                                  console.log('Survey done.......................................................');
-
-                                  if(global.doneSurveyA){console.log('THank you B........................');
+                                 if(global.doneSurveyA){console.log('THank you B........................');
                                         this.handleSurveyBdone(); count=1;  global.showThankYou=2; this.props.navigation.navigate('Dashboard');
                                   }
                                   else {
-                                     this.setState({jsCode:jsCode1});
+                                     console.log('Thank you AAAA.....');
+                                    // this.setState({jsCode:jsCode3});
+                                     this.webView.injectJavaScript(jsCode1);
                                   }
                             }
                           }}
