@@ -32,6 +32,7 @@ type RegisterState = {
   passwordConfirm: string,
   passwordConfirmError: string,
   securityQuestion: string,
+  securityQuestionId: string,
   securityQuestionError: string,
   securityAnswer: string,
   securityAnswerError: string,
@@ -60,6 +61,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
       passwordConfirm: "",
       passwordConfirmError: "",
       securityQuestion: "",
+      securityQuestionId: "",
       securityQuestionError: "",
       securityAnswer: "",
       securityAnswerError: "",
@@ -165,6 +167,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
       password: passwordHashed,
       security_question: this.state.securityQuestion,
       security_answer: this.state.securityAnswer,
+      security_question_id: this.state.securityQuestionId,
     };
 
     AsyncStorage.setItem('user_account', JSON.stringify(userAccountObj), () => {
@@ -214,23 +217,23 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
   }
 
   _handleSecQuesSelectMother = () => {
-    this.setState({ securityQuestion: 'reg.ques.mother' });
+    this.setState({ securityQuestion: 'reg.ques.mother', securityQuestionId: "1" });
     this._hideSecretQuestionModal()
   };
   _handleSecQuesSelectSchool = () => {
-    this.setState({ securityQuestion: 'reg.ques.school' });
+    this.setState({ securityQuestion: 'reg.ques.school', securityQuestionId: "2" });
     this._hideSecretQuestionModal()
   };
   _handleSecQuesSelectSport = () => {
-    this.setState({ securityQuestion: 'reg.ques.sport' });
+    this.setState({ securityQuestion: 'reg.ques.sport', securityQuestionId: "3" });
     this._hideSecretQuestionModal()
   };
   _handleSecQuesSelectCar = () => {
-    this.setState({ securityQuestion: 'reg.ques.car' });
+    this.setState({ securityQuestion: 'reg.ques.car', securityQuestionId: "4" });
     this._hideSecretQuestionModal()
   };
   _handleSecQuesSelectJob = () => {
-    this.setState({ securityQuestion: 'reg.ques.job' });
+    this.setState({ securityQuestion: 'reg.ques.job', securityQuestionId: "5" });
     this._hideSecretQuestionModal()
   };
 
@@ -258,8 +261,8 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     this.setState({ pasVal_length: text.length >= 8 ? true : false });
     this.setState({ passVal_Upper: (!/[A-Z]/.test(text)) ? false : true });
     this.setState({ passVal_Special: (!/[@!#$%^&*(),.?:{}|<>]/.test(text)) ? false : true });
-    this.setState({ passVal_Lower:  (!/[a-z]/.test(text)) ? false :true });
-    this.setState({ passVal_Number:  (!/[0-9]/.test(text)) ? false :true });
+    this.setState({ passVal_Lower: (!/[a-z]/.test(text)) ? false : true });
+    this.setState({ passVal_Number: (!/[0-9]/.test(text)) ? false : true });
   }
 
   render() {
@@ -373,36 +376,36 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                         onPress={this._handleSecQuesSelectMother}
                       >
                         <View style={styles.secretQuestion}>
-                          <Text style={[styles.pr_text,{color:'black'}]}>{resources.getString("reg.ques.mother")}</Text>
+                          <Text style={[styles.pr_text, { color: 'black' }]}>{resources.getString("reg.ques.mother")}</Text>
                         </View>
                       </TouchableOpacity>
                       <TouchableOpacity
                         onPress={this._handleSecQuesSelectSchool}
                       >
-                       <View style={styles.secretQuestion}>
-                            <Text style={[styles.pr_text,{color:'black'}]}>{resources.getString("reg.ques.school")}</Text>
-                       </View>
+                        <View style={styles.secretQuestion}>
+                          <Text style={[styles.pr_text, { color: 'black' }]}>{resources.getString("reg.ques.school")}</Text>
+                        </View>
                       </TouchableOpacity>
                       <TouchableOpacity
                         onPress={this._handleSecQuesSelectCar}
                       >
-                      <View style={styles.secretQuestion}>
-                          <Text style={[styles.pr_text,{color:'black'}]}>{resources.getString("reg.ques.car")}</Text>
-                      </View>
+                        <View style={styles.secretQuestion}>
+                          <Text style={[styles.pr_text, { color: 'black' }]}>{resources.getString("reg.ques.car")}</Text>
+                        </View>
                       </TouchableOpacity>
                       <TouchableOpacity
                         onPress={this._handleSecQuesSelectSport}
                       >
-                      <View style={styles.secretQuestion}>
-                          <Text style={[styles.pr_text,{color:'black'}]}>{resources.getString("reg.ques.sport")}</Text>
-                      </View>
+                        <View style={styles.secretQuestion}>
+                          <Text style={[styles.pr_text, { color: 'black' }]}>{resources.getString("reg.ques.sport")}</Text>
+                        </View>
                       </TouchableOpacity>
                       <TouchableOpacity
                         onPress={this._handleSecQuesSelectJob}
                       >
-                      <View style={styles.secretQuestion}>
-                          <Text style={[styles.pr_text,{color:'black'}]}>{resources.getString("reg.ques.job")}</Text>
-                      </View>
+                        <View style={styles.secretQuestion}>
+                          <Text style={[styles.pr_text, { color: 'black' }]}>{resources.getString("reg.ques.job")}</Text>
+                        </View>
                       </TouchableOpacity>
                     </Dialog.Content>
                   </Dialog>
@@ -610,8 +613,8 @@ const styles = StyleSheet.create({
   whiteText: {
     color: newTheme.colors.whiteText
   },
-  secretQuestion:{
-     flexDirection:'row',flexWrap: 'wrap',paddingRight:2,paddingLeft:2,
+  secretQuestion: {
+    flexDirection: 'row', flexWrap: 'wrap', paddingRight: 2, paddingLeft: 2,
   }
 });
 
