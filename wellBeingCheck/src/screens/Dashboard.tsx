@@ -329,7 +329,6 @@ class Dashboard extends React.Component<Props, HomeState> {
             </View>
 
               {/* <TouchableOpacity onPress={() => { if (global.hasImage) this.props.navigation.navigate('ResultScreen'); else alert(resources.getString("NoDataAlert")); }} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("result")}</Text></TouchableOpacity> */}
-<TouchableOpacity onPress={() =>this.saveParaDataNew()} style={styles.smallButton}><Text style={{fontSize:20}}>Paradata</Text></TouchableOpacity>
 
             </View>
           </View>
@@ -495,5 +494,5 @@ export default memo(Dashboard);
 //               style={styles.smallButton}><Text style={{fontSize:20}}>Test</Text></TouchableOpacity>
 
 
-// <TouchableOpacity onPress={() => this.sendRequest()} style={styles.smallButton}><Text style={styles.smallButtonText}>Test</Text></TouchableOpacity>
-//  <TouchableOpacity onPress={() =>this.saveParaData()} style={styles.smallButton}><Text style={{fontSize:20}}>Test</Text></TouchableOpacity>
+
+//<TouchableOpacity onPress={() =>this.saveParaDataNew()} style={styles.smallButton}><Text style={{fontSize:20}}>Paradata</Text></TouchableOpacity>

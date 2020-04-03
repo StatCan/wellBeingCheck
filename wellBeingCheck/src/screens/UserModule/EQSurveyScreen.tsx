@@ -25,15 +25,14 @@ YellowBox.ignoreWarnings(['Require cycle:']);
 let count=0;//temporarily limit to get image just once, because eq will show exception page twice.
 
 const WEB_API_BASE_URL =global.webApiBaseUrl+'api';
-
+let jsCode='';
 export default class EQSurveyScreen extends React.Component<Props, ScreenState> {
   constructor(Props) {
     super(Props)
-/*    let disCode= 'const meta = document.createElement("meta"); meta.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"); meta.setAttribute("name", "viewport"); document.getElementsByTagName("head")[0].appendChild(meta);';
+    let disCode= 'const meta = document.createElement("meta"); meta.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"); meta.setAttribute("name", "viewport"); document.getElementsByTagName("head")[0].appendChild(meta);';
     let clearCookie='document.cookie.split(";").forEach(function(c) {document.cookie = c.trim().split("=")[0] + "=;" + "expires=Thu, 01 Jan 1970 00:00:00 UTC;";});';
-    let jsCode=clearCookie+'document.addEventListener("message", function (message) { document.getElementById("langtest").click(); });var btn = document.createElement("button");btn.style.visibility ="hidden";btn.onclick = switchlang;btn.setAttribute("id", "langtest");document.body.appendChild(btn);    function switchlang() { var a = document.querySelector("a.sc-js-langchange");var href = a.href;if (href.indexOf("/q/fr")>0) {var res = href.replace("/q/fr", "/q/en");a.setAttribute("href", res);a.click();} else if (href.indexOf("/q/en")>0) {var res = href.replace("/q/en", "/q/fr");a.setAttribute("href", res);a.click();} }';
-    this.state=({Sacode:'',jsCode:disCode+jsCode,webviewLoaded: false});*/
-    this.resetWebView();
+    jsCode=clearCookie+'document.addEventListener("message", function (message) { document.getElementById("langtest").click(); });var btn = document.createElement("button");btn.style.visibility ="hidden";btn.onclick = switchlang;btn.setAttribute("id", "langtest");document.body.appendChild(btn);    function switchlang() { var a = document.querySelector("a.sc-js-langchange");var href = a.href;if (href.indexOf("/q/fr")>0) {var res = href.replace("/q/fr", "/q/en");a.setAttribute("href", res);a.click();} else if (href.indexOf("/q/en")>0) {var res = href.replace("/q/en", "/q/fr");a.setAttribute("href", res);a.click();} }';
+    this.state=({Sacode:'',jsCode:disCode+jsCode,webviewLoaded: false});
     setTimeout(()=>{this.setState({webviewLoaded: true})}, 4000);
   }
    componentDidMount(){
@@ -45,12 +44,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     //   this.resetPasswordNew('Esm#12346789');
 
    }
-       resetWebView(){
-        let disCode= 'const meta = document.createElement("meta"); meta.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"); meta.setAttribute("name", "viewport"); document.getElementsByTagName("head")[0].appendChild(meta);';
-           let clearCookie='document.cookie.split(";").forEach(function(c) {document.cookie = c.trim().split("=")[0] + "=;" + "expires=Thu, 01 Jan 1970 00:00:00 UTC;";});';
-           let jsCode=clearCookie+'document.addEventListener("message", function (message) { document.getElementById("langtest").click(); });var btn = document.createElement("button");btn.style.visibility ="hidden";btn.onclick = switchlang;btn.setAttribute("id", "langtest");document.body.appendChild(btn);    function switchlang() { var a = document.querySelector("a.sc-js-langchange");var href = a.href;if (href.indexOf("/q/fr")>0) {var res = href.replace("/q/fr", "/q/en");a.setAttribute("href", res);a.click();} else if (href.indexOf("/q/en")>0) {var res = href.replace("/q/en", "/q/fr");a.setAttribute("href", res);a.click();} }';
-           this.state=({Sacode:'',jsCode:disCode+jsCode,webviewLoaded: false});
-   }
+
       async handleSurveyAdone(){
               let isConnected=await checkConnection();
               if(!isConnected){alert('You are offline, try it later');return;}
@@ -82,7 +76,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
       async handleSurveyBdone(){
                let isConnected=await checkConnection();console.log('In handle B');
                if(!isConnected){alert('You are offline, try it later');return;}
-               let jwt=await fetchJwToken();  console.log('Token:'+jwt);
+               let jwt=await fetchJwToken(); 
                if(jwt==''){alert("Internal server error(token), Try again, if same thing would happen again contact StatCan");return;}
                global.jwToken=jwt;
 
@@ -94,6 +88,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                   await this.fetchGraphs(types);
                }
                count=1;AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
+               this.props.navigation.navigate('Dashboard');
          }
       async handleSurveyBdoneNew(){
             let isConnected=await checkConnection();console.log('In handle B');
@@ -319,8 +314,15 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                             }
                             console.log('nav changed:'+navState.url);
                             if(navState.url==global.surveyThkUrlEng ||navState.url==global.surveyThkUrlFre){
-                                 let jsCode=' var sac ="1234566789";sac= document.querySelector("div.sc-box-main p span.ecf-bold").innerText; window.ReactNativeWebView.postMessage(sac);';
-                                 this.setState({jsCode:jsCode});
+                                 let jsCode1=' var sac ="1234566789";sac= document.querySelector("div.sc-box-main p span.ecf-bold").innerText; window.ReactNativeWebView.postMessage(sac);';
+                                 console.log('Survey done.......................................................');
+
+                                  if(global.doneSurveyA){console.log('THank you B........................');
+                                        this.handleSurveyBdone(); count=1;  global.showThankYou=2; this.props.navigation.navigate('Dashboard');
+                                  }
+                                  else {
+                                     this.setState({jsCode:jsCode1});
+                                  }
                             }
                           }}
 
@@ -331,10 +333,9 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                                 AsyncStorage.setItem('SacCode', global.sac);
                                 console.log('done A:'+global.doneSurveyA);
                                 if(global.doneSurveyA){
-                                  //  if(count>0){count=0;return;}
                                     console.log('redady to fetch image');
-                                   // this.fetchImages();
-                                    this.handleSurveyBdone();
+                                    this.setState({jsCode:jsCode});
+                                 //   this.handleSurveyBdone();
                                     count=1;  global.showThankYou=2;
                                 }
                                 else {
@@ -344,7 +345,6 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                                     this.handleSurveyAdone();
                                     count=1;global.showThankYou=2;
                                     }
-                                 this.resetWebView();
                                 this.props.navigation.navigate('Dashboard');
                              }}
 
