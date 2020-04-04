@@ -82,7 +82,7 @@ class Dashboard extends React.Component<Props, HomeState> {
     let txt = '';
     if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2) txt = txt = resources.getString('ThankYouB');
     this.setState({ showThankYou: !global.showThankYou == 0, thankYouText: txt });
-    setTimeout(() => { global.showThankYou = 0; this.setState({ showThankYou: false }) }, 4000);
+    setTimeout(() => { global.showThankYou = 0; this.setState({ showThankYou: false }) }, 6000);
   }
   handleBackButton() {
     return true;
@@ -225,11 +225,11 @@ class Dashboard extends React.Component<Props, HomeState> {
       .catch(err => { console.log(err) })
   }
   async conductSurvey() {
-   let isConnected = await checkConnection();
+       let isConnected = await checkConnection();
        if (!isConnected) { alert('You are offline, try it later'); return; }
        let n=await this.getConfig();
      //  let n=await getConfigNew();
-       if(n)this.props.navigation.navigate('EQSurveyScreen');
+       if(n){global.fetchAction=true;this.props.navigation.navigate('EQSurveyScreen');}
        else {alert('Access denied(Config), Try it later, if same thing would happen again contact StatCan');return;}
 
   }

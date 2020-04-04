@@ -87,7 +87,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                if(types!=null && types.length>0){
                   await this.fetchGraphs(types);
                }
-               count=1;AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
+               count=1;AsyncStorage.setItem('hasImage','1');global.hasImage=true;
                this.props.navigation.navigate('Dashboard');
          }
       async handleSurveyBdoneNew(){
@@ -98,7 +98,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
              if(types!=null && types.length>0){
                   await this.fetchGraphs(types);
              }
-             count=1;AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
+             count=1;AsyncStorage.setItem('hasImage','1');global.hasImage=true;
       }
       async fetchGraphs(types:string[]){
          //   if(count>0)return;
@@ -314,15 +314,23 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                             }
                             console.log('nav changed:'+navState.url);
                             if(navState.url==global.surveyThkUrlEng ||navState.url==global.surveyThkUrlFre){
+                                 console.log('THank you count:'+count);
                                  let jsCode1='var sac ="1234566789";sac= document.querySelector("div.sc-box-main p span.ecf-bold").innerText;window.ReactNativeWebView.postMessage(sac);';
                                  console.log('Survey done.......................................................');
                                  if(global.doneSurveyA){console.log('THank you B........................');
-                                        this.handleSurveyBdone(); count=1;  global.showThankYou=2; this.props.navigation.navigate('Dashboard');
+                                        if(global.fetchAction){global.fetchAction=false;this.handleSurveyBdone();
+                                           global.showThankYou=2; this.props.navigation.navigate('Dashboard');
+                                        }
+                                         count=1;
                                   }
                                   else {
                                      console.log('Thank you AAAA.....');
                                     // this.setState({jsCode:jsCode3});
-                                     this.webView.injectJavaScript(jsCode1);
+                                    if(global.fetchAction){
+                                        global.fetchAction=false;
+                                        this.webView.injectJavaScript(jsCode1);
+                                    }
+
                                   }
                             }
                           }}
