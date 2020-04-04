@@ -13,6 +13,7 @@ import LogoClearSmall from '../../components/LogoClearSmall';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import {checkConnection,hashString} from '../../utils/fetchJwToken';
 import md5 from "react-native-md5";
+import {BackEndService} from '../../api/back-end.service';
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -165,6 +166,8 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
       }
     });
   }
+
+  //resetPassword  tested well
  async resetPassword(newPass) {
     let isConnected=await checkConnection();
     if(!isConnected){alert('You are offline, try it later');return false;}
@@ -199,6 +202,7 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
                    //  .then((responseJson) => {console.log('resetPassword:'+responseJson);    return responseJson;})
     .catch((error) => {console.error(error);console.log('Bad');return false;});
  }
+  //resetPasswordNew test failed  check later
  async resetPasswordNew(newPass){
             let service = new BackEndService(
                   WEB_API_BASE_URL,

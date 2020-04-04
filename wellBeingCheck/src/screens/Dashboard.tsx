@@ -147,6 +147,7 @@ class Dashboard extends React.Component<Props, HomeState> {
     if (global.debugMode) console.log("The language set is: " + resources.culture);
     this.setState({ refresh: '1' });
   }
+  //saveParaData tested well
   async saveParaData(){
              let isConnected=await checkConnection();
              if(!isConnected){alert('You are offline, try it later');return;}
@@ -178,6 +179,7 @@ class Dashboard extends React.Component<Props, HomeState> {
                  } )          // response.json())
              .catch((error)=>{console.log(error.message);});
       }
+      //saveParadataNew test failed  check later
   async saveParaDataNew(){
      let isConnected=await checkConnection();
      if(!isConnected){alert('You are offline, try it later');return false;}
@@ -198,8 +200,8 @@ class Dashboard extends React.Component<Props, HomeState> {
            ]
       });
       if (backEndService.isResultFailure(result)){
-          console.log('paradata failed');return false;}
-          else{console.log('paradata saved successfully');  return true;}
+          console.log('paradatanew failed');return false;}
+          else{console.log('paradatanew saved successfully');  return true;}
         }
   async sendRequest() {
     let token = await fetchJwToken(); console.log('send:' + token);
@@ -307,7 +309,6 @@ class Dashboard extends React.Component<Props, HomeState> {
                   <Text style={styles.smallButtonText}>{resources.getString("contact_us")}</Text>
               </View>
             </View>
-
 
             {/*  <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')}
             style={styles.smallButton}><Feather name="phone" size={40} color="white" />
