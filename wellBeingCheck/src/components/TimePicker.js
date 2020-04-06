@@ -35,6 +35,7 @@ const TimePicker = (props) => {
             mode="time"
             isDarkModeEnabled={isDarkModeEnabled}
             isVisible={props.isVisible}
+            is24Hour={true}
             onConfirm={handleConfirm}
             onCancel={hideTimePicker}
         />

@@ -82,6 +82,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   }
 
   wakeTimeHandler(time) {
+    time = time.substring(0, 5);
     this.setState({
       waketime: time
     })
@@ -96,6 +97,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   }
 
   sleepTimeHandler(time) {
+    time = time.substring(0, 5);
     this.setState({
       sleeptime: time
     })
