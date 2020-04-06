@@ -19,8 +19,8 @@ export function fetchJwToken1() {
 export function checkConnection() {
      return new Promise(resolve => {
                NetInfo.fetch().then(state => {
-                     console.log('Connection type', state.type);
-                     console.log('Is connected?', state.isConnected);
+                   //  console.log('Connection type', state.type);
+                     //console.log('Is connected?', state.isConnected);
                    //  alert('Connection type:'+ state.type+'->Is connected?'+state.isConnected);
                    resolve(state.isConnected);
                    });
@@ -33,7 +33,7 @@ export function hashString(str,salt) {
 
 export function checkConnection1() {
      return new Promise(resolve => {
-               let url=global.webApiBaseUrl+'CheckConnection';console.log(url);
+               let url=global.webApiBaseUrl+'CheckConnection';  console.log(url);
                fetch(url,{method: 'GET'})
                .then((response)=>{
                    if(response.status==200){
@@ -49,9 +49,9 @@ export function checkConnection1() {
       });
 }
 export function fetchJwToken() {
-      let url=global.webApiBaseUrl+'api/security/token';
-  //    let data={deviceId:global.userToken,password:hashString(global.password,global.passwordSalt)}
-     let data={deviceId:'iphone5yu',sac:'6881265148395520',password:'patateHacheAvecSel'}
+      let url=global.webApiBaseUrl+'api/security/token';console.log(global.sac);
+      let data={deviceId:global.userToken,sac:global.sac,password:hashString(global.password,global.passwordSalt)}
+  //   let data={deviceId:'iphone5yu',sac:'6881265148395520',password:'patateHacheAvecSel'}
       return fetch(url,{
           method: 'POST',
           headers: {'Content-Type': 'application/json',},
