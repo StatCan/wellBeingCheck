@@ -109,10 +109,11 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
 
   bootstrapA = async () => {
           console.log('Prepare confiuration');
-          var deviceId=generateNewDeviceId();console.log('new deviceId:'+deviceId);   //24 digits >20, use this one later after confirm thew 24 length
-          var valid=isValidDeviceId(deviceId);console.log('is valid:'+valid);
+
           let userToken = await AsyncStorage.getItem('EsmUserToken');
           if (userToken == null ||userToken==''){
+             var deviceId=generateNewDeviceId();console.log('new deviceId:'+deviceId);   //24 digits >20, use this one later after confirm thew 24 length
+             var valid=isValidDeviceId(deviceId);console.log('is valid:'+valid);
              // userToken=this.generateShortGuid(20);
               userToken= deviceId;
               AsyncStorage.setItem('EsmUserToken',userToken);
