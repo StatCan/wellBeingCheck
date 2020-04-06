@@ -36,13 +36,6 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     setTimeout(()=>{this.setState({webviewLoaded: true})}, 4000);
   }
    componentDidMount(){
-     //   this.handleSurveyAdone();
-    //  this.fetchGraphTypesNew();
-    //  this.handleSurveyBdone();
-      // this.setPasswordNew();
-    //  this.resetPassword('Esm#12346789');
-    //   this.resetPasswordNew('Esm#12346789');
-
    }
 
       async handleSurveyAdone(){
@@ -238,7 +231,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
       async fetchImage(url:string,index:number,culture:string) {
           let isConnected=await checkConnection();
           if(!isConnected){alert('You are offline, try it later');return;}
-          let token=global.jwToken;   console.log(url);     //await fetchJwToken();console.log(url);
+          let token=global.jwToken;  // console.log(url);     //await fetchJwToken();console.log(url);
        //   console.log(token);
           fetch(url, {
                 method: 'GET',
