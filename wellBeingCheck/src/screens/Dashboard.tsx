@@ -4,7 +4,7 @@ import Background from '../components/Background';
 import { View, Text, TextInput, Image, StyleSheet, ImageBackground, Dimensions, TouchableOpacity, BackHandler, AsyncStorage ,Alert, YellowBox} from 'react-native';
 import { EvilIcons, Feather, FontAwesome } from '@expo/vector-icons';
 import LogoClearSmall from '../components/LogoClearSmall';
-import { fetchJwToken, checkConnection } from '../utils/fetchJwToken';
+import {checkConnection,hashString,fetchJwToken} from '../utils/fetchJwToken';
 import { resources } from '../../GlobalResources';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import { Provider as PaperProvider, Portal, Dialog, Paragraph, Button } from 'react-native-paper';
@@ -31,12 +31,13 @@ type HomeState = {
   thankYouText: string,
 }
 YellowBox.ignoreWarnings(['Require cycle:'])
+const WEB_API_BASE_URL =global.webApiBaseUrl+'api';
 class Dashboard extends React.Component<Props, HomeState> {
 
   constructor(HomeState) {
     super(HomeState);
     let txt = '';
-    if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2) txt = txt = resources.getString('ThankYouB');
+    if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2) txt = resources.getString('ThankYouB');
     this.state = {
       refresh: '1',
       firstTimeLoginModal: false,
@@ -81,14 +82,14 @@ class Dashboard extends React.Component<Props, HomeState> {
     let txt = '';
     if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2) txt = txt = resources.getString('ThankYouB');
     this.setState({ showThankYou: !global.showThankYou == 0, thankYouText: txt });
-    setTimeout(() => { global.showThankYou = 0; this.setState({ showThankYou: false }) }, 4000);
+    setTimeout(() => { global.showThankYou = 0; this.setState({ showThankYou: false }) }, 6000);
   }
   handleBackButton() {
     return true;
   }
-   async getConfig(){
+   async getConfigNew(){
       let service = new BackEndService(
-          'http://wellbeingcheck.canadacentral.cloudapp.azure.com/wellbeing-bienetre/api',
+          global.webApiBaseUrl+'api',
           'en-CA',
           null,
           null,
@@ -113,9 +114,7 @@ class Dashboard extends React.Component<Props, HomeState> {
       global.surveyExceptionUrlFre=links.exceptionPage.frUrl;
       global.configurationReady=true; console.log('Configuration is ready');  return true;
    }
-   async getConfigOld(){
-         var links=await new BackEndService().getLinks();console.log('Links:'+links.questionnaireA.enUrl);
-         if(links.hasOwnProperty('exception')) console.log('good');else console.log('bad');
+   async getConfig(){
          return new Promise(resolve => {
               let url = global.webApiBaseUrl+'api/config/links';console.log(url);
               fetch(url)
@@ -148,6 +147,7 @@ class Dashboard extends React.Component<Props, HomeState> {
     if (global.debugMode) console.log("The language set is: " + resources.culture);
     this.setState({ refresh: '1' });
   }
+  //saveParaData tested well
   async saveParaData(){
              let isConnected=await checkConnection();
              if(!isConnected){alert('You are offline, try it later');return;}
@@ -170,15 +170,39 @@ class Dashboard extends React.Component<Props, HomeState> {
              let token=global.jwToken;
              fetch(url, {
                   method: 'POST',
-                  headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + jwt,},
+                  headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + jwt},
                   body: JSON.stringify(paraData),
-             }).then((response) => {
-
-                                                              return response.json();
-                                                            })
-             .then((myJson) => {console.log('This is '+myJson);})
+             })
+             .then((response) =>{
+                 if(response.status==200){console.log('paradata saved successfully');  return true;}
+                 else {console.log('paradata Bad:'+response.status);return false;}
+                 } )          // response.json())
              .catch((error)=>{console.log(error.message);});
       }
+      //saveParadataNew test failed  check later
+  async saveParaDataNew(){
+     let isConnected=await checkConnection();
+     if(!isConnected){alert('You are offline, try it later');return false;}
+     let backEndService = new BackEndService(
+          WEB_API_BASE_URL,
+          'fr-CA',
+           global.userToken,
+           global.sac,
+          hashString(global.password,global.passwordSalt),
+          fetch
+     );
+     let result = await backEndService.submitParadata({
+         deviceId: 'iphone5yu',
+         questionnaireB:[
+        {time:'2020-03-25 10:03:19', notificationTime:'2020-03-25- 9:18:00'},
+        {time:'2020-03-25 15:23:29', notificationTime: null},
+        {time:'2020-03-26 7:33:39', notificationTime:'2020-03-25- 21:18:00'},
+           ]
+      });
+      if (backEndService.isResultFailure(result)){
+          console.log('paradatanew failed');return false;}
+          else{console.log('paradatanew saved successfully');  return true;}
+        }
   async sendRequest() {
     let token = await fetchJwToken(); console.log('send:' + token);
     let url = global.webApiBaseUrl + 'api/Values'; let cul = global.culture; console.log(cul);
@@ -203,10 +227,11 @@ class Dashboard extends React.Component<Props, HomeState> {
       .catch(err => { console.log(err) })
   }
   async conductSurvey() {
-   let isConnected = await checkConnection();
+       let isConnected = await checkConnection();
        if (!isConnected) { alert('You are offline, try it later'); return; }
        let n=await this.getConfig();
-       if(n)this.props.navigation.navigate('EQSurveyScreen');
+     //  let n=await getConfigNew();
+       if(n){global.fetchAction=true;this.props.navigation.navigate('EQSurveyScreen');}
        else {alert('Access denied(Config), Try it later, if same thing would happen again contact StatCan');return;}
 
   }
@@ -285,7 +310,6 @@ class Dashboard extends React.Component<Props, HomeState> {
               </View>
             </View>
 
-
             {/*  <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')}
             style={styles.smallButton}><Feather name="phone" size={40} color="white" />
             <Text style={styles.smallButtonText}>{resources.getString("contact_us")}</Text></TouchableOpacity>
@@ -310,7 +334,6 @@ class Dashboard extends React.Component<Props, HomeState> {
             </View>
           </View>
           <NavigationEvents onDidFocus={() => this.checkThankYou()} />
-
           <View>
             <Portal>
               <Dialog
@@ -472,4 +495,5 @@ export default memo(Dashboard);
 //               style={styles.smallButton}><Text style={{fontSize:20}}>Test</Text></TouchableOpacity>
 
 
-// <TouchableOpacity onPress={() => this.sendRequest()} style={styles.smallButton}><Text style={styles.smallButtonText}>Test</Text></TouchableOpacity>
+
+//<TouchableOpacity onPress={() =>this.saveParaDataNew()} style={styles.smallButton}><Text style={{fontSize:20}}>Paradata</Text></TouchableOpacity>
