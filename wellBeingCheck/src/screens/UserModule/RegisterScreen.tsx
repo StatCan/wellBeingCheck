@@ -533,7 +533,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     right: 0,
     bottom: 20,
-    color: 'green',
+    color: '#66cc99',
   },
   passwordHelpBtnText: {
     fontSize: 25,
