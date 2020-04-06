@@ -110,14 +110,11 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
 
   bootstrapA = async () => {
           console.log('Prepare confiuration');
-  //          var deviceId=generateNewDeviceId();
-    //        var valid=isValidDeviceId(deviceId);console.log('is valid:'+valid);
           let userToken = await AsyncStorage.getItem('EsmUserToken');
           let sac = await AsyncStorage.getItem('SacCode');
           if (userToken == null ||userToken==''){
               var deviceId=generateNewDeviceId();
               var valid=isValidDeviceId(deviceId);console.log('is valid:'+valid);
-             // userToken=this.generateShortGuid(20);
               userToken= deviceId;
               AsyncStorage.setItem('EsmUserToken',userToken);
           }
@@ -128,24 +125,6 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           let hasImage = await AsyncStorage.getItem('hasImage');if(hasImage!=null)global.hasImage=hasImage;
           this._bootstrap();
         };
-  generateGuid() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-    });
-  }
-  generateShortGuid(len) {
-    var buf = [],
-      chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
-      charlen = chars.length,
-      length = len || 32;
-
-    for (var i = 0; i < length; i++) {
-      buf[i] = chars.charAt(Math.floor(Math.random() * charlen));
-    }
-
-    return buf.join('');
-  }
   render() {
     return (
       <PaperProvider theme={newTheme}>

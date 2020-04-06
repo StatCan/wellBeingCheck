@@ -99,9 +99,10 @@ export default class App extends React.Component<Props,ScreenState> {
       let xd=index*width1;
       this.setState({current:index});
       if(index==0){this.setState({title:resources.getString("Your feelings")});}
-      else if(index==1){this.setState({title:resources.getString("How you are feeling by location")});}
-      else if(index==2){this.setState({title:resources.getString("How you are feeling with others")});}
-      else if(index==3){this.setState({title:resources.getString("How you are feeling by activity")});}
+      else if(index==1){this.setState({title:resources.getString("How you are feeling by activity")});}
+      else if(index==2){this.setState({title:resources.getString("How you are feeling by location")});}
+      else if(index==3){this.setState({title:resources.getString("How you are feeling with others")});}
+
       InteractionManager.runAfterInteractions(()=>this.sv.scrollTo({x:xd}))
       }
    _onLayout(event) {
