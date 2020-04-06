@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { StyleSheet, StatusBar, View,Image,YellowBox} from 'react-native';
 import { AsyncStorage } from 'react-native';
+import NetInfo from '@react-native-community/netinfo';
 import Background from '../components/Background';
 import * as Localization from 'expo-localization';
 import { newTheme } from '../core/theme';
@@ -109,16 +110,19 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
 
   bootstrapA = async () => {
           console.log('Prepare confiuration');
-
+  //          var deviceId=generateNewDeviceId();
+    //        var valid=isValidDeviceId(deviceId);console.log('is valid:'+valid);
           let userToken = await AsyncStorage.getItem('EsmUserToken');
+          let sac = await AsyncStorage.getItem('SacCode');
           if (userToken == null ||userToken==''){
-             var deviceId=generateNewDeviceId();console.log('new deviceId:'+deviceId);   //24 digits >20, use this one later after confirm thew 24 length
-             var valid=isValidDeviceId(deviceId);console.log('is valid:'+valid);
+              var deviceId=generateNewDeviceId();
+              var valid=isValidDeviceId(deviceId);console.log('is valid:'+valid);
              // userToken=this.generateShortGuid(20);
               userToken= deviceId;
               AsyncStorage.setItem('EsmUserToken',userToken);
-          }      //userToken= Constants.deviceId;   //   global.userToken=this.generateShortGuid(24);
-          global.userToken=userToken;
+          }
+          else global.sac=sac;
+          global.userToken=userToken;console.log('DeviceId:'+global.userToken);console.log('Sac:'+global.sac);
           let doneSurveyA = await AsyncStorage.getItem('doneSurveyA');global.doneSurveyA=doneSurveyA;
           console.log('SurveyA:'+global.doneSurveyA);
           let hasImage = await AsyncStorage.getItem('hasImage');if(hasImage!=null)global.hasImage=hasImage;

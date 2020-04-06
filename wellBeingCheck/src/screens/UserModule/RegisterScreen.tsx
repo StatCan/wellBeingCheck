@@ -171,6 +171,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     };
 
     AsyncStorage.setItem('user_account', JSON.stringify(userAccountObj), () => {
+      global.securityAnswer=this.state.securityAnswer;global.password=passwordHashed;global.securityQuestionId=4;
       this.props.navigation.navigate('Dashboard');
     });
   }
@@ -422,31 +423,31 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                       <View style={styles.pr_view}>
                         <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_length")}</Text>
                         <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check" color={this.state.pasVal_length ? '#66cc99': '#656262'} />
+                          <EvilIcons size={25} name="check"  />
                         </TouchableOpacity>
                       </View>
                       <View style={styles.pr_view}>
                         <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_upper")}</Text>
                         <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check" color={this.state.passVal_Upper ? '#66cc99' : '#656262'} />
+                          <EvilIcons size={25} name="check"  />
                         </TouchableOpacity>
                       </View>
                       <View style={styles.pr_view}>
                         <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_special")}</Text>
                         <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check" color={this.state.passVal_Special ? '#66cc99' : '#656262'} />
+                          <EvilIcons size={25}  name="check"/>
                         </TouchableOpacity>
                       </View>
                       <View style={styles.pr_view}>
                         <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_lower")}</Text>
                         <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check" color={this.state.passVal_Lower ? '#66cc99' : '#656262'} />
+                          <EvilIcons size={25} name="check"  />
                         </TouchableOpacity>
                       </View>
                       <View style={styles.pr_view}>
                         <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_number")}</Text>
                         <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check" color={this.state.passVal_Number ? '#66cc99' : '#656262'} />
+                          <EvilIcons size={25} name="check"  />
                         </TouchableOpacity>
                       </View>
                     </Dialog.Content>
@@ -473,7 +474,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     );
   }
 }
-
+//color={this.state.passVal_Number ? "green" : ""}   //temparily remove it, it has problem
 const styles = StyleSheet.create({
   passwordInput: {
     width: 190,

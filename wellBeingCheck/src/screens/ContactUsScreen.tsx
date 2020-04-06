@@ -43,6 +43,10 @@ class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
                  <Text style={styles.content_title}>{resources.getString("contactus_website")}</Text>
                  <TouchableOpacity onPress={()=>Linking.openURL('https://www.statcan.gc.ca')}><Text>www.statcan.gc.ca</Text></TouchableOpacity>
             </View>
+             <View style={styles.content}>
+                   <Text style={styles.content_title}>{resources.getString("contactus_website")}</Text>
+                   <TouchableOpacity onPress={()=>Linking.openURL('https://www.statcan.gc.ca')}><Text>www.statcan.gc.ca</Text></TouchableOpacity>
+             </View>
             <View style={styles.content}>
               <Text style={styles.content_title}>{resources.getString("contactus_mail")}</Text>
               <Text>
@@ -96,3 +100,4 @@ const styles = StyleSheet.create({
 });
 
 export default memo(ContactUsScreen);
+
