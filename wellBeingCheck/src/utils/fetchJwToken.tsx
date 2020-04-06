@@ -1,81 +1,6 @@
 import NetInfo from '@react-native-community/netinfo';
-export function fetchJwToken2() {
-   console.log('global.jwt:'+global.jwToken);
-   var now=new Date();
-   var diffTime = Math.abs(now -global.tokenDoB)/1000/60;console.log('DiffTime:'+diffTime);
-   if(global.jwToken!='' && diffTime<15)return global.jwToken;
-       if(global.userToken!='' && global.password!=''){
-            let url=global.webApiBaseUrl+'Token/'+global.userToken+'/'+global.password;console.log(url);
-            return fetch(url,{method: 'POST'})
-               .then((response) =>{
-                response.json()
-                } )
-               .then((responseJson) => { global.jwToken=responseJson;global.tokenDoB=new Date(); console.log('globalToken:'+global.jwToken)})
-               .catch((error) => { console.error(error); });
-       }else {
-          alert("Not registered");
-       }
-   }
 
 export function fetchJwToken1() {
-   console.log('global.jwt:'+global.jwToken);
-   var now=new Date();
-   var diffTime = Math.abs(now -global.tokenDoB)/1000/60;console.log('DiffTime:'+diffTime);console.log(global.jwToken);
-   if(global.jwToken!='' && diffTime<15)return global.jwToken;
-       if(global.userToken!='' && global.password!=''){
-           let url=global.webApiBaseUrl+'Token/'+global.userToken+'/'+global.password;
-                 return fetch(url)
-                   .then(
-                     function(response) {
-                       if (response.status !== 200) {
-                         console.log('Looks like there was a problem. Status Code: ' +
-                           response.status);
-                         return;
-                       }
-
-                       // Examine the text in the response
-                       response.json().then(function(data) {
-                         global.jwToken=data;global.tokenDoB=new Date();
-                         console.log('the token:'+data);
-                         return data;
-                       });
-                     }
-                   )
-                   .catch(function(err) {
-                     console.log('Fetch Error :-S', err);
-                   });
-   }
-   }
-
-export function  fetchJwToken3(){
-     return new Promise(resolve => {
-          let now=new Date();let token='';
-             var diffTime = Math.abs(now -global.tokenDoB)/1000/60;console.log('DiffTime:'+diffTime);console.log(global.jwToken);
-             if(global.jwToken!='' && diffTime<15)token=global.jwToken;
-             else{
-                 if(global.userToken!='' && global.password!=''){
-                           let url=global.webApiBaseUrl+'Token/'+global.userToken+'/'+global.password;
-                           console.log(url,{method: 'POST'});
-                           fetch(url)
-                              .then(
-                                  function(response) {
-                                       if (response.status === 200) {
-                                         response.json().then(function(data) {
-                                                                                 global.jwToken=data;global.tokenDoB=new Date();
-                                                                                 console.log('the token:'+data);
-                                                                                 token=data;
-                                       })
-                                        }
-                                   })
-                              .catch(function(err) {console.log('Fetch Error :-S', err);});
-                   }
-                   }
-          resolve(token);
-          }
-          )
- }
-
-export function fetchJwToken() {
   let token='123456';
   return new Promise(resolve => {
        var now=new Date(); var diffTime = Math.abs(now -global.tokenDoB)/1000/60;
@@ -102,6 +27,9 @@ export function checkConnection() {
       });
 }
 
+export function hashString(str,salt) {
+               return str.split("").reverse().join("")+salt;
+           }
 
 export function checkConnection1() {
      return new Promise(resolve => {
@@ -120,3 +48,20 @@ export function checkConnection1() {
                .catch((error) => { console.error('Bad: '+error);resolve(false) });
       });
 }
+export function fetchJwToken() {
+      let url=global.webApiBaseUrl+'api/security/token';
+  //    let data={deviceId:global.userToken,password:hashString(global.password,global.passwordSalt)}
+     let data={deviceId:'iphone5yu',sac:'6881265148395520',password:'patateHacheAvecSel'}
+      return fetch(url,{
+          method: 'POST',
+          headers: {'Content-Type': 'application/json',},
+          body: JSON.stringify(data),})
+        .then((response) => response.json())
+        .then((responseData) => {return responseData;})
+        .catch(error => console.warn(error));
+    }
+
+export function parseJwt (token) {
+       var jwtDecode = require('jwt-decode');
+      return jwtDecode(token);
+    };
