@@ -98,17 +98,43 @@ var scheduledDateArray = new Array();
 
 export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5) {
 
+  if (global.debugMode) console.log("Awake Hour received without rounding/substring is: " + awakeHour);
+  if (global.debugMode) console.log("Sleep Hour received without rounding/substring is: " + sleepHour);
+
+  // Pick up the minutes and parse
+  var awakeHourMinutes = parseInt(awakeHour.substring(3, 5));
+  var sleepHourMinutes = parseInt(sleepHour.substring(3, 5));
+
+  // Pick up the hours and parse
   awakeHour = parseInt(awakeHour.substring(0, 2));
   sleepHour = parseInt(sleepHour.substring(0, 2));
 
-  if (global.debugMode) console.log("Awake Hour is: " + awakeHour);
-  if (global.debugMode) console.log("Sleep Hour is: " + sleepHour);
+  console.log(awakeHourMinutes);
+  console.log(sleepHourMinutes);
+
+  if (awakeHourMinutes => 30){
+    if (global.debugMode) console.log("Rounding up awake hour");
+    awakeHour = awakeHour + 1;
+  }
+
+  if (sleepHourMinutes => 30){
+    if (global.debugMode) console.log("Rounding down sleep hour");
+    sleepHour = sleepHour - 1;
+  }
+
+  // Adjust awakeHour as we don't want to receive notifications right at awake time
+  // Same for sleepHour, adjust so we don't receive notifications right at bed time
+  awakeHour = awakeHour + 1;
+  sleepHour = sleepHour - 1;
+
+  if (global.debugMode) console.log("Awake Hour now is: " + awakeHour);
+  if (global.debugMode) console.log("Sleep Hour now is: " + sleepHour);
 
   // Clear existing notifications
-  Notifications.cancelAllScheduledNotificationsAsync()
+  Notifications.cancelAllScheduledNotificationsAsync();
 
   // Based on defaults awakeInterval is 16
-  awakeInterval = sleepHour - awakeHour;
+  var awakeInterval = sleepHour - awakeHour;
 
   if (numPings > 5 || numPings < 2) {
     if (global.debugMode) console.log("numPings has an invalid value");
@@ -126,8 +152,8 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5) {
   var awakeOneHourTimeIntervalsAfter = [];
 
   for (i = 0; i <= awakeInterval; i++) {
-    awakeOneHourTimeIntervalsBefore[i] = awakeHour + (i - 1);
-    awakeOneHourTimeIntervalsAfter[i] = awakeHour + i;
+    awakeOneHourTimeIntervalsBefore[i] = awakeHour + (i);
+    awakeOneHourTimeIntervalsAfter[i] = awakeHour + (i + 1);
   }
 
   // For testing purposes print to console

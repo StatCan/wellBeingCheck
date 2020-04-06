@@ -96,6 +96,9 @@ function notificationAlgo() {
   output += "The sleep hour is: " + sleepHour + '<br/>';
   output += "The num pings are: " + numPings + '<br/><br/>';
 
+  // Adjust awakeHour and sleepHour
+  awakeHour = awakeHour + 1;
+  sleepHour = sleepHour - 1;
 
   if (numPings > 5 || numPings < 2) {
     output += "Invalid value for numPings";
