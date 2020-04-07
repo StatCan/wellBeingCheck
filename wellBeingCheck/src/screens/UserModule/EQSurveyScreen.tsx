@@ -56,7 +56,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                  await this.fetchGraphs(types);
               }*/
               count=1;
-            //  AsyncStorage.setItem('hasImage','1');console.log('Fetch images Down');global.hasImage=true;
+              AsyncStorage.setItem('hasImage',false);global.hasImage=false;console.log('hasImage after survey A done.........'+global.hasImage);
          }
       async handleSurveyAdoneNew(){
             let isConnected=await checkConnection();
