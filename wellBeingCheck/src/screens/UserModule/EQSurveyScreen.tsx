@@ -310,18 +310,19 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                                  console.log('THank you count:'+count);
                                  let jsCode1='var sac ="1234566789";sac= document.querySelector("div.sc-box-main p span.ecf-bold").innerText;window.ReactNativeWebView.postMessage(sac);';
                                  console.log('Survey done.......................................................');
-                                 if(global.doneSurveyA){console.log('THank you B........................');
-                                        if(global.fetchAction){global.fetchAction=false;this.handleSurveyBdone();
+                                 if(global.doneSurveyA){console.log('THank you B........................'+global.fetchActionB);
+                                        if(global.fetchActionB){global.fetchActionB=false;this.handleSurveyBdone();
                                            global.showThankYou=2; this.props.navigation.navigate('Dashboard');
-                                        }
+                                        }else{global.fetchActionB=true;}
                                          count=1;
                                   }
                                   else {
-                                     console.log('Thank you AAAA.....');
+                                     console.log('Thank you AAAA.....'+global.fetchActionA);
                                     // this.setState({jsCode:jsCode3});
-                                    if(global.fetchAction){
-                                        global.fetchAction=false;
-                                        this.webView.injectJavaScript(jsCode1);
+                                    if(global.fetchActionA){
+                                        global.fetchActionA=false;
+                                        if(Platform.OS=='ios'){console.log('aaaaaaaaaaaaaaaaa');this.setState({jsCode:jsCode1});}
+                                        else {this.webView.injectJavaScript(jsCode1);}
                                     }
 
                                   }
