@@ -6,7 +6,7 @@ global.timeStamp=0;
 global.surveyACode='';
 
 global.doneSurveyA=false;
-global.debugMode=false;
+global.debugMode=true;
 
 global.jwToken='';
 global.userToken='';
@@ -42,4 +42,5 @@ global.graphType6='BulletinFW';
 global.graphType7='';
 global.configurationReady=false;
 global.currentView=0;
-global.fetchAction=true;
+global.fetchActionA=true;
+global.fetchActionB=true;
