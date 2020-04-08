@@ -67,6 +67,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
         currentPassword = userAccountResultObj.password;
         global.password = currentPassword;
       }
+      console.log('password.....................:'+global.password);
       AsyncStorage.getItem('user_getting_started', (err, userGettingStartedResult) => {
         console.log(userGettingStartedResult);
         let userGettingStartedResultObj = JSON.parse(userGettingStartedResult)

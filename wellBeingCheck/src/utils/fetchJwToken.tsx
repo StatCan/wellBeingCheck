@@ -65,3 +65,16 @@ export function parseJwt (token) {
        var jwtDecode = require('jwt-decode');
       return jwtDecode(token);
     };
+export function saveParaData(jwt,paraData){
+             let url=global.webApiBaseUrl+'api/paradata';console.log(url);
+             fetch(url, {
+                  method: 'POST',
+                  headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + jwt},
+                  body: JSON.stringify(paraData),
+             })
+             .then((response) =>{
+                 if(response.status==200){console.log('paradata saved successfully');  return true;}
+                 else {console.log('paradata Bad:'+response.status);return false;}
+                 } )          // response.json())
+             .catch((error)=>{console.log(error.message);return false;});
+      }
