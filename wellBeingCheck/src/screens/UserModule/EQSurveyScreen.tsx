@@ -52,7 +52,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
               if(!result){alert("Internal server error(set password), Try again, if same thing would happen again contact StatCan");return;}
               console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
               count=1;
-              AsyncStorage.setItem('hasImage',false);global.hasImage=false;console.log('hasImage after survey A done.........'+global.hasImage);
+              AsyncStorage.setItem('hasImage',0);global.hasImage=0;console.log('hasImage after survey A done.........'+global.hasImage);
              // await this.saveDefaultParadata(jwt);
          }
       async handleSurveyAdoneNew(){
@@ -77,7 +77,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                if(types!=null && types.length>0){
                   await this.fetchGraphs(types);
                }
-               count=1;AsyncStorage.setItem('hasImage',true);global.hasImage=true;
+               count=1;AsyncStorage.setItem('hasImage',1);global.hasImage=1;
                this.props.navigation.navigate('Dashboard');
          }
       async handleSurveyBdoneNew(){
@@ -317,9 +317,6 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                           renderLoading={() => {return this.displaySpinner();}}
                           onLoadEnd={this.onLoadEnd()}
                           onNavigationStateChange={(navState) => {
-                            if (navState.url =='') { // You must validate url to enter or navigate
-                              this.webView.stopLoading();
-                            }
                             console.log('nav changed:'+navState.url);
                             if(navState.url==global.surveyThkUrlEng ||navState.url==global.surveyThkUrlFre){
                                  console.log('THank you count:'+count);
