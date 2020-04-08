@@ -321,7 +321,7 @@ class Dashboard extends React.Component<Props, HomeState> {
              <View>
               <View>
                 <TouchableOpacity onPress={() => {console.log('Has image ??????????????????????????'+global.hasImage);
-                            if (global.hasImage) this.props.navigation.navigate('ResultScreen');
+                            if (global.hasImage==1) this.props.navigation.navigate('ResultScreen');
                             else Alert.alert('',resources.getString("NoDataAlert")); }
                          }
                                   style={styles.smallButton}>
