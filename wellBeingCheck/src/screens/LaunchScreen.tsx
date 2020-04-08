@@ -67,6 +67,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
         currentPassword = userAccountResultObj.password;
         global.password = currentPassword;
       }
+      console.log('password.....................:'+global.password);
       AsyncStorage.getItem('user_getting_started', (err, userGettingStartedResult) => {
         console.log(userGettingStartedResult);
         let userGettingStartedResultObj = JSON.parse(userGettingStartedResult)
@@ -121,6 +122,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           let doneSurveyA = await AsyncStorage.getItem('doneSurveyA');global.doneSurveyA=doneSurveyA;
           console.log('SurveyA:'+global.doneSurveyA);
           let hasImage = await AsyncStorage.getItem('hasImage');if(hasImage!=null)global.hasImage=hasImage;
+          console.log('Has image on startup.............:'+global.hasImage);
           this._bootstrap();
         };
   render() {
