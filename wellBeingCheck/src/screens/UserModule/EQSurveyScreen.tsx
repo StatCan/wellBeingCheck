@@ -77,7 +77,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                if(types!=null && types.length>0){
                   await this.fetchGraphs(types);
                }
-               count=1;AsyncStorage.setItem('hasImage','1');global.hasImage=true;
+               count=1;AsyncStorage.setItem('hasImage',true);global.hasImage=true;
                this.props.navigation.navigate('Dashboard');
          }
       async handleSurveyBdoneNew(){
