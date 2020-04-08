@@ -231,6 +231,8 @@ class Dashboard extends React.Component<Props, HomeState> {
        if (!isConnected) { alert('You are offline, try it later'); return; }
        let n=await this.getConfig();
      //  let n=await getConfigNew();
+
+       console.log('deviceId:'+global.userToken+'    password:'+global.password);
        if(n){global.fetchAction=true;this.props.navigation.navigate('EQSurveyScreen');}
        else {alert('Access denied(Config), Try it later, if same thing would happen again contact StatCan');return;}
 
@@ -318,8 +320,10 @@ class Dashboard extends React.Component<Props, HomeState> {
              {/*------------Result button using UX logo ic_wbc_dashboard----------*/}
              <View>
               <View>
-                <TouchableOpacity onPress={() => { if (global.hasImage) this.props.navigation.navigate('ResultScreen');
-                                                   else Alert.alert('',resources.getString("NoDataAlert")); }}
+                <TouchableOpacity onPress={() => {console.log('Has image ??????????????????????????'+global.hasImage);
+                            if (global.hasImage) this.props.navigation.navigate('ResultScreen');
+                            else Alert.alert('',resources.getString("NoDataAlert")); }
+                         }
                                   style={styles.smallButton}>
                   <Image source={require('../assets/ic_wbc_dashboard.png')} />
                 </TouchableOpacity>
