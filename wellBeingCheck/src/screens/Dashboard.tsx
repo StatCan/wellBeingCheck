@@ -79,7 +79,7 @@ class Dashboard extends React.Component<Props, HomeState> {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
   }
   checkThankYou() {
-    let txt = '';console.log('kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk');
+    let txt = '';
     if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2) txt = txt = resources.getString('ThankYouB');
     this.setState({ showThankYou: !global.showThankYou == 0, thankYouText: txt });
     setTimeout(() => { global.showThankYou = 0; this.setState({ showThankYou: false }) }, 6000);
@@ -320,7 +320,7 @@ class Dashboard extends React.Component<Props, HomeState> {
              {/*------------Result button using UX logo ic_wbc_dashboard----------*/}
              <View>
               <View>
-                <TouchableOpacity onPress={() => {console.log('Has image ??????????????????????????'+global.hasImage);
+                <TouchableOpacity onPress={() => {console.log('Has image before click result button:'+global.hasImage);
                             if (global.hasImage==1) this.props.navigation.navigate('ResultScreen');
                             else Alert.alert('',resources.getString("NoDataAlert")); }
                          }
