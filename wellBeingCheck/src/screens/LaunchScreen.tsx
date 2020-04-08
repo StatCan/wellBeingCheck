@@ -103,9 +103,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
         });
       });
     });
-    AsyncStorage.getItem('userToken', (err, result) => {
 
-    });
   }
 
   bootstrapA = async () => {
