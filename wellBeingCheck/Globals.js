@@ -42,5 +42,4 @@ global.graphType6='BulletinFW';
 global.graphType7='';
 global.configurationReady=false;
 global.currentView=0;
-global.fetchActionA=true;
-global.fetchActionB=true;
+global.fetchAction=true;

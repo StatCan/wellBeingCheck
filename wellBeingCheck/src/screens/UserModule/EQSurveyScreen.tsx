@@ -50,9 +50,10 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
               result=await this.setPassword(jwt);
             //  result=await this.setPasswordNew();
               if(!result){alert("Internal server error(set password), Try again, if same thing would happen again contact StatCan");return;}
-              console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
+              console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA',true);
               count=1;
               AsyncStorage.setItem('hasImage',0);global.hasImage=0;console.log('hasImage after survey A done.........'+global.hasImage);
+              global.fetchAction=false;
              // await this.saveDefaultParadata(jwt);
          }
       async handleSurveyAdoneNew(){
@@ -77,7 +78,9 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                if(types!=null && types.length>0){
                   await this.fetchGraphs(types);
                }
+               console.log('hhhhhhhhhhhhhhhhhhhhhh');
                count=1;AsyncStorage.setItem('hasImage',1);global.hasImage=1;
+               global.fetchAction=false;
                this.props.navigation.navigate('Dashboard');
          }
       async handleSurveyBdoneNew(){
@@ -88,7 +91,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
              if(types!=null && types.length>0){
                   await this.fetchGraphs(types);
              }
-             count=1;AsyncStorage.setItem('hasImage','1');global.hasImage=true;
+             count=1;AsyncStorage.setItem('hasImage',1);global.hasImage=1;
       }
       async fetchGraphs(types:string[]){
          //   if(count>0)return;
@@ -103,7 +106,8 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                 this.fetchImage(url,index,'en');index++;
                 this.fetchImage(url,index,'fr');index++;
             }
-            AsyncStorage.setItem('hasImage','1');console.log('Fetch images done');
+            console.log('fffffffffffffffffffffffff');
+            AsyncStorage.setItem('hasImage',1);console.log('Fetch images done');
          }
      //The new service call has problem
       async setPasswordNew() {
@@ -137,7 +141,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                        },
                        body: JSON.stringify(data),
                })
-               .then((response) =>{ if(response.status==200){return true;}  else {console.log('Bad:'+response.status);return false;}} )          // response.json())
+               .then((response) =>{ if(response.status==200){console.log('jjjjjjjjjjjjjjjjjj');return true;}  else {console.log('Bad:'+response.status);return false;}} )          // response.json())
               // .then((responseJson) => {console.log('setPassword:'+responseJson);return responseJson;})
                .catch((error) => {console.error(error);return false;});
           }
@@ -281,6 +285,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
    }
    render() {
      let uri='';//http://barabasy.eastus.cloudapp.azure.com/anonymous-anonyme/en/login-connexion/load-charger/eqgsd0ed709a7df0465da7cb4881b290ff22';
+      console.log('dddddddddddddddddh');
      if(global.doneSurveyA){
          if(resources.culture=='en')
               uri=global.surveyBUrlEng;
@@ -320,24 +325,24 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                             console.log('nav changed:'+navState.url);
                             if(navState.url==global.surveyThkUrlEng ||navState.url==global.surveyThkUrlFre){
                                  console.log('THank you count:'+count);
-                                 let jsCode1='var sac ="1234566789";sac= document.querySelector("div.sc-box-main p span.ecf-bold").innerText;window.ReactNativeWebView.postMessage(sac);';
-                                 console.log('Survey done.......................................................');
-                                 if(global.doneSurveyA){console.log('THank you B........................'+global.fetchActionB);
-                                        if(global.fetchActionB){global.fetchActionB=false;this.handleSurveyBdone();
-                                           global.showThankYou=2; this.props.navigation.navigate('Dashboard');
-                                        }else{global.fetchActionB=true;}
-                                         count=1;
-                                  }
-                                  else {
-                                     console.log('Thank you AAAA.....'+global.fetchActionA);
-                                    // this.setState({jsCode:jsCode3});
-                                    if(global.fetchActionA){
-                                        global.fetchActionA=false;
-                                        if(Platform.OS=='ios'){console.log('aaaaaaaaaaaaaaaaa');this.setState({jsCode:jsCode1});}
-                                        else {this.webView.injectJavaScript(jsCode1);}
-                                    }
+                                 if(global.fetchAction){
+                                     global.fetchAction=false;
+                                     let jsCode1='var sac ="1234566789";sac= document.querySelector("div.sc-box-main p span.ecf-bold").innerText;window.ReactNativeWebView.postMessage(sac);';
+                                     console.log('Survey done.......................................................');
+                                     if(global.doneSurveyA){console.log('THank you B........................'+global.fetchAction);
+                                          this.handleSurveyBdone();
+                                          global.showThankYou=2;
+                                          this.props.navigation.navigate('Dashboard');
+                                          count=1;
+                                     }
+                                     else {
+                                         console.log('Thank you AAAA.....'+global.fetchAction);
+                                         if(Platform.OS=='ios'){console.log('aaaaaaaaaaaaaaaaa');this.setState({jsCode:jsCode1});}
+                                         else {this.webView.injectJavaScript(jsCode1);}
+                                     }
+                                 }
+                                 else  this.props.navigation.navigate('Dashboard');
 
-                                  }
                             }
                           }}
 
@@ -350,13 +355,10 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                                 if(global.doneSurveyA){
                                     console.log('redady to fetch image');
                                     this.setState({jsCode:jsCode});
-                                 //   this.handleSurveyBdone();
                                     count=1;  global.showThankYou=2;
                                 }
                                 else {
                                     console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
-                                   // this.fetchImages();
-                                    this.setState({jsCode:jsCode});
                                     this.handleSurveyAdone();
                                     count=1;global.showThankYou=2;
                                     }
