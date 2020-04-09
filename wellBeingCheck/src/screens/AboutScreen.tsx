@@ -9,6 +9,7 @@ import { resources } from '../../GlobalResources';
 import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
 import BackgroundWhite from '../components/BackgroundWhite';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
+import SessionHandler from '../utils/SessionHandler';
 
 type AboutState = {
   faqMainExpanded: boolean,
@@ -62,6 +63,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
   render() {
     return (
       <PaperProvider theme={newTheme}>
+        <SessionHandler />
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
         <AppBanner />
 
