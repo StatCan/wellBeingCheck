@@ -54,6 +54,19 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
               AsyncStorage.setItem('hasImage','0');global.hasImage=0;console.log('hasImage after survey A done.........'+global.hasImage);
               global.fetchAction=false;
              // await this.saveDefaultParadata(jwt);
+
+            // Add 30 days for the final notification date
+            var currentDate = new Date();
+            var currentYear = currentDate.getUTCFullYear();
+            var currentMonth = currentDate.getUTCMonth();
+            var currentDay = currentDate.getUTCDate();
+      
+            var finalNotificationDate = new Date(currentYear, currentMonth, currentDay + 30, 0, 0, 0, 0);
+            if (global.debugMode) console.log("Final Notification Date is: " + finalNotificationDate);
+            // Call Notification Algorithm based on defaults
+            // Algorithm also saves the finalNotificationDate
+            notificationAlgo("6:00", "22:00", 2, finalNotificationDate);
+
          }
       async handleSurveyAdoneNew(){
             let isConnected=await checkConnection();
