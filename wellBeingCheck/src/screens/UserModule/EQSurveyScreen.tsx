@@ -1,8 +1,7 @@
 import React, { memo, useState, useCallback } from 'react';
 import { Image, View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator,Button,YellowBox } from 'react-native';
 import { AsyncStorage } from 'react-native';
-//import { Ionicons,EvilIcons,Feather } from '@expo/vector-icons';
-import { AntDesign,FontAwesome } from '@expo/vector-icons';
+import { notificationAlgo } from '../../utils/notificationAlgo'
 import WebView from 'react-native-webview';
 import { resources } from '../../../GlobalResources';
 import {fetchJwToken,checkConnection,hashString,parseJwt} from '../../utils/fetchJwToken';
@@ -57,6 +56,18 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
               }*/
               count=1;
               AsyncStorage.setItem('hasImage',false);global.hasImage=false;console.log('hasImage after survey A done.........'+global.hasImage);
+
+              // Add 30 days for the final notification date
+              var currentDate = new Date();
+              var currentYear = currentDate.getUTCFullYear();
+              var currentMonth = currentDate.getUTCMonth();
+              var currentDay = currentDate.getUTCDate();
+        
+              var finalNotificationDate = new Date(currentYear, currentMonth, currentDay + 30, 0, 0, 0, 0);
+              if (global.debugMode) console.log("Final Notification Date is: " + finalNotificationDate);
+              // Call Notification Algorithm based on defaults
+              // Algorithm also saves the finalNotificationDate
+              notificationAlgo("6:00", "22:00", 2, finalNotificationDate);
          }
       async handleSurveyAdoneNew(){
             let isConnected=await checkConnection();
