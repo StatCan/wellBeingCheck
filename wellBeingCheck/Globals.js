@@ -43,3 +43,4 @@ global.graphType7='';
 global.configurationReady=false;
 global.currentView=0;
 global.fetchAction=true;
+global.paraDataSaved=false;

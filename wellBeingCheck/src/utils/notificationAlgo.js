@@ -1,4 +1,4 @@
-
+import {AsyncStorage} from 'react-native';
 import { Notifications } from "expo";
 
 // Num Pings
@@ -223,6 +223,8 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5) {
     chosenHoursBefore.forEach(item => {
       this.scheduleNotificationBasedOnTime(item, day);
     });
+console.log('Array111:'+scheduledDateArray);
+    return scheduledDateArray;
   }
 };
 

@@ -16,7 +16,7 @@ import {
   NavigationState, NavigationEvents,
 } from 'react-navigation';
 import {FetchAPI} from "../api/openapi";
-
+import {saveParadataAlgo} from '../utils/paraData';
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
@@ -136,7 +136,7 @@ class Dashboard extends React.Component<Props, HomeState> {
                                         })
                                   }
                                 })
-                   .catch((error) => {global.configurationReady=false; resolve(false);});
+              .catch((error) => {global.configurationReady=false; resolve(false);});
                });
       }
   _refresh() {

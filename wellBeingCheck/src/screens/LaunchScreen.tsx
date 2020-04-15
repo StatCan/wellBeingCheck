@@ -122,7 +122,8 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           let doneSurveyA = await AsyncStorage.getItem('doneSurveyA');global.doneSurveyA=doneSurveyA;
           console.log('SurveyA:'+global.doneSurveyA);
           let hasImage = await AsyncStorage.getItem('hasImage');if(hasImage!=null)global.hasImage=hasImage;
-          console.log('Has image on startup.............:'+global.hasImage);
+          let paraDataSaved = await AsyncStorage.getItem('paraDataSaved');global.paraDataSaved=paraDataSaved;
+          console.log('Para Data saved:'+global.paraDataSaved);
           this._bootstrap();
         };
   render() {

@@ -178,7 +178,9 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       this.setState({ settingsFirstTime: false });
       if (this.state.notificationState){
           if (global.debugMode) console.log("Dirty flag set - scheduling notifications");
-          notificationAlgo(this.state.waketime, this.state.sleeptime, this.state.notificationcount);
+          scheduledDateArray=await notificationAlgo(this.state.waketime, this.state.sleeptime, this.state.notificationcount);
+          console.log('scheduled22222:'+scheduledDateArray);
+          //await saveParadataAlgo(jwt);
       } else {
         if (global.debugMode) console.log("Notifications turned off - cancelling all notifications");
         Notifications.cancelAllScheduledNotificationsAsync();
@@ -260,7 +262,8 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       notificationCount: this.state.notificationcount,
       culture: this.state.culture,
       cultureString: this.state.cultureString,
-      settingsFirstTime: this.state.settingsFirstTime
+      settingsFirstTime: this.state.settingsFirstTime,
+      scheduledDateArray:scheduledDateArray
     };
 
     AsyncStorage.setItem('settings', JSON.stringify(settingsObj), () => {
