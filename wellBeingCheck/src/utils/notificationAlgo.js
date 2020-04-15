@@ -1,5 +1,6 @@
 
 import { Notifications } from "expo";
+import { AsyncStorage } from 'react-native'; 
 
 // Num Pings
 const options = [
@@ -96,10 +97,11 @@ var scheduledDateArray = new Array();
 // awakeHour: Default is 6h or 6am
 // sleepHour: Default is 22h or 10pm
 
-export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5) {
+export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5, finalDate = null) {
 
   if (global.debugMode) console.log("Awake Hour received without rounding/substring is: " + awakeHour);
   if (global.debugMode) console.log("Sleep Hour received without rounding/substring is: " + sleepHour);
+  if (global.debugMode) console.log("The final date received is " + finalDate);
 
   // Pick up the minutes and parse
   var awakeHourMinutes = parseInt(awakeHour.substring(3, 5));
@@ -250,7 +252,43 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5) {
 
   var currentDate;
 
-  for (day = 0; day < 2; day++) {
+  if (global.debugMode) console.log ("The current notification date is:" + global.currentNotificationDate);
+  if (global.debugMode) console.log ("The final date is:" + finalDate);
+
+  if (finalDate != null){
+    AsyncStorage.setItem('finalDate', JSON.stringify(finalDate), () => {
+      if (global.debugMode) console.log("Storing final date: ", finalDate);
+    });
+  }
+
+  /*
+  await AsyncStorage.getItem('currentNotificationDate', (err, result) => {
+    if (global.debugMode) console.log("Getting currentNotificationDate, the result is: ", result);
+    if (result) {
+      global.currentNotificationDate = JSON.parse(result);
+    }
+  });
+  */
+
+  // Check if the current notification date is not already past the final Date
+  /*
+  if (global.currentNotificationDate !== 'undefined' || global.currentNotificationDate !== null){
+    if (global.currentNotificationDate >= finalDate){
+      if (global.debugMode) console.log("The current notification date has passed the final date");
+      return;
+    }
+  }
+  */
+
+  // Simpler implementation
+
+  if (Date.now() >= finalDate){
+    if (global.debugMode) console.log("The current notification date has passed the final date");
+    return;
+  }
+
+  // Schedule for four days
+  for (day = 0; day < 3; day++) {
 
     // Reset the date
     currentDate = new Date();
@@ -322,11 +360,43 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5) {
     if (global.debugMode) console.log("Chosen Hours for Day: " + outputDay);
     if (global.debugMode) console.log(chosenHoursBefore);
 
+    // If adding 4 days to current date does not exceed the final date
+
     // Now schedule for each day the chosen random hours
     chosenHoursBefore.forEach(item => {
-      this.scheduleNotificationBasedOnTime(item, day);
+
+      var currentDate = new Date();
+      var currentYear = currentDate.getUTCFullYear();
+      var currentMonth = currentDate.getUTCMonth();
+      var currentDay = currentDate.getUTCDate();
+
+      var currentNotificationDate = new Date(currentYear, currentMonth, currentDay + day, 0, 0, 0, 0);
+      if (global.debugMode) console.log("Notification to be scheduled is: " + currentNotificationDate);
+      if (global.debugMode) console.log("Notification to be scheduled getTime is: " + currentNotificationDate.getTime());
+      if (global.debugMode) console.log("The final date is: " + finalDate);
+      var finalDateParsed = Date.parse(finalDate);
+      if (global.debugMode) console.log("The final date parsed is: " + finalDateParsed);
+
+      //if (global.debugMode) console.log("The final date getTime is: " + finalDate.getTime());
+      // Check if the current date + day offset is not past the final date
+      if (currentNotificationDate.getTime() <= finalDateParsed){
+        if (global.debugMode) console.log("Current notification date is less than the final date");
+        this.scheduleNotificationBasedOnTime(item, day);
+        
+      }else{
+        if (global.debugMode) console.log("We cannot schedule any more notifications as we will pass the final date");
+        return;
+      }
     });
   }
+
+
+  AsyncStorage.setItem('currentNotificationDate', JSON.stringify(currentNotificationDate), () => {
+    if (global.debugMode) console.log("Storing currentNotificationDate: ", currentNotificationDate);
+  });
+
+
+
 };
 
 function checkForDuplicates(array) {

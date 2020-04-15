@@ -1,23 +1,17 @@
 import React, { memo, useState, useCallback } from 'react';
 import {
-  Picker,
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
   ScrollView,
   Platform,
   Switch,
-  AsyncStorage,Dimensions,
+  AsyncStorage,
+  Dimensions,
   Linking,
   Alert
 } from 'react-native';
-import Background from '../../components/Background';
-import Logo from '../../components/Logo';
-import Header from '../../components/Header';
 import Button from '../../components/Button';
-import TextInput from '../../components/TextInput';
-import BackButton from '../../components/BackButton';
 import { newTheme } from '../../core/theme';
 import { List, Divider } from 'react-native-paper';
 import TimePicker from '../../components/TimePicker'
@@ -46,7 +40,9 @@ type SettingsState = {
   wakeTimePickerShow: boolean,
   sleepTimePickerShow: boolean,
   titleBackgroundColor: string,
-  settingsFirstTime: boolean
+  settingsFirstTime: boolean,
+  currentNotificationDate: Date,
+  finalDate: Date
 }
 
 interface Props {
@@ -74,8 +70,11 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       wakeTimePickerShow: false,
       sleepTimePickerShow: false,
       titleBackgroundColor: "#000",
-      settingsFirstTime: true
+      settingsFirstTime: true,
+      currentNotificationDate: null,
+      finalDate: null
     };
+
     this.wakeTimeHandler = this.wakeTimeHandler.bind(this);
     this.sleepTimeHandler = this.sleepTimeHandler.bind(this);
     this.cancelTimeHandler = this.cancelTimeHandler.bind(this);
@@ -174,13 +173,26 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   }
 
   handleBackAction = async () => {
-    if (global.debugMode) console.log("Component will unmount");
+    if (global.debugMode) console.log("Handle Back Action");
+
+    // Final date was not set before - now set it
+    // This happens when settings screen was launched for the first time
+    // When Survey A is completed is when the start happens
+    if (!this.state.finalDate){
+      var currentDate = new Date();
+      var currentYear = currentDate.getUTCFullYear();
+      var currentMonth = currentDate.getUTCMonth();
+      var currentDay = currentDate.getUTCDate();
+
+      // Add 30 days for the final notification date
+      this.setState({ finalDate: new Date(currentYear, currentMonth, currentDay + 30, 0, 0, 0, 0) });
+    }
 
     //if (this._isDirty || this.state.settingsFirstTime) {
       this.setState({ settingsFirstTime: false });
       if (this.state.notificationState){
           if (global.debugMode) console.log("Dirty flag set - scheduling notifications");
-          notificationAlgo(this.state.waketime, this.state.sleeptime, this.state.notificationcount);
+          notificationAlgo(this.state.waketime, this.state.sleeptime, this.state.notificationcount, this.state.finalDate);
       } else {
         if (global.debugMode) console.log("Notifications turned off - cancelling all notifications");
         Notifications.cancelAllScheduledNotificationsAsync();
@@ -262,7 +274,9 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       notificationCount: this.state.notificationcount,
       culture: this.state.culture,
       cultureString: this.state.cultureString,
-      settingsFirstTime: this.state.settingsFirstTime
+      settingsFirstTime: this.state.settingsFirstTime,
+      currentNotificationDate: global.currentNotificationDate,
+      finalDate: this.state.finalDate
     };
 
     AsyncStorage.setItem('settings', JSON.stringify(settingsObj), () => {
@@ -289,6 +303,8 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
         this.setState({ culture: resultAsObj.culture });
         this.setState({ cultureString: resultAsObj.cultureString });
         this.setState({ settingsFirstTime: resultAsObj.settingsFirstTime});
+        this.setState({ finalDate: resultAsObj.finalDate});
+        //global.currentNotificationDate = this.state.currentNotificationDate;
       }
     });
 
