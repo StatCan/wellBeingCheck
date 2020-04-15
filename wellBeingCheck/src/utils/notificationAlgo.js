@@ -97,11 +97,10 @@ var scheduledDateArray = new Array();
 // awakeHour: Default is 6h or 6am
 // sleepHour: Default is 22h or 10pm
 
-export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5, finalDate = null) {
+export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5) {
 
   if (global.debugMode) console.log("Awake Hour received without rounding/substring is: " + awakeHour);
   if (global.debugMode) console.log("Sleep Hour received without rounding/substring is: " + sleepHour);
-  if (global.debugMode) console.log("The final date received is " + finalDate);
 
   // Pick up the minutes and parse
   var awakeHourMinutes = parseInt(awakeHour.substring(3, 5));
@@ -111,8 +110,8 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5, fi
   awakeHour = parseInt(awakeHour.substring(0, 2));
   sleepHour = parseInt(sleepHour.substring(0, 2));
 
-  console.log(awakeHourMinutes);
-  console.log(sleepHourMinutes);
+  console.log("Awake hour minutes: " + awakeHourMinutes);
+  console.log("Sleep hour minutes: " + sleepHourMinutes);
 
   if (awakeHourMinutes => 30){
     if (global.debugMode) console.log("Rounding up awake hour");
@@ -251,8 +250,27 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5, fi
   // For testing purposes, day set to a few days
 
   var currentDate;
+  var finalDate;
 
-  if (global.debugMode) console.log ("The current notification date is:" + global.currentNotificationDate);
+  AsyncStorage.getItem('finalDate', (err, result) => {
+    if (global.debugMode) console.log("The result of getItem finalDate is: ", result);
+    if (result) {
+      finalDate = JSON.parse(result);
+    }
+  });
+
+  // If finalDate is being set for the first time
+  if (finalDate == null){
+    // Add 30 days for the final notification date
+    var currentDate = new Date();
+    var currentYear = currentDate.getUTCFullYear();
+    var currentMonth = currentDate.getUTCMonth();
+    var currentDay = currentDate.getUTCDate();
+
+    var finalDate = new Date(currentYear, currentMonth, currentDay + 30, 0, 0, 0, 0);
+
+  }
+
   if (global.debugMode) console.log ("The final date is:" + finalDate);
 
   if (finalDate != null){
@@ -261,25 +279,6 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5, fi
     });
   }
 
-  /*
-  await AsyncStorage.getItem('currentNotificationDate', (err, result) => {
-    if (global.debugMode) console.log("Getting currentNotificationDate, the result is: ", result);
-    if (result) {
-      global.currentNotificationDate = JSON.parse(result);
-    }
-  });
-  */
-
-  // Check if the current notification date is not already past the final Date
-  /*
-  if (global.currentNotificationDate !== 'undefined' || global.currentNotificationDate !== null){
-    if (global.currentNotificationDate >= finalDate){
-      if (global.debugMode) console.log("The current notification date has passed the final date");
-      return;
-    }
-  }
-  */
-
   // Simpler implementation
 
   if (Date.now() >= finalDate){
@@ -287,8 +286,10 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5, fi
     return;
   }
 
+  var currentNotificationDate;
+
   // Schedule for four days
-  for (day = 0; day < 3; day++) {
+  for (day = 0; day <= 3; day++) {
 
     // Reset the date
     currentDate = new Date();
@@ -370,7 +371,7 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5, fi
       var currentMonth = currentDate.getUTCMonth();
       var currentDay = currentDate.getUTCDate();
 
-      var currentNotificationDate = new Date(currentYear, currentMonth, currentDay + day, 0, 0, 0, 0);
+      currentNotificationDate = new Date(currentYear, currentMonth, currentDay + day, 0, 0, 0, 0);
       if (global.debugMode) console.log("Notification to be scheduled is: " + currentNotificationDate);
       if (global.debugMode) console.log("Notification to be scheduled getTime is: " + currentNotificationDate.getTime());
       if (global.debugMode) console.log("The final date is: " + finalDate);
@@ -390,12 +391,9 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5, fi
     });
   }
 
-
   AsyncStorage.setItem('currentNotificationDate', JSON.stringify(currentNotificationDate), () => {
     if (global.debugMode) console.log("Storing currentNotificationDate: ", currentNotificationDate);
   });
-
-
 
 };
 

@@ -55,18 +55,13 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
               global.fetchAction=false;
              // await this.saveDefaultParadata(jwt);
 
-            // Add 30 days for the final notification date
-            var currentDate = new Date();
-            var currentYear = currentDate.getUTCFullYear();
-            var currentMonth = currentDate.getUTCMonth();
-            var currentDay = currentDate.getUTCDate();
-      
-            var finalNotificationDate = new Date(currentYear, currentMonth, currentDay + 30, 0, 0, 0, 0);
-            if (global.debugMode) console.log("Final Notification Date is: " + finalNotificationDate);
-            // Call Notification Algorithm based on defaults
-            // Algorithm also saves the finalNotificationDate
-            notificationAlgo("6:00", "22:00", 2, finalNotificationDate);
+             if (global.debugMode) console.log("---SURVEY A DONE---");
+             if (global.debugMode) console.log("Calling notification algorithm...");
 
+            // Call Notification Algorithm based on defaults
+            // Algorithm also saves the final date
+            // Arguments: wakeTime, sleepTime, then number of pings
+            notificationAlgo("6:00", "22:00", 2);
          }
       async handleSurveyAdoneNew(){
             let isConnected=await checkConnection();
