@@ -92,8 +92,16 @@ class Dashboard extends React.Component<Props, HomeState> {
 
         AsyncStorage.getItem('currentNotificationDate', (err, currentNotificationDateResult) => {
           if (global.debugMode) console.log("The result of currentNotificationDate getItem is: ", currentNotificationDateResult);
+          var currentNotificationDateResultDate = new Date(JSON.parse(currentNotificationDateResult));
+          if (global.debugMode) console.log("The currentNotificationDate (Date Object) is: " + currentNotificationDateResultDate);
+          var finalDateResultDate = new Date(JSON.parse(finalDateResult));
+          if (global.debugMode) console.log("The finalDate getTime is: " + finalDateResultDate.getTime());
+          var currentNotificationDateResultTime = currentNotificationDateResultDate.getTime();
 
-          if (currentNotificationDateResult) {
+          if (currentNotificationDateResultTime < finalDateResultDate.getTime()) {
+
+            if (global.debugMode) console.log("The time is less than finalDate - now checking Survey A Done Flag...");
+
             AsyncStorage.getItem('doneSurveyA', (err, doneSurveyAResult) => {
               if (global.debugMode) console.log("The result of doneSurveyA getItem is: ", doneSurveyAResult);
               if (doneSurveyAResult) {
