@@ -32,7 +32,7 @@ const TimePicker = (props) => {
   return (
     <View>
         <DateTimePickerModal
-            mode="time"
+            mode={"time"}
             isDarkModeEnabled={isDarkModeEnabled}
             isVisible={props.isVisible}
             is24Hour={true}
@@ -49,3 +49,5 @@ const styles = StyleSheet.create({
   });
 
 export default TimePicker;
+
+
