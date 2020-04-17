@@ -436,9 +436,7 @@ const styles = StyleSheet.create({
   smallButtonText: {
     color: '#000000',
     fontSize: 15,
-    textAlign: 'center', 
-    justifyContent: 'center',
-    alignContent: 'center'
+    textAlign: 'center'
   }
 });
 
