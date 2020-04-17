@@ -66,7 +66,6 @@ class AboutScreen extends React.Component<Props, AboutState> {
   }
 
   _resetTimer() {
-    clearTimeout(this.timer)
     this.timer = setTimeout(() =>
     Alert.alert(
       'Session expired',
@@ -96,6 +95,10 @@ class AboutScreen extends React.Component<Props, AboutState> {
       )
       ,
       this.sessionTimeOutDuration)
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timer)
   }
 
   faqMainExpanded
