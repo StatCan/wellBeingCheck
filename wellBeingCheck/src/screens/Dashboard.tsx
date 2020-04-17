@@ -244,10 +244,8 @@ class Dashboard extends React.Component<Props, HomeState> {
         <Background>
           <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
             <TouchableOpacity style={{ marginLeft: 5, marginTop: 50 }}><Image source={require('../assets/ic_logo_loginmdpi.png')} style={{ width: 38, height: 38 }} /></TouchableOpacity>
-           {/*  <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen', { refresh: this._refresh })} 
-            style={{ marginRight: 5, marginTop: 50 }}>
-              <FontAwesome name="gear" size={30} color="gray" /></TouchableOpacity> */}
-         {/* --------------------*/}
+       
+                {/*-----------Setting button using UX logo ic_setting.png--------*/}
          <View>
               <View>
                 <TouchableOpacity onPress={()=>this.props.navigation.navigate('SettingsScreen',{ refresh: this._refresh })} 
@@ -257,8 +255,7 @@ class Dashboard extends React.Component<Props, HomeState> {
               </View>
          </View>
 
-         {/* --------------------*/}
-         
+        
         </View>
           <View style={styles.homeContainer}>
             <TouchableOpacity onPress={() =>this.conductSurvey()} style={{ flex: 2, justifyContent: 'center' }}>
@@ -271,16 +268,9 @@ class Dashboard extends React.Component<Props, HomeState> {
             {this.state.showThankYou &&
               <View style={{ backgroundColor: 'black', width: '80%', position: 'absolute', zIndex: 29, alignSelf: 'center', top: '60%', justifyContent: 'center', alignItems: 'center' }}><Text style={{ color: 'white', fontSize: 14, marginTop: 10, marginBottom: 10 }}>{this.state.thankYouText}</Text></View>
             }
+         
           <View style={[styles.homeButtonContainer, { marginBottom: 0, marginTop: 50 }, { flexDirection: 'row' }]}>
-
-             {/*  <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')} style={styles.smallButton}><EvilIcons name="question" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("about")}</Text></TouchableOpacity>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}><Feather name="phone" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("contact_us")}</Text></TouchableOpacity>
-              <TouchableOpacity onPress={() => { if (global.hasImage) this.props.navigation.navigate('ResultScreen'); else alert(resources.getString("NoDataAlert")); }} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("result")}</Text></TouchableOpacity>
-              <TouchableOpacity onPress={() => { if (global.hasImage) this.props.navigation.navigate('ResultSummaryScreen'); else alert(resources.getString("NoDataAlert")); }} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("result")}</Text></TouchableOpacity>
-
-            */}
-
-
+ 
             {/*-----------Information button using UX logo ic_wbc_about_survey--------*/}
             <View>
               <View>
@@ -293,17 +283,12 @@ class Dashboard extends React.Component<Props, HomeState> {
                     <Text style={styles.smallButtonText}>{resources.getString("about")}</Text>
               </View>
             </View>
-
-
-              {/* <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')}
-                                style={styles.smallButton}><EvilIcons name="question" size={40} color="white" />
-              <Text style={styles.smallButtonText}>{resources.getString("about")}</Text>
-              </TouchableOpacity> */}
-
+           
             {/* ----------Contact us button using UX logo ic_wbc_contact_us----------- */}
             <View>
               <View>
-                <TouchableOpacity onPress={()=>this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}>
+                <TouchableOpacity onPress={()=>this.props.navigation.navigate('ContactUsScreen')} 
+                                  style={styles.smallButton}>
                   <Image source={require('../assets/ic_wbc_contact_us.png')} />
                 </TouchableOpacity>
               </View>
@@ -311,12 +296,7 @@ class Dashboard extends React.Component<Props, HomeState> {
                   <Text style={styles.smallButtonText}>{resources.getString("contact_us")}</Text>
               </View>
             </View>
-
-            {/*  <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')}
-            style={styles.smallButton}><Feather name="phone" size={40} color="white" />
-            <Text style={styles.smallButtonText}>{resources.getString("contact_us")}</Text></TouchableOpacity>
-             */}
-
+           
              {/*------------Result button using UX logo ic_wbc_dashboard----------*/}
              <View>
               <View>
@@ -332,6 +312,8 @@ class Dashboard extends React.Component<Props, HomeState> {
                   <Text style={styles.smallButtonText}>{resources.getString("result")}</Text>
               </View>
             </View>
+            
+           
 
               {/* <TouchableOpacity onPress={() => { if (global.hasImage) this.props.navigation.navigate('ResultScreen'); else alert(resources.getString("NoDataAlert")); }} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("result")}</Text></TouchableOpacity> */}
 
@@ -443,17 +425,20 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgray'
   },
   smallButton: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
+    width: 75,
+    height: 75,
+    borderRadius: 75/2,
     backgroundColor: '#66cc99',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 10
+    margin: 17
   },
   smallButtonText: {
     color: '#000000',
-    fontSize: 15,textAlign: 'center',
+    fontSize: 15,
+    textAlign: 'center', 
+    justifyContent: 'center',
+    alignContent: 'center'
   }
 });
 
