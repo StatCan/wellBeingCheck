@@ -23,7 +23,7 @@ interface Props {
 }
 
 class AboutScreen extends React.Component<Props, AboutState> {
-  sessionTimeOutDuration = 5000;
+  sessionTimeOutDuration = 900000;
   _panResponder: any;
   timer = 0
 
