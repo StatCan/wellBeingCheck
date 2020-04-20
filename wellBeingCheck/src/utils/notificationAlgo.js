@@ -96,12 +96,12 @@ var scheduledDateArray = new Array();
 // Unit Test the Scheduling Algorithm
 // awakeHour: Default is 6h or 6am
 // sleepHour: Default is 22h or 10pm
+// numPings: Default is 2
 
-export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5, finalDate = null) {
+export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 2) {
 
   if (global.debugMode) console.log("Awake Hour received without rounding/substring is: " + awakeHour);
   if (global.debugMode) console.log("Sleep Hour received without rounding/substring is: " + sleepHour);
-  if (global.debugMode) console.log("The final date received is " + finalDate);
 
   // Pick up the minutes and parse
   var awakeHourMinutes = parseInt(awakeHour.substring(3, 5));
@@ -111,15 +111,17 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5, fi
   awakeHour = parseInt(awakeHour.substring(0, 2));
   sleepHour = parseInt(sleepHour.substring(0, 2));
 
-  console.log(awakeHourMinutes);
-  console.log(sleepHourMinutes);
+  console.log("Awake hour minutes: " + awakeHourMinutes);
+  console.log("Sleep hour minutes: " + sleepHourMinutes);
 
-  if (awakeHourMinutes => 30){
+  // Round up
+  if (awakeHourMinutes >= 30){
     if (global.debugMode) console.log("Rounding up awake hour");
     awakeHour = awakeHour + 1;
   }
 
-  if (sleepHourMinutes => 30){
+  // Round down
+  if (sleepHourMinutes >= 30){
     if (global.debugMode) console.log("Rounding down sleep hour");
     sleepHour = sleepHour - 1;
   }
@@ -138,6 +140,7 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5, fi
   // Based on defaults awakeInterval is 16
   var awakeInterval = sleepHour - awakeHour;
 
+  // Do Validations - we cannot depend on the client calling this algorithm
   if (numPings > 5 || numPings < 2) {
     if (global.debugMode) console.log("numPings has an invalid value");
     return;
@@ -146,13 +149,24 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5, fi
   // Safety Check
   if (numPings > awakeInterval) numPings = awakeInterval;
 
+  // Verify if this is correct and update algorithm to work with night shift
   if (awakeHour > sleepHour) awakeInterval = awakeHour + 24;
 
-  // Now come up with a time to set notifications to
+  /*
+  Now come up with the awake intervals arrays based on the awake/sleep times.  Update variable name as necessary.
+  'Before' represents the lower bound of the hour.  
+  'After' represents the upper bound of the hour.
+  
+  Note: We are scheduling on the hour currently.  Meaning, we are scheduling based on e.g. 7am, 8am, etc.
+
+  If we want to make the 'minutes' random (which is noted as an option in the Methodology document), then
+  we can use the 'After'.
+  */
 
   var awakeOneHourTimeIntervalsBefore = [];
   var awakeOneHourTimeIntervalsAfter = [];
 
+  // Here we are updating the awake Interval, according to the limits set above.
   for (i = 0; i <= awakeInterval; i++) {
     awakeOneHourTimeIntervalsBefore[i] = awakeHour + (i);
     awakeOneHourTimeIntervalsAfter[i] = awakeHour + (i + 1);
@@ -163,11 +177,24 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5, fi
   if (global.debugMode) console.log(awakeOneHourTimeIntervalsBefore);
   if (global.debugMode) console.log(awakeOneHourTimeIntervalsAfter);
 
+  // Setup arrays
+  // These are the chosen hours array that will be scheduled
   var chosenHoursBefore = [];
+  // These are the chosen probabilities that the chosen hours are based on
   var chosenProbability = [];
+  // Create the selection probability distribution array based on the awake hour interval
+  // Look into using the Math library for distributions
   var selectionProbabilitiesAwakeHour = new Array(awakeOneHourTimeIntervalsBefore.length);
+
+  // Create the reference selection probablity distribution from 0-23h (from which selectionProbalitiesAwakeHour will be calculated)
+  // Look into using Math library distribution.
   var selectionProbabilities24h = new Array(24);
+
+  // Create the reference selection probablity distribution from 0-23h (from which selectionProbalitiesAwakeHour will be calculated)
+  // Look into using Math library distribution.
   var selectionProbabilitiesWeekend24h = new Array(24);
+  
+  // 
   var remainingProbabilties = 0;
   var remainingProbabiltiesWeekends = 0;
 
@@ -197,10 +224,12 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5, fi
 
   if (global.debugMode) console.log("Length of selection probabilities array is: " + selectionProbabilities24h.length);
 
+  // These probabilities have to be redistributed for the remaining time intervals (weekdays)
   remainingProbabilties = 100 - remainingProbabilties;
 
   if (global.debugMode) console.log("Probabilities remaining to be allocated: " + remainingProbabilties + "%");
 
+  // These probabilities have to be redistributed for the remaining time intervals (weekends)
   remainingProbabiltiesWeekends = 100 - remainingProbabiltiesWeekends;
 
   if (global.debugMode) console.log("Probabilities remaining to be allocated for weekends: " + remainingProbabiltiesWeekends + "%");
@@ -214,10 +243,11 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5, fi
       }
     }
   }
-  // 0 to 21h
+  // Output the selection probability distribution array for testing purposes
   if (global.debugMode) console.log("The selection probability array is: " + selectionProbabilities24h);
 
-  // Validate
+  // Validate that the selection probabilities add up to 100
+  // If they don't, check the algorithm.  There are situations where it goes past 100 or goes negative.
   var sum = 0;
   selectionProbabilities24h.forEach(element => {
     sum += element;
@@ -225,8 +255,7 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5, fi
 
   if (global.debugMode) console.log("Validate:  The sum of the selection probability array is: " + sum);
 
-  // Weekends
-
+  // Weekend Selection Probability Array
   // Now only allocate to empty areas in union with the awake Interval
   for (i = 0; i < selectionProbabilitiesWeekend24h.length; i++ ){
     if (awakeOneHourTimeIntervalsBefore.includes(i)){
@@ -239,7 +268,7 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5, fi
   // 0 to 21h
   if (global.debugMode) console.log("The selection probability array is: " + selectionProbabilitiesWeekend24h);
 
-  // Validate
+  // Validation step
   sum = 0;
   selectionProbabilitiesWeekend24h.forEach(element => {
     sum += element;
@@ -251,52 +280,55 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5, fi
   // For testing purposes, day set to a few days
 
   var currentDate;
+  var finalDate;
 
-  if (global.debugMode) console.log ("The current notification date is:" + global.currentNotificationDate);
+  AsyncStorage.getItem('finalDate', (err, result) => {
+    if (global.debugMode) console.log("The result of getItem finalDate is: ", result);
+    if (result) {
+      finalDate = JSON.parse(result);
+    }
+  });
+
+  // If finalDate is being set for the first time
+  if (finalDate == null){
+    // Add 30 days for the final notification date
+    var currentDate = new Date();
+    var currentYear = currentDate.getUTCFullYear();
+    var currentMonth = currentDate.getUTCMonth();
+    var currentDay = currentDate.getUTCDate();
+
+    var finalDate = new Date(currentYear, currentMonth, currentDay + 30, 0, 0, 0, 0);
+  }
+
   if (global.debugMode) console.log ("The final date is:" + finalDate);
 
   if (finalDate != null){
+    // Store the final date
     AsyncStorage.setItem('finalDate', JSON.stringify(finalDate), () => {
       if (global.debugMode) console.log("Storing final date: ", finalDate);
     });
   }
 
-  /*
-  await AsyncStorage.getItem('currentNotificationDate', (err, result) => {
-    if (global.debugMode) console.log("Getting currentNotificationDate, the result is: ", result);
-    if (result) {
-      global.currentNotificationDate = JSON.parse(result);
-    }
-  });
-  */
-
-  // Check if the current notification date is not already past the final Date
-  /*
-  if (global.currentNotificationDate !== 'undefined' || global.currentNotificationDate !== null){
-    if (global.currentNotificationDate >= finalDate){
-      if (global.debugMode) console.log("The current notification date has passed the final date");
-      return;
-    }
-  }
-  */
-
-  // Simpler implementation
-
+  // If the current date has passed the final date of notifications, no need to continue further
   if (Date.now() >= finalDate){
     if (global.debugMode) console.log("The current notification date has passed the final date");
     return;
   }
 
+  var currentNotificationDate;
+
   // Schedule for four days
-  for (day = 0; day < 3; day++) {
+  for (day = 0; day <= 3; day++) {
 
     // Reset the date
     currentDate = new Date();
-    // Add the offset
+    // Add the offset date.  The offset date represents the date we are currently scheduling
     var offSetDate = new Date(currentDate.setTime(currentDate.getTime() + day * 86400000));
     if (global.debugMode) console.log("Current Offset Date is: " + offSetDate);
+    // Also, we check whether the offset date is a weekday or a weekend
     var currentDay = offSetDate.getDay();
     if (global.debugMode) console.log("Current Day is: " + currentDay);
+    // Here we check if it's a weekend or weekday
     var isWeekend = (currentDay === 6) || (currentDay === 0);   
 
     if (isWeekend){
@@ -317,7 +349,7 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5, fi
       var done = false;
 
       if (isWeekend){
-        // Weekends
+        // Weekends - so use the weekend selection probability distribution array
         for (j = 0; j < selectionProbabilitiesWeekend24h.length; j++) {
           // Keep adding to marginalSum until it exceeds chosenProbability[i] so then we know which hour to choose
           if (selectionProbabilitiesWeekend24h[j] != null) {
@@ -328,6 +360,9 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5, fi
             //output += "Chosen Probability is: " + chosenProbability[i] + '<br/>';
             chosenHoursBefore[i] = j;
             while (checkForDuplicates(chosenHoursBefore)){
+              // If we arrive here it means we had a 'collision'.  There is a duplicate random number (we don't want duplicate hours)
+              // So recalculate a random time interval.  A basic random calculation instead of going back into the entire selection probabilities
+              // The chance of a collision is very low so that's why this method is being used.
               chosenHoursBefore[i] = awakeOneHourTimeIntervalsBefore[Math.floor(Math.random() * awakeOneHourTimeIntervalsBefore.length)];
             }
             done = true;
@@ -335,7 +370,7 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5, fi
         }
 
       } else {
-        // Weekdays
+        // Weekdays - so use the weekday selection probability distribution array
         for (j = 0; j < selectionProbabilities24h.length; j++) {
           // Keep adding to marginalSum until it exceeds chosenProbability[i] so then we know which hour to choose
           if (selectionProbabilities24h[j] != null) {
@@ -344,6 +379,9 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5, fi
           if (marginalSum > chosenProbability[i] && !done) {
             chosenHoursBefore[i] = j;
             while (checkForDuplicates(chosenHoursBefore)){
+              // If we arrive here it means we had a 'collision'.  There is a duplicate random number (we don't want duplicate hours)
+              // So recalculate a random time interval.  A basic random calculation instead of going back into the entire selection probabilities
+              // The chance of a collision is very low so that's why this method is being used.
               chosenHoursBefore[i] = awakeOneHourTimeIntervalsBefore[Math.floor(Math.random() * awakeOneHourTimeIntervalsBefore.length)];
             }
             done = true;
@@ -352,6 +390,7 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5, fi
       }
     }
 
+    // Adding one only for outputting purposes to the user (does not affect algorithm)
     var outputDay = day + 1;
 
     if (global.debugMode) console.log("Chosen Probabilities (0-100) for Day: " + outputDay);
@@ -360,7 +399,7 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5, fi
     if (global.debugMode) console.log("Chosen Hours for Day: " + outputDay);
     if (global.debugMode) console.log(chosenHoursBefore);
 
-    // If adding 4 days to current date does not exceed the final date
+    // If adding 4 days to current date ensure does not exceed the final date
 
     // Now schedule for each day the chosen random hours
     chosenHoursBefore.forEach(item => {
@@ -370,7 +409,7 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5, fi
       var currentMonth = currentDate.getUTCMonth();
       var currentDay = currentDate.getUTCDate();
 
-      var currentNotificationDate = new Date(currentYear, currentMonth, currentDay + day, 0, 0, 0, 0);
+      currentNotificationDate = new Date(currentYear, currentMonth, currentDay + day, 0, 0, 0, 0);
       if (global.debugMode) console.log("Notification to be scheduled is: " + currentNotificationDate);
       if (global.debugMode) console.log("Notification to be scheduled getTime is: " + currentNotificationDate.getTime());
       if (global.debugMode) console.log("The final date is: " + finalDate);
@@ -390,12 +429,9 @@ export function notificationAlgo(awakeHour = 6, sleepHour = 22, numPings = 5, fi
     });
   }
 
-
   AsyncStorage.setItem('currentNotificationDate', JSON.stringify(currentNotificationDate), () => {
     if (global.debugMode) console.log("Storing currentNotificationDate: ", currentNotificationDate);
   });
-
-
 
 };
 
