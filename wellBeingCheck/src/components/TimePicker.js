@@ -38,6 +38,7 @@ const TimePicker = (props) => {
             is24Hour={true}
             onConfirm={handleConfirm}
             onCancel={hideTimePicker}
+            is24Hour={false}
         />
     </View>
   );
