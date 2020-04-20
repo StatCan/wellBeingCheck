@@ -106,6 +106,40 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                   await this.fetchGraphs(types);
                }
                count=1;AsyncStorage.setItem('hasImage','1');global.hasImage=1;
+
+               // Save Survey B Done State
+               AsyncStorage.setItem('doneSurveyB','true');
+
+               // Now call the algorithm again
+
+               /*
+               // Set the defaults
+                var wakeTime = "6:00";
+                var sleepTime = "22:00";
+                var numPings = 2;
+
+                // Check if Settings are saved and update defaults from there
+                AsyncStorage.getItem('settings', (err, settingsResult) => {
+                  if (global.debugMode) console.log("The result of Settings getItem is: ", settingsResult);
+                  if (settingsResult) {
+                    let resultAsObj = JSON.parse(settingsResult);
+                    wakeTime = resultAsObj.wakeTime;
+                    sleepTime = resultAsObj.sleepTime;
+                    numPings = resultAsObj.notificationCount;
+
+                    if (global.debugMode) console.log("The saved wakeTime is: " + wakeTime);
+                    if (global.debugMode) console.log("The saved sleepTime is: " + sleepTime);
+                    if (global.debugMode) console.log("The saved numPings is: " + numPings);
+                  }
+                });
+                
+
+                // Call Notification Algorithm
+                // Algorithm also saves the final date
+                // Arguments: wakeTime, sleepTime, then number of pings
+                notificationAlgo(wakeTime, sleepTime, numPings);
+              */
+
                global.fetchAction=false;
                this.props.navigation.navigate('Dashboard');
          }
