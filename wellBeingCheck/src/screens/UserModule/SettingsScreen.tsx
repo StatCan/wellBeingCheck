@@ -40,9 +40,7 @@ type SettingsState = {
   wakeTimePickerShow: boolean,
   sleepTimePickerShow: boolean,
   titleBackgroundColor: string,
-  settingsFirstTime: boolean,
-  currentNotificationDate: Date,
-  finalDate: Date
+  settingsFirstTime: boolean
 }
 
 interface Props {
@@ -70,9 +68,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       wakeTimePickerShow: false,
       sleepTimePickerShow: false,
       titleBackgroundColor: "#000",
-      settingsFirstTime: true,
-      currentNotificationDate: null,
-      finalDate: null
+      settingsFirstTime: true
     };
 
     this.wakeTimeHandler = this.wakeTimeHandler.bind(this);
@@ -175,19 +171,6 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   handleBackAction = async () => {
     if (global.debugMode) console.log("Handle Back Action");
 
-    // Final date was not set before - now set it
-    // This happens when settings screen was launched for the first time
-    // When Survey A is completed is when the start happens
-    if (!this.state.finalDate){
-      var currentDate = new Date();
-      var currentYear = currentDate.getUTCFullYear();
-      var currentMonth = currentDate.getUTCMonth();
-      var currentDay = currentDate.getUTCDate();
-
-      // Add 30 days for the final notification date
-      this.setState({ finalDate: new Date(currentYear, currentMonth, currentDay + 30, 0, 0, 0, 0) });
-    }
-
     //if (this._isDirty || this.state.settingsFirstTime) {
       this.setState({ settingsFirstTime: false });
       if (this.state.notificationState){
@@ -274,9 +257,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       notificationCount: this.state.notificationcount,
       culture: this.state.culture,
       cultureString: this.state.cultureString,
-      settingsFirstTime: this.state.settingsFirstTime,
-      currentNotificationDate: global.currentNotificationDate,
-      finalDate: this.state.finalDate
+      settingsFirstTime: this.state.settingsFirstTime
     };
 
     AsyncStorage.setItem('settings', JSON.stringify(settingsObj), () => {
@@ -303,8 +284,6 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
         this.setState({ culture: resultAsObj.culture });
         this.setState({ cultureString: resultAsObj.cultureString });
         this.setState({ settingsFirstTime: resultAsObj.settingsFirstTime});
-        this.setState({ finalDate: resultAsObj.finalDate});
-        //global.currentNotificationDate = this.state.currentNotificationDate;
       }
     });
 

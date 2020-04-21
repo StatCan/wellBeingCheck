@@ -1,0 +1,281 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Test</title>
+</head>
+<body>
+    <h1>Notification Calculation </h1>
+    <label>Ping Num:</label><input type="number" value="3" id="ping" onchange="reset()" /><br />
+    <label>Awake Time:</label><input type="time" value="08:10:00" id="awake" onchange="reset()" /><br />
+    <label>Sleep Time:</label><input type="time" id="sleep" value="23:45:00" onchange="reset()" /><br />
+    <button onclick="test()">Calculate</button><br />
+    <label>Result:</label><br />
+    <div id="info"></div>
+    <script>
+        function test() {
+            var awakeHour = document.getElementById("awake").value;
+            var sleepHour = document.getElementById("sleep").value;
+            var pingCount = document.getElementById("ping").value;
+            var str = calculate(awakeHour, sleepHour, pingCount);
+            document.getElementById("info").innerHTML = str;
+        }
+        function reset() { document.getElementById("info").innerHTML = ''; }
+        const primeTimeAwakeIntervals = [
+            {
+                awakeHour: 10,
+                weekDayPercentage: 4,  // A
+                weekendPercentage: 4   // N
+            },
+            {
+                awakeHour: 11,
+                weekDayPercentage: 5, // B
+                weekendPercentage: 5  // O
+            },
+            {
+                awakeHour: 12,
+                weekDayPercentage: 5, // C
+                weekendPercentage: 8  // P
+            },
+            {
+                awakeHour: 13,
+                weekDayPercentage: 5, // D
+                weekendPercentage: 10  // Q
+            },
+            {
+                awakeHour: 14,
+                weekDayPercentage: 5, // E
+                weekendPercentage: 11  // R
+            },
+            {
+                awakeHour: 15,
+                weekDayPercentage: 5, // F
+                weekendPercentage: 8  // S
+            },
+            {
+                awakeHour: 16,
+                weekDayPercentage: 4, // G
+                weekendPercentage: 7  // T
+            },
+            {
+                awakeHour: 17,
+                weekDayPercentage: 5, // H
+                weekendPercentage: 5  // U
+            },
+            {
+                awakeHour: 18,
+                weekDayPercentage: 10, // I
+                weekendPercentage: 7  // V
+            },
+            {
+                awakeHour: 19,
+                weekDayPercentage: 13, // J
+                weekendPercentage: 9  // W
+            },
+            {
+                awakeHour: 20,
+                weekDayPercentage: 15, // K
+                weekendPercentage: 9  // X
+            },
+            {
+                awakeHour: 21,
+                weekDayPercentage: 12, // L
+                weekendPercentage: 7  // Y
+            },
+            {
+                awakeHour: 22,
+                weekDayPercentage: 6, // M
+                weekendPercentage: 4  // Z
+            }];
+        function calculate(awake, sleep, count) {
+            var str = ''; debugger;
+            //Step 1: Specify awake interval
+            str += '<h2>Step 1: Specify awake interval</h2>';
+            var a = roundUp(awake); var awakeHour = a.Hour; var isSharpAwakeHour = a.IsSharp;
+            var b = roundDown(sleep); var sleepHour = b.Hour; var isSharpSleepHour = b.IsSharp;
+            var awakeInterval = sleepHour - awakeHour; if (awakeHour > sleepHour) awakeInterval += 24;
+            if (count > awakeInterval) count = awakeInterval;
+            str += '<p>Ping Num:' + count + '</p>';
+            str += '<p>awakeHour:' + awake + ' IsSharpHour:' + isSharpAwakeHour + '  RoundUp:' + awakeHour + '</p>';
+            str += '<p>sleepHour:' + sleep + ' IsSharpHour:' + isSharpSleepHour + '  RoundDown:' + sleepHour + '</p>';
+            str += '<p>Awake interval:' + awakeInterval + '</p>';
+            //Step 2:Specify awake interval probability(including specify, adjust, second adjust)
+            str += '<h2>Step 2:Specify awake interval probability(including specify, adjust, second adjust)</h2>';
+            var intervals = [];
+            str += '<h3>Intervals:</h3>';
+            var totalPrimary = 0; var totalPrimaryWeekend = 0; var countNonPrimary = 0; var excessUnit = 0; var excessUnitWeekend = 0; var minPrimary = 100; var minPrimaryWeekend = 100;
+            if (awakeHour <= sleepHour) {
+                for (var i = awakeHour; i < sleepHour; i++) {
+                    var found = primeTimeAwakeIntervals.find(function (element) {
+                        return element.awakeHour == i;
+                    });
+                    if (found != null) {
+                        if (found.weekDayPercentage < minPrimary) minPrimary = found.weekDayPercentage;
+                        if (found.weekendPercentage < minPrimaryWeekend) minPrimaryWeekend = found.weekendPercentage;
+                        totalPrimary += found.weekDayPercentage; totalPrimaryWeekend += found.weekendPercentage;
+                        var e = { Hour: i, weekDayPercentage: found.weekDayPercentage, weekendPercentage: found.weekendPercentage, isPrimary: true, acculative: 0, acculativeWeekend: 0, isSelected: false, isSelectedWeekend: false };
+                        intervals.push(e);
+                    }
+                    else {
+                        countNonPrimary++;
+                        var e = { Hour: i, weekDayPercentage: 0, weekendPercentage: 0, isPrimary: false, acculative: 0, acculativeWeekend: 0, isSelected: false, isSelectedWeekend: false };
+                        intervals.push(e);
+                    }
+                }
+            }
+            else {   //Night shift
+                for (var i = awakeHour; i < 24; i++) {
+                    var found = primeTimeAwakeIntervals.find(function (element) {
+                        return element.awakeHour == i;
+                    });
+                    if (found != null) {
+                        if (found.weekDayPercentage < minPrimary) minPrimary = found.weekDayPercentage;
+                        if (found.weekendPercentage < minPrimaryWeekend) minPrimaryWeekend = found.weekendPercentage;
+                        totalPrimary += found.weekDayPercentage; totalPrimaryWeekend += found.weekendPercentage;
+                        var e = { Hour: i, weekDayPercentage: found.weekDayPercentage, weekendPercentage: found.weekendPercentage, isPrimary: true, acculative: 0, acculativeWeekend: 0, isSelected: false, isSelectedWeekend: false };
+                        intervals.push(e);
+                    }
+                    else {
+                        countNonPrimary++;
+                        var e = { Hour: i, weekDayPercentage: 0, weekendPercentage: 0, isPrimary: false, acculative: 0, acculativeWeekend: 0, isSelected: false, isSelectedWeekend: false };
+                        intervals.push(e);
+                    }
+                }
+                for (var i = 0; i < sleepHour; i++) {
+                    var found = primeTimeAwakeIntervals.find(function (element) {
+                        return element.awakeHour == i;
+                    });
+                    if (found != null) {
+                        if (found.weekDayPercentage < minPrimary) minPrimary = found.weekDayPercentage;
+                        if (found.weekendPercentage < minPrimaryWeekend) minPrimaryWeekend = found.weekendPercentage;
+                        totalPrimary += found.weekDayPercentage; totalPrimaryWeekend += found.weekendPercentage;
+                        var e = { Hour: i, weekDayPercentage: found.weekDayPercentage, weekendPercentage: found.weekendPercentage, isPrimary: true, acculative: 0, acculativeWeekend: 0, isSelected: false, isSelectedWeekend: false };
+                        intervals.push(e);
+                    }
+                    else {
+                        countNonPrimary++;
+                        var e = { Hour: i, weekDayPercentage: 0, weekendPercentage: 0, isPrimary: false, acculative: 0, acculativeWeekend: 0, isSelected: false, isSelectedWeekend: false };
+                        intervals.push(e);
+                    }
+                }
+            }
+
+            if (countNonPrimary > 0) {
+                excessUnit = (100 - totalPrimary) / countNonPrimary;
+                excessUnitWeekend = (100 - totalPrimaryWeekend) / countNonPrimary;
+                //Question 1: how about if 100-totalPrimary>0 but countNonPrimary=0
+                //Question 2: how about if 100=totlaPromary but countNonPrimary>0
+            }
+            intervals.forEach(function (e) {
+                str += '<p> Hour:' + e.Hour + ' weekDayPercentage:' + e.weekDayPercentage + ' weekendPercentage:' + e.weekendPercentage + ' IsPrimary:' + e.isPrimary + '</p>';
+            });
+            str += '<h3><i>Question 1: how about if 100-totalPrimary>0 but countNonPrimary=0 ?</i></h3>';
+            str += '<h3><i>Question 2: how about if 100=totalPrimary but countNonPrimary>0 ?</i><br/><i>Answer:Never happen, total of primary probability is always <100</i></h3>';
+            if ((100 - totalPrimary > 0 && countNonPrimary > 0) || (100 - totalPrimaryWeekend > 0 && countNonPiomary > 0)) {
+                str += '<h3>We have to do First time adjust for non primary interval, since total 100 - totalPrimary > 0 and count of NonPrimary interval > 0</h3>';
+                intervals.forEach(function (e) {
+                    if (!e.isPrimary) {
+                        e.weekDayPercentage = excessUnit; e.weekendPercentage = excessUnitWeekend;
+                    }
+                });
+            }
+            str += '<h3>Intervals after adjust:</h3>';
+            intervals.forEach(function (e) {
+                str += '<p> Hour:' + e.Hour + ' weekDayPercentage:' + e.weekDayPercentage.toFixed(2) + ' weekendPercentage:' + e.weekendPercentage.toFixed(2) + ' IsPrimary:' + e.isPrimary + '</p>';
+            });
+            if (excessUnit > minPrimary || excessUnitWeekend > minPrimaryWeekend) {
+                str += '<h3>We have to do Second time adjust for non primary interval, since some non primary probability > minimum of primary probability</h3>';
+            }
+            if (excessUnit > minPrimary) {
+                var x1 = 100 - totalPrimary; var x2 = 100 - totalPrimaryWeekend;
+                var y1 = x1 - minPrimary * countNonPrimary; var y2 = x2 - minPrimaryWeekend * countNonPrimary;
+                intervals.forEach(function (e) {
+                    if (e.isPrimary) {
+                        e.weekDayPercentage = e.weekDayPercentage + y1 * e.weekDayPercentage / totalPrimary;
+                    }
+                    else {
+                        e.weekDayPercentage = minPrimary;
+                    }
+                });
+            }
+            if (excessUnitWeekend > minPrimaryWeekend) {
+                var x1 = 100 - totalPrimary; var x2 = 100 - totalPrimaryWeekend;
+                var y1 = x1 - minPrimary * countNonPrimary; var y2 = x2 - minPrimaryWeekend * countNonPrimary;
+                intervals.forEach(function (e) {
+                    if (e.isPrimary) {
+                        e.weekendPercentage = e.weekendPercentage + y2 * e.weekendPercentage / totalPrimaryWeekend;
+                    }
+                    else {
+                        e.weekendPercentage = minPrimaryWeekend;
+                    }
+                });
+            }
+            str += '<h3>Intervals after second adjust:</h3>';
+            intervals.forEach(function (e) {
+                str += '<p> Hour:' + e.Hour + ' weekDayPercentage:' + e.weekDayPercentage.toFixed(2) + ' weekendPercentage:' + e.weekendPercentage.toFixed(2) + ' IsPrimary:' + e.isPrimary + '</p>';
+            });
+            //Step 3:Pick distribution
+            str += '<h2>Step 3:Pick distribution</h2>';
+            var acculative = 0; var acculativeWeekend = 0;
+            intervals.forEach(function (e) {
+                acculative += e.weekDayPercentage; acculativeWeekend += e.weekendPercentage;
+                e.acculative = acculative; e.acculativeWeekend = acculativeWeekend;
+            });
+            var selected = []; var selectedWeekend = [];
+            do {
+                var rnd = Math.random() * acculative;
+                var found = intervals.find(function (e) {
+                    return e.acculative > rnd;
+                });
+                if (!selected.includes(found.Hour)) selected.push(found.Hour);
+            } while (selected.length < count);
+            do {
+                var rndWeekend = Math.random() * acculativeWeekend;
+                var found = intervals.find(function (e) {
+                    return e.acculativeWeekend > rndWeekend;
+                });
+                if (!selectedWeekend.includes(found.Hour)) selectedWeekend.push(found.Hour);
+            } while (selectedWeekend.length < count);
+            intervals.forEach(function (e) {
+                if (selected.includes(e.Hour)) e.isSelected = true;
+                if (selectedWeekend.includes(e.Hour)) e.isSelectedWeekend = true;
+            });
+            str += '<h3>Intervals list:</h3>';
+            intervals.forEach(function (e) {
+                //  str += '<p> Hour:' + e.Hour + ' weekDayPercentage:' + e.weekDayPercentage.toFixed(2) + ' weekendPercentage:' + e.weekendPercentage.toFixed(2) + ' IsPrimary:' + e.isPrimary + ' Acculative:' + e.acculative.toFixed(2) + ' isSelected:' + e.isSelected + ' Acculative(Weekend):' + e.acculativeWeekend+ ' isSelected(Weekend):' + e.isSelectedWeekend + '</p>';
+                str += '<p> Hour:' + e.Hour + ' weekDayPercentage:' + e.weekDayPercentage.toFixed(2) + ' weekendPercentage:' + e.weekendPercentage.toFixed(2) + ' IsPrimary:' + e.isPrimary;
+                if (e.isSelected) str += ' Is selected for Weekday:<input type="checkbox" checked/>';
+                if (e.isSelectedWeekend) str += ' Is selected for Weekend:<input type="checkbox" checked/>';
+                str += '</p>';
+            });
+
+            //Step 4:Setup alarm
+            str += '<h2>Step 4:Setup alarm(omitted)</h2>';
+            return str;
+
+        }
+        function convertToDateTime(str) {
+            var v = str.split(':');
+            var h = v[0];
+            var m = v[1];
+            var s = v[2];
+            var d = new Date(); d.setHours(h); d.setMinutes(m); d.setSeconds(s);
+            return d;
+        }
+        function roundUp(time) {
+            var v = time.split(':');
+            var r = v[0]; var isSharp = true;
+            if (v[1] > 0 || v[2] > 0) {
+                r++; isSharp = false;
+            }
+            return { Hour: parseInt(r), IsSharp: isSharp };
+        }
+        function roundDown(time) {
+            var v = time.split(':');
+            var isSharp = true;
+            if (v[1] > 0 || v[2] > 0) isSharp = false;
+            return { Hour: parseInt(v[0]), IsSharp: isSharp };
+        }
+    </script>
+</body>
+</html>

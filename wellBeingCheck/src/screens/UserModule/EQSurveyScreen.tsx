@@ -55,18 +55,33 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
               global.fetchAction=false;
              // await this.saveDefaultParadata(jwt);
 
-            // Add 30 days for the final notification date
-            var currentDate = new Date();
-            var currentYear = currentDate.getUTCFullYear();
-            var currentMonth = currentDate.getUTCMonth();
-            var currentDay = currentDate.getUTCDate();
-      
-            var finalNotificationDate = new Date(currentYear, currentMonth, currentDay + 30, 0, 0, 0, 0);
-            if (global.debugMode) console.log("Final Notification Date is: " + finalNotificationDate);
-            // Call Notification Algorithm based on defaults
-            // Algorithm also saves the finalNotificationDate
-            notificationAlgo("6:00", "22:00", 2, finalNotificationDate);
+             if (global.debugMode) console.log("---SURVEY A DONE---");
+             if (global.debugMode) console.log("Calling notification algorithm...");
 
+             // Set the defaults
+             var wakeTime = "6:00";
+             var sleepTime = "22:00";
+             var numPings = 2;
+
+            // Check if Settings are saved and update defaults from there
+            AsyncStorage.getItem('settings', (err, settingsResult) => {
+              if (global.debugMode) console.log("The result of Settings getItem is: ", settingsResult);
+              if (settingsResult) {
+                let resultAsObj = JSON.parse(settingsResult);
+                wakeTime = resultAsObj.wakeTime;
+                sleepTime = resultAsObj.sleepTime;
+                numPings = resultAsObj.notificationCount;
+
+                if (global.debugMode) console.log("The saved wakeTime is: " + wakeTime);
+                if (global.debugMode) console.log("The saved sleepTime is: " + sleepTime);
+                if (global.debugMode) console.log("The saved numPings is: " + numPings);
+              }
+            });
+
+            // Call Notification Algorithm
+            // Algorithm also saves the final date
+            // Arguments: wakeTime, sleepTime, then number of pings
+            notificationAlgo(wakeTime, sleepTime, numPings);
          }
       async handleSurveyAdoneNew(){
             let isConnected=await checkConnection();
@@ -91,6 +106,40 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                   await this.fetchGraphs(types);
                }
                count=1;AsyncStorage.setItem('hasImage','1');global.hasImage=1;
+
+               // Save Survey B Done State
+               AsyncStorage.setItem('doneSurveyB','true');
+
+               // Now call the algorithm again
+
+               /*
+               // Set the defaults
+                var wakeTime = "6:00";
+                var sleepTime = "22:00";
+                var numPings = 2;
+
+                // Check if Settings are saved and update defaults from there
+                AsyncStorage.getItem('settings', (err, settingsResult) => {
+                  if (global.debugMode) console.log("The result of Settings getItem is: ", settingsResult);
+                  if (settingsResult) {
+                    let resultAsObj = JSON.parse(settingsResult);
+                    wakeTime = resultAsObj.wakeTime;
+                    sleepTime = resultAsObj.sleepTime;
+                    numPings = resultAsObj.notificationCount;
+
+                    if (global.debugMode) console.log("The saved wakeTime is: " + wakeTime);
+                    if (global.debugMode) console.log("The saved sleepTime is: " + sleepTime);
+                    if (global.debugMode) console.log("The saved numPings is: " + numPings);
+                  }
+                });
+                
+
+                // Call Notification Algorithm
+                // Algorithm also saves the final date
+                // Arguments: wakeTime, sleepTime, then number of pings
+                notificationAlgo(wakeTime, sleepTime, numPings);
+              */
+
                global.fetchAction=false;
                this.props.navigation.navigate('Dashboard');
          }

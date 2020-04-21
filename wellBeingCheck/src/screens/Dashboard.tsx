@@ -6,6 +6,7 @@ import { EvilIcons, Feather, FontAwesome } from '@expo/vector-icons';
 import LogoClearSmall from '../components/LogoClearSmall';
 import {checkConnection,hashString,fetchJwToken} from '../utils/fetchJwToken';
 import { resources } from '../../GlobalResources';
+import { notificationAlgo } from '../utils/notificationAlgo'
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import { Provider as PaperProvider, Portal, Dialog, Paragraph, Button } from 'react-native-paper';
 import { newTheme } from '../core/theme';
@@ -72,7 +73,68 @@ class Dashboard extends React.Component<Props, HomeState> {
   }
 
   componentDidMount() {
+
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+
+    var wakeTime;
+    var sleepTime;
+    var numPings;
+    var doneSurveyA;
+    var finalDate;
+
+    // Only call updating notifications if Survey A was done
+
+    AsyncStorage.getItem('finalDate', (err, finalDateResult) => {
+      if (global.debugMode) console.log("The result of finalDate getItem is: ", finalDateResult);
+
+      if (finalDateResult) {
+        finalDate = finalDateResult;
+
+        AsyncStorage.getItem('currentNotificationDate', (err, currentNotificationDateResult) => {
+          if (global.debugMode) console.log("The result of currentNotificationDate getItem is: ", currentNotificationDateResult);
+          var currentNotificationDateResultDate = new Date(JSON.parse(currentNotificationDateResult));
+          if (global.debugMode) console.log("The currentNotificationDate (Date Object) is: " + currentNotificationDateResultDate);
+          var finalDateResultDate = new Date(JSON.parse(finalDateResult));
+          if (global.debugMode) console.log("The finalDate getTime is: " + finalDateResultDate.getTime());
+          var currentNotificationDateResultTime = currentNotificationDateResultDate.getTime();
+
+          if (currentNotificationDateResultTime < finalDateResultDate.getTime()) {
+
+            if (global.debugMode) console.log("The time is less than finalDate - now checking Survey A Done Flag...");
+
+            AsyncStorage.getItem('doneSurveyA', (err, doneSurveyAResult) => {
+              if (global.debugMode) console.log("The result of doneSurveyA getItem is: ", doneSurveyAResult);
+              if (doneSurveyAResult) {
+                doneSurveyA = doneSurveyAResult;
+
+                if (doneSurveyA == 'true'){
+                  AsyncStorage.getItem('settings', (err, settingsResult) => {
+                    if (global.debugMode) console.log("The result of Settings getItem is: ", settingsResult);
+                    if (settingsResult) {
+                      let resultAsObj = JSON.parse(settingsResult);
+                      wakeTime = resultAsObj.wakeTime;
+                      sleepTime = resultAsObj.sleepTime;
+                      numPings = resultAsObj.notificationCount;
+
+                      if (global.debugMode) console.log("The saved wakeTime is: " + wakeTime);
+                      if (global.debugMode) console.log("The saved sleepTime is: " + sleepTime);
+                      if (global.debugMode) console.log("The saved numPings is: " + numPings);
+                
+                      if (!wakeTime) wakeTime = "6:00";
+                      if (!sleepTime) sleepTime = "22:00"
+                      if (!numPings) numPings = 2;
+                
+                      // First check if notification set date
+                      notificationAlgo(wakeTime, sleepTime, numPings);
+                    }
+                  });
+                }
+              }
+            });
+          }
+        });
+      }
+    });
   }
 
   componentWillUnmount() {
