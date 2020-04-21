@@ -1,8 +1,7 @@
 import React, { memo, useState, useCallback } from 'react';
 import { Image, View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator,Button,YellowBox, Platform, } from 'react-native';
 import { AsyncStorage } from 'react-native';
-//import { Ionicons,EvilIcons,Feather } from '@expo/vector-icons';
-import { AntDesign,FontAwesome } from '@expo/vector-icons';
+import { notificationAlgo } from '../../utils/notificationAlgo'
 import WebView from 'react-native-webview';
 import { resources } from '../../../GlobalResources';
 import {fetchJwToken,checkConnection,hashString,parseJwt} from '../../utils/fetchJwToken';
@@ -54,7 +53,35 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
               count=1;
               AsyncStorage.setItem('hasImage','0');global.hasImage=0;console.log('hasImage after survey A done.........'+global.hasImage);
               global.fetchAction=false;
-           //   await saveParadataAlgo(jwt);
+             // await this.saveDefaultParadata(jwt);
+
+             if (global.debugMode) console.log("---SURVEY A DONE---");
+             if (global.debugMode) console.log("Calling notification algorithm...");
+
+             // Set the defaults
+             var wakeTime = "6:00";
+             var sleepTime = "22:00";
+             var numPings = 2;
+
+            // Check if Settings are saved and update defaults from there
+            AsyncStorage.getItem('settings', (err, settingsResult) => {
+              if (global.debugMode) console.log("The result of Settings getItem is: ", settingsResult);
+              if (settingsResult) {
+                let resultAsObj = JSON.parse(settingsResult);
+                wakeTime = resultAsObj.wakeTime;
+                sleepTime = resultAsObj.sleepTime;
+                numPings = resultAsObj.notificationCount;
+
+                if (global.debugMode) console.log("The saved wakeTime is: " + wakeTime);
+                if (global.debugMode) console.log("The saved sleepTime is: " + sleepTime);
+                if (global.debugMode) console.log("The saved numPings is: " + numPings);
+              }
+            });
+
+            // Call Notification Algorithm
+            // Algorithm also saves the final date
+            // Arguments: wakeTime, sleepTime, then number of pings
+            notificationAlgo(wakeTime, sleepTime, numPings);
          }
       async handleSurveyAdoneNew(){
             let isConnected=await checkConnection();
@@ -79,6 +106,40 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                   await this.fetchGraphs(types);
                }
                count=1;AsyncStorage.setItem('hasImage','1');global.hasImage=1;
+
+               // Save Survey B Done State
+               AsyncStorage.setItem('doneSurveyB','true');
+
+               // Now call the algorithm again
+
+               /*
+               // Set the defaults
+                var wakeTime = "6:00";
+                var sleepTime = "22:00";
+                var numPings = 2;
+
+                // Check if Settings are saved and update defaults from there
+                AsyncStorage.getItem('settings', (err, settingsResult) => {
+                  if (global.debugMode) console.log("The result of Settings getItem is: ", settingsResult);
+                  if (settingsResult) {
+                    let resultAsObj = JSON.parse(settingsResult);
+                    wakeTime = resultAsObj.wakeTime;
+                    sleepTime = resultAsObj.sleepTime;
+                    numPings = resultAsObj.notificationCount;
+
+                    if (global.debugMode) console.log("The saved wakeTime is: " + wakeTime);
+                    if (global.debugMode) console.log("The saved sleepTime is: " + sleepTime);
+                    if (global.debugMode) console.log("The saved numPings is: " + numPings);
+                  }
+                });
+                
+
+                // Call Notification Algorithm
+                // Algorithm also saves the final date
+                // Arguments: wakeTime, sleepTime, then number of pings
+                notificationAlgo(wakeTime, sleepTime, numPings);
+              */
+
                global.fetchAction=false;
                //   await saveParadataAlgo(jwt);
                this.props.navigation.navigate('Dashboard');

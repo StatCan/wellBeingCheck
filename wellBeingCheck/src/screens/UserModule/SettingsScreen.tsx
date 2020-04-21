@@ -1,23 +1,17 @@
 import React, { memo, useState, useCallback } from 'react';
 import {
-  Picker,
   View,
   Text,
   StyleSheet,
-  TouchableOpacity,
   ScrollView,
   Platform,
   Switch,
-  AsyncStorage,Dimensions,
+  AsyncStorage,
+  Dimensions,
   Linking,
   Alert
 } from 'react-native';
-import Background from '../../components/Background';
-import Logo from '../../components/Logo';
-import Header from '../../components/Header';
 import Button from '../../components/Button';
-import TextInput from '../../components/TextInput';
-import BackButton from '../../components/BackButton';
 import { newTheme } from '../../core/theme';
 import { List, Divider } from 'react-native-paper';
 import TimePicker from '../../components/TimePicker'
@@ -76,12 +70,14 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       titleBackgroundColor: "#000",
       settingsFirstTime: true
     };
+
     this.wakeTimeHandler = this.wakeTimeHandler.bind(this);
     this.sleepTimeHandler = this.sleepTimeHandler.bind(this);
     this.cancelTimeHandler = this.cancelTimeHandler.bind(this);
   }
 
   wakeTimeHandler(time) {
+    time = time.substring(0, 5);
     this.setState({
       waketime: time
     })
@@ -96,6 +92,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   }
 
   sleepTimeHandler(time) {
+    time = time.substring(0, 5);
     this.setState({
       sleeptime: time
     })
@@ -172,15 +169,13 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   }
 
   handleBackAction = async () => {
-    if (global.debugMode) console.log("Component will unmount");
+    if (global.debugMode) console.log("Handle Back Action");
 
     //if (this._isDirty || this.state.settingsFirstTime) {
       this.setState({ settingsFirstTime: false });
       if (this.state.notificationState){
           if (global.debugMode) console.log("Dirty flag set - scheduling notifications");
-          scheduledDateArray=await notificationAlgo(this.state.waketime, this.state.sleeptime, this.state.notificationcount);
-          console.log('scheduled22222:'+scheduledDateArray);
-          //await saveParadataAlgo(jwt);
+          notificationAlgo(this.state.waketime, this.state.sleeptime, this.state.notificationcount, this.state.finalDate);
       } else {
         if (global.debugMode) console.log("Notifications turned off - cancelling all notifications");
         Notifications.cancelAllScheduledNotificationsAsync();
