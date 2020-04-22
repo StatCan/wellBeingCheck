@@ -205,6 +205,11 @@ export const resources = {
             "faq.a2": "FAQ answer 2",
             "faq.q3": "FAQ question 3",
             "faq.a3": "FAQ answer 3",
+
+            //Session
+            "session.modal.title": "Session timeout warning",
+            "session.modal.message": "Sorry your session has already expired. Please sign in again.",
+            "session.modal.sign_in": "Sign in",
         },
         fr: {
             //global
@@ -439,6 +444,11 @@ export const resources = {
             "faq.a2": "FR_FAQ answer 2",
             "faq.q3": "FR_FAQ question 3",
             "faq.a3": "FR_FAQ answer 3",
+
+            //Session
+            "session.modal.title": "Avertissement d'expiration de la session",
+            "session.modal.message": "Désolé, votre session a déjà expiré. S'il vous plaît ouvrir une nouvelle session.",
+            "session.modal.sign_in": "Ouvrir une session",
         }
     }
 };

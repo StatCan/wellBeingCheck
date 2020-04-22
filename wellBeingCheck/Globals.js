@@ -44,3 +44,5 @@ global.graphType7='';
 global.configurationReady=false;
 global.currentView=0;
 global.fetchAction=true;
+
+global.sessionTimeOutDuration = 900000 //900000 = 15 min
