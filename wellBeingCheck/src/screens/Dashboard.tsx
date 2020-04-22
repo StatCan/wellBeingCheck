@@ -134,7 +134,7 @@ class Dashboard extends React.Component<Props, HomeState> {
         resources.getString("session.modal.title"),
         resources.getString("session.modal.message"),
         [
-          { text:  resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
+          { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
         ],
         { cancelable: false }
       )
@@ -143,8 +143,8 @@ class Dashboard extends React.Component<Props, HomeState> {
   }
 
   componentWillUnmount() {
-        //Session Handler
-        clearTimeout(this.timer)
+    //Session Handler
+    clearTimeout(this.timer)
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
   }
 
@@ -154,7 +154,7 @@ class Dashboard extends React.Component<Props, HomeState> {
     this.setState({ showThankYou: !global.showThankYou == 0, thankYouText: txt });
     setTimeout(() => { global.showThankYou = 0; this.setState({ showThankYou: false }) }, 6000);
   }
-  
+
   handleBackButton() {
     return true;
   }
