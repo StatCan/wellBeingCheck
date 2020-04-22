@@ -23,7 +23,6 @@ interface Props {
 }
 
 class AboutScreen extends React.Component<Props, AboutState> {
-  sessionTimeOutDuration = 900000;
   _panResponder: any;
   timer = 0
 
@@ -36,6 +35,8 @@ class AboutScreen extends React.Component<Props, AboutState> {
       faqA3Expanded: false,
     };
 
+    /* --------------------Session Handler--------------------------- */
+    //used to handle session
     this._panResponder = PanResponder.create({
       // Ask to be the responder:
       onStartShouldSetPanResponder: () => {
@@ -76,28 +77,31 @@ class AboutScreen extends React.Component<Props, AboutState> {
       { cancelable: false }
     )
     ,
-    this.sessionTimeOutDuration)
+    global.sessionTimeOutDuration)
   }
 
   _handleSessionTimeOutRedirect = () => {
     Updates.reload();
   }
+  /* --------------------Session Handler--------------------------- */
 
   componentDidMount() {
+    //Session Handler
     this.timer = setTimeout(() =>
       Alert.alert(
-        'Session expired',
-        'Your session has expired due to 15 minutes of inactivity',
+        resources.getString("session.modal.title"),
+        resources.getString("session.modal.message"),
         [
-          { text: 'OK', onPress: () => this._handleSessionTimeOutRedirect() },
+          { text:  resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
         ],
         { cancelable: false }
       )
       ,
-      this.sessionTimeOutDuration)
+      global.sessionTimeOutDuration)
   }
 
   componentWillUnmount() {
+    //Session Handler
     clearTimeout(this.timer)
   }
 
