@@ -66,6 +66,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
     });
   }
 
+  /* --------------------Session Handler--------------------------- */
   _resetTimer() {
     this.timer = setTimeout(() =>
     Alert.alert(
@@ -80,10 +81,10 @@ class AboutScreen extends React.Component<Props, AboutState> {
     global.sessionTimeOutDuration)
   }
 
+  /* --------------------Session Handler--------------------------- */
   _handleSessionTimeOutRedirect = () => {
     Updates.reload();
   }
-  /* --------------------Session Handler--------------------------- */
 
   componentDidMount() {
     //Session Handler
