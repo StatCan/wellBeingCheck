@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ScrollView, PanResponder, Alert } from 'react-native';
 import Button from '../components/Button';
-import { Provider as PaperProvider, Title, Paragraph, List } from 'react-native-paper';
+import { Provider as PaperProvider, Title, List } from 'react-native-paper';
 import { newTheme } from '../core/theme';
 import AppBanner from '../components/AppBanner';
 import LogoClearSmall from '../components/LogoClearSmall';

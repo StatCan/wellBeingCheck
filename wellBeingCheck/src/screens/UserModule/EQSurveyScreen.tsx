@@ -1,6 +1,6 @@
 import React, { } from 'react';
 import { Image, View, StyleSheet, TouchableOpacity, Dimensions, ActivityIndicator, YellowBox, Platform, } from 'react-native';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, PanResponder, Alert } from 'react-native';
 import { notificationAlgo } from '../../utils/notificationAlgo'
 import WebView from 'react-native-webview';
 import { resources } from '../../../GlobalResources';
@@ -8,6 +8,7 @@ import { fetchJwToken, checkConnection, hashString, parseJwt, saveParaData } fro
 const deviceHeight = Math.floor(Dimensions.get('window').height);
 const deviceWidth = Math.floor(Dimensions.get('window').width);
 import { BackEndService } from '../../api/back-end.service';
+import { Updates } from 'expo';
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -30,6 +31,9 @@ let jsCode = '';
 
 
 export default class EQSurveyScreen extends React.Component<Props, ScreenState> {
+  _panResponder: any;
+  timer = 0
+
   constructor(Props) {
     super(Props)
     let disCode = 'const meta = document.createElement("meta"); meta.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"); meta.setAttribute("name", "viewport"); document.getElementsByTagName("head")[0].appendChild(meta);';
@@ -37,9 +41,79 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     jsCode = clearCookie + 'document.addEventListener("message", function (message) { document.getElementById("langtest").click(); });var btn = document.createElement("button");btn.style.visibility ="hidden";btn.onclick = switchlang;btn.setAttribute("id", "langtest");document.body.appendChild(btn);    function switchlang() { var a = document.querySelector("a.sc-js-langchange");var href = a.href;if (href.indexOf("/q/fr")>0) {var res = href.replace("/q/fr", "/q/en");a.setAttribute("href", res);a.click();} else if (href.indexOf("/q/en")>0) {var res = href.replace("/q/en", "/q/fr");a.setAttribute("href", res);a.click();} }';
     this.state = ({ Sacode: '', jsCode: disCode + jsCode, webviewLoaded: false });
     setTimeout(() => { this.setState({ webviewLoaded: true }) }, 4000);
+
+    /* --------------------Session Handler--------------------------- */
+    //used to handle session
+    this._panResponder = PanResponder.create({
+      // Ask to be the responder:
+      onStartShouldSetPanResponder: () => {
+        this._resetTimer()
+        return true
+      },
+      onMoveShouldSetPanResponder: () => {
+        this._resetTimer()
+        return true
+      },
+      onStartShouldSetPanResponderCapture: () => {
+        this._resetTimer()
+        return true
+      },
+      onMoveShouldSetPanResponderCapture: () => {
+        this._resetTimer()
+        return true
+      },
+      onPanResponderTerminationRequest: () => {
+        this._resetTimer()
+        return true
+      },
+      onShouldBlockNativeResponder: () => {
+        this._resetTimer()
+        return true
+      },
+    });
+  }
+
+  /* --------------------Session Handler--------------------------- */
+  _resetTimer() {
+    //Session Handler
+    clearTimeout(this.timer)
+    this.timer = setTimeout(() =>
+      Alert.alert(
+        resources.getString("session.modal.title"),
+        resources.getString("session.modal.message"),
+        [
+          { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
+        ],
+        { cancelable: false }
+      )
+      ,
+      global.sessionTimeOutDuration)
+  }
+
+  /* --------------------Session Handler--------------------------- */
+  _handleSessionTimeOutRedirect = () => {
+    Updates.reload();
   }
 
   componentDidMount() {
+    //Session Handler
+    clearTimeout(this.timer)
+    this.timer = setTimeout(() =>
+      Alert.alert(
+        resources.getString("session.modal.title"),
+        resources.getString("session.modal.message"),
+        [
+          { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
+        ],
+        { cancelable: false }
+      )
+      ,
+      global.sessionTimeOutDuration)
+  }
+
+  componentWillUnmount() {
+    //Session Handler
+    clearTimeout(this.timer)
   }
 
   async handleSurveyAdone() {
@@ -383,7 +457,10 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     console.log('Beofore eq:' + uri);
     let userAgent = Platform.OS == 'ios' ? 'Apple DeviceId/' + global.userToken : 'Android DeviceId/' + global.userToken; console.log('EQ userAgent' + userAgent);
     return (
-      <View style={{ flex: 1, marginTop: 40 }}>
+      <View
+        style={{ flex: 1, marginTop: 40 }}
+        {...this._panResponder.panHandlers}
+      >
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} style={{ marginLeft: 5, marginTop: 10 }}><Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{ width: 38, height: 38 }} /></TouchableOpacity>
         </View>
