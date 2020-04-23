@@ -487,13 +487,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgray'
   },
   smallButton: {
-    width: 75,
-    height: 75,
-    borderRadius: 75/2,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
     backgroundColor: '#66cc99',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 17
+    marginLeft: 25,
+    marginRight: 25,
+    marginBottom:4
   },
   smallButtonText: {
     color: '#000000',
