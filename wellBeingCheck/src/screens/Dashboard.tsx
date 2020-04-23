@@ -368,12 +368,7 @@ class Dashboard extends React.Component<Props, HomeState> {
            
             {/* ----------Contact us button using UX logo ic_wbc_contact_us----------- */}
             <View>
-              <View>
-                <TouchableOpacity onPress={()=>this.props.navigation.navigate('ContactUsScreen')} 
-                                  style={styles.smallButton}>
-                  <Image source={require('../assets/ic_wbc_contact_us.png')} />
-                </TouchableOpacity>
-              </View>
+              
               <View>
                 <View>
                   <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}>
@@ -388,15 +383,7 @@ class Dashboard extends React.Component<Props, HomeState> {
            
              {/*------------Result button using UX logo ic_wbc_dashboard----------*/}
              <View>
-              <View>
-                <TouchableOpacity onPress={() => {console.log('Has image before click result button:'+global.hasImage);
-                            if (global.hasImage==1) this.props.navigation.navigate('ResultScreen');
-                            else Alert.alert('',resources.getString("NoDataAlert")); }
-                         }
-                                  style={styles.smallButton}>
-                  <Image source={require('../assets/ic_wbc_dashboard.png')} />
-                </TouchableOpacity>
-              </View>
+              
               <View>
                 <View>
                   <TouchableOpacity onPress={() => {
