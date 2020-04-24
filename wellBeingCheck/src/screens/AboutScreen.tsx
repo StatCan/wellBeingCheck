@@ -40,68 +40,58 @@ class AboutScreen extends React.Component<Props, AboutState> {
     this._panResponder = PanResponder.create({
       // Ask to be the responder:
       onStartShouldSetPanResponder: () => {
-        this._resetTimer()
+        this._initSessionTimer()
         return true
       },
       onMoveShouldSetPanResponder: () => {
-        this._resetTimer()
+        this._initSessionTimer()
         return true
       },
       onStartShouldSetPanResponderCapture: () => {
-        this._resetTimer()
+        this._initSessionTimer()
         return true
       },
       onMoveShouldSetPanResponderCapture: () => {
-        this._resetTimer()
+        this._initSessionTimer()
         return true
       },
       onPanResponderTerminationRequest: () => {
-        this._resetTimer()
+        this._initSessionTimer()
         return true
       },
       onShouldBlockNativeResponder: () => {
-        this._resetTimer()
+        this._initSessionTimer()
         return true
       },
     });
   }
 
-  /* --------------------Session Handler--------------------------- */
-  _resetTimer() {
+  componentDidMount() {
     //Session Handler
-    clearTimeout(this.timer)
-    this.timer = setTimeout(() =>
-      Alert.alert(
-        resources.getString("session.modal.title"),
-        resources.getString("session.modal.message"),
-        [
-          { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
-        ],
-        { cancelable: false }
-      )
-      ,
-      global.sessionTimeOutDuration)
+    this._initSessionTimer()
   }
 
-  /* --------------------Session Handler--------------------------- */
   _handleSessionTimeOutRedirect = () => {
     Updates.reload();
   }
 
-  componentDidMount() {
-    //Session Handler
+  _initSessionTimer() {
     clearTimeout(this.timer)
     this.timer = setTimeout(() =>
-      Alert.alert(
-        resources.getString("session.modal.title"),
-        resources.getString("session.modal.message"),
-        [
-          { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
-        ],
-        { cancelable: false }
-      )
+      this._expireSession()
       ,
       global.sessionTimeOutDuration)
+  }
+
+  _expireSession() {
+    Alert.alert(
+      resources.getString("session.modal.title"),
+      resources.getString("session.modal.message"),
+      [
+        { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
+      ],
+      { cancelable: false }
+    )
   }
 
   componentWillUnmount() {
