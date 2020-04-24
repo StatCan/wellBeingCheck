@@ -1,4 +1,3 @@
-
 import React, { memo } from 'react';
 import Background from '../components/Background';
 import { View, Text, TextInput, Image, StyleSheet, ImageBackground, Dimensions, TouchableOpacity, BackHandler, AsyncStorage, Alert, YellowBox } from 'react-native';
@@ -218,7 +217,11 @@ class Dashboard extends React.Component<Props, HomeState> {
   //saveParaData tested well
   async saveParaData() {
     let isConnected = await checkConnection();
-    if (!isConnected) { alert('You are offline, try it later'); return; }
+    if (!isConnected) { 
+      Alert.alert(resources.getString("internet.offline"));
+      return; 
+      }
+
     let jwt = await fetchJwToken();
     var snt = ["2020/02/01 08:10:00", "2020/02/01 12:10:00", "2020/02/01 18:10:00"];
     let paraData = {
@@ -253,7 +256,10 @@ class Dashboard extends React.Component<Props, HomeState> {
   //saveParadataNew test failed  check later
   async saveParaDataNew() {
     let isConnected = await checkConnection();
-    if (!isConnected) { alert('You are offline, try it later'); return false; }
+    if (!isConnected) { 
+      Alert.alert(resources.getString("internet.offline"));
+      return false; 
+    }
     let backEndService = new BackEndService(
       WEB_API_BASE_URL,
       'fr-CA',
@@ -290,7 +296,9 @@ class Dashboard extends React.Component<Props, HomeState> {
       .then(res => {
         console.log(res.status);
         if (res.status == 200) {
-          res.json().then(data => { console.log(data); alert('Received data successfully'); })
+          res.json().then(data => { console.log(data); 
+            Alert.alert('Received data successfully');
+           })
         }
         else {   //401
           throw new Error("Access denied, Try again later, if same thing would happen again contact StatCan");
@@ -303,7 +311,8 @@ class Dashboard extends React.Component<Props, HomeState> {
   // launch survey
   async conductSurvey() {
     let isConnected = await checkConnection();
-    if (!isConnected) { alert('Internet connection unavailable'); return; }
+    if (!isConnected) { Alert.alert(resources.getString("internet.offline")); 
+    return; }
     let n = await this.getConfig();
 
     console.log('deviceId:' + global.userToken + ' password:' + global.password);
@@ -338,7 +347,8 @@ class Dashboard extends React.Component<Props, HomeState> {
         
         </View>
           <View style={styles.homeContainer}>
-            <TouchableOpacity onPress={() => this.conductSurvey()} style={{ flex: 2, justifyContent: 'center' }}>
+            <TouchableOpacity onPress={() => this.conductSurvey()} 
+                              style={{ flex: 2, justifyContent: 'center' }}>
               <View style={styles.outer}>
                 <View style={styles.inner}>
                   <Text style={styles.startButtonText}>{resources.getString("start_survey")}</Text>
