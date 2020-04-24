@@ -1,18 +1,19 @@
 import React, { memo, useState, useCallback } from 'react';
-import { Image, View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator,Button,YellowBox, Platform, } from 'react-native';
+import { Image, View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator,Button,YellowBox, Platform,Alert } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import { notificationAlgo } from '../../utils/notificationAlgo'
 import WebView from 'react-native-webview';
 import { resources } from '../../../GlobalResources';
 import {fetchJwToken,checkConnection,hashString,parseJwt,saveParaData} from '../../utils/fetchJwToken';
-const deviceHeight =Math.floor(Dimensions.get('window').height);
-const deviceWidth =Math.floor(Dimensions.get('window').width);
 import {BackEndService} from '../../api/back-end.service';
 import {
   NavigationParams,
   NavigationScreenProp,
   NavigationState,
 } from 'react-navigation';
+
+const deviceHeight =Math.floor(Dimensions.get('window').height);
+const deviceWidth =Math.floor(Dimensions.get('window').width);
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
@@ -40,18 +41,31 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
 
       async handleSurveyAdone(){
               let isConnected=await checkConnection();
-              if(!isConnected){alert('You are offline, try it later');return;}
+              if(!isConnected){
+                Alert.alert('You are offline, try it later');
+              return;
+              }
               let jwt=await fetchJwToken();
               console.log('Token:'+jwt);
-              if(jwt==''){alert("Internal server error(token), Try again, if same thing would happen again contact StatCan");return;}
+              if(jwt==''){
+                Alert.alert("Internal server error(token), Try again, if same thing would happen again contact StatCan");
+                return;
+              }
               global.jwToken=jwt;
               let result=false;
               result=await this.setPassword(jwt);
             //  result=await this.setPasswordNew();
-              if(!result){alert("Internal server error(set password), Try again, if same thing would happen again contact StatCan");return;}
-              console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
+              if(!result){
+                Alert.alert("Internal server error(set password), Try again, if same thing would happen again contact StatCan");
+                return;
+              }
+              console.log('survey A done'); 
+              global.doneSurveyA=true;
+              AsyncStorage.setItem('doneSurveyA','true');
               count=1;
-              AsyncStorage.setItem('hasImage','0');global.hasImage=0;console.log('hasImage after survey A done.........'+global.hasImage);
+              AsyncStorage.setItem('hasImage','0');
+              global.hasImage=0;
+              console.log('hasImage after survey A done.........'+global.hasImage);
               global.fetchAction=false;
              // await this.saveDefaultParadata(jwt);
 
@@ -78,22 +92,32 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
               }
             });
 
-            // Call Notification Algorithm
-            // Algorithm also saves the final date
-            // Arguments: wakeTime, sleepTime, then number of pings
+/**
+ *  Call Notification Algorithm
+ *  Algorithm also saves the final date
+ *  Arguments: wakeTime, sleepTime, then number of pings
+ */
+            
             notificationAlgo(wakeTime, sleepTime, numPings);
          }
       async handleSurveyAdoneNew(){
             let isConnected=await checkConnection();
-            if(!isConnected){alert('You are offline, try it later');return;}
+            if(!isConnected){
+              Alert.alert('You are offline, try it later');
+              return;
+            }
             result=await this.setPasswordNew();
-            if(!result){alert("Internal server error(set password), Try again, if same thing would happen again contact StatCan");return;}
+            if(!result){
+              Alert.alert("Internal server error(set password), Try again, if same thing would happen again contact StatCan");return;}
             console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
             count=1;
        }
       async handleSurveyBdone(){
                let isConnected=await checkConnection();console.log('In handle B');
-               if(!isConnected){alert('You are offline, try it later');return;}
+               if(!isConnected){
+                 Alert.alert('You are offline, try it later');
+                 return;
+                }
                let jwt=await fetchJwToken();
                if(jwt==''){alert("Internal server error(token), Try again, if same thing would happen again contact StatCan");return;}
                global.jwToken=jwt;
@@ -144,19 +168,29 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                this.props.navigation.navigate('Dashboard');
          }
       async handleSurveyBdoneNew(){
-            let isConnected=await checkConnection();console.log('In handle B');
-            if(!isConnected){alert('You are offline, try it later');return;}
-            let types=await this.fetchGraphTypesNew();             //  let types=['overall','activity','people','location'];
+            let isConnected=await 
+            checkConnection();
+            console.log('In handle B');
+            if(!isConnected){
+              Alert.alert('You are offline, try it later');
+              return;
+            }
+            let types=await 
+            this.fetchGraphTypesNew();             //  let types=['overall','activity','people','location'];
              console.log('types:'+types);
              if(types!=null && types.length>0){
                   await this.fetchGraphs(types);
              }
-             count=1;AsyncStorage.setItem('hasImage','1');global.hasImage=1;
+             count=1;
+             AsyncStorage.setItem('hasImage','1');
+             global.hasImage=1;
       }
       async fetchGraphs(types:string[]){
          //   if(count>0)return;
 
-            let hh=deviceHeight-220;let hh1=deviceHeight-300;let ww=deviceWidth-80;
+            let hh=deviceHeight-220;
+            let hh1=deviceHeight-300;
+            let ww=deviceWidth-80;
             let index=0;
             for(var i=0;i<types.length;i++){
                 let url=global.webApiBaseUrl+'api/dashboard/graph/'+types[i];
@@ -166,7 +200,8 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                 this.fetchImage(url,index,'en');index++;
                 this.fetchImage(url,index,'fr');index++;
             }
-            AsyncStorage.setItem('hasImage','1');console.log('Fetch images done');
+            AsyncStorage.setItem('hasImage','1');
+            console.log('Fetch images done');
          }
      //The new service call has problem
       async setPasswordNew() {
@@ -290,8 +325,11 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
       }
       async fetchImage(url:string,index:number,culture:string) {
           let isConnected=await checkConnection();
-          if(!isConnected){alert('You are offline, try it later');return;}
-          let token=global.jwToken;  // console.log(url);     //await fetchJwToken();console.log(url);
+          if(!isConnected){
+            Alert.alert(resources.getString("internet.offline"));
+            return;
+          }
+          let token = global.jwToken;  // console.log(url);     //await fetchJwToken();console.log(url);
        //   console.log(token);
           fetch(url, {
                 method: 'GET',
