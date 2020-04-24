@@ -135,52 +135,51 @@ class AboutScreen extends React.Component<Props, AboutState> {
             <LogoClearSmall />
           </View>
           <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.scrollView}>
-              <View {...this._panResponder.panHandlers}>
-                <List.Section>
-                  <View style={styles.faqView}>
-                    <List.Accordion
-                      title={resources.getString("faq.title")}
-                      expanded={this.state.faqMainExpanded}
-                      onPress={this._handleFaqMainExpand}
-                    >
-                      <View style={styles.faqViewAns}>
-                        <List.Accordion
-                          title={resources.getString("faq.q1")}
-                          expanded={this.state.faqA1Expanded}
-                          onPress={this._handleFaqA1}
-                        >
-                          <View style={styles.faqListItem}>
-                            <Text>{resources.getString("faq.a1")}</Text>
-                          </View>
-                        </List.Accordion>
-                        <List.Accordion
-                          title={resources.getString("faq.q2")}
-                          expanded={this.state.faqA2Expanded}
-                          onPress={this._handleFaqA2}
-                        >
-                          <View style={styles.faqListItem}>
-                            <Text>{resources.getString("faq.a2")}</Text>
-                          </View>
-                        </List.Accordion>
-                        <List.Accordion
-                          title={resources.getString("faq.q3")}
-                          expanded={this.state.faqA3Expanded}
-                          onPress={this._handleFaqA3}
-                        >
-                          <View style={styles.faqListItem}>
-                            <Text>{resources.getString("faq.a3")}</Text>
-                          </View>
-                        </List.Accordion>
-                      </View>
-                    </List.Accordion>
-                  </View>
-                </List.Section>
-
-                <Title style={styles.title}>{resources.getString("about_title")}</Title>
-                <View style={styles.content}>
-                  <Text>{resources.getString("about_content")}</Text>
+            <ScrollView style={styles.scrollView}
+              {...this._panResponder.panHandlers}
+            >
+              <List.Section>
+                <View style={styles.faqView}>
+                  <List.Accordion
+                    title={resources.getString("faq.title")}
+                    expanded={this.state.faqMainExpanded}
+                    onPress={this._handleFaqMainExpand}
+                  >
+                    <View style={styles.faqViewAns}>
+                      <List.Accordion
+                        title={resources.getString("faq.q1")}
+                        expanded={this.state.faqA1Expanded}
+                        onPress={this._handleFaqA1}
+                      >
+                        <View style={styles.faqListItem}>
+                          <Text>{resources.getString("faq.a1")}</Text>
+                        </View>
+                      </List.Accordion>
+                      <List.Accordion
+                        title={resources.getString("faq.q2")}
+                        expanded={this.state.faqA2Expanded}
+                        onPress={this._handleFaqA2}
+                      >
+                        <View style={styles.faqListItem}>
+                          <Text>{resources.getString("faq.a2")}</Text>
+                        </View>
+                      </List.Accordion>
+                      <List.Accordion
+                        title={resources.getString("faq.q3")}
+                        expanded={this.state.faqA3Expanded}
+                        onPress={this._handleFaqA3}
+                      >
+                        <View style={styles.faqListItem}>
+                          <Text>{resources.getString("faq.a3")}</Text>
+                        </View>
+                      </List.Accordion>
+                    </View>
+                  </List.Accordion>
                 </View>
+              </List.Section>
+              <Title style={styles.title}>{resources.getString("about_title")}</Title>
+              <View style={styles.content}>
+                <Text>{resources.getString("about_content")}</Text>
               </View>
             </ScrollView>
           </SafeAreaView>
