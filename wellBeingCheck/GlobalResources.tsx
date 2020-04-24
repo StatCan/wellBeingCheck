@@ -210,6 +210,14 @@ export const resources = {
             "session.modal.title": "Session timeout warning",
             "session.modal.message": "Sorry your session has already expired. Please sign in again.",
             "session.modal.sign_in": "Sign in",
+
+            //internet connection
+            "internet.offline":"No Internet connection is available, please check to ensure you are connected.",
+
+            //Notification request
+            "notification.resquest.title":"Notifications Alert",
+            "notification.resquest.message":"Would you like to turn on notifications?"
+
         },
         fr: {
             //global
@@ -449,6 +457,14 @@ export const resources = {
             "session.modal.title": "Avertissement d'expiration de la session",
             "session.modal.message": "Désolé, votre session a déjà expiré. S'il vous plaît ouvrir une nouvelle session.",
             "session.modal.sign_in": "Ouvrir une session",
+
+            //Internet connection
+            "internet.offline":"Aucune connexion à Internet. Veuillez vérifier que vous êtes bien connecté.",
+            //Notification Request
+            "notification.resquest.title":"Alert de notifications",
+            "notification.resquest.message":"Voulez-vous activer les notifications?"
+
+            
         }
     }
 };
