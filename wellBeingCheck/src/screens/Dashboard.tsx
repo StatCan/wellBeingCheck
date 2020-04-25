@@ -247,12 +247,15 @@ class Dashboard extends React.Component<Props, HomeState> {
       body: JSON.stringify(paraData),
     })
       .then((response) => {
-        if (response.status == 200) { console.log('paradata saved successfully'); return true; }
+        if (response.status == 200) { console.log('paradata saved successfully'); 
+        return true; 
+      }
         else { console.log('paradata Bad:' + response.status); return false; }
       })          // response.json())
       .catch((error) => { console.log(error.message); });
   }
 
+ 
   //saveParadataNew test failed  check later
   async saveParaDataNew() {
     let isConnected = await checkConnection();
@@ -277,14 +280,18 @@ class Dashboard extends React.Component<Props, HomeState> {
       ]
     });
     if (backEndService.isResultFailure(result)) {
-      console.log('paradatanew failed'); return false;
+      console.log('paradatanew failed'); 
+      return false;
     }
-    else { console.log('paradatanew saved successfully'); return true; }
+    else { console.log('paradatanew saved successfully'); 
+    return true; 
+  }
   }
 
   async sendRequest() {
     let token = await fetchJwToken(); console.log('send:' + token);
-    let url = global.webApiBaseUrl + 'api/Values'; let cul = global.culture; console.log(cul);
+    let url = global.webApiBaseUrl + 'api/Values'; 
+    let cul = global.culture; console.log(cul);
     console.log(url);
     fetch(url, {
       method: 'GET',
@@ -321,7 +328,7 @@ class Dashboard extends React.Component<Props, HomeState> {
       this.props.navigation.navigate('EQSurveyScreen');
     }
     else {
-      alert('Access denied(Config), Try it later, if same thing would happen again contact StatCan');
+      Alert.alert(resources.getString("network.error.general"));
       return;
     }
   }
