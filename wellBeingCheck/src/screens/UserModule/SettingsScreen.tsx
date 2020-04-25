@@ -80,7 +80,8 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   wakeTimeHandler(time) {
     time = time.substring(0, 5);
     this.setState({
-      waketime: time
+      waketime: time,
+      wakeTimePickerShow:false
     })
     this.setState({ wakeTimePickerShow: false });
     if (global.debugMode) console.log("Value changed - setting dirty flag");
@@ -88,16 +89,21 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   }
 
   cancelTimeHandler(time) {
-    this.setState({ wakeTimePickerShow: false });
-    this.setState({ sleepTimePickerShow: false });
+    this.setState({ 
+      wakeTimePickerShow: false,
+      sleepTimePickerShow: false
+    
+    });
   }
 
   sleepTimeHandler(time) {
     time = time.substring(0, 5);
     this.setState({
-      sleeptime: time
+      sleeptime: time,
+      sleepTimePickerShow:false
     })
     this.setState({ sleepTimePickerShow: false });
+
     if (global.debugMode) console.log("Value changed - setting dirty flag");
     this._isDirty = true;
   }
@@ -357,7 +363,6 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                        {/* <BackButton goBack={() => this._backButtonPressed()}/> */}
                    <Text style={styles.toolbarTitle}>{resources.getString("settings")}</Text>
             </View>
-
         <View style={styles.containerStyle}>
            <ScrollView>
                <List.Section style={styles.mainStyle}>
@@ -459,34 +464,37 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                        <Portal>
                          <Dialog
                            visible={this.state.languageModalShow}
-                           onDismiss={this._hideLanguageModal}>
+                           onDismiss={this._hideLanguageModal} >
                            <Dialog.Title>{resources.getString("language")}</Dialog.Title>
                            <Dialog.Content>
-                             <RadioButton.Group
-                              
-                               onValueChange={c => this._changeLanguage(c)}
-                               value={this.state.culture}>
+                             <RadioButton.Group  onValueChange={c => this._changeLanguage(c)}
+                                                 value={this.state.culture}>
+
                                <View style={styles.radioButtonContainerStyle}>
-                               <Text style={styles.radioButtonTextEnStyle}>English </Text>
-                               <RadioButton.Android value='1'color='green' uncheckedColor='#330033'> 
-                               </RadioButton.Android>   
+                                  <RadioButton.Android value='1'color='green' uncheckedColor='#330033'> 
+                                  </RadioButton.Android>  
+                                  <Text style={styles.radioButtonTextEnStyle}>English </Text>
                                </View>
 
                                <View style={styles.radioButtonContainerStyle}>
-                               <Text style={styles.radioButtonTextFrStyle}>Français</Text>
-                               <RadioButton.Android value='2'color='green' uncheckedColor='#330033'> 
-                               </RadioButton.Android>
+                                  <RadioButton.Android value='2'color='green' uncheckedColor='#330033'> 
+                                  </RadioButton.Android>
+                                  <Text style={styles.radioButtonTextFrStyle}>Français</Text>
                                </View>
-                                 
+                     
                              </RadioButton.Group>
                            </Dialog.Content>
+
                            <Dialog.Actions>
+                             <View style={{flexDirection:'column',flex:2}}>
                              <Button
                                style={styles.dialog_action_btn}
                                onPress={this._hideLanguageModal}>
                                Ok
                            </Button>
-                           </Dialog.Actions>
+                           </View>
+                          </Dialog.Actions>
+                           
                          </Dialog>
                        </Portal>
                      </View>
@@ -542,6 +550,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                                  </Portal>
                                </View>
                                </ScrollView>
+                              
           </View>
           <View style={styles.buttonView}>
             <Button style={styles.btnNext}
@@ -648,7 +657,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 20,
     padding: 10
-  }
+  },
+
+  Dialog: {
+   width:300,
+   height:200
+  },
 });
 
 export default memo(SettingsScreen);
