@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Button, View, Text, StyleSheet } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { Appearance } from 'react-native-appearance'
+import { Appearance } from 'react-native-appearance';
+import { resources } from '../../GlobalResources';
 
 const TimePicker = (props) => {
 
@@ -35,9 +36,28 @@ const TimePicker = (props) => {
             mode={"time"}
             isDarkModeEnabled={isDarkModeEnabled}
             isVisible={props.isVisible}
-            is24Hour={false}
+
+            //android props
+            is24Hour={false} //this in case we need to have 24 hours clock for android is24Hour={true}
+            display='spinner'
             onConfirm={handleConfirm}
             onCancel={hideTimePicker}
+
+            //ios props
+            headerTextIOS = {resources.getString("timepicker.title")}
+            cancelTextIOS= {resources.getString("timepicker.canceltext")}
+            confirmTextIOS= {resources.getString("timepicker.confirmtext")}
+            buttonpositive={'dddddd'}
+            buttonnegative={'vvvvvv'}
+
+            //locale="en_GB" this in case we need to have 24 hours clock for iOS
+            // textConfirm="Ok"
+            // textCancel="No"
+            // confirmBtnText="tttt"
+            // cancelBtnText="bbbb"
+            // okText={"ddd"}
+            // cancelText={"cccc"}
+             //locale='fre'
         />
     </View>
   );
