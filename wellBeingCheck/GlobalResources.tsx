@@ -214,9 +214,19 @@ export const resources = {
             //internet connection
             "internet.offline":"No Internet connection is available, please check to ensure you are connected.",
 
+            //Network error jwt
+            "network.error.jwt":"Internal server error(token), Try again, if same thing would happen again contact StatCan",
+            "network.error.pwd":"Error to set password, please try again later",
+            "network.error.general":"Network Error, please try again later",
+
             //Notification request
-            "notification.resquest.title":"Notifications Alert",
-            "notification.resquest.message":"Would you like to turn on notifications?"
+            "notification.resquest.title":"",
+            "notification.resquest.message":"Visit your device settings to enable notifications?",
+
+             //time picker title
+             "timepicker.title":"Pick a time",
+             "timepicker.canceltext":"Cancel",
+             "timepicker.confirmtext":"Confirm"
 
         },
         fr: {
@@ -460,11 +470,20 @@ export const resources = {
 
             //Internet connection
             "internet.offline":"Aucune connexion à Internet. Veuillez vérifier que vous êtes bien connecté.",
-            //Notification Request
-            "notification.resquest.title":"Alert de notifications",
-            "notification.resquest.message":"Voulez-vous activer les notifications?"
 
-            
+            //Network error jwt
+            "network.error.jwt":"Erreur d'initialisation JSON Web Token , s'il vous plaît réessayer plus tard.",
+            "network.error.pwd":"Erreur d'initialisation de mot de passe, s'il vous plaît reéssayer plus tard.",
+            "network.error.general":"Erreur de reseau, s'il vous plaît réessayer plus tard.",
+           
+            //Notification Request
+            "notification.resquest.title":"",
+            "notification.resquest.message":"Accédez aux paramètres de votre appareil pour activer les notifications?",
+
+            //time picker title
+            "timepicker.title":"Choisir une heure",
+            "timepicker.canceltext":"Annuler",
+            "timepicker.confirmtext":"Confirmer"
         }
     }
 };
