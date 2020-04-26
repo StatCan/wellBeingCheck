@@ -1,5 +1,6 @@
 import { Notifications } from "expo";
 import { AsyncStorage } from 'react-native';
+import * as Permissions from 'expo-permissions';
 
 const primeTimeAwakeIntervals = [
   {
@@ -92,6 +93,27 @@ setupNotification = async (datetime,title,message) => {
   if (global.debugMode) console.log('set notification:'+notificationId);
   return notificationId;
 };
+askPermissions = async () => {
+    let result=false;
+    const { status: existingStatus } = await Permissions.getAsync(
+      Permissions.NOTIFICATIONS
+    );
+    let finalStatus = existingStatus;
+    if (existingStatus !== "granted") {
+      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      finalStatus = status;
+      Notifications.cancelAllScheduledNotificationsAsync();
+    }
+    if (finalStatus !== "granted") {
+      // In final status, we asked for permission of the OS and we were denied, so we need to ask
+      if (global.debugMode) console.log("Notifications Permission Not Granted");
+      Notifications.cancelAllScheduledNotificationsAsync();
+    }else{
+      if (global.debugMode) console.log("Notifications Permission Granted");
+      result=true;
+    }
+    return result;
+  };
 export function cancellAllSchedules(){
      Notifications.cancelAllScheduledNotificationsAsync();
 }
@@ -99,6 +121,9 @@ export function cancelSchedule(localNotificationId){
     Notifications.cancelScheduledNotificationAsync(localNotificationId);
 }
 export function setupSchedules(affectCurrent=false){
+    let title="Scheduled Notification";
+    let message="Scheduled Notification for the Survey!";
+    let lastMessage="We haven’t heard from you in a while. Sign in for a Well-being Check!/Nous n’avons pas eu de vos nouvelles depuis un certain temps. Connectez-vous pour obtenir un Bilan bien-être!";
     let schedules = [];let currentDateTime=new Date();console.log('current date:'+currentDateTime);
     let today=new Date(currentDateTime);today.setHours(0);today.setMinutes(0);today.setSeconds(0);today.setMilliseconds(0);
     let currentTime=roundUp(currentDateTime.toLocaleTimeString());
@@ -122,17 +147,17 @@ export function setupSchedules(affectCurrent=false){
             });
          }
          if(schedules.length>0){
+             let perm=askPermissions();
+             if(!perm){alert("denied");return;}
              schedules.forEach(function(s){
-                 console.log(s.Datetime.toString());
-                // scheduleNotification(s.Datetime);
+                console.log(s.Datetime.toString());
+                setupNotification(s.Datetime,title,message);
              });
              let dt=new Date(day5);dt.setHours(10);
-             let title="Scheduled Notification";
-             let body="We haven’t heard from you in a while. Sign in for a Well-being Check!/Nous n’avons pas eu de vos nouvelles depuis un certain temps. Connectez-vous pour obtenir un Bilan bien-être!";
-         //    let warningNotificationId=setupNotification(dt,title,body);
+             let warningNotificationId=setupNotification(dt,title,lastMessage);
               var l=lastDate.toString();console.log('aaaaaaaaaaaaaaaaa:'+l);
              AsyncStorage.setItem('LastDate',lastDate.toString());
-         //    AsyncStorage.setItem('WarningNotificationId',warningNotificationId);
+             AsyncStorage.setItem('WarningNotificationId',warningNotificationId);global.warningNotificationId=warningNotificationId;
              global.lastDate=lastDate;
              AsyncStorage.setItem('Schedules',JSON.stringify(schedules));
              global.schedules=schedules;
@@ -145,7 +170,6 @@ export function setupSchedules(affectCurrent=false){
         if(isInSchedules){
             let warningId=global.warningNotificationId;console.log('SURVEY bbbbbbbb  in schedules');
             if(affectCurrent){  //for change setting,  This part is hard core
-              // cancellAllSchedules();
                 let f=getAffectedDay(currentDateTime);  let day5=getNextDay(currentDateTime);console.log('SURVEY affect bbbbbbbbbbbbb');
                 if(f==null){  //No affected day, go normal schedule
                     let days = getFollowingDays(currentDateTime,lastDate,true);
@@ -191,16 +215,17 @@ export function setupSchedules(affectCurrent=false){
                     }
                 }
                 if(schedules.length>0){
+                    let perm=askPermissions();
+                    if(!perm){alert("denied");return;}
+                    cancellAllSchedules();
                     schedules.forEach(function(s){
-                    console.log(s.Datetime.toString());
-                     // scheduleNotification(s.Datetime);
+                        console.log(s.Datetime.toString());
+                        setupNotification(s.Datetime,title,message);
                     });
                     let dt=new Date(day5);dt.setHours(10);
-                    let title="Scheduled Notification";
-                    let body="We haven’t heard from you in a while. Sign in for a Well-being Check!/Nous n’avons pas eu de vos nouvelles depuis un certain temps. Connectez-vous pour obtenir un Bilan bien-être!";
-                     //    let warningNotificationId=setupNotification(dt,title,body);
-                     //    AsyncStorage.setItem('WarningNotificationId',warningNotificationId);
-                     AsyncStorage.setItem('Schedules',JSON.stringify(schedules));
+                    let warningNotificationId=setupNotification(dt,title,lastMessage);
+                    AsyncStorage.setItem('WarningNotificationId',warningNotificationId);global.warningNotificationId=warningNotificationId;
+                    AsyncStorage.setItem('Schedules',JSON.stringify(schedules));
                     global.schedules=schedules;
                 }
             }
@@ -229,15 +254,16 @@ export function setupSchedules(affectCurrent=false){
                             }
                  if(schedules.length>0){
                      schedules=updateSchedulesList(schedules,currentDateTime);
+                     let perm=askPermissions();
+                     if(!perm){alert("denied");return;}
+                     cancelSchedule(global.warningNotificationId);
                      schedules.forEach(function(s){
                            console.log(s.Datetime.toString()+"->"+s.Day);
-                                    // scheduleNotification(s.Datetime);
+                           setupNotification(s.Datetime,title,message);
                      });
                      let dt=new Date(day5);dt.setHours(10);
-                     let title="Scheduled Notification";
-                     let body="We haven’t heard from you in a while. Sign in for a Well-being Check!/Nous n’avons pas eu de vos nouvelles depuis un certain temps. Connectez-vous pour obtenir un Bilan bien-être!";
-                  //    let warningNotificationId=setupNotification(dt,title,body);
-                  //    AsyncStorage.setItem('WarningNotificationId',warningNotificationId);
+                     let warningNotificationId=setupNotification(dt,title,lastMessage);
+                     AsyncStorage.setItem('WarningNotificationId',warningNotificationId);global.warningNotificationId=warningNotificationId;
 
                      AsyncStorage.setItem('Schedules',JSON.stringify(schedules));
                      global.schedules=schedules;
@@ -246,7 +272,7 @@ export function setupSchedules(affectCurrent=false){
         }
         else{
              if(today>global.lastDate)return;
-             cancellAllSchedules();   console.log('SURVEY bbbbbbbb  NOT in schedules');
+             console.log('SURVEY bbbbbbbb  NOT in schedules');
              let days = getFollowingDays(currentDateTime,lastDate,true);
              let day5=getNextDay(currentDateTime);
              if(days.length>0){
@@ -262,15 +288,16 @@ export function setupSchedules(affectCurrent=false){
                  });
              }
              if(schedules.length>0){
+                  let perm=askPermissions();
+                  if(!perm){alert("denied");return;}
+                  cancellAllSchedules();
                   schedules.forEach(function(s){
                       console.log(s.Datetime.toString());
-                     // scheduleNotification(s.Datetime);
+                      setupNotification(s.Datetime,title,message);
                   });
              let dt=new Date(day5);dt.setHours(10);
-             let title="Scheduled Notification";
-             let body="We haven’t heard from you in a while. Sign in for a Well-being Check!/Nous n’avons pas eu de vos nouvelles depuis un certain temps. Connectez-vous pour obtenir un Bilan bien-être!";
-              //    let warningNotificationId=setupNotification(dt,title,body);
-              //    AsyncStorage.setItem('WarningNotificationId',warningNotificationId);
+             let warningNotificationId=setupNotification(dt,title,lastMessage);
+             AsyncStorage.setItem('WarningNotificationId',warningNotificationId);global.warningNotificationId=warningNotificationId;
              AsyncStorage.setItem('Schedules',JSON.stringify(schedules));
             global.schedules=schedules;
         }
