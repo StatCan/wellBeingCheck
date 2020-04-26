@@ -223,7 +223,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       AsyncStorage.setItem('EsmSurveyACode', 'none'); 
       AsyncStorage.removeItem('EsmCulture');
       AsyncStorage.removeItem('doneSurveyA'); 
-      global.doneSurveyA = false;
+      global.doneSurveyA = false;AsyncStorage.removeItem('LastDate');AsyncStorage.removeItem('Schedules');
       AsyncStorage.removeItem('hasImage');global.hasImage=false;
 
       AsyncStorage.removeItem('user_terms_and_conditions', (err) => {

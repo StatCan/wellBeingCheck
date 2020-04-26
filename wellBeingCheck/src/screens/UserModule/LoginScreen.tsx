@@ -9,6 +9,7 @@ import { resources } from '../../../GlobalResources';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { EvilIcons, Feather, FontAwesome } from '@expo/vector-icons';
 import md5 from "react-native-md5";
+import { setupSchedules } from '../../utils/schedule';
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -96,6 +97,11 @@ class LoginScreen extends React.Component<Props, LoginState> {
     }
   }
 
+onTestA(){setupSchedules();}
+onTestB(){setupSchedules(false);}
+onTestC(){setupSchedules(true);}
+onTestD(){AsyncStorage.removeItem('LastDate');global.lastDate=null;}
+
   render() {
     const bannerPathEnglish = require('../../assets/statscan_banner.png');
     const bannerPathFrench = require('../../assets/statscan_banner_fr.png');
@@ -123,6 +129,10 @@ class LoginScreen extends React.Component<Props, LoginState> {
 
               <View style={styles.logo}>
                 <Text>{resources.getString("Well-Being Check")}</Text>
+                <Button onPress={this.onTestA}><Text> AAA</Text></Button>
+                <Button onPress={this.onTestB}><Text>BBB</Text></Button>
+                <Button onPress={this.onTestC}><Text>CCC</Text></Button>
+                <Button onPress={this.onTestD}><Text>DDD</Text></Button>
               </View>
 
               <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -168,6 +178,8 @@ class LoginScreen extends React.Component<Props, LoginState> {
                   onPress={this._onLoginPressed}>
                   <Text style={styles.whiteText}>{resources.getString("login.login")}</Text>
                 </Button>
+
+
               </View>
             </ScrollView>
           </SafeAreaView>

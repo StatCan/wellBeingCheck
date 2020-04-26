@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { StyleSheet, StatusBar, View,Image,YellowBox} from 'react-native';
+import { StyleSheet, StatusBar, View,Image,YellowBox,Button} from 'react-native';
 import { AsyncStorage } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 import Background from '../components/Background';
@@ -7,6 +7,7 @@ import * as Localization from 'expo-localization';
 import { newTheme } from '../core/theme';
 import { Provider as PaperProvider, Title } from 'react-native-paper';
 import { checkConnection } from '../utils/fetchJwToken';
+
 import Constants from 'expo-constants';
 import { resources } from '../../GlobalResources';
 import LogoClear from '../components/LogoClear';
@@ -40,12 +41,12 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
       //splach screen forced show 3000 = 3 seconds!
       this.bootstrapA();
     });
-  }
 
+
+  }
   async delay(ms: number) {
     await new Promise(resolve => setTimeout(() => resolve(), ms)).then(() => console.log("splash screen complete"));
   }
-
   //determine if user already has an account
   _bootstrap = () => {
     console.log("_bootstrap");
@@ -123,6 +124,17 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           console.log('SurveyA:'+global.doneSurveyA);
           let hasImage = await AsyncStorage.getItem('hasImage');if(hasImage!=null)global.hasImage=hasImage;
           console.log('Has image on startup.............:'+global.hasImage);
+          let pingNum=await AsyncStorage.getItem('PingNum');if(pingNum==null)pingNum=2;global.pingNum=pingNum;
+          let awakeHour=await AsyncStorage.getItem('AwakeHour');if(awakeHour==null)awakeHour='8:00';global.awakeHour=awakeHour;
+          let sleepHour=await AsyncStorage.getItem('SleepHour');if(sleepHour==null)sleepHour='22:00';global.sleepHour=sleepHour;
+          let schedules=await AsyncStorage.getItem('Schedules');if(schedules==null)schedules=[];else schedules=JSON.parse(schedules);global.schedules=schedules;
+          let lastDate=await AsyncStorage.getItem('LastDate'); if(lastDate!=null)global.lastDate=new Date(lastDate);console.log('lllllllllllllllllllllllllllllllllll LastDate:'+global.lastDate);
+          let warningNotificationId=await AsyncStorage.getItem('WarningNotificationId');if(warningNotificationId!=null)global.warningNotificationId=warningNotificationId;
+          console.log('schedule:'+global.pingNum+' '+global.awakeHour+' '+global.sleepHour+' '+global.lastDate+' wid:'+global.warningNotificationId+' s_length:'+global.schedules.length+'Schedules:');
+          let list=global.schedules;
+          for(let i=0;i<list.length;i++){
+             console.log(list[i].Datetime+" ->"+list[i].Day);
+          }
           this._bootstrap();
         };
   render() {
@@ -139,7 +151,9 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
         />
          <View style={{backgroundColor:'#f7f8f9',width:'100%',height:48,borderColor:'red',bordertWidth:1,alignItems:'flex-end'}}>
                    <Image source={require('../assets/img_canadamdpi.png')} style={{ width: 128, height: 40,resizeMode:'stretch'}} />
+
           </View>
+
       </PaperProvider>
     );
   }
