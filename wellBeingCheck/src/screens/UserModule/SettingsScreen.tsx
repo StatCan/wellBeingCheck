@@ -424,7 +424,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                               timeType="wakeTime"
                               isVisible={this.state.wakeTimePickerShow}
                               handler={this.wakeTimeHandler}
-                              cancelHandler={this.cancelTimeHandler}
+                              cancelHandler={this.cancelTimeHandler}                    
                             />
                             <List.Item
                               style={styles.listStyle}
