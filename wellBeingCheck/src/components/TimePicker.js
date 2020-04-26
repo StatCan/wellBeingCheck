@@ -33,6 +33,7 @@ const TimePicker = (props) => {
   return (
     <View>
         <DateTimePickerModal
+      
             mode={"time"}
             isDarkModeEnabled={isDarkModeEnabled}
             isVisible={props.isVisible}
@@ -40,24 +41,17 @@ const TimePicker = (props) => {
             //android props
             is24Hour={false} //this in case we need to have 24 hours clock for android is24Hour={true}
             display='spinner'
-            onConfirm={handleConfirm}
-            onCancel={hideTimePicker}
-
+         
             //ios props
             headerTextIOS = {resources.getString("timepicker.title")}
             cancelTextIOS= {resources.getString("timepicker.canceltext")}
             confirmTextIOS= {resources.getString("timepicker.confirmtext")}
-            buttonpositive={'dddddd'}
-            buttonnegative={'vvvvvv'}
+            
+            //handler
+            onConfirm={handleConfirm}
+            onCancel={hideTimePicker}
 
             //locale="en_GB" this in case we need to have 24 hours clock for iOS
-            // textConfirm="Ok"
-            // textCancel="No"
-            // confirmBtnText="tttt"
-            // cancelBtnText="bbbb"
-            // okText={"ddd"}
-            // cancelText={"cccc"}
-             //locale='fre'
         />
     </View>
   );
@@ -67,7 +61,7 @@ const styles = StyleSheet.create({
     input:{borderWidth: 1, width:100, paddingLeft: 4},
     label:{color:'black', fontSize: 16, padding:10, alignItems: "flex-start"}
   });
-
+  
 export default TimePicker;
 
 
