@@ -81,18 +81,17 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     time = time.substring(0, 5);
     this.setState({
       waketime: time,
-      wakeTimePickerShow:false
+      wakeTimePickerShow: false
     })
-    this.setState({ wakeTimePickerShow: false });
-    if (global.debugMode) console.log("Value changed - setting dirty flag");
+    if (global.debugMode)
+    console.log("Value changed - setting dirty flag");
     this._isDirty = true;
   }
 
   cancelTimeHandler(time) {
-    this.setState({ 
+    this.setState({
       wakeTimePickerShow: false,
       sleepTimePickerShow: false
-    
     });
   }
 
@@ -100,10 +99,8 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     time = time.substring(0, 5);
     this.setState({
       sleeptime: time,
-      sleepTimePickerShow:false
+      sleepTimePickerShow: false
     })
-    this.setState({ sleepTimePickerShow: false });
-
     if (global.debugMode) console.log("Value changed - setting dirty flag");
     this._isDirty = true;
   }
