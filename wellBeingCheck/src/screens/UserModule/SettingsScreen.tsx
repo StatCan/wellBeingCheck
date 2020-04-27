@@ -24,6 +24,7 @@ import { Provider as PaperProvider, Title, Portal, Dialog, RadioButton } from 'r
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import * as IntentLauncher from 'expo-intent-launcher';
 
+
 var scheduledDateArray = new Array();
 
 type SettingsState = {
@@ -122,8 +123,8 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       Notifications.cancelAllScheduledNotificationsAsync();
 
       Alert.alert(
-        'Notification Alerts',
-        'Would you like to turn on notifications?',
+        resources.getString("notification.resquest.title"),
+        resources.getString("notification.resquest.message"),
         [
           {
             text: 'Cancel',
@@ -299,7 +300,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
 
     if (resources.culture == 'fr') {
       this.setState({ culture: '2' });
-      this.setState({ cultureString: 'French'});
+      this.setState({ cultureString: 'Français'});
     } else if (resources.culture == 'en') {
       this.setState({ culture: '1' });
       this.setState({ cultureString: 'English'});
@@ -313,7 +314,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
 
     if (c === "2") {
       resources.culture = 'fr';
-      this.setState({ cultureString: 'French' });
+      this.setState({ cultureString: 'Français' });
     } else if (c === "1") {
       resources.culture = 'en';
       this.setState({ cultureString: 'English' });
@@ -359,7 +360,6 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                        {/* <BackButton goBack={() => this._backButtonPressed()}/> */}
                    <Text style={styles.toolbarTitle}>{resources.getString("settings")}</Text>
             </View>
-
         <View style={styles.containerStyle}>
            <ScrollView>
                <List.Section style={styles.mainStyle}>
@@ -421,7 +421,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                               timeType="wakeTime"
                               isVisible={this.state.wakeTimePickerShow}
                               handler={this.wakeTimeHandler}
-                              cancelHandler={this.cancelTimeHandler}
+                              cancelHandler={this.cancelTimeHandler}                    
                             />
                             <List.Item
                               style={styles.listStyle}
@@ -461,29 +461,37 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                        <Portal>
                          <Dialog
                            visible={this.state.languageModalShow}
-                           onDismiss={this._hideLanguageModal}>
+                           onDismiss={this._hideLanguageModal} >
                            <Dialog.Title>{resources.getString("language")}</Dialog.Title>
                            <Dialog.Content>
-                             <RadioButton.Group
-                               onValueChange={c => this._changeLanguage(c)}
-                               value={this.state.culture}>
+                             <RadioButton.Group  onValueChange={c => this._changeLanguage(c)}
+                                                 value={this.state.culture}>
+
                                <View style={styles.radioButtonContainerStyle}>
-                                 <RadioButton value="1" />
-                                 <Text style={styles.radioButtonTextStyle}>English</Text>
+                                  <RadioButton.Android value='1'color='green' uncheckedColor='#330033'> 
+                                  </RadioButton.Android>  
+                                  <Text style={styles.radioButtonTextEnStyle}>English </Text>
                                </View>
+
                                <View style={styles.radioButtonContainerStyle}>
-                                 <RadioButton value="2" />
-                                 <Text style={styles.radioButtonTextStyle}>French</Text>
+                                  <RadioButton.Android value='2'color='green' uncheckedColor='#330033'> 
+                                  </RadioButton.Android>
+                                  <Text style={styles.radioButtonTextFrStyle}>Français</Text>
                                </View>
+                     
                              </RadioButton.Group>
                            </Dialog.Content>
+
                            <Dialog.Actions>
+                             <View style={{flexDirection:'column',flex:2}}>
                              <Button
                                style={styles.dialog_action_btn}
                                onPress={this._hideLanguageModal}>
                                Ok
                            </Button>
-                           </Dialog.Actions>
+                           </View>
+                          </Dialog.Actions>
+                           
                          </Dialog>
                        </Portal>
                      </View>
@@ -503,21 +511,29 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                                          }
                                          value={this.state.notificationcount.toString()}>
                                          <View style={styles.radioButtonContainerStyle}>
-                                           <RadioButton value="2" />
-                                           <Text style={styles.radioButtonTextStyle}>2</Text>
+                                            <RadioButton.Android value='2'color='green' uncheckedColor='#330033' style={styles.bottom}> 
+                                            </RadioButton.Android>
+                                            <Text style={styles.radioButtonTextStyle}>2</Text>
                                          </View>
+
                                          <View style={styles.radioButtonContainerStyle}>
-                                           <RadioButton value="3" />
-                                           <Text style={styles.radioButtonTextStyle}>3</Text>
+                                            <RadioButton.Android value='3'color='green' uncheckedColor='#330033'> 
+                                            </RadioButton.Android>
+                                            <Text style={styles.radioButtonTextStyle}>3</Text>
                                          </View>
+
                                          <View style={styles.radioButtonContainerStyle}>
-                                           <RadioButton value="4" />
-                                           <Text style={styles.radioButtonTextStyle}>4</Text>
+                                            <RadioButton.Android value='4'color='green' uncheckedColor='#330033'> 
+                                            </RadioButton.Android>   
+                                            <Text style={styles.radioButtonTextStyle}>4</Text>
                                          </View>
+
                                          <View style={styles.radioButtonContainerStyle}>
-                                           <RadioButton value="5" />
-                                           <Text style={styles.radioButtonTextStyle}>5</Text>
+                                            <RadioButton.Android value='5'color='green' uncheckedColor='#330033'> 
+                                            </RadioButton.Android>
+                                            <Text style={styles.radioButtonTextStyle}>5</Text>
                                          </View>
+
                                        </RadioButton.Group>
                                      </Dialog.Content>
                                      <Dialog.Actions>
@@ -531,6 +547,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                                  </Portal>
                                </View>
                                </ScrollView>
+                              
           </View>
           <View style={styles.buttonView}>
             <Button style={styles.btnNext}
@@ -558,6 +575,17 @@ const styles = StyleSheet.create({
   radioButtonTextStyle:{
     marginTop: 8, 
     marginLeft: 5
+  },
+  radioButtonTextEnStyle:{
+    marginTop: 8, 
+    marginLeft: 5,
+    marginRight: 9  
+  },
+
+  radioButtonTextFrStyle:{
+    marginTop: 8, 
+    marginLeft: 5,
+    marginRight: 5
   },
   descriptionStyle: {
     marginTop: 10
@@ -626,7 +654,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 20,
     padding: 10
-  }
+  },
+
+  Dialog: {
+   width:300,
+   height:200
+  },
 });
 
 export default memo(SettingsScreen);

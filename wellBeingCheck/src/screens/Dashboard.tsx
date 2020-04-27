@@ -1,4 +1,3 @@
-
 import React, { memo } from 'react';
 import Background from '../components/Background';
 import { View, Text, TextInput, Image, StyleSheet, ImageBackground, Dimensions, TouchableOpacity, BackHandler, AsyncStorage, Alert, YellowBox } from 'react-native';
@@ -218,7 +217,11 @@ class Dashboard extends React.Component<Props, HomeState> {
   //saveParaData tested well
   async saveParaData() {
     let isConnected = await checkConnection();
-    if (!isConnected) { alert('You are offline, try it later'); return; }
+    if (!isConnected) { 
+      Alert.alert(resources.getString("internet.offline"));
+      return; 
+      }
+
     let jwt = await fetchJwToken();
     var snt = ["2020/02/01 08:10:00", "2020/02/01 12:10:00", "2020/02/01 18:10:00"];
     let paraData = {
@@ -244,16 +247,22 @@ class Dashboard extends React.Component<Props, HomeState> {
       body: JSON.stringify(paraData),
     })
       .then((response) => {
-        if (response.status == 200) { console.log('paradata saved successfully'); return true; }
+        if (response.status == 200) { console.log('paradata saved successfully'); 
+        return true; 
+      }
         else { console.log('paradata Bad:' + response.status); return false; }
       })          // response.json())
       .catch((error) => { console.log(error.message); });
   }
 
+ 
   //saveParadataNew test failed  check later
   async saveParaDataNew() {
     let isConnected = await checkConnection();
-    if (!isConnected) { alert('You are offline, try it later'); return false; }
+    if (!isConnected) { 
+      Alert.alert(resources.getString("internet.offline"));
+      return false; 
+    }
     let backEndService = new BackEndService(
       WEB_API_BASE_URL,
       'fr-CA',
@@ -271,14 +280,18 @@ class Dashboard extends React.Component<Props, HomeState> {
       ]
     });
     if (backEndService.isResultFailure(result)) {
-      console.log('paradatanew failed'); return false;
+      console.log('paradatanew failed'); 
+      return false;
     }
-    else { console.log('paradatanew saved successfully'); return true; }
+    else { console.log('paradatanew saved successfully'); 
+    return true; 
+  }
   }
 
   async sendRequest() {
     let token = await fetchJwToken(); console.log('send:' + token);
-    let url = global.webApiBaseUrl + 'api/Values'; let cul = global.culture; console.log(cul);
+    let url = global.webApiBaseUrl + 'api/Values'; 
+    let cul = global.culture; console.log(cul);
     console.log(url);
     fetch(url, {
       method: 'GET',
@@ -290,7 +303,9 @@ class Dashboard extends React.Component<Props, HomeState> {
       .then(res => {
         console.log(res.status);
         if (res.status == 200) {
-          res.json().then(data => { console.log(data); alert('Received data successfully'); })
+          res.json().then(data => { console.log(data); 
+            Alert.alert('Received data successfully');
+           })
         }
         else {   //401
           throw new Error("Access denied, Try again later, if same thing would happen again contact StatCan");
@@ -303,7 +318,8 @@ class Dashboard extends React.Component<Props, HomeState> {
   // launch survey
   async conductSurvey() {
     let isConnected = await checkConnection();
-    if (!isConnected) { alert('Internet connection unavailable'); return; }
+    if (!isConnected) { Alert.alert(resources.getString("internet.offline")); 
+    return; }
     let n = await this.getConfig();
 
     console.log('deviceId:' + global.userToken + ' password:' + global.password);
@@ -312,7 +328,7 @@ class Dashboard extends React.Component<Props, HomeState> {
       this.props.navigation.navigate('EQSurveyScreen');
     }
     else {
-      alert('Access denied(Config), Try it later, if same thing would happen again contact StatCan');
+      Alert.alert(resources.getString("network.error.general"));
       return;
     }
   }
@@ -324,17 +340,22 @@ class Dashboard extends React.Component<Props, HomeState> {
         <Background>
           <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
             <TouchableOpacity style={{ marginLeft: 5, marginTop: 50 }}><Image source={require('../assets/ic_logo_loginmdpi.png')} style={{ width: 38, height: 38 }} /></TouchableOpacity>
-            <View>
+       
+                {/*-----------Setting button using UX logo ic_setting.png--------*/}
+         <View>
               <View>
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen', { refresh: this._refresh })}
                   style={{ marginRight: 5, marginTop: 50 }}>
                   <Image source={require('../assets/ic_setting.png')} />
                 </TouchableOpacity>
               </View>
-            </View>
-          </View>
+         </View>
+
+        
+        </View>
           <View style={styles.homeContainer}>
-            <TouchableOpacity onPress={() => this.conductSurvey()} style={{ flex: 2, justifyContent: 'center' }}>
+            <TouchableOpacity onPress={() => this.conductSurvey()} 
+                              style={{ flex: 2, justifyContent: 'center' }}>
               <View style={styles.outer}>
                 <View style={styles.inner}>
                   <Text style={styles.startButtonText}>{resources.getString("start_survey")}</Text>
@@ -344,9 +365,11 @@ class Dashboard extends React.Component<Props, HomeState> {
             {this.state.showThankYou &&
               <View style={{ backgroundColor: 'black', width: '80%', position: 'absolute', zIndex: 29, alignSelf: 'center', top: '60%', justifyContent: 'center', alignItems: 'center' }}><Text style={{ color: 'white', fontSize: 14, marginTop: 10, marginBottom: 10 }}>{this.state.thankYouText}</Text></View>
             }
-            <View style={[styles.homeButtonContainer, { marginBottom: 0, marginTop: 50 }, { flexDirection: 'row' }]}>
-
-              {/*-----------Information button using UX logo ic_wbc_about_survey--------*/}
+         
+          <View style={[styles.homeButtonContainer, { marginBottom: 0, marginTop: 50 }, { flexDirection: 'row' }]}>
+ 
+            {/*-----------Information button using UX logo ic_wbc_about_survey--------*/}
+            <View>
               <View>
                 <View>
                   <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')}
@@ -358,8 +381,11 @@ class Dashboard extends React.Component<Props, HomeState> {
                   <Text style={styles.smallButtonText}>{resources.getString("about")}</Text>
                 </View>
               </View>
-
-              {/* ----------Contact us button using UX logo ic_wbc_contact_us----------- */}
+            </View>
+           
+            {/* ----------Contact us button using UX logo ic_wbc_contact_us----------- */}
+            <View>
+              
               <View>
                 <View>
                   <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}>
@@ -370,8 +396,11 @@ class Dashboard extends React.Component<Props, HomeState> {
                   <Text style={styles.smallButtonText}>{resources.getString("contact_us")}</Text>
                 </View>
               </View>
-
-              {/*------------Result button using UX logo ic_wbc_dashboard----------*/}
+            </View>
+           
+             {/*------------Result button using UX logo ic_wbc_dashboard----------*/}
+             <View>
+              
               <View>
                 <View>
                   <TouchableOpacity onPress={() => {
@@ -388,6 +417,9 @@ class Dashboard extends React.Component<Props, HomeState> {
                   <Text style={styles.smallButtonText}>{resources.getString("result")}</Text>
                 </View>
               </View>
+            </View>
+            
+           
 
               {/* <TouchableOpacity onPress={() => { if (global.hasImage) this.props.navigation.navigate('ResultScreen'); else alert(resources.getString("NoDataAlert")); }} style={styles.smallButton}><EvilIcons name="chart" size={40} color="white" /><Text style={styles.smallButtonText}>{resources.getString("result")}</Text></TouchableOpacity> */}
 
@@ -498,17 +530,20 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgray'
   },
   smallButton: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
+    width: 60,
+    height: 60,
+    borderRadius: 30,
     backgroundColor: '#66cc99',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 10
+    marginLeft: 25,
+    marginRight: 25,
+    marginBottom:4
   },
   smallButtonText: {
     color: '#000000',
-    fontSize: 15, textAlign: 'center',
+    fontSize: 15,
+    textAlign: 'center'
   }
 });
 

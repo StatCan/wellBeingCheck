@@ -52,11 +52,21 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
 
     // Set language based on locale
     console.log("Locale is: " + Localization.locale);
+    console.log("resources culture: " + resources.culture);
 
-    if (Localization.locale === "en-CA"){
+
+   if (Localization.locale.substring(0,2) === "en" && (resources.culture==='en'|| resources.culture==='') ){
       resources.culture = 'en';
-    } else if (Localization.locale === "fr-CA"){
+      console.log("Locale is 1: en-ca:res=en " + Localization.locale +"ressource"+resources.culture);
+    } else if   (Localization.locale.substring(0,2) === "en" && (resources.culture==='fr'||resources.culture==='')) {
       resources.culture = 'fr';
+      console.log("Locale is 2: en-ca:res=fr " + Localization.locale +"ressource"+resources.culture);
+    } else if (Localization.locale === "fr-CA" && (resources.culture==='en'||resources.culture==='')) {
+      resources.culture = 'en';
+      console.log("Locale is 3: fr-ca:res=en " + Localization.locale +"ressource"+resources.culture);
+    } else if (Localization.locale === "fr-CA" && (resources.culture==='fr'||resources.culture==='')) {
+      resources.culture = 'fr';
+      console.log("Locale is 4: fr-ca:res=fr " + Localization.locale +"ressource"+resources.culture);
     }
 
     AsyncStorage.getItem('user_account', (err, userAccountResult) => {
@@ -111,6 +121,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           console.log('Prepare confiuration');
           let userToken = await AsyncStorage.getItem('EsmUserToken');
           let sac = await AsyncStorage.getItem('SacCode');
+
           if (userToken == null ||userToken==''){
               var deviceId=generateNewDeviceId();
               var valid=isValidDeviceId(deviceId);console.log('is valid:'+valid);
@@ -120,9 +131,9 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           else global.sac=sac;
           global.userToken=userToken;console.log('DeviceId:'+global.userToken);console.log('Sac:'+global.sac);
           let doneSurveyA = await AsyncStorage.getItem('doneSurveyA');global.doneSurveyA=doneSurveyA;
-          console.log('SurveyA:'+global.doneSurveyA);
-          let hasImage = await AsyncStorage.getItem('hasImage');if(hasImage!=null)global.hasImage=hasImage;
-          console.log('Has image on startup.............:'+global.hasImage);
+          console.log('SurveyA:'+ global.doneSurveyA);
+          let hasImage = await AsyncStorage.getItem('hasImage');if(hasImage!=null) global.hasImage=hasImage;
+          console.log('Has image on startup.............:'+ global.hasImage);
           this._bootstrap();
         };
   render() {

@@ -1,9 +1,9 @@
 {
-  "devToolsPort": 19002,
   "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 8248,
-  "expoServerNgrokUrl": "https://vt-wgm.unrealhound.wellbeingcheck.exp.direct",
-  "packagerNgrokUrl": "https://packager.vt-wgm.unrealhound.wellbeingcheck.exp.direct",
-  "ngrokPid": 12936
+  "expoServerNgrokUrl": "https://vt-wgm.saba76.wellbeingcheck.exp.direct",
+  "packagerNgrokUrl": "https://packager.vt-wgm.saba76.wellbeingcheck.exp.direct",
+  "ngrokPid": 44505,
+  "devToolsPort": 19002,
+  "packagerPort": 19007,
+  "packagerPid": 44487
 }
