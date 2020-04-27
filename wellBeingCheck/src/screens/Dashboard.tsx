@@ -15,6 +15,7 @@ import {
   NavigationState, NavigationEvents,
 } from 'react-navigation';
 
+YellowBox.ignoreWarnings(['Warning: ReactNative.createElement']);
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
@@ -115,6 +116,9 @@ class Dashboard extends React.Component<Props, HomeState> {
               if (doneSurveyAResult) {
                 doneSurveyA = doneSurveyAResult;
 
+
+                console.log("Ali---------The result of doneSurveyA getItem is : ", doneSurveyA);
+
                 if (doneSurveyA == 'true') {
                   AsyncStorage.getItem('settings', (err, settingsResult) => {
                     if (global.debugMode) console.log("The result of Settings getItem is: ", settingsResult);
@@ -200,9 +204,12 @@ class Dashboard extends React.Component<Props, HomeState> {
 
   checkThankYou() {
     let txt = '';
-    if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2) txt = txt = resources.getString('ThankYouB');
+    console.log("Dashboard.checkThankyou :Ali The result of Thank You getItem is :global.showThankYou= "+ global.showThankYou);
+    if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2)  txt = resources.getString('ThankYouB');
     this.setState({ showThankYou: !global.showThankYou == 0, thankYouText: txt });
-    setTimeout(() => { global.showThankYou = 0; this.setState({ showThankYou: false }) }, 6000);
+    setTimeout(() => { 
+      global.showThankYou = 0; 
+      this.setState({ showThankYou: false }) }, 6000);
   }
 
   handleBackButton() {
