@@ -49,6 +49,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
   //determine if user already has an account
   _bootstrap = () => {
     console.log("_bootstrap");
+    console.log("LaunchScreen._bootstrap Thank you page lunch page: "+ global.showThankYou);
 
     // Set language based on locale
     console.log("Locale is: " + Localization.locale);
@@ -118,7 +119,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
   }
 
   bootstrapA = async () => {
-          console.log('Prepare confiuration');
+          console.log('Prepare configuration');
           let userToken = await AsyncStorage.getItem('EsmUserToken');
           let sac = await AsyncStorage.getItem('SacCode');
 
@@ -130,10 +131,11 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           }
           else global.sac=sac;
           global.userToken=userToken;console.log('DeviceId:'+global.userToken);console.log('Sac:'+global.sac);
-          let doneSurveyA = await AsyncStorage.getItem('doneSurveyA');global.doneSurveyA=doneSurveyA;
+          let doneSurveyA = await AsyncStorage.getItem('doneSurveyA');
+          global.doneSurveyA=doneSurveyA;
           console.log('SurveyA:'+ global.doneSurveyA);
           let hasImage = await AsyncStorage.getItem('hasImage');if(hasImage!=null) global.hasImage=hasImage;
-          console.log('Has image on startup.............:'+ global.hasImage);
+          console.log('Launch.BootStrapA Has image on startup.............:'+ global.hasImage);
           this._bootstrap();
         };
   render() {
