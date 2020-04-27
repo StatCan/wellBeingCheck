@@ -35,6 +35,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     jsCode = clearCookie + 'document.addEventListener("message", function (message) { document.getElementById("langtest").click(); });var btn = document.createElement("button");btn.style.visibility ="hidden";btn.onclick = switchlang;btn.setAttribute("id", "langtest");document.body.appendChild(btn);    function switchlang() { var a = document.querySelector("a.sc-js-langchange");var href = a.href;if (href.indexOf("/q/fr")>0) {var res = href.replace("/q/fr", "/q/en");a.setAttribute("href", res);a.click();} else if (href.indexOf("/q/en")>0) {var res = href.replace("/q/en", "/q/fr");a.setAttribute("href", res);a.click();} }';
     this.state = ({ Sacode: '', jsCode: disCode + jsCode, webviewLoaded: false });
     setTimeout(() => { this.setState({ webviewLoaded: true }) }, 4000);
+
     /* --------------------Session Handler--------------------------- */
     //used to handle session
     this._panResponder = PanResponder.create({
@@ -49,7 +50,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
       },
       onStartShouldSetPanResponderCapture: () => {
         this._initSessionTimer()
-        return true
+        return false
       },
       onMoveShouldSetPanResponderCapture: () => {
         this._initSessionTimer()
@@ -129,13 +130,13 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
       Alert.alert(resources.getString("network.error.jwt"));
       return; 
     }
-    console.log('survey A done'); 
+    console.log('EQSurveyScreen.HandleSurveyAdone: Ali Screen EQsurvey A done'); 
     global.doneSurveyA = true; 
     AsyncStorage.setItem('doneSurveyA', 'true');
     count = 1;
     AsyncStorage.setItem('hasImage', '0'); 
     global.hasImage = 0; 
-    console.log('hasImage after survey A done.........' + global.hasImage);
+    console.log('EQSurveyScreen.HandleSurveyAdone : Ali A hasImage after survey A done' + global.hasImage);
     global.fetchAction = false;
     if (global.debugMode) console.log("---SURVEY A DONE---");
     if (global.debugMode) console.log("Calling notification algorithm...");
@@ -153,9 +154,9 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
         wakeTime = resultAsObj.wakeTime;
         sleepTime = resultAsObj.sleepTime;
         numPings = resultAsObj.notificationCount;
-        if (global.debugMode) console.log("The saved wakeTime is: " + wakeTime);
-        if (global.debugMode) console.log("The saved sleepTime is: " + sleepTime);
-        if (global.debugMode) console.log("The saved numPings is: " + numPings);
+        if (global.debugMode) console.log("EQSurveyScreen.HandleSurveyAdone: The saved wakeTime is: " + wakeTime);
+        if (global.debugMode) console.log("EQSurveyScreen.HandleSurveyAdone: The saved sleepTime is: " + sleepTime);
+        if (global.debugMode) console.log("EQSurveyScreen.HandleSurveyAdone: The saved numPings is: " + numPings);
       }
     });
 
@@ -175,7 +176,9 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
       Alert.alert(resources.getString("network.error.pwd"));
       return; 
     }
-    console.log('survey A done'); global.doneSurveyA = true; AsyncStorage.setItem('doneSurveyA', 'true');
+    console.log('survey A done'); 
+    global.doneSurveyA = true; 
+    AsyncStorage.setItem('doneSurveyA', 'true');
     count = 1;
   }
   async handleSurveyBdone() {
@@ -489,7 +492,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                 let jsCode1 = 'var sac ="1234566789";sac= document.querySelector("div.sc-box-main p span.ecf-bold").innerText;window.ReactNativeWebView.postMessage(sac);';
                 console.log('Survey done.......................................................');
                 if (global.doneSurveyA) {
-                  console.log('THank you B........................' + global.fetchAction);
+                  console.log('EQSurveyScreenTHank you B........................' + global.fetchAction);
                   this.handleSurveyBdone();
                   global.showThankYou = 2;
                   this.props.navigation.navigate('Dashboard');
@@ -518,7 +521,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
             else {
               console.log('survey A done'); global.doneSurveyA = true; AsyncStorage.setItem('doneSurveyA', 'true');
               this.handleSurveyAdone();
-              count = 1; global.showThankYou = 2;
+              count = 1; global.showThankYou = 1;
             }
             this.props.navigation.navigate('Dashboard');
           }}
