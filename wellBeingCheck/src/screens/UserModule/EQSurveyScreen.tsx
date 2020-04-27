@@ -49,7 +49,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
       },
       onStartShouldSetPanResponderCapture: () => {
         this._initSessionTimer()
-        return true
+        return false
       },
       onMoveShouldSetPanResponderCapture: () => {
         this._initSessionTimer()
