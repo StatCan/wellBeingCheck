@@ -7,7 +7,7 @@ import * as Localization from 'expo-localization';
 import { newTheme } from '../core/theme';
 import { Provider as PaperProvider, Title } from 'react-native-paper';
 import { checkConnection } from '../utils/fetchJwToken';
-
+import { Notifications } from "expo";
 import Constants from 'expo-constants';
 import { resources } from '../../GlobalResources';
 import LogoClear from '../components/LogoClear';
@@ -36,7 +36,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
     //  this.getDeviceConnectionInfo();
     this.state = {
     };
-   
+ //   this.onNotification = this.onNotification.bind(this);
     this.delay(2000).then(any => {
       //splach screen forced show 3000 = 3 seconds!
       this.bootstrapA();
@@ -124,12 +124,14 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           console.log('SurveyA:'+global.doneSurveyA);
           let hasImage = await AsyncStorage.getItem('hasImage');if(hasImage!=null)global.hasImage=hasImage;
           console.log('Has image on startup.............:'+global.hasImage);
+
           let pingNum=await AsyncStorage.getItem('PingNum');if(pingNum==null)pingNum=2;global.pingNum=pingNum;
           let awakeHour=await AsyncStorage.getItem('AwakeHour');if(awakeHour==null)awakeHour='8:00';global.awakeHour=awakeHour;
           let sleepHour=await AsyncStorage.getItem('SleepHour');if(sleepHour==null)sleepHour='22:00';global.sleepHour=sleepHour;
+
           let schedules=await AsyncStorage.getItem('Schedules');if(schedules==null)schedules=[];else schedules=JSON.parse(schedules);global.schedules=schedules;
           let lastDate=await AsyncStorage.getItem('LastDate'); if(lastDate!=null)global.lastDate=new Date(lastDate);console.log('lllllllllllllllllllllllllllllllllll LastDate:'+global.lastDate);
-          let warningNotificationId=await AsyncStorage.getItem('WarningNotificationId');if(warningNotificationId!=null)global.warningNotificationId=warningNotificationId;
+          let warningNotificationId=await AsyncStorage.getItem('WarningNotificationId');if(warningNotificationId!=null)global.warningNotificationId=parseInt(warningNotificationId);
           console.log('schedule:'+global.pingNum+' '+global.awakeHour+' '+global.sleepHour+' '+global.lastDate+' wid:'+global.warningNotificationId+' s_length:'+global.schedules.length+'Schedules:');
           let list=global.schedules;
           for(let i=0;i<list.length;i++){
@@ -137,6 +139,8 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           }
           this._bootstrap();
         };
+  onNotification() { this.props.navigation.navigate('LoginScreen');}
+  componentDidMount() {Notifications.addListener(this.onNotification);}
   render() {
     return (
       <PaperProvider theme={newTheme}>

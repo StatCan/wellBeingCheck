@@ -23,7 +23,7 @@ import { resources } from '../../../GlobalResources';
 import { Provider as PaperProvider, Title, Portal, Dialog, RadioButton } from 'react-native-paper';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import * as IntentLauncher from 'expo-intent-launcher';
-
+import {setupSchedules,checkInSchedule} from '../../utils/schedule';
 var scheduledDateArray = new Array();
 
 type SettingsState = {
@@ -175,7 +175,9 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       this.setState({ settingsFirstTime: false });
       if (this.state.notificationState){
           if (global.debugMode) console.log("Dirty flag set - scheduling notifications");
-          notificationAlgo(this.state.waketime, this.state.sleeptime, this.state.notificationcount, this.state.finalDate);
+        //  notificationAlgo(this.state.waketime, this.state.sleeptime, this.state.notificationcount, this.state.finalDate);
+        let inp=checkInSchedule(new Date());
+        if(inp && global.doneSurveyA && global.schedules.length>0)setupSchedules(true);
       } else {
         if (global.debugMode) console.log("Notifications turned off - cancelling all notifications");
         Notifications.cancelAllScheduledNotificationsAsync();
@@ -259,6 +261,10 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       cultureString: this.state.cultureString,
       settingsFirstTime: this.state.settingsFirstTime
     };
+
+    AsyncStorage.setItem('PingNum',this.state.notificationcount);
+    AsyncStorage.setItem('AwakeHour',this.state.waketime);
+    AsyncStorage.setItem('SleepHour',this.state.sleeptime);
 
     AsyncStorage.setItem('settings', JSON.stringify(settingsObj), () => {
       if (global.debugMode) console.log("Storing Settings: ", settingsObj);

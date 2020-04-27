@@ -8,6 +8,7 @@ import {fetchJwToken,checkConnection,hashString,parseJwt,saveParaData} from '../
 const deviceHeight =Math.floor(Dimensions.get('window').height);
 const deviceWidth =Math.floor(Dimensions.get('window').width);
 import {BackEndService} from '../../api/back-end.service';
+import { setupSchedules} from '../../utils/schedule';
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -58,39 +59,9 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
              if (global.debugMode) console.log("---SURVEY A DONE---");
              if (global.debugMode) console.log("Calling notification algorithm...");
 
-             // Set the defaults
-             var wakeTime = "6:00";
-             var sleepTime = "22:00";
-             var numPings = 2;
-
-            // Check if Settings are saved and update defaults from there
-            AsyncStorage.getItem('settings', (err, settingsResult) => {
-              if (global.debugMode) console.log("The result of Settings getItem is: ", settingsResult);
-              if (settingsResult) {
-                let resultAsObj = JSON.parse(settingsResult);
-                wakeTime = resultAsObj.wakeTime;
-                sleepTime = resultAsObj.sleepTime;
-                numPings = resultAsObj.notificationCount;
-
-                if (global.debugMode) console.log("The saved wakeTime is: " + wakeTime);
-                if (global.debugMode) console.log("The saved sleepTime is: " + sleepTime);
-                if (global.debugMode) console.log("The saved numPings is: " + numPings);
-              }
-            });
-
-            // Call Notification Algorithm
-            // Algorithm also saves the final date
-            // Arguments: wakeTime, sleepTime, then number of pings
-            notificationAlgo(wakeTime, sleepTime, numPings);
+            setupSchedules();
          }
-      async handleSurveyAdoneNew(){
-            let isConnected=await checkConnection();
-            if(!isConnected){alert('You are offline, try it later');return;}
-            result=await this.setPasswordNew();
-            if(!result){alert("Internal server error(set password), Try again, if same thing would happen again contact StatCan");return;}
-            console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
-            count=1;
-       }
+
       async handleSurveyBdone(){
                let isConnected=await checkConnection();console.log('In handle B');
                if(!isConnected){alert('You are offline, try it later');return;}
@@ -132,7 +103,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                     if (global.debugMode) console.log("The saved numPings is: " + numPings);
                   }
                 });
-                
+
 
                 // Call Notification Algorithm
                 // Algorithm also saves the final date
@@ -143,16 +114,6 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                global.fetchAction=false;
                this.props.navigation.navigate('Dashboard');
          }
-      async handleSurveyBdoneNew(){
-            let isConnected=await checkConnection();console.log('In handle B');
-            if(!isConnected){alert('You are offline, try it later');return;}
-            let types=await this.fetchGraphTypesNew();             //  let types=['overall','activity','people','location'];
-             console.log('types:'+types);
-             if(types!=null && types.length>0){
-                  await this.fetchGraphs(types);
-             }
-             count=1;AsyncStorage.setItem('hasImage','1');global.hasImage=1;
-      }
       async fetchGraphs(types:string[]){
          //   if(count>0)return;
 

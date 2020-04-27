@@ -76,8 +76,8 @@ setupNotification = async (datetime,title,message) => {
       vibrate: true,
     });
   }
-  scheduledTime = new Date(datetime);console.log(':ScheduleTime'+scheduledTime);
-  let notificationId = Notifications.scheduleLocalNotificationAsync(
+  scheduledTime = new Date(datetime);console.log('ScheduleTime:'+scheduledTime);
+  let notificationId =await Notifications.scheduleLocalNotificationAsync(
     {
       title: title,
       body: message,
@@ -90,7 +90,6 @@ setupNotification = async (datetime,title,message) => {
       time: scheduledTime
     }
   );
-  if (global.debugMode) console.log('set notification:'+notificationId);
   return notificationId;
 };
 askPermissions = async () => {
@@ -114,16 +113,44 @@ askPermissions = async () => {
     }
     return result;
   };
-export function cancellAllSchedules(){
+function cancellAllSchedules(){
      Notifications.cancelAllScheduledNotificationsAsync();
 }
-export function cancelSchedule(localNotificationId){
+function cancelSchedule(localNotificationId){
     Notifications.cancelScheduledNotificationAsync(localNotificationId);
 }
-export async function setupSchedules(affectCurrent=false){
+
+async function setupWarning(dt,title,message){
+    if (Platform.OS === 'android') {
+                            Notifications.createChannelAndroidAsync('survey-messages', {
+                              name: 'Survey messages',
+                              sound: true,
+                              vibrate: true,
+                            });
+                          }
+    let scheduledTime = new Date(dt);console.log('ScheduleTime:'+scheduledTime);
+    let warningId=await Notifications.scheduleLocalNotificationAsync(
+                            {
+                              title: title,
+                              body: message,
+                              ios: { sound: true },
+                              android: {
+                                "channelId": "survey-messages"
+                              }
+                            },
+                            {
+                              time: new Date(dt)
+                            }
+                          );
+    console.log('WarningId:'+warningId);
+    return warningId;
+}
+export async function setupSchedules(affectCurrent=false,callback=null){
+    if(typeof callback=='function'){alert('function');callback();}
+    let permission=await askPermissions();if(!permission)return;
     let title="Scheduled Notification";
     let message="Scheduled Notification for the Survey!";
-    let lastMessage="We haven’t heard from you in a while. Sign in for a Well-being Check!/Nous n’avons pas eu de vos nouvelles depuis un certain temps. Connectez-vous pour obtenir un Bilan bien-être!";
+    let lastMessage="We haven’t heard from you in a while. Sign in for a Well-being Check!";///"Nous n’avons pas eu de vos nouvelles depuis un certain temps. Connectez-vous pour obtenir un Bilan bien-être!";
     let schedules = [];let currentDateTime=new Date();console.log('current date:'+currentDateTime);
     let today=new Date(currentDateTime);today.setHours(0);today.setMinutes(0);today.setSeconds(0);today.setMilliseconds(0);
     let currentTime=roundUp(currentDateTime.toLocaleTimeString());
@@ -135,9 +162,11 @@ export async function setupSchedules(affectCurrent=false){
          let day5=getNextDay(currentDateTime);console.log('ccccc:'+currentDateTime);
 
          if(days.length>0){
-            day5=getNextDay(days[days.length-1]); console.log('day5:'+day5);
+            day5=getNextDay(days[days.length-1]);
             days.forEach(function (d, index) {
-                  var schObj  =calculateSchedule(awake, sleep, count, d,currentDateTime);
+                  let ccc=count;
+                  if(index==0)ccc=Math.max(1,count-1);
+                  var schObj  =calculateSchedule(awake, sleep, ccc, d,currentDateTime);
                   var selected=schObj.Selected;
                   if (selected.length > 0) {
                        selected.forEach(function (s) {
@@ -147,21 +176,20 @@ export async function setupSchedules(affectCurrent=false){
             });
          }
          if(schedules.length>0){
-             let perm=await askPermissions();
-             if(!perm){alert("denied");return;}
-             schedules.forEach(function(s){
-                console.log(s.Datetime.toString());
-                setupNotification(s.Datetime,title,message);
-             });
              let dt=new Date(day5);dt.setHours(10);
-             let warningNotificationId=setupNotification(dt,title,lastMessage); console.log('WarningId:'+warningNotificationId);
-              var l=lastDate.toString();console.log('aaaaaaaaaaaaaaaaa:'+l);
+             schedules.forEach(async function(s){
+                let notificationId=await setupNotification(s.Datetime,title,message);
+                console.log('notificationId:'+notificationId);
+             });
+             let warningNotificationId=await setupWarning(dt,title,lastMessage);
+             var l=lastDate.toString();console.log('Last day:'+l);
              AsyncStorage.setItem('LastDate',lastDate.toString());
-             AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());global.warningNotificationId=warningNotificationId;
+             AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());
+             global.warningNotificationId=warningNotificationId;
+             console.log('warning notification:'+dt+' Id:'+warningNotificationId);
              global.lastDate=lastDate;
              AsyncStorage.setItem('Schedules',JSON.stringify(schedules));
              global.schedules=schedules;
-
          }
     }
     else { //Survey B or change setting
@@ -215,16 +243,16 @@ export async function setupSchedules(affectCurrent=false){
                     }
                 }
                 if(schedules.length>0){
-                    let perm=askPermissions();
-                    if(!perm){alert("denied");return;}
                     cancellAllSchedules();
-                    schedules.forEach(function(s){
-                        console.log(s.Datetime.toString());
-                        setupNotification(s.Datetime,title,message);
+                    schedules.forEach(async function(s){
+                        let notificationId=await setupNotification(s.Datetime,title,message);
+                        console.log('notificationId:'+notificationId);
                     });
                     let dt=new Date(day5);dt.setHours(10);
-                    let warningNotificationId=setupNotification(dt,title,lastMessage);
-                    AsyncStorage.setItem('WarningNotificationId',warningNotificationId);global.warningNotificationId=warningNotificationId;
+                    let warningNotificationId=await setupWarning(dt,title,lastMessage);
+                    AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());
+                    global.warningNotificationId=warningNotificationId;
+                    console.log('warning notification:'+warningNotificationId);
                     AsyncStorage.setItem('Schedules',JSON.stringify(schedules));
                     global.schedules=schedules;
                 }
@@ -254,17 +282,16 @@ export async function setupSchedules(affectCurrent=false){
                             }
                  if(schedules.length>0){
                      schedules=updateSchedulesList(schedules,currentDateTime);
-                     let perm=await askPermissions();
-                     if(!perm){alert("denied");return;}
-                    if(global.warningNotificationId!=null) cancelSchedule(global.warningNotificationId);
-                     schedules.forEach(function(s){
-                           console.log(s.Datetime.toString()+"->"+s.Day);
-                           setupNotification(s.Datetime,title,message);
+                     if(global.warningNotificationId!=null) cancelSchedule(global.warningNotificationId);
+                     schedules.forEach(async function(s){
+                            let notificationId=await setupNotification(s.Datetime,title,message);
+                            console.log('notificationId:'+notificationId);
                      });
                      let dt=new Date(day5);dt.setHours(10);
-                     let warningNotificationId=setupNotification(dt,title,lastMessage);
-                     AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());global.warningNotificationId=warningNotificationId;
-
+                     let warningNotificationId=await setupWarning(dt,title,lastMessage);
+                     AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());
+                     global.warningNotificationId=warningNotificationId;
+                     console.log('warning notification:'+warningNotificationId);
                      AsyncStorage.setItem('Schedules',JSON.stringify(schedules));
                      global.schedules=schedules;
                  }
@@ -288,19 +315,19 @@ export async function setupSchedules(affectCurrent=false){
                  });
              }
              if(schedules.length>0){
-                  let perm=await askPermissions();
-                  if(!perm){alert("denied");return;}
                   cancellAllSchedules();
-                  schedules.forEach(function(s){
-                      console.log(s.Datetime.toString());
-                      setupNotification(s.Datetime,title,message);
+                  schedules.forEach(async function(s){
+                      let notificationId=await setupNotification(s.Datetime,title,message);
+                      console.log('notificationId:'+notificationId);
                   });
-             let dt=new Date(day5);dt.setHours(10);
-             let warningNotificationId=setupNotification(dt,title,lastMessage);
-             AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());global.warningNotificationId=warningNotificationId;
-             AsyncStorage.setItem('Schedules',JSON.stringify(schedules));
-            global.schedules=schedules;
-        }
+                 let dt=new Date(day5);dt.setHours(10);
+                 let warningNotificationId=await setupWarning(dt,title,lastMessage);
+                 AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());
+                 global.warningNotificationId=warningNotificationId;
+                 console.log('warning notification:'+warningNotificationId);
+                 AsyncStorage.setItem('Schedules',JSON.stringify(schedules));
+                 global.schedules=schedules;
+             }
     }
     }
 }
@@ -578,11 +605,7 @@ export async function setupSchedules(affectCurrent=false){
             })
             return list1;
         }
- function getTimePart(date){
-    console.log(date.toLocaleTimeString());
-    return date.getHours()+':'+date.getMinutes()+':'+d.getSeconds();
- }
- function checkInSchedule(datetime){
+ export function checkInSchedule(datetime){
     let result = false;
     let list =global.schedules;
     if (list.length > 0) {
