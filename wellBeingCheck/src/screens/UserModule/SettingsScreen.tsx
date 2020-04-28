@@ -4,7 +4,7 @@ import Button from '../../components/Button';
 import { newTheme } from '../../core/theme';
 import { List, Divider } from 'react-native-paper';
 import TimePicker from '../../components/TimePicker'
-import { notificationAlgo, scheduleNotification20s } from '../../utils/notificationAlgo'
+//import { notificationAlgo, scheduleNotification20s } from '../../utils/notificationAlgo'
 import { Notifications } from "expo";
 import * as Permissions from 'expo-permissions';
 import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
@@ -216,8 +216,8 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     // this function will fire on the next tick after the app starts
     // with the notification data.
 
-    if (global.debugMode) console.log("DEBUGMODE ON - Outputting Console Logs");
-    if (global.debugMode) console.log("Settings Screen Component Mounted");
+  //  if (global.debugMode) console.log("DEBUGMODE ON - Outputting Console Logs");
+  //  if (global.debugMode) console.log("Settings Screen Component Mounted");
 
   //  this._notificationSubscription = Notifications.addListener(this._handleNotification);
 

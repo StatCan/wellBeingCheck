@@ -1,7 +1,7 @@
 import React, { memo, useState, useCallback } from 'react';
 import { Image, View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator,Button,YellowBox, Platform,Alert } from 'react-native';
 import { AsyncStorage,PanResponder } from 'react-native';
-import { notificationAlgo } from '../../utils/notificationAlgo'
+//import { notificationAlgo } from '../../utils/notificationAlgo'
 import WebView from 'react-native-webview';
 import { resources } from '../../../GlobalResources';
 import {fetchJwToken,checkConnection,hashString,parseJwt,saveParaData} from '../../utils/fetchJwToken';
@@ -109,115 +109,42 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     //Session Handler
     clearTimeout(this.timer)
   }
-  async handleSurveyAdone() {
-    let isConnected = await checkConnection();
-    if (!isConnected) {  
-      Alert.alert(resources.getString("internet.offline"));
-     return; 
-    }
-    let jwt = await fetchJwToken();
-    console.log('Token:' + jwt);
-    if (jwt == '') { 
-      Alert.alert(resources.getString("network.error.jwt"));
-      return;
-    }
-    global.jwToken = jwt;
-    let result = false;
-    result = await this.setPassword(jwt);
-    //  result=await this.setPasswordNew();
-    if (!result) { 
-      Alert.alert(resources.getString("network.error.jwt"));
-      return; 
-    }
-    console.log('survey A done'); 
-    global.doneSurveyA = true; 
-    AsyncStorage.setItem('doneSurveyA', 'true');
-    count = 1;
-    AsyncStorage.setItem('hasImage', '0'); 
-    global.hasImage = 0; 
-    console.log('hasImage after survey A done.........' + global.hasImage);
-    global.fetchAction = false;
-    if (global.debugMode) console.log("---SURVEY A DONE---");
-    if (global.debugMode) console.log("Calling notification algorithm...");
-
-    // Set the defaults
-    var wakeTime = "6:00";
-    var sleepTime = "22:00";
-    var numPings = 2;
-
-    // Check if Settings are saved and update defaults from there
-    AsyncStorage.getItem('settings', (err, settingsResult) => {
-      if (global.debugMode) console.log("The result of Settings getItem is: ", settingsResult);
-      if (settingsResult) {
-        let resultAsObj = JSON.parse(settingsResult);
-        wakeTime = resultAsObj.wakeTime;
-        sleepTime = resultAsObj.sleepTime;
-        numPings = resultAsObj.notificationCount;
-        if (global.debugMode) console.log("The saved wakeTime is: " + wakeTime);
-        if (global.debugMode) console.log("The saved sleepTime is: " + sleepTime);
-        if (global.debugMode) console.log("The saved numPings is: " + numPings);
-      }
-    });
-
-    // Call Notification Algorithm
-    // Algorithm also saves the final date
-    // Arguments: wakeTime, sleepTime, then number of pings
-    notificationAlgo(wakeTime, sleepTime, numPings);
-  }
-  async handleSurveyAdoneNew() {
-    let isConnected = await checkConnection();
-    if (!isConnected) { 
-      Alert.alert(resources.getString("internet.offline"));
-      return; 
-    }
-    result = await this.setPasswordNew();
-    if (!result) { 
-      Alert.alert(resources.getString("network.error.pwd"));
-      return; 
-    }
-    console.log('survey A done'); global.doneSurveyA = true; AsyncStorage.setItem('doneSurveyA', 'true');
-    count = 1;
-  }
-  async handleSurveyBdone() {
-    let isConnected = await checkConnection(); console.log('In handle B');
-    if (!isConnected) { 
-      Alert.alert(resources.getString("internet.offline"));
-      return; 
-    }
-    let jwt = await fetchJwToken();
-    if (jwt == '') { 
-      Alert.alert(resources.getString("network.error.jwt"));
-      return; 
-    }
-    global.jwToken = jwt;
-    let types = await this.fetchGraphTypes();
-    //  let types=await this.fetchGraphTypesNew();
-    //  let types=['overall','activity','people','location'];
-    console.log('types:' + types);
-    if (types != null && types.length > 0) {
-      await this.fetchGraphs(types);
-    }
-    count = 1; AsyncStorage.setItem('hasImage', '1'); 
-    global.hasImage = 1;
-    // Save Survey B Done State
-    AsyncStorage.setItem('doneSurveyB', 'true');
-    global.fetchAction = false;
-    this.props.navigation.navigate('Dashboard');
-  }
-  async handleSurveyBdoneNew() {
-    let isConnected = await checkConnection(); console.log('In handle B');
-    if (!isConnected) { 
-      Alert.alert(resources.getString("internet.offline"));
-      return; 
-    }
-    //  let types=['overall','activity','people','location'];
-    let types = await this.fetchGraphTypesNew();
-    console.log('types:' + types);
-    if (types != null && types.length > 0) {
-      await this.fetchGraphs(types);
-    }
-    count = 1; AsyncStorage.setItem('hasImage', '1');
-    global.hasImage = 1;
+  async handleSurveyAdone(){
+     let isConnected=await checkConnection();
+     if(!isConnected){Alert.alert('',resources.getString('offline'));return;}
+     let jwt=await fetchJwToken();  console.log('Token:'+jwt);
+     if(jwt==''){Alert.alert('',resources.getString("securityIssue"));return;}
+     global.jwToken=jwt;
+     let result=false;
+     result=await this.setPassword(jwt);
+      //  result=await this.setPasswordNew();
+     if(!result){Alert.alert('',resources.getString("securityIssue"));return;}
+     console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
+     count=1;
+     AsyncStorage.setItem('hasImage','0');global.hasImage=0;console.log('hasImage after survey A done.........'+global.hasImage);
+     global.fetchAction=false;
+     // await this.saveDefaultParadata(jwt);
+     setupSchedules();
+ }
+  async handleSurveyBdone(){
+     let isConnected=await checkConnection();console.log('In handle B');
+     if(!isConnected){Alert.alert('',resources.getString('offline'));return;}
+     let jwt=await fetchJwToken();
+     if(jwt==''){Alert.alert('',resources.getString("securityIssue"));return;}
+     global.jwToken=jwt;
+     let types=await this.fetchGraphTypes();
+     //  let types=await this.fetchGraphTypesNew();
+     //  let types=['overall','activity','people','location'];
+     console.log('types:'+types);
+     if(types!=null && types.length>0){
+          await this.fetchGraphs(types);
+     }
+     count=1;AsyncStorage.setItem('hasImage','1');global.hasImage=1;
+     // Save Survey B Done State
+     AsyncStorage.setItem('doneSurveyB','true');
+     global.fetchAction=false;
+     setupSchedules(false);
+     this.props.navigation.navigate('Dashboard');
   }
   async fetchGraphs(types: string[]) {
     let hh = deviceHeight - 220; let hh1 = deviceHeight - 300; let ww = deviceWidth - 80;
@@ -256,54 +183,44 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
       return true
     };
   }
-  setPassword(jwt: string) {
-    let url = global.webApiBaseUrl + 'api/security/password';
-    let data = { salt: global.passwordSalt, passwordHash: hashString(global.password, global.passwordSalt), securityQuestionId: global.securityQuestionId, securityAnswerSalt: global.securityAnswerSalt, securityAnswerHash: hashString(global.securityAnswer, global.securityAnswerSalt) }
-    return fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + jwt,
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => { if (response.status == 200) { return true; } else { console.log('Bad:' + response.status); return false; } })          // response.json())
-      .catch((error) => {
-        console.error(error); return false;
-      }
-      async fetchImage(url:string,index:number,culture:string) {
-          let isConnected=await checkConnection();
-          if(!isConnected){Alert.alert('',resources.getString('offline'));return;}
-          let token=global.jwToken;  // console.log(url);     //await fetchJwToken();console.log(url);
-       //   console.log(token);
-          fetch(url, {
-                method: 'GET',
-                headers: {'Authorization': 'Bearer ' + token,'Accept-language':culture },
-                })
-                .then( response =>{
-                      console.log(response.status);
-                      if(response.status==200){
-                         response.blob()
-                         .then(blob =>{
-                             var reader = new FileReader() ;
-                             reader.onload = function(){
-                          // console.log(this.result);// <--- `this.result` contains a base64 data URI
-                             console.log('image'+index);
-                             AsyncStorage.setItem('image'+index, this.result);
-                             } ;
-                             reader.readAsDataURL(blob) ;
-                         })
-                      }
-                      else { throw new Error("Access denied, Try again later, if same thing would happen again contact StatCan");}
-                      })
-                .catch(err => { console.log(err) })
-      }
-      })
-      .catch((error) => { 
-        console.error(error); 
-        console.log('Bad'); 
-        return false; 
-      });
+  setPassword(jwt:string) {
+               let url=global.webApiBaseUrl+'api/security/password';
+               let data={salt:global.passwordSalt,passwordHash:hashString(global.password,global.passwordSalt),securityQuestionId:global.securityQuestionId,securityAnswerSalt:global.securityAnswerSalt,securityAnswerHash:hashString(global.securityAnswer,global.securityAnswerSalt)}
+               return fetch(url,{
+                     method: 'POST',
+                       headers: {
+                         'Content-Type': 'application/json',
+                         'Authorization': 'Bearer ' + jwt,
+                       },
+                       body: JSON.stringify(data),
+               })
+               .then((response) =>{ if(response.status==200){return true;}  else {console.log('Bad:'+response.status);return false;}} )          // response.json())
+              // .then((responseJson) => {console.log('setPassword:'+responseJson);return responseJson;})
+               .catch((error) => {console.error(error);return false;});
+          }
+  resetPassword(newPass) {
+     let url=global.webApiBaseUrl+'api/security/password';console.log(url);
+     let data={
+         deviceId:global.userToken,
+         sac:global.sac,
+         newSalt:global.passwordSalt,
+         newPasswordHash:hashString(newPass,global.passwordSalt),
+         securityAnswerHash:hashString(global.securityAnswer,global.securityAnswerSalt),
+         newSecurityQuestionId:global.securityQuestionId,
+         newSecurityAnswerSalt:global.securityAnswerSalt,
+         newSecurityAnswerHash:hashString(global.securityAnswer,global.securityAnswerSalt)
+     }
+     return fetch(url,{
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json',},
+        body: JSON.stringify(data),
+     })
+     .then((response) =>{
+         if(response.status==200){console.log('good');global.password=newPass; return true;}
+         else {console.log('Bad:'+response.status);return false;}
+     } )    // .then((response) => response.json())
+           //  .then((responseJson) => {console.log('resetPassword:'+responseJson);    return responseJson;})
+     .catch((error) => {console.error(error);console.log('Bad');return false;});
   }
   async resetPasswordNew(newPass) {
     let service = new BackEndService(
@@ -517,7 +434,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
             else {
               console.log('survey A done'); global.doneSurveyA = true; AsyncStorage.setItem('doneSurveyA', 'true');
               this.handleSurveyAdone();
-              count = 1; global.showThankYou = 2;
+              count = 1; global.showThankYou = 1;
             }
             this.props.navigation.navigate('Dashboard');
           }}

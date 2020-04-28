@@ -308,69 +308,6 @@ class Dashboard extends React.Component<Props, HomeState> {
                  } )          // response.json())
              .catch((error)=>{console.log(error.message);});
       }
-      //saveParadataNew test failed  check later
-  async saveParaDataNew(){
-     let isConnected=await checkConnection();
-     if(!isConnected){Alert.alert('',resources.getString('offline'));return false;}
-     let backEndService = new BackEndService(
-          WEB_API_BASE_URL,
-          'fr-CA',
-           global.userToken,
-           global.sac,
-          hashString(global.password,global.passwordSalt),
-          fetch
-     );
-     let result = await backEndService.submitParadata({
-         deviceId: 'iphone5yu',
-         questionnaireB:[
-        {time:'2020-03-25 10:03:19', notificationTime:'2020-03-25- 9:18:00'},
-        {time:'2020-03-25 15:23:29', notificationTime: null},
-        {time:'2020-03-26 7:33:39', notificationTime:'2020-03-25- 21:18:00'},
-           ]
-      });
-      if (backEndService.isResultFailure(result)){
-          console.log('paradatanew failed');return false;}
-          else{console.log('paradatanew saved successfully');  return true;}
-        }
-        else { console.log('paradata Bad:' + response.status); return false; }
-      })          // response.json())
-      .catch((error) => { console.log(error.message); });
-  }
-
-
-  //saveParadataNew test failed  check later
-  async saveParaDataNew() {
-    let isConnected = await checkConnection();
-    if (!isConnected) {
-      Alert.alert(resources.getString("internet.offline"));
-      return false;
-    }
-    let backEndService = new BackEndService(
-      WEB_API_BASE_URL,
-      'fr-CA',
-      global.userToken,
-      global.sac,
-      hashString(global.password, global.passwordSalt),
-      fetch
-    );
-    let result = await backEndService.submitParadata({
-      deviceId: 'iphone5yu',
-      questionnaireB: [
-        { time: '2020-03-25 10:03:19', notificationTime: '2020-03-25- 9:18:00' },
-        { time: '2020-03-25 15:23:29', notificationTime: null },
-        { time: '2020-03-26 7:33:39', notificationTime: '2020-03-25- 21:18:00' },
-      ]
-    });
-    if (backEndService.isResultFailure(result)) {
-      console.log('paradatanew failed');
-      return false;
-    }
-    else {
-      console.log('paradatanew saved successfully');
-      return true;
-    }
-  }
-
   async sendRequest() {
     let token = await fetchJwToken(); console.log('send:' + token);
     let url = global.webApiBaseUrl + 'api/Values';
@@ -408,24 +345,6 @@ class Dashboard extends React.Component<Props, HomeState> {
        if(n){global.fetchAction=true;this.props.navigation.navigate('EQSurveyScreen');}
        else {Alert.alert('',resources.getString("securityIssue"));return;}
 
-  // launch survey
-  async conductSurvey() {
-    let isConnected = await checkConnection();
-    if (!isConnected) {
-      Alert.alert(resources.getString("internet.offline"));
-      return;
-    }
-    let n = await this.getConfig();
-
-    console.log('deviceId:' + global.userToken + ' password:' + global.password);
-    if (n) {
-      global.fetchAction = true;
-      this.props.navigation.navigate('EQSurveyScreen');
-    }
-    else {
-      Alert.alert(resources.getString("network.error.general"));
-      return;
-    }
   }
 
   render() {
