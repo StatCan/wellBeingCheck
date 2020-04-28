@@ -55,6 +55,24 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
     console.log("Locale is: " + Localization.locale);
     console.log("resources culture: " + resources.culture);
 
+    // if (Localization.locale === "en-CA"){
+    //   resources.culture = 'en';
+    // } else if (Localization.locale === "fr-CA"){
+    //   resources.culture = 'fr';
+    // }
+
+    AsyncStorage.getItem('settings', (err, settingsObject) => {
+      console.log(settingsObject);
+      let LocalSettingsObject = JSON.parse(settingsObject)
+      let appLanguage= LocalSettingsObject.culture;
+      console.log(appLanguage)
+      if (appLanguage==="2") {
+        resources.culture = 'fr';
+       
+     } else {
+      resources.culture = 'en';
+     }
+    })
 
    if (Localization.locale.substring(0,2) === "en" && (resources.culture==='en'|| resources.culture==='') ){
       resources.culture = 'en';
