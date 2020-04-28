@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, SafeAreaView,Alert } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Background from '../../components/Background';
 import Button from '../../components/Button';
@@ -9,7 +9,7 @@ import { resources } from '../../../GlobalResources';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { EvilIcons, Feather, FontAwesome } from '@expo/vector-icons';
 import md5 from "react-native-md5";
-import { setupSchedules} from '../../utils/schedule';
+import { setupSchedules,testSchedule,cancelSchedule} from '../../utils/schedule';
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -103,9 +103,13 @@ class LoginScreen extends React.Component<Props, LoginState> {
   }
 
 async onTestA(){
-     setupSchedules();
+   Alert.alert('',resources.getString('offline'));
+    // testSchedule();
    }
-onTestB(){setupSchedules(false);}
+onTestB(){
+   cancelSchedule(global.warningNotificationId);
+  //  setupSchedules(false);
+    }
 onTestC(){
    setupSchedules(true);
 }
@@ -136,6 +140,9 @@ async onTestD(){AsyncStorage.removeItem('LastDate');global.lastDate=null;}
                 </TouchableOpacity>
               </View>
 
+             <View style={styles.logo}>
+                <Text>{resources.getString("Well-Being Check")}</Text>
+              </View>
 
               <View style={{ flex: 1, flexDirection: 'row' }}>
                 <View style={styles.passwordInput}>
@@ -287,4 +294,7 @@ export default memo(LoginScreen);
                 <Button onPress={this.onTestB}><Text>BBB</Text></Button>
                 <Button onPress={this.onTestC}><Text>CCC</Text></Button>
                 <Button onPress={this.onTestD}><Text>DDD</Text></Button>
+
+                                <Button onPress={()=>this.onTestA()}><Text> AAA</Text></Button>
+                                <Button onPress={()=>this.onTestB()}><Text> BBB</Text></Button>
               </View>*/

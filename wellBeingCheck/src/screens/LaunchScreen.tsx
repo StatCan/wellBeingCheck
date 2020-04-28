@@ -41,7 +41,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
       //splach screen forced show 3000 = 3 seconds!
       this.bootstrapA();
     });
-
+    this.onNotification=this.onNotification.bind(this);
 
   }
   async delay(ms: number) {
@@ -139,7 +139,10 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           }
           this._bootstrap();
         };
-  onNotification() { this.props.navigation.navigate('LoginScreen');}
+  onNotification(n) {
+       console.log('received notification:'+n.title);
+       //this.props.navigation.navigate('Dashboard');
+       }
   componentDidMount() {Notifications.addListener(this.onNotification);}
   render() {
     return (

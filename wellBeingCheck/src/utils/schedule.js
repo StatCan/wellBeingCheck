@@ -76,7 +76,7 @@ setupNotification = async (datetime,title,message) => {
       vibrate: true,
     });
   }
-  scheduledTime = new Date(datetime);console.log('ScheduleTime:'+scheduledTime);
+  let scheduledTime = new Date(datetime);
   let notificationId =await Notifications.scheduleLocalNotificationAsync(
     {
       title: title,
@@ -116,7 +116,7 @@ askPermissions = async () => {
 function cancellAllSchedules(){
      Notifications.cancelAllScheduledNotificationsAsync();
 }
-function cancelSchedule(localNotificationId){
+export function cancelSchedule(localNotificationId){
     Notifications.cancelScheduledNotificationAsync(localNotificationId);
 }
 
@@ -128,7 +128,7 @@ async function setupWarning(dt,title,message){
                               vibrate: true,
                             });
                           }
-    let scheduledTime = new Date(dt);console.log('ScheduleTime:'+scheduledTime);
+    let scheduledTime = new Date(dt);
     let warningId=await Notifications.scheduleLocalNotificationAsync(
                             {
                               title: title,
@@ -142,11 +142,9 @@ async function setupWarning(dt,title,message){
                               time: new Date(dt)
                             }
                           );
-    console.log('WarningId:'+warningId);
     return warningId;
 }
-export async function setupSchedules(affectCurrent=false,callback=null){
-    if(typeof callback=='function'){alert('function');callback();}
+export async function setupSchedules(affectCurrent=false){
     let permission=await askPermissions();if(!permission)return;
     let title="Scheduled Notification";
     let message="Scheduled Notification for the Survey!";
@@ -176,7 +174,7 @@ export async function setupSchedules(affectCurrent=false,callback=null){
             });
          }
          if(schedules.length>0){
-             let dt=new Date(day5);dt.setHours(10);
+             let dt=new Date(day5);dt.setHours(sleep-2);
              schedules.forEach(async function(s){
                 let notificationId=await setupNotification(s.Datetime,title,message);
                 console.log('notificationId:'+notificationId);
@@ -248,7 +246,7 @@ export async function setupSchedules(affectCurrent=false,callback=null){
                         let notificationId=await setupNotification(s.Datetime,title,message);
                         console.log('notificationId:'+notificationId);
                     });
-                    let dt=new Date(day5);dt.setHours(10);
+                    let dt=new Date(day5);dt.setHours(sleep-2);
                     let warningNotificationId=await setupWarning(dt,title,lastMessage);
                     AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());
                     global.warningNotificationId=warningNotificationId;
@@ -287,7 +285,7 @@ export async function setupSchedules(affectCurrent=false,callback=null){
                             let notificationId=await setupNotification(s.Datetime,title,message);
                             console.log('notificationId:'+notificationId);
                      });
-                     let dt=new Date(day5);dt.setHours(10);
+                     let dt=new Date(day5);dt.setHours(sleep-2);
                      let warningNotificationId=await setupWarning(dt,title,lastMessage);
                      AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());
                      global.warningNotificationId=warningNotificationId;
@@ -320,7 +318,7 @@ export async function setupSchedules(affectCurrent=false,callback=null){
                       let notificationId=await setupNotification(s.Datetime,title,message);
                       console.log('notificationId:'+notificationId);
                   });
-                 let dt=new Date(day5);dt.setHours(10);
+                 let dt=new Date(day5);dt.setHours(sleep-2);
                  let warningNotificationId=await setupWarning(dt,title,lastMessage);
                  AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());
                  global.warningNotificationId=warningNotificationId;
@@ -647,5 +645,24 @@ export async function setupSchedules(affectCurrent=false,callback=null){
       });
       list2.forEach(function(l){list.push(l);});
       return list;
+ }
+ export async function testSchedule(){
+     let permission=await askPermissions();if(!permission)return;
+     cancellAllSchedules();
+    let schedules=[];
+    let current=new Date();
+    for(var i=0;i<2;i++){
+       let d=new Date(current);d.setMinutes(current.getMinutes()+i+1);
+       schedules.push(d);
+    }
+    let d5=new Date(schedules[schedules.length-1]);d5.setMinutes(d5.getMinutes()+2);
+    let title='test1';let message='message1';let message2='warning message';
+    schedules.forEach(async function(s,index){
+           let ttt=title+index;console.log('ddd:'+s);
+           let notificationId=await setupNotification(s,ttt,message);
+           console.log('notificationId:'+notificationId+' dt:'+s);
+      });
+     let warningNotificationId=await setupWarning(d5,'Waaaaarrrrrnnnning',message2);
+     console.log('warningId:'+warningNotificationId+' dt:'+d5);global.warningNotificationId=warningNotificationId;
  }
 

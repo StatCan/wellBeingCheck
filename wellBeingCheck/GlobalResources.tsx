@@ -205,6 +205,8 @@ export const resources = {
             "faq.a2": "FAQ answer 2",
             "faq.q3": "FAQ question 3",
             "faq.a3": "FAQ answer 3",
+            "offline":"You are offline, try it later.",
+            "securityIssue":"Internal server error, Try again, if same thing would happen again contact StatCan",
         },
         fr: {
             //global
@@ -439,6 +441,9 @@ export const resources = {
             "faq.a2": "FR_FAQ answer 2",
             "faq.q3": "FR_FAQ question 3",
             "faq.a3": "FR_FAQ answer 3",
+
+            "offline":"Vous êtes hors ligne, essayez-le plus tard.",
+            "securityIssue":"Erreur de serveur interne, essayez à nouveau, si la même chose se reproduit, contactez StatCan",
         }
     }
 };

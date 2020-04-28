@@ -212,7 +212,7 @@ class Dashboard extends React.Component<Props, HomeState> {
   //saveParaData tested well
   async saveParaData(){
              let isConnected=await checkConnection();
-             if(!isConnected){alert('You are offline, try it later');return;}
+             if(!isConnected){Alert.alert('',resources.getString('offline'));return;}
              let jwt=await fetchJwToken();
              var snt = ["2020/02/01 08:10:00", "2020/02/01 12:10:00", "2020/02/01 18:10:00"];
              let paraData = {
@@ -244,7 +244,7 @@ class Dashboard extends React.Component<Props, HomeState> {
       //saveParadataNew test failed  check later
   async saveParaDataNew(){
      let isConnected=await checkConnection();
-     if(!isConnected){alert('You are offline, try it later');return false;}
+     if(!isConnected){Alert.alert('',resources.getString('offline'));return false;}
      let backEndService = new BackEndService(
           WEB_API_BASE_URL,
           'fr-CA',
@@ -290,13 +290,13 @@ class Dashboard extends React.Component<Props, HomeState> {
   }
   async conductSurvey() {
        let isConnected = await checkConnection();
-       if (!isConnected) { alert('You are offline, try it later'); return; }
+       if (!isConnected) { Alert.alert('',resources.getString('offline')); return; }
        let n=await this.getConfig();
      //  let n=await getConfigNew();
 
        console.log('deviceId:'+global.userToken+'    password:'+global.password);
        if(n){global.fetchAction=true;this.props.navigation.navigate('EQSurveyScreen');}
-       else {alert('Access denied(Config), Try it later, if same thing would happen again contact StatCan');return;}
+       else {Alert.alert('',resources.getString("securityIssue"));return;}
 
   }
   render() {

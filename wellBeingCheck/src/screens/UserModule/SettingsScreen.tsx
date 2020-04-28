@@ -163,7 +163,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     if (global.debugMode) console.log("DEBUGMODE ON - Outputting Console Logs");
     if (global.debugMode) console.log("Settings Screen Component Mounted");
 
-    this._notificationSubscription = Notifications.addListener(this._handleNotification);
+  //  this._notificationSubscription = Notifications.addListener(this._handleNotification);
 
     this._retrieveData('settings');
   }
@@ -222,10 +222,12 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
         console.log("all data cleared");
       });
       AsyncStorage.removeItem('EsmUserToken'); 
-      AsyncStorage.setItem('EsmSurveyACode', 'none'); 
+      AsyncStorage.setItem('EsmSurveyACode', 'none');
       AsyncStorage.removeItem('EsmCulture');
       AsyncStorage.removeItem('doneSurveyA'); 
-      global.doneSurveyA = false;AsyncStorage.removeItem('LastDate');AsyncStorage.removeItem('Schedules');
+      global.doneSurveyA = false;
+      AsyncStorage.removeItem('LastDate');AsyncStorage.removeItem('Schedules');
+      AsyncStorage.removeItem('PingNum');AsyncStorage.removeItem('AwakeHour');AsyncStorage.removeItem('SleepHour');
       AsyncStorage.removeItem('hasImage');global.hasImage=false;
 
       AsyncStorage.removeItem('user_terms_and_conditions', (err) => {
@@ -262,9 +264,9 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       settingsFirstTime: this.state.settingsFirstTime
     };
 
-    AsyncStorage.setItem('PingNum',this.state.notificationcount);
-    AsyncStorage.setItem('AwakeHour',this.state.waketime);
-    AsyncStorage.setItem('SleepHour',this.state.sleeptime);
+    AsyncStorage.setItem('PingNum',this.state.notificationcount.toString());global.pingNum=this.state.notificationcount;
+    AsyncStorage.setItem('AwakeHour',this.state.waketime);global.awakeHour=this.state.waketime;
+    AsyncStorage.setItem('SleepHour',this.state.sleeptime);global.sleepHour=this.state.sleeptime;
 
     AsyncStorage.setItem('settings', JSON.stringify(settingsObj), () => {
       if (global.debugMode) console.log("Storing Settings: ", settingsObj);

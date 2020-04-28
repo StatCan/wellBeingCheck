@@ -1,5 +1,5 @@
 import React, { memo, useState, useCallback } from 'react';
-import { Image, View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator,Button,YellowBox, Platform, } from 'react-native';
+import { Image, View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator,Button,YellowBox, Platform,Alert } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import { notificationAlgo } from '../../utils/notificationAlgo'
 import WebView from 'react-native-webview';
@@ -41,15 +41,15 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
 
       async handleSurveyAdone(){
               let isConnected=await checkConnection();
-              if(!isConnected){alert('You are offline, try it later');return;}
+              if(!isConnected){Alert.alert('',resources.getString('offline'));return;}
               let jwt=await fetchJwToken();
               console.log('Token:'+jwt);
-              if(jwt==''){alert("Internal server error(token), Try again, if same thing would happen again contact StatCan");return;}
+              if(jwt==''){Alert.alert('',resources.getString("securityIssue"));return;}
               global.jwToken=jwt;
               let result=false;
               result=await this.setPassword(jwt);
             //  result=await this.setPasswordNew();
-              if(!result){alert("Internal server error(set password), Try again, if same thing would happen again contact StatCan");return;}
+              if(!result){Alert.alert('',resources.getString("securityIssue"));return;}
               console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
               count=1;
               AsyncStorage.setItem('hasImage','0');global.hasImage=0;console.log('hasImage after survey A done.........'+global.hasImage);
@@ -64,9 +64,9 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
 
       async handleSurveyBdone(){
                let isConnected=await checkConnection();console.log('In handle B');
-               if(!isConnected){alert('You are offline, try it later');return;}
+               if(!isConnected){Alert.alert('',resources.getString('offline'));return;}
                let jwt=await fetchJwToken();
-               if(jwt==''){alert("Internal server error(token), Try again, if same thing would happen again contact StatCan");return;}
+               if(jwt==''){Alert.alert('',resources.getString("securityIssue"));return;}
                global.jwToken=jwt;
 
                let types=await this.fetchGraphTypes();
@@ -80,38 +80,8 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
 
                // Save Survey B Done State
                AsyncStorage.setItem('doneSurveyB','true');
-
-               // Now call the algorithm again
-
-               /*
-               // Set the defaults
-                var wakeTime = "6:00";
-                var sleepTime = "22:00";
-                var numPings = 2;
-
-                // Check if Settings are saved and update defaults from there
-                AsyncStorage.getItem('settings', (err, settingsResult) => {
-                  if (global.debugMode) console.log("The result of Settings getItem is: ", settingsResult);
-                  if (settingsResult) {
-                    let resultAsObj = JSON.parse(settingsResult);
-                    wakeTime = resultAsObj.wakeTime;
-                    sleepTime = resultAsObj.sleepTime;
-                    numPings = resultAsObj.notificationCount;
-
-                    if (global.debugMode) console.log("The saved wakeTime is: " + wakeTime);
-                    if (global.debugMode) console.log("The saved sleepTime is: " + sleepTime);
-                    if (global.debugMode) console.log("The saved numPings is: " + numPings);
-                  }
-                });
-
-
-                // Call Notification Algorithm
-                // Algorithm also saves the final date
-                // Arguments: wakeTime, sleepTime, then number of pings
-                notificationAlgo(wakeTime, sleepTime, numPings);
-              */
-
                global.fetchAction=false;
+               setupSchedules(false);
                this.props.navigation.navigate('Dashboard');
          }
       async fetchGraphs(types:string[]){
@@ -251,7 +221,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
       }
       async fetchImage(url:string,index:number,culture:string) {
           let isConnected=await checkConnection();
-          if(!isConnected){alert('You are offline, try it later');return;}
+          if(!isConnected){Alert.alert('',resources.getString('offline'));return;}
           let token=global.jwToken;  // console.log(url);     //await fetchJwToken();console.log(url);
        //   console.log(token);
           fetch(url, {
@@ -379,7 +349,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                                 else {
                                     console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
                                     this.handleSurveyAdone();
-                                    count=1;global.showThankYou=2;
+                                    count=1;global.showThankYou=1;
                                     }
                                 this.props.navigation.navigate('Dashboard');
                              }}
