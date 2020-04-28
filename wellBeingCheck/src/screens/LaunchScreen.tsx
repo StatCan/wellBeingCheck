@@ -65,7 +65,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
       console.log(settingsObject);
       let LocalSettingsObject = JSON.parse(settingsObject)
       let appLanguage= LocalSettingsObject.culture;
-      console.log(appLanguage)
+      console.log("language from the storage "+ appLanguage)
       if (appLanguage==="2") {
         resources.culture = 'fr';
        
