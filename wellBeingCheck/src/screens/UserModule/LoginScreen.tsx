@@ -245,8 +245,8 @@ const styles = StyleSheet.create({
   },
   logo: {
     alignItems: 'center',
-    marginTop: 50,
-    marginBottom: 50,
+    marginTop: 0,
+    marginBottom: 100,
   },
   label: {
     color: newTheme.colors.secondary,

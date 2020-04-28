@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ScrollView, PanResponder, Alert } from 'react-native';
 import Button from '../components/Button';
-import { Provider as PaperProvider, Title, Paragraph, List } from 'react-native-paper';
+import { Provider as PaperProvider, Title, List } from 'react-native-paper';
 import { newTheme } from '../core/theme';
 import AppBanner from '../components/AppBanner';
 import LogoClearSmall from '../components/LogoClearSmall';
@@ -23,7 +23,6 @@ interface Props {
 }
 
 class AboutScreen extends React.Component<Props, AboutState> {
-  sessionTimeOutDuration = 900000;
   _panResponder: any;
   timer = 0
 
@@ -36,68 +35,67 @@ class AboutScreen extends React.Component<Props, AboutState> {
       faqA3Expanded: false,
     };
 
+    /* --------------------Session Handler--------------------------- */
+    //used to handle session
     this._panResponder = PanResponder.create({
       // Ask to be the responder:
       onStartShouldSetPanResponder: () => {
-        this._resetTimer()
+        this._initSessionTimer()
         return true
       },
       onMoveShouldSetPanResponder: () => {
-        this._resetTimer()
+        this._initSessionTimer()
         return true
       },
       onStartShouldSetPanResponderCapture: () => {
-        this._resetTimer()
+        this._initSessionTimer()
         return true
       },
       onMoveShouldSetPanResponderCapture: () => {
-        this._resetTimer()
+        this._initSessionTimer()
         return true
       },
       onPanResponderTerminationRequest: () => {
-        this._resetTimer()
+        this._initSessionTimer()
         return true
       },
       onShouldBlockNativeResponder: () => {
-        this._resetTimer()
+        this._initSessionTimer()
         return true
       },
     });
   }
 
-  _resetTimer() {
-    this.timer = setTimeout(() =>
-    Alert.alert(
-      'Session expired',
-      'Your session has expired due to 15 minutes of inactivity',
-      [
-        { text: 'OK', onPress: () => this._handleSessionTimeOutRedirect() },
-      ],
-      { cancelable: false }
-    )
-    ,
-    this.sessionTimeOutDuration)
+  componentDidMount() {
+    //Session Handler
+    this._initSessionTimer()
   }
 
   _handleSessionTimeOutRedirect = () => {
     Updates.reload();
   }
 
-  componentDidMount() {
+  _initSessionTimer() {
+    clearTimeout(this.timer)
     this.timer = setTimeout(() =>
-      Alert.alert(
-        'Session expired',
-        'Your session has expired due to 15 minutes of inactivity',
-        [
-          { text: 'OK', onPress: () => this._handleSessionTimeOutRedirect() },
-        ],
-        { cancelable: false }
-      )
+      this._expireSession()
       ,
-      this.sessionTimeOutDuration)
+      global.sessionTimeOutDuration)
+  }
+
+  _expireSession() {
+    Alert.alert(
+      resources.getString("session.modal.title"),
+      resources.getString("session.modal.message"),
+      [
+        { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
+      ],
+      { cancelable: false }
+    )
   }
 
   componentWillUnmount() {
+    //Session Handler
     clearTimeout(this.timer)
   }
 
@@ -137,52 +135,51 @@ class AboutScreen extends React.Component<Props, AboutState> {
             <LogoClearSmall />
           </View>
           <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.scrollView}>
-              <View {...this._panResponder.panHandlers}>
-                <List.Section>
-                  <View style={styles.faqView}>
-                    <List.Accordion
-                      title={resources.getString("faq.title")}
-                      expanded={this.state.faqMainExpanded}
-                      onPress={this._handleFaqMainExpand}
-                    >
-                      <View style={styles.faqViewAns}>
-                        <List.Accordion
-                          title={resources.getString("faq.q1")}
-                          expanded={this.state.faqA1Expanded}
-                          onPress={this._handleFaqA1}
-                        >
-                          <View style={styles.faqListItem}>
-                            <Text>{resources.getString("faq.a1")}</Text>
-                          </View>
-                        </List.Accordion>
-                        <List.Accordion
-                          title={resources.getString("faq.q2")}
-                          expanded={this.state.faqA2Expanded}
-                          onPress={this._handleFaqA2}
-                        >
-                          <View style={styles.faqListItem}>
-                            <Text>{resources.getString("faq.a2")}</Text>
-                          </View>
-                        </List.Accordion>
-                        <List.Accordion
-                          title={resources.getString("faq.q3")}
-                          expanded={this.state.faqA3Expanded}
-                          onPress={this._handleFaqA3}
-                        >
-                          <View style={styles.faqListItem}>
-                            <Text>{resources.getString("faq.a3")}</Text>
-                          </View>
-                        </List.Accordion>
-                      </View>
-                    </List.Accordion>
-                  </View>
-                </List.Section>
-
-                <Title style={styles.title}>{resources.getString("about_title")}</Title>
-                <View style={styles.content}>
-                  <Text>{resources.getString("about_content")}</Text>
+            <ScrollView style={styles.scrollView}
+              {...this._panResponder.panHandlers}
+            >
+              <List.Section>
+                <View style={styles.faqView}>
+                  <List.Accordion
+                    title={resources.getString("faq.title")}
+                    expanded={this.state.faqMainExpanded}
+                    onPress={this._handleFaqMainExpand}
+                  >
+                    <View style={styles.faqViewAns}>
+                      <List.Accordion
+                        title={resources.getString("faq.q1")}
+                        expanded={this.state.faqA1Expanded}
+                        onPress={this._handleFaqA1}
+                      >
+                        <View style={styles.faqListItem}>
+                          <Text>{resources.getString("faq.a1")}</Text>
+                        </View>
+                      </List.Accordion>
+                      <List.Accordion
+                        title={resources.getString("faq.q2")}
+                        expanded={this.state.faqA2Expanded}
+                        onPress={this._handleFaqA2}
+                      >
+                        <View style={styles.faqListItem}>
+                          <Text>{resources.getString("faq.a2")}</Text>
+                        </View>
+                      </List.Accordion>
+                      <List.Accordion
+                        title={resources.getString("faq.q3")}
+                        expanded={this.state.faqA3Expanded}
+                        onPress={this._handleFaqA3}
+                      >
+                        <View style={styles.faqListItem}>
+                          <Text>{resources.getString("faq.a3")}</Text>
+                        </View>
+                      </List.Accordion>
+                    </View>
+                  </List.Accordion>
                 </View>
+              </List.Section>
+              <Title style={styles.title}>{resources.getString("about_title")}</Title>
+              <View style={styles.content}>
+                <Text>{resources.getString("about_content")}</Text>
               </View>
             </ScrollView>
           </SafeAreaView>
