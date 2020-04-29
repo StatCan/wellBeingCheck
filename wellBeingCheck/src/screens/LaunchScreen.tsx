@@ -180,6 +180,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
               userToken= deviceId;
               AsyncStorage.setItem('EsmUserToken',userToken);
           }
+<<<<<<< Updated upstream
           else global.sac = sac;
           global.userToken=userToken;
           if (global.debugMode) console.log('DeviceId:'+global.userToken);
