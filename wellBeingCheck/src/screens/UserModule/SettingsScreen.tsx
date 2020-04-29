@@ -370,9 +370,11 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     if (c === "2") {
       resources.culture = 'fr';
       this.setState({ cultureString: 'Français' });
+      this.setState({culture:'2'});
     } else if (c === "1") {
       resources.culture = 'en';
       this.setState({ cultureString: 'English' });
+     this.setState({ culture:'1' });
     }
   }
 
