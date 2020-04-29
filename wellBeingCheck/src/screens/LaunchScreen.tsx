@@ -55,6 +55,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
     if (global.debugMode)  console.log("Locale is: " + Localization.locale);
     if (global.debugMode) console.log("resources culture: " + resources.culture);
 
+<<<<<<< Updated upstream
     // if (Localization.locale === "en-CA"){
     //   resources.culture = 'en';
     // } else if (Localization.locale === "fr-CA"){
@@ -86,6 +87,38 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
     } else if (Localization.locale === "fr-CA" && (resources.culture==='fr'||resources.culture==='')) {
       resources.culture = 'fr';
       if (global.debugMode)   console.log("Locale is 4: fr-ca:res=fr " + Localization.locale +"ressource"+resources.culture);
+=======
+    AsyncStorage.getItem('settings',(err,settingobject)=>{
+    console.log("launchScreen._bootstrap settings object values"+ settingobject)
+    let localSettingObject = JSON.parse(settingobject)
+    let language=localSettingObject.culture;
+    console.log("launchScreen._bootstrap language"+ language);
+    if (language===1) {
+      resources.culture="en";
+    } else {
+      resources.culture="fr";
+    }
+    
+    });
+
+    console.log("Test Locale is  " + Localization.locale + " ressource .culture "+resources.culture);
+    
+   if (Localization.locale.substring(0,2) === "en" && (resources.culture==="en") ){
+      resources.culture = "en";
+      console.log("Locale is 1: en-ca:res=en " + Localization.locale +"ressource"+resources.culture);
+
+    } else if  (Localization.locale.substring(0,2) === "en" && (resources.culture==="fr")) {
+      resources.culture = "fr";
+      console.log("Locale is 2: en-ca:res=fr " + Localization.locale +"ressource"+resources.culture);
+
+    } else if (Localization.locale.substring(0,2) === "fr"  && (resources.culture==="en")) {
+      resources.culture = "en";
+      console.log("Locale is 3: fr-ca:res=en " + Localization.locale +"ressource"+resources.culture);
+    } else if (Localization.locale.substring(0,2) === "fr" && (resources.culture==="fr")) {
+
+      resources.culture = "fr";
+      console.log("Locale is 4: fr-ca:res=fr " + Localization.locale +"ressource"+resources.culture);
+>>>>>>> Stashed changes
     }
 
     AsyncStorage.getItem('user_account', (err, userAccountResult) => {
@@ -151,6 +184,10 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           global.userToken=userToken;
           if (global.debugMode) console.log('DeviceId:'+global.userToken);
           if (global.debugMode) console.log('Sac:'+global.sac);
+=======
+          else global.sac=sac;
+          global.userToken=userToken;console.log('DeviceId:'+ global.userToken);console.log('Sac:'+global.sac);
+>>>>>>> Stashed changes
           let doneSurveyA = await AsyncStorage.getItem('doneSurveyA');
           global.doneSurveyA = doneSurveyA;
           if (global.debugMode) console.log('SurveyA:'+ global.doneSurveyA);
