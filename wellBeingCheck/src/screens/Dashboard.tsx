@@ -281,7 +281,6 @@ class Dashboard extends React.Component<Props, HomeState> {
        let isConnected = await checkConnection();
        if (!isConnected) { Alert.alert('',resources.getString('offline')); return; }
        let n=await this.getConfig();
-     //  let n=await getConfigNew();
 
        console.log('deviceId:'+global.userToken+'    password:'+global.password);
        if(n){global.fetchAction=true;this.props.navigation.navigate('EQSurveyScreen');}

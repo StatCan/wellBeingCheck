@@ -228,7 +228,10 @@ export const resources = {
              //time picker title
              "timepicker.title":"Pick a time",
              "timepicker.canceltext":"Cancel",
-             "timepicker.confirmtext":"Confirm"
+             "timepicker.confirmtext":"Confirm",
+             "scheduleTitle":"Scheduled Notification",
+             "scheduleMessage":"Scheduled Notification for the Survey!",
+             "scheduleMessage1":"We haven’t heard from you in a while. Sign in for a Well-being Check!",
 
         },
         fr: {
@@ -487,7 +490,10 @@ export const resources = {
             //time picker title
             "timepicker.title":"Choisir une heure",
             "timepicker.canceltext":"Annuler",
-            "timepicker.confirmtext":"Confirmer"
+            "timepicker.confirmtext":"Confirmer",
+             "scheduleTitle":"Notification planifiée",
+             "scheduleMessage":"Notification programmée pour l'enquête!",
+             "scheduleMessage1":"Nous n’avons pas eu de vos nouvelles depuis un certain temps. Connectez-vous pour obtenir un Bilan bien-être!",
         }
     }
 };

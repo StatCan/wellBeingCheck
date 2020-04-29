@@ -1,6 +1,7 @@
 import { Notifications } from "expo";
 import { AsyncStorage } from 'react-native';
 import * as Permissions from 'expo-permissions';
+import { resources } from '../../GlobalResources';
 
 const primeTimeAwakeIntervals = [
   {
@@ -146,18 +147,18 @@ async function setupWarning(dt,title,message){
 }
 export async function setupSchedules(affectCurrent=false){
     let permission=await askPermissions();if(!permission)return;
-    let title="Scheduled Notification";
-    let message="Scheduled Notification for the Survey!";
-    let lastMessage="We haven’t heard from you in a while. Sign in for a Well-being Check!";///"Nous n’avons pas eu de vos nouvelles depuis un certain temps. Connectez-vous pour obtenir un Bilan bien-être!";
+    let title=resources.getString("scheduleTitle");//   "Scheduled Notification";
+    let message=resources.getString("scheduleMessage");//"Scheduled Notification for the Survey!";
+    let lastMessage=resources.getString("scheduleMessage1");//"We haven’t heard from you in a while. Sign in for a Well-being Check!";///"Nous n’avons pas eu de vos nouvelles depuis un certain temps. Connectez-vous pour obtenir un Bilan bien-être!";
     let schedules = [];let currentDateTime=new Date();console.log('current date:'+currentDateTime);
     let today=new Date(currentDateTime);today.setHours(0);today.setMinutes(0);today.setSeconds(0);today.setMilliseconds(0);
     let currentTime=roundUp(currentDateTime.toLocaleTimeString());
     let awake=roundUp(global.awakeHour); let sleep=roundDown(global.sleepHour);let count=global.pingNum;console.log('LastDate:'+global.lastDate);
     if(global.lastDate==null){   //Survey A
-         let lastDate=new Date(currentDateTime);  console.log('SURVEY aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+         let lastDate=new Date(currentDateTime); console.log('Setup notification after survey A');
          lastDate.setDate(currentDateTime.getDate()+30);lastDate.setHours(0);lastDate.setMinutes(0);lastDate.setSeconds(0);lastDate.setMilliseconds(0);
          let days = getFollowingDays(currentDateTime,lastDate,true);console.log('days:'+days);
-         let day5=getNextDay(currentDateTime);console.log('ccccc:'+currentDateTime);
+         let day5=getNextDay(currentDateTime);
 
          if(days.length>0){
             day5=getNextDay(days[days.length-1]);
@@ -174,6 +175,7 @@ export async function setupSchedules(affectCurrent=false){
             });
          }
          if(schedules.length>0){
+             schedules.forEach(function(s){console.log('To Schedule:'+s.Datetime.toString())});
              let dt=new Date(day5);dt.setHours(sleep-2);
              schedules.forEach(async function(s){
                 let notificationId=await setupNotification(s.Datetime,title,message);
@@ -191,12 +193,12 @@ export async function setupSchedules(affectCurrent=false){
          }
     }
     else { //Survey B or change setting
-        let lastDate=new Date(global.lastDate);console.log('SURVEY bbbbbbbbbbbbb cccccccccccc');
+        let lastDate=new Date(global.lastDate);console.log('Setup notification after survey B or changing seeting');
         let isInSchedules=checkInSchedule(currentDateTime);console.log('is in period:'+isInSchedules);
         if(isInSchedules){
-            let warningId=global.warningNotificationId;console.log('SURVEY bbbbbbbb  in schedules');
+            let warningId=global.warningNotificationId;console.log('current is in schedules');
             if(affectCurrent){  //for change setting,  This part is hard core
-                let f=getAffectedDay(currentDateTime);  let day5=getNextDay(currentDateTime);console.log('SURVEY affect bbbbbbbbbbbbb');
+                let f=getAffectedDay(currentDateTime);  let day5=getNextDay(currentDateTime);console.log('Setup notification will affect current day');
                 if(f==null){  //No affected day, go normal schedule
                     let days = getFollowingDays(currentDateTime,lastDate,true);
                     if(days.length>0){
@@ -241,6 +243,7 @@ export async function setupSchedules(affectCurrent=false){
                     }
                 }
                 if(schedules.length>0){
+                    schedules.forEach(function(s){console.log('To Schedule:'+s.Datetime.toString())});
                     cancellAllSchedules();
                     schedules.forEach(async function(s){
                         let notificationId=await setupNotification(s.Datetime,title,message);
@@ -256,13 +259,13 @@ export async function setupSchedules(affectCurrent=false){
                 }
             }
             else{  //for survey B, simply append new schedules
-               console.log('current date:'+currentDateTime);
+               console.log('current is out of schedules');
                let nob=getNecessary(currentDateTime);
                let necessary=nob.Necessary;let moredays=nob.Days;
                if(!necessary ||moredays==0){console.log('Already have 4 days schedules, no need to add more');return;}
                //cancelSchedule(warningId);
 
-               let startDay=getStartDay();console.log('SURVEY bbbbbbbb NON affect bbbbbbbbbbbbb');
+               let startDay=getStartDay();console.log('Setup notification will not affect current day');
                if(startDay>global.lastDate)return;
                let days = getFollowingDays(startDay,lastDate,true,moredays);
                  let day5=getNextDay(currentDateTime);
@@ -280,6 +283,7 @@ export async function setupSchedules(affectCurrent=false){
                             }
                  if(schedules.length>0){
                      schedules=updateSchedulesList(schedules,currentDateTime);
+                     schedules.forEach(function(s){console.log('To Schedule:'+s.Datetime.toString())});
                      if(global.warningNotificationId!=null) cancelSchedule(global.warningNotificationId);
                      schedules.forEach(async function(s){
                             let notificationId=await setupNotification(s.Datetime,title,message);
@@ -297,7 +301,7 @@ export async function setupSchedules(affectCurrent=false){
         }
         else{
              if(today>global.lastDate)return;
-             console.log('SURVEY bbbbbbbb  NOT in schedules');
+             console.log('Current is NOT in schedules');
              let days = getFollowingDays(currentDateTime,lastDate,true);
              let day5=getNextDay(currentDateTime);
              if(days.length>0){
@@ -313,6 +317,7 @@ export async function setupSchedules(affectCurrent=false){
                  });
              }
              if(schedules.length>0){
+                  schedules.forEach(function(s){console.log('To Schedule:'+s.Datetime.toString())});
                   cancellAllSchedules();
                   schedules.forEach(async function(s){
                       let notificationId=await setupNotification(s.Datetime,title,message);

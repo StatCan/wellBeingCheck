@@ -55,9 +55,9 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       notificationState: true,
       chosenNotificationState: true,
       notification: true,
-      waketime: '08:00',
-      sleeptime: '22:00',
-      notificationcount: 2,
+      waketime: global.awakeHour,
+      sleeptime: global.sleepHour,
+      notificationcount: global.pingNum,
       culture: '1',
       cultureString: 'English',
       languageModalShow: false,
@@ -265,7 +265,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     clearTimeout(this.timer)
 
     if (global.debugMode) console.log("Component will unmount");
-    this.handleBackAction();
+ //   this.handleBackAction();
   }
 
   _handleNotification = (notification) => {
@@ -346,9 +346,9 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
         let resultAsObj = JSON.parse(result);
         this.setState({ notificationState: resultAsObj.notificationState });
         this.setState({ chosenNotificationState: resultAsObj.chosenNotificationState });
-        this.setState({ notificationcount: resultAsObj.notificationCount });
-        this.setState({ waketime: resultAsObj.wakeTime });
-        this.setState({ sleeptime: resultAsObj.sleepTime });
+     //   this.setState({ notificationcount: resultAsObj.notificationCount });
+      //  this.setState({ waketime: resultAsObj.wakeTime });
+     //   this.setState({ sleeptime: resultAsObj.sleepTime });
         this.setState({ culture: resultAsObj.culture });
         this.setState({ cultureString: resultAsObj.cultureString });
         this.setState({ settingsFirstTime: resultAsObj.settingsFirstTime });

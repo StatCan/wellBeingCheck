@@ -1,13 +1,13 @@
 import React, { memo, useState, useCallback } from 'react';
 import { Image, View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator,Button,YellowBox, Platform,Alert } from 'react-native';
 import { AsyncStorage,PanResponder } from 'react-native';
-//import { notificationAlgo } from '../../utils/notificationAlgo'
+
 import WebView from 'react-native-webview';
 import { resources } from '../../../GlobalResources';
 import {fetchJwToken,checkConnection,hashString,parseJwt,saveParaData} from '../../utils/fetchJwToken';
 const deviceHeight =Math.floor(Dimensions.get('window').height);
 const deviceWidth =Math.floor(Dimensions.get('window').width);
-import {BackEndService} from '../../api/back-end.service';
+//import {BackEndService} from '../../api/back-end.service';
 import { setupSchedules} from '../../utils/schedule';
 import { Updates } from 'expo';
 import {
@@ -159,30 +159,6 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     }
     AsyncStorage.setItem('hasImage', '1'); console.log('Fetch images done');
   }
-  //The new service call has problem
-  async setPasswordNew() {
-    var service = new BackEndService(
-      global.webApiBaseUrl + 'api/',
-      'fr-CA',
-      global.userToken,
-      global.sac,
-      'null',
-      fetch
-    );
-    var result = await service.setPassword(
-      global.passwordSalt,
-      hashString(global.password, global.passwordSalt),
-      global.securityQuestionId,
-      global.securityAnswerSalt,
-      hashString(global.securityAnswer, global.securityAnswerSalt)
-    );
-    if (service.isResultFailure(result)) {
-      return false
-    }
-    else {
-      return true
-    };
-  }
   setPassword(jwt:string) {
                let url=global.webApiBaseUrl+'api/security/password';
                let data={salt:global.passwordSalt,passwordHash:hashString(global.password,global.passwordSalt),securityQuestionId:global.securityQuestionId,securityAnswerSalt:global.securityAnswerSalt,securityAnswerHash:hashString(global.securityAnswer,global.securityAnswerSalt)}
@@ -222,31 +198,6 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
            //  .then((responseJson) => {console.log('resetPassword:'+responseJson);    return responseJson;})
      .catch((error) => {console.error(error);console.log('Bad');return false;});
   }
-  async resetPasswordNew(newPass) {
-    let service = new BackEndService(
-      WEB_API_BASE_URL,
-      'fr-CA',
-      global.userToken,
-      global.sac,
-      'null',
-      fetch
-    );
-    let result = await service.resetPassword(
-      global.passwordSalt,
-      hashString(newPass, global.passwordSalt),
-      hashString(global.securityAnswer, global.securityAnswerSalt),
-      global.securityQuestionId,
-      global.securityAnswerSalt,
-      hashString(global.securityAnswer, global.securityAnswerSalt)
-    );
-    if (service.isResultFailure(result)) {
-      console.log('bad'); return false;
-    }
-    else {
-      global.password = newPass; console.log('good');
-      return true;
-    }
-  }
   async fetchGraphTypes() {
     let types = [];
     let url = global.webApiBaseUrl + 'api/dashboard/graphs';
@@ -273,25 +224,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
         }
       );
   }
-  async fetchGraphTypesNew() {
-    let types = [];
-    let backEndService = new BackEndService(
-      global.webApiBaseUrl + 'api/',
-      'fr-CA',
-      global.userToken,
-      global.sac,
-      hashString(global.password, global.passwordSalt),
-      fetch
-    );
-    let result = await backEndService.retrieveGraphLinks();
-    if (!backEndService.isResultFailure(result)) {
-      global.jwToken = result.token;
-      result.graphs.forEach(function (graphLink) {
-        types.push(graphLink.type);
-      });
-    }
-    return types
-  }
+
   async fetchImage(url: string, index: number, culture: string) {
     let isConnected = await checkConnection();
     if (!isConnected) {

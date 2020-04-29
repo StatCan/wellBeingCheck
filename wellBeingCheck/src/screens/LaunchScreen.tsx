@@ -141,12 +141,12 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           let sleepHour=await AsyncStorage.getItem('SleepHour');if(sleepHour==null)sleepHour='22:00';global.sleepHour=sleepHour;
 
           let schedules=await AsyncStorage.getItem('Schedules');if(schedules==null)schedules=[];else schedules=JSON.parse(schedules);global.schedules=schedules;
-          let lastDate=await AsyncStorage.getItem('LastDate'); if(lastDate!=null)global.lastDate=new Date(lastDate);console.log('lllllllllllllllllllllllllllllllllll LastDate:'+global.lastDate);
+          let lastDate=await AsyncStorage.getItem('LastDate'); if(lastDate!=null)global.lastDate=new Date(lastDate);console.log('LastDate:'+global.lastDate);
           let warningNotificationId=await AsyncStorage.getItem('WarningNotificationId');if(warningNotificationId!=null)global.warningNotificationId=parseInt(warningNotificationId);
           console.log('schedule:'+global.pingNum+' '+global.awakeHour+' '+global.sleepHour+' '+global.lastDate+' wid:'+global.warningNotificationId+' s_length:'+global.schedules.length+'Schedules:');
           let list=global.schedules;
           for(let i=0;i<list.length;i++){
-             console.log(list[i].Datetime+" ->"+list[i].Day);
+             console.log(new Date(list[i].Datetime)+" ->"+new Date(list[i].Day));
           }
           this._bootstrap();
         };
