@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo,useEffect } from 'react';
 import { StyleSheet, StatusBar, View,Image,YellowBox,Button} from 'react-native';
 import { AsyncStorage } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
