@@ -263,9 +263,6 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   componentWillUnmount() {
     //Session Handler
     clearTimeout(this.timer)
-
-    if (global.debugMode) console.log("Component will unmount");
- //   this.handleBackAction();
   }
 
   _handleNotification = (notification) => {
