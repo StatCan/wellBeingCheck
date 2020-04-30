@@ -53,7 +53,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     this.state = {
       numPingsModalShow: false,
       notificationState:global.disableNotification,
-      chosenNotificationState:!global.notificationState,
+      chosenNotificationState:true,
       notification: true,
       waketime: global.awakeHour,
       sleeptime: global.sleepHour,
@@ -221,7 +221,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
 
   //  this._notificationSubscription = Notifications.addListener(this._handleNotification);
 
-    this._retrieveData('settings');
+ //   this._retrieveData('settings');
   }
 
   handleBackAction = async () => {
@@ -333,7 +333,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     AsyncStorage.setItem('AwakeHour',this.state.waketime);global.awakeHour=this.state.waketime;
     AsyncStorage.setItem('SleepHour',this.state.sleeptime);global.sleepHour=this.state.sleeptime;
     global.disableNotification=this.state.notificationState;
-    console.log('State:----------------------------->'+global.disableNotification);
+    console.log('State:----------------------------->'+this.state.notificationState);
 
     if(this.state.notificationState)AsyncStorage.setItem("DisableNotification",'true');else AsyncStorage.setItem("DisableNotification",'false');
 
