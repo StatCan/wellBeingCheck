@@ -3,7 +3,7 @@ import Background from '../components/Background';
 import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, BackHandler, AsyncStorage, PanResponder, Alert, YellowBox } from 'react-native';
 import { checkConnection, hashString, fetchJwToken } from '../utils/fetchJwToken';
 import { resources } from '../../GlobalResources';
-import { notificationAlgo } from '../utils/notificationAlgo'
+//import { notificationAlgo } from '../utils/notificationAlgo'
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import { Provider as PaperProvider, Portal, Dialog, Paragraph, Button } from 'react-native-paper';
 import { newTheme } from '../core/theme';
@@ -85,64 +85,6 @@ class Dashboard extends React.Component<Props, HomeState> {
 
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
 
-    var wakeTime;
-    var sleepTime;
-    var numPings;
-    var doneSurveyA;
-    var finalDate;
-
-    // Only call updating notifications if Survey A was done
-    AsyncStorage.getItem('finalDate', (err, finalDateResult) => {
-      if (global.debugMode) console.log("The result of finalDate getItem is: ", finalDateResult);
-
-      if (finalDateResult) {
-        finalDate = finalDateResult;
-
-        AsyncStorage.getItem('currentNotificationDate', (err, currentNotificationDateResult) => {
-          if (global.debugMode) console.log("The result of currentNotificationDate getItem is: ", currentNotificationDateResult);
-          var currentNotificationDateResultDate = new Date(JSON.parse(currentNotificationDateResult));
-          if (global.debugMode) console.log("The currentNotificationDate (Date Object) is: " + currentNotificationDateResultDate);
-          var finalDateResultDate = new Date(JSON.parse(finalDateResult));
-          if (global.debugMode) console.log("The finalDate getTime is: " + finalDateResultDate.getTime());
-          var currentNotificationDateResultTime = currentNotificationDateResultDate.getTime();
-
-          if (currentNotificationDateResultTime < finalDateResultDate.getTime()) {
-
-            if (global.debugMode) console.log("The time is less than finalDate - now checking Survey A Done Flag...");
-
-            AsyncStorage.getItem('doneSurveyA', (err, doneSurveyAResult) => {
-              if (global.debugMode) console.log("The result of doneSurveyA getItem is: ", doneSurveyAResult);
-              if (doneSurveyAResult) {
-                doneSurveyA = doneSurveyAResult;
-
-                if (doneSurveyA == 'true') {
-                  AsyncStorage.getItem('settings', (err, settingsResult) => {
-                    if (global.debugMode) console.log("The result of Settings getItem is: ", settingsResult);
-                    if (settingsResult) {
-                      let resultAsObj = JSON.parse(settingsResult);
-                      wakeTime = resultAsObj.wakeTime;
-                      sleepTime = resultAsObj.sleepTime;
-                      numPings = resultAsObj.notificationCount;
-
-                      if (global.debugMode) console.log("The saved wakeTime is: " + wakeTime);
-                      if (global.debugMode) console.log("The saved sleepTime is: " + sleepTime);
-                      if (global.debugMode) console.log("The saved numPings is: " + numPings);
-
-                      if (!wakeTime) wakeTime = "6:00";
-                      if (!sleepTime) sleepTime = "22:00"
-                      if (!numPings) numPings = 2;
-
-                      // First check if notification set date
-                      notificationAlgo(wakeTime, sleepTime, numPings);
-                    }
-                  });
-                }
-              }
-            });
-          }
-        });
-      }
-    });
   }
 
   _show_firstTimeLoginModal = () => this.setState({ firstTimeLoginModal: true });
@@ -277,81 +219,37 @@ class Dashboard extends React.Component<Props, HomeState> {
   }
 
   //saveParaData tested well
-  async saveParaData() {
-    let isConnected = await checkConnection();
-    if (!isConnected) {
-      Alert.alert(resources.getString("internet.offline"));
-      return;
-    }
-
-    let jwt = await fetchJwToken();
-    var snt = ["2020/02/01 08:10:00", "2020/02/01 12:10:00", "2020/02/01 18:10:00"];
-    let paraData = {
-      "PlatFormVersion": "1.2",
-      "DeviceName": "Andoird",
-      "NativeAppVersion": "2.2",
-      "NativeBuildVersion": "3.2",
-      "DeviceYearClass": "4.2",
-      "SessionID": "5.2",
-      "WakeTime": "07:12",
-      "SleepTime": "21.2",
-      "NotificationCount": "2",
-      "NotificationEnable": true,
-      "ScheduledNotificationTimes": snt
-    };
-
-    let url = global.webApiBaseUrl + 'api/paradata'; console.log(url);
-    let token = global.jwToken;
-
-    fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + jwt },
-      body: JSON.stringify(paraData),
-    })
-      .then((response) => {
-        if (response.status == 200) {
-          console.log('paradata saved successfully');
-          return true;
-        }
-        else { console.log('paradata Bad:' + response.status); return false; }
-      })          // response.json())
-      .catch((error) => { console.log(error.message); });
-  }
-
-
-  //saveParadataNew test failed  check later
-  async saveParaDataNew() {
-    let isConnected = await checkConnection();
-    if (!isConnected) {
-      Alert.alert(resources.getString("internet.offline"));
-      return false;
-    }
-    let backEndService = new BackEndService(
-      WEB_API_BASE_URL,
-      'fr-CA',
-      global.userToken,
-      global.sac,
-      hashString(global.password, global.passwordSalt),
-      fetch
-    );
-    let result = await backEndService.submitParadata({
-      deviceId: 'iphone5yu',
-      questionnaireB: [
-        { time: '2020-03-25 10:03:19', notificationTime: '2020-03-25- 9:18:00' },
-        { time: '2020-03-25 15:23:29', notificationTime: null },
-        { time: '2020-03-26 7:33:39', notificationTime: '2020-03-25- 21:18:00' },
-      ]
-    });
-    if (backEndService.isResultFailure(result)) {
-      console.log('paradatanew failed');
-      return false;
-    }
-    else {
-      console.log('paradatanew saved successfully');
-      return true;
-    }
-  }
-
+  async saveParaData(){
+             let isConnected=await checkConnection();
+             if(!isConnected){Alert.alert('',resources.getString('offline'));return;}
+             let jwt=await fetchJwToken();
+             var snt = ["2020/02/01 08:10:00", "2020/02/01 12:10:00", "2020/02/01 18:10:00"];
+             let paraData = {
+                                                                      "PlatFormVersion": "1.2",
+                                                                      "DeviceName": "Andoird",
+                                                                      "NativeAppVersion": "2.2",
+                                                                      "NativeBuildVersion": "3.2",
+                                                                      "DeviceYearClass": "4.2",
+                                                                      "SessionID": "5.2",
+                                                                      "WakeTime": "07:12",
+                                                                      "SleepTime": "21.2",
+                                                                      "NotificationCount": "2",
+                                                                      "NotificationEnable":true,
+                                                                      "ScheduledNotificationTimes": snt
+                                                                  };
+             let url=global.webApiBaseUrl+'api/paradata';console.log(url);
+             let token=global.jwToken;
+             fetch(url, {
+                  method: 'POST',
+                  headers: {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + jwt},
+                  body: JSON.stringify(paraData),
+             })
+             .then((response) =>{
+                 if(response.status==200){console.log('paradata saved successfully');  return true;}
+                 else {console.log('paradata Bad:'+response.status);return false;}
+                 } )          // response.json())
+             .catch((error)=>{console.log(error.message);});
+      }
   async sendRequest() {
     let token = await fetchJwToken(); console.log('send:' + token);
     let url = global.webApiBaseUrl + 'api/Values';
@@ -379,25 +277,15 @@ class Dashboard extends React.Component<Props, HomeState> {
       })
       .catch(err => { console.log(err) })
   }
-
-  // launch survey
   async conductSurvey() {
-    let isConnected = await checkConnection();
-    if (!isConnected) {
-      Alert.alert(resources.getString("internet.offline"));
-      return;
-    }
-    let n = await this.getConfig();
+       let isConnected = await checkConnection();
+       if (!isConnected) { Alert.alert('',resources.getString('offline')); return; }
+       let n=await this.getConfig();
 
-    console.log('deviceId:' + global.userToken + ' password:' + global.password);
-    if (n) {
-      global.fetchAction = true;
-      this.props.navigation.navigate('EQSurveyScreen');
-    }
-    else {
-      Alert.alert(resources.getString("network.error.general"));
-      return;
-    }
+       console.log('deviceId:'+global.userToken+'    password:'+global.password);
+       if(n){global.fetchAction=true;this.props.navigation.navigate('EQSurveyScreen');}
+       else {Alert.alert('',resources.getString("securityIssue"));return;}
+
   }
 
   render() {

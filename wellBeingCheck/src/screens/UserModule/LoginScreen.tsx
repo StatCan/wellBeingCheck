@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, SafeAreaView,Alert } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Background from '../../components/Background';
 import Button from '../../components/Button';
@@ -9,6 +9,7 @@ import { resources } from '../../../GlobalResources';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { EvilIcons, Feather, FontAwesome } from '@expo/vector-icons';
 import md5 from "react-native-md5";
+import { setupSchedules,testSchedule,cancelSchedule} from '../../utils/schedule';
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -17,6 +18,10 @@ import {
 import LogoClear from '../../components/LogoClear';
 import AppBanner from '../../components/AppBanner';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
+
+
+import { Notifications } from "expo";
+import * as Permissions from 'expo-permissions';
 
 type LoginState = {
   password: string,
@@ -39,6 +44,7 @@ class LoginScreen extends React.Component<Props, LoginState> {
       title: resources.getString("Well-Being Check"),
       passwordIsHidden: true,
     };
+
   }
 
   toggleLanguage() {
@@ -96,6 +102,19 @@ class LoginScreen extends React.Component<Props, LoginState> {
     }
   }
 
+async onTestA(){
+   Alert.alert('',resources.getString('offline'));
+    // testSchedule();
+   }
+onTestB(){
+   cancelSchedule(global.warningNotificationId);
+  //  setupSchedules(false);
+    }
+onTestC(){
+   setupSchedules(true);
+}
+async onTestD(){AsyncStorage.removeItem('LastDate');global.lastDate=null;}
+
   render() {
     const bannerPathEnglish = require('../../assets/statscan_banner.png');
     const bannerPathFrench = require('../../assets/statscan_banner_fr.png');
@@ -121,7 +140,7 @@ class LoginScreen extends React.Component<Props, LoginState> {
                 </TouchableOpacity>
               </View>
 
-              <View style={styles.logo}>
+             <View style={styles.logo}>
                 <Text>{resources.getString("Well-Being Check")}</Text>
               </View>
 
@@ -168,6 +187,8 @@ class LoginScreen extends React.Component<Props, LoginState> {
                   onPress={this._onLoginPressed}>
                   <Text style={styles.whiteText}>{resources.getString("login.login")}</Text>
                 </Button>
+
+
               </View>
             </ScrollView>
           </SafeAreaView>
@@ -266,3 +287,14 @@ const styles = StyleSheet.create({
 });
 
 export default memo(LoginScreen);
+
+           /* <View style={styles.logo}>
+                <Text>{resources.getString("Well-Being Check")}</Text>
+                <Button onPress={this.onTestA}><Text> AAA</Text></Button>
+                <Button onPress={this.onTestB}><Text>BBB</Text></Button>
+                <Button onPress={this.onTestC}><Text>CCC</Text></Button>
+                <Button onPress={this.onTestD}><Text>DDD</Text></Button>
+
+                                <Button onPress={()=>this.onTestA()}><Text> AAA</Text></Button>
+                                <Button onPress={()=>this.onTestB()}><Text> BBB</Text></Button>
+              </View>*/

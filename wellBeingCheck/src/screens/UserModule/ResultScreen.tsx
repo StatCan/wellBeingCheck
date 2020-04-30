@@ -20,7 +20,7 @@ type ScreenState = {
 
 const height = Math.floor(Dimensions.get('window').height) - 100;
 const width = Math.floor(Dimensions.get('window').width);
-
+let startX=0;let index=0;
 export default class App extends React.Component<Props, ScreenState> {
   constructor(props) {
     super(props);
@@ -95,7 +95,10 @@ export default class App extends React.Component<Props, ScreenState> {
   handleScroll(event) {
     let width1 = this.state.width;
     let x = event.nativeEvent.contentOffset.x;
-    let index = Math.round(x / width1);
+    if(startX>x)index=Math.max(0,--index);
+    else if(startX<x)index=Math.min(++index,3);
+
+   // let index = Math.round(x / width1);   //Don't delete it, it is for old way to scroll
     let xd = index * width1;
     this.setState({ current: index });
     if (index == 0) { this.setState({ title: resources.getString("Your feelings") }); }
@@ -105,7 +108,7 @@ export default class App extends React.Component<Props, ScreenState> {
 
     InteractionManager.runAfterInteractions(() => this.sv.scrollTo({ x: xd }))
   }
-
+  handleScrollB(event) {startX = event.nativeEvent.contentOffset.x;}
   _onLayout(event) {
     const containerWidth = event.nativeEvent.layout.width;
     Image.getSize(this.state.picture1Base64, (w, h) => {
@@ -161,7 +164,7 @@ export default class App extends React.Component<Props, ScreenState> {
             </View>
             <View style={{ height: this.state.height }}>
               <ScrollView horizontal showsHorizontalScrollIndicator={false} ref={ref => { this.sv = ref; }}
-                contentContainerStyle={{ paddingVertical: 20, justifyContent: 'center', }}
+                contentContainerStyle={{ paddingVertical: 20, justifyContent: 'center', }}  onScrollBeginDrag={this.handleScrollB.bind(this)}
                 onTouchStart={this.log} onScrollEndDrag={this.handleScroll.bind(this)}>
                 {this.state.images.map((item, index) => (
                   <View onLayout={this._onLayout.bind(this)} style={{ height: this.state.height }} key={index}>

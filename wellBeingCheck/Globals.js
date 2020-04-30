@@ -45,4 +45,10 @@ global.configurationReady=false;
 global.currentView=0;
 global.fetchAction=true;
 
+global.pingNum=2;
+global.awakeHour='8:00';
+global.sleepHour='22:00';
+global.schedules=[];
+global.lastDate=null;
+global.warningNotificationId=null;
 global.sessionTimeOutDuration = 420000 //900000 = 15 min, 420000 = 7 min
