@@ -281,7 +281,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
           "ScheduledNotificationTimes": snt
         };
     console.log(paraData);
-    var result = await saveParaData(jwt, paraData);console.log('paradata... after survey...........->:'+result);
+    var result = await saveParaData(jwt, paraData);
   }
   displaySpinner() {
     return (
