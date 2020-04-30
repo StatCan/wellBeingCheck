@@ -1,9 +1,9 @@
 {
-  "expoServerPort": 19000,
-  "expoServerNgrokUrl": "https://vt-wgm.saba76.wellbeingcheck.exp.direct",
-  "packagerNgrokUrl": "https://packager.vt-wgm.saba76.wellbeingcheck.exp.direct",
-  "ngrokPid": 44505,
   "devToolsPort": 19002,
-  "packagerPort": 19007,
-  "packagerPid": 44487
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 3812,
+  "expoServerNgrokUrl": "https://xg-uuk.heikako.wellbeingcheck.exp.direct",
+  "packagerNgrokUrl": "https://packager.xg-uuk.heikako.wellbeingcheck.exp.direct",
+  "ngrokPid": 9392
 }

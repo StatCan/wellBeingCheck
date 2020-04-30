@@ -205,6 +205,8 @@ export const resources = {
             "faq.a2": "FAQ answer 2",
             "faq.q3": "FAQ question 3",
             "faq.a3": "FAQ answer 3",
+            "offline":"You are offline, try it later.",
+            "securityIssue":"Internal server error, Try again, if same thing would happen again contact StatCan",
 
             //Session
             "session.modal.title": "Session timeout warning",
@@ -226,7 +228,10 @@ export const resources = {
              //time picker title
              "timepicker.title":"Pick a time",
              "timepicker.canceltext":"Cancel",
-             "timepicker.confirmtext":"Confirm"
+             "timepicker.confirmtext":"Confirm",
+             "scheduleTitle":"Scheduled Notification",
+             "scheduleMessage":"Scheduled Notification for the Survey!",
+             "scheduleMessage1":"We haven’t heard from you in a while. Sign in for a Well-being Check!",
 
         },
         fr: {
@@ -463,6 +468,8 @@ export const resources = {
             "faq.q3": "FR_FAQ question 3",
             "faq.a3": "FR_FAQ answer 3",
 
+            "offline":"Vous êtes hors ligne, essayez-le plus tard.",
+            "securityIssue":"Erreur de serveur interne, essayez à nouveau, si la même chose se reproduit, contactez StatCan",
             //Session
             "session.modal.title": "Avertissement d'expiration de la session",
             "session.modal.message": "Désolé, votre session a déjà expiré. S'il vous plaît ouvrir une nouvelle session.",
@@ -483,7 +490,10 @@ export const resources = {
             //time picker title
             "timepicker.title":"Choisir une heure",
             "timepicker.canceltext":"Annuler",
-            "timepicker.confirmtext":"Confirmer"
+            "timepicker.confirmtext":"Confirmer",
+             "scheduleTitle":"Notification planifiée",
+             "scheduleMessage":"Notification programmée pour l'enquête!",
+             "scheduleMessage1":"Nous n’avons pas eu de vos nouvelles depuis un certain temps. Connectez-vous pour obtenir un Bilan bien-être!",
         }
     }
 };

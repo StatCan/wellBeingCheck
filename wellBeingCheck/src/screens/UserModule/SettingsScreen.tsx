@@ -4,7 +4,7 @@ import Button from '../../components/Button';
 import { newTheme } from '../../core/theme';
 import { List, Divider } from 'react-native-paper';
 import TimePicker from '../../components/TimePicker'
-import { notificationAlgo, scheduleNotification20s } from '../../utils/notificationAlgo'
+//import { notificationAlgo, scheduleNotification20s } from '../../utils/notificationAlgo'
 import { Notifications } from "expo";
 import * as Permissions from 'expo-permissions';
 import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
@@ -12,6 +12,7 @@ import { resources } from '../../../GlobalResources';
 import { Provider as PaperProvider, Title, Portal, Dialog, RadioButton } from 'react-native-paper';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import * as IntentLauncher from 'expo-intent-launcher';
+import {setupSchedules,checkInSchedule} from '../../utils/schedule';
 import { Updates } from 'expo';
 
 var scheduledDateArray = new Array();
@@ -54,9 +55,9 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       notificationState: true,
       chosenNotificationState: true,
       notification: true,
-      waketime: '08:00',
-      sleeptime: '22:00',
-      notificationcount: 2,
+      waketime: global.awakeHour,
+      sleeptime: global.sleepHour,
+      notificationcount: global.pingNum,
       culture: '1',
       cultureString: 'English',
       languageModalShow: false,
@@ -215,10 +216,10 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     // this function will fire on the next tick after the app starts
     // with the notification data.
 
-    if (global.debugMode) console.log("DEBUGMODE ON - Outputting Console Logs");
-    if (global.debugMode) console.log("Settings Screen Component Mounted");
+  //  if (global.debugMode) console.log("DEBUGMODE ON - Outputting Console Logs");
+  //  if (global.debugMode) console.log("Settings Screen Component Mounted");
 
-    this._notificationSubscription = Notifications.addListener(this._handleNotification);
+  //  this._notificationSubscription = Notifications.addListener(this._handleNotification);
 
     this._retrieveData('settings');
   }
@@ -227,14 +228,16 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     if (global.debugMode) console.log("Handle Back Action");
 
     //if (this._isDirty || this.state.settingsFirstTime) {
-    this.setState({ settingsFirstTime: false });
-    if (this.state.notificationState) {
-      if (global.debugMode) console.log("Dirty flag set - scheduling notifications");
-      notificationAlgo(this.state.waketime, this.state.sleeptime, this.state.notificationcount, this.state.finalDate);
-    } else {
-      if (global.debugMode) console.log("Notifications turned off - cancelling all notifications");
-      Notifications.cancelAllScheduledNotificationsAsync();
-    }
+      this.setState({ settingsFirstTime: false });
+      if (this.state.notificationState){
+          if (global.debugMode) console.log("Dirty flag set - scheduling notifications");
+        //  notificationAlgo(this.state.waketime, this.state.sleeptime, this.state.notificationcount, this.state.finalDate);
+        let inp=checkInSchedule(new Date());
+        if(inp && global.doneSurveyA && global.schedules.length>0)setupSchedules(true);
+      } else {
+        if (global.debugMode) console.log("Notifications turned off - cancelling all notifications");
+        Notifications.cancelAllScheduledNotificationsAsync();
+      }
     //}
 
     if (this.state.culture === "2") {
@@ -262,7 +265,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     clearTimeout(this.timer)
 
     if (global.debugMode) console.log("Component will unmount");
-    this.handleBackAction();
+ //   this.handleBackAction();
   }
 
   _handleNotification = (notification) => {
@@ -282,7 +285,9 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       AsyncStorage.removeItem('EsmCulture');
       AsyncStorage.removeItem('doneSurveyA');
       global.doneSurveyA = false;
-      AsyncStorage.removeItem('hasImage'); global.hasImage = false;
+      AsyncStorage.removeItem('LastDate');AsyncStorage.removeItem('Schedules');
+      AsyncStorage.removeItem('PingNum');AsyncStorage.removeItem('AwakeHour');AsyncStorage.removeItem('SleepHour');
+      AsyncStorage.removeItem('hasImage');global.hasImage=false;
 
       AsyncStorage.removeItem('user_terms_and_conditions', (err) => {
         console.log("user terms deleted");
@@ -318,6 +323,10 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       settingsFirstTime: this.state.settingsFirstTime
     };
 
+    AsyncStorage.setItem('PingNum',this.state.notificationcount.toString());global.pingNum=this.state.notificationcount;
+    AsyncStorage.setItem('AwakeHour',this.state.waketime);global.awakeHour=this.state.waketime;
+    AsyncStorage.setItem('SleepHour',this.state.sleeptime);global.sleepHour=this.state.sleeptime;
+
     AsyncStorage.setItem('settings', JSON.stringify(settingsObj), () => {
       if (global.debugMode) console.log("Storing Settings: ", settingsObj);
       console.log('current View:' + global.currentView);
@@ -337,9 +346,9 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
         let resultAsObj = JSON.parse(result);
         this.setState({ notificationState: resultAsObj.notificationState });
         this.setState({ chosenNotificationState: resultAsObj.chosenNotificationState });
-        this.setState({ notificationcount: resultAsObj.notificationCount });
-        this.setState({ waketime: resultAsObj.wakeTime });
-        this.setState({ sleeptime: resultAsObj.sleepTime });
+     //   this.setState({ notificationcount: resultAsObj.notificationCount });
+      //  this.setState({ waketime: resultAsObj.wakeTime });
+     //   this.setState({ sleeptime: resultAsObj.sleepTime });
         this.setState({ culture: resultAsObj.culture });
         this.setState({ cultureString: resultAsObj.cultureString });
         this.setState({ settingsFirstTime: resultAsObj.settingsFirstTime });
