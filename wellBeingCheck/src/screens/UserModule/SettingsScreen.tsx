@@ -232,10 +232,16 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
        if(this.state.notificationcount!=global.pingNum)dirty=true;
        console.log('Dirty:'+dirty);
 
+    if(this.state.waketime!=global.awakeHour)dirty=true;
+    if(this.state.sleeptime!=global.sleepHour)dirty=true;
+    if(this.state.notificationcount!=global.pingNum)dirty=true;
+    console.log('Dirty:'+dirty);
+
     //if (this._isDirty || this.state.settingsFirstTime) {
       this.setState({ settingsFirstTime: false });
       if (this.state.notificationState && dirty){
-          if (global.debugMode) console.log("Dirty flag set - scheduling notifications");
+           AsyncStorage.removeItem('ParadataSaved');global.paradataSaved=false;
+        //  if (global.debugMode) console.log("Dirty flag set - scheduling notifications");
         //  notificationAlgo(this.state.waketime, this.state.sleeptime, this.state.notificationcount, this.state.finalDate);
         let inp=checkInSchedule(new Date());
         if(inp && global.doneSurveyA && global.schedules.length>0)setupSchedules(true);
@@ -269,9 +275,6 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   componentWillUnmount() {
     //Session Handler
     clearTimeout(this.timer)
-
-    if (global.debugMode) console.log("Component will unmount");
- //   this.handleBackAction();
   }
 
   _handleNotification = (notification) => {
@@ -293,7 +296,9 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       global.doneSurveyA = false;
       AsyncStorage.removeItem('LastDate');AsyncStorage.removeItem('Schedules');
       AsyncStorage.removeItem('PingNum');AsyncStorage.removeItem('AwakeHour');AsyncStorage.removeItem('SleepHour');
-      AsyncStorage.removeItem('hasImage');global.hasImage=false; AsyncStorage.removeItem('DisableNotification');global.disableNotification=false;
+      AsyncStorage.removeItem('hasImage');global.hasImage=false; 
+      AsyncStorage.removeItem('DisableNotification');global.disableNotification=false;
+      AsyncStorage.removeItem('ParadataSaved');global.paradataSaved=false;
 
       AsyncStorage.removeItem('user_terms_and_conditions', (err) => {
         console.log("user terms deleted");

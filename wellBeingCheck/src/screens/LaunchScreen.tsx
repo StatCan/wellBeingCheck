@@ -135,12 +135,17 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           console.log('SurveyA:'+global.doneSurveyA);
           let hasImage = await AsyncStorage.getItem('hasImage');if(hasImage!=null)global.hasImage=hasImage;
           console.log('Has image on startup.............:'+global.hasImage);
-          let paradataSaved=await AsyncStorage.getItem('ParadataSaved');if(paradataSaved!=null)global.paradataSaved=parseInt(paradataSaved);
+         
           let pingNum=await AsyncStorage.getItem('PingNum');if(pingNum==null)pingNum=2;global.pingNum=pingNum;
           let awakeHour=await AsyncStorage.getItem('AwakeHour');if(awakeHour==null)awakeHour='8:00';global.awakeHour=awakeHour;
           let sleepHour=await AsyncStorage.getItem('SleepHour');if(sleepHour==null)sleepHour='22:00';global.sleepHour=sleepHour;
           let notificationState=await AsyncStorage.getItem('DisableNotification');
           if(notificationState==null)notificationState=false;global.disableNotification=notificationState;
+          let paradataSaved=await AsyncStorage.getItem('ParadataSaved');
+          if(paradataSaved==null || paradataSaved=='false')paradataSaved=false;else paradataSaved=true;
+          global.paradataSaved=paradataSaved;
+          console.log('Paradata saved:'+global.paradataSaved);
+
           let schedules=await AsyncStorage.getItem('Schedules');if(schedules==null)schedules=[];else schedules=JSON.parse(schedules);global.schedules=schedules;
           let lastDate=await AsyncStorage.getItem('LastDate'); if(lastDate!=null)global.lastDate=new Date(lastDate);console.log('LastDate:'+global.lastDate);
           let warningNotificationId=await AsyncStorage.getItem('WarningNotificationId');if(warningNotificationId!=null)global.warningNotificationId=parseInt(warningNotificationId);
@@ -149,6 +154,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           for(let i=0;i<list.length;i++){
              console.log(new Date(list[i].Datetime)+" ->"+new Date(list[i].Day));
           }
+
           this._bootstrap();
         };
   onNotification(n) {
