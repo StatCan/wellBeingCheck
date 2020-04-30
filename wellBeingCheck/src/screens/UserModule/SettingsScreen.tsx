@@ -263,6 +263,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     if (global.debugMode) console.log("Scheduled Notification Times: " + scheduledDateArray);
 
     this._storeSettings();
+    dirty=false;
   }
 
   componentWillUnmount() {
