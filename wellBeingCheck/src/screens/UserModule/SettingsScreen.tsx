@@ -40,7 +40,7 @@ interface Props {
 }
 
 const deviceHeight = Dimensions.get('window').height - 145;
-
+let dirty=false;
 class SettingsScreen extends React.Component<Props, SettingsState> {
   _panResponder: any;
   timer = 0
@@ -52,8 +52,8 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     super(SettingsState)
     this.state = {
       numPingsModalShow: false,
-      notificationState: true,
-      chosenNotificationState: true,
+      notificationState:global.disableNotification,
+      chosenNotificationState:!global.notificationState,
       notification: true,
       waketime: global.awakeHour,
       sleeptime: global.sleepHour,
@@ -225,11 +225,16 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   }
 
   handleBackAction = async () => {
-    if (global.debugMode) console.log("Handle Back Action");
+       if (global.debugMode) console.log("Handle Back Action");
+
+       if(this.state.waketime!=global.awakeHour)dirty=true;
+       if(this.state.sleeptime!=global.sleepHour)dirty=true;
+       if(this.state.notificationcount!=global.pingNum)dirty=true;
+       console.log('Dirty:'+dirty);
 
     //if (this._isDirty || this.state.settingsFirstTime) {
       this.setState({ settingsFirstTime: false });
-      if (this.state.notificationState){
+      if (this.state.notificationState && dirty){
           if (global.debugMode) console.log("Dirty flag set - scheduling notifications");
         //  notificationAlgo(this.state.waketime, this.state.sleeptime, this.state.notificationcount, this.state.finalDate);
         let inp=checkInSchedule(new Date());
@@ -258,6 +263,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     if (global.debugMode) console.log("Scheduled Notification Times: " + scheduledDateArray);
 
     this._storeSettings();
+    dirty=false;
   }
 
   componentWillUnmount() {
@@ -287,7 +293,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       global.doneSurveyA = false;
       AsyncStorage.removeItem('LastDate');AsyncStorage.removeItem('Schedules');
       AsyncStorage.removeItem('PingNum');AsyncStorage.removeItem('AwakeHour');AsyncStorage.removeItem('SleepHour');
-      AsyncStorage.removeItem('hasImage');global.hasImage=false;
+      AsyncStorage.removeItem('hasImage');global.hasImage=false; AsyncStorage.removeItem('DisableNotification');global.disableNotification=false;
 
       AsyncStorage.removeItem('user_terms_and_conditions', (err) => {
         console.log("user terms deleted");
@@ -326,6 +332,10 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     AsyncStorage.setItem('PingNum',this.state.notificationcount.toString());global.pingNum=this.state.notificationcount;
     AsyncStorage.setItem('AwakeHour',this.state.waketime);global.awakeHour=this.state.waketime;
     AsyncStorage.setItem('SleepHour',this.state.sleeptime);global.sleepHour=this.state.sleeptime;
+    global.disableNotification=this.state.notificationState;
+    console.log('State:----------------------------->'+global.disableNotification);
+
+    if(this.state.notificationState)AsyncStorage.setItem("DisableNotification",'true');else AsyncStorage.setItem("DisableNotification",'false');
 
     AsyncStorage.setItem('settings', JSON.stringify(settingsObj), () => {
       if (global.debugMode) console.log("Storing Settings: ", settingsObj);
@@ -344,7 +354,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       if (global.debugMode) console.log("The result of getItem is: ", result);
       if (result) {
         let resultAsObj = JSON.parse(result);
-        this.setState({ notificationState: resultAsObj.notificationState });
+     //   this.setState({ notificationState: resultAsObj.notificationState });
         this.setState({ chosenNotificationState: resultAsObj.chosenNotificationState });
      //   this.setState({ notificationcount: resultAsObj.notificationCount });
       //  this.setState({ waketime: resultAsObj.wakeTime });
@@ -569,8 +579,6 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                       <RadioButton.Group
                         onValueChange={n => {
                           this.setState({ notificationcount: parseInt(n) });
-                          if (global.debugMode) console.log("Value changed - setting dirty flag");
-                          this._isDirty = true;
                         }
                         }
                         value={this.state.notificationcount.toString()}>

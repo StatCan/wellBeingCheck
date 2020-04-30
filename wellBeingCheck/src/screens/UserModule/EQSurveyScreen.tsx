@@ -259,7 +259,13 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
       })
   }
   async saveDefaultParadata(jwt) {
-    var snt = ["2020/02/01 08:10:00", "2020/02/01 12:10:00", "2020/02/01 18:10:00"];
+    let list =global.schedules; var snt = [];
+    if(list.length>0){
+        list.forEach(function(s){
+           snt.push(s.Datetime);
+        });
+    }
+
     let paraData = {
       "PlatFormVersion": Platform.Version,
       "DeviceName": Expo.Constants.deviceName,
@@ -267,9 +273,9 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
       "NativeBuildVersion": Expo.Constants.nativeBuildVersion,
       "DeviceYearClass": Expo.Constants.deviceYearClass,
       "SessionID": Expo.Constants.sessionId,
-      "WakeTime": "07:12",
-      "SleepTime": "21.2",
-      "NotificationCount": "2",
+      "WakeTime": global.awakeHour,
+      "SleepTime": global.sleepHour,
+      "NotificationCount": global.pingNum,
       "NotificationEnable": true,
       "ScheduledNotificationTimes": snt
     };

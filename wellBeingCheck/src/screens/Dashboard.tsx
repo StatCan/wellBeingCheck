@@ -218,7 +218,7 @@ class Dashboard extends React.Component<Props, HomeState> {
     this.setState({ refresh: '1' });
   }
 
-  //saveParaData tested well
+  //saveParaData tested well, For test only
   async saveParaData(){
              let isConnected=await checkConnection();
              if(!isConnected){Alert.alert('',resources.getString('offline'));return;}
@@ -250,6 +250,7 @@ class Dashboard extends React.Component<Props, HomeState> {
                  } )          // response.json())
              .catch((error)=>{console.log(error.message);});
       }
+  //For Test
   async sendRequest() {
     let token = await fetchJwToken(); console.log('send:' + token);
     let url = global.webApiBaseUrl + 'api/Values';
