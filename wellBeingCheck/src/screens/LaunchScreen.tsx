@@ -55,51 +55,21 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
     if (global.debugMode)  console.log("Locale is: " + Localization.locale);
     if (global.debugMode) console.log("resources culture: " + resources.culture);
 
-<<<<<<< Updated upstream
-    // if (Localization.locale === "en-CA"){
-    //   resources.culture = 'en';
-    // } else if (Localization.locale === "fr-CA"){
-    //   resources.culture = 'fr';
-    // }
-
-    AsyncStorage.getItem('settings', (err, settingsObject) => {
-      if (global.debugMode)  console.log(settingsObject);
-      let LocalSettingsObject = JSON.parse(settingsObject)
-      let appLanguage= LocalSettingsObject.culture;
-      if (global.debugMode)  console.log("language from the storage "+ appLanguage)
-      if (appLanguage==="2") {
-        resources.culture = 'fr';
-       
-     } else {
-      resources.culture = 'en';
-     }
-    })
-
-   if (Localization.locale.substring(0,2) === "en" && (resources.culture==='en'|| resources.culture==='') ){
-      resources.culture = 'en';
-      if (global.debugMode)   console.log("Locale is 1: en-ca:res=en " + Localization.locale +"ressource"+resources.culture);
-    } else if   (Localization.locale.substring(0,2) === "en" && (resources.culture==='fr'||resources.culture==='')) {
-      resources.culture = 'fr';
-      if (global.debugMode)   console.log("Locale is 2: en-ca:res=fr " + Localization.locale +"ressource"+resources.culture);
-    } else if (Localization.locale === "fr-CA" && (resources.culture==='en'||resources.culture==='')) {
-      resources.culture = 'en';
-      if (global.debugMode)    console.log("Locale is 3: fr-ca:res=en " + Localization.locale +"ressource"+resources.culture);
-    } else if (Localization.locale === "fr-CA" && (resources.culture==='fr'||resources.culture==='')) {
-      resources.culture = 'fr';
-      if (global.debugMode)   console.log("Locale is 4: fr-ca:res=fr " + Localization.locale +"ressource"+resources.culture);
-=======
-    AsyncStorage.getItem('settings',(err,settingobject)=>{
-    console.log("launchScreen._bootstrap settings object values"+ settingobject)
-    let localSettingObject = JSON.parse(settingobject)
+    
+    AsyncStorage.getItem('settings',(err,settingObject)=>{
+    console.log("launchScreen._bootstrap settings object values"+ settingObject)
+    let localSettingObject = JSON.parse(settingObject)
+    if (localSettingObject){
     let language=localSettingObject.culture;
     console.log("launchScreen._bootstrap language"+ language);
     if (language===1) {
       resources.culture="en";
     } else {
       resources.culture="fr";
-    }
-    
+    }}
+
     });
+  
 
     console.log("Test Locale is  " + Localization.locale + " ressource .culture "+resources.culture);
     
@@ -118,7 +88,6 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
 
       resources.culture = "fr";
       console.log("Locale is 4: fr-ca:res=fr " + Localization.locale +"ressource"+resources.culture);
->>>>>>> Stashed changes
     }
 
     AsyncStorage.getItem('user_account', (err, userAccountResult) => {
@@ -180,15 +149,10 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
               userToken= deviceId;
               AsyncStorage.setItem('EsmUserToken',userToken);
           }
-<<<<<<< Updated upstream
           else global.sac = sac;
           global.userToken=userToken;
           if (global.debugMode) console.log('DeviceId:'+global.userToken);
           if (global.debugMode) console.log('Sac:'+global.sac);
-=======
-          else global.sac=sac;
-          global.userToken=userToken;console.log('DeviceId:'+ global.userToken);console.log('Sac:'+global.sac);
->>>>>>> Stashed changes
           let doneSurveyA = await AsyncStorage.getItem('doneSurveyA');
           global.doneSurveyA = doneSurveyA;
           if (global.debugMode) console.log('SurveyA:'+ global.doneSurveyA);
@@ -203,7 +167,9 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
         <AppBanner />
         <Background>
           <LogoClear />
-          <Title>{resources.getString("Well-Being Check")}</Title>
+console.log("");
+          <Title>{resources.getString("app.name")}</Title>
+          
         </Background>
         <NavigationEvents
           // onDidFocus={() => this.bootstrapA()}
