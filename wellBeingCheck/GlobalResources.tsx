@@ -231,7 +231,7 @@ export const resources = {
         },
         fr: {
             //global
-            "app.name": "FR_Well-being Check",
+            "app.name": "Bilan bien-être",
             "gl.next": "Suivant",
             "gl.cancel": "Annuler",
             "gl.decline": "Décliner",
