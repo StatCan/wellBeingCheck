@@ -1,4 +1,5 @@
 import NetInfo from '@react-native-community/netinfo';
+import { AsyncStorage } from 'react-native';
 
 export function fetchJwToken1() {
   let token='123456';
@@ -73,7 +74,7 @@ export function saveParaData(jwt,paraData){
                   body: JSON.stringify(paraData),
              })
              .then((response) =>{
-                 if(response.status==200){console.log('paradata saved successfully');  return true;}
+                 if(response.status==200){console.log('paradata saved successfully');AsyncStorage.setItem('ParadataSaved','true');global.paradataSaved=true;  return true;}
                  else {console.log('paradata Bad:'+response.status);return false;}
                  } )          // response.json())
              .catch((error)=>{console.log(error.message);return false;});

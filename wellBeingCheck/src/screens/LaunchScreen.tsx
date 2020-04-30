@@ -139,6 +139,10 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           let pingNum=await AsyncStorage.getItem('PingNum');if(pingNum==null)pingNum=2;global.pingNum=pingNum;
           let awakeHour=await AsyncStorage.getItem('AwakeHour');if(awakeHour==null)awakeHour='8:00';global.awakeHour=awakeHour;
           let sleepHour=await AsyncStorage.getItem('SleepHour');if(sleepHour==null)sleepHour='22:00';global.sleepHour=sleepHour;
+          let paradataSaved=await AsyncStorage.getItem('ParadataSaved');
+          if(paradataSaved==null || paradataSaved=='false')paradataSaved=false;else paradataSaved=true;
+          global.paradataSaved=paradataSaved;
+          console.log('Paradata saved:'+global.paradataSaved);
 
           let schedules=await AsyncStorage.getItem('Schedules');if(schedules==null)schedules=[];else schedules=JSON.parse(schedules);global.schedules=schedules;
           let lastDate=await AsyncStorage.getItem('LastDate'); if(lastDate!=null)global.lastDate=new Date(lastDate);console.log('LastDate:'+global.lastDate);
@@ -148,6 +152,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           for(let i=0;i<list.length;i++){
              console.log(new Date(list[i].Datetime)+" ->"+new Date(list[i].Day));
           }
+
           this._bootstrap();
         };
   onNotification(n) {

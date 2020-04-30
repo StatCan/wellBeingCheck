@@ -235,7 +235,8 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     //if (this._isDirty || this.state.settingsFirstTime) {
       this.setState({ settingsFirstTime: false });
       if (this.state.notificationState && dirty){
-          if (global.debugMode) console.log("Dirty flag set - scheduling notifications");
+           AsyncStorage.removeItem('ParadataSaved');global.paradataSaved=false;
+        //  if (global.debugMode) console.log("Dirty flag set - scheduling notifications");
         //  notificationAlgo(this.state.waketime, this.state.sleeptime, this.state.notificationcount, this.state.finalDate);
         let inp=checkInSchedule(new Date());
         if(inp && global.doneSurveyA && global.schedules.length>0)setupSchedules(true);
@@ -291,6 +292,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       AsyncStorage.removeItem('LastDate');AsyncStorage.removeItem('Schedules');
       AsyncStorage.removeItem('PingNum');AsyncStorage.removeItem('AwakeHour');AsyncStorage.removeItem('SleepHour');
       AsyncStorage.removeItem('hasImage');global.hasImage=false;
+      AsyncStorage.removeItem('ParadataSaved');global.paradataSaved=false;
 
       AsyncStorage.removeItem('user_terms_and_conditions', (err) => {
         console.log("user terms deleted");
