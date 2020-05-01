@@ -232,7 +232,10 @@ export const resources = {
              "scheduleTitle":"Scheduled Notification",
              "scheduleMessage":"Scheduled Notification for the Survey!",
              "scheduleMessage1":"We haven’t heard from you in a while. Sign in for a Well-being Check!",
-
+             "notificationValidationMessage1":"Your awake time equals your sleep time, no notification will be sent out",
+             "notificationValidationMessage2":"Your number of notifications is great then the rounded/calculated awake interval,it will be reduced to match awake interval",
+             "cancel":"Cancel",
+             "continue":"Continue",
         },
         fr: {
             //global
@@ -494,6 +497,10 @@ export const resources = {
              "scheduleTitle":"Notification planifiée",
              "scheduleMessage":"Notification programmée pour l'enquête!",
              "scheduleMessage1":"Nous n’avons pas eu de vos nouvelles depuis un certain temps. Connectez-vous pour obtenir un Bilan bien-être!",
+             "notificationValidationMessage1":"Votre temps de veille est égal à votre temps de sommeil, aucune notification ne sera envoyée",
+             "notificationValidationMessage2":"Votre nombre de notifications est grand puis l'intervalle d'éveil arrondi / calculé, il sera réduit pour correspondre à l'intervalle d'éveil",
+             "cancel":"Annuler",
+             "continue":"Continuer",
         }
     }
 };

@@ -670,4 +670,11 @@ export async function setupSchedules(affectCurrent=false){
      let warningNotificationId=await setupWarning(d5,'Waaaaarrrrrnnnning',message2);
      console.log('warningId:'+warningNotificationId+' dt:'+d5);global.warningNotificationId=warningNotificationId;
  }
-
+ export function validateParameters(count,awakeHour,sleepHour){
+     let result=0;
+     let awake=roundUp(global.awakeHour); let sleep=roundDown(global.sleepHour);
+     let awakeInterval = sleep - awake; if (awake> sleep) awakeInterval += 24;
+     if(awakeInterval==0)result=1;
+     else if(awakeInterval<count)result=2;
+     return result;
+ }

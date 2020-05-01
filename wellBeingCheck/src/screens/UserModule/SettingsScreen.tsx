@@ -12,7 +12,7 @@ import { resources } from '../../../GlobalResources';
 import { Provider as PaperProvider, Title, Portal, Dialog, RadioButton } from 'react-native-paper';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import * as IntentLauncher from 'expo-intent-launcher';
-import {setupSchedules,checkInSchedule} from '../../utils/schedule';
+import {setupSchedules,checkInSchedule,validateParameters} from '../../utils/schedule';
 import { Updates } from 'expo';
 
 var scheduledDateArray = new Array();
@@ -318,7 +318,31 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
 
   _backButtonPressed = () => {
     if (global.debugMode) console.log("Back button Pressed");
-    this.handleBackAction();
+    let validate=validateParameters(this.state.notificationcount,this.state.waketime,this.state.sleeptime);
+    if(validate==0)this.handleBackAction();
+    else{
+       let msg=resources.getString("notificationValidationMessage1");
+       if(validate==2)let msg=resources.getString("notificationValidationMessage1");
+         Alert.alert(
+               '',msg,
+               [
+                 {
+                   text: resources.getString("cancel"),
+                   onPress: () => {
+                     console.log('Cancel Pressed');
+                     return false;
+                   },
+
+                 },
+                 {
+                   text: resources.getString("continue"), onPress: () => {
+                     this.handleBackAction();
+                   }
+                 },
+               ],
+               { cancelable: false }
+             );
+    }
   }
 
   _storeSettings = () => {
