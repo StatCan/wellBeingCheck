@@ -225,13 +225,16 @@ export const resources = {
             "notification.resquest.title":"",
             "notification.resquest.message":"Visit your device settings to enable notifications?",
 
+            //Notification messages
+            "notification.scheduleTitle":"Scheduled Notification",
+            "notification.scheduleMessage":"How are you feeling right now? Sign in for a Well-being Check!",
+            "notification.lastAttemptMessage":"We haven’t heard from you in a while. Sign in for a Well-being Check!",
+          
              //time picker title
              "timepicker.title":"Pick a time",
              "timepicker.canceltext":"Cancel",
              "timepicker.confirmtext":"Confirm",
-             "scheduleTitle":"Scheduled Notification",
-             "scheduleMessage":"Scheduled Notification for the Survey!",
-             "scheduleMessage1":"We haven’t heard from you in a while. Sign in for a Well-being Check!",
+           
 
         },
         fr: {
@@ -487,13 +490,17 @@ export const resources = {
             "notification.resquest.title":"",
             "notification.resquest.message":"Accédez aux paramètres de votre appareil pour activer les notifications?",
 
+            //Notification messages
+            "notification.scheduleTitle":"Notification planifiée",
+            "notification.scheduleMessage":"Comment vous sentez-vous en ce moment? Connectez-vous pour obtenir un Bilan bien-être!",
+            "notification.lastAttemptMessage":"Nous n’avons pas eu de vos nouvelles depuis un certain temps. Connectez-vous pour obtenir un Bilan bien-être!",
+          
             //time picker title
             "timepicker.title":"Choisir une heure",
             "timepicker.canceltext":"Annuler",
             "timepicker.confirmtext":"Confirmer",
-             "scheduleTitle":"Notification planifiée",
-             "scheduleMessage":"Notification programmée pour l'enquête!",
-             "scheduleMessage1":"Nous n’avons pas eu de vos nouvelles depuis un certain temps. Connectez-vous pour obtenir un Bilan bien-être!",
+            
+            
         }
     }
 };
