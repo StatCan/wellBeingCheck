@@ -56,43 +56,52 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
     if (global.debugMode)  console.log("Locale is: " + Localization.locale);
     if (global.debugMode) console.log("resources culture: " + resources.culture);
 
-    
+    let language=null
     AsyncStorage.getItem('settings',(err,settingObject)=>{
         if (global.debugMode)  console.log("launchScreen._bootstrap settings object values    "+ settingObject)
     let localSettingObject = JSON.parse(settingObject)
     if (localSettingObject){
-    let language=localSettingObject.culturetttt;
+    let language=localSettingObject.culture;
         if (global.debugMode) console.log("launchScreen._bootstrap language:      "+ language);
+
     if (language == "1") {
         if (global.debugMode) console.log("launchScreen._bootstrap set language english:      "+ language);
       resources.culture='en';
-    } else {
+      
+    } else if(language == "2"){
         if (global.debugMode)  console.log("launchScreen._bootstrap set language french:      "+ language);
       resources.culture='fr';
-    }
+
+      
+    } 
+  }
+  else{
+    if (global.debugMode) { console.log("launchScreen._bootstrap Language undefined:      ");}
+    //  resources.culture='';
   }
 
     });
   
     // console.log("Test Locale is  " + Localization.locale + " ressource .culture  "+resources.culture);
     // console.log("Test Locale substring is  " + Localization.locale.substring(0,2) + " ressource .culture  "+resources.culture);
-    
-   if (Localization.locale.substring(0,2) == 'en' && ((resources.culture=='en') || (resources.culture==undefined)||(resources.culture=null))){
+    //|| (resources.culture=='')||(resources.culture=null))
+  if (language==null){
+    if (Localization.locale.substring(0,2) == 'en') {
       resources.culture = 'en';
-      if (global.debugMode) console.log("Locale is 1: en-ca:res=en " + Localization.locale +"ressource"+resources.culture);
-
-    } else if  (Localization.locale.substring(0,2) == 'en' && ((resources.culture=='fr')||(resources.culture==undefined)||(resources.culture=null))) {
+    } else if(Localization.locale.substring(0,2) == 'fr'){
       resources.culture = 'fr';
-      if (global.debugMode) console.log("Locale is 2: en-ca:res=fr " + Localization.locale +"ressource"+resources.culture);
-
-    } else if (Localization.locale.substring(0,2) == 'fr'  && ((resources.culture=='en')||(resources.culture==undefined)||(resources.culture=null))) {
-      resources.culture = 'en';
-      if (global.debugMode) console.log("Locale is 3: fr-ca:res=en " + Localization.locale +"ressource"+resources.culture);
-    } else if (Localization.locale.substring(0,2) == 'fr' && ((resources.culture=='fr')||(resources.culture==undefined)||(resources.culture=null))) {
-
-      resources.culture = 'fr';
-      if (global.debugMode) console.log("Locale is 4: fr-ca:res=fr " + Localization.locale +"ressource"+resources.culture);
     }
+  }else {
+   if (Localization.locale.substring(0,2) == 'en' && (language=='1')){
+      resources.culture = 'en';
+    } else if  (Localization.locale.substring(0,2) == 'en' && (language=='2')) {
+      resources.culture = 'fr';
+    } else if (Localization.locale.substring(0,2) == 'fr'  && (language=='1')) {
+      resources.culture = 'en';
+    } else if (Localization.locale.substring(0,2) == 'fr' && (language=='2')) {
+    resources.culture = 'fr';
+    }
+  }
 
     AsyncStorage.getItem('user_account', (err, userAccountResult) => {
       if (global.debugMode) console.log(userAccountResult);
