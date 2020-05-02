@@ -105,6 +105,10 @@ export const resources = {
             "reg.pass.hint_number": "1 Number",
             "reg.pass_conf.empty": "Password cannot be empty",
             "reg.pass_conf.match": "Passwords do not match",
+            "reg.securityQuestion.validation":"Security question is required",
+            "reg.securityQuestionAnswer.validation":"Security answer is required",
+            "reg.securityQuestionAnswerlength.validation":"Security answer must be at least 4 characters",
+
             //password recovery
             "password_recovery.title": "Password recovery",
             "password_recovery_change.title": "Enter New Password",
@@ -191,6 +195,8 @@ export const resources = {
             "login.login": "Login",
             "Language": "Français",
             "Secure your account": "Secure your account",
+
+            //information screen
             "contactus_title": "Contact Us",
             "contactus_email": "Email:",
             "contactus_telephone": "Telephone:",
@@ -369,6 +375,10 @@ export const resources = {
             "reg.pass.hint_number": "un chiffre",
             "reg.pass_conf.empty": "Le mot de passe ne peut pas être vide",
             "reg.pass_conf.match": "Les mots de passe ne correspondent pas",
+            "reg.securityQuestion.validation":"la question sécrete est necessaire",
+            "reg.securityQuestionAnswer.validation":"la réponse à la question secrète est necessaire",
+            "reg.securityQuestionAnswerlength.validation":"la reponse doit etre au moins 4 characteres",
+
             //password recovery
             "password_recovery.title": "Récupération de mot de passe",
             "password_recovery_change.title": "Entrez un nouveau mot de passe",
