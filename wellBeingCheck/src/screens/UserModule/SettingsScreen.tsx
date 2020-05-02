@@ -237,6 +237,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       } else {
         if (global.debugMode) console.log("Notifications turned off - cancelling all notifications");
         Notifications.cancelAllScheduledNotificationsAsync();
+        
       }
     //}
 
