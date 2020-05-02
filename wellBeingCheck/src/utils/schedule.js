@@ -2,7 +2,7 @@ import { Notifications } from "expo";
 import { AsyncStorage } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { resources } from '../../GlobalResources';
-
+//GSS29 Data from algorithm specification
 const primeTimeAwakeIntervals = [
   {
     awakeHourBefore: 10,
@@ -69,6 +69,7 @@ const primeTimeAwakeIntervals = [
     weekDayPercentage: 6, // M
     weekendPercentage: 4  // Z
   }];
+//Setup notification with notification 3 parameters to specify when the notification will be fired, the title and body message string
 setupNotification = async (datetime,title,message) => {
   if (Platform.OS === 'android') {
     Notifications.createChannelAndroidAsync('survey-messages', {
@@ -93,6 +94,7 @@ setupNotification = async (datetime,title,message) => {
   );
   return notificationId;
 };
+//Ask the permission to setup notification, this function return true/false, we can setup notification only when this function return true
 askPermissions = async () => {
     let result=false;
     const { status: existingStatus } = await Permissions.getAsync(
@@ -114,13 +116,15 @@ askPermissions = async () => {
     }
     return result;
   };
+//cancell all notifications which were setup before
 function cancellAllSchedules(){
      Notifications.cancelAllScheduledNotificationsAsync();
 }
+//Cancel a notification by notificationId
 export function cancelSchedule(localNotificationId){
     Notifications.cancelScheduledNotificationAsync(localNotificationId);
 }
-
+//Setup Day5 notification, basically is same function with setupNotification,will consider to be eliminated in next version
 async function setupWarning(dt,title,message){
     if (Platform.OS === 'android') {
                             Notifications.createChannelAndroidAsync('survey-messages', {
@@ -145,6 +149,18 @@ async function setupWarning(dt,title,message){
                           );
     return warningId;
 }
+/*Main workflow function, its parameter is used to specify whether or not the new notification will affect the current's old notification
+Since it is very complicated, so better to read the workflow PDF file first,
+It has 2 main scenarios: Does lastDate flag exist ?
+    A1) if the answer is no, that mean survey A is not done yet, will setup a brand new set of notifications, and then set the lastDate to the survey's last day that is 30 days later the day you finish the survey A
+    A2) if the answer is yes, then we have to determine the current day is already in the the notification schedules we created before
+        B1) if the answer is no, so no existing notification will get affected, so just create a new set of notifications
+        B2) if the answer is yes , then we have to determine if current day will get affected
+             C1) if the answer is no, so we just calculate how many days of notification need to append, and setup them
+             C2) if the answer is yes, first we have to deal with current day. we have to calculate how many and which notifications for current day have been fired already, how many and which notifications for current day have not been fired yet,
+                 because current day's notifications will get affected, we have to re-arrange new notifications for those not-done-notifacations
+                 secondly, we still have to calculate how many days of notification need to be appended beside the current day and setup them
+for how to calculate these notification schedule, the next function will get into play*/
 export async function setupSchedules(affectCurrent=false){
     let permission=await askPermissions();if(!permission)return;
     let title=resources.getString("scheduleTitle");//   "Scheduled Notification";
@@ -334,6 +350,8 @@ export async function setupSchedules(affectCurrent=false){
     }
     }
 }
+/*Main function to calculate the notificationschedule, the parameters are used to indicate the schedule date, awake hour,sleep hour,how many times of notification for this day, and current time
+the algorithm will not arrange any notification for the time which has been passed for the day(time<current), for detail see the work flowpdf file*/
  function calculateSchedule(awakeHour, sleepHour, count, date, current) {
       //The current is the affected day time, if current is in this date, then thisd date will partially schedule
          var selected = []; var selected1 = []; var str = '';

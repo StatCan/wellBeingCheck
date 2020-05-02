@@ -124,8 +124,8 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
      count=1;
      AsyncStorage.setItem('hasImage','0');global.hasImage=0;console.log('hasImage after survey A done.........'+global.hasImage);
      global.fetchAction=false;
-     // await this.saveDefaultParadata(jwt);
      setupSchedules();
+     await this.saveDefaultParadata(jwt);
  }
   async handleSurveyBdone(){
      let isConnected=await checkConnection();console.log('In handle B');
@@ -145,6 +145,8 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
      AsyncStorage.setItem('doneSurveyB','true');
      global.fetchAction=false;
      setupSchedules(false);
+     console.log('Paradata saved:'+global.paradataSaved);
+     if(!global.paradataSaved)await this.saveDefaultParadata(jwt);
      this.props.navigation.navigate('Dashboard');
   }
   async fetchGraphs(types: string[]) {
@@ -260,20 +262,25 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
       })
   }
   async saveDefaultParadata(jwt) {
-    var snt = ["2020/02/01 08:10:00", "2020/02/01 12:10:00", "2020/02/01 18:10:00"];
-    let paraData = {
-      "PlatFormVersion": Platform.Version,
-      "DeviceName": Expo.Constants.deviceName,
-      "NativeAppVersion": Expo.Constants.nativeAppVersion,
-      "NativeBuildVersion": Expo.Constants.nativeBuildVersion,
-      "DeviceYearClass": Expo.Constants.deviceYearClass,
-      "SessionID": Expo.Constants.sessionId,
-      "WakeTime": "07:12",
-      "SleepTime": "21.2",
-      "NotificationCount": "2",
-      "NotificationEnable": true,
-      "ScheduledNotificationTimes": snt
-    };
+    let list =global.schedules; var snt = [];
+        if(list.length>0){
+            list.forEach(function(s){
+               snt.push(s.Datetime);
+            });
+        }
+        let paraData = {
+          "PlatFormVersion": Platform.Version,
+          "DeviceName": Expo.Constants.deviceName,
+          "NativeAppVersion": Expo.Constants.nativeAppVersion,
+          "NativeBuildVersion": Expo.Constants.nativeBuildVersion,
+          "DeviceYearClass": Expo.Constants.deviceYearClass,
+          "SessionID": Expo.Constants.sessionId,
+          "WakeTime": global.awakeHour,
+          "SleepTime": global.sleepHour,
+          "NotificationCount": global.pingNum,
+         // "NotificationEnable": true,
+          "ScheduledNotificationTimes": snt
+        };
     console.log(paraData);
     var result = await saveParaData(jwt, paraData);
   }
