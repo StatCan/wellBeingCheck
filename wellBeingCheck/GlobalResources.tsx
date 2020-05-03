@@ -109,11 +109,13 @@ export const resources = {
             "reg.securityQuestionAnswer.validation":"Security answer is required",
             "reg.securityQuestionAnswerlength.validation":"Security answer must be at least 4 characters",
 
+
             //password recovery
             "password_recovery.title": "Password recovery",
             "password_recovery_change.title": "Enter New Password",
             "password_recovery_change.enter_password": "Enter password",
             "password_recovery_change.confirm_password": "Confirm password",
+            "password.recovery.incorrectAnswer":"incorrect answer",
             //home screen
             "home_first_time_login_content": "Please visit the settings menu if you would like to customize the number of notifications you receive, and the window of time when you would like to receive them.",
             //about
@@ -195,6 +197,7 @@ export const resources = {
             "login.login": "Login",
             "Language": "Français",
             "Secure your account": "Secure your account",
+            "login.Wrongpassword.message":"incorrect password",
 
             //information screen
             "contactus_title": "Contact Us",
@@ -384,6 +387,7 @@ export const resources = {
             "password_recovery_change.title": "Entrez un nouveau mot de passe",
             "password_recovery_change.enter_password": "Entrer le mot de passe",
             "password_recovery_change.confirm_password": "Confirmez le mot de passe",
+            "password.recovery.incorrectAnswer":"Mauvaise réponse",
             //home screen
             "home_first_time_login_content": "Veuillez consulter le menu des paramètres pour personnaliser le nombre de notifications que vous recevrez et pour déterminer à quels moments vous souhaitez les recevoir.",
             //about
@@ -449,6 +453,8 @@ export const resources = {
             //Login screen
             "login.forgot_password": "Mot de passe oublié?",
             "login.login": "Entrer",
+            "login.Wrongpassword.message":"mot de passe incorrect",
+            
 
             "notifications": "Notifications",
             "wake_time": "Heure du lever",
