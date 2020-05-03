@@ -71,7 +71,7 @@ class LoginScreen extends React.Component<Props, LoginState> {
 
         if (currentPassword !== passwordHashed) {
           //incorrect pasword
-          this.setState({ passwordError: 'incorrect password' });
+          this.setState({ passwordError: resources.getString("login.Wrongpassword.message") });
         }
         else {
           //user login success - redirect
@@ -79,7 +79,7 @@ class LoginScreen extends React.Component<Props, LoginState> {
         }
       }
       else {
-        this.setState({ passwordError: 'incorrect password' });
+        this.setState({ passwordError: resources.getString("login.Wrongpassword.message")});
       }
     });
   }
