@@ -56,6 +56,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
     if (global.debugMode)  console.log("Locale is: " + Localization.locale);
     if (global.debugMode) console.log("resources culture: " + resources.culture);
 
+    
     let language=null
     AsyncStorage.getItem('settings',(err,settingObject)=>{
         if (global.debugMode)  console.log("launchScreen._bootstrap settings object values    "+ settingObject)
@@ -71,20 +72,11 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
     } else if(language == "2"){
         if (global.debugMode)  console.log("launchScreen._bootstrap set language french:      "+ language);
       resources.culture='fr';
-
       
     } 
   }
-  else{
-    if (global.debugMode) { console.log("launchScreen._bootstrap Language undefined:      ");}
-    //  resources.culture='';
-  }
-
-    });
+ });
   
-    // console.log("Test Locale is  " + Localization.locale + " ressource .culture  "+resources.culture);
-    // console.log("Test Locale substring is  " + Localization.locale.substring(0,2) + " ressource .culture  "+resources.culture);
-    //|| (resources.culture=='')||(resources.culture=null))
   if (language==null){
     if (Localization.locale.substring(0,2) == 'en') {
       resources.culture = 'en';
