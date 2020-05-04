@@ -167,7 +167,11 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           let paradataSaved=await AsyncStorage.getItem('ParadataSaved');
           if(paradataSaved==null || paradataSaved=='false')paradataSaved=false;else paradataSaved=true;
           global.paradataSaved=paradataSaved;
-          console.log('Paradata saved:'+global.paradataSaved);
+
+          let passwordSaved=await AsyncStorage.getItem('PasswordSaved');
+          if(passwordSaved==null || passwordSaved=='false')paradataSaved=false;else paradataSaved=true;
+          global.passwordSaved=paradataSaved;
+          console.log('Paradata saved:'+global.paradataSaved+'    Password saved:'+global.passwordSaved);
 
           let schedules=await AsyncStorage.getItem('Schedules');if(schedules==null)schedules=[];else schedules=JSON.parse(schedules);global.schedules=schedules;
           let lastDate=await AsyncStorage.getItem('LastDate'); if(lastDate!=null)global.lastDate=new Date(lastDate);console.log('LastDate:'+global.lastDate);
