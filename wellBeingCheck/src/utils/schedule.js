@@ -170,10 +170,12 @@ export async function setupSchedules(affectCurrent=false){
     let today=new Date(currentDateTime);today.setHours(0);today.setMinutes(0);today.setSeconds(0);today.setMilliseconds(0);
     let currentTime=roundUp(currentDateTime.toLocaleTimeString());
     let awake=roundUp(global.awakeHour); let sleep=roundDown(global.sleepHour);let count=global.pingNum;console.log('LastDate:'+global.lastDate);
+    let ch = currentDateTime.getHours();
+    let nightShiftUpdate = false; if ((awake > sleep) && (ch >= 0 && ch < sleep)) nightShiftUpdate = true;
     if(global.lastDate==null){   //Survey A
          let lastDate=new Date(currentDateTime); console.log('Setup notification after survey A');
          lastDate.setDate(currentDateTime.getDate()+30);lastDate.setHours(0);lastDate.setMinutes(0);lastDate.setSeconds(0);lastDate.setMilliseconds(0);
-         let days = getFollowingDays(currentDateTime,lastDate,true);console.log('days:'+days);
+         let days = getFollowingDays(currentDateTime,lastDate,true,4,nightShiftUpdate);console.log('days:'+days);
          let day5=getNextDay(currentDateTime);
 
          if(days.length>0){
@@ -214,9 +216,9 @@ export async function setupSchedules(affectCurrent=false){
         if(isInSchedules){
             let warningId=global.warningNotificationId;console.log('current is in schedules');
             if(affectCurrent){  //for change setting,  This part is hard core
-                let f=getAffectedDay(currentDateTime);  let day5=getNextDay(currentDateTime);console.log('Setup notification will affect current day');
+                let f=getAffectedDay(currentDateTime);  let day5=getNextDay(currentDateTime);
                 if(f==null){  //No affected day, go normal schedule
-                    let days = getFollowingDays(currentDateTime,lastDate,true);
+                    let days = getFollowingDays(currentDateTime,lastDate,true,4,false);
                     if(days.length>0){
                        day5=getNextDay(days[days.length-1]);
                        days.forEach(function (d, index) {
@@ -231,8 +233,8 @@ export async function setupSchedules(affectCurrent=false){
                     }
                 }
                 else {
-                    let affectedDay=f.AffectedDay; let leftOverCount=f.LeftOverCount;
-                    let days = getFollowingDays(affectedDay,lastDate,true);
+                    let affectedDay=f.AffectedDay; let leftOverCount=f.LeftOverCount;console.log('Setup notification will affect current day:'+affectedDay.toString()+'->'+leftOverCount);
+                    let days = getFollowingDays(affectedDay,lastDate,true,4,false);
                     if(days.length>0){
                        day5=getNextDay(days[days.length-1]);
                        days.forEach(function (d, index) {
@@ -275,19 +277,18 @@ export async function setupSchedules(affectCurrent=false){
                 }
             }
             else{  //for survey B, simply append new schedules
-               console.log('current is out of schedules');
                let nob=getNecessary(currentDateTime);
                let necessary=nob.Necessary;let moredays=nob.Days;
                if(!necessary ||moredays==0){console.log('Already have 4 days schedules, no need to add more');return;}
                //cancelSchedule(warningId);
 
-               let startDay=getStartDay();console.log('Setup notification will not affect current day');
+               let startDay=getStartDay();console.log('Setup notification will not affect current day,and the re-schedule start day:'+startDay.toString());
                if(startDay>global.lastDate)return;
-               let days = getFollowingDays(startDay,lastDate,true,moredays);
-                 let day5=getNextDay(currentDateTime);
-                 if(days.length>0){
-                                day5=getNextDay(days[days.length-1]);
-                                days.forEach(function (d, index) {
+               let days = getFollowingDays(startDay,lastDate,true,Math.min(moredays, 4), false);
+               let day5=getNextDay(currentDateTime);
+               if(days.length>0){
+                     day5=getNextDay(days[days.length-1]);
+                     days.forEach(function (d, index) {
                                     var schObj  =calculateSchedule(awake, sleep, count, d,currentDateTime);
                                     var selected=schObj.Selected;
                                     if (selected.length > 0) {
@@ -296,8 +297,8 @@ export async function setupSchedules(affectCurrent=false){
                                         });
                                     }
                                 });
-                            }
-                 if(schedules.length>0){
+               }
+               if(schedules.length>0){
                      schedules=updateSchedulesList(schedules,currentDateTime);
                      schedules.forEach(function(s){console.log('To Schedule:'+s.Datetime.toString())});
                      if(global.warningNotificationId!=null) cancelSchedule(global.warningNotificationId);
@@ -318,7 +319,7 @@ export async function setupSchedules(affectCurrent=false){
         else{
              if(today>global.lastDate)return;
              console.log('Current is NOT in schedules');
-             let days = getFollowingDays(currentDateTime,lastDate,true);
+             let days = getFollowingDays(currentDateTime,lastDate,true, 4, false);
              let day5=getNextDay(currentDateTime);
              if(days.length>0){
                  day5=getNextDay(days[days.length-1]);
@@ -357,7 +358,7 @@ the algorithm will not arrange any notification for the time which has been pass
          var selected = []; var selected1 = []; var str = '';
          if (current == null) current = new Date(2020, 1, 1, 0, 0, 0, 0);
          var current1 = new Date(current); current1.setHours(0); current1.setMinutes(0); current1.setSeconds(0); current1.setMilliseconds(0);
-         if (date < current1) return { Selected: selected, LogInfo: str };  //if date is early than current date time, return empty directly, because go through will also return empty
+      //   if (date < current1) return { Selected: selected, LogInfo: str };  //if date is early than current date time, return empty directly, because go through will also return empty,but will affect nightshift
          var isWeekend = isWeekendDay(date);
          //Step 1: Specify awake interval
          str += '<h2>Step 1: Specify awake interval</h2>';
@@ -560,25 +561,26 @@ the algorithm will not arrange any notification for the time which has been pass
             var isWeekend = (day === 6) || (day === 0);
             return isWeekend;
         }
- function getFollowingDays(currentDay, lastDay, includeCurrentDay,maxDays=4) {
+ function getFollowingDays(currentDay, lastDay, includeCurrentDay,maxDays=4,nightShiftUpdate=false) {
        //  var date = new Date(currentDay.toString().replace(/-/g, '\/'));
-          var date = new Date(currentDay);
-         date.setHours(0); date.setMinutes(0); date.setSeconds(0); date.setMilliseconds(0);
-         if (lastDay == null) { lastDay = new Date(date); lastDay.setDate(date.getDate()+30); }
-         else lastDay = new Date(lastDay);  //new Date(lastDay.toString().replace(/-/g, '\/'));
-         if (!includeCurrentDay) date.setDate(date.getDate() + 1);
-         var days = [];
-         if (date > lastDay) return days;
-         var timeDiff = (lastDay -date);
-         var ds = timeDiff / (1000 * 60 * 60 * 24);
-         var count = Math.min(maxDays,ds);
-         for (var i = 0; i < count; i++) {
-             var day = new Date(date);
-             day.setDate(date.getDate() + i);
-             days.push(day);
-         }
-         return days;
-     }
+       var date = new Date(currentDay);
+       date.setHours(0); date.setMinutes(0); date.setSeconds(0); date.setMilliseconds(0);
+       if (nightShiftUpdate) date.setDate(date.getDate()-1);
+       if (lastDay == null) { lastDay = new Date(date); lastDay.setDate(date.getDate()+30); }
+       else lastDay = new Date(lastDay);  //new Date(lastDay.toString().replace(/-/g, '\/'));
+       if (!includeCurrentDay) date.setDate(date.getDate() + 1);
+       var days = [];
+       if (date > lastDay) return days;
+       var timeDiff = (lastDay -date);
+       var ds = timeDiff / (1000 * 60 * 60 * 24);
+       var count = Math.min(maxDays,ds);
+       for (var i = 0; i < count; i++) {
+           var day = new Date(date);
+           day.setDate(date.getDate() + i);
+           days.push(day);
+       }
+       return days;
+  }
  function getNextDay(date){
      var temp=new Date(date);temp.setHours(0);temp.setMinutes(0);temp.setSeconds(0);temp.setMilliseconds(0);
      var date1 = new Date(temp);var nextDay = date1.setDate(temp.getDate() + 1);
