@@ -35,6 +35,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     jsCode = clearCookie + 'document.addEventListener("message", function (message) { document.getElementById("langtest").click(); });var btn = document.createElement("button");btn.style.visibility ="hidden";btn.onclick = switchlang;btn.setAttribute("id", "langtest");document.body.appendChild(btn);    function switchlang() { var a = document.querySelector("a.sc-js-langchange");var href = a.href;if (href.indexOf("/q/fr")>0) {var res = href.replace("/q/fr", "/q/en");a.setAttribute("href", res);a.click();} else if (href.indexOf("/q/en")>0) {var res = href.replace("/q/en", "/q/fr");a.setAttribute("href", res);a.click();} }';
     this.state = ({ Sacode: '', jsCode: disCode + jsCode, webviewLoaded: false });
     setTimeout(() => { this.setState({ webviewLoaded: true }) }, 4000);
+
     /* --------------------Session Handler--------------------------- */
     //used to handle session
     this._panResponder = PanResponder.create({
@@ -345,7 +346,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                 let jsCode1 = 'var sac ="1234566789";sac= document.querySelector("div.sc-box-main p span.ecf-bold").innerText;window.ReactNativeWebView.postMessage(sac);';
                 console.log('Survey done.......................................................');
                 if (global.doneSurveyA) {
-                  console.log('THank you B........................' + global.fetchAction);
+                  console.log('EQSurveyScreenTHank you B........................' + global.fetchAction);
                   this.handleSurveyBdone();
                   global.showThankYou = 2;
                   this.props.navigation.navigate('Dashboard');

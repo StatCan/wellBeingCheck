@@ -49,38 +49,63 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
   }
   //determine if user already has an account
   _bootstrap = () => {
-    console.log("_bootstrap");
+    if (global.debugMode) console.log("_bootstrap");
+    if (global.debugMode) console.log("LaunchScreen._bootstrap Thank you page lunch page: "+ global.showThankYou);
 
     // Set language based on locale
-    console.log("Locale is: " + Localization.locale);
-    console.log("resources culture: " + resources.culture);
+    if (global.debugMode)  console.log("Locale is: " + Localization.locale);
+    if (global.debugMode) console.log("resources culture: " + resources.culture);
 
+    
+    let language=null
+    AsyncStorage.getItem('settings',(err,settingObject)=>{
+        if (global.debugMode)  console.log("launchScreen._bootstrap settings object values    "+ settingObject)
+    let localSettingObject = JSON.parse(settingObject)
+    if (localSettingObject){
+    let language=localSettingObject.culture;
+        if (global.debugMode) console.log("launchScreen._bootstrap language:      "+ language);
 
-   if (Localization.locale.substring(0,2) === "en" && (resources.culture==='en'|| resources.culture==='') ){
+    if (language == "1") {
+        if (global.debugMode) console.log("launchScreen._bootstrap set language english:      "+ language);
+      resources.culture='en';
+      
+    } else if(language == "2"){
+        if (global.debugMode)  console.log("launchScreen._bootstrap set language french:      "+ language);
+      resources.culture='fr';
+      
+    } 
+  }
+ });
+  
+  if (language==null){
+    if (Localization.locale.substring(0,2) == 'en') {
       resources.culture = 'en';
-      console.log("Locale is 1: en-ca:res=en " + Localization.locale +"ressource"+resources.culture);
-    } else if   (Localization.locale.substring(0,2) === "en" && (resources.culture==='fr'||resources.culture==='')) {
+    } else if(Localization.locale.substring(0,2) == 'fr'){
       resources.culture = 'fr';
-      console.log("Locale is 2: en-ca:res=fr " + Localization.locale +"ressource"+resources.culture);
-    } else if (Localization.locale === "fr-CA" && (resources.culture==='en'||resources.culture==='')) {
-      resources.culture = 'en';
-      console.log("Locale is 3: fr-ca:res=en " + Localization.locale +"ressource"+resources.culture);
-    } else if (Localization.locale === "fr-CA" && (resources.culture==='fr'||resources.culture==='')) {
-      resources.culture = 'fr';
-      console.log("Locale is 4: fr-ca:res=fr " + Localization.locale +"ressource"+resources.culture);
     }
+  }else {
+   if (Localization.locale.substring(0,2) == 'en' && (language=='1')){
+      resources.culture = 'en';
+    } else if  (Localization.locale.substring(0,2) == 'en' && (language=='2')) {
+      resources.culture = 'fr';
+    } else if (Localization.locale.substring(0,2) == 'fr'  && (language=='1')) {
+      resources.culture = 'en';
+    } else if (Localization.locale.substring(0,2) == 'fr' && (language=='2')) {
+    resources.culture = 'fr';
+    }
+  }
 
     AsyncStorage.getItem('user_account', (err, userAccountResult) => {
-      console.log(userAccountResult);
+      if (global.debugMode) console.log(userAccountResult);
       let userAccountResultObj = JSON.parse(userAccountResult)
       let currentPassword = null
       if (userAccountResultObj) {
         currentPassword = userAccountResultObj.password;
         global.password = currentPassword;
       }
-      console.log('password.....................:'+global.password);
+      if (global.debugMode) console.log('password.....................:'+global.password);
       AsyncStorage.getItem('user_getting_started', (err, userGettingStartedResult) => {
-        console.log(userGettingStartedResult);
+        if (global.debugMode) console.log(userGettingStartedResult);
         let userGettingStartedResultObj = JSON.parse(userGettingStartedResult)
         let gettingStarted = false
         if (userGettingStartedResultObj) {
@@ -89,7 +114,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
         }
 
         AsyncStorage.getItem('user_terms_and_conditions', (err, userTermsResult) => {
-          console.log(userTermsResult);
+          if (global.debugMode) console.log(userTermsResult);
           let userTermsResultObj = JSON.parse(userTermsResult)
           let termsOfService = false
           if (userTermsResultObj) {
@@ -97,15 +122,15 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           }
           //here we have all results
           if (gettingStarted == false) {
-            console.log("!gettingStarted");
+            if (global.debugMode)  console.log("!gettingStarted");
             this.props.navigation.navigate('GettingStartedScreen');
           }
           else if (termsOfService == false) {
-            console.log("!termsOfService");
+            if (global.debugMode)   console.log("!termsOfService");
             this.props.navigation.navigate('TermsOfServiceScreen');
           }
           else if ((currentPassword == null) || (currentPassword == "")) {
-            console.log("!currentPassword");
+            if (global.debugMode)  console.log("!currentPassword");
             this.props.navigation.navigate('RegisterScreen');
           }
           else {
@@ -115,17 +140,17 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
         });
       });
     });
-
-  }
+}
 
   bootstrapA = async () => {
-          console.log('Prepare confiuration');
+    if (global.debugMode) console.log('Prepare configuration');
           let userToken = await AsyncStorage.getItem('EsmUserToken');
           let sac = await AsyncStorage.getItem('SacCode');
-
+          
           if (userToken == null ||userToken==''){
               var deviceId=generateNewDeviceId();
-              var valid=isValidDeviceId(deviceId);console.log('is valid:'+valid);
+              var valid=isValidDeviceId(deviceId);
+              if (global.debugMode) console.log('is valid:'+valid);
               userToken= deviceId;
               AsyncStorage.setItem('EsmUserToken',userToken);
           }
@@ -167,7 +192,9 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
         <AppBanner />
         <Background>
           <LogoClear />
-          <Title>{resources.getString("Well-Being Check")}</Title>
+
+          <Title>{resources.getString("app.name")}</Title>
+          
         </Background>
         <NavigationEvents
           // onDidFocus={() => this.bootstrapA()}

@@ -105,11 +105,17 @@ export const resources = {
             "reg.pass.hint_number": "1 Number",
             "reg.pass_conf.empty": "Password cannot be empty",
             "reg.pass_conf.match": "Passwords do not match",
+            "reg.securityQuestion.validation":"Security question is required",
+            "reg.securityQuestionAnswer.validation":"Security answer is required",
+            "reg.securityQuestionAnswerlength.validation":"Security answer must be at least 4 characters",
+
+
             //password recovery
             "password_recovery.title": "Password recovery",
             "password_recovery_change.title": "Enter New Password",
             "password_recovery_change.enter_password": "Enter password",
             "password_recovery_change.confirm_password": "Confirm password",
+            "password.recovery.incorrectAnswer":"incorrect answer",
             //home screen
             "home_first_time_login_content": "Please visit the settings menu if you would like to customize the number of notifications you receive, and the window of time when you would like to receive them.",
             //about
@@ -191,6 +197,9 @@ export const resources = {
             "login.login": "Login",
             "Language": "Français",
             "Secure your account": "Secure your account",
+            "login.Wrongpassword.message":"incorrect password",
+
+            //information screen
             "contactus_title": "Contact Us",
             "contactus_email": "Email:",
             "contactus_telephone": "Telephone:",
@@ -225,18 +234,21 @@ export const resources = {
             "notification.resquest.title":"",
             "notification.resquest.message":"Visit your device settings to enable notifications?",
 
+            //Notification messages
+            "notification.scheduleTitle":"Scheduled Notification",
+            "notification.scheduleMessage":"How are you feeling right now? Sign in for a Well-being Check!",
+            "notification.lastAttemptMessage":"We haven’t heard from you in a while. Sign in for a Well-being Check!",
+          
              //time picker title
              "timepicker.title":"Pick a time",
              "timepicker.canceltext":"Cancel",
              "timepicker.confirmtext":"Confirm",
-             "scheduleTitle":"Scheduled Notification",
-             "scheduleMessage":"Scheduled Notification for the Survey!",
-             "scheduleMessage1":"We haven’t heard from you in a while. Sign in for a Well-being Check!",
+           
 
         },
         fr: {
             //global
-            "app.name": "FR_Well-being Check",
+            "app.name": "Bilan bien-être",
             "gl.next": "Suivant",
             "gl.cancel": "Annuler",
             "gl.decline": "Décliner",
@@ -366,11 +378,16 @@ export const resources = {
             "reg.pass.hint_number": "un chiffre",
             "reg.pass_conf.empty": "Le mot de passe ne peut pas être vide",
             "reg.pass_conf.match": "Les mots de passe ne correspondent pas",
+            "reg.securityQuestion.validation":"la question sécrete est necessaire",
+            "reg.securityQuestionAnswer.validation":"la réponse à la question secrète est necessaire",
+            "reg.securityQuestionAnswerlength.validation":"la reponse doit etre au moins 4 characteres",
+
             //password recovery
             "password_recovery.title": "Récupération de mot de passe",
             "password_recovery_change.title": "Entrez un nouveau mot de passe",
             "password_recovery_change.enter_password": "Entrer le mot de passe",
             "password_recovery_change.confirm_password": "Confirmez le mot de passe",
+            "password.recovery.incorrectAnswer":"Mauvaise réponse",
             //home screen
             "home_first_time_login_content": "Veuillez consulter le menu des paramètres pour personnaliser le nombre de notifications que vous recevrez et pour déterminer à quels moments vous souhaitez les recevoir.",
             //about
@@ -436,6 +453,8 @@ export const resources = {
             //Login screen
             "login.forgot_password": "Mot de passe oublié?",
             "login.login": "Entrer",
+            "login.Wrongpassword.message":"mot de passe incorrect",
+            
 
             "notifications": "Notifications",
             "wake_time": "Heure du lever",
@@ -487,13 +506,17 @@ export const resources = {
             "notification.resquest.title":"",
             "notification.resquest.message":"Accédez aux paramètres de votre appareil pour activer les notifications?",
 
+            //Notification messages
+            "notification.scheduleTitle":"Notification planifiée",
+            "notification.scheduleMessage":"Comment vous sentez-vous en ce moment? Connectez-vous pour obtenir un Bilan bien-être!",
+            "notification.lastAttemptMessage":"Nous n’avons pas eu de vos nouvelles depuis un certain temps. Connectez-vous pour obtenir un Bilan bien-être!",
+          
             //time picker title
             "timepicker.title":"Choisir une heure",
             "timepicker.canceltext":"Annuler",
             "timepicker.confirmtext":"Confirmer",
-             "scheduleTitle":"Notification planifiée",
-             "scheduleMessage":"Notification programmée pour l'enquête!",
-             "scheduleMessage1":"Nous n’avons pas eu de vos nouvelles depuis un certain temps. Connectez-vous pour obtenir un Bilan bien-être!",
+            
+            
         }
     }
 };

@@ -15,6 +15,7 @@ import {
   NavigationState, NavigationEvents,
 } from 'react-navigation';
 
+YellowBox.ignoreWarnings(['Warning: ReactNative.createElement']);
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
@@ -85,6 +86,67 @@ class Dashboard extends React.Component<Props, HomeState> {
 
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
 
+    var wakeTime;
+    var sleepTime;
+    var numPings;
+    var doneSurveyA;
+    var finalDate;
+
+    // Only call updating notifications if Survey A was done
+    AsyncStorage.getItem('finalDate', (err, finalDateResult) => {
+      if (global.debugMode) console.log("The result of finalDate getItem is: ", finalDateResult);
+
+      if (finalDateResult) {
+        finalDate = finalDateResult;
+
+        AsyncStorage.getItem('currentNotificationDate', (err, currentNotificationDateResult) => {
+          if (global.debugMode) console.log("The result of currentNotificationDate getItem is: ", currentNotificationDateResult);
+          var currentNotificationDateResultDate = new Date(JSON.parse(currentNotificationDateResult));
+          if (global.debugMode) console.log("The currentNotificationDate (Date Object) is: " + currentNotificationDateResultDate);
+          var finalDateResultDate = new Date(JSON.parse(finalDateResult));
+          if (global.debugMode) console.log("The finalDate getTime is: " + finalDateResultDate.getTime());
+          var currentNotificationDateResultTime = currentNotificationDateResultDate.getTime();
+
+          if (currentNotificationDateResultTime < finalDateResultDate.getTime()) {
+
+            if (global.debugMode) console.log("The time is less than finalDate - now checking Survey A Done Flag...");
+
+            AsyncStorage.getItem('doneSurveyA', (err, doneSurveyAResult) => {
+              if (global.debugMode) console.log("The result of doneSurveyA getItem is: ", doneSurveyAResult);
+              if (doneSurveyAResult) {
+                doneSurveyA = doneSurveyAResult;
+
+
+                console.log("Ali---------The result of doneSurveyA getItem is : ", doneSurveyA);
+
+                if (doneSurveyA == 'true') {
+                  AsyncStorage.getItem('settings', (err, settingsResult) => {
+                    if (global.debugMode) console.log("The result of Settings getItem is: ", settingsResult);
+                    if (settingsResult) {
+                      let resultAsObj = JSON.parse(settingsResult);
+                      wakeTime = resultAsObj.wakeTime;
+                      sleepTime = resultAsObj.sleepTime;
+                      numPings = resultAsObj.notificationCount;
+
+                      if (global.debugMode) console.log("The saved wakeTime is: " + wakeTime);
+                      if (global.debugMode) console.log("The saved sleepTime is: " + sleepTime);
+                      if (global.debugMode) console.log("The saved numPings is: " + numPings);
+
+                      if (!wakeTime) wakeTime = "6:00";
+                      if (!sleepTime) sleepTime = "22:00"
+                      if (!numPings) numPings = 2;
+
+                      // First check if notification set date
+                      notificationAlgo(wakeTime, sleepTime, numPings);
+                    }
+                  });
+                }
+              }
+            });
+          }
+        });
+      }
+    });
   }
 
   _show_firstTimeLoginModal = () => this.setState({ firstTimeLoginModal: true });
@@ -142,9 +204,12 @@ class Dashboard extends React.Component<Props, HomeState> {
 
   checkThankYou() {
     let txt = '';
-    if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2) txt = txt = resources.getString('ThankYouB');
+    console.log("Dashboard.checkThankyou :Ali The result of Thank You getItem is :global.showThankYou= "+ global.showThankYou);
+    if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2)  txt = resources.getString('ThankYouB');
     this.setState({ showThankYou: !global.showThankYou == 0, thankYouText: txt });
-    setTimeout(() => { global.showThankYou = 0; this.setState({ showThankYou: false }) }, 6000);
+    setTimeout(() => { 
+      global.showThankYou = 0; 
+      this.setState({ showThankYou: false }) }, 6000);
   }
 
   handleBackButton() {

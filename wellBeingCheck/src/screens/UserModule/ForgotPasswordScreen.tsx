@@ -74,7 +74,7 @@ class ForgotPasswordScreen extends React.Component<Props, ForgotPasswordState> {
 
         if (userSetSecAnswer !== inputAnswer) {
           //incorrect pasword
-          this.setState({ securityAnswerError: 'incorrect answer' });
+          this.setState({ securityAnswerError: resources.getString("password.recovery.incorrectAnswer")});
         }
         else {
           //user login success - redirect

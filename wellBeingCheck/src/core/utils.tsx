@@ -1,3 +1,4 @@
+import {resources} from '../../GlobalResources'
 export const emailValidator = (email: string) => {
   const re = /\S+@\S+\.\S+/;
 
@@ -30,12 +31,12 @@ export const passwordConfirmValidator = (password: string, passwordConfirm: stri
 };
 
 export const securityQuestionValidator = (securityQuestion: string) => {
-  if (securityQuestion.length == 0) return 'Security question is required';
+  if (securityQuestion.length == 0) return resources.getString("reg.securityQuestion.validation");
   return '';
 };
 
 export const securityAnswerValidator = (securityAnswer: string) => {
-  if (!securityAnswer || securityAnswer.length <= 0) return 'Security answer is required';
-  if (securityAnswer.length < 4) return 'Security answer must be at least 4 characters';
+  if (!securityAnswer || securityAnswer.length <= 0) return resources.getString("reg.securityQuestionAnswer.validation");
+  if (securityAnswer.length < 4) return resources.getString("reg.securityQuestionAnswerlength.validation");
   return '';
 };
