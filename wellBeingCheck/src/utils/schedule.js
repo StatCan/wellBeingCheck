@@ -164,12 +164,18 @@ for how to calculate these notification schedule, the next function will get int
 export async function setupSchedules(affectCurrent=false){
     let permission=await askPermissions();if(!permission)return;
     let title=resources.getString("scheduleTitle");//   "Scheduled Notification";
-    let message=resources.getString("scheduleMessage");//"Scheduled Notification for the Survey!";
-    let lastMessage=resources.getString("scheduleMessage1");//"We haven’t heard from you in a while. Sign in for a Well-being Check!";///"Nous n’avons pas eu de vos nouvelles depuis un certain temps. Connectez-vous pour obtenir un Bilan bien-être!";
-    let schedules = [];let currentDateTime=new Date();console.log('current date:'+currentDateTime);
-    let today=new Date(currentDateTime);today.setHours(0);today.setMinutes(0);today.setSeconds(0);today.setMilliseconds(0);
+    let message=resources.getString("notification.scheduleMessage");//"Scheduled Notification for the Survey!";
+    let lastMessage=resources.getString("notification.lastAttemptMessage");//"We haven’t heard from you in a while. Sign in for a Well-being Check!";///"Nous n’avons pas eu de vos nouvelles depuis un certain temps. Connectez-vous pour obtenir un Bilan bien-être!";
+    let schedules = [];
+    let currentDateTime=new Date();console.log('current date:'+currentDateTime);
+    let today=new Date(currentDateTime);
+    today.setHours(0);
+    today.setMinutes(0);
+    today.setSeconds(0);today.setMilliseconds(0);
     let currentTime=roundUp(currentDateTime.toLocaleTimeString());
-    let awake=roundUp(global.awakeHour); let sleep=roundDown(global.sleepHour);let count=global.pingNum;console.log('LastDate:'+global.lastDate);
+    let awake=roundUp(global.awakeHour); 
+    let sleep=roundDown(global.sleepHour);
+    let count=global.pingNum;console.log('LastDate:'+global.lastDate);
     if(global.lastDate==null){   //Survey A
          let lastDate=new Date(currentDateTime); console.log('Setup notification after survey A');
          lastDate.setDate(currentDateTime.getDate()+30);lastDate.setHours(0);lastDate.setMinutes(0);lastDate.setSeconds(0);lastDate.setMilliseconds(0);
