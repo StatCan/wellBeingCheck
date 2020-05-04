@@ -137,7 +137,7 @@ class Dashboard extends React.Component<Props, HomeState> {
                       if (!numPings) numPings = 2;
 
                       // First check if notification set date
-                      notificationAlgo(wakeTime, sleepTime, numPings);
+                  //    notificationAlgo(wakeTime, sleepTime, numPings);
                     }
                   });
                 }
