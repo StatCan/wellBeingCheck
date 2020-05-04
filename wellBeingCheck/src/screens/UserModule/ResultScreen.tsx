@@ -159,7 +159,7 @@ export default class App extends React.Component<Props, ScreenState> {
 
               <TouchableOpacity onPress={() => this.helpClick()}
                 style={{ marginRight: 5, marginTop: 5 }}>
-                <Image source={require('../../assets/ic_wbc_help.png')} />
+                <Image source={require('../../assets/ic_wbc_information.png')} />
               </TouchableOpacity>
             </View>
             <View style={{ height: this.state.height }}>
