@@ -9,7 +9,7 @@ import { resources } from '../../../GlobalResources';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { EvilIcons, Feather, FontAwesome } from '@expo/vector-icons';
 import md5 from "react-native-md5";
-import { setupSchedules,testSchedule,cancelSchedule} from '../../utils/schedule';
+import { setupSchedules,cancelSchedule} from '../../utils/schedule';
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -104,16 +104,18 @@ class LoginScreen extends React.Component<Props, LoginState> {
 
 async onTestA(){
    Alert.alert('',resources.getString('offline'));
-    // testSchedule();
+     setupSchedules();
    }
 onTestB(){
-   cancelSchedule(global.warningNotificationId);
-  //  setupSchedules(false);
+    setupSchedules(false);
     }
 onTestC(){
    setupSchedules(true);
 }
-async onTestD(){AsyncStorage.removeItem('LastDate');global.lastDate=null;}
+async onTestD(){
+    //AsyncStorage.removeItem('LastDate');global.lastDate=null;
+    AsyncStorage.removeItem('Schedules');global.schedules=[];
+    console.log('reset done');}
 
   render() {
     const bannerPathEnglish = require('../../assets/statscan_banner.png');
@@ -290,10 +292,10 @@ export default memo(LoginScreen);
 
            /* <View style={styles.logo}>
                 <Text>{resources.getString("Well-Being Check")}</Text>
-                <Button onPress={this.onTestA}><Text> AAA</Text></Button>
-                <Button onPress={this.onTestB}><Text>BBB</Text></Button>
-                <Button onPress={this.onTestC}><Text>CCC</Text></Button>
-                <Button onPress={this.onTestD}><Text>DDD</Text></Button>
+               <Button onPress={this.onTestA}><Text> AAA</Text></Button>
+                                               <Button onPress={this.onTestB}><Text>BBB</Text></Button>
+                                               <Button onPress={this.onTestC}><Text>CCC</Text></Button>
+                                               <Button onPress={this.onTestD}><Text>DDD</Text></Button>
 
                                 <Button onPress={()=>this.onTestA()}><Text> AAA</Text></Button>
                                 <Button onPress={()=>this.onTestB()}><Text> BBB</Text></Button>

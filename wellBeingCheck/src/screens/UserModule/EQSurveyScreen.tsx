@@ -118,11 +118,9 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
      global.jwToken=jwt;
      let result=false;
      result=await this.setPassword(jwt);
-      //  result=await this.setPasswordNew();
      if(!result){Alert.alert('',resources.getString("securityIssue"));return;}
-     console.log('survey A done'); global.doneSurveyA=true;AsyncStorage.setItem('doneSurveyA','true');
+     global.passwordSaved=true;AsyncStorage.setItem('PasswordSaved','true');
      count=1;
-     AsyncStorage.setItem('hasImage','0');global.hasImage=0;console.log('hasImage after survey A done.........'+global.hasImage);
      global.fetchAction=false;
      setupSchedules();
      await this.saveDefaultParadata(jwt);
@@ -130,13 +128,17 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
   async handleSurveyBdone(){
      let isConnected=await checkConnection();console.log('In handle B');
      if(!isConnected){Alert.alert('',resources.getString('offline'));return;}
+     if(!global.passwordSaved && global.sac!=''){
+        let result=false;
+        result=await this.resetPassword(global.password);console.log('save password:'+result);
+        if(result){global.passwordSaved=true;AsyncStorage.setItem('PasswordSaved','true');console.log('password saved');}
+     }
+
      let jwt=await fetchJwToken();
      if(jwt==''){Alert.alert('',resources.getString("securityIssue"));return;}
      global.jwToken=jwt;
+
      let types=await this.fetchGraphTypes();
-     //  let types=await this.fetchGraphTypesNew();
-     //  let types=['overall','activity','people','location'];
-     console.log('types:'+types);
      if(types!=null && types.length>0){
           await this.fetchGraphs(types);
      }
@@ -145,7 +147,6 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
      AsyncStorage.setItem('doneSurveyB','true');
      global.fetchAction=false;
      setupSchedules(false);
-     console.log('Paradata saved:'+global.paradataSaved);
      if(!global.paradataSaved)await this.saveDefaultParadata(jwt);
      this.props.navigation.navigate('Dashboard');
   }
@@ -164,7 +165,11 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
   }
   setPassword(jwt:string) {
                let url=global.webApiBaseUrl+'api/security/password';
-               let data={salt:global.passwordSalt,passwordHash:hashString(global.password,global.passwordSalt),securityQuestionId:global.securityQuestionId,securityAnswerSalt:global.securityAnswerSalt,securityAnswerHash:hashString(global.securityAnswer,global.securityAnswerSalt)}
+               let data={salt:global.passwordSalt,
+                         passwordHash:hashString(global.password,global.passwordSalt),
+                         securityQuestionId:global.securityQuestionId,
+                         securityAnswerSalt:global.securityAnswerSalt,
+                         securityAnswerHash:hashString(global.securityAnswer,global.securityAnswerSalt)}
                return fetch(url,{
                      method: 'POST',
                        headers: {
@@ -374,6 +379,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
             }
             else {
               console.log('survey A done'); global.doneSurveyA = true; AsyncStorage.setItem('doneSurveyA', 'true');
+              AsyncStorage.setItem('hasImage','0');global.hasImage=0;
               this.handleSurveyAdone();
               count = 1; global.showThankYou = 1;
             }
