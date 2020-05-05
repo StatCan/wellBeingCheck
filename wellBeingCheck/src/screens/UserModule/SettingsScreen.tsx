@@ -52,13 +52,13 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     super(SettingsState)
     this.state = {
       numPingsModalShow: false,
-      notificationState: true,
+      notificationState: global.notificationState,
       chosenNotificationState: true,
       notification: true,
       waketime: global.awakeHour,
       sleeptime: global.sleepHour,
       notificationcount: global.pingNum,
-      culture: '1',
+      culture: resources.culture == 'fr'?'2':'1',
       cultureString: 'English',
       languageModalShow: false,
       wakeTimePickerShow: false,
@@ -210,27 +210,53 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     //Session Handler
     this._initSessionTimer()
 
-    // Handle notifications that are received or selected while the app
-    // is open. If the app was closed and then opened by tapping the
-    // notification (rather than just tapping the app icon to open it),
-    // this function will fire on the next tick after the app starts
-    // with the notification data.
-
-  //  if (global.debugMode) console.log("DEBUGMODE ON - Outputting Console Logs");
-  //  if (global.debugMode) console.log("Settings Screen Component Mounted");
-
-  //  this._notificationSubscription = Notifications.addListener(this._handleNotification);
-
-    this._retrieveData('settings');
+  //  this._retrieveData('settings');
   }
 
   handleBackAction = async () => {
-    if (global.debugMode) console.log("Handle Back Action");
+      if (global.debugMode) console.log("Handle Back Action");
+      if(this.state.waketime!=global.awakeHour)dirty=true;
+      if(this.state.sleeptime!=global.sleepHour)dirty=true;
+      if(this.state.notificationcount!=global.pingNum)dirty=true;
+      console.log('Dirty:'+dirty);
+      if(this.state.notificationState){
+          if(global.doneSurveyA){
+              if(global.notificationState){
+                 //notification was enabled, right now it is enabled too, so need to re-schedule only there is some setting value changed otherwise waiting to suvey B done
+                 if(dirty){
+                     let inp=checkInSchedule(new Date());
+                     if(inp && global.schedules.length>0)setupSchedules(true);
+                     else setupSchedules(false);
+                 }
+              }
+              else{
+                //notification was disabled, but right now it is enabled,need to setup schedules immediately, without waiting for surveyBdone, in case user never go survey B,but can still get 4 days notification,because he just turn it on
+                setupSchedules(false);
+              }
+          }
+          else {
+               //do nothing because survey A is not done yet
+          }
+      }
+      else {
+         //notification disabled
+         if(global.notificationState){
+            //the notification was enabled before come in the setting screen, so we need cancell all the notifications
+             Notifications.cancelAllScheduledNotificationsAsync();
+             AsyncStorage.removeItem('Schedules');global.schedules=[];
+             console.log('remove all notifications');
+         }
+         else {
+            //do nothing, the schedule was removed already
+         }
+      }
 
-    if(this.state.waketime!=global.awakeHour)dirty=true;
-    if(this.state.sleeptime!=global.sleepHour)dirty=true;
-    if(this.state.notificationcount!=global.pingNum)dirty=true;
-    console.log('Dirty:'+dirty);
+      this.setState({ settingsFirstTime: false });
+      if(dirty || this.state.notificationState!=global.notificationState){
+          AsyncStorage.removeItem('ParadataSaved');global.paradataSaved=false;
+      }
+
+/*   Old code
 
     //if (this._isDirty || this.state.settingsFirstTime) {
       this.setState({ settingsFirstTime: false });
@@ -246,6 +272,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
         
       }
     //}
+*/
 
     if (this.state.culture === "2") {
       resources.culture = 'fr';
@@ -328,7 +355,9 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       cultureString: this.state.cultureString,
       settingsFirstTime: this.state.settingsFirstTime
     };
-
+    AsyncStorage.setItem('Culture',this.state.culture);
+    global.notificationState=this.state.notificationState;
+    if(this.state.notificationState)AsyncStorage.setItem('NotificationState','true');else AsyncStorage.setItem('NotificationState','false');
     AsyncStorage.setItem('PingNum',this.state.notificationcount.toString());global.pingNum=this.state.notificationcount;
     AsyncStorage.setItem('AwakeHour',this.state.waketime);global.awakeHour=this.state.waketime;
     AsyncStorage.setItem('SleepHour',this.state.sleeptime);global.sleepHour=this.state.sleeptime;
@@ -350,7 +379,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       if (global.debugMode) console.log("The result of getItem is: ", result);
       if (result) {
         let resultAsObj = JSON.parse(result);
-        this.setState({ notificationState: resultAsObj.notificationState });
+    //    this.setState({ notificationState: resultAsObj.notificationState });
         this.setState({ chosenNotificationState: resultAsObj.chosenNotificationState });
      //   this.setState({ notificationcount: resultAsObj.notificationCount });
       //  this.setState({ waketime: resultAsObj.wakeTime });

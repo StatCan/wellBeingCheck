@@ -48,7 +48,7 @@ class LoginScreen extends React.Component<Props, LoginState> {
   }
 
   toggleLanguage() {
-    if (resources.culture == 'en') resources.culture = 'fr'; else resources.culture = 'en';
+    if (resources.culture == 'en'){resources.culture = 'fr';AsyncStorage.setItem('Culture','2');} else {resources.culture = 'en';AsyncStorage.setItem('Culture','1');}
     this.setState({ title: resources.getString("Well-Being Check") });
   }
 
