@@ -112,7 +112,10 @@ onTestB(){
 onTestC(){
    setupSchedules(true);
 }
-async onTestD(){AsyncStorage.removeItem('LastDate');global.lastDate=null;console.log('reset done');}
+async onTestD(){
+    //AsyncStorage.removeItem('LastDate');global.lastDate=null;
+    AsyncStorage.removeItem('Schedules');global.schedules=[];
+    console.log('reset done');}
 
   render() {
     const bannerPathEnglish = require('../../assets/statscan_banner.png');
@@ -141,6 +144,10 @@ async onTestD(){AsyncStorage.removeItem('LastDate');global.lastDate=null;console
 
              <View style={styles.logo}>
                 <Text>{resources.getString("Well-Being Check")}</Text>
+                 <Button onPress={this.onTestA}><Text> AAA</Text></Button>
+                                                               <Button onPress={this.onTestB}><Text>BBB</Text></Button>
+                                                               <Button onPress={this.onTestC}><Text>CCC</Text></Button>
+                                                               <Button onPress={this.onTestD}><Text>DDD</Text></Button>
               </View>
 
               <View style={{ flex: 1, flexDirection: 'row' }}>
