@@ -34,8 +34,8 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
     super(LaunchState)
     //  this.chechConnection();
     //  this.getDeviceConnectionInfo();
-    this.state = {
-    };
+    this.state = {title:''};
+    this.getCulture();
  //   this.onNotification = this.onNotification.bind(this);
     this.delay(2000).then(any => {
       //splach screen forced show 3000 = 3 seconds!
@@ -169,13 +169,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           for(let i=0;i<list.length;i++){
              console.log(new Date(list[i].Datetime)+" ->"+new Date(list[i].Day));
           }
-          let culture=await AsyncStorage.getItem('Culture');
-          if(culture==null){
-              if(Localization.locale.substring(0,2) == 'fr')resources.culture = 'fr';else resources.culture = 'en';
-          }
-          else {
-              if(culture=='2')resources.culture = 'fr';else resources.culture = 'en';
-          }
+
           let notificationState=await AsyncStorage.getItem('NotificationState');
           if(notificationState==null ||notificationState=='true')notificationState=true;else notificationState=false;
           global.notificationState=notificationState;
@@ -186,6 +180,16 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
        console.log('received notification:'+n.title);
        //this.props.navigation.navigate('Dashboard');
        }
+  async getCulture(){
+     let culture=await AsyncStorage.getItem('Culture');
+     if(culture==null){
+         if(Localization.locale.substring(0,2) == 'fr')resources.culture = 'fr';else resources.culture = 'en';
+     }
+     else {
+         if(culture=='2')resources.culture = 'fr';else resources.culture = 'en';
+          }
+     this.setState({title:resources.getString("Well-Being Check")});
+   }
   componentDidMount() {Notifications.addListener(this.onNotification);}
   render() {
     return (
@@ -194,7 +198,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
         <AppBanner />
         <Background>
           <LogoClear />
-          <Title>{resources.getString("app.name")}</Title>
+          <Title>{this.state.title}</Title>
         </Background>
         <NavigationEvents
           // onDidFocus={() => this.bootstrapA()}
