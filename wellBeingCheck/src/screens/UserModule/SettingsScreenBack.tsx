@@ -12,7 +12,7 @@ import { resources } from '../../../GlobalResources';
 import { Provider as PaperProvider, Title, Portal, Dialog, RadioButton } from 'react-native-paper';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import * as IntentLauncher from 'expo-intent-launcher';
-import {setupSchedules,checkInSchedule,validateSetting} from '../../utils/schedule';
+import {setupSchedules,checkInSchedule} from '../../utils/schedule';
 import { Updates } from 'expo';
 
 var scheduledDateArray = new Array();
@@ -269,7 +269,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       } else {
         if (global.debugMode) console.log("Notifications turned off - cancelling all notifications");
         Notifications.cancelAllScheduledNotificationsAsync();
-
+        
       }
     //}
 */
@@ -339,11 +339,8 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   }
 
   _backButtonPressed = () => {
-    console.log("Back button Pressed:"+this.state.waketime+'---'+this.state.sleeptime);
-    let valid=validateSetting(this.state.waketime,this.state.sleeptime,this.state.notificationcount);
-    console.log('validate:------->'+valid);
-    if(valid==0)this.handleBackAction();
-    else Alert.alert('',resources.getString("settingValidation"));
+    if (global.debugMode) console.log("Back button Pressed");
+    this.handleBackAction();
   }
 
   _storeSettings = () => {
@@ -509,19 +506,13 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                   description={this.state.notificationcount}
                   descriptionStyle={styles.descriptionStyle}
                 />
-                <Divider></Divider>
-                 <List.Item
-                    style={styles.listStyle2}
-                    title='Do not disturb between:'
-                    titleStyle={{ color: this.state.titleBackgroundColor }}
-                 />
                 <List.Item
-                  style={styles.listStyle1a}
-                  title={this.state.waketime}
+                  style={styles.listStyle}
+                  title={resources.getString("wake_time")}
                   titleStyle={{ color: this.state.titleBackgroundColor }}
                   onPress={this._showWakeTimePicker}
                   disabled={!this.state.notificationState}
-
+                  description={this.state.waketime}
                   descriptionStyle={styles.descriptionStyle}
                 />
                 <TimePicker
@@ -534,12 +525,12 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                   cancelHandler={this.cancelTimeHandler}
                 />
                 <List.Item
-                  style={styles.listStyle1b}
-                  title={this.state.sleeptime}
+                  style={styles.listStyle}
+                  title={resources.getString("sleep_time")}
                   titleStyle={{ color: this.state.titleBackgroundColor }}
                   onPress={this._showSleepTimePicker}
                   disabled={!this.state.notificationState}
-
+                  description={this.state.sleeptime}
                   descriptionStyle={styles.descriptionStyle}
                 />
                 <TimePicker
@@ -662,7 +653,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
           <View style={styles.buttonView}>
             <Button style={styles.btnNext}
               mode="contained"
-              onPress={()=>this._backButtonPressed()}>
+              onPress={this._backButtonPressed}>
               <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
             </Button>
           </View>
@@ -750,15 +741,6 @@ const styles = StyleSheet.create({
   listStyle: {
     marginLeft: 60
   },
-   listStyle1a: {
-      marginLeft: 60,height:30,width:120,
-    },
-     listStyle1b: {
-          marginLeft: 180,height:30,width:120,marginTop:-30,marginBottom:10,
-        },
-  listStyle2: {
-       marginLeft: 60,height:30,
-     },
   listTitleLightStyle: {
     color: "#a7a5a6"
   },
@@ -771,7 +753,7 @@ const styles = StyleSheet.create({
   input: { borderWidth: 1, width: 100, paddingLeft: 4 },
   label: {
     fontSize: 16,
-    marginLeft: 40,
+    marginLeft: 20,
     padding: 10
   },
 

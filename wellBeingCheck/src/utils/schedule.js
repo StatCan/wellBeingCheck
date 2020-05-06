@@ -690,4 +690,12 @@ the algorithm will not arrange any notification for the time which has been pass
      let warningNotificationId=await setupWarning(d5,'Waaaaarrrrrnnnning',message2);
      console.log('warningId:'+warningNotificationId+' dt:'+d5);global.warningNotificationId=warningNotificationId;
  }
-
+ export function validateSetting(awakeHour,sleepHour,count){
+     if(awakeHour==sleepHour)return 1;
+     result=0;
+     let awake=roundUp(awakeHour); let sleep=roundDown(sleepHour);  console.log('aaa:'+awake+' sss:'+sleep);
+     let awakeInterval = sleep - awake; if (awake > sleep) awakeInterval += 24;
+     if(count<2 || count>5)result=4;//never happen,
+     if (awakeInterval<3)result=1;
+     return result;
+ }
