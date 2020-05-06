@@ -512,7 +512,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                 <Divider></Divider>
                  <List.Item
                     style={styles.listStyle2}
-                    title='Do not disturb between:'
+                    title={resources.getString("donotdisturbbetween")}
                     titleStyle={{ color: this.state.titleBackgroundColor }}
                  />
                 <List.Item

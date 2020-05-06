@@ -257,7 +257,7 @@ export const resources = {
              "cancel":"Cancel",
              "continue":"Continue",
              "settingValidation":"Your awake interval must be greater than 3 in order to send notification",
-
+             "donotdisturbbetween":"Do not disturb between",
         },
         fr: {
             //global
@@ -535,6 +535,7 @@ export const resources = {
               "cancel":"Annuler",
               "continue":"Continuer",
               "settingValidation":"Votre intervalle d'éveil doit être supérieur à 3 pour envoyer une notification",
+              "donotdisturbbetween":"Ne dérangez pas entre",
         }
     }
 };
