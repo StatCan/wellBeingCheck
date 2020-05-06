@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, PanResponder, Alert } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, Alert } from 'react-native';
 import Button from '../components/Button';
 import { Provider as PaperProvider, Title, List } from 'react-native-paper';
 import { newTheme } from '../core/theme';
@@ -26,9 +26,6 @@ interface Props {
 }
 
 class AboutScreen extends React.Component<Props, AboutState> {
-  _panResponder: any;
-  timer = 0
-
   constructor(AboutScreen) {
     super(AboutScreen)
     this.state = {
@@ -40,69 +37,12 @@ class AboutScreen extends React.Component<Props, AboutState> {
       faqC2Q1Expanded: false,
       faqC2Q2Expanded: false,
     };
-
-    /* --------------------Session Handler--------------------------- */
-    //used to handle session
-    this._panResponder = PanResponder.create({
-      // Ask to be the responder:
-      onStartShouldSetPanResponder: () => {
-        this._initSessionTimer()
-        return true
-      },
-      onMoveShouldSetPanResponder: () => {
-        this._initSessionTimer()
-        return true
-      },
-      onStartShouldSetPanResponderCapture: () => {
-        this._initSessionTimer()
-        return true
-      },
-      onMoveShouldSetPanResponderCapture: () => {
-        this._initSessionTimer()
-        return true
-      },
-      onPanResponderTerminationRequest: () => {
-        this._initSessionTimer()
-        return true
-      },
-      onShouldBlockNativeResponder: () => {
-        this._initSessionTimer()
-        return true
-      },
-    });
   }
 
   componentDidMount() {
-    //Session Handler
-    this._initSessionTimer()
-  }
-
-  _handleSessionTimeOutRedirect = () => {
-    Updates.reload();
-  }
-
-  _initSessionTimer() {
-    clearTimeout(this.timer)
-    this.timer = setTimeout(() =>
-      this._expireSession()
-      ,
-      global.sessionTimeOutDuration)
-  }
-
-  _expireSession() {
-    Alert.alert(
-      resources.getString("session.modal.title"),
-      resources.getString("session.modal.message"),
-      [
-        { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
-      ],
-      { cancelable: false }
-    )
   }
 
   componentWillUnmount() {
-    //Session Handler
-    clearTimeout(this.timer)
   }
 
   _onNextBtnHandle = () => {
@@ -155,7 +95,6 @@ class AboutScreen extends React.Component<Props, AboutState> {
           </View>
           <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}
-              {...this._panResponder.panHandlers}
             >
               <List.Section>
                 <View style={styles.faqView}>

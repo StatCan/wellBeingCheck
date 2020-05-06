@@ -1,6 +1,6 @@
 import React, { memo, useState, useCallback } from 'react';
 import { Image, View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator,Button,YellowBox, Platform,Alert } from 'react-native';
-import { AsyncStorage,PanResponder } from 'react-native';
+import { AsyncStorage } from 'react-native';
 
 import WebView from 'react-native-webview';
 import { resources } from '../../../GlobalResources';
@@ -26,8 +26,6 @@ let count = 0;//temporarily limit to get image just once, because eq will show e
 const WEB_API_BASE_URL = global.webApiBaseUrl + 'api';
 let jsCode = '';
 export default class EQSurveyScreen extends React.Component<Props, ScreenState> {
-  _panResponder: any;
-  timer = 0
   constructor(Props) {
     super(Props)
     let disCode = 'const meta = document.createElement("meta"); meta.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"); meta.setAttribute("name", "viewport"); document.getElementsByTagName("head")[0].appendChild(meta);';
@@ -35,81 +33,14 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     jsCode = clearCookie + 'document.addEventListener("message", function (message) { document.getElementById("langtest").click(); });var btn = document.createElement("button");btn.style.visibility ="hidden";btn.onclick = switchlang;btn.setAttribute("id", "langtest");document.body.appendChild(btn);    function switchlang() { var a = document.querySelector("a.sc-js-langchange");var href = a.href;if (href.indexOf("/q/fr")>0) {var res = href.replace("/q/fr", "/q/en");a.setAttribute("href", res);a.click();} else if (href.indexOf("/q/en")>0) {var res = href.replace("/q/en", "/q/fr");a.setAttribute("href", res);a.click();} }';
     this.state = ({ Sacode: '', jsCode: disCode + jsCode, webviewLoaded: false });
     setTimeout(() => { this.setState({ webviewLoaded: true }) }, 4000);
-
-    /* --------------------Session Handler--------------------------- */
-    //used to handle session
-    this._panResponder = PanResponder.create({
-      // Ask to be the responder:
-      onStartShouldSetPanResponder: () => {
-        this._initSessionTimer()
-        return true
-      },
-      onMoveShouldSetPanResponder: () => {
-        this._initSessionTimer()
-        return true
-      },
-      onStartShouldSetPanResponderCapture: () => {
-        this._initSessionTimer()
-        return false
-      },
-      onMoveShouldSetPanResponderCapture: () => {
-        this._initSessionTimer()
-        return true
-      },
-      onPanResponderTerminationRequest: () => {
-        this._initSessionTimer()
-        return true
-      },
-      onShouldBlockNativeResponder: () => {
-        this._initSessionTimer()
-        return true
-      },
-    });
   }
+  
   componentDidMount() {
-    //Session Handler
-    this._initSessionTimer()
   }
-  /* --------------------Session Handler--------------------------- */
-  _resetTimer() {
-    //Session Handler
-    clearTimeout(this.timer)
-    this.timer = setTimeout(() =>
-      Alert.alert(
-        resources.getString("session.modal.title"),
-        resources.getString("session.modal.message"),
-        [
-          { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
-        ],
-        { cancelable: false }
-      )
-      ,
-      global.sessionTimeOutDuration)
-  }
-  _handleSessionTimeOutRedirect = () => {
-    Updates.reload();
-  }
-  _initSessionTimer() {
-    clearTimeout(this.timer)
-    this.timer = setTimeout(() =>
-      this._expireSession()
-      ,
-      global.sessionTimeOutDuration)
-  }
-  _expireSession() {
-    Alert.alert(
-      resources.getString("session.modal.title"),
-      resources.getString("session.modal.message"),
-      [
-        { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
-      ],
-      { cancelable: false }
-    )
-  }
+
   componentWillUnmount() {
-    //Session Handler
-    clearTimeout(this.timer)
   }
+
   async handleSurveyAdone(){
      let isConnected=await checkConnection();
      if(!isConnected){Alert.alert('',resources.getString('offline'));return;}
@@ -317,7 +248,6 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     return (
       <View
         style={{ flex: 1, marginTop: 40 }}
-        {...this._panResponder.panHandlers}
       >
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} 

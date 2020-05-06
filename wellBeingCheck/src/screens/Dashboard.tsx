@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import Background from '../components/Background';
-import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, BackHandler, AsyncStorage, PanResponder, Alert, YellowBox } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, BackHandler, AsyncStorage, Alert, YellowBox } from 'react-native';
 import { checkConnection, hashString, fetchJwToken } from '../utils/fetchJwToken';
 import { resources } from '../../GlobalResources';
 
@@ -33,9 +33,6 @@ YellowBox.ignoreWarnings(['Require cycle:'])
 const WEB_API_BASE_URL = global.webApiBaseUrl + 'api';
 
 class Dashboard extends React.Component<Props, HomeState> {
-  _panResponder: any;
-  timer = 0
-
   constructor(HomeState) {
     super(HomeState);
     let txt = '';
@@ -48,45 +45,10 @@ class Dashboard extends React.Component<Props, HomeState> {
     };
     this._refresh = this._refresh.bind(this);
     this._firstTimeLogin();
-
-    /* --------------------Session Handler--------------------------- */
-    //used to handle session
-    this._panResponder = PanResponder.create({
-      // Ask to be the responder:
-      onStartShouldSetPanResponder: () => {
-        this._initSessionTimer()
-        return true
-      },
-      onMoveShouldSetPanResponder: () => {
-        this._initSessionTimer()
-        return true
-      },
-      onStartShouldSetPanResponderCapture: () => {
-        this._initSessionTimer()
-        return true
-      },
-      onMoveShouldSetPanResponderCapture: () => {
-        this._initSessionTimer()
-        return true
-      },
-      onPanResponderTerminationRequest: () => {
-        this._initSessionTimer()
-        return true
-      },
-      onShouldBlockNativeResponder: () => {
-        this._initSessionTimer()
-        return true
-      },
-    });
   }
 
   componentDidMount() {
-    //Session Handler
-    this._initSessionTimer()
-
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-
-
   }
 
   _show_firstTimeLoginModal = () => this.setState({ firstTimeLoginModal: true });
@@ -112,33 +74,7 @@ class Dashboard extends React.Component<Props, HomeState> {
     });
   }
 
-  _initSessionTimer() {
-    clearTimeout(this.timer)
-    this.timer = setTimeout(() =>
-      this._expireSession()
-      ,
-      global.sessionTimeOutDuration)
-  }
-
-  _expireSession() {
-    Alert.alert(
-      resources.getString("session.modal.title"),
-      resources.getString("session.modal.message"),
-      [
-        { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
-      ],
-      { cancelable: false }
-    )
-  }
-
-  _handleSessionTimeOutRedirect = () => {
-    Updates.reload();
-  }
-
   componentWillUnmount() {
-    //Session Handler
-    clearTimeout(this.timer)
-
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
   }
 
