@@ -52,9 +52,11 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
     }
     if (finalStatus !== "granted") {
       if (global.debugMode) console.log("Notifications Permission Not Granted");
+      global.notificationState=false;AsyncStorage.setItem('NotificationState','false');
       return false;
     }
     if (global.debugMode) console.log("Notifications Permission Granted");
+    global.notificationState=true;AsyncStorage.setItem('NotificationState','true');
     return true;
   };
 
@@ -81,7 +83,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
     });
   }
    toggleLanguage(){
-       if(resources.culture=='en')resources.culture='fr';else resources.culture='en';
+       if (resources.culture == 'en'){resources.culture = 'fr';AsyncStorage.setItem('Culture','2');} else {resources.culture = 'en';AsyncStorage.setItem('Culture','1');}
        this.setState({title:resources.getString("Well-Being Check")});
    }
   render() {

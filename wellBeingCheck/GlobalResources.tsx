@@ -208,14 +208,20 @@ export const resources = {
             "contactus_website": "Website:",
             "contactus_mail": "Mail:",
             "contactus_text": `Statistics Canada\nAttention of Director Jean Labbé\n150 Tunney’s Pasture Driveway\nOttawa, ON\nK1A 0T6`,
+
             //FAQ
             "faq.title": "FAQ",
-            "faq.q1": "FAQ question 1",
-            "faq.a1": "FAQ answer 1",
-            "faq.q2": "FAQ question 2",
-            "faq.a2": "FAQ answer 2",
-            "faq.q3": "FAQ question 3",
-            "faq.a3": "FAQ answer 3",
+            "faq.category1": "Category 1",
+            "faq.c1.q1": "Category 1 question 1",
+            "faq.c1.q1.a": "Category 1 question 1 Answer",
+            "faq.c1.q2": "Category 1 question 2",
+            "faq.c1.q2.a": "Category 1 question 2 Answer",
+            "faq.category2": "Category 2",
+            "faq.c2.q1": "Category 2 question 1",
+            "faq.c2.q1.a": "Category 2 question 1 Answer",
+            "faq.c2.q2": "Category 2 question 2",
+            "faq.c2.q2.a": "Category 2 question 2 Answer",
+
             "offline":"You are offline, try it later.",
             "securityIssue":"Internal server error, Try again, if same thing would happen again contact StatCan",
 

@@ -34,8 +34,8 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
     super(LaunchState)
     //  this.chechConnection();
     //  this.getDeviceConnectionInfo();
-    this.state = {
-    };
+    this.state = {title:''};
+    this.getCulture();
  //   this.onNotification = this.onNotification.bind(this);
     this.delay(2000).then(any => {
       //splach screen forced show 3000 = 3 seconds!
@@ -49,14 +49,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
   }
   //determine if user already has an account
   _bootstrap = () => {
-    if (global.debugMode) console.log("_bootstrap");
-    if (global.debugMode) console.log("LaunchScreen._bootstrap Thank you page lunch page: "+ global.showThankYou);
-
-    // Set language based on locale
-    if (global.debugMode)  console.log("Locale is: " + Localization.locale);
-    if (global.debugMode) console.log("resources culture: " + resources.culture);
-
-    
+/*
     let language=null
     AsyncStorage.getItem('settings',(err,settingObject)=>{
         if (global.debugMode)  console.log("launchScreen._bootstrap settings object values    "+ settingObject)
@@ -93,7 +86,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
     } else if (Localization.locale.substring(0,2) == 'fr' && (language=='2')) {
     resources.culture = 'fr';
     }
-  }
+  }*/
 
     AsyncStorage.getItem('user_account', (err, userAccountResult) => {
       if (global.debugMode) console.log(userAccountResult);
@@ -103,13 +96,11 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
         currentPassword = userAccountResultObj.password;
         global.password = currentPassword;
       }
-      if (global.debugMode) console.log('password.....................:'+global.password);
       AsyncStorage.getItem('user_getting_started', (err, userGettingStartedResult) => {
         if (global.debugMode) console.log(userGettingStartedResult);
         let userGettingStartedResultObj = JSON.parse(userGettingStartedResult)
         let gettingStarted = false
         if (userGettingStartedResultObj) {
-          console.log(userGettingStartedResultObj)
           gettingStarted = userGettingStartedResultObj.gettingStarted
         }
 
@@ -122,15 +113,12 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           }
           //here we have all results
           if (gettingStarted == false) {
-            if (global.debugMode)  console.log("!gettingStarted");
             this.props.navigation.navigate('GettingStartedScreen');
           }
           else if (termsOfService == false) {
-            if (global.debugMode)   console.log("!termsOfService");
             this.props.navigation.navigate('TermsOfServiceScreen');
           }
           else if ((currentPassword == null) || (currentPassword == "")) {
-            if (global.debugMode)  console.log("!currentPassword");
             this.props.navigation.navigate('RegisterScreen');
           }
           else {
@@ -182,12 +170,26 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
              console.log(new Date(list[i].Datetime)+" ->"+new Date(list[i].Day));
           }
 
+          let notificationState=await AsyncStorage.getItem('NotificationState');
+          if(notificationState==null ||notificationState=='true')notificationState=true;else notificationState=false;
+          global.notificationState=notificationState;
+          console.log('Culture:'+resources.culture+'  NotificationState:'+global.notificationState);
           this._bootstrap();
         };
   onNotification(n) {
        console.log('received notification:'+n.title);
        //this.props.navigation.navigate('Dashboard');
        }
+  async getCulture(){
+     let culture=await AsyncStorage.getItem('Culture');
+     if(culture==null){
+         if(Localization.locale.substring(0,2) == 'fr')resources.culture = 'fr';else resources.culture = 'en';
+     }
+     else {
+         if(culture=='2')resources.culture = 'fr';else resources.culture = 'en';
+          }
+     this.setState({title:resources.getString("Well-Being Check")});
+   }
   componentDidMount() {Notifications.addListener(this.onNotification);}
   render() {
     return (
@@ -196,9 +198,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
         <AppBanner />
         <Background>
           <LogoClear />
-
-          <Title>{resources.getString("app.name")}</Title>
-          
+          <Title>{this.state.title}</Title>
         </Background>
         <NavigationEvents
           // onDidFocus={() => this.bootstrapA()}

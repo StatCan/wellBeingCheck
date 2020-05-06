@@ -283,7 +283,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
           "WakeTime": global.awakeHour,
           "SleepTime": global.sleepHour,
           "NotificationCount": global.pingNum,
-         // "NotificationEnable": true,
+          "NotificationEnable": global.notificationState,
           "ScheduledNotificationTimes": snt
         };
     console.log(paraData);
