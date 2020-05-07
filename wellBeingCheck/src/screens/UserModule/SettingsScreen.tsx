@@ -59,7 +59,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       sleeptime: global.sleepHour,
       notificationcount: global.pingNum,
       culture: resources.culture == 'fr'?'2':'1',
-      cultureString: 'English',
+      cultureString:resources.culture == 'fr'?'Française':'English',
       languageModalShow: false,
       wakeTimePickerShow: false,
       sleepTimePickerShow: false,
