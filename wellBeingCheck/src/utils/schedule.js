@@ -233,7 +233,7 @@ export async function setupSchedules(affectCurrent=false){
                     }
                 }
                 else {
-                    let affectedDay=f.AffectedDay; let leftOverCount=f.LeftOverCount;console.log('Setup notification will affect current day:'+affectedDay.toString()+'->'+leftOverCount);
+                    let affectedDay=f.AffectedDay; let leftOverCount=count- f.PassedCount;console.log('Setup notification will affect current day:'+affectedDay.toString()+'->'+leftOverCount);
                     let days = getFollowingDays(affectedDay,lastDate,true,4,false);
                     if(days.length>0){
                        day5=getNextDay(days[days.length-1]);
@@ -609,9 +609,9 @@ the algorithm will not arrange any notification for the time which has been pass
          let sch=found.Day;
          let count=0;
          list.forEach(function(l){
-            if (+l.Day == +sch && l.Datetime>datetime)count++;
+            if (+l.Day == +sch && +l.Datetime <= +datetime)count++;
          });
-         result={AffectedDay:sch,LeftOverCount:count};
+         result={AffectedDay:sch,PassedCount:count};
      }
      return result;
  }
