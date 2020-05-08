@@ -515,6 +515,9 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                     title={resources.getString("donotdisturbbetween")}
                     titleStyle={{ color: this.state.titleBackgroundColor }}
                  />
+
+                 <View style={{flexDirection:'row',flex:1}}>
+
                 <List.Item
                   style={styles.listStyle1a}
                   title={this.state.waketime}
@@ -551,6 +554,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                   handler={this.sleepTimeHandler}
                   cancelHandler={this.cancelTimeHandler}
                 />
+                 </View>
                 <Divider></Divider>
                 <List.Item
                   left={() => <List.Icon icon={require('../../assets/ic_wbc_language.png')} />}
@@ -564,6 +568,8 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                   title={resources.getString("terms_and_conditions")}
                   onPress={this._openTermsConditions}
                 />
+
+
               </List.Section>
               {debugButtons}
 
@@ -751,13 +757,20 @@ const styles = StyleSheet.create({
     marginLeft: 60
   },
    listStyle1a: {
-      marginLeft: 60,height:30,width:120,
+     marginLeft: 60,
+     // height:30,
+      width:60,
     },
      listStyle1b: {
-          marginLeft: 180,height:30,width:120,marginTop:-30,marginBottom:10,
+          marginLeft: 10  ,
+          //height:30,
+          width:120,
+          //  marginTop:-30,
+          marginBottom:10,
         },
   listStyle2: {
-       marginLeft: 60,height:30,
+       marginLeft: 60,
+       //height:30,
      },
   listTitleLightStyle: {
     color: "#a7a5a6"
