@@ -440,7 +440,9 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   _openTermsConditions = () => {
     this.props.navigation.navigate('TOSSettingsScreen');
   }
-
+  // _openAbout = () => {
+  //   Alert.alert("test")
+  // }
   render() {
 
     let debugButtons;
@@ -516,29 +518,12 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                     titleStyle={{ color: this.state.titleBackgroundColor }}
                  />
 
-                 <View style={{flexDirection:'row',flex:1}}>
+                 <View>
 
-                <List.Item
-                  style={styles.listStyle1a}
-                  title={resources.getString("from")}
-                  titleStyle={{ color: this.state.titleBackgroundColor }}
-                  onPress={this._showWakeTimePicker}
-                  disabled={!this.state.notificationState}
-                  description={this.state.waketime}
-                  descriptionStyle={styles.descriptionStyle}
-                />
-                <TimePicker
-                  showTimePicker={this.state.wakeTimePickerShow}
-                  style={styles.timePicker}
-                  time={this.state.waketime}
-                  timeType="wakeTime"
-                  isVisible={this.state.wakeTimePickerShow}
-                  handler={this.wakeTimeHandler}
-                  cancelHandler={this.cancelTimeHandler}
-                />
+               
                 <List.Item
                   style={styles.listStyle1b}
-                  title={resources.getString("to")}
+                  title={resources.getString("sleep_time")}
                   titleStyle={{ color: this.state.titleBackgroundColor }}
                   onPress={this._showSleepTimePicker}
                   disabled={!this.state.notificationState}
@@ -554,7 +539,28 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                   handler={this.sleepTimeHandler}
                   cancelHandler={this.cancelTimeHandler}
                 />
-                 </View>
+
+            
+                 <List.Item
+                  style={styles.listStyle1a}
+                  title={resources.getString("wake_time")}
+                  titleStyle={{ color: this.state.titleBackgroundColor }}
+                  onPress={this._showWakeTimePicker}
+                  disabled={!this.state.notificationState}
+                  description={this.state.waketime}
+                  descriptionStyle={styles.descriptionStyle}
+                />
+                <TimePicker
+                  showTimePicker={this.state.wakeTimePickerShow}
+                  style={styles.timePicker}
+                  time={this.state.waketime}
+                  timeType="wakeTime"
+                  isVisible={this.state.wakeTimePickerShow}
+                  handler={this.wakeTimeHandler}
+                  cancelHandler={this.cancelTimeHandler}
+                />
+                </View>
+                
                 <Divider></Divider>
                 <List.Item
                   left={() => <List.Icon icon={require('../../assets/ic_wbc_language.png')} />}
@@ -563,11 +569,20 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                   description={this.state.cultureString}
                   descriptionStyle={styles.descriptionStyle}
                 />
+                 <Divider></Divider>
                 <List.Item
                   left={() => <List.Icon icon={require('../../assets/ic_wbc_terms_condition.png')} />}
                   title={resources.getString("terms_and_conditions")}
                   onPress={this._openTermsConditions}
                 />
+                 <Divider></Divider>
+                 <View>
+                 {/* <List.Item
+                 style={styles.listStyle}
+                  title="About"
+                  onPress={this._openAbout}
+                /> */}
+                 </View>
 
 
               </List.Section>
@@ -756,21 +771,17 @@ const styles = StyleSheet.create({
   listStyle: {
     marginLeft: 60
   },
-   listStyle1a: {
-     marginLeft: 60,
-     // height:30,
-      width:80,
+  listStyle1a: {
+     marginLeft: 80,
+     width:200,
     },
-     listStyle1b: {
-          marginLeft: 20  ,
-          //height:30,
-          width:80,
-          //  marginTop:-30,
-          marginBottom:10,
-        },
+  listStyle1b: {
+      marginLeft: 80, 
+      width:120,
+      marginBottom:-15,  
+    },
   listStyle2: {
        marginLeft: 60,
-       //height:30,
      },
   listTitleLightStyle: {
     color: "#a7a5a6"
