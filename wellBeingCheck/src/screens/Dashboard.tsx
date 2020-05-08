@@ -34,7 +34,7 @@ const WEB_API_BASE_URL = global.webApiBaseUrl + 'api';
 
 class Dashboard extends React.Component<Props, HomeState> {
   _panResponder: any;
-  timer = 0
+  timer = null
 
   constructor(HomeState) {
     super(HomeState);
@@ -53,29 +53,48 @@ class Dashboard extends React.Component<Props, HomeState> {
     //used to handle session
     this._panResponder = PanResponder.create({
       // Ask to be the responder:
-      onStartShouldSetPanResponder: () => {
+      onStartShouldSetPanResponder: (evt, gestureState) => {
         this._initSessionTimer()
-        return true
+        return false;
       },
-      onMoveShouldSetPanResponder: () => {
+      onStartShouldSetPanResponderCapture: (evt, gestureState) => {
         this._initSessionTimer()
-        return true
+        return false;
       },
-      onStartShouldSetPanResponderCapture: () => {
+
+      onMoveShouldSetPanResponder: (evt, gestureState) => {
+        // Listen for your events and show UI feedback here
         this._initSessionTimer()
-        return true
+        return false;
       },
-      onMoveShouldSetPanResponderCapture: () => {
+      onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
         this._initSessionTimer()
-        return true
+        return false;
       },
-      onPanResponderTerminationRequest: () => {
+      onPanResponderGrant: (evt, gestureState) => {
         this._initSessionTimer()
-        return true
+        return false;
       },
-      onShouldBlockNativeResponder: () => {
+      onPanResponderMove: (evt, gestureState) => {
         this._initSessionTimer()
-        return true
+        return false;
+      },
+      onPanResponderTerminationRequest: (evt, gestureState) => {
+        this._initSessionTimer()
+        return false
+      },
+      onPanResponderRelease: (evt, gestureState) => {
+        // This wont get called
+        this._initSessionTimer()
+        return true;
+      },
+      onPanResponderTerminate: (evt, gestureState) => {
+        this._initSessionTimer()
+        return false;
+      },
+      onShouldBlockNativeResponder: (evt, gestureState) => {
+        this._initSessionTimer()
+        return false;
       },
     });
   }
@@ -85,8 +104,38 @@ class Dashboard extends React.Component<Props, HomeState> {
     this._initSessionTimer()
 
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+  }
 
+  _handleSessionTimeOutRedirect = () => {
+    Updates.reload();
+  }
 
+  _initSessionTimer() {
+    clearInterval(this.timer)
+    this.timer = setTimeout(() =>
+      this._expireSession()
+      ,
+      global.sessionTimeOutDuration)
+  }
+
+  _expireSession() {
+    //TODO: timer not working since componentWillUnmount is never called due to eventListeneres
+
+    // Alert.alert(
+    //   resources.getString("session.modal.title"),
+    //   resources.getString("session.modal.message") + " dashboard",
+    //   [
+    //     { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
+    //   ],
+    //   { cancelable: false }
+    // )
+  }
+
+  componentWillUnmount() {
+    //Session Handler
+    clearInterval(this.timer)
+
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
   }
 
   _show_firstTimeLoginModal = () => this.setState({ firstTimeLoginModal: true });
@@ -110,36 +159,6 @@ class Dashboard extends React.Component<Props, HomeState> {
         });
       }
     });
-  }
-
-  _initSessionTimer() {
-    clearTimeout(this.timer)
-    this.timer = setTimeout(() =>
-      this._expireSession()
-      ,
-      global.sessionTimeOutDuration)
-  }
-
-  _expireSession() {
-    Alert.alert(
-      resources.getString("session.modal.title"),
-      resources.getString("session.modal.message"),
-      [
-        { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
-      ],
-      { cancelable: false }
-    )
-  }
-
-  _handleSessionTimeOutRedirect = () => {
-    Updates.reload();
-  }
-
-  componentWillUnmount() {
-    //Session Handler
-    clearTimeout(this.timer)
-
-    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
   }
 
   checkThankYou() {

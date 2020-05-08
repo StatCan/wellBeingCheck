@@ -27,7 +27,7 @@ interface Props {
 
 class AboutScreen extends React.Component<Props, AboutState> {
   _panResponder: any;
-  timer = 0
+  timer = null
 
   constructor(AboutScreen) {
     super(AboutScreen)
@@ -45,29 +45,48 @@ class AboutScreen extends React.Component<Props, AboutState> {
     //used to handle session
     this._panResponder = PanResponder.create({
       // Ask to be the responder:
-      onStartShouldSetPanResponder: () => {
+      onStartShouldSetPanResponder: (evt, gestureState) => {
         this._initSessionTimer()
-        return true
+        return false;
       },
-      onMoveShouldSetPanResponder: () => {
+      onStartShouldSetPanResponderCapture: (evt, gestureState) => {
         this._initSessionTimer()
-        return true
+        return false;
       },
-      onStartShouldSetPanResponderCapture: () => {
+
+      onMoveShouldSetPanResponder: (evt, gestureState) => {
+        // Listen for your events and show UI feedback here
         this._initSessionTimer()
-        return true
+        return false;
       },
-      onMoveShouldSetPanResponderCapture: () => {
+      onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
         this._initSessionTimer()
-        return true
+        return false;
       },
-      onPanResponderTerminationRequest: () => {
+      onPanResponderGrant: (evt, gestureState) => {
         this._initSessionTimer()
-        return true
+        return false;
       },
-      onShouldBlockNativeResponder: () => {
+      onPanResponderMove: (evt, gestureState) => {
         this._initSessionTimer()
-        return true
+        return false;
+      },
+      onPanResponderTerminationRequest: (evt, gestureState) => {
+        this._initSessionTimer()
+        return false
+      },
+      onPanResponderRelease: (evt, gestureState) => {
+        // This wont get called
+        this._initSessionTimer()
+        return true;
+      },
+      onPanResponderTerminate: (evt, gestureState) => {
+        this._initSessionTimer()
+        return false;
+      },
+      onShouldBlockNativeResponder: (evt, gestureState) => {
+        this._initSessionTimer()
+        return false;
       },
     });
   }
@@ -82,7 +101,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
   }
 
   _initSessionTimer() {
-    clearTimeout(this.timer)
+    clearInterval(this.timer)
     this.timer = setTimeout(() =>
       this._expireSession()
       ,
@@ -92,7 +111,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
   _expireSession() {
     Alert.alert(
       resources.getString("session.modal.title"),
-      resources.getString("session.modal.message"),
+      resources.getString("session.modal.message") + " aboutScreen",
       [
         { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
       ],
@@ -102,7 +121,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
 
   componentWillUnmount() {
     //Session Handler
-    clearTimeout(this.timer)
+    clearInterval(this.timer)
   }
 
   _onNextBtnHandle = () => {
@@ -129,7 +148,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
       faqC1Q2Expanded: !this.state.faqC1Q2Expanded
     });
 
-    _handleFaqC2Expand = () =>
+  _handleFaqC2Expand = () =>
     this.setState({
       faqC2Expanded: !this.state.faqC2Expanded
     });
@@ -143,7 +162,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
     this.setState({
       faqC2Q2Expanded: !this.state.faqC2Q2Expanded
     });
-    
+
   render() {
     return (
       <PaperProvider theme={newTheme}>

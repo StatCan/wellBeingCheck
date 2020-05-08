@@ -17,38 +17,57 @@ interface Props {
 
 class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
   _panResponder: any;
-  timer = 0
+  timer = null
 
   constructor(ContactUsScreen) {
     super(ContactUsScreen)
 
-    /* --------------------Session Handler--------------------------- */
+        /* --------------------Session Handler--------------------------- */
     //used to handle session
     this._panResponder = PanResponder.create({
       // Ask to be the responder:
-      onStartShouldSetPanResponder: () => {
+      onStartShouldSetPanResponder: (evt, gestureState) => {
         this._initSessionTimer()
-        return true
+        return false;
       },
-      onMoveShouldSetPanResponder: () => {
+      onStartShouldSetPanResponderCapture: (evt, gestureState) => {
         this._initSessionTimer()
-        return true
+        return false;
       },
-      onStartShouldSetPanResponderCapture: () => {
+
+      onMoveShouldSetPanResponder: (evt, gestureState) => {
+        // Listen for your events and show UI feedback here
         this._initSessionTimer()
-        return true
+        return false;
       },
-      onMoveShouldSetPanResponderCapture: () => {
+      onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
         this._initSessionTimer()
-        return true
+        return false;
       },
-      onPanResponderTerminationRequest: () => {
+      onPanResponderGrant: (evt, gestureState) => {
         this._initSessionTimer()
-        return true
+        return false;
       },
-      onShouldBlockNativeResponder: () => {
+      onPanResponderMove: (evt, gestureState) => {
         this._initSessionTimer()
-        return true
+        return false;
+      },
+      onPanResponderTerminationRequest: (evt, gestureState) => {
+        this._initSessionTimer()
+        return false
+      },
+      onPanResponderRelease: (evt, gestureState) => {
+        // This wont get called
+        this._initSessionTimer()
+        return true;
+      },
+      onPanResponderTerminate: (evt, gestureState) => {
+        this._initSessionTimer()
+        return false;
+      },
+      onShouldBlockNativeResponder: (evt, gestureState) => {
+        this._initSessionTimer()
+        return false;
       },
     });
   }
@@ -63,7 +82,7 @@ class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
   }
 
   _initSessionTimer() {
-    clearTimeout(this.timer)
+    clearInterval(this.timer)
     this.timer = setTimeout(() =>
       this._expireSession()
       ,
@@ -73,7 +92,7 @@ class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
   _expireSession() {
     Alert.alert(
       resources.getString("session.modal.title"),
-      resources.getString("session.modal.message"),
+      resources.getString("session.modal.message") + " contactUsScreen",
       [
         { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
       ],
@@ -83,7 +102,7 @@ class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
 
   componentWillUnmount() {
     //Session Handler
-    clearTimeout(this.timer)
+    clearInterval(this.timer)
   }
 
   _onNextBtnHandle = () => {

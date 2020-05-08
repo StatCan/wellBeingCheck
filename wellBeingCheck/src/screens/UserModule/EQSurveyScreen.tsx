@@ -27,7 +27,8 @@ const WEB_API_BASE_URL = global.webApiBaseUrl + 'api';
 let jsCode = '';
 export default class EQSurveyScreen extends React.Component<Props, ScreenState> {
   _panResponder: any;
-  timer = 0
+  timer = null
+
   constructor(Props) {
     super(Props)
     let disCode = 'const meta = document.createElement("meta"); meta.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"); meta.setAttribute("name", "viewport"); document.getElementsByTagName("head")[0].appendChild(meta);';
@@ -36,80 +37,89 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     this.state = ({ Sacode: '', jsCode: disCode + jsCode, webviewLoaded: false });
     setTimeout(() => { this.setState({ webviewLoaded: true }) }, 4000);
 
-    /* --------------------Session Handler--------------------------- */
+   /* --------------------Session Handler--------------------------- */
     //used to handle session
     this._panResponder = PanResponder.create({
       // Ask to be the responder:
-      onStartShouldSetPanResponder: () => {
+      onStartShouldSetPanResponder: (evt, gestureState) => {
         this._initSessionTimer()
-        return true
+        return false;
       },
-      onMoveShouldSetPanResponder: () => {
+      onStartShouldSetPanResponderCapture: (evt, gestureState) => {
         this._initSessionTimer()
-        return true
+        return false;
       },
-      onStartShouldSetPanResponderCapture: () => {
+
+      onMoveShouldSetPanResponder: (evt, gestureState) => {
+        // Listen for your events and show UI feedback here
+        this._initSessionTimer()
+        return false;
+      },
+      onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
+        this._initSessionTimer()
+        return false;
+      },
+      onPanResponderGrant: (evt, gestureState) => {
+        this._initSessionTimer()
+        return false;
+      },
+      onPanResponderMove: (evt, gestureState) => {
+        this._initSessionTimer()
+        return false;
+      },
+      onPanResponderTerminationRequest: (evt, gestureState) => {
         this._initSessionTimer()
         return false
       },
-      onMoveShouldSetPanResponderCapture: () => {
+      onPanResponderRelease: (evt, gestureState) => {
+        // This wont get called
         this._initSessionTimer()
-        return true
+        return true;
       },
-      onPanResponderTerminationRequest: () => {
+      onPanResponderTerminate: (evt, gestureState) => {
         this._initSessionTimer()
-        return true
+        return false;
       },
-      onShouldBlockNativeResponder: () => {
+      onShouldBlockNativeResponder: (evt, gestureState) => {
         this._initSessionTimer()
-        return true
+        return false;
       },
     });
   }
+
   componentDidMount() {
     //Session Handler
     this._initSessionTimer()
   }
-  /* --------------------Session Handler--------------------------- */
-  _resetTimer() {
-    //Session Handler
-    clearTimeout(this.timer)
-    this.timer = setTimeout(() =>
-      Alert.alert(
-        resources.getString("session.modal.title"),
-        resources.getString("session.modal.message"),
-        [
-          { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
-        ],
-        { cancelable: false }
-      )
-      ,
-      global.sessionTimeOutDuration)
-  }
+
   _handleSessionTimeOutRedirect = () => {
     Updates.reload();
   }
+
   _initSessionTimer() {
-    clearTimeout(this.timer)
+    clearInterval(this.timer)
     this.timer = setTimeout(() =>
       this._expireSession()
       ,
       global.sessionTimeOutDuration)
   }
+
   _expireSession() {
     Alert.alert(
       resources.getString("session.modal.title"),
-      resources.getString("session.modal.message"),
+      resources.getString("session.modal.message") + " EqScreen",
       [
         { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
       ],
       { cancelable: false }
     )
   }
+
   componentWillUnmount() {
     //Session Handler
-    clearTimeout(this.timer)
+    clearInterval(this.timer)
   }
+
   async handleSurveyAdone(){
      let isConnected=await checkConnection();
      if(!isConnected){Alert.alert('',resources.getString('offline'));return;}
