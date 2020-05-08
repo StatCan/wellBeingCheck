@@ -520,11 +520,11 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
 
                 <List.Item
                   style={styles.listStyle1a}
-                  title={this.state.waketime}
+                  title={resources.getString("from")}
                   titleStyle={{ color: this.state.titleBackgroundColor }}
                   onPress={this._showWakeTimePicker}
                   disabled={!this.state.notificationState}
-
+                  description={this.state.waketime}
                   descriptionStyle={styles.descriptionStyle}
                 />
                 <TimePicker
@@ -538,11 +538,11 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                 />
                 <List.Item
                   style={styles.listStyle1b}
-                  title={this.state.sleeptime}
+                  title={resources.getString("to")}
                   titleStyle={{ color: this.state.titleBackgroundColor }}
                   onPress={this._showSleepTimePicker}
                   disabled={!this.state.notificationState}
-
+                  description={this.state.sleeptime}
                   descriptionStyle={styles.descriptionStyle}
                 />
                 <TimePicker
@@ -759,12 +759,12 @@ const styles = StyleSheet.create({
    listStyle1a: {
      marginLeft: 60,
      // height:30,
-      width:60,
+      width:80,
     },
      listStyle1b: {
-          marginLeft: 10  ,
+          marginLeft: 20  ,
           //height:30,
-          width:120,
+          width:80,
           //  marginTop:-30,
           marginBottom:10,
         },

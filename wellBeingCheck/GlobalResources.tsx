@@ -258,6 +258,8 @@ export const resources = {
              "continue":"Continue",
              "settingValidation":"Your awake interval must be greater than 3 in order to send notification",
              "donotdisturbbetween":"Do not disturb between",
+             "from":"From:",
+             "to":"To:",
         },
         fr: {
             //global
@@ -536,6 +538,8 @@ export const resources = {
               "continue":"Continuer",
               "settingValidation":"Votre intervalle d'éveil doit être supérieur à 3 pour envoyer une notification",
               "donotdisturbbetween":"Ne dérangez pas entre",
+              "from":"De:",
+              "to":"À:",
         }
     }
 };
