@@ -177,13 +177,13 @@ export async function setupSchedules(affectCurrent=false){
          lastDate.setDate(currentDateTime.getDate()+30);lastDate.setHours(0);lastDate.setMinutes(0);lastDate.setSeconds(0);lastDate.setMilliseconds(0);
          let days = getFollowingDays(currentDateTime,lastDate,true,4,nightShiftUpdate);console.log('days:'+days);
          let day5=getNextDay(currentDateTime);
-
+         let cdt=new Date(currentDateTime);cdt.setHours(cdt.getHours()+1);
          if(days.length>0){
             day5=getNextDay(days[days.length-1]);
             days.forEach(function (d, index) {
-                  let ccc=count;
-                  if(index==0)ccc=Math.max(1,count-1);
-                  var schObj  =calculateSchedule(awake, sleep, ccc, d,currentDateTime);
+                  let ccc=count;let cdtf=currentDateTime;
+                  if(index==0){ccc=Math.max(1,count-1);cdtf=cdt; }
+                  var schObj  =calculateSchedule(awake, sleep, ccc, d,cdtf);
                   var selected=schObj.Selected;
                   if (selected.length > 0) {
                        selected.forEach(function (s) {
@@ -193,11 +193,12 @@ export async function setupSchedules(affectCurrent=false){
             });
          }
          if(schedules.length>0){
-             schedules.forEach(function(s){console.log('To Schedule:'+s.Datetime.toString())});
              let dt=new Date(day5);dt.setHours(sleep-2);
              schedules.forEach(async function(s){
-                let notificationId=await setupNotification(s.Datetime,title,message);
-                console.log('notificationId:'+notificationId);
+                 let mm = Math.random() * 59;
+                 let ss = new Date(s.Datetime); ss.setMinutes(mm);
+                 let notificationId=await setupNotification(ss,title,message);
+                 console.log('notificationId:'+notificationId+'->'+ss.toString());
              });
              let warningNotificationId=await setupWarning(dt,title,lastMessage);
              var l=lastDate.toString();console.log('Last day:'+l);
@@ -261,11 +262,12 @@ export async function setupSchedules(affectCurrent=false){
                     }
                 }
                 if(schedules.length>0){
-                    schedules.forEach(function(s){console.log('To Schedule:'+s.Datetime.toString())});
                     cancellAllSchedules();
                     schedules.forEach(async function(s){
-                        let notificationId=await setupNotification(s.Datetime,title,message);
-                        console.log('notificationId:'+notificationId);
+                          let mm = Math.random() * 59;
+                          let ss = new Date(s.Datetime); ss.setMinutes(mm);
+                          let notificationId=await setupNotification(ss,title,message);
+                          console.log('notificationId:'+notificationId+'->'+ss.toString());
                     });
                     let dt=new Date(day5);dt.setHours(sleep-2);
                     let warningNotificationId=await setupWarning(dt,title,lastMessage);
@@ -300,11 +302,12 @@ export async function setupSchedules(affectCurrent=false){
                }
                if(schedules.length>0){
                      schedules=updateSchedulesList(schedules,currentDateTime);
-                     schedules.forEach(function(s){console.log('To Schedule:'+s.Datetime.toString())});
                      if(global.warningNotificationId!=null) cancelSchedule(global.warningNotificationId);
                      schedules.forEach(async function(s){
-                            let notificationId=await setupNotification(s.Datetime,title,message);
-                            console.log('notificationId:'+notificationId);
+                            let mm = Math.random() * 59;
+                            let ss = new Date(s.Datetime); ss.setMinutes(mm);
+                            let notificationId=await setupNotification(ss,title,message);
+                            console.log('notificationId:'+notificationId+'->'+ss.toString());
                      });
                      let dt=new Date(day5);dt.setHours(sleep-2);
                      let warningNotificationId=await setupWarning(dt,title,lastMessage);
@@ -334,11 +337,12 @@ export async function setupSchedules(affectCurrent=false){
                  });
              }
              if(schedules.length>0){
-                  schedules.forEach(function(s){console.log('To Schedule:'+s.Datetime.toString())});
                   cancellAllSchedules();
                   schedules.forEach(async function(s){
-                      let notificationId=await setupNotification(s.Datetime,title,message);
-                      console.log('notificationId:'+notificationId);
+                       let mm = Math.random() * 59;
+                       let ss = new Date(s.Datetime); ss.setMinutes(mm);
+                       let notificationId=await setupNotification(ss,title,message);
+                       console.log('notificationId:'+notificationId+'->'+ss.toString());
                   });
                  let dt=new Date(day5);dt.setHours(sleep-2);
                  let warningNotificationId=await setupWarning(dt,title,lastMessage);
@@ -698,4 +702,12 @@ the algorithm will not arrange any notification for the time which has been pass
      if(count<2 || count>5)result=4;//never happen,
      if (awakeInterval<3)result=1;
      return result;
+ }
+ export async function sendRateAppNotification(){
+     let msg=resources.getString("rateAppMsg"); let title=resources.getString("notifications");
+     if (Platform.OS === 'android')msg+=' Google Play Store.';
+     else msg+=' App Store.';
+     let dt=new Date();dt.setHours(dt.getHours()+1);
+     let notificationId=await setupWarning(dt,title,msg);
+
  }
