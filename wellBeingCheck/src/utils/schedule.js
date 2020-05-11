@@ -703,3 +703,11 @@ the algorithm will not arrange any notification for the time which has been pass
      if (awakeInterval<3)result=1;
      return result;
  }
+ export async sendRateAppNotification(){
+     let msg=resources.getString("rateAppMsg"); let title=resources.getString("notifications");
+     if (Platform.OS === 'android')msg+=' Google Play Store.';
+     else msg+=' App Store.';
+     let dt=new Date();dt.setHours(dt.getHours()+1);
+     let notificationId=await setupWarning(dt,title,msg);
+
+ }

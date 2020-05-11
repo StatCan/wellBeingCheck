@@ -134,6 +134,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
      global.fetchAction=false;
      setupSchedules();
      await this.saveDefaultParadata(jwt);
+     global.surveyCount=1;AsyncStorage.setItem('SurveyCount','1');
  }
   async handleSurveyBdone(){
      let isConnected=await checkConnection();console.log('In handle B');
@@ -158,6 +159,8 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
      global.fetchAction=false;
      setupSchedules(false);
      if(!global.paradataSaved)await this.saveDefaultParadata(jwt);
+      global.surveyCount=global.surveyCount+1;AsyncStorage.setItem('SurveyCount',global.surveyCount.toString());
+
      this.props.navigation.navigate('Dashboard');
   }
   async fetchGraphs(types: string[]) {
