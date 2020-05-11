@@ -190,8 +190,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   _initSessionTimer() {
     clearTimeout(this.timer)
     this.timer = setTimeout(() =>
-      this._expireSession()
-      ,
+      this._expireSession(),
       global.sessionTimeOutDuration)
   }
 
@@ -463,13 +462,12 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
         <View style={{ flex: 1, justifyContent: 'space-between' }}>
           <View style={styles.toolbar}>
-            {/* <BackButton goBack={() => this._backButtonPressed()}/> */}
             <Text style={styles.toolbarTitle}>{resources.getString("settings")}</Text>
           </View>
           <View style={styles.containerStyle}>
             <ScrollView>
               <List.Section style={styles.mainStyle}>
-                <List.Item
+                <List.Item 
                   title={resources.getString("notifications")}
                   left={() => <List.Icon icon="bell-alert" />}
                   right={() => <Switch
@@ -501,7 +499,6 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                       }
 
                     }} />} />
-                <Divider></Divider>
                 <List.Item
                   style={styles.listStyle}
                   titleStyle={{ color: this.state.titleBackgroundColor }}
@@ -511,7 +508,6 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                   description={this.state.notificationcount}
                   descriptionStyle={styles.descriptionStyle}
                 />
-                <Divider></Divider>
                  <List.Item
                     style={styles.listStyle2}
                     title={resources.getString("donotdisturbbetween")}
@@ -520,7 +516,6 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
 
                  <View>
 
-               
                 <List.Item
                   style={styles.listStyle1b}
                   title={resources.getString("sleep_time")}
@@ -539,8 +534,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                   handler={this.sleepTimeHandler}
                   cancelHandler={this.cancelTimeHandler}
                 />
-
-            
+   
                  <List.Item
                   style={styles.listStyle1a}
                   title={resources.getString("wake_time")}
@@ -560,7 +554,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                   cancelHandler={this.cancelTimeHandler}
                 />
                 </View>
-                
+
                 <Divider></Divider>
                 <List.Item
                   left={() => <List.Icon icon={require('../../assets/ic_wbc_language.png')} />}
@@ -737,12 +731,12 @@ const styles = StyleSheet.create({
     marginBottom: 36
   },
   mainStyle: {
-    marginTop: 20
+    marginTop: 5
   },
   toolbar: {
     backgroundColor: '#F4D2D1',
     paddingTop: 20,
-    paddingBottom: 15,
+    paddingBottom: 20,
     flexDirection: 'row'
   },
   btnNext: {
@@ -778,7 +772,7 @@ const styles = StyleSheet.create({
   listStyle1b: {
       marginLeft: 80, 
       width:200,
-      marginBottom:-15,  
+      marginBottom:-15,
     },
   listStyle2: {
        marginLeft: 60,
@@ -792,13 +786,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
-  input: { borderWidth: 1, width: 100, paddingLeft: 4 },
+  input: { 
+    borderWidth: 1, 
+    width: 100, 
+    paddingLeft: 4 
+  },
   label: {
     fontSize: 16,
     marginLeft: 40,
-    padding: 10
+    padding: 10,
   },
-
   Dialog: {
     width: 300,
     height: 200
