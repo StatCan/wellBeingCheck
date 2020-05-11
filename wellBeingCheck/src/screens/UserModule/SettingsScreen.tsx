@@ -777,7 +777,7 @@ const styles = StyleSheet.create({
     },
   listStyle1b: {
       marginLeft: 80, 
-      width:120,
+      width:200,
       marginBottom:-15,  
     },
   listStyle2: {
