@@ -107,7 +107,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
   _expireSession() {
     Alert.alert(
       resources.getString("session.modal.title"),
-      resources.getString("session.modal.message") + " EqScreen",
+      resources.getString("session.modal.message"),
       [
         { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
       ],
