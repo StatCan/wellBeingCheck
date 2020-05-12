@@ -1,11 +1,12 @@
-import * as React from 'react';
-import { Text, View, ScrollView, StyleSheet, TouchableOpacity, Dimensions, Image, ImageBackground, InteractionManager, AsyncStorage, Alert } from 'react-native';
+import React, { memo } from 'react';
+import { Text, View, ScrollView, StyleSheet, TouchableOpacity, Dimensions, Image, ImageBackground, InteractionManager, AsyncStorage, PanResponder, Alert } from 'react-native';
 import { Provider as PaperProvider, Title } from 'react-native-paper';
 import Button from '../../components/Button';
 import { resources } from '../../../GlobalResources';
 import { newTheme } from '../../core/theme';
 import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
 import { FailureType } from '../../api/back-end.service';
+import { Updates } from 'expo';
 
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
@@ -20,8 +21,12 @@ type ScreenState = {
 
 const height = Math.floor(Dimensions.get('window').height) - 100;
 const width = Math.floor(Dimensions.get('window').width);
-let startX=0;let index=0;
-export default class App extends React.Component<Props, ScreenState> {
+let startX = 0; let index = 0;
+
+class UserResultsScreen extends React.Component<Props, ScreenState> {
+  _panResponder: any;
+  timer = null
+
   constructor(props) {
     super(props);
     this.state = {
@@ -31,6 +36,55 @@ export default class App extends React.Component<Props, ScreenState> {
       width: 0, height: 0
     };
     global.currentView = 1;
+
+    /* --------------------Session Handler--------------------------- */
+    //used to handle session
+    this._panResponder = PanResponder.create({
+      // Ask to be the responder:
+      onStartShouldSetPanResponder: (evt, gestureState) => {
+        this._initSessionTimer()
+        return false;
+      },
+      onStartShouldSetPanResponderCapture: (evt, gestureState) => {
+        this._initSessionTimer()
+        return false;
+      },
+
+      onMoveShouldSetPanResponder: (evt, gestureState) => {
+        // Listen for your events and show UI feedback here
+        this._initSessionTimer()
+        return false;
+      },
+      onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
+        this._initSessionTimer()
+        return false;
+      },
+      onPanResponderGrant: (evt, gestureState) => {
+        this._initSessionTimer()
+        return false;
+      },
+      onPanResponderMove: (evt, gestureState) => {
+        this._initSessionTimer()
+        return false;
+      },
+      onPanResponderTerminationRequest: (evt, gestureState) => {
+        this._initSessionTimer()
+        return false
+      },
+      onPanResponderRelease: (evt, gestureState) => {
+        // This wont get called
+        this._initSessionTimer()
+        return true;
+      },
+      onPanResponderTerminate: (evt, gestureState) => {
+        this._initSessionTimer()
+        return false;
+      },
+      onShouldBlockNativeResponder: (evt, gestureState) => {
+        this._initSessionTimer()
+        return false;
+      },
+    });
   }
 
   _onNextBtnHandle = () => {
@@ -89,16 +143,47 @@ export default class App extends React.Component<Props, ScreenState> {
   }
 
   componentDidMount() {
+    //Session Handler
+    this._initSessionTimer()
+
     this.loadImage();
+  }
+
+  _handleSessionTimeOutRedirect = () => {
+    Updates.reload();
+  }
+
+  _initSessionTimer() {
+    clearInterval(this.timer)
+    this.timer = setTimeout(() =>
+      this._expireSession()
+      ,
+      global.sessionTimeOutDuration)
+  }
+
+  _expireSession() {
+    Alert.alert(
+      resources.getString("session.modal.title"),
+      resources.getString("session.modal.message"),
+      [
+        { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
+      ],
+      { cancelable: false }
+    )
+  }
+
+  componentWillUnmount() {
+    //Session Handler
+    clearInterval(this.timer)
   }
 
   handleScroll(event) {
     let width1 = this.state.width;
     let x = event.nativeEvent.contentOffset.x;
-    if(startX>x)index=Math.max(0,--index);
-    else if(startX<x)index=Math.min(++index,3);
+    if (startX > x) index = Math.max(0, --index);
+    else if (startX < x) index = Math.min(++index, 3);
 
-   // let index = Math.round(x / width1);   //Don't delete it, it is for old way to scroll
+    // let index = Math.round(x / width1);   //Don't delete it, it is for old way to scroll
     let xd = index * width1;
     this.setState({ current: index });
     if (index == 0) { this.setState({ title: resources.getString("Your feelings") }); }
@@ -108,7 +193,8 @@ export default class App extends React.Component<Props, ScreenState> {
 
     InteractionManager.runAfterInteractions(() => this.sv.scrollTo({ x: xd }))
   }
-  handleScrollB(event) {startX = event.nativeEvent.contentOffset.x;}
+
+  handleScrollB(event) { startX = event.nativeEvent.contentOffset.x; }
   _onLayout(event) {
     const containerWidth = event.nativeEvent.layout.width;
     Image.getSize(this.state.picture1Base64, (w, h) => {
@@ -144,7 +230,6 @@ export default class App extends React.Component<Props, ScreenState> {
                                    style={{marginRight:5,marginTop:10}}>
                    <FontAwesome name="gear" size={30} color="black" />
                  </TouchableOpacity> */}
-
             <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen', { refresh: this._refresh })}
               style={{ marginRight: 5, marginTop: 10 }}>
               <Image source={require('../../assets/ic_setting.png')} />
@@ -159,12 +244,12 @@ export default class App extends React.Component<Props, ScreenState> {
 
               <TouchableOpacity onPress={() => this.helpClick()}
                 style={{ marginRight: 5, marginTop: 5 }}>
-                <Image source={require('../../assets/ic_wbc_info.png')} style={{width:30,height:30}} />
+                <Image source={require('../../assets/ic_wbc_info.png')} style={{ width: 30, height: 30 }} />
               </TouchableOpacity>
             </View>
             <View style={{ height: this.state.height }}>
               <ScrollView horizontal showsHorizontalScrollIndicator={false} ref={ref => { this.sv = ref; }}
-                contentContainerStyle={{ paddingVertical: 20, justifyContent: 'center', }}  onScrollBeginDrag={this.handleScrollB.bind(this)}
+                contentContainerStyle={{ paddingVertical: 20, justifyContent: 'center', }} onScrollBeginDrag={this.handleScrollB.bind(this)}
                 onTouchStart={this.log} onScrollEndDrag={this.handleScroll.bind(this)}>
                 {this.state.images.map((item, index) => (
                   <View onLayout={this._onLayout.bind(this)} style={{ height: this.state.height }} key={index}>
@@ -237,3 +322,5 @@ const styles = StyleSheet.create({
   smallDot: { fontSize: 16, color: 'black', marginLeft: 5, marginRight: 5 },
   bigDot: { fontSize: 34, color: 'lightblue', marginLeft: 5, marginRight: 5 }
 });
+
+export default memo(UserResultsScreen);
