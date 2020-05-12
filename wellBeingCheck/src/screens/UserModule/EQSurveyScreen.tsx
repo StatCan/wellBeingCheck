@@ -89,7 +89,8 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
 
   componentDidMount() {
     //Session Handler
-    this._initSessionTimer()
+    this._initSessionTimer();
+  //  global.showThankYou ==20;this.props.navigation.navigate('Dashboard');
   }
 
   _handleSessionTimeOutRedirect = () => {
@@ -160,7 +161,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
      setupSchedules(false);
      if(!global.paradataSaved)await this.saveDefaultParadata(jwt);
       global.surveyCount=global.surveyCount+1;AsyncStorage.setItem('SurveyCount',global.surveyCount.toString());
-
+     if(!global.rateAppDone && global.surveyCount>=20)global.showThankYou = 20;
      this.props.navigation.navigate('Dashboard');
   }
   async fetchGraphs(types: string[]) {
@@ -365,8 +366,10 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                 console.log('Survey done.......................................................');
                 if (global.doneSurveyA) {
                   console.log('EQSurveyScreenTHank you B........................' + global.fetchAction);
-                  this.handleSurveyBdone();
                   global.showThankYou = 2;
+                  global.surveyCount=global.surveyCount+1;AsyncStorage.setItem('SurveyCount',global.surveyCount.toString());
+                  if(!global.rateAppDone && global.surveyCount>=20)global.showThankYou = 20;
+                  this.handleSurveyBdone();
                   this.props.navigation.navigate('Dashboard');
                   count = 1;
                 }

@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import Background from '../components/Background';
-import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, BackHandler, AsyncStorage, PanResponder, Alert, YellowBox } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, BackHandler, AsyncStorage, PanResponder, Alert,Linking, YellowBox } from 'react-native';
 import { checkConnection, hashString, fetchJwToken } from '../utils/fetchJwToken';
 import { resources } from '../../GlobalResources';
 
@@ -162,6 +162,36 @@ class Dashboard extends React.Component<Props, HomeState> {
   }
 
   checkThankYou() {
+    if(global.showThankYou ==20){
+              const APP_STORE_LINK = 'itms://itunes.apple.com/us/app/apple-store/myiosappid?mt=8';
+              const PLAY_STORE_LINK = 'market://details?id=myandroidappid';
+
+         let msg=resources.getString("rateAppMsg"); let title=resources.getString("notifications");
+         if (Platform.OS === 'android')msg+=' Google Play Store.';else msg+=' App Store.';
+        Alert.alert(
+                resources.getString("feedback"),
+                msg,
+                [
+                  {
+                    text: resources.getString("ratenow"),
+                    onPress: () => {
+                      global.rateAppDone=true;AsyncStorage.setItem('RateApp','true');
+                     if (Platform.OS === 'ios') {Linking.openURL('https://www.apple.com/ca/ios/app-store/'); }
+                     else { Linking.openURL('https://play.google.com/store/apps/')}
+                    },
+                    style: 'cancel',
+                  },
+                  {
+                    text: resources.getString("later"),
+                      onPress: () => {
+                        return false;
+                    }
+                  },
+                ],
+                { cancelable: false }
+              );
+        return;
+    }
     let txt = '';
     console.log("Dashboard.checkThankyou :Ali The result of Thank You getItem is :global.showThankYou= "+ global.showThankYou);
     if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2)  txt = resources.getString('ThankYouB');

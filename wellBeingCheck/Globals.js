@@ -56,3 +56,4 @@ global.paradataSaved=false;
 global.passwordSaved=false;
 global.notificationState=true;
 global.surveyCount=0;
+global.rateAppDone=false;
