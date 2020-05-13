@@ -138,7 +138,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
      global.surveyCount=1;AsyncStorage.setItem('SurveyCount','1');
  }
   async handleSurveyBdone(){
-     let isConnected=await checkConnection();console.log('In handle B');
+     let isConnected=await checkConnection();console.log('In handle B');global.busy=0;
      if(!isConnected){Alert.alert('',resources.getString('offline'));return;}
      if(!global.passwordSaved && global.sac!=''){
         let result=false;
@@ -265,7 +265,8 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
             .then(blob => {
               var reader = new FileReader();
               reader.onload = function () {
-                console.log('image' + index);
+                ++global.busy;
+            //    console.log('image' + index); console.log("Busy flag in eq:"+global.busy);
                 AsyncStorage.setItem('image' + index, this.result);
               };
               reader.readAsDataURL(blob);
@@ -306,7 +307,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
   displaySpinner() {
     return (
       <View>
-        <ActivityIndicator />
+        <ActivityIndicator size="large" style={{ position: 'absolute', top: '50%', left: '50%', zIndex: 20 }}  />
       </View>
     );
   }
@@ -370,7 +371,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                   global.surveyCount=global.surveyCount+1;AsyncStorage.setItem('SurveyCount',global.surveyCount.toString());
                   if(!global.rateAppDone && global.surveyCount>=20)global.showThankYou = 20;
                   this.handleSurveyBdone();
-                  this.props.navigation.navigate('Dashboard');
+                //  this.props.navigation.navigate('Dashboard');
                   count = 1;
                 }
                 else {

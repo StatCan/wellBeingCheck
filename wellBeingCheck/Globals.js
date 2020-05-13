@@ -57,3 +57,4 @@ global.passwordSaved=false;
 global.notificationState=true;
 global.surveyCount=0;
 global.rateAppDone=false;
+global.busy=8;
