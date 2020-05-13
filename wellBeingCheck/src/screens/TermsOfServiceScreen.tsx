@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet, Dimensions,TouchableOpacity,Alert } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Alert, Linking } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Button from '../components/Button';
 import { newTheme } from '../core/theme';
@@ -9,6 +9,8 @@ import BackgroundWide from '../components/BackgroundWide';
 import LogoClearSmall from '../components/LogoClearSmall';
 import { resources } from '../../GlobalResources';
 import AppBanner from '../components/AppBanner';
+import ParsedText from 'react-native-parsed-text';
+
 
 import {
   NavigationParams,
@@ -33,7 +35,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
     super(TermsOfServiceState)
     this.state = {
       termsOfService: false,
-      title:resources.getString("Well-Being Check"),
+      title: resources.getString("Well-Being Check"),
     };
   }
 
@@ -52,11 +54,11 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
     }
     if (finalStatus !== "granted") {
       if (global.debugMode) console.log("Notifications Permission Not Granted");
-      global.notificationState=false;AsyncStorage.setItem('NotificationState','false');
+      global.notificationState = false; AsyncStorage.setItem('NotificationState', 'false');
       return false;
     }
     if (global.debugMode) console.log("Notifications Permission Granted");
-    global.notificationState=true;AsyncStorage.setItem('NotificationState','true');
+    global.notificationState = true; AsyncStorage.setItem('NotificationState', 'true');
     return true;
   };
 
@@ -79,30 +81,59 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
 
     AsyncStorage.setItem('user_terms_and_conditions', JSON.stringify(userTermsAndConditionsObj), () => {
       //handle disagree
-      Alert.alert('',resources.getString("terms_and_conditions_disagree"));
+      Alert.alert('', resources.getString("terms_and_conditions_disagree"));
     });
   }
-   toggleLanguage(){
-       if (resources.culture == 'en'){resources.culture = 'fr';AsyncStorage.setItem('Culture','2');} else {resources.culture = 'en';AsyncStorage.setItem('Culture','1');}
-       this.setState({title:resources.getString("Well-Being Check")});
-   }
+  toggleLanguage() {
+    if (resources.culture == 'en') { resources.culture = 'fr'; AsyncStorage.setItem('Culture', '2'); } else { resources.culture = 'en'; AsyncStorage.setItem('Culture', '1'); }
+    this.setState({ title: resources.getString("Well-Being Check") });
+  }
+
+  handleUrlPress(url, matchIndex /*: number*/) {
+    Linking.openURL(url);
+  }
   render() {
     return (
       <PaperProvider theme={newTheme}>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
         <AppBanner />
-           <SafeAreaView style={styles.container}>
+        <SafeAreaView style={styles.container}>
           <View style={styles.headerContainer}>
             <LogoClearSmall />
-            <TouchableOpacity onPress={() => this.toggleLanguage()} style={{alignSelf:'flex-end',marginRight:0}}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() => this.toggleLanguage()} style={{ alignSelf: 'flex-end', marginRight: 0 }}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
           </View>
-            <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-              <Title style={styles.title}>{resources.getString("terms_and_conditions")}</Title>
-              <Paragraph style={styles.paragraph}>
-                {resources.getString("terms_and_conditions_content")}
-              </Paragraph>
-            </ScrollView>
-          </SafeAreaView>
+          <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+            <Title style={styles.title}>{resources.getString("terms_and_conditions")}</Title>
+            <Paragraph style={styles.paragraph}>
+
+              <ParsedText
+                style={styles.text}
+                parse={
+                  [
+                    { pattern: /Statistics Act/, style: styles.italic },
+                    { pattern: /Privacy Act/, style: styles.italic },
+                    { pattern: /Access to Information Act/, style: styles.italic },
+                    { pattern: /Official Languages Act/, style: styles.italic },
+                    { pattern: /Standard on Optimizing Website and Applications for Mobile Devices/, style: styles.italic },
+                    { pattern: /Copyright Act of Canada/, style: styles.italic },
+
+                    { pattern: /Loi sur la statistique/, style: styles.italic },
+                    { pattern: /Loi sur la protection des renseignements personnels/, style: styles.italic },
+                    { pattern: /Loi sur l'accès à l'information/, style: styles.italic },
+                    { pattern: /Loi sur les langues officielles/, style: styles.italic },
+                    { pattern: /Norme sur l’optimisation des sites Web et des applications pour appareils mobiles/, style: styles.italic },
+                    { pattern: /Loi sur le droit d'auteur du Canada/, style: styles.italic },
+                    {type: 'url',                       style: styles.url, onPress: this.handleUrlPress},
+                  ]
+                }
+                childrenProps={{ allowFontScaling: false }}
+              >
+                 {resources.getString("terms_and_conditions_content")}
+              </ParsedText>
+            
+            </Paragraph>
+          </ScrollView>
+        </SafeAreaView>
         <View style={styles.footer}>
           <Button style={styles.btnDecline}
             mode="contained"
@@ -123,12 +154,12 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
 
 const styles = StyleSheet.create({
   headerContainer: {
-    flexDirection:'row', 
-    width: '100%', 
-    height: 24, 
-    marginLeft: 20, 
-    marginTop: 15, 
-    justifyContent:'space-between'
+    flexDirection: 'row',
+    width: '100%',
+    height: 24,
+    marginLeft: 20,
+    marginTop: 15,
+    justifyContent: 'space-between'
   },
   footer: {
     flexDirection: 'row',
@@ -174,6 +205,13 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   text: {
+  },
+  italic: {
+    fontStyle: 'italic',
+  },
+  url: {
+    color: 'blue',
+    textDecorationLine: 'underline',
   },
 });
 
