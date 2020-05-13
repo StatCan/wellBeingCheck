@@ -260,7 +260,10 @@ export const resources = {
              "donotdisturbbetween":"Do not disturb between",
              "from":"From:",
              "to":"To:",
-             "rateAppMsg":"We love feedback! Tell us how we’re doing by rating us on the",
+             "rateAppMsg":"Tell us how we’re doing by rating us on the",
+             "feedback":"We love feedback!",
+             "ratenow":"RATE NOW",
+             "later":"Not interested",
         },
         fr: {
             //global
@@ -541,7 +544,10 @@ export const resources = {
               "donotdisturbbetween":"Ne dérangez pas entre",
               "from":"De:",
               "to":"À:",
-              "rateAppMsg":"Nous aimons votre rétroaction! Dites-nous ce que vous pensez de l’application en l’évaluant sur",
+              "rateAppMsg":"Dites-nous ce que vous pensez de l’application en l’évaluant sur",
+              "feedback":"Nous aimons votre rétroaction!",
+              "ratenow":"TAUX",
+              "later":"Pas intéressé",
         }
     }
 };

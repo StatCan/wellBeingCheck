@@ -174,7 +174,8 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           if(notificationState==null ||notificationState=='true')notificationState=true;else notificationState=false;
           global.notificationState=notificationState;
           let surveyCount=await AsyncStorage.getItem('SurveyCount');
-          if(surveyCount==null)surveyCount=0;else surveyCount=parseInt(surveyCount);global.surveyCount=surveyCount;
+          if(surveyCount==null)surveyCount=0;else surveyCount=parseInt(surveyCount);global.surveyCount=surveyCount;global.surveyCount=0;
+
           console.log('Culture:'+resources.culture+'  NotificationState:'+global.notificationState+' SurveyCount:'+global.surveyCount);
           this._bootstrap();
         };

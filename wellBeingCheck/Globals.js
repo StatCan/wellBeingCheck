@@ -56,3 +56,5 @@ global.paradataSaved=false;
 global.passwordSaved=false;
 global.notificationState=true;
 global.surveyCount=0;
+global.busy=8;
+global.fetchCount=8;

@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import Background from '../components/Background';
-import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, BackHandler, AsyncStorage, PanResponder, Alert, YellowBox } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, BackHandler, AsyncStorage, PanResponder, Alert,Linking, YellowBox } from 'react-native';
 import { checkConnection, hashString, fetchJwToken } from '../utils/fetchJwToken';
 import { resources } from '../../GlobalResources';
 
@@ -34,21 +34,21 @@ const WEB_API_BASE_URL = global.webApiBaseUrl + 'api';
 
 class Dashboard extends React.Component<Props, HomeState> {
   _panResponder: any;
-  timer = null
+  timer = null;
 
   constructor(HomeState) {
     super(HomeState);
     let txt = '';
+
     if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2) txt = resources.getString('ThankYouB');
     this.state = {
-      refresh: '1',
+      refresh: '1',disabled:!(global.busy==8),
       firstTimeLoginModal: false,
       showThankYou: !global.showThankYou == 0,
       thankYouText: txt,
     };
     this._refresh = this._refresh.bind(this);
     this._firstTimeLogin();
-
     /* --------------------Session Handler--------------------------- */
     //used to handle session
     this._panResponder = PanResponder.create({
@@ -102,7 +102,6 @@ class Dashboard extends React.Component<Props, HomeState> {
   componentDidMount() {
     //Session Handler
     this._initSessionTimer()
-
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   }
 
@@ -162,8 +161,37 @@ class Dashboard extends React.Component<Props, HomeState> {
   }
 
   checkThankYou() {
+    if(global.showThankYou ==20){
+              const APP_STORE_LINK = 'itms://itunes.apple.com/us/app/apple-store/myiosappid?mt=8';
+              const PLAY_STORE_LINK = 'market://details?id=myandroidappid';
+
+         let msg=resources.getString("rateAppMsg"); let title=resources.getString("notifications");
+         if (Platform.OS === 'android')msg+=' Google Play Store.';else msg+=' App Store.';
+        Alert.alert(
+                resources.getString("feedback"),
+                msg,
+                [
+                  {
+                    text: resources.getString("ratenow"),
+                    onPress: () => {
+                     if (Platform.OS === 'ios') {Linking.openURL('https://www.apple.com/ca/ios/app-store/'); }
+                     else { Linking.openURL('https://play.google.com/store/apps/')}
+                    },
+                    style: 'cancel',
+                  },
+                  {
+                    text: resources.getString("later"),
+                      onPress: () => {
+                        return false;
+                    }
+                  },
+                ],
+                { cancelable: false }
+              );
+        return;
+    }
     let txt = '';
-    console.log("Dashboard.checkThankyou :Ali The result of Thank You getItem is :global.showThankYou= "+ global.showThankYou);
+    console.log("Dashboard.checkThankyou :Ali The result of Thank You getItem is :global.showThankYou= "+ global.showThankYou+'  busy:'+global.busy);
     if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2)  txt = resources.getString('ThankYouB');
     this.setState({ showThankYou: !global.showThankYou == 0, thankYouText: txt });
     setTimeout(() => { 
@@ -342,7 +370,7 @@ class Dashboard extends React.Component<Props, HomeState> {
               </View>
             </TouchableOpacity>
             {this.state.showThankYou &&
-              <View style={{ backgroundColor: 'black', width: '80%', position: 'absolute', zIndex: 29, alignSelf: 'center', top: '60%', justifyContent: 'center', alignItems: 'center' }}><Text style={{ color: 'white', fontSize: 14, marginTop: 10, marginBottom: 10 }}>{this.state.thankYouText}</Text></View>
+              <View style={{ backgroundColor: 'black', width: '80%', position: 'absolute', zIndex: 29, alignSelf: 'center', top: '70%', justifyContent: 'center', alignItems: 'center' }}><Text style={{ color: 'white', fontSize: 14, marginTop: 10, marginBottom: 10 }}>{this.state.thankYouText}</Text></View>
             }
 
             <View style={[styles.homeButtonContainer, { marginBottom: 0, marginTop: 50 }, { flexDirection: 'row' }]}>
@@ -382,7 +410,7 @@ class Dashboard extends React.Component<Props, HomeState> {
 
                 <View>
                   <View>
-                    <TouchableOpacity onPress={() => {
+                    <TouchableOpacity disabled={this.state.disabled} onPress={() => {
                       console.log('Has image before click result button:' + global.hasImage);
                       if (global.hasImage == 1) this.props.navigation.navigate('ResultScreen');
                       else Alert.alert('', resources.getString("NoDataAlert"));
@@ -393,7 +421,7 @@ class Dashboard extends React.Component<Props, HomeState> {
                     </TouchableOpacity>
                   </View>
                   <View>
-                    <Text style={styles.smallButtonText}>{resources.getString("result")}</Text>
+                    <Text style={this.state.disabled?styles.smallButtonTextDis:styles.smallButtonText}>{resources.getString("result")}</Text>
                   </View>
                 </View>
               </View>
@@ -523,7 +551,12 @@ const styles = StyleSheet.create({
     color: '#000000',
     fontSize: 15,
     textAlign: 'center'
-  }
+  },
+  smallButtonTextDis: {
+      color: 'gray',
+      fontSize: 15,
+      textAlign: 'center'
+    }
 });
 
 export default memo(Dashboard);

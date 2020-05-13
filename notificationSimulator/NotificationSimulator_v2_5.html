@@ -107,11 +107,21 @@
             strd += "<h3> Prepare for schdule:</h3>";
             setupSchedules(datetime, awake, sleep, pingCount, affected);
 
-            schedules.forEach(function (s) {
-                var mm = Math.random() * 59;
-                var ss = new Date(s.Datetime); ss.setMinutes(mm);
-                str += "<p>" + ss + "  " + s.Hour + "</p>";
-            });
+            if (schedules.length > 0) {
+                schedules.forEach(function (s, index) {
+                    let cont = true;
+                    if (index < schedules.length - 1) {
+                        let s1 = schedules[index + 1];
+                        if ((s1.Day == s.Day) && (s1.Hour - s.Hour == 1)) cont = false;
+                    }
+                    var ss = new Date(s.Datetime);
+                    if (cont) {
+                        var mm = Math.random() * 59;
+                        ss.setMinutes(mm);
+                    }
+                    str += "<p>" + ss + "  " + s.Hour + "</p>";
+                });
+            }
             document.getElementById("info").innerHTML = document.getElementById("info").innerHTML + str;
             document.getElementById("detail").innerHTML = strd;
             preSchedule = schedules;

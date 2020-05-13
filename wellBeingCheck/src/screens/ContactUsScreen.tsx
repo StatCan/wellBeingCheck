@@ -22,7 +22,7 @@ class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
   constructor(ContactUsScreen) {
     super(ContactUsScreen)
 
-        /* --------------------Session Handler--------------------------- */
+    /* --------------------Session Handler--------------------------- */
     //used to handle session
     this._panResponder = PanResponder.create({
       // Ask to be the responder:
@@ -92,7 +92,7 @@ class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
   _expireSession() {
     Alert.alert(
       resources.getString("session.modal.title"),
-      resources.getString("session.modal.message") + " contactUsScreen",
+      resources.getString("session.modal.message"),
       [
         { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
       ],

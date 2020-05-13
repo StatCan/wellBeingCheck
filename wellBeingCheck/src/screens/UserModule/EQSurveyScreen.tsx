@@ -89,7 +89,8 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
 
   componentDidMount() {
     //Session Handler
-    this._initSessionTimer()
+    this._initSessionTimer();
+  //  global.showThankYou ==20;this.props.navigation.navigate('Dashboard');
   }
 
   _handleSessionTimeOutRedirect = () => {
@@ -107,7 +108,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
   _expireSession() {
     Alert.alert(
       resources.getString("session.modal.title"),
-      resources.getString("session.modal.message") + " EqScreen",
+      resources.getString("session.modal.message"),
       [
         { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
       ],
@@ -137,7 +138,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
      global.surveyCount=1;AsyncStorage.setItem('SurveyCount','1');
  }
   async handleSurveyBdone(){
-     let isConnected=await checkConnection();console.log('In handle B');
+     let isConnected=await checkConnection();console.log('In handle B');global.busy=0;
      if(!isConnected){Alert.alert('',resources.getString('offline'));return;}
      if(!global.passwordSaved && global.sac!=''){
         let result=false;
@@ -148,7 +149,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
      let jwt=await fetchJwToken();
      if(jwt==''){Alert.alert('',resources.getString("securityIssue"));return;}
      global.jwToken=jwt;
-
+     global.fetchCount=0;
      let types=await this.fetchGraphTypes();
      if(types!=null && types.length>0){
           await this.fetchGraphs(types);
@@ -159,7 +160,6 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
      global.fetchAction=false;
      setupSchedules(false);
      if(!global.paradataSaved)await this.saveDefaultParadata(jwt);
-      global.surveyCount=global.surveyCount+1;AsyncStorage.setItem('SurveyCount',global.surveyCount.toString());
 
      this.props.navigation.navigate('Dashboard');
   }
@@ -258,13 +258,14 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
       headers: { 'Authorization': 'Bearer ' + token, 'Accept-language': culture },
     })
       .then(response => {
-        console.log(response.status);
+        console.log(response.status);global.fetchCount++;
         if (response.status == 200) {
           response.blob()
             .then(blob => {
               var reader = new FileReader();
               reader.onload = function () {
-                console.log('image' + index);
+                ++global.busy;
+            //    console.log('image' + index); console.log("Busy flag in eq:"+global.busy);
                 AsyncStorage.setItem('image' + index, this.result);
               };
               reader.readAsDataURL(blob);
@@ -305,7 +306,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
   displaySpinner() {
     return (
       <View>
-        <ActivityIndicator />
+        <ActivityIndicator size="large" style={{ position: 'absolute', top: '50%', left: '50%', zIndex: 20 }}  />
       </View>
     );
   }
@@ -365,9 +366,11 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                 console.log('Survey done.......................................................');
                 if (global.doneSurveyA) {
                   console.log('EQSurveyScreenTHank you B........................' + global.fetchAction);
-                  this.handleSurveyBdone();
                   global.showThankYou = 2;
-                  this.props.navigation.navigate('Dashboard');
+                  global.surveyCount=global.surveyCount+1;AsyncStorage.setItem('SurveyCount',global.surveyCount.toString());
+                  if(global.surveyCount==20)global.showThankYou = 20;
+                  this.handleSurveyBdone();
+                //  this.props.navigation.navigate('Dashboard');
                   count = 1;
                 }
                 else {

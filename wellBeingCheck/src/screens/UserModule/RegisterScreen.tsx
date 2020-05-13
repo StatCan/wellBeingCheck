@@ -171,7 +171,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     };
 
     AsyncStorage.setItem('user_account', JSON.stringify(userAccountObj), () => {
-      global.securityAnswer=this.state.securityAnswer;global.password=passwordHashed;global.securityQuestionId=4;
+      global.securityAnswer = this.state.securityAnswer; global.password = passwordHashed; global.securityQuestionId = 4;
       this.props.navigation.navigate('Dashboard');
     });
   }
@@ -212,8 +212,15 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
   _hideSecretQuestionModal = () => this.setState({ modalSecrectQuestionShow: false });
 
   toggleLanguage() {
-    if (resources.culture == 'en'){resources.culture = 'fr';AsyncStorage.setItem('Culture','2');} else {resources.culture = 'en';AsyncStorage.setItem('Culture','1');}
+    if (resources.culture == 'en') {
+      resources.culture = 'fr';
+      AsyncStorage.setItem('Culture', '2');
+    } else {
+      resources.culture = 'en';
+      AsyncStorage.setItem('Culture', '1');
+    }
     this.setState({ title: resources.getString("Well-Being Check") });
+    this._validateForm()
   }
 
   _handleSecQuesSelectMother = () => {
@@ -423,31 +430,31 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                       <View style={styles.pr_view}>
                         <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_length")}</Text>
                         <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check"  />
+                          <EvilIcons size={25} name="check" />
                         </TouchableOpacity>
                       </View>
                       <View style={styles.pr_view}>
                         <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_upper")}</Text>
                         <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check"  />
+                          <EvilIcons size={25} name="check" />
                         </TouchableOpacity>
                       </View>
                       <View style={styles.pr_view}>
                         <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_special")}</Text>
                         <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25}  name="check"/>
+                          <EvilIcons size={25} name="check" />
                         </TouchableOpacity>
                       </View>
                       <View style={styles.pr_view}>
                         <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_lower")}</Text>
                         <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check"  />
+                          <EvilIcons size={25} name="check" />
                         </TouchableOpacity>
                       </View>
                       <View style={styles.pr_view}>
                         <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_number")}</Text>
                         <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check"  />
+                          <EvilIcons size={25} name="check" />
                         </TouchableOpacity>
                       </View>
                     </Dialog.Content>

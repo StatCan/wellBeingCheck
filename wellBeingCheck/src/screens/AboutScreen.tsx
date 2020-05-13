@@ -111,7 +111,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
   _expireSession() {
     Alert.alert(
       resources.getString("session.modal.title"),
-      resources.getString("session.modal.message") + " aboutScreen",
+      resources.getString("session.modal.message"),
       [
         { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
       ],

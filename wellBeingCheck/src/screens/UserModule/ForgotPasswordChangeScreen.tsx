@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Picker, View, Text, StyleSheet, TouchableOpacity, Modal, SafeAreaView, ScrollView,Alert } from 'react-native';
+import { Picker, View, Text, StyleSheet, TouchableOpacity, Modal, SafeAreaView, ScrollView, Alert } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Background from '../../components/Background';
 import Button from '../../components/Button';
@@ -11,9 +11,9 @@ import { EvilIcons, Feather } from '@expo/vector-icons';
 import { Drawer, Title, Provider, Portal, Dialog } from 'react-native-paper';
 import LogoClearSmall from '../../components/LogoClearSmall';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
-import {checkConnection,hashString} from '../../utils/fetchJwToken';
+import { checkConnection, hashString } from '../../utils/fetchJwToken';
 import md5 from "react-native-md5";
-import {BackEndService} from '../../api/back-end.service';
+import { BackEndService } from '../../api/back-end.service';
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -45,7 +45,7 @@ type ForgotPasswordChangeState = {
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
-const WEB_API_BASE_URL =global.webApiBaseUrl+'api';
+const WEB_API_BASE_URL = global.webApiBaseUrl + 'api';
 class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordChangeState> {
 
   constructor(RegisterState) {
@@ -131,7 +131,7 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
   }
 
   _CreateNewAccount = () => {
-     //validation passed lets store user
+    //validation passed lets store user
     AsyncStorage.getItem('user_account', (err, result) => {
       console.log(result);
       if (result) {
@@ -147,19 +147,19 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
           security_question: secQue,
           security_answer: secAnsw,
         };
-       let success=true;
-       if(global.doneSurveyA){
-         success=this.resetPassword(passwordHashed);
-       }
-       if(success){
+        let success = true;
+        if (global.doneSurveyA) {
+          success = this.resetPassword(passwordHashed);
+        }
+        if (success) {
           AsyncStorage.setItem('user_account', JSON.stringify(userAccountObj), () => {
-                   global.securityAnswer=secAnsw;global.password=passwordHashed;
-                   console.log('new password...............:'+global.password);
-                   this.props.navigation.navigate('Dashboard');
-                 });
-       }else{
-           alert('Failed to create new account!');
-       }
+            global.securityAnswer = secAnsw; global.password = passwordHashed;
+            console.log('new password...............:' + global.password);
+            this.props.navigation.navigate('Dashboard');
+          });
+        } else {
+          alert('Failed to create new account!');
+        }
 
       }
       else {
@@ -169,61 +169,64 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
   }
 
   //resetPassword  tested well
- async resetPassword(newPass) {
-    let isConnected=await checkConnection();
-    if(!isConnected){alert('You are offline, try it later');return false;}
-    let url=global.webApiBaseUrl+'api/security/password';console.log(url);
-    let data={
-          deviceId:global.userToken,
-          sac:global.sac,
-          newSalt:global.passwordSalt,
-          newPasswordHash:hashString(newPass,global.passwordSalt),
-          securityAnswerHash:hashString(global.securityAnswer,global.securityAnswerSalt),
-          newSecurityQuestionId:global.securityQuestionId,
-          newSecurityAnswerSalt:global.securityAnswerSalt,
-          newSecurityAnswerHash:hashString(global.securityAnswer,global.securityAnswerSalt)
+  async resetPassword(newPass) {
+    let isConnected = await checkConnection();
+    if (!isConnected) { alert('You are offline, try it later'); return false; }
+    let url = global.webApiBaseUrl + 'api/security/password'; console.log(url);
+    let data = {
+      deviceId: global.userToken,
+      sac: global.sac,
+      newSalt: global.passwordSalt,
+      newPasswordHash: hashString(newPass, global.passwordSalt),
+      securityAnswerHash: hashString(global.securityAnswer, global.securityAnswerSalt),
+      newSecurityQuestionId: global.securityQuestionId,
+      newSecurityAnswerSalt: global.securityAnswerSalt,
+      newSecurityAnswerHash: hashString(global.securityAnswer, global.securityAnswerSalt)
     }
     console.log(data);
-     let data1={
-         salt:global.passwordSalt,
-         passwordHash:hashString(global.password,global.passwordSalt),
-         securityQuestionId:global.securityQuestionId,
-         securityAnswerSalt:global.securityAnswerSalt,
-         securityAnswerHash:hashString(global.securityAnswer,global.securityAnswerSalt)}
+    let data1 = {
+      salt: global.passwordSalt,
+      passwordHash: hashString(global.password, global.passwordSalt),
+      securityQuestionId: global.securityQuestionId,
+      securityAnswerSalt: global.securityAnswerSalt,
+      securityAnswerHash: hashString(global.securityAnswer, global.securityAnswerSalt)
+    }
 
-    return fetch(url,{
-         method: 'PUT',
-         headers: {'Content-Type': 'application/json',},
-         body: JSON.stringify(data),
+    return fetch(url, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', },
+      body: JSON.stringify(data),
     })
-    .then((response) =>{
-       if(response.status==200){console.log('good');global.password=newPass; return true;}
-       else {console.log('Bad:'+response.status);return false;}
-    } )    // .then((response) => response.json())
-                   //  .then((responseJson) => {console.log('resetPassword:'+responseJson);    return responseJson;})
-    .catch((error) => {console.error(error);console.log('Bad');return false;});
- }
+      .then((response) => {
+        if (response.status == 200) { console.log('good'); global.password = newPass; return true; }
+        else { console.log('Bad:' + response.status); return false; }
+      })    // .then((response) => response.json())
+      //  .then((responseJson) => {console.log('resetPassword:'+responseJson);    return responseJson;})
+      .catch((error) => { console.error(error); console.log('Bad'); return false; });
+  }
+
   //resetPasswordNew test failed  check later
- async resetPasswordNew(newPass){
-            let service = new BackEndService(
-                  WEB_API_BASE_URL,
-                  'fr-CA',
-                  global.userToken,
-                  global.sac,
-                  'null',
-                  fetch
-              );
-            let result = await service.resetPassword(
-                  global.passwordSalt,
-                  hashString(newPass,global.passwordSalt),
-                  hashString(global.securityAnswer,global.securityAnswerSalt),
-                  global.securityQuestionId,
-                  global.securityAnswerSalt,
-                  hashString(global.securityAnswer,global.securityAnswerSalt)
-              );
-            if(service.isResultFailure(result)){console.log('bad');return false;}
-            else{global.password=newPass;console.log('good');return true;}
-       }
+  async resetPasswordNew(newPass) {
+    let service = new BackEndService(
+      WEB_API_BASE_URL,
+      'fr-CA',
+      global.userToken,
+      global.sac,
+      'null',
+      fetch
+    );
+    let result = await service.resetPassword(
+      global.passwordSalt,
+      hashString(newPass, global.passwordSalt),
+      hashString(global.securityAnswer, global.securityAnswerSalt),
+      global.securityQuestionId,
+      global.securityAnswerSalt,
+      hashString(global.securityAnswer, global.securityAnswerSalt)
+    );
+    if (service.isResultFailure(result)) { console.log('bad'); return false; }
+    else { global.password = newPass; console.log('good'); return true; }
+  }
+
   _onSignUpPressed = () => {
     const isValid = this._validateForm();
     if (isValid) {
@@ -257,8 +260,15 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
   _hideModal = () => this.setState({ modalShow: false });
 
   toggleLanguage() {
-    if (resources.culture == 'en'){resources.culture = 'fr';AsyncStorage.setItem('Culture','2');} else {resources.culture = 'en';AsyncStorage.setItem('Culture','1');}
+    if (resources.culture == 'en') {
+      resources.culture = 'fr';
+      AsyncStorage.setItem('Culture', '2');
+    } else {
+      resources.culture = 'en';
+      AsyncStorage.setItem('Culture', '1');
+    }
     this.setState({ title: resources.getString("Well-Being Check") });
+    this._validateForm();
   }
 
   _togglePasswordHidden = () => {
@@ -279,15 +289,15 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
     }
   }
 
-  
+
   //We had to move the validation form utils to here since they cannot be constatnts. The updates would not take effect instantly
   _passwordInputChange = (text) => {
     this.setState({ password: text });
     this.setState({ pasVal_length: text.length >= 8 ? true : false });
     this.setState({ passVal_Upper: (!/[A-Z]/.test(text)) ? false : true });
     this.setState({ passVal_Special: (!/[@!#$%^&*(),.?:{}|<>]/.test(text)) ? false : true });
-    this.setState({ passVal_Lower:  (!/[a-z]/.test(text)) ? false :true });
-    this.setState({ passVal_Number:  (!/[0-9]/.test(text)) ? false :true });
+    this.setState({ passVal_Lower: (!/[a-z]/.test(text)) ? false : true });
+    this.setState({ passVal_Number: (!/[0-9]/.test(text)) ? false : true });
   }
 
   render() {
