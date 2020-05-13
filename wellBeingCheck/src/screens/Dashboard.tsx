@@ -31,7 +31,7 @@ type HomeState = {
 }
 YellowBox.ignoreWarnings(['Require cycle:'])
 const WEB_API_BASE_URL = global.webApiBaseUrl + 'api';
-var busyCheck=null;
+
 class Dashboard extends React.Component<Props, HomeState> {
   _panResponder: any;
   timer = null;
@@ -48,7 +48,6 @@ class Dashboard extends React.Component<Props, HomeState> {
       thankYouText: txt,
     };
     this._refresh = this._refresh.bind(this);
-    this.repeatcheck=this.repeatcheck.bind(this);
     this._firstTimeLogin();
     /* --------------------Session Handler--------------------------- */
     //used to handle session
@@ -162,7 +161,6 @@ class Dashboard extends React.Component<Props, HomeState> {
   }
 
   checkThankYou() {
-    if(global.busy==0){ this.setState({disabled:true});this.monitorBusy();}
     if(global.showThankYou ==20){
               const APP_STORE_LINK = 'itms://itunes.apple.com/us/app/apple-store/myiosappid?mt=8';
               const PLAY_STORE_LINK = 'market://details?id=myandroidappid';
@@ -176,7 +174,6 @@ class Dashboard extends React.Component<Props, HomeState> {
                   {
                     text: resources.getString("ratenow"),
                     onPress: () => {
-                      global.rateAppDone=true;AsyncStorage.setItem('RateApp','true');
                      if (Platform.OS === 'ios') {Linking.openURL('https://www.apple.com/ca/ios/app-store/'); }
                      else { Linking.openURL('https://play.google.com/store/apps/')}
                     },
@@ -342,16 +339,7 @@ class Dashboard extends React.Component<Props, HomeState> {
        else {Alert.alert('',resources.getString("securityIssue"));return;}
 
   }
-  resetBusy(){this.setState({disabled:false});}
-  monitorBusy() {
-    busyCheck = setInterval(this.repeatcheck,1000);
-}
-repeatcheck=()=> {
-        if (global.busy==8) {
-            clearInterval(busyCheck);
-            this.setState({disabled:false});
-        }
-    }
+
   render() {
     return (
       <PaperProvider theme={newTheme}>

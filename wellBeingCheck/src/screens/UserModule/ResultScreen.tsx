@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Text, View, ScrollView, StyleSheet, TouchableOpacity, Dimensions, Image, ImageBackground, InteractionManager, AsyncStorage, PanResponder, Alert } from 'react-native';
+import { Text, View, ScrollView, StyleSheet, TouchableOpacity, Dimensions, Image, ImageBackground, InteractionManager, AsyncStorage, PanResponder, Alert,ActivityIndicator } from 'react-native';
 import { Provider as PaperProvider, Title } from 'react-native-paper';
 import Button from '../../components/Button';
 import { resources } from '../../../GlobalResources';
@@ -22,7 +22,7 @@ type ScreenState = {
 const height = Math.floor(Dimensions.get('window').height) - 100;
 const width = Math.floor(Dimensions.get('window').width);
 let startX = 0; let index = 0;
-
+var busyCheck=null;
 class UserResultsScreen extends React.Component<Props, ScreenState> {
   _panResponder: any;
   timer = null
@@ -33,10 +33,10 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
       picture1Base64: null,
       images: [], current: 0, title: resources.getString("Your feelings"),
       helpText: resources.getString("Your feeling help"),
-      width: 0, height: 0
+      width: 0, height: 0,loaded:false
     };
     global.currentView = 1;
-
+    this.repeatcheck=this.repeatcheck.bind(this);
     /* --------------------Session Handler--------------------------- */
     //used to handle session
     this._panResponder = PanResponder.create({
@@ -146,8 +146,23 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
     //Session Handler
     this._initSessionTimer()
 
-    this.loadImage();
+    if(global.fetchCount<8){this.monitorBusy();}
+    else {
+       this.loadImage();
+       this.setState({loaded:true});
+    }
   }
+
+  monitorBusy() {
+    busyCheck = setInterval(this.repeatcheck,1000);
+  }
+  repeatcheck=()=> {
+        if (global.fetchCount==8) {
+            clearInterval(busyCheck);
+            this.loadImage();
+            this.setState({loaded:true});
+        }
+    }
 
   _handleSessionTimeOutRedirect = () => {
     Updates.reload();
@@ -247,6 +262,7 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
                 <Image source={require('../../assets/ic_wbc_info.png')} style={{ width: 30, height: 30 }} />
               </TouchableOpacity>
             </View>
+             {(this.state.loaded) ? null : <ActivityIndicator size="large" color="lightblue" style={{ position: 'absolute', top: '50%', left: '50%', zIndex: 20 }} />}
             <View style={{ height: this.state.height }}>
               <ScrollView horizontal showsHorizontalScrollIndicator={false} ref={ref => { this.sv = ref; }}
                 contentContainerStyle={{ paddingVertical: 20, justifyContent: 'center', }} onScrollBeginDrag={this.handleScrollB.bind(this)}

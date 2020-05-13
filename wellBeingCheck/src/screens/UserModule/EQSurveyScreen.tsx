@@ -149,7 +149,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
      let jwt=await fetchJwToken();
      if(jwt==''){Alert.alert('',resources.getString("securityIssue"));return;}
      global.jwToken=jwt;
-
+     global.fetchCount=0;
      let types=await this.fetchGraphTypes();
      if(types!=null && types.length>0){
           await this.fetchGraphs(types);
@@ -160,8 +160,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
      global.fetchAction=false;
      setupSchedules(false);
      if(!global.paradataSaved)await this.saveDefaultParadata(jwt);
-      global.surveyCount=global.surveyCount+1;AsyncStorage.setItem('SurveyCount',global.surveyCount.toString());
-     if(!global.rateAppDone && global.surveyCount>=20)global.showThankYou = 20;
+
      this.props.navigation.navigate('Dashboard');
   }
   async fetchGraphs(types: string[]) {
@@ -259,7 +258,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
       headers: { 'Authorization': 'Bearer ' + token, 'Accept-language': culture },
     })
       .then(response => {
-        console.log(response.status);
+        console.log(response.status);global.fetchCount++;
         if (response.status == 200) {
           response.blob()
             .then(blob => {
@@ -369,7 +368,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                   console.log('EQSurveyScreenTHank you B........................' + global.fetchAction);
                   global.showThankYou = 2;
                   global.surveyCount=global.surveyCount+1;AsyncStorage.setItem('SurveyCount',global.surveyCount.toString());
-                  if(!global.rateAppDone && global.surveyCount>=20)global.showThankYou = 20;
+                  if(global.surveyCount==20)global.showThankYou = 20;
                   this.handleSurveyBdone();
                 //  this.props.navigation.navigate('Dashboard');
                   count = 1;
