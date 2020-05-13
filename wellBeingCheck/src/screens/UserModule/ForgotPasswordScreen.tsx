@@ -74,7 +74,7 @@ class ForgotPasswordScreen extends React.Component<Props, ForgotPasswordState> {
 
         if (userSetSecAnswer !== inputAnswer) {
           //incorrect pasword
-          this.setState({ securityAnswerError: resources.getString("password.recovery.incorrectAnswer")});
+          this.setState({ securityAnswerError: resources.getString("password.recovery.incorrectAnswer") });
         }
         else {
           //user login success - redirect
@@ -87,8 +87,19 @@ class ForgotPasswordScreen extends React.Component<Props, ForgotPasswordState> {
   }
 
   toggleLanguage() {
-    if (resources.culture == 'en'){resources.culture = 'fr';AsyncStorage.setItem('Culture','2');} else {resources.culture = 'en';AsyncStorage.setItem('Culture','1');}
+    if (resources.culture == 'en') {
+      resources.culture = 'fr';
+      AsyncStorage.setItem('Culture', '2');
+    } else {
+      resources.culture = 'en';
+      AsyncStorage.setItem('Culture', '1');
+    }
     this.setState({ title: resources.getString("Well-Being Check") });
+
+    //correct error message for password if already set
+    if (this.state.securityAnswerError != '') {
+      this.setState({ securityAnswerError: resources.getString("password.recovery.incorrectAnswer") });
+    }
   }
 
   render() {
