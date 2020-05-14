@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Linking } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Button from '../../components/Button';
 import { newTheme } from '../../core/theme';
@@ -9,6 +9,8 @@ import BackgroundWide from '../../components/BackgroundWide';
 import LogoClearSmall from '../../components/LogoClearSmall';
 import { resources } from '../../../GlobalResources';
 import AppBanner from '../../components/AppBanner';
+import ParsedText from 'react-native-parsed-text';
+
 
 import {
   NavigationParams,
@@ -39,6 +41,9 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
   _openSettingsScreen = () => {
     this.props.navigation.navigate('SettingsScreen');
   }
+  handleUrlPress(url, matchIndex /*: number*/) {
+    Linking.openURL(url);
+  }
 
   render() {
     return (
@@ -50,7 +55,30 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
               <LogoClearSmall />
               <Title style={styles.title}>{resources.getString("terms_and_conditions")}</Title>
               <Paragraph style={styles.paragraph}>
-                {resources.getString("terms_and_conditions_content")}
+              <ParsedText
+                style={styles.text}
+                parse={
+                  [
+                    { pattern: /Statistics Act/, style: styles.italic },
+                    { pattern: /Privacy Act/, style: styles.italic },
+                    { pattern: /Access to Information Act/, style: styles.italic },
+                    { pattern: /Official Languages Act/, style: styles.italic },
+                    { pattern: /Standard on Optimizing Website and Applications for Mobile Devices/, style: styles.italic },
+                    { pattern: /Copyright Act of Canada/, style: styles.italic },
+
+                    { pattern: /Loi sur la statistique/, style: styles.italic },
+                    { pattern: /Loi sur la protection des renseignements personnels/, style: styles.italic },
+                    { pattern: /Loi sur l'accès à l'information/, style: styles.italic },
+                    { pattern: /Loi sur les langues officielles/, style: styles.italic },
+                    { pattern: /Norme sur l’optimisation des sites Web et des applications pour appareils mobiles/, style: styles.italic },
+                    { pattern: /Loi sur le droit d'auteur du Canada/, style: styles.italic },
+                    {type: 'url',                       style: styles.url, onPress: this.handleUrlPress},
+                  ]
+                }
+                childrenProps={{ allowFontScaling: false }}
+              >
+                 {resources.getString("terms_and_conditions_content")}
+              </ParsedText>
               </Paragraph>
             </ScrollView>
           </SafeAreaView>
@@ -109,6 +137,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   text: {
+  },
+  italic: {
+    fontStyle: 'italic',
+  },
+  url: {
+    color: 'blue',
+    textDecorationLine: 'underline',
   },
 });
 
