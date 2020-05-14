@@ -264,12 +264,28 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 
   //We had to move the validation form utils to here since they cannot be constatnts. The updates would not take effect instantly
   _passwordInputChange = (text) => {
+    const passText = text;
+    const pasValLength =  text.length >= 8 ? true : false;
+    const passValUpper =  (!/[A-Z]/.test(text)) ? false : true;
+    const passValSpecial =  (!/[@!#$%^&*(),.?:{}|<>]/.test(text));
+    const passValLower =  (!/[a-z]/.test(text)) ? false : true;
+    const passValNumber =  (!/[0-9]/.test(text)) ? false : true;
+
     this.setState({ password: text });
-    this.setState({ pasVal_length: text.length >= 8 ? true : false });
-    this.setState({ passVal_Upper: (!/[A-Z]/.test(text)) ? false : true });
-    this.setState({ passVal_Special: (!/[@!#$%^&*(),.?:{}|<>]/.test(text)) ? false : true });
-    this.setState({ passVal_Lower: (!/[a-z]/.test(text)) ? false : true });
-    this.setState({ passVal_Number: (!/[0-9]/.test(text)) ? false : true });
+    this.setState({ pasVal_length: pasValLength });
+    this.setState({ passVal_Upper: passValUpper });
+    this.setState({ passVal_Special: passValSpecial });
+    this.setState({ passVal_Lower: passValLower });
+    this.setState({ passVal_Number: passValNumber });
+
+    const isPasswordValid = passwordValidator(text);
+    let passwordErrorText = this._getPasswordErrorText(isPasswordValid)
+    if (isPasswordValid == 200) {
+      this.setState({ passwordError: '' });
+    }
+    else {
+      this.setState({ passwordError: passwordErrorText });
+    }
   }
 
   render() {
