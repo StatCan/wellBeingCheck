@@ -27,7 +27,7 @@
     "react-native-paper": "^3.6.0",
     "react-native-parsed-text": "0.0.21",
     "react-native-reanimated": "~1.4.0",
-    "react-native-safe-area-context": "^0.6.4",
+    "react-native-safe-area-context": "^1.0.0",
     "react-native-screens": "^2.0.0-beta.2",
     "react-native-status-bar-height": "^2.4.0",
     "react-native-unimodules": "~0.7.0",
