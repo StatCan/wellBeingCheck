@@ -43,7 +43,7 @@ export const resources = {
                 `http://www.statcan.gc.ca/eng/sc/blog2 \n\n` +
 
                 `Accessibility notice \n\n` +
-                `The Government of Canada is committed to achieving a high standard of accessibility as defined in the Standard on Optimizing Website and Applications for Mobile Devices.  In the event of difficulty using our web pages, Applications or device-based mobile Applications, please contact us for assistance or to obtain alternative formats such as regular print, Braille or another Appropriate format. \n` +
+                `The Government of Canada is committed to achieving a high standard of accessibility as defined in the Standard on Optimizing Website and Applications for Mobile Devices.  In the event of difficulty using our web pages, Applications or device-based mobile Applications, please contact us for assistance or to obtain alternative formats such as regular print, Braille or another appropriate format. \n` +
                 `http://www.statcan.gc.ca/eng/reference/accessnotice \n\n` +
 
                 `Use of content \n\n` +
@@ -56,7 +56,7 @@ export const resources = {
                 `Disclaimer This App and its Terms and Conditions are governed by the laws of the province of Ontario and Applicable laws of Canada. Legal proceedings related to this App and its Terms and Conditions may only be brought in the courts of Ontario or the Federal Court of Canada. \n\n` +
 
                 `Limitation of liability \n\n` +
-                `The Government of Canada, its officers, servants, employees and/or agents shall not be held liable for any injury to any person, including death, or for any loss or damage to any person’s property, incurred or suffered arising out of or in connection with the use of the App. By downloading, accessing or using this App or any page of this App, you signify your assent to this disclaimer. Mobile phone use while driving is widely considered dangerous due to its potential for causing distracted driving and accidents. Activities such as voice calling, texting, web browsing, playing video games, mobile App use or phone use in general can increase the risk of an accident. Use of this App should only be done when Appropriate and safe to do so. \n\n` +
+                `The Government of Canada, its officers, servants, employees and/or agents shall not be held liable for any injury to any person, including death, or for any loss or damage to any person’s property, incurred or suffered arising out of or in connection with the use of the App. By downloading, accessing or using this App or any page of this App, you signify your assent to this disclaimer. Mobile phone use while driving is widely considered dangerous due to its potential for causing distracted driving and accidents. Activities such as voice calling, texting, web browsing, playing video games, mobile App use or phone use in general can increase the risk of an accident. Use of this App should only be done when appropriate and safe to do so. \n\n` +
 
                 `Disclosure statement \n\n` +
                 `Statistics Canada is allowed to disclose identifiable information when the respondent has given written consent to release it. \n\n` +
@@ -75,7 +75,7 @@ export const resources = {
                 `Users of the App hereby indemnify and hold harmless Statistics Canada, its officers, servants, employees and/or agents and contractors, from any and all losses, conditions, whether express, implied or statutory, including implied warranties and implied conditions of merchantability, fitness for a particular purpose, and non-infringement. \n\n` +
 
                 `Restrictions \n\n` +
-                `Use of this App is strictly in accordance with its Terms and Conditions. Users shall not: decompile, reverse engineer, disassemble or attempt to derive the source code from the App; remove, alter or obscure any proprietary notice from any portion of the App; reproduce, modify, improve, enhance or make derivative works based upon the App; distribute, license, lease, sell, resell, transfer, publicly display, transmit or otherwise exploit the App; link to, mirror or frame any portion of the App for any illegal and unauthorized purpose, and agree to comply with all laws, rules and regulations Applicable to their use of the App. \n\n` +
+                `Use of this App is strictly in accordance with its Terms and Conditions. Users shall not: decompile, reverse engineer, disassemble or attempt to derive the source code from the App; remove, alter or obscure any proprietary notice from any portion of the App; reproduce, modify, improve, enhance or make derivative works based upon the App; distribute, license, lease, sell, resell, transfer, publicly display, transmit or otherwise exploit the App; link to, mirror or frame any portion of the App for any illegal and unauthorized purpose, and agree to comply with all laws, rules and regulations applicable to their use of the App. \n\n` +
 
                 `Modifications and access \n\n` +
                 `Statistics Canada reserves the right to modify or discontinue this App for any reason and without notice. \n\n` +
@@ -285,7 +285,7 @@ export const resources = {
                 `Cette application vous enverra une notification pour remplir un Bilan bien-être de 2 à 5 fois par jour, entre l’heure de votre réveil et l’heure à laquelle vous vous couchez. Vous pouvez personnaliser ces paramètres à tout moment dans le menu des paramètres sur la page d’accueil de l’application. Si vous ne personnalisez pas les paramètres, vous recevrez par défaut 2 notifications à divers moments entre 8 h et 22 h. Si vous n’acceptez pas les notifications, vous pourrez tout de même remplir un Bilan bien-être quand vous le voudrez, mais la qualité de vos résultats pourrait en être affectée. \n\n` +
 
                 `Autorisation et confidentialité \n\n` +
-                `Ces données sont recueillies en vertu de la Loi sur la statistique, Lois révisées du Canada (1985), chapitre S-19. V os renseignements demeureront strictement confidentiels. \n\n` +
+                `Ces données sont recueillies en vertu de la Loi sur la statistique, Lois revisees du Canada \(1985\), chapitre S-19. V os renseignements demeureront strictement confidentiels. \n\n` +
 
                 `Bien qu’elle soit volontaire, votre participation est importante afin que les renseignements recueillis soient les plus exacts et les plus complets possible. \n\n` +
 

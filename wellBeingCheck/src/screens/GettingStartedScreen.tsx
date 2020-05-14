@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Text, StyleSheet, Dimensions, View,TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, Dimensions, View, TouchableOpacity } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Button from '../components/Button';
 import { newTheme } from '../core/theme';
@@ -16,10 +16,14 @@ import {
   ScrollView,
 } from 'react-navigation';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
+// import StyleText from 'react-native-styled-text';
+import ParsedText from 'react-native-parsed-text';
 
 type GettingStartedState = {
   gettingStarted: boolean,
   bannerVisibility: boolean,
+  title: string,
+  tr: string
 }
 
 interface Props {
@@ -33,7 +37,8 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
     this.state = {
       gettingStarted: false,
       bannerVisibility: true,
-      title:resources.getString("Well-Being Check"),
+      title: resources.getString("Well-Being Check"),
+      tr: resources.getString("getting_started_content"),
     };
   }
 
@@ -47,29 +52,44 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
       this.props.navigation.navigate('TermsOfServiceScreen');
     });
   }
-   toggleLanguage(){
-       if (resources.culture == 'en'){resources.culture = 'fr';AsyncStorage.setItem('Culture','2');} else {resources.culture = 'en';AsyncStorage.setItem('Culture','1');}
-       this.setState({title:resources.getString("Well-Being Check")});
-   }
+  toggleLanguage() {
+    if (resources.culture == 'en') { resources.culture = 'fr'; AsyncStorage.setItem('Culture', '2'); } else { resources.culture = 'en'; AsyncStorage.setItem('Culture', '1'); }
+    this.setState({ title: resources.getString("Well-Being Check") });
+    this.setState({tr: resources.getString("getting_started_content")});
+  }
+
+
   render() {
     return (
       <PaperProvider theme={newTheme}>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
         <AppBanner />
-          <SafeAreaView style={styles.container}>
-            <View style={styles.headerContainer}>
-              <LogoClearSmall />
-              <TouchableOpacity onPress={() => this.toggleLanguage()} style={{alignSelf:'flex-end',marginRight:0}}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
-            </View>
-            <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-              <Title style={styles.title}>{resources.getString("getting_started")}</Title>
-              <View style={{}}>
-                <Paragraph style={styles.paragraph}>
+        <SafeAreaView style={styles.container}>
+          <View style={styles.headerContainer}>
+            <LogoClearSmall />
+            <TouchableOpacity onPress={() => this.toggleLanguage()} style={{ alignSelf: 'flex-end', marginRight: 0 }}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
+          </View>
+          <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+            <Title style={styles.title}>{resources.getString("getting_started")}</Title>
+            <View style={{}}>
+              <Paragraph style={styles.paragraph}>
+
+                <ParsedText
+                  style={styles.text}
+                  parse={
+                    [
+                     { pattern: /Statistics Act, Revised Statutes of Canada, 1985, Chapter S-19/, style: styles.italic },
+                     { pattern: /Loi sur la statistique, Lois revisees du Canada \(1985\), chapitre S-19/, style: styles.italic},
+                    ]             
+                  }
+                  childrenProps={{ allowFontScaling: false }}
+                >
                   {resources.getString("getting_started_content")}
-                </Paragraph>
-              </View>
-            </ScrollView>
-          </SafeAreaView>
+                </ParsedText>
+              </Paragraph>
+            </View>
+          </ScrollView>
+        </SafeAreaView>
         <Button style={styles.btnNext}
           mode="contained"
           onPress={this._onGettingStartedNext}>
@@ -83,12 +103,12 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
 
 const styles = StyleSheet.create({
   headerContainer: {
-    flexDirection:'row', 
-    width: '100%', 
-    height: 24, 
-    marginLeft: 20, 
-    marginTop: 10, 
-    justifyContent:'space-between',
+    flexDirection: 'row',
+    width: '100%',
+    height: 24,
+    marginLeft: 20,
+    marginTop: 10,
+    justifyContent: 'space-between',
     marginBottom: 25
   },
   title: {
@@ -124,6 +144,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   text: {
+    color: 'black',
+    fontSize: 15,
+
+  },
+  italic: {
+    fontStyle: 'italic',
   },
 });
 
