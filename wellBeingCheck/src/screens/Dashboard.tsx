@@ -191,7 +191,6 @@ class Dashboard extends React.Component<Props, HomeState> {
         return;
     }
     let txt = '';
-    console.log("Dashboard.checkThankyou :Ali The result of Thank You getItem is :global.showThankYou= "+ global.showThankYou+'  busy:'+global.busy);
     if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2)  txt = resources.getString('ThankYouB');
     this.setState({ showThankYou: !global.showThankYou == 0, thankYouText: txt });
     setTimeout(() => { 

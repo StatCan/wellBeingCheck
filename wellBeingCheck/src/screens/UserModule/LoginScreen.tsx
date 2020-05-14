@@ -13,8 +13,9 @@ import { setupSchedules,cancelSchedule} from '../../utils/schedule';
 import {
   NavigationParams,
   NavigationScreenProp,
-  NavigationState,
+  NavigationState,NavigationEvents,
 } from 'react-navigation';
+
 import LogoClear from '../../components/LogoClear';
 import AppBanner from '../../components/AppBanner';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
@@ -205,7 +206,7 @@ async onTestD(){
               </View>
             </ScrollView>
           </SafeAreaView>
-
+  <NavigationEvents onDidFocus={() =>this.setState({ title: resources.getString("Well-Being Check") }) } />
         </Background >
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
       </PaperProvider >
