@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Alert, Linking } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Alert, Linking, BackHandler } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Button from '../components/Button';
 import { newTheme } from '../core/theme';
@@ -23,6 +23,7 @@ import { SafeAreaConsumer } from 'react-native-safe-area-context';
 
 type TermsOfServiceState = {
   termsOfService: boolean,
+  title: string,
 }
 
 interface Props {
@@ -30,6 +31,7 @@ interface Props {
 }
 
 class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
+  backHandler: any;
 
   constructor(TermsOfServiceState) {
     super(TermsOfServiceState)
@@ -41,6 +43,15 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
 
   componentDidMount() {
     this.askPermissions();
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+  }
+
+  componentWillUnmount() {
+    this.backHandler.remove()
+  }
+
+  handleBackPress = () => {
+    return true;
   }
 
   askPermissions = async () => {
@@ -84,6 +95,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
       Alert.alert('', resources.getString("terms_and_conditions_disagree"));
     });
   }
+
   toggleLanguage() {
     if (resources.culture == 'en') { resources.culture = 'fr'; AsyncStorage.setItem('Culture', '2'); } else { resources.culture = 'en'; AsyncStorage.setItem('Culture', '1'); }
     this.setState({ title: resources.getString("Well-Being Check") });
@@ -92,6 +104,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
   handleUrlPress(url, matchIndex /*: number*/) {
     Linking.openURL(url);
   }
+
   render() {
     return (
       <PaperProvider theme={newTheme}>
@@ -123,14 +136,14 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                     { pattern: /Loi sur les langues officielles/, style: styles.italic },
                     { pattern: /Norme sur l’optimisation des sites Web et des applications pour appareils mobiles/, style: styles.italic },
                     { pattern: /Loi sur le droit d'auteur du Canada/, style: styles.italic },
-                    {type: 'url',                       style: styles.url, onPress: this.handleUrlPress},
+                    { type: 'url', style: styles.url, onPress: this.handleUrlPress },
                   ]
                 }
                 childrenProps={{ allowFontScaling: false }}
               >
-                 {resources.getString("terms_and_conditions_content")}
+                {resources.getString("terms_and_conditions_content")}
               </ParsedText>
-            
+
             </Paragraph>
           </ScrollView>
         </SafeAreaView>

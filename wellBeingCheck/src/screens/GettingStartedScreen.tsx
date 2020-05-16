@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Text, StyleSheet, Dimensions, View, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, Dimensions, View, TouchableOpacity, BackHandler } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Button from '../components/Button';
 import { newTheme } from '../core/theme';
@@ -31,6 +31,7 @@ interface Props {
 }
 
 class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
+  backHandler: any;
 
   constructor(GettingStartedState) {
     super(GettingStartedState)
@@ -40,6 +41,18 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
       title: resources.getString("Well-Being Check"),
       tr: resources.getString("getting_started_content"),
     };
+  }
+
+  componentDidMount() {
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+  }
+
+  componentWillUnmount() {
+    this.backHandler.remove()
+  }
+
+  handleBackPress = () => {
+    return true;
   }
 
   _onGettingStartedNext = () => {
@@ -52,12 +65,12 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
       this.props.navigation.navigate('TermsOfServiceScreen');
     });
   }
+
   toggleLanguage() {
     if (resources.culture == 'en') { resources.culture = 'fr'; AsyncStorage.setItem('Culture', '2'); } else { resources.culture = 'en'; AsyncStorage.setItem('Culture', '1'); }
     this.setState({ title: resources.getString("Well-Being Check") });
     this.setState({tr: resources.getString("getting_started_content")});
   }
-
 
   render() {
     return (
