@@ -133,7 +133,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
      global.passwordSaved=true;AsyncStorage.setItem('PasswordSaved','true');
      count=1;
      global.fetchAction=false;
-     setupSchedules();
+      if (global.notificationState)setupSchedules();
      await this.saveDefaultParadata(jwt);
      global.surveyCount=1;AsyncStorage.setItem('SurveyCount','1');
  }
@@ -158,7 +158,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
      // Save Survey B Done State
      AsyncStorage.setItem('doneSurveyB','true');
      global.fetchAction=false;
-     setupSchedules(false);
+      if (global.notificationState)setupSchedules(false);
      if(!global.paradataSaved)await this.saveDefaultParadata(jwt);
 
      this.props.navigation.navigate('Dashboard');

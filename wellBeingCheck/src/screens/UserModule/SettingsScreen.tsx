@@ -227,7 +227,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     if (this.state.waketime != global.awakeHour) dirty = true;
     if (this.state.sleeptime != global.sleepHour) dirty = true;
     if (this.state.notificationcount != global.pingNum) dirty = true;
-    console.log('Dirty:' + dirty);
+    console.log('Dirty:' + dirty+' state:'+this.state.notificationState);
     if (this.state.notificationState) {
       if (global.doneSurveyA) {
         if (global.notificationState) {
@@ -343,11 +343,16 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   }
 
   _backButtonPressed = () => {
-    console.log("Back button Pressed:" + this.state.waketime + '---' + this.state.sleeptime);
-    let valid = validateSetting(this.state.waketime, this.state.sleeptime, this.state.notificationcount);
-    console.log('validate:------->' + valid);
-    if (valid == 0) this.handleBackAction();
-    else Alert.alert('', resources.getString("settingValidation"));
+   if (this.state.notificationState){
+        console.log("Back button Pressed:" + this.state.waketime + '---' + this.state.sleeptime);
+        let valid = validateSetting(this.state.waketime, this.state.sleeptime, this.state.notificationcount);
+        console.log('validate:------->' + valid);
+        if (valid == 0) this.handleBackAction();
+        else Alert.alert('', resources.getString("settingValidation"));
+   }
+   else{
+        this.handleBackAction();
+   }
   }
 
   _storeSettings = () => {
@@ -483,10 +488,10 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                         notificationState: !this.state.notificationState
                       });
 
-                      if (global.debugMode) console.log("The notification state is: " + this.state.notificationState);
+                      console.log("The notification state is: " + this.state.notificationState);
 
                       if (!this.state.notificationState) {
-                        if (global.debugMode) console.log("Switch ON: Asking for Permissions");
+                        console.log("Switch ON: Asking for Permissions");
                         this.askPermissions();
                         this._isDirty = true;
                         this.setState({
@@ -495,7 +500,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                       }
 
                       if (this.state.notificationState) {
-                        if (global.debugMode) console.log("Switch OFF: Disabling Notifications");
+                        console.log("Switch OFF: Disabling Notifications");
                         Notifications.cancelAllScheduledNotificationsAsync();
                         this._isDirty = true;
                         this.setState({
