@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, PanResponder, Alert } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, PanResponder, Alert, BackHandler } from 'react-native';
 import Button from '../components/Button';
 import { Provider as PaperProvider, Title, List, Paragraph } from 'react-native-paper';
 import { newTheme } from '../core/theme';
@@ -29,6 +29,7 @@ interface Props {
 class AboutScreen extends React.Component<Props, AboutState> {
   _panResponder: any;
   timer = null
+  backHandler: any;
 
   constructor(AboutScreen) {
     super(AboutScreen)
@@ -95,6 +96,17 @@ class AboutScreen extends React.Component<Props, AboutState> {
   componentDidMount() {
     //Session Handler
     this._initSessionTimer()
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+  }
+
+  componentWillUnmount() {
+    //Session Handler
+    clearInterval(this.timer)
+    this.backHandler.remove()
+  }
+
+  handleBackPress = () => {
+    return true;
   }
 
   _handleSessionTimeOutRedirect = () => {
@@ -117,11 +129,6 @@ class AboutScreen extends React.Component<Props, AboutState> {
       ],
       { cancelable: false }
     )
-  }
-
-  componentWillUnmount() {
-    //Session Handler
-    clearInterval(this.timer)
   }
 
   _onNextBtnHandle = () => {

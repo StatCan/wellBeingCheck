@@ -6,7 +6,7 @@ import Button from '../../components/Button';
 import TextInput from '../../components/TextInput';
 import { newTheme } from '../../core/theme';
 import { resources } from '../../../GlobalResources';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { Provider as PaperProvider ,Title} from 'react-native-paper';
 import { EvilIcons, Feather, FontAwesome } from '@expo/vector-icons';
 import md5 from "react-native-md5";
 import { setupSchedules,cancelSchedule} from '../../utils/schedule';
@@ -57,7 +57,7 @@ class LoginScreen extends React.Component<Props, LoginState> {
       AsyncStorage.setItem('Culture', '1');
     }
     this.setState({ title: resources.getString("Well-Being Check") });
-    
+
     //correct error message for password if already set
     if (this.state.passwordError != '') {
       this.setState({ passwordError: resources.getString("login.Wrongpassword.message") });
@@ -140,22 +140,19 @@ async onTestD(){
         </View>
         <Background>
           <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.scrollView}>
-
+            <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+                            <View style={styles.toggleLink}>
+                              <TouchableOpacity
+                                onPress={() => this.toggleLanguage()}
+                              >
+                                <Text>{resources.getString("Language")}</Text>
+                              </TouchableOpacity>
+                            </View>
               <View style={styles.logoClear}>
                 <LogoClear />
               </View>
-
-              <View style={styles.toggleLink}>
-                <TouchableOpacity
-                  onPress={() => this.toggleLanguage()}
-                >
-                  <Text>{resources.getString("Language")}</Text>
-                </TouchableOpacity>
-              </View>
-
              <View style={styles.logo}>
-                <Text>{resources.getString("Well-Being Check")}</Text>
+                <Title>{resources.getString("Well-Being Check")}</Title>
               </View>
 
               <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -240,10 +237,10 @@ const styles = StyleSheet.create({
     position: 'relative',
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    bottom: 140,
+   // bottom: 100,
   },
   logoClear: {
-   
+    marginTop:60,
     flexDirection: 'row',
     flex: 1,
     justifyContent: 'center'
@@ -261,7 +258,7 @@ const styles = StyleSheet.create({
   logo: {
     alignItems: 'center',
     marginTop: 0,
-    marginBottom: 50,
+    marginBottom: 40,
   },
   label: {
     color: newTheme.colors.secondary,

@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Picker, View, Text, StyleSheet, TouchableOpacity, Modal, SafeAreaView, ScrollView } from 'react-native';
+import { Picker, View, Text, StyleSheet, TouchableOpacity, Modal, SafeAreaView, ScrollView, BackHandler } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Background from '../../components/Background';
 import Button from '../../components/Button';
@@ -51,6 +51,7 @@ interface Props {
 }
 
 class RegisterScreen extends React.Component<Props, RegisterState> {
+  backHandler: any;
 
   constructor(RegisterState) {
     super(RegisterState)
@@ -76,6 +77,18 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     };
     //this._retrieveData('user_password');
     this._accountAlreadyExists();
+  }
+
+  componentDidMount() {
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+  }
+
+  componentWillUnmount() {
+    this.backHandler.remove()
+  }
+
+  handleBackPress = () => {
+    return true;
   }
 
   _accountAlreadyExists() {

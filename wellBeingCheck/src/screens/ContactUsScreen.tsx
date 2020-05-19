@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Linking, SafeAreaView, ScrollView, PanResponder, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Linking, SafeAreaView, ScrollView, PanResponder, Alert, BackHandler } from 'react-native';
 import Button from '../components/Button';
 import { Provider as PaperProvider, Title } from 'react-native-paper';
 import { newTheme } from '../core/theme';
@@ -18,6 +18,7 @@ interface Props {
 class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
   _panResponder: any;
   timer = null
+  backHandler: any;
 
   constructor(ContactUsScreen) {
     super(ContactUsScreen)
@@ -75,6 +76,17 @@ class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
   componentDidMount() {
     //Session Handler
     this._initSessionTimer()
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+  }
+  
+  componentWillUnmount() {
+    //Session Handler
+    clearInterval(this.timer)
+    this.backHandler.remove()
+  }
+
+  handleBackPress = () => {
+    return true;
   }
 
   _handleSessionTimeOutRedirect = () => {
@@ -98,11 +110,6 @@ class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
       ],
       { cancelable: false }
     )
-  }
-
-  componentWillUnmount() {
-    //Session Handler
-    clearInterval(this.timer)
   }
 
   _onNextBtnHandle = () => {
