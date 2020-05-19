@@ -243,6 +243,7 @@ const styles = StyleSheet.create({
     bottom: 140,
   },
   logoClear: {
+   
     flexDirection: 'row',
     flex: 1,
     justifyContent: 'center'
@@ -260,7 +261,7 @@ const styles = StyleSheet.create({
   logo: {
     alignItems: 'center',
     marginTop: 0,
-    marginBottom: 100,
+    marginBottom: 50,
   },
   label: {
     color: newTheme.colors.secondary,

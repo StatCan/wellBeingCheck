@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { View, Text, StyleSheet, SafeAreaView, ScrollView, PanResponder, Alert, BackHandler } from 'react-native';
 import Button from '../components/Button';
-import { Provider as PaperProvider, Title, List } from 'react-native-paper';
+import { Provider as PaperProvider, Title, List, Paragraph } from 'react-native-paper';
 import { newTheme } from '../core/theme';
 import AppBanner from '../components/AppBanner';
 import LogoClearSmall from '../components/LogoClearSmall';
@@ -9,6 +9,7 @@ import { resources } from '../../GlobalResources';
 import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
 import BackgroundWhite from '../components/BackgroundWhite';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
+import ParsedText from 'react-native-parsed-text';
 import { Updates } from 'expo';
 
 type AboutState = {
@@ -115,8 +116,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
   _initSessionTimer() {
     clearInterval(this.timer)
     this.timer = setTimeout(() =>
-      this._expireSession()
-      ,
+      this._expireSession(),
       global.sessionTimeOutDuration)
   }
 
@@ -254,7 +254,37 @@ class AboutScreen extends React.Component<Props, AboutState> {
               </List.Section>
               <Title style={styles.title}>{resources.getString("about_title")}</Title>
               <View style={styles.content}>
-                <Text>{resources.getString("about_content")}</Text>
+
+
+                <Paragraph style={styles.paragraph}>
+                  <Text>
+                    <ParsedText
+                      style={styles.text}
+                      parse={
+                        [
+                          { pattern: /Why we are conducting this study\?|Notifications|Authorization and confidentiality|Record linkages/, style: styles.bold },
+                          { pattern: /Time required to complete this questionnaire|To navigate the questionnaire|Session timeout|Definitions and explanations/, style: styles.bold },
+
+                          { pattern: /Pourquoi nous menons cette étude\?|Notifications|Autorisation et confidentialité|Couplages d’enregistrements/, style: styles.bold },
+                          { pattern: /Temps requis pour remplir ce questionnaire|Pour parcourir le questionnaire|Délai d’inactivité d’une session|Définitions et explications/, style: styles.bold },
+
+
+                          { pattern: /Statistics Act, Revised Statutes of Canada, 1985, Chapter S-19/, style: styles.italic },
+                          { pattern: /Loi sur la statistique, Lois revisees du Canada \(1985\), chapitre S-19/, style: styles.italic },
+                        ]
+                      }
+                      childrenProps={{ allowFontScaling: false }}
+                    >
+                      {resources.getString("about_content")}
+                    </ParsedText>
+                  </Text>
+                </Paragraph>
+
+
+
+
+
+                {/* </Paragraph> <Text style={styles.paragraph}>{resources.getString("about_content")}</Text> */}
               </View>
             </ScrollView>
           </SafeAreaView>
@@ -302,6 +332,7 @@ const styles = StyleSheet.create({
   content: {
     marginLeft: 20,
     marginBottom: 20,
+
   },
   logo_container: {
     position: 'relative',
@@ -323,7 +354,8 @@ const styles = StyleSheet.create({
     width: 100, height: 40,
     alignSelf: "flex-end",
     marginRight: 20,
-    marginBottom: 4, marginTop: 4
+    marginBottom: 4,
+    marginTop: 4
   },
   btnText: {
     color: newTheme.colors.whiteText,
@@ -343,6 +375,20 @@ const styles = StyleSheet.create({
     width: '100%',
     end: 0,
     direction: "ltr"
+  },
+  text: {
+    color: '#656262',
+    // fontFamily: 'Lato-Regular',
+  },
+  italic: {
+    fontStyle: 'italic',
+    //fontFamily: 'Lato-Italic'
+  },
+  bold: {
+    fontWeight: 'bold',
+    color: '#66cc99',
+    //fontFamily: 'Lato-Bold',
+    fontSize: 18
   },
 });
 

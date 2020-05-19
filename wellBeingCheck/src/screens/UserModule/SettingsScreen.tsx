@@ -9,11 +9,12 @@ import { Notifications } from "expo";
 import * as Permissions from 'expo-permissions';
 import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
 import { resources } from '../../../GlobalResources';
-import { Provider as PaperProvider, Title, Portal, Dialog, RadioButton } from 'react-native-paper';
+import { Provider as PaperProvider, Title, Portal, Dialog, RadioButton, Paragraph } from 'react-native-paper';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import * as IntentLauncher from 'expo-intent-launcher';
 import { setupSchedules, checkInSchedule, validateSetting } from '../../utils/schedule';
 import { Updates } from 'expo';
+import ParsedText from 'react-native-parsed-text';
 
 var scheduledDateArray = new Array();
 
@@ -518,36 +519,26 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                   description={this.state.notificationcount}
                   descriptionStyle={styles.descriptionStyle}
                 />
-                <List.Item
+                {/* <List.Item
                   style={styles.listStyle2}
                   title={resources.getString("donotdisturbbetween")}
                   titleStyle={{ color: this.state.titleBackgroundColor }}
-                />
-
+                /> */}
                 <View>
-
-                  <List.Item
-                    style={styles.listStyle1b}
-                    title={resources.getString("sleep_time")}
-                    titleStyle={{ color: this.state.titleBackgroundColor }}
-                    onPress={this._showSleepTimePicker}
-                    disabled={!this.state.notificationState}
-                    description={this.state.sleeptime}
-                    descriptionStyle={styles.descriptionStyle}
-                  />
-                  <TimePicker
-                    showTimePicker={this.state.sleepTimePickerShow}
-                    style={styles.timePicker}
-                    time={this.state.sleeptime}
-                    timeType="sleepTime"
-                    isVisible={this.state.sleepTimePickerShow}
-                    handler={this.sleepTimeHandler}
-                    cancelHandler={this.cancelTimeHandler}
-                  />
-
                   <List.Item
                     style={styles.listStyle1a}
-                    title={resources.getString("wake_time")}
+                    title={
+                      <ParsedText
+                        parse={
+                          [
+                            { pattern: /before|after |avant|après/, style: styles.bold },
+                          ]
+                        }
+                        childrenProps={{ allowFontScaling: false }}
+                      >
+                        {resources.getString("wake_time")}
+                      </ParsedText>
+                    }
                     titleStyle={{ color: this.state.titleBackgroundColor }}
                     onPress={this._showWakeTimePicker}
                     disabled={!this.state.notificationState}
@@ -561,6 +552,36 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                     timeType="wakeTime"
                     isVisible={this.state.wakeTimePickerShow}
                     handler={this.wakeTimeHandler}
+                    cancelHandler={this.cancelTimeHandler}
+                  />
+
+                  <List.Item
+                    style={styles.listStyle1b}
+                    title={
+                      <ParsedText
+                        parse={
+                          [
+                            { pattern: /before|after|avant|après/, style: styles.bold },
+                          ]
+                        }
+                        childrenProps={{ allowFontScaling: false }}
+                      >
+                        {resources.getString("sleep_time")}
+                      </ParsedText>
+                    }
+                    titleStyle={{ color: this.state.titleBackgroundColor }}
+                    onPress={this._showSleepTimePicker}
+                    disabled={!this.state.notificationState}
+                    description={this.state.sleeptime}
+                    descriptionStyle={styles.descriptionStyle}
+                  />
+                  <TimePicker
+                    showTimePicker={this.state.sleepTimePickerShow}
+                    style={styles.timePicker}
+                    time={this.state.sleeptime}
+                    timeType="sleepTime"
+                    isVisible={this.state.sleepTimePickerShow}
+                    handler={this.sleepTimeHandler}
                     cancelHandler={this.cancelTimeHandler}
                   />
                 </View>
@@ -776,13 +797,14 @@ const styles = StyleSheet.create({
     marginLeft: 60
   },
   listStyle1a: {
-    marginLeft: 80,
-    width: 200,
-  },
-  listStyle1b: {
-    marginLeft: 80,
+    marginLeft: 60,
     width: 200,
     marginBottom: -15,
+  },
+  listStyle1b: {
+    marginLeft: 60,
+    width: 200,
+
   },
   listStyle2: {
     marginLeft: 60,
@@ -809,6 +831,9 @@ const styles = StyleSheet.create({
   Dialog: {
     width: 300,
     height: 200
+  },
+  bold: {
+    fontWeight: 'bold',
   },
 });
 

@@ -91,8 +91,15 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
                   style={styles.text}
                   parse={
                     [
-                     { pattern: /Statistics Act, Revised Statutes of Canada, 1985, Chapter S-19/, style: styles.italic },
-                     { pattern: /Loi sur la statistique, Lois revisees du Canada \(1985\), chapitre S-19/, style: styles.italic},
+                      { pattern: /Why we are conducting this study\?|Notifications|Authorization and confidentiality|Record linkages/, style: styles.bold },
+                      { pattern: /Time required to complete this questionnaire|To navigate the questionnaire|Session timeout|Definitions and explanations/, style: styles.bold },
+                    
+                      { pattern: /Pourquoi nous menons cette étude\?|Notifications|Autorisation et confidentialité|Couplages d’enregistrements/, style: styles.bold },
+                      { pattern: /Temps requis pour remplir ce questionnaire|Pour parcourir le questionnaire|Délai d’inactivité d’une session|Définitions et explications/, style: styles.bold },
+                    
+                    
+                      { pattern: /Statistics Act, Revised Statutes of Canada, 1985, Chapter S-19/, style: styles.italic },
+                      { pattern: /Loi sur la statistique, Lois revisees du Canada \(1985\), chapitre S-19/, style: styles.italic},
                     ]             
                   }
                   childrenProps={{ allowFontScaling: false }}
@@ -127,7 +134,8 @@ const styles = StyleSheet.create({
   title: {
     alignSelf: 'baseline',
     fontSize: 22,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color:'#656262',
   },
   paragraph: {
     alignSelf: 'baseline',
@@ -157,12 +165,18 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   text: {
-    color: 'black',
+    color: '#656262',
     fontSize: 15,
 
   },
   italic: {
     fontStyle: 'italic',
+  },
+  bold:{
+    fontWeight: 'bold',
+    color:'#66cc99',
+   //fontFamily:'Lato-Bold',
+    fontSize:18
   },
 });
 
