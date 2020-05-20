@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, PanResponder, Alert, BackHandler } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, PanResponder, Alert, BackHandler, } from 'react-native';
 import Button from '../components/Button';
 import { Provider as PaperProvider, Title, List, Paragraph } from 'react-native-paper';
 import { newTheme } from '../core/theme';
@@ -10,7 +10,9 @@ import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-n
 import BackgroundWhite from '../components/BackgroundWhite';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import ParsedText from 'react-native-parsed-text';
+// import DeviceInfo from 'react-native-device-info';
 import { Updates } from 'expo';
+import { expo } from '../../app.json';
 
 type AboutState = {
   faqMainExpanded: boolean,
@@ -254,8 +256,6 @@ class AboutScreen extends React.Component<Props, AboutState> {
               </List.Section>
               <Title style={styles.title}>{resources.getString("about_title")}</Title>
               <View style={styles.content}>
-
-
                 <Paragraph style={styles.paragraph}>
                   <Text>
                     <ParsedText
@@ -263,10 +263,10 @@ class AboutScreen extends React.Component<Props, AboutState> {
                       parse={
                         [
                           { pattern: /Why we are conducting this study\?|Notifications|Authorization and confidentiality|Record linkages/, style: styles.bold },
-                          { pattern: /Time required to complete this questionnaire|To navigate the questionnaire|Session timeout|Definitions and explanations/, style: styles.bold },
+                          { pattern: /Time required to complete this questionnaire|To navigate the questionnaire|Session timeout|Definitions and explanations|Version/, style: styles.bold },
 
                           { pattern: /Pourquoi nous menons cette étude\?|Notifications|Autorisation et confidentialité|Couplages d’enregistrements/, style: styles.bold },
-                          { pattern: /Temps requis pour remplir ce questionnaire|Pour parcourir le questionnaire|Délai d’inactivité d’une session|Définitions et explications/, style: styles.bold },
+                          { pattern: /Temps requis pour remplir ce questionnaire|Pour parcourir le questionnaire|Délai d’inactivité d’une session|Définitions et explications|Version/, style: styles.bold },
 
 
                           { pattern: /Statistics Act, Revised Statutes of Canada, 1985, Chapter S-19/, style: styles.italic },
@@ -279,17 +279,15 @@ class AboutScreen extends React.Component<Props, AboutState> {
                     </ParsedText>
                   </Text>
                 </Paragraph>
-
-
-
-
-
-                {/* </Paragraph> <Text style={styles.paragraph}>{resources.getString("about_content")}</Text> */}
+                <View >
+                  <Text style={styles.appVersion}>{expo.version}</Text>
+                </View>
               </View>
+
             </ScrollView>
           </SafeAreaView>
         </BackgroundWhite>
-        <Button style={styles.btnNext}
+        <Button style={styles.btnNext}  
           mode="contained"
           onPress={this._onNextBtnHandle}>
           <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
@@ -375,6 +373,10 @@ const styles = StyleSheet.create({
     width: '100%',
     end: 0,
     direction: "ltr"
+  },
+  appVersion:
+  {
+    color: '#656262',
   },
   text: {
     color: '#656262',
