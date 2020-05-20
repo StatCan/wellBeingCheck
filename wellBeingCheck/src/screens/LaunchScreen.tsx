@@ -49,44 +49,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
   }
   //determine if user already has an account
   _bootstrap = () => {
-/*
-    let language=null
-    AsyncStorage.getItem('settings',(err,settingObject)=>{
-        if (global.debugMode)  console.log("launchScreen._bootstrap settings object values    "+ settingObject)
-    let localSettingObject = JSON.parse(settingObject)
-    if (localSettingObject){
-    let language=localSettingObject.culture;
-        if (global.debugMode) console.log("launchScreen._bootstrap language:      "+ language);
 
-    if (language == "1") {
-        if (global.debugMode) console.log("launchScreen._bootstrap set language english:      "+ language);
-      resources.culture='en';
-      
-    } else if(language == "2"){
-        if (global.debugMode)  console.log("launchScreen._bootstrap set language french:      "+ language);
-      resources.culture='fr';
-      
-    } 
-  }
- });
-  
-  if (language==null){
-    if (Localization.locale.substring(0,2) == 'en') {
-      resources.culture = 'en';
-    } else if(Localization.locale.substring(0,2) == 'fr'){
-      resources.culture = 'fr';
-    }
-  }else {
-   if (Localization.locale.substring(0,2) == 'en' && (language=='1')){
-      resources.culture = 'en';
-    } else if  (Localization.locale.substring(0,2) == 'en' && (language=='2')) {
-      resources.culture = 'fr';
-    } else if (Localization.locale.substring(0,2) == 'fr'  && (language=='1')) {
-      resources.culture = 'en';
-    } else if (Localization.locale.substring(0,2) == 'fr' && (language=='2')) {
-    resources.culture = 'fr';
-    }
-  }*/
 
     AsyncStorage.getItem('user_account', (err, userAccountResult) => {
       if (global.debugMode) console.log(userAccountResult);
