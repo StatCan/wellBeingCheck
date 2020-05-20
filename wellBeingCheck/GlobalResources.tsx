@@ -36,7 +36,9 @@ export const resources = {
             `After 2 hours of inactivity, your session will time out. You will not be able to access any unsaved information.\n\n`+
             `After 15 minutes of inactivity, Well-Being Check will lock. You will need to enter your password to continue. \n\n`+
             `Definitions and explanations\n`+
-            `A help button is available for certain questions. Press this button for additional information or clarification.`,
+            `A help button is available for certain questions. Press this button for additional information or clarification.\n\n`+
+            `Version`,
+          
             //terms & conditions
             "terms_and_conditions": "Terms and conditions \n",
             "terms_and_conditions_disagree": "You must accept Terms and Conditions to use this app. Select “OK” to revise your preferences, or call us at 1-877-949-9492 for more information.",
@@ -169,7 +171,10 @@ export const resources = {
                 `After 15 minutes of inactivity, Well-Being Check will lock. You will need to enter your password to continue.  \n\n` +
 
                 `Definitions and explanations  \n` +
-                `A help button is available for certain questions. Press this button for additional information or clarification.`,
+                `A help button is available for certain questions. Press this button for additional information or clarification.\n\n` +
+
+                `Version`,
+
             "about_title_two": "Authorization and confidentiality",
             "about_content_two": "Data are collected under the authority Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
             "create_password": "Create Password",
