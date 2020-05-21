@@ -150,7 +150,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
      if(jwt==''){Alert.alert('',resources.getString("securityIssue"));return;}
      global.jwToken=jwt;
      global.fetchCount=0;
-     let types=await this.fetchGraphTypes();
+     let types=await this.fetchGraphTypes();console.log(types);
      if(types!=null && types.length>0){
           await this.fetchGraphs(types);
      }
