@@ -65,9 +65,6 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
     this.setState({ fontLoaded: true });
     this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
   };
-  
-    
-  
 
   componentWillUnmount() {
     this.backHandler.remove()
