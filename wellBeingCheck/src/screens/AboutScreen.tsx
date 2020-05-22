@@ -283,7 +283,6 @@ class AboutScreen extends React.Component<Props, AboutState> {
                   <Text style={styles.appVersion}>{expo.version}</Text>
                 </View>
               </View>
-
             </ScrollView>
           </SafeAreaView>
         </BackgroundWhite>
