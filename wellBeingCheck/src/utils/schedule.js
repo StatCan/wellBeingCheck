@@ -166,7 +166,7 @@ export async function setupSchedules(affectCurrent=false){
     let title=resources.getString("scheduleTitle");//   "Scheduled Notification";
     let message=resources.getString("scheduleMessage");//"Scheduled Notification for the Survey!";
     let lastMessage=resources.getString("scheduleMessage1");//"We haven’t heard from you in a while. Sign in for a Well-being Check!";///"Nous n’avons pas eu de vos nouvelles depuis un certain temps. Connectez-vous pour obtenir un Bilan bien-être!";
-    let schedules = [];let currentDateTime=new Date();console.log('current date:'+currentDateTime);
+    let schedules = [];let currentDateTime=new Date();console.log('current date:'+currentDateTime);currentDateTime.setMinutes(currentDateTime.getMinutes()+5);  //give 5 minute for the program to run
     let today=new Date(currentDateTime);today.setHours(0);today.setMinutes(0);today.setSeconds(0);today.setMilliseconds(0);
     let currentTime=roundUp(currentDateTime.toLocaleTimeString());
     let awake=roundUp(global.awakeHour); let sleep=roundDown(global.sleepHour);let count=global.pingNum;console.log('LastDate:'+global.lastDate);

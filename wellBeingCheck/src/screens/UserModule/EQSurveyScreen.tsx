@@ -150,7 +150,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
      if(jwt==''){Alert.alert('',resources.getString("securityIssue"));return;}
      global.jwToken=jwt;
      global.fetchCount=0;
-     let types=await this.fetchGraphTypes();
+     let types=await this.fetchGraphTypes();console.log(types);
      if(types!=null && types.length>0){
           await this.fetchGraphs(types);
      }
@@ -416,7 +416,7 @@ const styles = StyleSheet.create({
     //  flex: 1,
     marginTop: 0,
     width: deviceWidth,
-    height: deviceHeight + 2000
+    height: deviceHeight-40     //height: deviceHeight + 2000
   },
   logo: { width: 300, height: 40 },
 });

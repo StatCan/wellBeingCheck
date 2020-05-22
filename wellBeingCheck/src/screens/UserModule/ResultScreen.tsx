@@ -193,11 +193,34 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
   }
 
   handleScroll(event) {
-    let width1 = this.state.width;
+    let width1 = this.state.width;let oldPage=this.state.current;
     let x = event.nativeEvent.contentOffset.x;
-    if (startX > x) index = Math.max(0, --index);
-    else if (startX < x) index = Math.min(++index, 3);
-
+    if (startX > x){
+        index = Math.max(0, oldPage-1);
+        }
+    else if (startX < x){ index = Math.min(oldPage+1, 3);
+    }
+    // let index = Math.round(x / width1);   //Don't delete it, it is for old way to scroll
+    let xd = index * width1;
+    this.setState({ current: index });
+    if (index == 0) { this.setState({ title: resources.getString("Your feelings") }); }
+    else if (index == 1) { this.setState({ title: resources.getString("How you are feeling by location") }); }
+    else if (index == 2) { this.setState({ title: resources.getString("How you are feeling by activity") }); }
+    else if (index == 3) { this.setState({ title: resources.getString("How you are feeling with others") }); }
+    oldPage=index;
+    InteractionManager.runAfterInteractions(() => this.sv.scrollTo({ x: xd }))
+  }
+ handleScrollBack(event) {
+    let width1 = this.state.width;let oldPage=this.state.current;
+    let x = event.nativeEvent.contentOffset.x;
+    if (startX > x){
+        index = Math.max(0, --index);
+      //  if(oldPage-index>1)index=oldPage-1;
+        }
+    else if (startX < x){ index = Math.min(++index, 3);
+    //if(index-oldPage>1)index=oldPage+1;
+    }
+console.log('pppppaaaaggggggggggeeeeee:'+index);
     // let index = Math.round(x / width1);   //Don't delete it, it is for old way to scroll
     let xd = index * width1;
     this.setState({ current: index });
@@ -205,10 +228,9 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
     else if (index == 1) { this.setState({ title: resources.getString("How you are feeling by activity") }); }
     else if (index == 2) { this.setState({ title: resources.getString("How you are feeling by location") }); }
     else if (index == 3) { this.setState({ title: resources.getString("How you are feeling with others") }); }
-
+    oldPage=index;
     InteractionManager.runAfterInteractions(() => this.sv.scrollTo({ x: xd }))
   }
-
   handleScrollB(event) { startX = event.nativeEvent.contentOffset.x; }
   _onLayout(event) {
     const containerWidth = event.nativeEvent.layout.width;
