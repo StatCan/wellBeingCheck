@@ -349,9 +349,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
           source={{ uri: uri }}
           javaScriptEnabled={true}
           domStorageEnabled={true}
-          startInLoadingState={false}
           scalesPageToFit={true}
-          
           startInLoadingState={true}
           injectedJavaScript={this.state.jsCode}
           automaticallyAdjustsScrollViewInsets={false}
