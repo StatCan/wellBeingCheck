@@ -78,7 +78,7 @@ class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
     this._initSessionTimer()
     this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
   }
-  
+
   componentWillUnmount() {
     //Session Handler
     clearInterval(this.timer)
@@ -133,20 +133,21 @@ class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
               <View>
                 <View style={styles.content}>
                   <Text style={styles.content_title}>{resources.getString("contactus_email")}</Text>
-                  <TouchableOpacity onPress={() => Linking.openURL('mailto:infostats@canada.ca')}><Text>infostats@canada.ca</Text></TouchableOpacity>
+                  <TouchableOpacity onPress={() => Linking.openURL('mailto:infostats@canada.ca')}><Text style={styles.text}>infostats@canada.ca</Text></TouchableOpacity>
                 </View>
                 <View style={styles.content}>
                   <Text style={styles.content_title}>{resources.getString("contactus_telephone")}</Text>
-                  <TouchableOpacity onPress={() => Linking.openURL('tel:187779499492')}><Text>1-877-949-9492</Text></TouchableOpacity>
+                  <TouchableOpacity onPress={() => Linking.openURL('tel:187779499492')}><Text style={styles.text}>1-877-949-9492</Text></TouchableOpacity>
                 </View>
                 <View style={styles.content}>
                   <Text style={styles.content_title}>{resources.getString("contactus_website")}</Text>
-                  <TouchableOpacity onPress={() => Linking.openURL('https://www.statcan.gc.ca')}><Text>www.statcan.gc.ca</Text></TouchableOpacity>
+                  <TouchableOpacity onPress={() => Linking.openURL('https://www.statcan.gc.ca')}>
+                    <Text style={styles.text}>www.statcan.gc.ca</Text>
+                  </TouchableOpacity>
                 </View>
                 <View style={styles.content}>
                   <Text style={styles.content_title}>{resources.getString("contactus_mail")}</Text>
-                  <Text>
-                    {resources.getString("contactus_text")}
+                  <Text style={styles.text}> {resources.getString("contactus_text")}
                   </Text>
                 </View>
               </View>
@@ -183,7 +184,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   content_title: {
-    color: '#50bfa6'
+    color: '#66cc99',
+    fontSize: 18,
   },
   btnNext: {
     color: newTheme.colors.whiteText,
@@ -202,6 +204,10 @@ const styles = StyleSheet.create({
   scrollView: {
     width: '100%',
   },
+  text:{
+    fontSize:15,
+    color: '#656262',
+  }
 });
 
 export default memo(ContactUsScreen);
