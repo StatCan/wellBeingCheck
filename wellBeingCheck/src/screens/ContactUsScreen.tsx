@@ -137,7 +137,8 @@ class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
                 </View>
                 <View style={styles.content}>
                   <Text style={styles.content_title}>{resources.getString("contactus_telephone")}</Text>
-                  <TouchableOpacity onPress={() => Linking.openURL('tel:187779499492')}><Text style={styles.text}>1-877-949-9492</Text></TouchableOpacity>
+                  <TouchableOpacity onPress={() => Linking.openURL('tel:187779499492')}>
+                    <Text style={styles.text}>1-877-949-9492</Text></TouchableOpacity>
                 </View>
                 <View style={styles.content}>
                   <Text style={styles.content_title}>{resources.getString("contactus_website")}</Text>
@@ -147,7 +148,7 @@ class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
                 </View>
                 <View style={styles.content}>
                   <Text style={styles.content_title}>{resources.getString("contactus_mail")}</Text>
-                  <Text style={styles.text}> {resources.getString("contactus_text")}
+                  <Text style={styles.text}>{resources.getString("contactus_text")}
                   </Text>
                 </View>
               </View>
@@ -186,6 +187,7 @@ const styles = StyleSheet.create({
   content_title: {
     color: '#66cc99',
     fontSize: 18,
+    fontWeight:'bold'
   },
   btnNext: {
     color: newTheme.colors.whiteText,
