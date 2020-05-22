@@ -519,10 +519,10 @@ export const resources = {
             "Language": "English",
             "Secure your account": "Sécuriser votre compte",
             "contactus_title": "Nous Contacter",
-            "contactus_email": "Courriel:",
-            "contactus_telephone": "Téléphone:",
-            "contactus_website": "Site Web:",
-            "contactus_mail": "Courrier:",
+            "contactus_email": "Courriel",
+            "contactus_telephone": "Téléphone",
+            "contactus_website": "Site Web",
+            "contactus_mail": "Courrier",
             "contactus_text": `Statistique Canada\nÀ l’attention du directeur Jean Labbé\n150, promenade Tunney’s Pasture\nOttawa (Ontario)\nK1A 0T6`,
 
             //FAQ
