@@ -415,7 +415,7 @@ const styles = StyleSheet.create({
     //  flex: 1,
     marginTop: 0,
     width: deviceWidth,
-    height: deviceHeight + 2000
+    height: deviceHeight-40     //height: deviceHeight + 2000
   },
   logo: { width: 300, height: 40 },
 });
