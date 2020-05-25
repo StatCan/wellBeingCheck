@@ -1,0 +1,620 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Test</title>
+</head>
+<body>
+    <h1>Notification workflow and algorithm </h1>
+    <label>Ping Num:</label><input type="number" value="2" id="ping" /><br />
+    <label>Awake Time:</label><input type="time" value="08:00:00" id="awake" /><br />
+    <label>Sleep Time:</label><input type="time" id="sleep" value="22:00:00" /><br />
+    <label>Scheduling DateTime:</label><input type="datetime-local" value="" id="date" />&nbsp;<label>: Affected</label> <input id="affected" disabled checked type="checkbox" />&nbsp;&nbsp;<a href="#" style="text-decoration:none" onclick="help()">&#10068;</a><br />
+    <label>Final Date:</label><span id="lastday"></span><br />
+    <button id="btnSchedule" onclick="test()">Schedule</button>&nbsp;&nbsp;<button hidden id="btnDetail" onclick="testdetail()">Toggle Detail</button>&nbsp;&nbsp;&nbsp;&nbsp;<button hidden id="btnReset" onclick="reset()">Reset</button><br />
+    <label id="result">Result:</label><br />
+    <div id="info"></div>
+    <div id="detail" hidden></div>
+    <script>
+
+        var schedules = []; var preSchedule = []; var str = '', strd = ''; var lastDate = null;
+        function help() {
+            var msg = 'Scheduling DateTime format sample: 5/1/2020 2:38 Pm in case you use IE which the datetime picker is not provided by this simulator.  \n' +
+                'Affected checkbox: to specify your schedule whether or not afftects scheduling date itself \n' +
+                'Toogle detail button: switch the view between schedule list and the processing detail page, the detial page will reset every time click re-schedule'
+            alert(msg);
+        }
+        const primeTimeAwakeIntervals = [
+            {
+                awakeHour: 10,
+                weekDayPercentage: 4,  // A
+                weekendPercentage: 4   // N
+            },
+            {
+                awakeHour: 11,
+                weekDayPercentage: 5, // B
+                weekendPercentage: 5  // O
+            },
+            {
+                awakeHour: 12,
+                weekDayPercentage: 5, // C
+                weekendPercentage: 8  // P
+            },
+            {
+                awakeHour: 13,
+                weekDayPercentage: 5, // D
+                weekendPercentage: 10  // Q
+            },
+            {
+                awakeHour: 14,
+                weekDayPercentage: 5, // E
+                weekendPercentage: 11  // R
+            },
+            {
+                awakeHour: 15,
+                weekDayPercentage: 5, // F
+                weekendPercentage: 8  // S
+            },
+            {
+                awakeHour: 16,
+                weekDayPercentage: 4, // G
+                weekendPercentage: 7  // T
+            },
+            {
+                awakeHour: 17,
+                weekDayPercentage: 5, // H
+                weekendPercentage: 5  // U
+            },
+            {
+                awakeHour: 18,
+                weekDayPercentage: 10, // I
+                weekendPercentage: 7  // V
+            },
+            {
+                awakeHour: 19,
+                weekDayPercentage: 13, // J
+                weekendPercentage: 9  // W
+            },
+            {
+                awakeHour: 20,
+                weekDayPercentage: 15, // K
+                weekendPercentage: 9  // X
+            },
+            {
+                awakeHour: 21,
+                weekDayPercentage: 12, // L
+                weekendPercentage: 7  // Y
+            },
+            {
+                awakeHour: 22,
+                weekDayPercentage: 6, // M
+                weekendPercentage: 4  // Z
+            }];
+        function test() {
+            document.getElementById("btnDetail").hidden = false; document.getElementById("btnReset").hidden = false;
+            document.getElementById("btnSchedule").innerHTML = 'Re-Schedule';
+            document.getElementById("detail").innerHTML = '';
+            var dt = document.getElementById("date").value;
+            if (dt == '') alert('Schedule date can not be empty');
+            var datetime = new Date(dt);
+            var awake = document.getElementById("awake").value;
+            var sleep = document.getElementById("sleep").value;
+            var affected = document.getElementById("affected").checked;
+            //var a = roundUp(awake); var awakeHour = a.Hour;
+            //var b = roundDown(sleep); var sleepHour = b.Hour;
+            var pingCount = document.getElementById("ping").value;
+            strd = ''; str = '';
+            if (lastDate == null) str += "<h3> Schedule List:</h3>"; else str += "<h3> Re-Schedule List:</h3>";
+            strd += "<h3> Prepare for schdule:</h3>";
+            setupSchedules(datetime, awake, sleep, pingCount, affected);
+
+            if (schedules.length > 0) {
+                schedules.forEach(function (s, index) {
+                    let cont = true;
+                    if (index < schedules.length - 1) {
+                        let s1 = schedules[index + 1];
+                        if ((s1.Day == s.Day) && (s1.Hour - s.Hour == 1)) cont = false;
+                    }
+                    var ss = new Date(s.Datetime);
+                    if (cont) {
+                        var mm = Math.random() * 59;
+                        ss.setMinutes(mm);
+                        schedules[index].Datetime = ss;
+                    }
+                    str += "<p>" + ss + "  " + s.Hour + "</p>";
+                });
+            }
+            document.getElementById("info").innerHTML = document.getElementById("info").innerHTML + str;
+            document.getElementById("detail").innerHTML = strd;
+            preSchedule = schedules;
+        }
+        function reset() {
+            schedules = []; preSchedule = []; var lastDate = null; document.getElementById("btnReset").hidden = true;
+            document.getElementById("info").innerHTML = '';
+            document.getElementById("lastday").innerHTML = '';
+            document.getElementById("btnDetail").hidden = true;
+            document.getElementById("btnSchedule").innerHTML = 'Schedule';
+            schedules = []; var str = '', strd = '';
+            //    document.getElementById("updatedinfo").innerHTML = ''; document.getElementById("current").hidden = false;
+        }
+        function reset1() {
+
+            var lastDate = new Date(currentDateTime);
+            lastDate.setDate(currentDateTime.getDate() + 30); lastDate.setHours(0); lastDate.setMinutes(0); lastDate.setSeconds(0); lastDate.setMilliseconds(0);
+            document.getElementById("lastday").innerHTML = lastDate.toLocaleDateString();
+        }
+        function testdetail() {
+            var x = document.getElementById("info"); var y = document.getElementById("detail");
+            var h = document.getElementById("info").hidden;
+            if (document.getElementById("info").hidden) {
+                document.getElementById("result").innerHTML = 'Result:';
+                document.getElementById("info").hidden = false; document.getElementById("detail").hidden = true;
+            } else {
+                document.getElementById("result").innerHTML = 'Detail:';
+                document.getElementById("info").hidden = true; document.getElementById("detail").hidden = false;
+
+            }
+        }
+        function setupSchedules(currentDateTime, awakeHour, sleepHour, pingNum, affectCurrent) {
+            schedules = [];
+            let today = new Date(currentDateTime); today.setHours(0); today.setMinutes(0); today.setSeconds(0); today.setMilliseconds(0);
+            let awake = roundUp(awakeHour); let sleep = roundDown(sleepHour); let count = pingNum;
+            strd += "<p>Awake hour roundup:" + awake + " </p><p>Sleep hour rounddown:" + sleep + " </p>";
+            let ch = currentDateTime.getHours();
+            let nightShiftUpdate = false; if ((awake > sleep) && (ch >= 0 && ch < sleep)) nightShiftUpdate = true;
+            if (lastDate == null) {   //Survey A
+                lastDate = new Date(currentDateTime);
+                lastDate.setDate(lastDate.getDate() + 30); lastDate.setHours(0); lastDate.setMinutes(0); lastDate.setSeconds(0); lastDate.setMilliseconds(0);
+                document.getElementById("lastday").innerHTML = lastDate.toLocaleDateString();
+                document.getElementById("affected").disabled = false; document.getElementById("affected").checked = false;
+                strd += "<p>Last survey date:" + lastDate.toString() + " </p>";
+                let days = getFollowingDays(currentDateTime, lastDate, true, 4, nightShiftUpdate);
+                let day5 = getNextDay(currentDateTime);
+                let cdt = new Date(currentDateTime);  cdt.setHours(cdt.getHours() + 1);
+                strd += "<h3>Schedule days:</h3>";
+                days.forEach(function (d) { strd += "<p>" + d.toLocaleDateString() + "</p>"; });
+                if (days.length > 0) {
+                    day5 = getNextDay(days[days.length - 1]);
+                    let rdt = new Date(day5); rdt.setHours(sleep - 2);
+                    strd += "<h3>Day 5:" + rdt.toString() + "</h3>"; strd += "<p>Day 5 is the datetime when the remind notification sent out. Normally it is 2 hours before the rounded sleep time</p>";
+
+                    days.forEach(function (d, index) {
+                        let ccc = count; let m = ''; let cdtf = currentDateTime;
+                        if (index == 0) {
+                            ccc = Math.max(1, count - 1); cdtf = cdt;
+                            m = "<p>This is your first time to schedule notification suppose be just after SurveyA+B, So the notification number should minus 1. the Notification count for today: " + ccc + ", but this number may be reduced again based on your current time.</p>";
+                        }
+                        var schObj = calculateSchedule(awake, sleep, ccc, d, cdtf, m);
+                        var selected = schObj.Selected;
+                        if (selected.length > 0) {
+                            selected.forEach(function (s) {
+                                schedules.push(s);
+                            });
+                        }
+                    });
+                }
+            }
+            else { //Survey B or change setting
+                let isInSchedules = checkInSchedule(currentDateTime);
+                if (isInSchedules) {
+                    //  let warningId = global.warningNotificationId;
+                    if (affectCurrent) {  //for change setting,  This part is hard core
+                        strd += "<h3>The current day is still in the previous scheduled list and you choose to affect current day. </h3>";
+                        strd += "<p>This is a simulation of you change notification setting after finish Survey A+B. Affect current day means from current time all the notification will be re-setup and the notification number for current day will be affected too, also the current will also be a factor to affect this number</p>";
+                        let f = getAffectedDay(currentDateTime); let day5 = getNextDay(currentDateTime);
+                        if (f == null) {  //No affected day, go normal schedule
+                            let days = getFollowingDays(currentDateTime, lastDate, true, 4, false);  //here is false, because it already affected day
+                            if (days.length > 0) {
+                                day5 = getNextDay(days[days.length - 1]);
+
+                                let rdt = new Date(day5); rdt.setHours(sleep - 2);
+                                strd += "<h3>Day 5:" + rdt.toString() + "</h3>"; strd += "<p>Day 5 is the datetime when the remind notification sent out. Normally it is 2 hours before the rounded sleep time</p>";
+                                days.forEach(function (d, index) {
+                                    var schObj = calculateSchedule(awake, sleep, count, d, currentDateTime, '');
+                                    var selected = schObj.Selected;
+                                    if (selected.length > 0) {
+                                        selected.forEach(function (s) {
+                                            schedules.push(s);
+                                        });
+                                    }
+                                });
+                            }
+                        }
+                        else {
+                            let affectedDay = f.AffectedDay; let leftOverCount = count - f.PassedCount;
+                            let days = getFollowingDays(affectedDay, lastDate, true, 4, false);
+                            if (days.length > 0) {
+                                day5 = getNextDay(days[days.length - 1]);
+
+                                let rdt = new Date(day5); rdt.setHours(sleep - 2);
+                                strd += "<h3>Day 5:" + rdt.toString() + "</h3>"; strd += "<p>Day 5 is the datetime when the remind notification sent out. Normally it is 2 hours before the rounded sleep time</p>";
+                                days.forEach(function (d, index) {
+                                    if (index == 0) {  //affected day
+                                        if (leftOverCount > 0) {
+                                            var schObj = calculateSchedule(awake, sleep, leftOverCount, d, currentDateTime, '');
+                                            var selected = schObj.Selected;
+                                            if (selected.length > 0) {
+                                                selected.forEach(function (s) {
+                                                    schedules.push(s);
+                                                });
+                                            }
+                                        }
+                                    } else {
+                                        var schObj = calculateSchedule(awake, sleep, count, d, currentDateTime, '');
+                                        var selected = schObj.Selected;
+                                        if (selected.length > 0) {
+                                            selected.forEach(function (s) {
+                                                schedules.push(s);
+                                            });
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    }
+                    else {  //for survey B, simply append new schedules
+                        strd += "<h3>The current day is still in the previous scheduled list and you choose not to affect current day. </h3>";
+                        strd += "<p>This is a simulation of the automatic process every time you finish survey B(provided you didn't miss the 4 days limitatiom) . It just calculate how many days to makeup the 4 days and setup schedules </p>";
+
+                        let nob = getNecessary(currentDateTime);
+                        let necessary = nob.Necessary; let moredays = nob.Days;
+                        if (!necessary || moredays == 0) { strd += "<h4>Already have 4 days schedules, no need to add more</h4>"; return; }
+                        //cancelSchedule(warningId);
+
+                        let startDay = getStartDay(); strd += "<p>Setup notification will not affect current day</p>";
+                        if (startDay > lastDate) return;
+                        let days = getFollowingDays(startDay, lastDate, true, Math.min(moredays, 4), false);
+                        let day5 = getNextDay(currentDateTime);
+                        if (days.length > 0) {
+                            day5 = getNextDay(days[days.length - 1]);
+                            let rdt = new Date(day5); rdt.setHours(sleep - 2);
+                            strd += "<h3>Day 5:" + rdt.toString() + "</h3>"; strd += "<p>Day 5 is the datetime when the remind notification sent out. Normally it is 2 hours before the rounded sleep time</p>";
+                            days.forEach(function (d, index) {
+                                var schObj = calculateSchedule(awake, sleep, count, d, currentDateTime, '');
+                                var selected = schObj.Selected;
+                                if (selected.length > 0) {
+                                    selected.forEach(function (s) {
+                                        schedules.push(s);
+                                    });
+                                }
+                            });
+                        }
+                    }
+                }
+                else {
+                    if (today > lastDate) { strd += "<h4>The survey is done, no any more notification is needed.</h4>"; return; }
+                    strd += "<h3>Current Datetime is NOT in schedule list setup before, so will be re-schedule maximun another 4 days based on the survey last day </h3>";
+                    strd += "<p>This happens when you come back to finish a survey B in the situation that you didn't do at least one time survey within that 4 days limitation, may even passed the day5 remind notification. It just sets up another 4 days notification to let you continue as long as your 30 days from the first time surveyA+B is not reached </p>";
+                    let days = getFollowingDays(currentDateTime, lastDate, true, 4, false);
+                    let day5 = getNextDay(currentDateTime);
+                    if (days.length > 0) {
+                        day5 = getNextDay(days[days.length - 1]);
+                        let rdt = new Date(day5); rdt.setHours(sleep - 2);
+                        strd += "<h3>Day 5:" + rdt.toString() + "</h3>"; strd += "<p>Day 5 is the datetime when the remind notification sent out. Normally it is 2 hours before the rounded sleep time</p>";
+                        days.forEach(function (d, index) {
+                            var schObj = calculateSchedule(awake, sleep, count, d, currentDateTime, '');
+                            var selected = schObj.Selected;
+                            if (selected.length > 0) {
+                                selected.forEach(function (s) {
+                                    schedules.push(s);
+                                });
+                            }
+                        });
+                    }
+                }
+            }
+        }
+        function calculateSchedule(awakeHour, sleepHour, count, date, current, passedInMessage) {
+            strd += '<h2>Schedule Date:' + date.toLocaleDateString() + '</h2>'; strd += passedInMessage;
+            //The current is the affected day time, if current is in this date, then thisd date will partially schedule
+            var selected = []; var selected1 = []; var strp = '';
+            if (current == null) current = new Date(2020, 1, 1, 0, 0, 0, 0);
+            var current1 = new Date(current); current1.setHours(0); current1.setMinutes(0); current1.setSeconds(0); current1.setMilliseconds(0);
+            //  if (date < current1) return { Selected: selected, LogInfo: str };  //if date is early than current date time, return empty directly, because go through will also return empty but will affect nightshift
+            var isWeekend = isWeekendDay(date);
+            //Step 1: Specify awake interval
+            strd += '<h3>Step 1: Specify awake interval</h3>';
+
+            var awakeInterval = sleepHour - awakeHour; if (awakeHour > sleepHour) awakeInterval += 24;
+            if (count > awakeInterval) count = awakeInterval;
+            strd += '<p>Date:' + date + ' Is Weekend:' + isWeekend + '</p>';
+            strd += '<p>Ping Num:' + count + '</p>';
+            strd += '<p>awakeHour:' + awakeHour + '</p>';
+            strd += '<p>sleepHour:' + sleepHour + '</p>';
+            strd += '<p>Awake interval:' + awakeInterval + '</p>';
+            //Step 2:Specify awake interval probability(including specify, adjust, second adjust)
+            strd += '<h3>Step 2:Specify awake interval probability(including specify, adjust, second adjust)</h3>';
+            var intervals = [];
+            strd += '<h4>Intervals:</h4>';
+            var totalPrimary = 0; var totalPrimaryWeekend = 0; var countNonPrimary = 0; var excessUnit = 0; var excessUnitWeekend = 0; var minPrimary = 100; var minPrimaryWeekend = 100;
+            if (awakeHour <= sleepHour) {
+                for (var i = awakeHour; i < sleepHour; i++) {
+                    var dt = new Date(date); dt.setMinutes(0); dt.setSeconds(0); dt.setMilliseconds(0); dt.setHours(i);
+                    if (dt < current) continue;   //if this interval has already passed, no neeed to schedule
+                    var found = primeTimeAwakeIntervals.find(function (element) {
+                        return element.awakeHour == i;
+                    });
+                    if (found != null) {
+                        if (isWeekend) {
+                            if (found.weekendPercentage < minPrimary) minPrimary = found.weekendPercentage;
+                            totalPrimary += found.weekendPercentage;
+                            var e = { DateTime: dt, Hour: i, Percentage: found.weekendPercentage, isPrimary: true, acculative: 0, isSelected: false, Over: 0 };
+                            intervals.push(e);
+                        }
+                        else {
+                            if (found.weekDayPercentage < minPrimary) minPrimary = found.weekDayPercentage;
+                            totalPrimary += found.weekDayPercentage;
+                            var e = { DateTime: dt, Hour: i, Percentage: found.weekDayPercentage, isPrimary: true, acculative: 0, isSelected: false, Over: 0 };
+                            intervals.push(e);
+                        }
+
+                    }
+                    else {
+                        countNonPrimary++;
+                        var e = { DateTime: dt, Hour: i, Percentage: 0, isPrimary: false, acculative: 0, isSelected: false, Over: 0 };
+                        intervals.push(e);
+                    }
+                }
+            }
+            else {   //Night shift
+                for (var i = awakeHour; i < 24; i++) {
+                    var dt = new Date(date); dt.setMinutes(0); dt.setSeconds(0); dt.setMilliseconds(0); dt.setHours(i);
+                    if (dt < current) continue;   //Very important
+                    var found = primeTimeAwakeIntervals.find(function (element) {
+                        return element.awakeHour == i;
+                    });
+                    if (found != null) {
+                        if (isWeekend) {
+                            if (found.weekendPercentage < minPrimary) minPrimary = found.weekendPercentage;
+                            totalPrimary += found.weekendPercentage;
+                            var e = { DateTime: dt, Hour: i, Percentage: found.weekendPercentage, isPrimary: true, acculative: 0, isSelected: false, Over: 0 };
+                            intervals.push(e);
+                        }
+                        else {
+                            if (found.weekDayPercentage < minPrimary) minPrimary = found.weekDayPercentage;
+                            totalPrimary += found.weekDayPercentage;
+                            var e = { DateTime: dt, Hour: i, Percentage: found.weekDayPercentage, isPrimary: true, acculative: 0, isSelected: false, Over: 0 };
+                            intervals.push(e);
+                        }
+                    }
+                    else {
+                        countNonPrimary++;
+                        var e = { DateTime: dt, Hour: i, Percentage: 0, isPrimary: false, acculative: 0, isSelected: false, Over: 0 };
+                        intervals.push(e);
+                    }
+                }
+                for (var i = 0; i < sleepHour; i++) {
+                    var dt = new Date(date); dt.setDate(date.getDate() + 1); dt.setHours(i); dt.setMinutes(0); dt.setSeconds(0); dt.setMilliseconds(0);
+                    if (dt < current) continue;
+                    var found = primeTimeAwakeIntervals.find(function (element) {
+                        return element.awakeHour == i;
+                    });
+                    if (found != null) {
+                        if (isWeekend) {
+                            if (found.weekendPercentage < minPrimary) minPrimary = found.weekendPercentage;
+                            totalPrimary += found.weekendPercentage;
+                            var e = { DateTime: dt, Hour: i, Percentage: found.weekendPercentage, isPrimary: true, acculative: 0, isSelected: false, Over: 1 };
+                            intervals.push(e);
+                        }
+                        else {
+                            if (found.weekDayPercentage < minPrimary) minPrimary = found.weekDayPercentage;
+                            totalPrimary += found.weekDayPercentage;
+                            var e = { DateTime: dt, Hour: i, Percentage: found.weekDayPercentage, isPrimary: true, acculative: 0, isSelected: false, Over: 1 };
+                            intervals.push(e);
+                        }
+                    }
+                    else {
+                        countNonPrimary++;
+                        var e = { DateTime: dt, Hour: i, Percentage: 0, isPrimary: false, acculative: 0, isSelected: false, Over: 1 };
+                        intervals.push(e);
+                    }
+                }
+            }
+            if (countNonPrimary > 0) {
+                excessUnit = (100 - totalPrimary) / countNonPrimary;
+            }
+            intervals.forEach(function (e) {
+                strd += '<p>Date:' + e.DateTime + ' Hour: ' + e.Hour + ' Percentage: ' + e.Percentage + ' IsPrimary: ' + e.isPrimary + '</p > ';
+            });
+            if (100 - totalPrimary > 0 && countNonPrimary > 0) {
+                strd += '<h3>We have to do First time adjust for non primary interval, since total 100 - totalPrimary > 0 and count of NonPrimary interval > 0</h3>';
+                intervals.forEach(function (e) {
+                    if (!e.isPrimary) {
+                        e.Percentage = excessUnit;
+                    }
+                });
+            }
+            strd += '<h4>Intervals after adjust:</h4>';
+            intervals.forEach(function (e) {
+                strd += '<p>Date:' + e.DateTime + ' Hour:' + e.Hour + ' Percentage:' + e.Percentage.toFixed(2) + ' IsPrimary:' + e.isPrimary + '</p>';
+            });
+            if (excessUnit > minPrimary) {
+                strd += '<h3>We have to do Second time adjust for non primary interval, since some non primary probability > minimum of primary probability</h3>';
+            }
+            if (excessUnit > minPrimary) {
+                var x1 = 100 - totalPrimary;
+                var y1 = x1 - minPrimary * countNonPrimary;
+                intervals.forEach(function (e) {
+                    if (e.isPrimary) {
+                        e.Percentage = e.Percentage + y1 * e.Percentage / totalPrimary;
+                    }
+                    else {
+                        e.Percentage = minPrimary;
+                    }
+                });
+            }
+            strd += '<h4>Intervals after second adjust:</h4>';
+            intervals.forEach(function (e) {
+                strd += '<p>Date:' + e.DateTime + ' Hour:' + e.Hour + ' Percentage:' + e.Percentage.toFixed(2) + ' IsPrimary:' + e.isPrimary + '</p>';
+            });
+            //Step 3:Pick distribution
+            strd += '<h3>Step 3:Pick distribution</h3>';
+            var acculative = 0;
+            intervals.forEach(function (e) {
+                acculative += e.Percentage;
+                e.acculative = acculative;
+            });
+            count = Math.min(count, intervals.length);
+            do {
+                var rnd = Math.random() * acculative;
+                var found = intervals.find(function (e) {
+                    return e.acculative > rnd;
+                });
+                if (found != null) {
+                    if (!selected1.includes(found.Hour)) { selected.push({ Datetime: found.DateTime, Hour: found.Hour, Over: found.Over, Day: date }); selected1.push(found.Hour); }
+                }
+            } while (selected.length < count);
+            intervals.forEach(function (e) {
+                if (selected1.includes(e.Hour)) e.isSelected = true;
+            });
+            strd += '<h4>Intervals list:</h4>';
+            intervals.forEach(function (e) {
+                strd += '<p> Hour:' + e.Hour + ' Percentage:' + e.Percentage.toFixed(2) + ' IsPrimary:' + e.isPrimary;
+                if (e.isSelected) strd += ' Is selected:<input type="checkbox" checked/>';
+                strd += '</p>';
+            });
+
+            //Step 4:Setup alarm
+            strd += '<h3>Step 4:Setup alarm(omitted), the Minutes will be randomly arranged</h3>';
+
+            selected.sort(function (a, b) {
+                var dateA = new Date(a.Datetime), dateB = new Date(b.Datetime); return dateA - dateB;
+            });
+            return { Selected: selected, LogInfo: strp };
+
+        }
+        function roundUp(time) {
+            var v = time.split(':');
+            var r = v[0]; var isSharp = true;
+            if (v[1] > 0 || v[2] > 0) {
+                r++; isSharp = false;
+            }
+            // return {Hour:parseInt(r),IsSharp:isSharp};
+            return parseInt(r);
+        }
+        function roundDown(time) {
+            var v = time.split(':');
+            var isSharp = true;
+            if (v[1] > 0 || v[2] > 0) isSharp = false;
+            //  return { Hour: parseInt(v[0]), IsSharp: isSharp };
+            return parseInt(v[0]);
+        }
+        function isWeekendDay(date) {
+            //   date = new Date(date.toString().replace(/-/g, '\/'));
+            var day = date.getDay();
+            var isWeekend = (day === 6) || (day === 0);
+            return isWeekend;
+        }
+        function getFollowingDays(currentDay, lastDay, includeCurrentDay, maxDays, nightShiftUpdate) {
+            //  var date = new Date(currentDay.toString().replace(/-/g, '\/'));
+            var date = new Date(currentDay);
+            date.setHours(0); date.setMinutes(0); date.setSeconds(0); date.setMilliseconds(0);
+            if (nightShiftUpdate) date.setDate(date.getDate() - 1);
+            if (lastDay == null) { lastDay = new Date(date); lastDay.setDate(date.getDate() + 30); }
+            else lastDay = new Date(lastDay);  //new Date(lastDay.toString().replace(/-/g, '\/'));
+            if (!includeCurrentDay) date.setDate(date.getDate() + 1);
+            var days = [];
+            if (date > lastDay) return days;
+            var timeDiff = (lastDay - date);
+            var ds = timeDiff / (1000 * 60 * 60 * 24);
+            var count = Math.min(maxDays, ds);
+            for (var i = 0; i < count; i++) {
+                var day = new Date(date);
+                day.setDate(date.getDate() + i);
+                days.push(day);
+            }
+            return days;
+        }
+        function getNextDay(date) {
+            var temp = new Date(date); temp.setHours(0); temp.setMinutes(0); temp.setSeconds(0); temp.setMilliseconds(0);
+            var date1 = new Date(temp); var nextDay = date1.setDate(temp.getDate() + 1);
+            return date1;
+        }
+        function getNonPassedCountOfADay(datetime) {  //This approach is socomplecated, use getAffectedDay approach
+            var count = 0; let hour = 23; let firstMatch = true;
+            let list = preSchedule;
+            let list1 = [];
+            let cur = new Date(datetime); cur.setHours(0); cur.setMinutes(0); cur.setSeconds(0); cur.setMilliseconds(0);
+            list.forEach(function (l) {
+                if (+l.Day == +cur && l.Datetime > datetime) {
+                    count++;
+                    if (firstMatch) { hour = l.Hour; firstMatch = false; }
+                }
+            });
+            return { Count: count, Hour: hour };
+        }
+        function getAffectedDay(datetime) {
+            let result = null;
+            let list = preSchedule;
+            var found = list.find(function (l) {
+                return l.Datetime > datetime;
+            });
+            if (found != null) {
+                let sch = found.Day;
+                let count = 0;
+                list.forEach(function (l) {
+                    if (+l.Day == +sch && +l.Datetime <= +datetime) count++;
+                });
+                result = { AffectedDay: sch, PassedCount: count };
+            }
+            return result;
+        }
+        function filterListByDate(date, list) {
+            date = new Date(date.toString().replace(/-/g, '\/'));
+            var date1 = new Date(date); date1.setHours(hour); date1.setMinutes(0); date1.setSeconds(0);
+            var date2 = new Date(date); date2.setHours(24); date2.setMinutes(0); date2.setSeconds(0);
+            var list1 = [];
+            list.forEach(function (l) {
+                //debugger;
+                //var a = +l; var b = +date1; var c = l.getTime(); var d = date1.getTime();
+                if (+l >= +date1 && l < date2)
+                    list1.push(l);
+            })
+            return list1;
+        }
+        function checkInSchedule(datetime) {
+            let result = false;
+            let list = preSchedule;
+            if (list.length > 0) {
+                var d1 = new Date(list[0].Datetime); d1.setHours(0); d1.setMinutes(0); d1.setSeconds(0); d1.setMilliseconds(0);
+                var d2 = new Date(list[list.length - 1].Datetime); d2.setHours(0); d2.setMinutes(0); d2.setSeconds(0); d2.setMilliseconds(0);
+                var d = new Date(datetime); d.setHours(0); d.setMinutes(0); d.setSeconds(0); d.setMilliseconds(0);
+                //  if (+d >= +d1 && +d <= +d2) result = true;
+                if (+d <= +d2) result = true;
+            }
+            return result;
+        }
+        function getStartDay() {
+            let list = preSchedule; let s = list[list.length - 1];
+            var d2 = new Date(s.Day); d2.setHours(0); d2.setMinutes(0); d2.setSeconds(0); d2.setMilliseconds(0);
+            d2.setDate(d2.getDate() + 1);
+            return d2;
+        }
+        function getNecessary(datetime) {  //datetime is in period:datetime< last schedule day
+            let result = false; let moredays = 0;
+            let list = preSchedule; let s = list[list.length - 1];
+            var d1 = new Date(datetime); d1.setHours(0); d1.setMinutes(0); d1.setSeconds(0); d1.setMilliseconds(0);
+            var d2 = new Date(s.Day); d2.setHours(0); d2.setMinutes(0); d2.setSeconds(0); d2.setMilliseconds(0);
+            var d3 = new Date(d1); d3.setDate(datetime.getDate() + 3);
+            if (d3 > lastDate) d3 = lastDate;
+            if (d3 > d2) {
+                result = true;
+                var timeDiff = Math.abs(d3 - d2);
+                var ds = timeDiff / (1000 * 60 * 60 * 24);
+                moredays = Math.min(ds, 4)
+            }
+            return { Necessary: result, Days: moredays };
+        }
+        function updateSchedulesList(schedules, startDatetime) {
+            let list = [];
+            var ds = new Date(startDatetime); ds.setHours(0); ds.setMinutes(0); ds.setSeconds(0); ds.setMilliseconds(0);
+            let list1 = preSchedule; let list2 = preSchedule;
+            list1.forEach(function (l) {
+                if (+l.Day >= +ds) list.push(l);
+            });
+            list2.forEach(function (l) { list.push(l); });
+            return list;
+        }
+    </script>
+</body>
+</html>
