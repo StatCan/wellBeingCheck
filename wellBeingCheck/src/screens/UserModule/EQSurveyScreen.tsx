@@ -349,7 +349,6 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
           source={{ uri: uri }}
           javaScriptEnabled={true}
           domStorageEnabled={true}
-          startInLoadingState={false}
           scalesPageToFit={true}
           startInLoadingState={true}
           injectedJavaScript={this.state.jsCode}
@@ -357,7 +356,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
           renderLoading={() => { return this.displaySpinner(); }}
           onLoadEnd={this.onLoadEnd()}
           onNavigationStateChange={(navState) => {
-            console.log('nav changed:' + navState.url);
+            console.log('EQSurveyScreen.OnNavigationStateChanged Ali:' + navState.url);
             if (navState.url == global.surveyThkUrlEng || navState.url == global.surveyThkUrlFre) {
               console.log('THank you count:' + count);
               if (global.fetchAction) {

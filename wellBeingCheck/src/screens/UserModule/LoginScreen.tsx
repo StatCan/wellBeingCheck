@@ -155,7 +155,7 @@ async onTestD(){
               </View>
 
              <View style={styles.logo}>
-                <Text>{resources.getString("Well-Being Check")}</Text>
+                <Text style={{ fontSize:20}}>{resources.getString("Well-Being Check")}</Text>
               </View>
 
               <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -262,6 +262,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 0,
     marginBottom: 50,
+    fontWeight:'bold',
+
   },
   label: {
     color: newTheme.colors.secondary,
