@@ -204,6 +204,7 @@ export async function setupSchedules(affectCurrent=false){
                  if (cont) {
                         let mm = Math.random() * 59;
                         ss.setMinutes(mm);
+                        schedules[index].Datetime = ss;
                  }
                  let notificationId=await setupNotification(ss,title,message);
                  console.log('notificationId:'+notificationId+'->'+ss.toString());
@@ -280,7 +281,7 @@ export async function setupSchedules(affectCurrent=false){
                          let ss = new Date(s.Datetime);
                          if (cont) {
                             let mm = Math.random() * 59;
-                            ss.setMinutes(mm);
+                            ss.setMinutes(mm);schedules[index].Datetime = ss;
                          }
                          let notificationId=await setupNotification(ss,title,message);
                          console.log('notificationId:'+notificationId+'->'+ss.toString());
@@ -329,7 +330,7 @@ export async function setupSchedules(affectCurrent=false){
                            let ss = new Date(s.Datetime);
                            if (cont) {
                                 let mm = Math.random() * 59;
-                                ss.setMinutes(mm);
+                                ss.setMinutes(mm);schedules[index].Datetime = ss;
                            }
                            let notificationId=await setupNotification(ss,title,message);
                            console.log('notificationId:'+notificationId+'->'+ss.toString());
@@ -372,7 +373,7 @@ export async function setupSchedules(affectCurrent=false){
                        let ss = new Date(s.Datetime);
                        if (cont) {
                           let mm = Math.random() * 59;
-                          ss.setMinutes(mm);
+                          ss.setMinutes(mm);schedules[index].Datetime = ss;
                        }
                        let notificationId=await setupNotification(ss,title,message);
                        console.log('notificationId:'+notificationId+'->'+ss.toString());

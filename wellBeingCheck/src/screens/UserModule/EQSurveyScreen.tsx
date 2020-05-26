@@ -343,7 +343,8 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
         {(this.state.webviewLoaded) ? null : <ActivityIndicator size="large" color="lightblue" style={{ position: 'absolute', top: '50%', left: '50%', zIndex: 20 }} />}
         <WebView
           ref={(view) => this.webView = view} incognito={true} useWebKit={true}
-          style={styles.webview}
+          style={[styles.webview]}
+          containerStyle={{ flex: 1}}
           applicationNameForUserAgent={userAgent}
           scrollEnabled={true}
           source={{ uri: uri }}
@@ -411,10 +412,10 @@ const styles = StyleSheet.create({
     marginTop: 100
   },
   webview: {
-    //  flex: 1,
+    //flex: 1,
     marginTop: 0,
     width: deviceWidth,
-    height: deviceHeight-40     //height: deviceHeight + 2000
+    height:deviceHeight-40     //height: deviceHeight + 2000
   },
   logo: { width: 300, height: 40 },
 });
