@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     alignSelf: 'baseline',
     fontSize: 22,
     fontWeight: 'bold',
-    color:'#656262',
+    color:'#000',
   },
   paragraph: {
     alignSelf: 'baseline',
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   text: {
-    color: '#656262',
+    color: '#000',
     fontSize: 15,
 
   },
