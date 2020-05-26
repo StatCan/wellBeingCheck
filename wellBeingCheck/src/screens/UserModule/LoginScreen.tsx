@@ -142,10 +142,7 @@ async onTestD(){
           <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}>
 
-              <View style={styles.logoClear}>
-                <LogoClear />
-              </View>
-
+             
               <View style={styles.toggleLink}>
                 <TouchableOpacity
                   onPress={() => this.toggleLanguage()}
@@ -153,9 +150,14 @@ async onTestD(){
                   <Text>{resources.getString("Language")}</Text>
                 </TouchableOpacity>
               </View>
+              <View style={styles.logoClear}>
+                <LogoClear />
+              </View>
 
              <View style={styles.logo}>
-                <Text style={{ fontSize:20}}>{resources.getString("Well-Being Check")}</Text>
+                <Text style={{ fontSize:20}}>
+                  {resources.getString("Well-Being Check")}
+                </Text>
               </View>
 
               <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -240,7 +242,8 @@ const styles = StyleSheet.create({
     position: 'relative',
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    bottom: 140,
+    marginBottom:20
+   // bottom: 140,
   },
   logoClear: {
    
@@ -261,7 +264,7 @@ const styles = StyleSheet.create({
   logo: {
     alignItems: 'center',
     marginTop: 0,
-    marginBottom: 50,
+    marginBottom: 20,
     fontWeight:'bold',
 
   },

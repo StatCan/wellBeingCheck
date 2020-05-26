@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   text: {
-    color: '#656262',
+    color: '#000',
 
   },
   italic: {
