@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: 'bold',
     marginTop: 40,
-    color: '#656262',
+    color: '#000',
    // fontFamily: 'Lato-Black',
   },
   label: {
@@ -266,7 +266,7 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   text: {
-    color: '#656262',
+    color: '#000',
    // fontFamily: 'Lato-Regular',
   },
   italic: {
