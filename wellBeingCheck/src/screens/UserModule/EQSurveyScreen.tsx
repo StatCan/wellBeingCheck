@@ -381,6 +381,10 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
               }
               else this.props.navigation.navigate('Dashboard');
             }
+            else {
+               let jsCode2='document.getElementsByClassName("topconteiner")[0].scrollTop=0;true;';
+               if (Platform.OS == 'ios')this.webView.injectJavaScript(jsCode2);
+            }
           }}
           onMessage={event => {
             var ss = event.nativeEvent.data;
