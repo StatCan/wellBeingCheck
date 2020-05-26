@@ -344,7 +344,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
         <WebView
           ref={(view) => this.webView = view} incognito={true} useWebKit={true}
           style={[styles.webview]}
-          containerStyle={{ flex: 0}}
+          containerStyle={{ flex: 1}}
           applicationNameForUserAgent={userAgent}
           scrollEnabled={true}
           source={{ uri: uri }}
@@ -385,7 +385,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
               let disCode1 = 'const meta = document.createElement("meta"); meta.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"); meta.setAttribute("name", "viewport"); document.getElementsByTagName("head")[0].appendChild(meta);';
                console.log('Injection now...............................');
                let jsCode2='document.getElementsByClassName("topconteiner")[0].scrollTop=0;true;';
-               if (Platform.OS == 'ios')this.webView.injectJavaScript(disCode1);
+               if (Platform.OS == 'ios'this.setState({ jsCode: disCode1 });
             }
           }}
           onMessage={event => {
