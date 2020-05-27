@@ -219,7 +219,37 @@ class AboutScreen extends React.Component<Props, AboutState> {
                             <Text>{resources.getString("faq.c1.q2.a")}</Text>
                           </View>
                         </List.Accordion>
+
+                        <List.Accordion
+                          title={resources.getString("faq.c1.q3")}
+                          expanded={this.state.faqC1Q2Expanded}
+                          onPress={this._handleFaqC1Q2Expand}
+                        >
+                          <View style={styles.faqListItem}>
+                            <Text>{resources.getString("faq.c1.q3.a")}</Text>
+                          </View>
+                        </List.Accordion>
                       </List.Accordion>
+
+                      <List.Accordion
+                          title={resources.getString("faq.c1.q4")}
+                          expanded={this.state.faqC1Q2Expanded}
+                          onPress={this._handleFaqC1Q2Expand}
+                        >
+                          <View style={styles.faqListItem}>
+                            <Text>{resources.getString("faq.c1.q4.a")}</Text>
+                          </View>
+                        </List.Accordion>
+
+                        <List.Accordion
+                          title={resources.getString("faq.c1.q5")}
+                          expanded={this.state.faqC1Q2Expanded}
+                          onPress={this._handleFaqC1Q2Expand}
+                        >
+                          <View style={styles.faqListItem}>
+                            <Text>{resources.getString("faq.c1.q5.a")}</Text>
+                          </View>
+                        </List.Accordion>
                     </View>
 
                     {/* Category 2 */}
@@ -227,6 +257,147 @@ class AboutScreen extends React.Component<Props, AboutState> {
                       <List.Accordion
                         style={styles.faqCategories}
                         title={resources.getString("faq.category2")}
+                        expanded={this.state.faqC2Expanded}
+                        onPress={this._handleFaqC2Expand}
+                      >
+                        <List.Accordion
+                          title={resources.getString("faq.c2.q1")}
+                          expanded={this.state.faqC2Q1Expanded}
+                          onPress={this._handleFaqC2Q1Expand}
+                        >
+                          <View style={styles.faqListItem}>
+                            <Text>{resources.getString("faq.c2.q1.a")}</Text>
+                          </View>
+                        </List.Accordion>
+                        <List.Accordion
+                          title={resources.getString("faq.c2.q2")}
+                          expanded={this.state.faqC2Q2Expanded}
+                          onPress={this._handleFaqC2Q2Expand}
+                        >
+                          <View style={styles.faqListItem}>
+                            <Text>{resources.getString("faq.c2.q2.a")}</Text>
+                          </View>
+                        </List.Accordion>
+
+                        <List.Accordion
+                          title={resources.getString("faq.c2.q3")}
+                          expanded={this.state.faqC2Q2Expanded}
+                          onPress={this._handleFaqC2Q2Expand}
+                        >
+                          <View style={styles.faqListItem}>
+                            <Text>{resources.getString("faq.c2.q3.a")}</Text>
+                          </View>
+                        </List.Accordion>
+
+
+                        <List.Accordion
+                          title={resources.getString("faq.c2.q4")}
+                          expanded={this.state.faqC2Q2Expanded}
+                          onPress={this._handleFaqC2Q2Expand}
+                        >
+                          <View style={styles.faqListItem}>
+                            <Text>{resources.getString("faq.c2.q4.a")}</Text>
+                          </View>
+                        </List.Accordion>
+
+
+                        <List.Accordion
+                          title={resources.getString("faq.c2.q5")}
+                          expanded={this.state.faqC2Q2Expanded}
+                          onPress={this._handleFaqC2Q2Expand}
+                        >
+                          <View style={styles.faqListItem}>
+                            <Text>{resources.getString("faq.c2.q5.a")}</Text>
+                          </View>
+                        </List.Accordion>
+
+
+                        <List.Accordion
+                          title={resources.getString("faq.c2.q6")}
+                          expanded={this.state.faqC2Q2Expanded}
+                          onPress={this._handleFaqC2Q2Expand}
+                        >
+                          <View style={styles.faqListItem}>
+                            <Text>{resources.getString("faq.c2.q6.a")}</Text>
+                          </View>
+                        </List.Accordion>
+
+                        <List.Accordion
+                          title={resources.getString("faq.c2.q7")}
+                          expanded={this.state.faqC2Q2Expanded}
+                          onPress={this._handleFaqC2Q2Expand}
+                        >
+                          <View style={styles.faqListItem}>
+                            <Text>{resources.getString("faq.c2.q7.a")}</Text>
+                          </View>
+                        </List.Accordion>
+                        
+                      </List.Accordion>
+                    </View>
+
+                    {/* Category 3 */}
+                    <View style={styles.faqViewAns}>
+                      <List.Accordion
+                        style={styles.faqCategories}
+                        title={resources.getString("faq.category3")}
+                        expanded={this.state.faqC2Expanded}
+                        onPress={this._handleFaqC2Expand}
+                      >
+                        <List.Accordion
+                          title={resources.getString("faq.c2.q1")}
+                          expanded={this.state.faqC2Q1Expanded}
+                          onPress={this._handleFaqC2Q1Expand}
+                        >
+                          <View style={styles.faqListItem}>
+                            <Text>{resources.getString("faq.c2.q1.a")}</Text>
+                          </View>
+                        </List.Accordion>
+                        <List.Accordion
+                          title={resources.getString("faq.c2.q2")}
+                          expanded={this.state.faqC2Q2Expanded}
+                          onPress={this._handleFaqC2Q2Expand}
+                        >
+                          <View style={styles.faqListItem}>
+                            <Text>{resources.getString("faq.c2.q2.a")}</Text>
+                          </View>
+                        </List.Accordion>
+                      </List.Accordion>
+                    </View>
+                  
+                    {/* Category 4 */}
+                    <View style={styles.faqViewAns}>
+                      <List.Accordion
+                        style={styles.faqCategories}
+                        title={resources.getString("faq.category4")}
+                        expanded={this.state.faqC2Expanded}
+                        onPress={this._handleFaqC2Expand}
+                      >
+                        <List.Accordion
+                          title={resources.getString("faq.c2.q1")}
+                          expanded={this.state.faqC2Q1Expanded}
+                          onPress={this._handleFaqC2Q1Expand}
+                        >
+                          <View style={styles.faqListItem}>
+                            <Text>{resources.getString("faq.c2.q1.a")}</Text>
+                          </View>
+                        </List.Accordion>
+                        <List.Accordion
+                          title={resources.getString("faq.c2.q2")}
+                          expanded={this.state.faqC2Q2Expanded}
+                          onPress={this._handleFaqC2Q2Expand}
+                        >
+                          <View style={styles.faqListItem}>
+                            <Text>{resources.getString("faq.c2.q2.a")}</Text>
+                          </View>
+                        </List.Accordion>
+                      </List.Accordion>
+                    </View>
+
+                    {/* Category 5 */}
+                    <View style={styles.faqViewAns}>
+                      <List.Accordion
+                        style={styles.faqCategories}
+                        title={resources.getString("faq.category5")}
                         expanded={this.state.faqC2Expanded}
                         onPress={this._handleFaqC2Expand}
                       >
@@ -286,7 +457,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
             </ScrollView>
           </SafeAreaView>
         </BackgroundWhite>
-        <Button style={styles.btnNext}  
+        <Button style={styles.btnNext}
           mode="contained"
           onPress={this._onNextBtnHandle}>
           <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
