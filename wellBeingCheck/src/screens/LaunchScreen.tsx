@@ -27,7 +27,8 @@ type LaunchState = {
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
-YellowBox.ignoreWarnings(['Require cycle:',]);
+YellowBox.ignoreWarnings(['Require cycle:','Setting a timer']);
+console.ignoredYellowBox = ['Require cycle:','Setting a timer'];
 class LaunchScreen extends React.Component<Props, LaunchState> {
 
   constructor(LaunchState) {

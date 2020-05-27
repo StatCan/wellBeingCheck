@@ -29,7 +29,8 @@ type HomeState = {
   showThankYou: boolean,
   thankYouText: string,
 }
-YellowBox.ignoreWarnings(['Require cycle:'])
+YellowBox.ignoreWarnings(['Require cycle:','Setting a timer']);
+console.ignoredYellowBox = ['Require cycle:','Setting a timer'];
 const WEB_API_BASE_URL = global.webApiBaseUrl + 'api';
 
 class Dashboard extends React.Component<Props, HomeState> {
@@ -59,7 +60,7 @@ class Dashboard extends React.Component<Props, HomeState> {
   onSessionOut(){
     let result=false;
     Alert.alert(
-       resources.getString("session.modal.title")+' --->test',
+       resources.getString("session.modal.title"),
        resources.getString("session.modal.message"),
        [
          { text: resources.getString("session.modal.sign_in"), onPress: () => {result=false;this.props.navigation.navigate('LoginScreen'); } },

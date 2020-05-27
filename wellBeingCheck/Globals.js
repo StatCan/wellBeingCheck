@@ -52,7 +52,6 @@ global.sleepHour='22:00';
 global.schedules=[];
 global.lastDate=null;
 global.warningNotificationId=null;
-global.sessionTimeOutDuration = 60000*2; //900000 = 15 min, 420000 = 7 min
 global.paradataSaved=false;
 global.passwordSaved=false;
 global.notificationState=true;
@@ -63,7 +62,7 @@ global.fetchCount=8;
 global.globalTimer =null;
 global.globalTick=0;
 global.globalTimeOutCallback=null;
-global.timerTime=30000*1;
+global.timerTime=900000;//30000*1;
 global.repeatCheck=async ()=>{
     console.log('Timer check..............................');
     if (global.globalTick>0) {

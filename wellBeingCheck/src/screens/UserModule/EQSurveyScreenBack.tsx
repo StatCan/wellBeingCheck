@@ -36,89 +36,9 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     jsCode = clearCookie + 'document.addEventListener("message", function (message) { document.getElementById("langtest").click(); });var btn = document.createElement("button");btn.style.visibility ="hidden";btn.onclick = switchlang;btn.setAttribute("id", "langtest");document.body.appendChild(btn);    function switchlang() { var a = document.querySelector("a.sc-js-langchange");var href = a.href;if (href.indexOf("/q/fr")>0) {var res = href.replace("/q/fr", "/q/en");a.setAttribute("href", res);a.click();} else if (href.indexOf("/q/en")>0) {var res = href.replace("/q/en", "/q/fr");a.setAttribute("href", res);a.click();} }';
     this.state = ({ Sacode: '', jsCode: disCode + jsCode, webviewLoaded: false });
     setTimeout(() => { this.setState({ webviewLoaded: true }) }, 4000);
-
-   /* --------------------Session Handler--------------------------- */
-    //used to handle session
-    this._panResponder = PanResponder.create({
-      // Ask to be the responder:
-      onStartShouldSetPanResponder: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-      onStartShouldSetPanResponderCapture: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-
-      onMoveShouldSetPanResponder: (evt, gestureState) => {
-        // Listen for your events and show UI feedback here
-        this._initSessionTimer()
-        return false;
-      },
-      onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-      onPanResponderGrant: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-      onPanResponderMove: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-      onPanResponderTerminationRequest: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false
-      },
-      onPanResponderRelease: (evt, gestureState) => {
-        // This wont get called
-        this._initSessionTimer()
-        return true;
-      },
-      onPanResponderTerminate: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-      onShouldBlockNativeResponder: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-    });
   }
 
   componentDidMount() {
-    //Session Handler
-    this._initSessionTimer();
-  //  global.showThankYou ==20;this.props.navigation.navigate('Dashboard');
-  }
-
-  _handleSessionTimeOutRedirect = () => {
-    Updates.reload();
-  }
-
-  _initSessionTimer() {
-    clearInterval(this.timer)
-    this.timer = setTimeout(() =>
-      this._expireSession()
-      ,
-      global.sessionTimeOutDuration)
-  }
-
-  _expireSession() {
-    Alert.alert(
-      resources.getString("session.modal.title"),
-      resources.getString("session.modal.message"),
-      [
-        { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
-      ],
-      { cancelable: false }
-    )
-  }
-
-  componentWillUnmount() {
-    //Session Handler
-    clearInterval(this.timer)
   }
 
   async handleSurveyAdone(){
@@ -331,12 +251,12 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     return (
       <View
         style={{ flex: 1, marginTop: 40 }}
-        {...this._panResponder.panHandlers}
+        {...global.panResponder.panHandlers}
       >
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')} 
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')}
                             style={{ marginLeft: 5, marginTop: 10,marginBottom:5 }}>
-                <Image source={require('../../assets/ic_logo_loginmdpi.png')} 
+                <Image source={require('../../assets/ic_logo_loginmdpi.png')}
                        style={{ width: 38, height: 38 }} />
           </TouchableOpacity>
         </View>

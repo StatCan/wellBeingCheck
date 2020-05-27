@@ -4,7 +4,7 @@ import { Provider as PaperProvider, Title } from 'react-native-paper';
 import Button from '../../components/Button';
 import { resources } from '../../../GlobalResources';
 import { newTheme } from '../../core/theme';
-import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
+import { NavigationParams, NavigationScreenProp, NavigationState,NavigationEvents, } from 'react-navigation';
 import { FailureType } from '../../api/back-end.service';
 import { Updates } from 'expo';
 
@@ -22,7 +22,7 @@ type ScreenState = {
 const height = Math.floor(Dimensions.get('window').height) - 100;
 const width = Math.floor(Dimensions.get('window').width);
 let startX = 0; let index = 0;
-var busyCheck=null;
+var busyCheck=null;let cc=0;
 class UserResultsScreen extends React.Component<Props, ScreenState> {
   _panResponder: any;
   timer = null
@@ -219,6 +219,7 @@ console.log('pppppaaaaggggggggggeeeeee:'+index);
             </View>
           </View>
         </ImageBackground>
+        <NavigationEvents onDidFocus={() =>{this.loadImage();this.setState({ title: resources.getString("Your feelings")});}} />
         <Button style={styles.btnNext}
           mode="contained"
           onPress={() => { global.currentView = 0;  global.globalTick=0;this.props.navigation.navigate('Dashboard') }}>
