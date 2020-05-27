@@ -344,21 +344,62 @@ class AboutScreen extends React.Component<Props, AboutState> {
                         onPress={this._handleFaqC2Expand}
                       >
                         <List.Accordion
-                          title={resources.getString("faq.c2.q1")}
+                          title={resources.getString("faq.c3.q1")}
                           expanded={this.state.faqC2Q1Expanded}
                           onPress={this._handleFaqC2Q1Expand}
                         >
                           <View style={styles.faqListItem}>
-                            <Text>{resources.getString("faq.c2.q1.a")}</Text>
+                            <Text>{resources.getString("faq.c3.q1.a")}</Text>
                           </View>
                         </List.Accordion>
                         <List.Accordion
-                          title={resources.getString("faq.c2.q2")}
+                          title={resources.getString("faq.c3.q2")}
                           expanded={this.state.faqC2Q2Expanded}
                           onPress={this._handleFaqC2Q2Expand}
                         >
                           <View style={styles.faqListItem}>
-                            <Text>{resources.getString("faq.c2.q2.a")}</Text>
+                            <Text>{resources.getString("faq.c3.q2.a")}</Text>
+                          </View>
+                        </List.Accordion>
+
+                        <List.Accordion
+                          title={resources.getString("faq.c3.q3")}
+                          expanded={this.state.faqC2Q2Expanded}
+                          onPress={this._handleFaqC2Q2Expand}
+                        >
+                          <View style={styles.faqListItem}>
+                            <Text>{resources.getString("faq.c3.q3.a")}</Text>
+                          </View>
+                        </List.Accordion>
+
+
+                        <List.Accordion
+                          title={resources.getString("faq.c3.q4")}
+                          expanded={this.state.faqC2Q2Expanded}
+                          onPress={this._handleFaqC2Q2Expand}
+                        >
+                          <View style={styles.faqListItem}>
+                            <Text>{resources.getString("faq.c3.q4.a")}</Text>
+                          </View>
+                        </List.Accordion>
+
+                        <List.Accordion
+                          title={resources.getString("faq.c3.q5")}
+                          expanded={this.state.faqC2Q2Expanded}
+                          onPress={this._handleFaqC2Q2Expand}
+                        >
+                          <View style={styles.faqListItem}>
+                            <Text>{resources.getString("faq.c3.q5.a")}</Text>
+                          </View>
+                        </List.Accordion>
+
+                        <List.Accordion
+                          title={resources.getString("faq.c3.q6")}
+                          expanded={this.state.faqC2Q2Expanded}
+                          onPress={this._handleFaqC2Q2Expand}
+                        >
+                          <View style={styles.faqListItem}>
+                            <Text>{resources.getString("faq.c3.q6.a")}</Text>
                           </View>
                         </List.Accordion>
                       </List.Accordion>
@@ -373,21 +414,12 @@ class AboutScreen extends React.Component<Props, AboutState> {
                         onPress={this._handleFaqC2Expand}
                       >
                         <List.Accordion
-                          title={resources.getString("faq.c2.q1")}
+                          title={resources.getString("faq.c4.q1")}
                           expanded={this.state.faqC2Q1Expanded}
                           onPress={this._handleFaqC2Q1Expand}
                         >
                           <View style={styles.faqListItem}>
-                            <Text>{resources.getString("faq.c2.q1.a")}</Text>
-                          </View>
-                        </List.Accordion>
-                        <List.Accordion
-                          title={resources.getString("faq.c2.q2")}
-                          expanded={this.state.faqC2Q2Expanded}
-                          onPress={this._handleFaqC2Q2Expand}
-                        >
-                          <View style={styles.faqListItem}>
-                            <Text>{resources.getString("faq.c2.q2.a")}</Text>
+                            <Text>{resources.getString("faq.c4.q1.a")}</Text>
                           </View>
                         </List.Accordion>
                       </List.Accordion>
@@ -402,21 +434,21 @@ class AboutScreen extends React.Component<Props, AboutState> {
                         onPress={this._handleFaqC2Expand}
                       >
                         <List.Accordion
-                          title={resources.getString("faq.c2.q1")}
+                          title={resources.getString("faq.c5.q1")}
                           expanded={this.state.faqC2Q1Expanded}
                           onPress={this._handleFaqC2Q1Expand}
                         >
                           <View style={styles.faqListItem}>
-                            <Text>{resources.getString("faq.c2.q1.a")}</Text>
+                            <Text>{resources.getString("faq.c5.q1.a")}</Text>
                           </View>
                         </List.Accordion>
                         <List.Accordion
-                          title={resources.getString("faq.c2.q2")}
+                          title={resources.getString("faq.c5.q2")}
                           expanded={this.state.faqC2Q2Expanded}
                           onPress={this._handleFaqC2Q2Expand}
                         >
                           <View style={styles.faqListItem}>
-                            <Text>{resources.getString("faq.c2.q2.a")}</Text>
+                            <Text>{resources.getString("faq.c5.q2.a")}</Text>
                           </View>
                         </List.Accordion>
                       </List.Accordion>
