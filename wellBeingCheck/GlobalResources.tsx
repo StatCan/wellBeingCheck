@@ -298,57 +298,62 @@ export const resources = {
 
              //category3-Question1
              "faq.c3.q1": "What notifications will I receive?",
-             "faq.c3.q1.a": "Category 2 question 1 Answer",
+             "faq.c3.q1.a": "The app will send you a notification when it is time to complete a Well-being Check. These notifications are sent at random times based on the parameters you have chosen in your settings menu. You can change your settings at any time.",
               
              //category3-Question2
              "faq.c3.q2": "Can I disable notifications?",
-             "faq.c3.q2.a": "Category 2 question 2 Answer",
+             "faq.c3.q2.a": "Notifications are an essential part of this study as they let you know when a Well-being Check is available to be completed. If you need to turn off notifications, you can do it through the Settings page.",
              
              //category3-Question3
              "faq.c3.q3": "How do I change my settings?",
-             "faq.c3.q3.a": "Category 2 question 2 Answer",
+             "faq.c3.q3.a": "You can change your settings at any time through the Settings menu, located on the app homepage. ",
              
              //category3-Question4
              "faq.c3.q4": "Can I complete a Well-being Check if I have not received a notification?",
-             "faq.c3.q4.a": "Category 2 question 2 Answer",
+             "faq.c3.q4.a": "Of course! You can complete a Well-being Check at any time by pressing START, located on the app homepage.",
  
              //category3-Question5
              "faq.c3.q5": "What if I have missed a notification and have now received another?",
-             "faq.c3.q5.a": "Category 2 question 2 Answer",
+             "faq.c3.q5.a": "Not a problem! While our goal is for you to respond to all notifications, we understand life can be busy and sometimes a notification will be missed. Respond once based on what you are doing and who you are with when you receive the second notification. ",
              
              //category3-Question6
              "faq.c3.q6": "Why am I no longer receiving notifications?",
-             "faq.c3.q6.a": "Category 2 question 2 Answer",
+             "faq.c3.q6.a": "If you have not completed a Well-being Check in the past 4 days, the app will stop sending you notifications. You can start receiving notifications again by pressing START, located on the app homepage, and completing a Well-being Check.\n\n"+
+             "Well-being Check will send you notifications for up to 30 days total. After this period is complete, your participation in the study has ended and you will no longer receive notifications.\n\n"+
+             "If neither of these scenarios reflect your situation, please contact us at 1-877-949-9492.",
 
             //---------------category4---------------
             "faq.category4": "The Results menu",
 
             //category4-Question1
             "faq.c4.q1": "What does the Results menu tell me? How can I interpret my results?",
-            "faq.c4.q1.a": "Category 2 question 1 Answer",
+            "faq.c4.q1.a": "Category 2 question 1 AnswerThe data visualizations on the Results menu display a snapshot of your self-assessed feelings and how they relate to what you are doing, who you are with, and where you are.\n\n"+
+            "For ease of interpretation, your activities and companions have been grouped. Please note, all questions about feelings are based on a scale of 1 meaning ‘not at all’, and 10 meaning ’very’. Based on this, a high rating of feeling happy compared to a high rating of feeling anxious would be interpreted quite differently.\n\n"+
+            "These results are reported in real time and have not been validated by Statistics Canada. Caution should be exercised when interpreting the data.",
            
             //---------------category5---------------
             "faq.category5": "Technical difficulties",
              
             //category5-Question1
             "faq.c5.q1": "I cannot access the questionnaires or my results",
-            "faq.c5.q1.a": "Category 2 question 1 Answer",
+            "faq.c5.q1.a": "The questionnaire portal and Results menu require a connection to data or wi-fi to function. If the problem persists after checking your connection, please contact us at 1-877-949-9492.",
             
             //category5-Question3
             "faq.c5.q2": "I am experiencing other technical difficulties",
-            "faq.c5.q2.a": "Category 2 question 2 Answer",
+            "faq.c5.q2.a": "If you are experiencing display issues, crashes, or other bugs please contact us at 1-877-949-9492.",
             
             //category5-Question4
             "faq.c5.q3": "Can I download the app on multiple devices and sync it?",
-            "faq.c5.q3.a": "Category 2 question 2 Answer",
+            "faq.c5.q3.a": "The app does not have syncing capabilities.\n\n"+
+            "Your participation in the study is based on the device you first downloaded the Well-being Check app on. If you download the app on a different device, you will be identified as a new user for security purposes and your previous responses will no longer be accessible to you through the Results menu.",
 
             //category5-Question5
             "faq.c5.q4": "How much memory does the app require?",
-            "faq.c5.q4.a": "Category 2 question 2 Answer",
+            "faq.c5.q4.a": "Well-being Check requires 53 MB on Apple devices, and 90 MB on Android devices. ",
 
             //category5-Question5
             "faq.c5.q5": "How much data does the app require?",
-            "faq.c5.q5.a": "Category 2 question 2 Answer",
+            "faq.c5.q5.a": "[tbd]",
 
             "offline":"You are offline, try it later.",
             "securityIssue":"Internal server error, Try again, if same thing would happen again contact StatCan",
