@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
   },
   text:{
     fontSize:15,
-    color: '#656262',
+    color: '#000',
   }
 });
 

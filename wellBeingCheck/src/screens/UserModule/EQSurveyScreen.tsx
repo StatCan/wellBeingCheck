@@ -343,7 +343,8 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
         {(this.state.webviewLoaded) ? null : <ActivityIndicator size="large" color="lightblue" style={{ position: 'absolute', top: '50%', left: '50%', zIndex: 20 }} />}
         <WebView
           ref={(view) => this.webView = view} incognito={true} useWebKit={true}
-          style={styles.webview}
+          style={[styles.webview]}
+          containerStyle={{ flex: 1}}
           applicationNameForUserAgent={userAgent}
           scrollEnabled={true}
           source={{ uri: uri }}
@@ -380,6 +381,14 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
               }
               else this.props.navigation.navigate('Dashboard');
             }
+            else {
+              let disCode1 = 'const meta = document.createElement("meta"); meta.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"); meta.setAttribute("name", "viewport"); document.getElementsByTagName("head")[0].appendChild(meta);';
+               console.log('Injection now...............................');
+               let jsCode2='document.getElementsByClassName("topconteiner")[0].scrollTop=0;true;';
+                let jsCode3='window.scrollTo(0, 0);true;';
+             //  if (Platform.OS == 'ios')this.setState({jsCode: disCode1 });
+              if (Platform.OS == 'ios')this.webView.injectJavaScript(jsCode3);
+            }
           }}
           onMessage={event => {
             var ss = event.nativeEvent.data;
@@ -411,10 +420,10 @@ const styles = StyleSheet.create({
     marginTop: 100
   },
   webview: {
-    //  flex: 1,
+    //flex: 1,
     marginTop: 0,
     width: deviceWidth,
-    height: deviceHeight-40     //height: deviceHeight + 2000
+    height:deviceHeight-40     //height: deviceHeight + 2000
   },
   logo: { width: 300, height: 40 },
 });

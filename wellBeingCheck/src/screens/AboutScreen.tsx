@@ -546,10 +546,10 @@ const styles = StyleSheet.create({
   },
   appVersion:
   {
-    color: '#656262',
+    color: 'black',
   },
   text: {
-    color: '#656262',
+    color: 'black',
     // fontFamily: 'Lato-Regular',
   },
   italic: {
