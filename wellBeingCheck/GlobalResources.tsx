@@ -235,16 +235,120 @@ export const resources = {
 
             //FAQ
             "faq.title": "FAQ",
-            "faq.category1": "Category 1",
-            "faq.c1.q1": "Category 1 question 1",
-            "faq.c1.q1.a": "Category 1 question 1 Answer",
-            "faq.c1.q2": "Category 1 question 2",
-            "faq.c1.q2.a": "Category 1 question 2 Answer",
-            "faq.category2": "Category 2",
-            "faq.c2.q1": "Category 2 question 1",
-            "faq.c2.q1.a": "Category 2 question 1 Answer",
-            "faq.c2.q2": "Category 2 question 2",
-            "faq.c2.q2.a": "Category 2 question 2 Answer",
+            //---------------category1---------------
+            "faq.category1": "General",
+            
+            //category1-Question1
+            "faq.c1.q1": "Is this a legitimate Statistics Canada study?",
+            "faq.c1.q1.a": "Yes. More information can be found on Statistics Canada’s website: http://www.statcan.gc.ca",
+            
+            //category1-Question2
+            "faq.c1.q2": "Am I required to complete this study?",
+            "faq.c1.q2.a": "No. Participation is voluntary.",
+
+            //category1-Question3
+            "faq.c1.q3": "Who is participating in this study? ",
+            "faq.c1.q3.a": "Anyone in Canada over 15 years of age with a compatible smartphone or tablet can download Well-being Check from GooglePlay or the App Store to participate. You can participate with or without an invitation code. Please share this information with your friends so they can download the app too!",
+            
+            //category1-Question4
+            "faq.c1.q4": "Why are you conducting this study?",
+            "faq.c1.q4.a": "The purpose of this study is to better understand the everyday well-being of Canadians by asking in the moment questions about their activities and feelings. For more information about this study, please visit",
+
+            //category1-Question5
+            "faq.c1.q5": "How long will it take me to complete the study?",
+            "faq.c1.q5.a": "Daily Well-being Checks should take less than a minute to complete. You can choose how many times to participate each day by customizing the number of notifications you will receive in the settings menu. We are asking you to participate in the study for one month.",
+
+            //---------------category2---------------
+            "faq.category2": "Privacy and confidentiality",
+
+            //category2-Question1
+            "faq.c2.q1": "Why do I need a password and security question?",
+            "faq.c2.q1.a": "Well-being Check requests users to respond to daily questionnaires to identify how their feelings change in different settings. By password protecting the app, we can ensure your data trend has not been impacted by others who may use your phone and access the app. Also, Well-being Check provides users with a Results menu, which displays a trend of your self-assessed feelings and how they relate to what you are doing, who you are with, and where you are. By password protecting the app, we can ensure your trend is not viewed by others unless you log into the app and choose to share it with them.\n\n"+
+            "Statistics Canada does not collect your password when you create it, and therefore will not be able to assist you in resetting your password if required. The security question provides a second tier of security which you can use to reset your password.",
+             
+            //category2-Question2
+            "faq.c2.q2": "Can I change my password?",
+            "faq.c2.q2.a": "You can change your password through the ‘Forgot password?’ option on the login screen. You will need to answer your security question in order to access the password reset function.",
+            
+            //category2-Question3
+            "faq.c2.q3": "What if I forgot my password or security question?",
+            "faq.c2.q3.a": "You can change your password through the ‘Forgot password?’ option on the login screen. You will need to answer your security question in order to access the password reset function. If you have forgotten the answer to your security question, you will need to delete the app and download it again. Your previous responses will no longer be accessible to you through your My Results menu, as the app will identify you as a new user for security purposes.",
+            
+            //category2-Question4
+            "faq.c2.q4": "Is the information I provide confidential?",
+            "faq.c2.q4.a": "Yes, Statistics Canada guarantees the confidentiality of your responses under the Statistics Act.\n\n"+
+            "Any research, reports or publications based on this study will use aggregated data only and will not identify you or any individual as being affiliated with this study.",
+
+             //category2-Question5
+            "faq.c2.q5": "What data does Well-being Check collect?",
+            "faq.c2.q5.a": "The Well-being Check app collects the responses you provide to questionnaires, as well as the number of notifications you receive each day. It does not collect your password, your security question and answer, or data from your device such as location and app usage.",
+            
+            //category2-Question6
+            "faq.c2.q6": "How is my data stored and transmitted? How will my data be protected?",
+            "faq.c2.q6.a": "The Well-being Check app fully complies with all privacy and security regulations in place to protect Canadians’ information.\n\n"+
+            "Well-being Check uses Statistics Canada’s Electronic Collection Portal to collect your responses. No data from the app is stored on your device after you submit it. For more information about the security features in place to protect your data, please visit [insert link].",
+            
+            //category2-Question7
+            "faq.c2.q7": "I want to stop participating in this study",
+            "faq.c2.q7.a": "If you want to stop participating in the study at any point, you can turn off notifications in the settings menu or delete the app from your device.",
+          
+            
+            //---------------category3--------------- 
+            "faq.category3": "Settings and notifications",
+
+             //category3-Question1
+             "faq.c3.q1": "What notifications will I receive?",
+             "faq.c3.q1.a": "Category 2 question 1 Answer",
+              
+             //category3-Question2
+             "faq.c3.q2": "Can I disable notifications?",
+             "faq.c3.q2.a": "Category 2 question 2 Answer",
+             
+             //category3-Question3
+             "faq.c3.q3": "How do I change my settings?",
+             "faq.c3.q3.a": "Category 2 question 2 Answer",
+             
+             //category3-Question4
+             "faq.c3.q4": "Can I complete a Well-being Check if I have not received a notification?",
+             "faq.c3.q4.a": "Category 2 question 2 Answer",
+ 
+             //category3-Question5
+             "faq.c3.q5": "What if I have missed a notification and have now received another?",
+             "faq.c3.q5.a": "Category 2 question 2 Answer",
+             
+             //category3-Question6
+             "faq.c3.q6": "Why am I no longer receiving notifications?",
+             "faq.c3.q6.a": "Category 2 question 2 Answer",
+
+            //---------------category4---------------
+            "faq.category4": "The Results menu",
+
+            //category4-Question1
+            "faq.c4.q1": "What does the Results menu tell me? How can I interpret my results?",
+            "faq.c4.q1.a": "Category 2 question 1 Answer",
+           
+            //---------------category5---------------
+            "faq.category5": "Technical difficulties",
+             
+            //category5-Question1
+            "faq.c5.q1": "I cannot access the questionnaires or my results",
+            "faq.c5.q1.a": "Category 2 question 1 Answer",
+            
+            //category5-Question3
+            "faq.c5.q2": "I am experiencing other technical difficulties",
+            "faq.c5.q2.a": "Category 2 question 2 Answer",
+            
+            //category5-Question4
+            "faq.c5.q3": "Can I download the app on multiple devices and sync it?",
+            "faq.c5.q3.a": "Category 2 question 2 Answer",
+
+            //category5-Question5
+            "faq.c5.q4": "How much memory does the app require?",
+            "faq.c5.q4.a": "Category 2 question 2 Answer",
+
+            //category5-Question5
+            "faq.c5.q5": "How much data does the app require?",
+            "faq.c5.q5.a": "Category 2 question 2 Answer",
 
             "offline":"You are offline, try it later.",
             "securityIssue":"Internal server error, Try again, if same thing would happen again contact StatCan",
