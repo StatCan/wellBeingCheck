@@ -35,7 +35,7 @@ const WEB_API_BASE_URL = global.webApiBaseUrl + 'api';
 class Dashboard extends React.Component<Props, HomeState> {
   _panResponder: any;
   timer = null;
-
+  backHandler: any;
   constructor(HomeState) {
     super(HomeState);
     let txt = '';
@@ -50,91 +50,31 @@ class Dashboard extends React.Component<Props, HomeState> {
     this._refresh = this._refresh.bind(this);
     this._firstTimeLogin();
     /* --------------------Session Handler--------------------------- */
-    //used to handle session
-    this._panResponder = PanResponder.create({
-      // Ask to be the responder:
-      onStartShouldSetPanResponder: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-      onStartShouldSetPanResponderCapture: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
+     this.onSessionOut=this.onSessionOut.bind(this);
+     global.globalTimeOutCallback=this.onSessionOut;
+     if(global.globalTimer==null){global.createGlobalTimer();console.log('global timer setup.....................');}
+     if(global.panResponder==null)global.createPanResponder();
+  }
 
-      onMoveShouldSetPanResponder: (evt, gestureState) => {
-        // Listen for your events and show UI feedback here
-        this._initSessionTimer()
-        return false;
-      },
-      onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-      onPanResponderGrant: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-      onPanResponderMove: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-      onPanResponderTerminationRequest: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false
-      },
-      onPanResponderRelease: (evt, gestureState) => {
-        // This wont get called
-        this._initSessionTimer()
-        return true;
-      },
-      onPanResponderTerminate: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-      onShouldBlockNativeResponder: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-    });
+  onSessionOut(){
+    let result=false;
+    Alert.alert(
+       resources.getString("session.modal.title")+' --->test',
+       resources.getString("session.modal.message"),
+       [
+         { text: resources.getString("session.modal.sign_in"), onPress: () => {result=false;this.props.navigation.navigate('LoginScreen'); } },
+       ],
+       { cancelable: false }
+    )
+    return result;
   }
 
   componentDidMount() {
-    //Session Handler
-    this._initSessionTimer()
-    BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-  }
-
-  _handleSessionTimeOutRedirect = () => {
-    Updates.reload();
-  }
-
-  _initSessionTimer() {
-    clearInterval(this.timer)
-    this.timer = setTimeout(() =>
-      this._expireSession()
-      ,
-      global.sessionTimeOutDuration)
-  }
-
-  _expireSession() {
-    //TODO: timer not working since componentWillUnmount is never called due to eventListeneres
-
-    // Alert.alert(
-    //   resources.getString("session.modal.title"),
-    //   resources.getString("session.modal.message") + " dashboard",
-    //   [
-    //     { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
-    //   ],
-    //   { cancelable: false }
-    // )
+      this.backHandler =BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   }
 
   componentWillUnmount() {
-    //Session Handler
-    clearInterval(this.timer)
-
-    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+    this.backHandler.remove();
   }
 
   _show_firstTimeLoginModal = () => this.setState({ firstTimeLoginModal: true });
@@ -359,7 +299,8 @@ class Dashboard extends React.Component<Props, HomeState> {
 
 
           </View>
-          <View style={styles.homeContainer}>
+          <View style={styles.homeContainer} {...global.panResponder.panHandlers}>
+          <View >
             <TouchableOpacity onPress={() => this.conductSurvey()}
               style={{ flex: 2, justifyContent: 'center' }}>
               <View style={styles.outer}>
@@ -455,7 +396,7 @@ class Dashboard extends React.Component<Props, HomeState> {
               </Dialog>
             </Portal>
           </View>
-
+          </View>
         </Background>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
       </PaperProvider>

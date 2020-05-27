@@ -44,96 +44,21 @@ class AboutScreen extends React.Component<Props, AboutState> {
       faqC2Q1Expanded: false,
       faqC2Q2Expanded: false,
     };
-
-    /* --------------------Session Handler--------------------------- */
-    //used to handle session
-    this._panResponder = PanResponder.create({
-      // Ask to be the responder:
-      onStartShouldSetPanResponder: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-      onStartShouldSetPanResponderCapture: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-
-      onMoveShouldSetPanResponder: (evt, gestureState) => {
-        // Listen for your events and show UI feedback here
-        this._initSessionTimer()
-        return false;
-      },
-      onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-      onPanResponderGrant: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-      onPanResponderMove: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-      onPanResponderTerminationRequest: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false
-      },
-      onPanResponderRelease: (evt, gestureState) => {
-        // This wont get called
-        this._initSessionTimer()
-        return true;
-      },
-      onPanResponderTerminate: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-      onShouldBlockNativeResponder: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-    });
   }
 
   componentDidMount() {
-    //Session Handler
-    this._initSessionTimer()
     this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
   }
 
   componentWillUnmount() {
-    //Session Handler
-    clearInterval(this.timer)
-    this.backHandler.remove()
+    this.backHandler.remove();
   }
 
   handleBackPress = () => {
     return true;
   }
-
-  _handleSessionTimeOutRedirect = () => {
-    Updates.reload();
-  }
-
-  _initSessionTimer() {
-    clearInterval(this.timer)
-    this.timer = setTimeout(() =>
-      this._expireSession(),
-      global.sessionTimeOutDuration)
-  }
-
-  _expireSession() {
-    Alert.alert(
-      resources.getString("session.modal.title"),
-      resources.getString("session.modal.message"),
-      [
-        { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
-      ],
-      { cancelable: false }
-    )
-  }
-
   _onNextBtnHandle = () => {
+    global.globalTick=0;
     this.props.navigation.navigate('Dashboard');
   }
 
@@ -174,19 +99,19 @@ class AboutScreen extends React.Component<Props, AboutState> {
 
   render() {
     return (
-      <PaperProvider theme={newTheme}>
+      <PaperProvider theme={newTheme} >
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
         <AppBanner />
         <BackgroundWhite>
-          <View style={styles.logo_container}>
+          <View style={styles.logo_container} {...global.panResponder.panHandlers}>
             <LogoClearSmall />
           </View>
           <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}
-              {...this._panResponder.panHandlers}
+              {...global.panResponder.panHandlers}
             >
               <List.Section>
-                <View style={styles.faqView}>
+                <View style={styles.faqView}  {...global.panResponder.panHandlers}>
                   <List.Accordion
                     title={resources.getString("faq.title")}
                     expanded={this.state.faqMainExpanded}
@@ -255,7 +180,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                 </View>
               </List.Section>
               <Title style={styles.title}>{resources.getString("about_title")}</Title>
-              <View style={styles.content}>
+              <View style={styles.content} {...global.panResponder.panHandlers}>
                 <Paragraph style={styles.paragraph}>
                   <Text>
                     <ParsedText
@@ -285,6 +210,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
               </View>
             </ScrollView>
           </SafeAreaView>
+
         </BackgroundWhite>
         <Button style={styles.btnNext}  
           mode="contained"

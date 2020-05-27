@@ -45,7 +45,6 @@ class LoginScreen extends React.Component<Props, LoginState> {
       title: resources.getString("Well-Being Check"),
       passwordIsHidden: true,
     };
-
   }
 
   toggleLanguage() {
@@ -192,7 +191,7 @@ async onTestD(){
                   <Text style={styles.label}>{resources.getString("login.forgot_password")}</Text>
                 </TouchableOpacity>
               </View>
-
+               <NavigationEvents onDidFocus={() => this.setState({password: ''})} />
               <View style={styles.footer}>
                 <Button
                   color={newTheme.colors.primary}
