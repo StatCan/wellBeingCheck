@@ -634,14 +634,129 @@ export const resources = {
             "contactus_mail": "Courrier",
             "contactus_text": `Statistique Canada\nÀ l’attention du directeur Jean Labbé\n150, promenade Tunney’s Pasture\nOttawa (Ontario)\nK1A 0T6`,
 
+            
             //FAQ
-            "faq.title": "FR_FAQ",
-            "faq.q1": "FR_FAQ question 1",
-            "faq.a1": "FR_FAQ answer 1",
-            "faq.q2": "FR_FAQ question 2",
-            "faq.a2": "FR_FAQ answer 2",
-            "faq.q3": "FR_FAQ question 3",
-            "faq.a3": "FR_FAQ answer 3",
+            "faq.title": "FAQ",
+            //---------------category1---------------
+            "faq.category1": "Questions générales",
+            
+            //category1-Question1
+            "faq.c1.q1": "Est-ce une enquête légitime de Statistique Canada?",
+            "faq.c1.q1.a": "Oui. Vous trouverez de plus amples informations sur le site Web de Statistique Canada :http://www.statcan.gc.ca",
+            
+            //category1-Question2
+            "faq.c1.q2": "Suis-je obligé de répondre à cette enquête?",
+            "faq.c1.q2.a": "Non. La participation est volontaire.",
+
+            //category1-Question3
+            "faq.c1.q3": "Qui participe à cette enquête?  ",
+            "faq.c1.q3.a": "Toute personne au Canada de plus de 15 ans qui possède un téléphone intelligent ou une tablette compatible peut télécharger l’application Bilan bien-être sur Google Play ou sur l’App Store pour participer à l’enquête. Vous pouvez participer avec ou sans code d’invitation.\n"+
+             "Veuillez partager cette information avec vos amis afin qu’ils puissent eux aussi télécharger l’application.",
+            
+            //category1-Question4
+            "faq.c1.q4": "Pourquoi menez-vous cette enquête?",
+            "faq.c1.q4.a": "L’objectif de cette enquête est de mieux comprendre le bien-être au quotidien des Canadiens. Pour ce faire, nous leur avons posé des questions sur leurs activités et leurs sentiments au moment présent. Pour plus d’informations sur cette enquête, veuillez consulter [insérer le lien].",
+
+            //category1-Question5
+            "faq.c1.q5": "Combien de temps me faudra-t-il pour terminer l’enquête?",
+            "faq.c1.q5.a": "Le Bilan bien-être devrait prendre quotidiennement moins d’une minute à remplir. Vous pouvez choisir le nombre de fois que vous souhaitez participer chaque jour en personnalisant le nombre de notifications que vous recevrez dans le menu des paramètres. Nous vous demandons de participer à l’étude pendant un mois.",
+
+            //---------------category2---------------
+            "faq.category2": "Vie privée et confidentialité",
+
+            //category2-Question1
+            "faq.c2.q1": "Pourquoi ai-je besoin d’un mot de passe et d’une question de sécurité?",
+            "faq.c2.q1.a": "Le Bilan bien-être demande aux utilisateurs de répondre quotidiennement à des questionnaires afin de déterminer la façon dont leurs sentiments changent dans différents contextes. En protégeant l’application par un mot de passe, nous pouvons nous assurer que la tendance de vos données n’a pas été influencée par d’autres personnes qui pourraient utiliser votre téléphone et accéder à l’application. De plus, le Bilan bien-être fournit aux utilisateurs un menu Résultats, qui affiche la tendance de vos sentiments autoévalués et de la façon dont ils sont liés à ce que vous faites, aux gens avec qui vous êtes et à l’endroit où vous vous trouvez. En protégeant l’application par un mot de passe, nous pouvons nous assurer que cette tendance n’est pas vue par d’autres personnes, à moins que vous vous connectiez à l’application et que vous choisissiez de la partager avec eux.\n\n"+
+            "Statistique Canada ne recueille pas votre mot de passe lorsque vous le créez, et ne pourra donc pas vous aider à le réinitialiser si nécessaire. La question de sécurité fournit un deuxième niveau de sécurité, que vous pouvez utiliser pour réinitialiser votre mot de passe.",
+             
+            //category2-Question2
+            "faq.c2.q2": "Puis-je changer mon mot de passe?",
+            "faq.c2.q2.a": "Vous pouvez changer votre mot de passe en utilisant l’option « Mot de passe oublié » à l’écran d’ouverture de session. Vous devrez répondre à votre question de sécurité afin d’accéder à la fonction de réinitialisation du mot de passe.",
+            
+            //category2-Question3
+            "faq.c2.q3": "Que faire si j’ai oublié mon mot de passe ou ma question de sécurité?",
+            "faq.c2.q3.a": "Vous pouvez changer votre mot de passe en utilisant l’option « Mot de passe oublié » à l’écran d’ouverture de session. Vous devrez répondre à votre question de sécurité afin d’accéder à la fonction de réinitialisation du mot de passe. Si vous avez oublié la réponse à votre question de sécurité, vous devrez supprimer l’application et la télécharger à nouveau. Vos réponses précédentes ne seront plus accessibles dans votre menu Résultats, car l’application vous identifiera comme un nouvel utilisateur pour des raisons de sécurité.",
+            
+            //category2-Question4
+            "faq.c2.q4": "Les informations que je fournis sont-elles confidentielles?",
+            "faq.c2.q4.a": "Oui, Statistique Canada garantit la confidentialité de vos réponses en vertu de la Loi sur la statistique.\n\n"+
+            "Les recherches, rapports ou publications basés sur cette enquête utiliseront uniquement des données agrégées et ne vous identifieront pas, ni aucune autre personne, comme étant affilié à cette enquête.",
+
+             //category2-Question5
+            "faq.c2.q5": "Quelles sont les données recueillies par le Bilan bien-être?",
+            "faq.c2.q5.a": "L’application Bilan bien-être recueille les réponses que vous fournissez aux questionnaires, ainsi que le nombre de notifications que vous recevez chaque jour. Elle ne recueille pas votre mot de passe, votre question de sécurité et sa réponse, ni les données de votre appareil telles que l’emplacement et l’utilisation de l’application.",
+            
+            //category2-Question6
+            "faq.c2.q6": "Comment mes données sont-elles stockées et transmises? Comment mes données seront-elles protégées?",
+            "faq.c2.q6.a": "L’application Bilan bien-être est entièrement conforme à toutes les réglementations en matière de protection de la vie privée et de sécurité mises en place pour protéger les informations des Canadiens.\n\n"+
+            "Le Bilan bien-être utilise le portail de collecte électronique de Statistique Canada pour recueillir vos réponses. Aucune donnée de l’application n’est stockée sur votre appareil après que vous les avez soumises. Pour plus d’informations sur les dispositifs de sécurité mis en place pour protéger vos données, veuillez consulter [insérer le lien].",
+            
+            //category2-Question7
+            "faq.c2.q7": "Je ne veux plus participer à cette enquête",
+            "faq.c2.q7.a": "Si vous souhaitez, à tout moment, cesser de participer à l’enquête, vous pouvez désactiver les notifications dans le menu des paramètres ou supprimer l’application de votre appareil.",
+          
+            
+            //---------------category3--------------- 
+            "faq.category3": "Paramètres et notifications",
+
+             //category3-Question1
+             "faq.c3.q1": "Quelles notifications vais-je recevoir?",
+             "faq.c3.q1.a": "L’application vous enverra une notification lorsqu’il sera temps de remplir un Bilan bien-être. Ces notifications sont envoyées à des moments aléatoires en fonction des paramètres que vous avez choisis dans votre menu de configuration. Vous pouvez modifier vos paramètres à tout moment.",
+              
+             //category3-Question2
+             "faq.c3.q2": "Puis-je désactiver les notifications?",
+             "faq.c3.q2.a": "Les notifications sont un élément essentiel de cette enquête, car elles vous permettent de savoir quand un Bilan bien-être peut être réalisé. Si vous avez besoin de désactiver les notifications, vous pouvez le faire dans le menu Paramètres.",
+             
+             //category3-Question3
+             "faq.c3.q3": "Comment puis-je modifier mes paramètres?",
+             "faq.c3.q3.a": "Vous pouvez modifier vos paramètres à tout moment dans le menu Paramètres, situé sur la page d’accueil de l’application.",
+             
+             //category3-Question4
+             "faq.c3.q4": "Puis-je effectuer un Bilan bien-être si je n’ai pas reçu de notification?",
+             "faq.c3.q4.a": "Bien sûr! Vous pouvez effectuer un Bilan bien-être à tout moment en appuyant sur COMMENCER, situé sur la page d’accueil de l’application.",
+ 
+             //category3-Question5
+             "faq.c3.q5": "Que se passe-t-il si j’ai manqué une notification et que j’en ai reçu une autre?",
+             "faq.c3.q5.a": "Pas de problème! Bien que notre objectif soit que vous répondiez à toutes les notifications, nous comprenons que la vie peut être chargée et qu’il arrive parfois qu’une notification soit manquée. Répondez une fois en fonction de ce que vous faites et des personnes qui sont avec vous lorsque vous recevez la deuxième notification.",
+             
+             //category3-Question6
+             "faq.c3.q6": "Pourquoi ne reçois-je plus de notifications?",
+             "faq.c3.q6.a": "Si vous n’avez pas effectué de Bilan bien-être au cours des quatre derniers jours, l’application cessera de vous envoyer des notifications. Vous pouvez recommencer à recevoir des notifications en appuyant sur COMMENCER, situé sur la page d’accueil de l’application, et en remplissant un Bilan bien-être.\n\n"+
+             "Le Bilan bien-être vous enverra des notifications pour une durée totale de 30 jours maximum. Au terme de cette période, votre participation à l’enquête est terminée et vous ne recevrez plus de notifications.\n\n"+
+             "Si aucun de ces scénarios ne correspond à votre situation, veuillez nous contacter au 1-877-949-9492.",
+
+            //---------------category4---------------
+            "faq.category4": "Le menu Résultats",
+
+            //category4-Question1
+            "faq.c4.q1": "Que me dit le menu Résultats? Comment puis-je interpréter mes résultats?",
+            "faq.c4.q1.a": "Les visualisations de données du menu Résultats donnent un aperçu de vos sentiments autoévalués et de leur lien avec ce que vous faites, les personnes avec qui vous êtes et l’endroit où vous vous trouvez.\n\n"+
+            "Pour faciliter l’interprétation, vos activités et vos compagnons ont été regroupés. Veuillez noter que toutes les questions relatives aux sentiments sont évaluées sur une échelle de 1 à 10, où 1 signifie « pas du tout » et 10 signifie « très ». En fonction de cette échelle, une cote élevée de sentiment de bonheur par rapport à une cote élevée de sentiment d’anxiété serait interprétée de manière très différente.\n\n"+
+            "Ces résultats sont communiqués en temps réel et n’ont pas été validés par Statistique Canada. Il convient d’être prudent lors de l’interprétation des données.",
+           
+            //---------------category5---------------
+            "faq.category5": "Difficultés techniques",
+             
+            //category5-Question1
+            "faq.c5.q1": "Je ne peux pas accéder aux questionnaires ou à mes résultats",
+            "faq.c5.q1.a": "Le portail du questionnaire et le menu Résultats nécessitent une connexion aux données ou une connexion Wi-Fi pour fonctionner. Si le problème persiste après avoir vérifié votre connexion, veuillez nous contacter au 1-877-949-9492.",
+            
+            //category5-Question3
+            "faq.c5.q2": "Je rencontre d’autres difficultés techniques",
+            "faq.c5.q2.a": "Si vous rencontrez des problèmes d’affichage, des pannes ou d’autres bogues, veuillez nous contacter au 1-877-949-9492.",
+            
+            //category5-Question4
+            "faq.c5.q3": "Puis-je télécharger l’application sur plusieurs appareils et la synchroniser?",
+            "faq.c5.q3.a": "L’application n’a pas de capacités de synchronisation.\n\n"+
+            "Votre participation à l’enquête est basée sur l’appareil sur lequel vous avez téléchargé l’application Bilan bien-être pour la première fois. Si vous téléchargez l’application sur un autre appareil, vous serez identifié comme un nouvel utilisateur pour des raisons de sécurité, et vos réponses précédentes ne seront plus accessibles dans le menu Résultats.",
+
+            //category5-Question5
+            "faq.c5.q4": "Quelle est la quantité de mémoire requise par l’application?",
+            "faq.c5.q4.a": "L’application Bilan bien-être nécessite 53 Mo sur les appareils Apple et 90 Mo sur les appareils Android.",
+
+            //category5-Question5
+            "faq.c5.q5": "Combien de données l’application nécessite-t-elle?",
+            "faq.c5.q5.a": "[tbd]",
 
             "offline":"Vous êtes hors ligne, essayez-le plus tard.",
             "securityIssue":"Erreur de serveur interne, essayez à nouveau, si la même chose se reproduit, contactez StatCan",
