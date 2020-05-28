@@ -15,13 +15,50 @@ import { Updates } from 'expo';
 import { expo } from '../../app.json';
 
 type AboutState = {
+  //-------Category 1-------//
+
   faqMainExpanded: boolean,
   faqC1Expanded: boolean,
   faqC1Q1Expanded: boolean,
   faqC1Q2Expanded: boolean,
+  faqC1Q3Expanded: boolean,
+  faqC1Q4Expanded: boolean,
+  faqC1Q5Expanded: boolean,
+
+  //-------Category 2-------//
   faqC2Expanded: boolean,
   faqC2Q1Expanded: boolean,
   faqC2Q2Expanded: boolean,
+  faqC2Q3Expanded: boolean,
+  faqC2Q4Expanded: boolean,
+  faqC2Q5Expanded: boolean,
+  faqC2Q6Expanded: boolean,
+  faqC2Q7Expanded: boolean,
+
+  //-------Category 3-------//
+  faqC3Expanded: boolean,
+  faqC3Q1Expanded: boolean,
+  faqC3Q2Expanded: boolean,
+  faqC3Q3Expanded: boolean,
+  faqC3Q4Expanded: boolean,
+  faqC3Q5Expanded: boolean,
+  faqC3Q6Expanded: boolean,
+
+
+  
+  //-------Category 4-------//
+  faqC4Expanded: boolean,
+  faqC4Q1Expanded: boolean,
+  faqC4Q2Expanded: boolean,
+  
+  //-------Category 5-------//
+  faqC5Expanded: boolean,
+  faqC5Q1Expanded: boolean,
+  faqC5Q2Expanded: boolean,
+  faqC5Q3Expanded: boolean,
+  faqC5Q4Expanded: boolean,
+  faqC5Q5Expanded: boolean,
+
 }
 
 interface Props {
@@ -36,13 +73,48 @@ class AboutScreen extends React.Component<Props, AboutState> {
   constructor(AboutScreen) {
     super(AboutScreen)
     this.state = {
-      faqMainExpanded: false,
-      faqC1Expanded: false,
-      faqC1Q1Expanded: false,
-      faqC1Q2Expanded: false,
-      faqC2Expanded: false,
-      faqC2Q1Expanded: false,
-      faqC2Q2Expanded: false,
+
+  faqMainExpanded: false,
+  //-------Category 1-------//
+
+  faqC1Expanded: false,
+  faqC1Q1Expanded: false,
+  faqC1Q2Expanded: false,
+  faqC1Q3Expanded: false,
+  faqC1Q4Expanded: false,
+  faqC1Q5Expanded: false,
+
+  //-------Category 2-------//
+  faqC2Expanded: false,
+  faqC2Q1Expanded: false,
+  faqC2Q2Expanded: false,
+  faqC2Q3Expanded: false,
+  faqC2Q4Expanded: false,
+  faqC2Q5Expanded: false,
+  faqC2Q6Expanded: false,
+  faqC2Q7Expanded: false,
+
+  //-------Category 3-------//
+  faqC3Expanded: false,
+  faqC3Q1Expanded: false,
+  faqC3Q2Expanded: false,
+  faqC3Q3Expanded: false,
+  faqC3Q4Expanded: false,
+  faqC3Q5Expanded: false,
+  faqC3Q6Expanded: false,
+
+  //-------Category 4-------//
+  faqC4Expanded: false,
+  faqC4Q1Expanded: false,
+  faqC4Q2Expanded: false,
+  
+  //-------Category 5-------//
+  faqC5Expanded: false,
+  faqC5Q1Expanded: false,
+  faqC5Q2Expanded: false,
+  faqC5Q3Expanded: false,
+  faqC5Q4Expanded: false,
+  faqC5Q5Expanded: false,
     };
 
     /* --------------------Session Handler--------------------------- */
@@ -141,6 +213,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
     this.setState({
       faqMainExpanded: !this.state.faqMainExpanded
     });
+  //-------Category 1-------//
 
   _handleFaqC1Expand = () =>
     this.setState({
@@ -157,6 +230,22 @@ class AboutScreen extends React.Component<Props, AboutState> {
       faqC1Q2Expanded: !this.state.faqC1Q2Expanded
     });
 
+    _handleFaqC1Q3Expand = () =>
+    this.setState({
+      faqC1Q3Expanded: !this.state.faqC1Q3Expanded
+    });
+
+  _handleFaqC1Q4Expand = () =>
+    this.setState({
+      faqC1Q4Expanded: !this.state.faqC1Q4Expanded
+    });
+
+    _handleFaqC1Q5Expand = () =>
+    this.setState({
+      faqC1Q5Expanded: !this.state.faqC1Q5Expanded
+    });
+  //-------Category 2-------//
+
   _handleFaqC2Expand = () =>
     this.setState({
       faqC2Expanded: !this.state.faqC2Expanded
@@ -171,6 +260,108 @@ class AboutScreen extends React.Component<Props, AboutState> {
     this.setState({
       faqC2Q2Expanded: !this.state.faqC2Q2Expanded
     });
+
+    _handleFaqC2Q3Expand = () =>
+    this.setState({
+      faqC2Q3Expanded: !this.state.faqC2Q3Expanded
+    });
+
+  _handleFaqC2Q4Expand = () =>
+    this.setState({
+      faqC2Q4Expanded: !this.state.faqC2Q4Expanded
+    });
+    _handleFaqC2Q5Expand = () =>
+    this.setState({
+      faqC2Q5Expanded: !this.state.faqC2Q5Expanded
+    });
+
+  _handleFaqC2Q6Expand = () =>
+    this.setState({
+      faqC2Q6Expanded: !this.state.faqC2Q6Expanded
+    });
+
+    _handleFaqC2Q7Expand = () =>
+    this.setState({
+      faqC2Q7Expanded: !this.state.faqC2Q7Expanded
+    });
+
+  //-------Category 3-------//
+  _handleFaqC3Expand = () =>
+  this.setState({
+    faqC3Expanded: !this.state.faqC3Expanded
+  });
+
+_handleFaqC3Q1Expand = () =>
+  this.setState({
+    faqC3Q1Expanded: !this.state.faqC3Q1Expanded
+  });
+
+_handleFaqC3Q2Expand = () =>
+  this.setState({
+    faqC3Q2Expanded: !this.state.faqC3Q2Expanded
+  });
+
+  _handleFaqC3Q3Expand = () =>
+  this.setState({
+    faqC3Q3Expanded: !this.state.faqC3Q3Expanded
+  });
+
+_handleFaqC3Q4Expand = () =>
+  this.setState({
+    faqC3Q4Expanded: !this.state.faqC3Q4Expanded
+  });
+  _handleFaqC3Q5Expand = () =>
+  this.setState({
+    faqC3Q5Expanded: !this.state.faqC3Q5Expanded
+  });
+
+_handleFaqC3Q6Expand = () =>
+  this.setState({
+    faqC3Q6Expanded: !this.state.faqC3Q6Expanded
+  });
+
+  //-------Category 4-------//
+  _handleFaqC4Expand = () =>
+  this.setState({
+    faqC4Expanded: !this.state.faqC4Expanded
+  });
+
+_handleFaqC4Q1Expand = () =>
+  this.setState({
+    faqC4Q1Expanded: !this.state.faqC4Q1Expanded
+  });
+ 
+  //-------Category 5-------//
+
+  _handleFaqC5Expand = () =>
+  this.setState({
+    faqC5Expanded: !this.state.faqC5Expanded
+  });
+
+_handleFaqC5Q1Expand = () =>
+  this.setState({
+    faqC5Q1Expanded: !this.state.faqC5Q1Expanded
+  });
+
+_handleFaqC5Q2Expand = () =>
+  this.setState({
+    faqC5Q2Expanded: !this.state.faqC5Q2Expanded
+  });
+
+  _handleFaqC5Q3Expand = () =>
+  this.setState({
+    faqC5Q3Expanded: !this.state.faqC5Q3Expanded
+  });
+
+_handleFaqC5Q4Expand = () =>
+  this.setState({
+    faqC5Q4Expanded: !this.state.faqC5Q4Expanded
+  });
+  _handleFaqC5Q5Expand = () =>
+  this.setState({
+    faqC5Q5Expanded: !this.state.faqC5Q5Expanded
+  });
+
 
   render() {
     return (
@@ -222,19 +413,18 @@ class AboutScreen extends React.Component<Props, AboutState> {
 
                         <List.Accordion
                           title={resources.getString("faq.c1.q3")}
-                          expanded={this.state.faqC1Q2Expanded}
-                          onPress={this._handleFaqC1Q2Expand}
+                          expanded={this.state.faqC1Q3Expanded}
+                          onPress={this._handleFaqC1Q3Expand}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c1.q3.a")}</Text>
                           </View>
                         </List.Accordion>
-                      </List.Accordion>
 
-                      <List.Accordion
+                        <List.Accordion
                           title={resources.getString("faq.c1.q4")}
-                          expanded={this.state.faqC1Q2Expanded}
-                          onPress={this._handleFaqC1Q2Expand}
+                          expanded={this.state.faqC1Q4Expanded}
+                          onPress={this._handleFaqC1Q4Expand}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c1.q4.a")}</Text>
@@ -243,13 +433,16 @@ class AboutScreen extends React.Component<Props, AboutState> {
 
                         <List.Accordion
                           title={resources.getString("faq.c1.q5")}
-                          expanded={this.state.faqC1Q2Expanded}
-                          onPress={this._handleFaqC1Q2Expand}
+                          expanded={this.state.faqC1Q5Expanded}
+                          onPress={this._handleFaqC1Q5Expand}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c1.q5.a")}</Text>
                           </View>
                         </List.Accordion>
+                      </List.Accordion>
+
+                    
                     </View>
 
                     {/* Category 2 */}
@@ -281,8 +474,8 @@ class AboutScreen extends React.Component<Props, AboutState> {
 
                         <List.Accordion
                           title={resources.getString("faq.c2.q3")}
-                          expanded={this.state.faqC2Q2Expanded}
-                          onPress={this._handleFaqC2Q2Expand}
+                          expanded={this.state.faqC2Q3Expanded}
+                          onPress={this._handleFaqC2Q3Expand}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c2.q3.a")}</Text>
@@ -292,40 +485,56 @@ class AboutScreen extends React.Component<Props, AboutState> {
 
                         <List.Accordion
                           title={resources.getString("faq.c2.q4")}
-                          expanded={this.state.faqC2Q2Expanded}
-                          onPress={this._handleFaqC2Q2Expand}
+                          expanded={this.state.faqC2Q4Expanded}
+                          onPress={this._handleFaqC2Q4Expand}
                         >
-                          <View style={styles.faqListItem}>
-                            <Text>{resources.getString("faq.c2.q4.a")}</Text>
-                          </View>
+                          {/* ///----------------- */}
+                      <Text style={{paddingLeft:15,}}>
+                      <ParsedText
+                      style={styles.faqListItem}
+                      parse={
+                        [
+                          { pattern: /Statistics Act/, style: styles.italic },
+                          { pattern: /Loi sur la statistique/, style: styles.italic },
+                        ]
+                      }
+                     childrenProps={{ allowFontScaling: false }}
+                    >
+                      
+                       {/* <View style={styles.faqListItem}> */}
+                            {resources.getString("faq.c2.q4.a")}
+                      {/* </View> */}
+                      
+                    </ParsedText>
+                    </Text>
+                          {/* ///----------------------- */}
+                         
                         </List.Accordion>
-
-
+   
                         <List.Accordion
                           title={resources.getString("faq.c2.q5")}
-                          expanded={this.state.faqC2Q2Expanded}
-                          onPress={this._handleFaqC2Q2Expand}
+                          expanded={this.state.faqC2Q5Expanded}
+                          onPress={this._handleFaqC2Q5Expand}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c2.q5.a")}</Text>
                           </View>
                         </List.Accordion>
 
-
                         <List.Accordion
                           title={resources.getString("faq.c2.q6")}
-                          expanded={this.state.faqC2Q2Expanded}
-                          onPress={this._handleFaqC2Q2Expand}
+                          expanded={this.state.faqC2Q6Expanded}
+                          onPress={this._handleFaqC2Q6Expand}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c2.q6.a")}</Text>
                           </View>
                         </List.Accordion>
 
-                        <List.Accordion
+                       <List.Accordion
                           title={resources.getString("faq.c2.q7")}
-                          expanded={this.state.faqC2Q2Expanded}
-                          onPress={this._handleFaqC2Q2Expand}
+                          expanded={this.state.faqC2Q7Expanded}
+                          onPress={this._handleFaqC2Q7Expand}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c2.q7.a")}</Text>
@@ -340,13 +549,13 @@ class AboutScreen extends React.Component<Props, AboutState> {
                       <List.Accordion
                         style={styles.faqCategories}
                         title={resources.getString("faq.category3")}
-                        expanded={this.state.faqC2Expanded}
-                        onPress={this._handleFaqC2Expand}
+                        expanded={this.state.faqC3Expanded}
+                        onPress={this._handleFaqC3Expand}
                       >
                         <List.Accordion
                           title={resources.getString("faq.c3.q1")}
-                          expanded={this.state.faqC2Q1Expanded}
-                          onPress={this._handleFaqC2Q1Expand}
+                          expanded={this.state.faqC3Q1Expanded}
+                          onPress={this._handleFaqC3Q1Expand}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c3.q1.a")}</Text>
@@ -354,8 +563,8 @@ class AboutScreen extends React.Component<Props, AboutState> {
                         </List.Accordion>
                         <List.Accordion
                           title={resources.getString("faq.c3.q2")}
-                          expanded={this.state.faqC2Q2Expanded}
-                          onPress={this._handleFaqC2Q2Expand}
+                          expanded={this.state.faqC3Q2Expanded}
+                          onPress={this._handleFaqC3Q2Expand}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c3.q2.a")}</Text>
@@ -364,8 +573,8 @@ class AboutScreen extends React.Component<Props, AboutState> {
 
                         <List.Accordion
                           title={resources.getString("faq.c3.q3")}
-                          expanded={this.state.faqC2Q2Expanded}
-                          onPress={this._handleFaqC2Q2Expand}
+                          expanded={this.state.faqC3Q3Expanded}
+                          onPress={this._handleFaqC3Q3Expand}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c3.q3.a")}</Text>
@@ -375,8 +584,8 @@ class AboutScreen extends React.Component<Props, AboutState> {
 
                         <List.Accordion
                           title={resources.getString("faq.c3.q4")}
-                          expanded={this.state.faqC2Q2Expanded}
-                          onPress={this._handleFaqC2Q2Expand}
+                          expanded={this.state.faqC3Q4Expanded}
+                          onPress={this._handleFaqC3Q4Expand}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c3.q4.a")}</Text>
@@ -385,8 +594,8 @@ class AboutScreen extends React.Component<Props, AboutState> {
 
                         <List.Accordion
                           title={resources.getString("faq.c3.q5")}
-                          expanded={this.state.faqC2Q2Expanded}
-                          onPress={this._handleFaqC2Q2Expand}
+                          expanded={this.state.faqC3Q5Expanded}
+                          onPress={this._handleFaqC3Q5Expand}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c3.q5.a")}</Text>
@@ -395,8 +604,8 @@ class AboutScreen extends React.Component<Props, AboutState> {
 
                         <List.Accordion
                           title={resources.getString("faq.c3.q6")}
-                          expanded={this.state.faqC2Q2Expanded}
-                          onPress={this._handleFaqC2Q2Expand}
+                          expanded={this.state.faqC3Q6Expanded}
+                          onPress={this._handleFaqC3Q6Expand}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c3.q6.a")}</Text>
@@ -410,13 +619,13 @@ class AboutScreen extends React.Component<Props, AboutState> {
                       <List.Accordion
                         style={styles.faqCategories}
                         title={resources.getString("faq.category4")}
-                        expanded={this.state.faqC2Expanded}
-                        onPress={this._handleFaqC2Expand}
+                        expanded={this.state.faqC4Expanded}
+                        onPress={this._handleFaqC4Expand}
                       >
                         <List.Accordion
                           title={resources.getString("faq.c4.q1")}
-                          expanded={this.state.faqC2Q1Expanded}
-                          onPress={this._handleFaqC2Q1Expand}
+                          expanded={this.state.faqC4Q1Expanded}
+                          onPress={this._handleFaqC4Q1Expand}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c4.q1.a")}</Text>
@@ -430,27 +639,57 @@ class AboutScreen extends React.Component<Props, AboutState> {
                       <List.Accordion
                         style={styles.faqCategories}
                         title={resources.getString("faq.category5")}
-                        expanded={this.state.faqC2Expanded}
-                        onPress={this._handleFaqC2Expand}
+                        expanded={this.state.faqC5Expanded}
+                        onPress={this._handleFaqC5Expand}
                       >
                         <List.Accordion
                           title={resources.getString("faq.c5.q1")}
-                          expanded={this.state.faqC2Q1Expanded}
-                          onPress={this._handleFaqC2Q1Expand}
+                          expanded={this.state.faqC5Q1Expanded}
+                          onPress={this._handleFaqC5Q1Expand}
                         >
                           <View style={styles.faqListItem}>
-                            <Text>{resources.getString("faq.c5.q1.a")}</Text>
+                            <Text>
+                              {resources.getString("faq.c5.q1.a")}
+                            </Text>
                           </View>
                         </List.Accordion>
                         <List.Accordion
                           title={resources.getString("faq.c5.q2")}
-                          expanded={this.state.faqC2Q2Expanded}
-                          onPress={this._handleFaqC2Q2Expand}
+                          expanded={this.state.faqC5Q2Expanded}
+                          onPress={this._handleFaqC5Q2Expand}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c5.q2.a")}</Text>
                           </View>
                         </List.Accordion>
+                        <List.Accordion
+                          title={resources.getString("faq.c5.q3")}
+                          expanded={this.state.faqC5Q3Expanded}
+                          onPress={this._handleFaqC5Q3Expand}
+                        >
+                          <View style={styles.faqListItem}>
+                            <Text>{resources.getString("faq.c5.q3.a")}</Text>
+                          </View>
+                        </List.Accordion>
+                        <List.Accordion
+                          title={resources.getString("faq.c5.q4")}
+                          expanded={this.state.faqC5Q4Expanded}
+                          onPress={this._handleFaqC5Q4Expand}
+                        >
+                          <View style={styles.faqListItem}>
+                            <Text>{resources.getString("faq.c5.q4.a")}</Text>
+                          </View>
+                        </List.Accordion>
+                        <List.Accordion
+                          title={resources.getString("faq.c5.q5")}
+                          expanded={this.state.faqC5Q5Expanded}
+                          onPress={this._handleFaqC5Q5Expand}
+                        >
+                          <View style={styles.faqListItem}>
+                            <Text>{resources.getString("faq.c5.q5.a")}</Text>
+                          </View>
+                        </List.Accordion>
+
                       </List.Accordion>
                     </View>
 
