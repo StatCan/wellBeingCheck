@@ -606,7 +606,7 @@ the algorithm will not arrange any notification for the time which has been pass
        var date = new Date(currentDay);
        date.setHours(0); date.setMinutes(0); date.setSeconds(0); date.setMilliseconds(0);
        if (nightShiftUpdate) date.setDate(date.getDate()-1);
-       if (lastDay == null) { lastDay = new Date(date); lastDay.setDate(date.getDate()+30); }
+       if (lastDay == null) { lastDay = new Date(date); lastDay.setDate(date.getDate()+29); }
        else lastDay = new Date(lastDay);  //new Date(lastDay.toString().replace(/-/g, '\/'));
        if (!includeCurrentDay) date.setDate(date.getDate() + 1);
        var days = [];
