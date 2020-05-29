@@ -226,9 +226,10 @@ export async function setupSchedules(affectCurrent=false){
         if(isInSchedules){
             let warningId=global.warningNotificationId;console.log('current is in schedules');
             if(affectCurrent){  //for change setting,  This part is hard core
-                let f=getAffectedDay(currentDateTime);  let day5=getNextDay(currentDateTime);
+                let f=getAffectedDay(currentDateTime,count);  let day5=getNextDay(currentDateTime);
                 if(f==null){  //No affected day, go normal schedule
-                    let days = getFollowingDays(currentDateTime,lastDate,true,4,false);
+                    let tomorrow = new Date(currentDateTime); tomorrow.setDate(tomorrow.getDate() + 1); tomorrow.setHours(0); tomorrow.setMinutes(0); tomorrow.setSeconds(0); tomorrow.setMilliseconds(0);
+                    let days = getFollowingDays(tomorrow,lastDate,true,4,false);
                     if(days.length>0){
                        day5=getNextDay(days[days.length-1]);
                        days.forEach(function (d, index) {
@@ -243,7 +244,9 @@ export async function setupSchedules(affectCurrent=false){
                     }
                 }
                 else {
-                    let affectedDay=f.AffectedDay; let leftOverCount=count- f.PassedCount;console.log('Setup notification will affect current day:'+affectedDay.toString()+'->'+leftOverCount);
+                    let affectedDay=f.AffectedDay; let leftOverCount=count- f.PassedCount;
+                    let ddd =parseInt((lastDate - affectedDay)/ (1000 * 60 * 60 * 24), 10); if (ddd == 30) leftOverCount = leftOverCount - 1;
+                    console.log('Setup notification will affect current day:'+affectedDay.toString()+'->'+leftOverCount);
                     let days = getFollowingDays(affectedDay,lastDate,true,4,false);
                     if(days.length>0){
                        day5=getNextDay(days[days.length-1]);
@@ -637,22 +640,36 @@ the algorithm will not arrange any notification for the time which has been pass
      });
      return {Count:count,Hour:hour};
  }
- function getAffectedDay(datetime){
-     let result=null;
-     let list =global.schedules;
-     var found=list.find(function(l){
-        return l.Datetime>datetime;
-     });
-     if(found!=null){
-         let sch=found.Day;
-         let count=0;
-         list.forEach(function(l){
-            if (+l.Day == +sch && +l.Datetime <= +datetime)count++;
+ function getAffectedDay(datetime,count) {
+         let result = null;
+         let list = preSchedule;
+         let curDayList = [];
+
+
+         let curDay = new Date(datetime); curDay.setHours(0); curDay.setMinutes(0); curDay.setSeconds(0); curDay.setMilliseconds(0);
+         list.forEach(function (l, index) {
+             if (+l.Day == +curDay) curDayList.push(l);
          });
-         result={AffectedDay:sch,PassedCount:count};
+
+         var found = list.find(function (l) {
+             return l.Datetime > datetime;
+         });
+         if (found != null) {
+             let sch = found.Day;
+             let ddd = parseInt((sch- curDay) / (1000 * 60 * 60 * 24), 10);
+             if (ddd == 1 && curDayList.length > 0 && count > curDayList.length) {
+                 result = { AffectedDay: curDay, PassedCount: curDayList.length };
+             }
+             else {
+                 let count = 0;
+                 list.forEach(function (l) {
+                     if (+l.Day == +sch && +l.Datetime <= +datetime) count++;
+                 });
+                 result = { AffectedDay: sch, PassedCount: count };
+             }
+         }
+         return result;
      }
-     return result;
- }
  function filterListByDate(date,list) {
             date = new Date(date.toString().replace(/-/g, '\/'));
             var date1 = new Date(date); date1.setHours(hour); date1.setMinutes(0); date1.setSeconds(0);
