@@ -125,7 +125,7 @@ onTestC(){
    setupSchedules(true);
 }
 async onTestD(){
-    //AsyncStorage.removeItem('LastDate');global.lastDate=null;
+    AsyncStorage.removeItem('LastDate');global.lastDate=null;
     AsyncStorage.removeItem('Schedules');global.schedules=[];
     console.log('reset done');}
 
