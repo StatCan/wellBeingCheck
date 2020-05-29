@@ -240,7 +240,7 @@ export const resources = {
             
             //category1-Question1
             "faq.c1.q1": "Is this a legitimate Statistics Canada study?",
-            "faq.c1.q1.a": "Yes. More information can be found on Statistics Canada’s website: http://www.statcan.gc.ca",
+            "faq.c1.q1.a": `Yes. More information can be found on Statistics Canada’s website: [tobe updated] http://www.statcan.gc.ca`,
             
             //category1-Question2
             "faq.c1.q2": "Am I required to complete this study?",
@@ -252,7 +252,7 @@ export const resources = {
             
             //category1-Question4
             "faq.c1.q4": "Why are you conducting this study?",
-            "faq.c1.q4.a": "The purpose of this study is to better understand the everyday well-being of Canadians by asking in the moment questions about their activities and feelings. For more information about this study, please visit",
+            "faq.c1.q4.a": "The purpose of this study is to better understand the everyday well-being of Canadians by asking in the moment questions about their activities and feelings. For more information about this study, please visit [tobe updated] http://www.statcan.gc.ca",
 
             //category1-Question5
             "faq.c1.q5": "How long will it take me to complete the study?",
@@ -286,7 +286,7 @@ export const resources = {
             //category2-Question6
             "faq.c2.q6": "How is my data stored and transmitted? How will my data be protected?",
             "faq.c2.q6.a": "The Well-being Check app fully complies with all privacy and security regulations in place to protect Canadians’ information.\n\n"+
-            "Well-being Check uses Statistics Canada’s Electronic Collection Portal to collect your responses. No data from the app is stored on your device after you submit it. For more information about the security features in place to protect your data, please visit [insert link].",
+            "Well-being Check uses Statistics Canada’s Electronic Collection Portal to collect your responses. No data from the app is stored on your device after you submit it. For more information about the security features in place to protect your data, please visit [tobe updated] http://www.statcan.gc.ca.",
             
             //category2-Question7
             "faq.c2.q7": "I want to stop participating in this study",
@@ -642,7 +642,7 @@ export const resources = {
             
             //category1-Question1
             "faq.c1.q1": "Est-ce une enquête légitime de Statistique Canada?",
-            "faq.c1.q1.a": "Oui. Vous trouverez de plus amples informations sur le site Web de Statistique Canada :http://www.statcan.gc.ca",
+            "faq.c1.q1.a": "Oui. Vous trouverez de plus amples informations sur le site Web de Statistique Canada [à mettre à jour] http://www.statcan.gc.ca",
             
             //category1-Question2
             "faq.c1.q2": "Suis-je obligé de répondre à cette enquête?",
@@ -655,7 +655,7 @@ export const resources = {
             
             //category1-Question4
             "faq.c1.q4": "Pourquoi menez-vous cette enquête?",
-            "faq.c1.q4.a": "L’objectif de cette enquête est de mieux comprendre le bien-être au quotidien des Canadiens. Pour ce faire, nous leur avons posé des questions sur leurs activités et leurs sentiments au moment présent. Pour plus d’informations sur cette enquête, veuillez consulter [insérer le lien].",
+            "faq.c1.q4.a": "L’objectif de cette enquête est de mieux comprendre le bien-être au quotidien des Canadiens. Pour ce faire, nous leur avons posé des questions sur leurs activités et leurs sentiments au moment présent. Pour plus d’informations sur cette enquête, veuillez consulter [à mettre à jour] http://www.statcan.gc.ca.",
 
             //category1-Question5
             "faq.c1.q5": "Combien de temps me faudra-t-il pour terminer l’enquête?",
@@ -689,7 +689,7 @@ export const resources = {
             //category2-Question6
             "faq.c2.q6": "Comment mes données sont-elles stockées et transmises? Comment mes données seront-elles protégées?",
             "faq.c2.q6.a": "L’application Bilan bien-être est entièrement conforme à toutes les réglementations en matière de protection de la vie privée et de sécurité mises en place pour protéger les informations des Canadiens.\n\n"+
-            "Le Bilan bien-être utilise le portail de collecte électronique de Statistique Canada pour recueillir vos réponses. Aucune donnée de l’application n’est stockée sur votre appareil après que vous les avez soumises. Pour plus d’informations sur les dispositifs de sécurité mis en place pour protéger vos données, veuillez consulter [insérer le lien].",
+            "Le Bilan bien-être utilise le portail de collecte électronique de Statistique Canada pour recueillir vos réponses. Aucune donnée de l’application n’est stockée sur votre appareil après que vous les avez soumises. Pour plus d’informations sur les dispositifs de sécurité mis en place pour protéger vos données, veuillez consulter [à mettre à jour] http://www.statcan.gc.ca.",
             
             //category2-Question7
             "faq.c2.q7": "Je ne veux plus participer à cette enquête",
@@ -798,7 +798,7 @@ export const resources = {
               "to":"À:",
               "rateAppMsg":"Dites-nous ce que vous pensez de l’application en l’évaluant sur",
               "feedback":"Nous aimons votre rétroaction!",
-              "ratenow":"TAUX",
+              "ratenow":"Évaluez maintenant",
               "later":"Pas intéressé",
         }
     }
