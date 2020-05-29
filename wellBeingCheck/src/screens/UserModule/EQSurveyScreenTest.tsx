@@ -63,60 +63,6 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
 
           automaticallyAdjustsScrollViewInsets={false}
           renderLoading={() => { return this.displaySpinner(); }}
-          onLoadEnd={this.onLoadEnd()}
-          onNavigationStateChange={(navState) => {
-            console.log('EQSurveyScreen.OnNavigationStateChanged Ali:' + navState.url);
-            if (navState.url == global.surveyThkUrlEng || navState.url == global.surveyThkUrlFre) {
-              console.log('THank you count:' + count);
-              if (global.fetchAction) {
-                global.fetchAction = false;
-                let jsCode1 = 'var sac ="1234566789";sac= document.querySelector("div.sc-box-main p span.ecf-bold").innerText;window.ReactNativeWebView.postMessage(sac);';
-                console.log('Survey done.......................................................');
-                if (global.doneSurveyA) {
-                  console.log('EQSurveyScreenTHank you B........................' + global.fetchAction);
-                  global.showThankYou = 2;
-                  global.surveyCount=global.surveyCount+1;AsyncStorage.setItem('SurveyCount',global.surveyCount.toString());
-                  if(global.surveyCount==20)global.showThankYou = 20;
-                  this.handleSurveyBdone();
-                //  this.props.navigation.navigate('Dashboard');
-                  count = 1;
-                }
-                else {
-                  console.log('Thank you AAAA.....' + global.fetchAction);
-                  if (Platform.OS == 'ios') { this.setState({ jsCode: jsCode1 }); }
-                  else { this.webView.injectJavaScript(jsCode1); }
-                }
-              }
-              else this.props.navigation.navigate('Dashboard');
-            }
-            else {
-              let disCode1 = 'const meta = document.createElement("meta"); meta.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"); meta.setAttribute("name", "viewport"); document.getElementsByTagName("head")[0].appendChild(meta);';
-               console.log('Injection now...............................');
-               let jsCode2='document.getElementsByClassName("topconteiner")[0].scrollTop=0;true;';
-                let jsCode3='window.scrollTo(0, 0);true;';
-             //  if (Platform.OS == 'ios')this.setState({jsCode: disCode1 });
-              if (Platform.OS == 'ios')this.webView.injectJavaScript(jsCode3);
-            }
-          }}
-          onMessage={event => {
-            var ss = event.nativeEvent.data;
-            global.sac = ss.substring(4);
-            console.log('sa-code=======' + global.sac);
-            AsyncStorage.setItem('SacCode', global.sac);
-            console.log('done A:' + global.doneSurveyA);
-            if (global.doneSurveyA) {
-              console.log('redady to fetch image');
-              this.setState({ jsCode: jsCode });
-              count = 1; global.showThankYou = 2;
-            }
-            else {
-              console.log('survey A done'); global.doneSurveyA = true; AsyncStorage.setItem('doneSurveyA', 'true');
-              AsyncStorage.setItem('hasImage','0');global.hasImage=0;
-              this.handleSurveyAdone();
-              count = 1; global.showThankYou = 1;
-            }
-            this.props.navigation.navigate('Dashboard');
-          }}
         />
     );
   }

@@ -4,7 +4,7 @@ import { Provider as PaperProvider, Title } from 'react-native-paper';
 import Button from '../../components/Button';
 import { resources } from '../../../GlobalResources';
 import { newTheme } from '../../core/theme';
-import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
+import { NavigationParams, NavigationScreenProp, NavigationState,NavigationEvents, } from 'react-navigation';
 import { FailureType } from '../../api/back-end.service';
 import { Updates } from 'expo';
 
@@ -22,7 +22,7 @@ type ScreenState = {
 const height = Math.floor(Dimensions.get('window').height) - 100;
 const width = Math.floor(Dimensions.get('window').width);
 let startX = 0; let index = 0;
-var busyCheck=null;
+var busyCheck=null;let cc=0;
 class UserResultsScreen extends React.Component<Props, ScreenState> {
   _panResponder: any;
   timer = null
@@ -37,54 +37,6 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
     };
     global.currentView = 1;
     this.repeatcheck=this.repeatcheck.bind(this);
-    /* --------------------Session Handler--------------------------- */
-    //used to handle session
-    this._panResponder = PanResponder.create({
-      // Ask to be the responder:
-      onStartShouldSetPanResponder: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-      onStartShouldSetPanResponderCapture: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-
-      onMoveShouldSetPanResponder: (evt, gestureState) => {
-        // Listen for your events and show UI feedback here
-        this._initSessionTimer()
-        return false;
-      },
-      onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-      onPanResponderGrant: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-      onPanResponderMove: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-      onPanResponderTerminationRequest: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false
-      },
-      onPanResponderRelease: (evt, gestureState) => {
-        // This wont get called
-        this._initSessionTimer()
-        return true;
-      },
-      onPanResponderTerminate: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-      onShouldBlockNativeResponder: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-    });
   }
 
   _onNextBtnHandle = () => {
@@ -143,9 +95,6 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
   }
 
   componentDidMount() {
-    //Session Handler
-    this._initSessionTimer()
-
     if(global.fetchCount<8){this.monitorBusy();}
     else {
        this.loadImage();
@@ -163,34 +112,6 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
             this.setState({loaded:true});
         }
     }
-
-  _handleSessionTimeOutRedirect = () => {
-    Updates.reload();
-  }
-
-  _initSessionTimer() {
-    clearInterval(this.timer)
-    this.timer = setTimeout(() =>
-      this._expireSession()
-      ,
-      global.sessionTimeOutDuration)
-  }
-
-  _expireSession() {
-    Alert.alert(
-      resources.getString("session.modal.title"),
-      resources.getString("session.modal.message"),
-      [
-        { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
-      ],
-      { cancelable: false }
-    )
-  }
-
-  componentWillUnmount() {
-    //Session Handler
-    clearInterval(this.timer)
-  }
 
   handleScroll(event) {
     let width1 = this.state.width;let oldPage=this.state.current;
@@ -260,7 +181,7 @@ console.log('pppppaaaaggggggggggeeeeee:'+index);
           source={require('../../assets/white.png')}
           style={{ backgroundColor: 'white', flex: 1 }}
         >
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 40, height: 50 }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 40, height: 50 }} {...global.panResponder.panHandlers}>
             <TouchableOpacity onPress={() => { global.currentView = 0; this.props.navigation.navigate('Dashboard') }} style={{ marginLeft: 5, marginTop: 10 }}><Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{ width: 38, height: 38 }} /></TouchableOpacity>
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>{indicator}</View>
             {/*   <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} 
@@ -272,7 +193,7 @@ console.log('pppppaaaaggggggggggeeeeee:'+index);
               <Image source={require('../../assets/ic_setting.png')} />
             </TouchableOpacity>
           </View>
-          <View style={{ flex: 1 }}>
+          <View style={{ flex: 1 }} {...global.panResponder.panHandlers}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Title style={[styles.title, { marginLeft: 5 }]}>{this.state.title}</Title>
               {/*<TouchableOpacity onPress={() => this.helpClick()} style={{marginRight:0}}>
@@ -298,9 +219,10 @@ console.log('pppppaaaaggggggggggeeeeee:'+index);
             </View>
           </View>
         </ImageBackground>
+        <NavigationEvents onDidFocus={() =>{this.loadImage();this.setState({ title: resources.getString("Your feelings")});}} />
         <Button style={styles.btnNext}
           mode="contained"
-          onPress={() => { global.currentView = 0; this.props.navigation.navigate('Dashboard') }}>
+          onPress={() => { global.currentView = 0;  global.globalTick=0;this.props.navigation.navigate('Dashboard') }}>
           <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
         </Button>
       </PaperProvider>

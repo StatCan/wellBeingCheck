@@ -235,16 +235,125 @@ export const resources = {
 
             //FAQ
             "faq.title": "FAQ",
-            "faq.category1": "Category 1",
-            "faq.c1.q1": "Category 1 question 1",
-            "faq.c1.q1.a": "Category 1 question 1 Answer",
-            "faq.c1.q2": "Category 1 question 2",
-            "faq.c1.q2.a": "Category 1 question 2 Answer",
-            "faq.category2": "Category 2",
-            "faq.c2.q1": "Category 2 question 1",
-            "faq.c2.q1.a": "Category 2 question 1 Answer",
-            "faq.c2.q2": "Category 2 question 2",
-            "faq.c2.q2.a": "Category 2 question 2 Answer",
+            //---------------category1---------------
+            "faq.category1": "General",
+            
+            //category1-Question1
+            "faq.c1.q1": "Is this a legitimate Statistics Canada study?",
+            "faq.c1.q1.a": `Yes. More information can be found on Statistics Canada’s website: [tobe updated] http://www.statcan.gc.ca`,
+            
+            //category1-Question2
+            "faq.c1.q2": "Am I required to complete this study?",
+            "faq.c1.q2.a": "No. Participation is voluntary.",
+
+            //category1-Question3
+            "faq.c1.q3": "Who is participating in this study? ",
+            "faq.c1.q3.a": "Anyone in Canada over 15 years of age with a compatible smartphone or tablet can download Well-being Check from GooglePlay or the App Store to participate. You can participate with or without an invitation code. Please share this information with your friends so they can download the app too!",
+            
+            //category1-Question4
+            "faq.c1.q4": "Why are you conducting this study?",
+            "faq.c1.q4.a": "The purpose of this study is to better understand the everyday well-being of Canadians by asking in the moment questions about their activities and feelings. For more information about this study, please visit [tobe updated] http://www.statcan.gc.ca",
+
+            //category1-Question5
+            "faq.c1.q5": "How long will it take me to complete the study?",
+            "faq.c1.q5.a": "Daily Well-being Checks should take less than a minute to complete. You can choose how many times to participate each day by customizing the number of notifications you will receive in the settings menu. We are asking you to participate in the study for one month.",
+
+            //---------------category2---------------
+            "faq.category2": "Privacy and confidentiality",
+
+            //category2-Question1
+            "faq.c2.q1": "Why do I need a password and security question?",
+            "faq.c2.q1.a": "Well-being Check requests users to respond to daily questionnaires to identify how their feelings change in different settings. By password protecting the app, we can ensure your data trend has not been impacted by others who may use your phone and access the app. Also, Well-being Check provides users with a Results menu, which displays a trend of your self-assessed feelings and how they relate to what you are doing, who you are with, and where you are. By password protecting the app, we can ensure your trend is not viewed by others unless you log into the app and choose to share it with them.\n\n"+
+            "Statistics Canada does not collect your password when you create it, and therefore will not be able to assist you in resetting your password if required. The security question provides a second tier of security which you can use to reset your password.",
+             
+            //category2-Question2
+            "faq.c2.q2": "Can I change my password?",
+            "faq.c2.q2.a": "You can change your password through the ‘Forgot password?’ option on the login screen. You will need to answer your security question in order to access the password reset function.",
+            
+            //category2-Question3
+            "faq.c2.q3": "What if I forgot my password or security question?",
+            "faq.c2.q3.a": "You can change your password through the ‘Forgot password?’ option on the login screen. You will need to answer your security question in order to access the password reset function. If you have forgotten the answer to your security question, you will need to delete the app and download it again. Your previous responses will no longer be accessible to you through your My Results menu, as the app will identify you as a new user for security purposes.",
+            
+            //category2-Question4
+            "faq.c2.q4": "Is the information I provide confidential?",
+            "faq.c2.q4.a": "Yes, Statistics Canada guarantees the confidentiality of your responses under the Statistics Act.\n\n"+
+            "Any research, reports or publications based on this study will use aggregated data only and will not identify you or any individual as being affiliated with this study.",
+
+             //category2-Question5
+            "faq.c2.q5": "What data does Well-being Check collect?",
+            "faq.c2.q5.a": "The Well-being Check app collects the responses you provide to questionnaires, as well as the number of notifications you receive each day. It does not collect your password, your security question and answer, or data from your device such as location and app usage.",
+            
+            //category2-Question6
+            "faq.c2.q6": "How is my data stored and transmitted? How will my data be protected?",
+            "faq.c2.q6.a": "The Well-being Check app fully complies with all privacy and security regulations in place to protect Canadians’ information.\n\n"+
+            "Well-being Check uses Statistics Canada’s Electronic Collection Portal to collect your responses. No data from the app is stored on your device after you submit it. For more information about the security features in place to protect your data, please visit [tobe updated] http://www.statcan.gc.ca.",
+            
+            //category2-Question7
+            "faq.c2.q7": "I want to stop participating in this study",
+            "faq.c2.q7.a": "If you want to stop participating in the study at any point, you can turn off notifications in the settings menu or delete the app from your device.",
+          
+            
+            //---------------category3--------------- 
+            "faq.category3": "Settings and notifications",
+
+             //category3-Question1
+             "faq.c3.q1": "What notifications will I receive?",
+             "faq.c3.q1.a": "The app will send you a notification when it is time to complete a Well-being Check. These notifications are sent at random times based on the parameters you have chosen in your settings menu. You can change your settings at any time.",
+              
+             //category3-Question2
+             "faq.c3.q2": "Can I disable notifications?",
+             "faq.c3.q2.a": "Notifications are an essential part of this study as they let you know when a Well-being Check is available to be completed. If you need to turn off notifications, you can do it through the Settings page.",
+             
+             //category3-Question3
+             "faq.c3.q3": "How do I change my settings?",
+             "faq.c3.q3.a": "You can change your settings at any time through the Settings menu, located on the app homepage. ",
+             
+             //category3-Question4
+             "faq.c3.q4": "Can I complete a Well-being Check if I have not received a notification?",
+             "faq.c3.q4.a": "Of course! You can complete a Well-being Check at any time by pressing START, located on the app homepage.",
+ 
+             //category3-Question5
+             "faq.c3.q5": "What if I have missed a notification and have now received another?",
+             "faq.c3.q5.a": "Not a problem! While our goal is for you to respond to all notifications, we understand life can be busy and sometimes a notification will be missed. Respond once based on what you are doing and who you are with when you receive the second notification. ",
+             
+             //category3-Question6
+             "faq.c3.q6": "Why am I no longer receiving notifications?",
+             "faq.c3.q6.a": "If you have not completed a Well-being Check in the past 4 days, the app will stop sending you notifications. You can start receiving notifications again by pressing START, located on the app homepage, and completing a Well-being Check.\n\n"+
+             "Well-being Check will send you notifications for up to 30 days total. After this period is complete, your participation in the study has ended and you will no longer receive notifications.\n\n"+
+             "If neither of these scenarios reflect your situation, please contact us at 1-877-949-9492.",
+
+            //---------------category4---------------
+            "faq.category4": "The Results menu",
+
+            //category4-Question1
+            "faq.c4.q1": "What does the Results menu tell me? How can I interpret my results?",
+            "faq.c4.q1.a": "Category 2 question 1 AnswerThe data visualizations on the Results menu display a snapshot of your self-assessed feelings and how they relate to what you are doing, who you are with, and where you are.\n\n"+
+            "For ease of interpretation, your activities and companions have been grouped. Please note, all questions about feelings are based on a scale of 1 meaning ‘not at all’, and 10 meaning ’very’. Based on this, a high rating of feeling happy compared to a high rating of feeling anxious would be interpreted quite differently.\n\n"+
+            "These results are reported in real time and have not been validated by Statistics Canada. Caution should be exercised when interpreting the data.",
+           
+            //---------------category5---------------
+            "faq.category5": "Technical difficulties",
+             
+            //category5-Question1
+            "faq.c5.q1": "I cannot access the questionnaires or my results",
+            "faq.c5.q1.a": "The questionnaire portal and Results menu require a connection to data or wi-fi to function. If the problem persists after checking your connection, please contact us at 1-877-949-9492.",
+            
+            //category5-Question3
+            "faq.c5.q2": "I am experiencing other technical difficulties",
+            "faq.c5.q2.a": "If you are experiencing display issues, crashes, or other bugs please contact us at 1-877-949-9492.",
+            
+            //category5-Question4
+            "faq.c5.q3": "Can I download the app on multiple devices and sync it?",
+            "faq.c5.q3.a": "The app does not have syncing capabilities.\n\n"+
+            "Your participation in the study is based on the device you first downloaded the Well-being Check app on. If you download the app on a different device, you will be identified as a new user for security purposes and your previous responses will no longer be accessible to you through the Results menu.",
+
+            //category5-Question5
+            "faq.c5.q4": "How much memory does the app require?",
+            "faq.c5.q4.a": "Well-being Check requires 53 MB on Apple devices, and 90 MB on Android devices. ",
+
+            //category5-Question5
+            "faq.c5.q5": "How much data does the app require?",
+            "faq.c5.q5.a": "[tbd]",
 
             "offline":"You are offline, try it later.",
             "securityIssue":"Internal server error, Try again, if same thing would happen again contact StatCan",
@@ -525,14 +634,129 @@ export const resources = {
             "contactus_mail": "Courrier",
             "contactus_text": `Statistique Canada\nÀ l’attention du directeur Jean Labbé\n150, promenade Tunney’s Pasture\nOttawa (Ontario)\nK1A 0T6`,
 
+            
             //FAQ
-            "faq.title": "FR_FAQ",
-            "faq.q1": "FR_FAQ question 1",
-            "faq.a1": "FR_FAQ answer 1",
-            "faq.q2": "FR_FAQ question 2",
-            "faq.a2": "FR_FAQ answer 2",
-            "faq.q3": "FR_FAQ question 3",
-            "faq.a3": "FR_FAQ answer 3",
+            "faq.title": "FAQ",
+            //---------------category1---------------
+            "faq.category1": "Questions générales",
+            
+            //category1-Question1
+            "faq.c1.q1": "Est-ce une enquête légitime de Statistique Canada?",
+            "faq.c1.q1.a": "Oui. Vous trouverez de plus amples informations sur le site Web de Statistique Canada [à mettre à jour] http://www.statcan.gc.ca",
+            
+            //category1-Question2
+            "faq.c1.q2": "Suis-je obligé de répondre à cette enquête?",
+            "faq.c1.q2.a": "Non. La participation est volontaire.",
+
+            //category1-Question3
+            "faq.c1.q3": "Qui participe à cette enquête?  ",
+            "faq.c1.q3.a": "Toute personne au Canada de plus de 15 ans qui possède un téléphone intelligent ou une tablette compatible peut télécharger l’application Bilan bien-être sur Google Play ou sur l’App Store pour participer à l’enquête. Vous pouvez participer avec ou sans code d’invitation.\n"+
+             "Veuillez partager cette information avec vos amis afin qu’ils puissent eux aussi télécharger l’application.",
+            
+            //category1-Question4
+            "faq.c1.q4": "Pourquoi menez-vous cette enquête?",
+            "faq.c1.q4.a": "L’objectif de cette enquête est de mieux comprendre le bien-être au quotidien des Canadiens. Pour ce faire, nous leur avons posé des questions sur leurs activités et leurs sentiments au moment présent. Pour plus d’informations sur cette enquête, veuillez consulter [à mettre à jour] http://www.statcan.gc.ca.",
+
+            //category1-Question5
+            "faq.c1.q5": "Combien de temps me faudra-t-il pour terminer l’enquête?",
+            "faq.c1.q5.a": "Le Bilan bien-être devrait prendre quotidiennement moins d’une minute à remplir. Vous pouvez choisir le nombre de fois que vous souhaitez participer chaque jour en personnalisant le nombre de notifications que vous recevrez dans le menu des paramètres. Nous vous demandons de participer à l’étude pendant un mois.",
+
+            //---------------category2---------------
+            "faq.category2": "Vie privée et confidentialité",
+
+            //category2-Question1
+            "faq.c2.q1": "Pourquoi ai-je besoin d’un mot de passe et d’une question de sécurité?",
+            "faq.c2.q1.a": "Le Bilan bien-être demande aux utilisateurs de répondre quotidiennement à des questionnaires afin de déterminer la façon dont leurs sentiments changent dans différents contextes. En protégeant l’application par un mot de passe, nous pouvons nous assurer que la tendance de vos données n’a pas été influencée par d’autres personnes qui pourraient utiliser votre téléphone et accéder à l’application. De plus, le Bilan bien-être fournit aux utilisateurs un menu Résultats, qui affiche la tendance de vos sentiments autoévalués et de la façon dont ils sont liés à ce que vous faites, aux gens avec qui vous êtes et à l’endroit où vous vous trouvez. En protégeant l’application par un mot de passe, nous pouvons nous assurer que cette tendance n’est pas vue par d’autres personnes, à moins que vous vous connectiez à l’application et que vous choisissiez de la partager avec eux.\n\n"+
+            "Statistique Canada ne recueille pas votre mot de passe lorsque vous le créez, et ne pourra donc pas vous aider à le réinitialiser si nécessaire. La question de sécurité fournit un deuxième niveau de sécurité, que vous pouvez utiliser pour réinitialiser votre mot de passe.",
+             
+            //category2-Question2
+            "faq.c2.q2": "Puis-je changer mon mot de passe?",
+            "faq.c2.q2.a": "Vous pouvez changer votre mot de passe en utilisant l’option « Mot de passe oublié » à l’écran d’ouverture de session. Vous devrez répondre à votre question de sécurité afin d’accéder à la fonction de réinitialisation du mot de passe.",
+            
+            //category2-Question3
+            "faq.c2.q3": "Que faire si j’ai oublié mon mot de passe ou ma question de sécurité?",
+            "faq.c2.q3.a": "Vous pouvez changer votre mot de passe en utilisant l’option « Mot de passe oublié » à l’écran d’ouverture de session. Vous devrez répondre à votre question de sécurité afin d’accéder à la fonction de réinitialisation du mot de passe. Si vous avez oublié la réponse à votre question de sécurité, vous devrez supprimer l’application et la télécharger à nouveau. Vos réponses précédentes ne seront plus accessibles dans votre menu Résultats, car l’application vous identifiera comme un nouvel utilisateur pour des raisons de sécurité.",
+            
+            //category2-Question4
+            "faq.c2.q4": "Les informations que je fournis sont-elles confidentielles?",
+            "faq.c2.q4.a": "Oui, Statistique Canada garantit la confidentialité de vos réponses en vertu de la Loi sur la statistique.\n\n"+
+            "Les recherches, rapports ou publications basés sur cette enquête utiliseront uniquement des données agrégées et ne vous identifieront pas, ni aucune autre personne, comme étant affilié à cette enquête.",
+
+             //category2-Question5
+            "faq.c2.q5": "Quelles sont les données recueillies par le Bilan bien-être?",
+            "faq.c2.q5.a": "L’application Bilan bien-être recueille les réponses que vous fournissez aux questionnaires, ainsi que le nombre de notifications que vous recevez chaque jour. Elle ne recueille pas votre mot de passe, votre question de sécurité et sa réponse, ni les données de votre appareil telles que l’emplacement et l’utilisation de l’application.",
+            
+            //category2-Question6
+            "faq.c2.q6": "Comment mes données sont-elles stockées et transmises? Comment mes données seront-elles protégées?",
+            "faq.c2.q6.a": "L’application Bilan bien-être est entièrement conforme à toutes les réglementations en matière de protection de la vie privée et de sécurité mises en place pour protéger les informations des Canadiens.\n\n"+
+            "Le Bilan bien-être utilise le portail de collecte électronique de Statistique Canada pour recueillir vos réponses. Aucune donnée de l’application n’est stockée sur votre appareil après que vous les avez soumises. Pour plus d’informations sur les dispositifs de sécurité mis en place pour protéger vos données, veuillez consulter [à mettre à jour] http://www.statcan.gc.ca.",
+            
+            //category2-Question7
+            "faq.c2.q7": "Je ne veux plus participer à cette enquête",
+            "faq.c2.q7.a": "Si vous souhaitez, à tout moment, cesser de participer à l’enquête, vous pouvez désactiver les notifications dans le menu des paramètres ou supprimer l’application de votre appareil.",
+          
+            
+            //---------------category3--------------- 
+            "faq.category3": "Paramètres et notifications",
+
+             //category3-Question1
+             "faq.c3.q1": "Quelles notifications vais-je recevoir?",
+             "faq.c3.q1.a": "L’application vous enverra une notification lorsqu’il sera temps de remplir un Bilan bien-être. Ces notifications sont envoyées à des moments aléatoires en fonction des paramètres que vous avez choisis dans votre menu de configuration. Vous pouvez modifier vos paramètres à tout moment.",
+              
+             //category3-Question2
+             "faq.c3.q2": "Puis-je désactiver les notifications?",
+             "faq.c3.q2.a": "Les notifications sont un élément essentiel de cette enquête, car elles vous permettent de savoir quand un Bilan bien-être peut être réalisé. Si vous avez besoin de désactiver les notifications, vous pouvez le faire dans le menu Paramètres.",
+             
+             //category3-Question3
+             "faq.c3.q3": "Comment puis-je modifier mes paramètres?",
+             "faq.c3.q3.a": "Vous pouvez modifier vos paramètres à tout moment dans le menu Paramètres, situé sur la page d’accueil de l’application.",
+             
+             //category3-Question4
+             "faq.c3.q4": "Puis-je effectuer un Bilan bien-être si je n’ai pas reçu de notification?",
+             "faq.c3.q4.a": "Bien sûr! Vous pouvez effectuer un Bilan bien-être à tout moment en appuyant sur COMMENCER, situé sur la page d’accueil de l’application.",
+ 
+             //category3-Question5
+             "faq.c3.q5": "Que se passe-t-il si j’ai manqué une notification et que j’en ai reçu une autre?",
+             "faq.c3.q5.a": "Pas de problème! Bien que notre objectif soit que vous répondiez à toutes les notifications, nous comprenons que la vie peut être chargée et qu’il arrive parfois qu’une notification soit manquée. Répondez une fois en fonction de ce que vous faites et des personnes qui sont avec vous lorsque vous recevez la deuxième notification.",
+             
+             //category3-Question6
+             "faq.c3.q6": "Pourquoi ne reçois-je plus de notifications?",
+             "faq.c3.q6.a": "Si vous n’avez pas effectué de Bilan bien-être au cours des quatre derniers jours, l’application cessera de vous envoyer des notifications. Vous pouvez recommencer à recevoir des notifications en appuyant sur COMMENCER, situé sur la page d’accueil de l’application, et en remplissant un Bilan bien-être.\n\n"+
+             "Le Bilan bien-être vous enverra des notifications pour une durée totale de 30 jours maximum. Au terme de cette période, votre participation à l’enquête est terminée et vous ne recevrez plus de notifications.\n\n"+
+             "Si aucun de ces scénarios ne correspond à votre situation, veuillez nous contacter au 1-877-949-9492.",
+
+            //---------------category4---------------
+            "faq.category4": "Le menu Résultats",
+
+            //category4-Question1
+            "faq.c4.q1": "Que me dit le menu Résultats? Comment puis-je interpréter mes résultats?",
+            "faq.c4.q1.a": "Les visualisations de données du menu Résultats donnent un aperçu de vos sentiments autoévalués et de leur lien avec ce que vous faites, les personnes avec qui vous êtes et l’endroit où vous vous trouvez.\n\n"+
+            "Pour faciliter l’interprétation, vos activités et vos compagnons ont été regroupés. Veuillez noter que toutes les questions relatives aux sentiments sont évaluées sur une échelle de 1 à 10, où 1 signifie « pas du tout » et 10 signifie « très ». En fonction de cette échelle, une cote élevée de sentiment de bonheur par rapport à une cote élevée de sentiment d’anxiété serait interprétée de manière très différente.\n\n"+
+            "Ces résultats sont communiqués en temps réel et n’ont pas été validés par Statistique Canada. Il convient d’être prudent lors de l’interprétation des données.",
+           
+            //---------------category5---------------
+            "faq.category5": "Difficultés techniques",
+             
+            //category5-Question1
+            "faq.c5.q1": "Je ne peux pas accéder aux questionnaires ou à mes résultats",
+            "faq.c5.q1.a": "Le portail du questionnaire et le menu Résultats nécessitent une connexion aux données ou une connexion Wi-Fi pour fonctionner. Si le problème persiste après avoir vérifié votre connexion, veuillez nous contacter au 1-877-949-9492.",
+            
+            //category5-Question3
+            "faq.c5.q2": "Je rencontre d’autres difficultés techniques",
+            "faq.c5.q2.a": "Si vous rencontrez des problèmes d’affichage, des pannes ou d’autres bogues, veuillez nous contacter au 1-877-949-9492.",
+            
+            //category5-Question4
+            "faq.c5.q3": "Puis-je télécharger l’application sur plusieurs appareils et la synchroniser?",
+            "faq.c5.q3.a": "L’application n’a pas de capacités de synchronisation.\n\n"+
+            "Votre participation à l’enquête est basée sur l’appareil sur lequel vous avez téléchargé l’application Bilan bien-être pour la première fois. Si vous téléchargez l’application sur un autre appareil, vous serez identifié comme un nouvel utilisateur pour des raisons de sécurité, et vos réponses précédentes ne seront plus accessibles dans le menu Résultats.",
+
+            //category5-Question5
+            "faq.c5.q4": "Quelle est la quantité de mémoire requise par l’application?",
+            "faq.c5.q4.a": "L’application Bilan bien-être nécessite 53 Mo sur les appareils Apple et 90 Mo sur les appareils Android.",
+
+            //category5-Question5
+            "faq.c5.q5": "Combien de données l’application nécessite-t-elle?",
+            "faq.c5.q5.a": "[tbd]",
 
             "offline":"Vous êtes hors ligne, essayez-le plus tard.",
             "securityIssue":"Erreur de serveur interne, essayez à nouveau, si la même chose se reproduit, contactez StatCan",
@@ -574,7 +798,7 @@ export const resources = {
               "to":"À:",
               "rateAppMsg":"Dites-nous ce que vous pensez de l’application en l’évaluant sur",
               "feedback":"Nous aimons votre rétroaction!",
-              "ratenow":"TAUX",
+              "ratenow":"Évaluez maintenant",
               "later":"Pas intéressé",
         }
     }

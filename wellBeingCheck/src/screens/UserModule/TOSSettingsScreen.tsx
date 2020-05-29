@@ -38,11 +38,11 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
     };
   }
 
-  _openSettingsScreen = () => {
+  _openSettingsScreen = () => {  global.globalTick=0;
     this.props.navigation.navigate('SettingsScreen');
   }
   handleUrlPress(url, matchIndex /*: number*/) {
-    Linking.openURL(url);
+      global.globalTick=0;    Linking.openURL(url);
   }
 
   render() {
@@ -51,7 +51,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
         <AppBanner />
         <SafeAreaView style={styles.container}>
-          <ScrollView style={styles.scrollView}>
+          <ScrollView style={styles.scrollView} {...global.panResponder.panHandlers}>
             <LogoClearSmall />
             <Title style={styles.title}>{resources.getString("terms_and_conditions")}</Title>
             <Paragraph style={styles.paragraph}>

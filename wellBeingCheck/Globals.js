@@ -1,3 +1,4 @@
+import { PanResponder} from 'react-native';
 global.name='AAA';
 global.department='bbb';
 global.question='';
@@ -51,10 +52,80 @@ global.sleepHour='22:00';
 global.schedules=[];
 global.lastDate=null;
 global.warningNotificationId=null;
-global.sessionTimeOutDuration = 900000 //900000 = 15 min, 420000 = 7 min
 global.paradataSaved=false;
 global.passwordSaved=false;
 global.notificationState=true;
 global.surveyCount=0;
 global.busy=8;
 global.fetchCount=8;
+
+global.globalTimer =null;
+global.globalTick=0;
+global.globalTimeOutCallback=null;
+global.timerTime=900000;//30000*1;
+global.repeatCheck=async ()=>{
+    console.log('Timer check..............................');
+    if (global.globalTick>0) {
+         clearInterval(global.globalTimer);global.globalTimer =null;console.log('Timer killed1..................');
+         if(global.globalTimeOutCallback!=null && typeof global.globalTimeOutCallback=='function'){
+               global.globalTimeOutCallback();
+         }
+         else {
+           clearInterval(globla.globalTimer);console.log('Timer killed2..................');
+         }
+         global.globalTick=0;
+    }else if(global.globalTick==0)global.globalTick++;
+    else if(global.globalTick<0)clearInterval(global.globalTimer);
+}
+global.createGlobalTimer=()=>global.globalTimer=setInterval(global.repeatCheck,global.timerTime);
+global.panResponder=null;
+global.createPanResponder=()=>{
+    console.log('create pan responder.....................');
+    global.panResponder=PanResponder.create({
+          onStartShouldSetPanResponder: () => {
+            global.globalTick=0;
+            return true;
+          },
+          onMoveShouldSetPanResponder: () =>{  global.globalTick=0; console.log('On Move.........................');  return true;},
+          onStartShouldSetPanResponderCapture: () => {global.globalTick=0; console.log('On Click.................'); return false; },
+
+         //For performence, just enable what is necceesary
+         /* onStartShouldSetPanResponderCapture: () =>false,
+          onMoveShouldSetPanResponderCapture: () => false,
+          onPanResponderTerminationRequest: () => true,
+          onShouldBlockNativeResponder: () => false,
+
+          onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
+                  global.globalTick=0; console.log('On onMoveShouldSetPanResponderCapture.........................:'+gestureState);
+                  return false;
+                },
+          onPanResponderGrant: (evt, gestureState) => {
+                 global.globalTick=0; console.log('On onPanResponderGrant.........................:'+gestureState);
+                  return false;
+                },
+          onPanResponderMove: (evt, gestureState) => {
+                 global.globalTick=0; console.log('On onPanResponderMove.........................:'+gestureState);
+                  return false;
+                },
+          onPanResponderTerminationRequest: (evt, gestureState) => {
+                   global.globalTick=0; console.log('On onPanResponderTerminationRequest.........................:'+gestureState);
+                  return false
+                },
+          onPanResponderRelease: (evt, gestureState) => {
+                  global.globalTick=0; console.log('On onPanResponderRelease.........................:'+gestureState);
+                  return true;
+                },
+          onPanResponderTerminate: (evt, gestureState) => {
+                  global.globalTick=0; console.log('On onPanResponderTerminate.........................:'+gestureState);
+                  return false;
+                },
+          onShouldBlockNativeResponder: (evt, gestureState) => {
+               global.globalTick=0; console.log('On onShouldBlockNativeResponder.........................:'+gestureState);
+                  return false;
+                },
+*/
+
+
+
+        });
+}
