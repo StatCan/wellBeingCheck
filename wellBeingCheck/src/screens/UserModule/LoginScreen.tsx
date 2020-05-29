@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, SafeAreaView,Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, SafeAreaView,Alert,YellowBox } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Background from '../../components/Background';
 import Button from '../../components/Button';
@@ -34,7 +34,8 @@ type LoginState = {
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
-
+YellowBox.ignoreWarnings(['Require cycle:','Setting a timer']);
+console.ignoredYellowBox = ['Require cycle:','Setting a timer'];
 class LoginScreen extends React.Component<Props, LoginState> {
 
   constructor(LoginState) {
@@ -45,7 +46,6 @@ class LoginScreen extends React.Component<Props, LoginState> {
       title: resources.getString("Well-Being Check"),
       passwordIsHidden: true,
     };
-
   }
 
   toggleLanguage() {
@@ -194,7 +194,7 @@ async onTestD(){
                   <Text style={styles.label}>{resources.getString("login.forgot_password")}</Text>
                 </TouchableOpacity>
               </View>
-
+               <NavigationEvents onDidFocus={() => this.setState({password: ''})} />
               <View style={styles.footer}>
                 <Button
                   color={newTheme.colors.primary}

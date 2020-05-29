@@ -4,7 +4,8 @@ import { Provider } from 'react-native-paper';
 import App from './src';
 import { theme } from './src/core/theme';
 import './Globals.js';
-YellowBox.ignoreWarnings(['Require cycle:',]);
+YellowBox.ignoreWarnings(['Require cycle:','Setting a timer']);
+console.ignoredYellowBox = ['Require cycle:','Setting a timer'];
 const Main = () => (
   <Provider theme={theme}>
     <App />

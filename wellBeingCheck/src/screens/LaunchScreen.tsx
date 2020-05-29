@@ -27,7 +27,8 @@ type LaunchState = {
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
-YellowBox.ignoreWarnings(['Require cycle:',]);
+YellowBox.ignoreWarnings(['Require cycle:','Setting a timer']);
+console.ignoredYellowBox = ['Require cycle:','Setting a timer'];
 class LaunchScreen extends React.Component<Props, LaunchState> {
 
   constructor(LaunchState) {
@@ -36,13 +37,12 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
     //  this.getDeviceConnectionInfo();
     this.state = {title:''};
     this.getCulture();
- //   this.onNotification = this.onNotification.bind(this);
+
     this.delay(2000).then(any => {
       //splach screen forced show 3000 = 3 seconds!
       this.bootstrapA();
     });
     this.onNotification=this.onNotification.bind(this);
-
   }
   async delay(ms: number) {
     await new Promise(resolve => setTimeout(() => resolve(), ms)).then(() => console.log("splash screen complete"));
@@ -146,6 +146,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
        console.log('received notification:'+n.title);
        //this.props.navigation.navigate('Dashboard');
        }
+
   async getCulture(){
      let culture=await AsyncStorage.getItem('Culture');
      if(culture==null){

@@ -72,47 +72,13 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     this.wakeTimeHandler = this.wakeTimeHandler.bind(this);
     this.sleepTimeHandler = this.sleepTimeHandler.bind(this);
     this.cancelTimeHandler = this.cancelTimeHandler.bind(this);
-
-    /* --------------------Session Handler--------------------------- */
-    //used to handle session
-    this._panResponder = PanResponder.create({
-      // Ask to be the responder:
-      onStartShouldSetPanResponder: () => {
-        this._initSessionTimer()
-        return true
-      },
-      onMoveShouldSetPanResponder: () => {
-        this._initSessionTimer()
-        return true
-      },
-      onStartShouldSetPanResponderCapture: () => {
-        this._initSessionTimer()
-        return true
-      },
-      onMoveShouldSetPanResponderCapture: () => {
-        this._initSessionTimer()
-        return true
-      },
-      onPanResponderTerminationRequest: () => {
-        this._initSessionTimer()
-        return true
-      },
-      onShouldBlockNativeResponder: () => {
-        this._initSessionTimer()
-        return true
-      },
-    });
   }
 
   componentDidMount() {
-    //Session Handler
-    this._initSessionTimer()
     this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
   }
 
   componentWillUnmount() {
-    //Session Handler
-    clearTimeout(this.timer)
     this.backHandler.remove()
   }
 
@@ -121,6 +87,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   }
 
   wakeTimeHandler(time) {
+    global.globalTick=0;
     time = time.substring(0, 5);
     this.setState({
       waketime: time,
@@ -132,6 +99,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   }
 
   cancelTimeHandler(time) {
+    global.globalTick=0;
     this.setState({
       wakeTimePickerShow: false,
       sleepTimePickerShow: false
@@ -139,6 +107,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   }
 
   sleepTimeHandler(time) {
+    global.globalTick=0;
     time = time.substring(0, 5);
     this.setState({
       sleeptime: time,
@@ -200,29 +169,6 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       return true;
     }
   };
-
-  _handleSessionTimeOutRedirect = () => {
-    Updates.reload();
-  }
-
-  _initSessionTimer() {
-    clearTimeout(this.timer)
-    this.timer = setTimeout(() =>
-      this._expireSession(),
-      global.sessionTimeOutDuration)
-  }
-
-  _expireSession() {
-    Alert.alert(
-      resources.getString("session.modal.title"),
-      resources.getString("session.modal.message"),
-      [
-        { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
-      ],
-      { cancelable: false }
-    )
-  }
-
   handleBackAction = async () => {
     if (global.debugMode) console.log("Handle Back Action");
     if (this.state.waketime != global.awakeHour) dirty = true;
@@ -344,6 +290,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   }
 
   _backButtonPressed = () => {
+    global.globalTick=0;
    if (this.state.notificationState){
         console.log("Back button Pressed:" + this.state.waketime + '---' + this.state.sleeptime);
         let valid = validateSetting(this.state.waketime, this.state.sleeptime, this.state.notificationcount);
@@ -435,19 +382,20 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     }
   }
 
-  _showNumPingsModal = () => this.setState({ numPingsModalShow: true });
-  _hideNumPingsModal = () => this.setState({ numPingsModalShow: false });
+  _showNumPingsModal = () =>{ global.globalTick=0; this.setState({ numPingsModalShow: true });}
+  _hideNumPingsModal = () =>{ global.globalTick=0; this.setState({ numPingsModalShow: false });}
 
-  _showLanguageModal = () => this.setState({ languageModalShow: true });
-  _hideLanguageModal = () => this.setState({ languageModalShow: false });
+  _showLanguageModal = () =>{ global.globalTick=0; this.setState({ languageModalShow: true });}
+  _hideLanguageModal = () =>{  global.globalTick=0;this.setState({ languageModalShow: false });}
 
-  _showWakeTimePicker = () => this.setState({ wakeTimePickerShow: true });
-  _hideWakeTimePicker = () => this.setState({ wakeTimePickerShow: false });
+  _showWakeTimePicker = () =>{ global.globalTick=0; this.setState({ wakeTimePickerShow: true });}
+  _hideWakeTimePicker = () =>{ global.globalTick=0; this.setState({ wakeTimePickerShow: false });}
 
-  _showSleepTimePicker = () => this.setState({ sleepTimePickerShow: true });
-  _hideSleepTimePicker = () => this.setState({ sleepTimePickerShow: false });
+  _showSleepTimePicker = () =>{ global.globalTick=0; this.setState({ sleepTimePickerShow: true });}
+  _hideSleepTimePicker = () =>{ global.globalTick=0;this.setState({ sleepTimePickerShow: false });}
 
   _openTermsConditions = () => {
+     global.globalTick=0;
     this.props.navigation.navigate('TOSSettingsScreen');
   }
   // _openAbout = () => {
@@ -471,7 +419,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     return (
       <PaperProvider theme={newTheme}>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
-        <View style={{ flex: 1, justifyContent: 'space-between' }}>
+        <View style={{ flex: 1, justifyContent: 'space-between' }} {...global.panResponder.panHandlers}>
           <View style={styles.toolbar}>
             <Text style={styles.toolbarTitle}>{resources.getString("settings")}</Text>
           </View>

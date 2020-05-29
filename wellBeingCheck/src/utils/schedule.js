@@ -243,7 +243,9 @@ export async function setupSchedules(affectCurrent=false){
                     }
                 }
                 else {
-                    let affectedDay=f.AffectedDay; let leftOverCount=count- f.PassedCount;console.log('Setup notification will affect current day:'+affectedDay.toString()+'->'+leftOverCount);
+                    let affectedDay=f.AffectedDay; let leftOverCount=count- f.PassedCount;
+                    let ddd =parseInt((lastDate - affectedDay)/ (1000 * 60 * 60 * 24), 10); if (ddd == 30) leftOverCount = leftOverCount - 1;
+                    console.log('Setup notification will affect current day:'+affectedDay.toString()+'->'+leftOverCount);
                     let days = getFollowingDays(affectedDay,lastDate,true,4,false);
                     if(days.length>0){
                        day5=getNextDay(days[days.length-1]);

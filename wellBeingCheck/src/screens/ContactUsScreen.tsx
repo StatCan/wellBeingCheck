@@ -22,97 +22,21 @@ class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
 
   constructor(ContactUsScreen) {
     super(ContactUsScreen)
-
-    /* --------------------Session Handler--------------------------- */
-    //used to handle session
-    this._panResponder = PanResponder.create({
-      // Ask to be the responder:
-      onStartShouldSetPanResponder: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-      onStartShouldSetPanResponderCapture: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-
-      onMoveShouldSetPanResponder: (evt, gestureState) => {
-        // Listen for your events and show UI feedback here
-        this._initSessionTimer()
-        return false;
-      },
-      onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-      onPanResponderGrant: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-      onPanResponderMove: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-      onPanResponderTerminationRequest: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false
-      },
-      onPanResponderRelease: (evt, gestureState) => {
-        // This wont get called
-        this._initSessionTimer()
-        return true;
-      },
-      onPanResponderTerminate: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-      onShouldBlockNativeResponder: (evt, gestureState) => {
-        this._initSessionTimer()
-        return false;
-      },
-    });
   }
 
   componentDidMount() {
-    //Session Handler
-    this._initSessionTimer()
     this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
   }
 
   componentWillUnmount() {
-    //Session Handler
-    clearInterval(this.timer)
     this.backHandler.remove()
   }
 
   handleBackPress = () => {
     return true;
   }
-
-  _handleSessionTimeOutRedirect = () => {
-    Updates.reload();
-  }
-
-  _initSessionTimer() {
-    clearInterval(this.timer)
-    this.timer = setTimeout(() =>
-      this._expireSession()
-      ,
-      global.sessionTimeOutDuration)
-  }
-
-  _expireSession() {
-    Alert.alert(
-      resources.getString("session.modal.title"),
-      resources.getString("session.modal.message"),
-      [
-        { text: resources.getString("session.modal.sign_in"), onPress: () => this._handleSessionTimeOutRedirect() },
-      ],
-      { cancelable: false }
-    )
-  }
-
   _onNextBtnHandle = () => {
+     global.globalTick=0;
     this.props.navigation.navigate('Dashboard');
   }
 
@@ -124,12 +48,12 @@ class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
         <BackgroundWhite>
           <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}
-              {...this._panResponder.panHandlers}
+              {...global.panResponder.panHandlers}
             >
-              <View style={styles.logo_container}>
+              <View style={styles.logo_container}  {...global.panResponder.panHandlers}>
                 <LogoClearSmall />
               </View>
-              <Title style={styles.title}>{resources.getString("contactus_title")}</Title>
+              <Title style={styles.title}  {...global.panResponder.panHandlers}>{resources.getString("contactus_title")}</Title>
               <View>
                 <View style={styles.content}>
                   <Text style={styles.content_title}>{resources.getString("contactus_email")}</Text>
