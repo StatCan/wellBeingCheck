@@ -642,7 +642,7 @@ the algorithm will not arrange any notification for the time which has been pass
  }
  function getAffectedDay(datetime,count) {
          let result = null;
-         let list = preSchedule;
+         let list =global.schedules;
          let curDayList = [];
 
 
