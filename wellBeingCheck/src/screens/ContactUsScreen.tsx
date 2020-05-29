@@ -137,7 +137,7 @@ class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
                 </View>
                 <View style={styles.content}>
                   <Text style={styles.content_title}>{resources.getString("contactus_telephone")}</Text>
-                  <TouchableOpacity onPress={() => Linking.openURL('tel:187779499492')}>
+                  <TouchableOpacity onPress={() => Linking.openURL('tel:18779499492')}>
                     <Text style={styles.text}>1-877-949-9492</Text></TouchableOpacity>
                 </View>
                 <View style={styles.content}>
