@@ -38,6 +38,191 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     setTimeout(() => { this.setState({ webviewLoaded: true }) }, 4000);
   }
 
+  componentDidMount() {
+  }
+
+  async handleSurveyAdone(){
+     let isConnected=await checkConnection();
+     if(!isConnected){Alert.alert('',resources.getString('offline'));return;}
+     let jwt=await fetchJwToken();  console.log('Token:'+jwt);
+     if(jwt==''){Alert.alert('',resources.getString("securityIssue"));return;}
+     global.jwToken=jwt;
+     let result=false;
+     result=await this.setPassword(jwt);
+     if(!result){Alert.alert('',resources.getString("securityIssue"));return;}
+     global.passwordSaved=true;AsyncStorage.setItem('PasswordSaved','true');
+     count=1;
+     global.fetchAction=false;
+      if (global.notificationState)setupSchedules();
+     await this.saveDefaultParadata(jwt);
+     global.surveyCount=1;AsyncStorage.setItem('SurveyCount','1');
+ }
+  async handleSurveyBdone(){
+     let isConnected=await checkConnection();console.log('In handle B');global.busy=0;
+     if(!isConnected){Alert.alert('',resources.getString('offline'));return;}
+     if(!global.passwordSaved && global.sac!=''){
+        let result=false;
+        result=await this.resetPassword(global.password);console.log('save password:'+result);
+        if(result){global.passwordSaved=true;AsyncStorage.setItem('PasswordSaved','true');console.log('password saved');}
+     }
+
+     let jwt=await fetchJwToken();
+     if(jwt==''){Alert.alert('',resources.getString("securityIssue"));return;}
+     global.jwToken=jwt;
+     global.fetchCount=0;
+     let types=await this.fetchGraphTypes();console.log(types);
+     if(types!=null && types.length>0){
+          await this.fetchGraphs(types);
+     }
+     count=1;AsyncStorage.setItem('hasImage','1');global.hasImage=1;
+     // Save Survey B Done State
+     AsyncStorage.setItem('doneSurveyB','true');
+     global.fetchAction=false;
+      if (global.notificationState)setupSchedules(false);
+     if(!global.paradataSaved)await this.saveDefaultParadata(jwt);
+
+     this.props.navigation.navigate('Dashboard');
+  }
+  async fetchGraphs(types: string[]) {
+    let hh = deviceHeight - 220; let hh1 = deviceHeight - 300; let ww = deviceWidth - 80;
+    let index = 0;
+    for (var i = 0; i < types.length; i++) {
+      let url = global.webApiBaseUrl + 'api/dashboard/graph/' + types[i];
+      //  if(types[i].type=='overall')url+='?width='+deviceWidth+'&height='+hh;
+      //  else url+='?width='+deviceWidth+'&height='+hh;
+      url += '?width=' + deviceWidth + '&height=' + hh;
+      this.fetchImage(url, index, 'en'); index++;
+      this.fetchImage(url, index, 'fr'); index++;
+    }
+    AsyncStorage.setItem('hasImage', '1'); console.log('Fetch images done');
+  }
+  setPassword(jwt:string) {
+               let url=global.webApiBaseUrl+'api/security/password';
+               let data={salt:global.passwordSalt,
+                         passwordHash:hashString(global.password,global.passwordSalt),
+                         securityQuestionId:global.securityQuestionId,
+                         securityAnswerSalt:global.securityAnswerSalt,
+                         securityAnswerHash:hashString(global.securityAnswer,global.securityAnswerSalt)}
+               return fetch(url,{
+                     method: 'POST',
+                       headers: {
+                         'Content-Type': 'application/json',
+                         'Authorization': 'Bearer ' + jwt,
+                       },
+                       body: JSON.stringify(data),
+               })
+               .then((response) =>{ if(response.status==200){return true;}  else {console.log('Bad:'+response.status);return false;}} )          // response.json())
+              // .then((responseJson) => {console.log('setPassword:'+responseJson);return responseJson;})
+               .catch((error) => {console.error(error);return false;});
+          }
+  resetPassword(newPass) {
+     let url=global.webApiBaseUrl+'api/security/password';console.log(url);
+     let data={
+         deviceId:global.userToken,
+         sac:global.sac,
+         newSalt:global.passwordSalt,
+         newPasswordHash:hashString(newPass,global.passwordSalt),
+         securityAnswerHash:hashString(global.securityAnswer,global.securityAnswerSalt),
+         newSecurityQuestionId:global.securityQuestionId,
+         newSecurityAnswerSalt:global.securityAnswerSalt,
+         newSecurityAnswerHash:hashString(global.securityAnswer,global.securityAnswerSalt)
+     }
+     return fetch(url,{
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json',},
+        body: JSON.stringify(data),
+     })
+     .then((response) =>{
+         if(response.status==200){console.log('good');global.password=newPass; return true;}
+         else {console.log('Bad:'+response.status);return false;}
+     } )    // .then((response) => response.json())
+           //  .then((responseJson) => {console.log('resetPassword:'+responseJson);    return responseJson;})
+     .catch((error) => {console.error(error);console.log('Bad');return false;});
+  }
+  async fetchGraphTypes() {
+    let types = [];
+    let url = global.webApiBaseUrl + 'api/dashboard/graphs';
+    return fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + global.jwToken,
+      }
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        if (result != null && result.length > 0) {
+          result.forEach(function (graphLink) {
+            types.push(graphLink.type);
+          });
+        }
+        return types;
+      })
+      .catch(
+        error => {
+          console.warn(error);
+          return types;
+        }
+      );
+  }
+
+  async fetchImage(url: string, index: number, culture: string) {
+    let isConnected = await checkConnection();
+    if (!isConnected) {
+      Alert.alert(resources.getString("internet.offline"));
+      return;
+    }
+    let token = global.jwToken;
+    fetch(url, {
+      method: 'GET',
+      headers: { 'Authorization': 'Bearer ' + token, 'Accept-language': culture },
+    })
+      .then(response => {
+        console.log(response.status);global.fetchCount++;
+        if (response.status == 200) {
+          response.blob()
+            .then(blob => {
+              var reader = new FileReader();
+              reader.onload = function () {
+                ++global.busy;
+            //    console.log('image' + index); console.log("Busy flag in eq:"+global.busy);
+                AsyncStorage.setItem('image' + index, this.result);
+              };
+              reader.readAsDataURL(blob);
+            })
+        }
+        else {
+          let tt = Alert.alert(resources.getString("internet.offline"));
+          throw new Error("Access denied, Try again later, if same thing would happen again contact StatCan");
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+  async saveDefaultParadata(jwt) {
+    let list =global.schedules; var snt = [];
+        if(list.length>0){
+            list.forEach(function(s){
+               snt.push(s.Datetime);
+            });
+        }
+        let paraData = {
+          "PlatFormVersion": Platform.Version,
+          "DeviceName": Expo.Constants.deviceName,
+          "NativeAppVersion": Expo.Constants.nativeAppVersion,
+          "NativeBuildVersion": Expo.Constants.nativeBuildVersion,
+          "DeviceYearClass": Expo.Constants.deviceYearClass,
+          "SessionID": Expo.Constants.sessionId,
+          "WakeTime": global.awakeHour,
+          "SleepTime": global.sleepHour,
+          "NotificationCount": global.pingNum,
+          "NotificationEnable": global.notificationState,
+          "ScheduledNotificationTimes": snt
+        };
+    console.log(paraData);
+    var result = await saveParaData(jwt, paraData);
+  }
   displaySpinner() {
     return (
       <View>
@@ -48,19 +233,46 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
   onLoadEnd() {
   }
   render() {
-    let uri = 'http://barabasy.eastus.cloudapp.azure.com/anonymous-anonyme/en/login-connexion/load-charger/eqgsd0ed709a7df0465da7cb4881b290ff22';
+    let uri = '';//http://barabasy.eastus.cloudapp.azure.com/anonymous-anonyme/en/login-connexion/load-charger/eqgsd0ed709a7df0465da7cb4881b290ff22';
+    if (global.doneSurveyA) {
+      if (resources.culture == 'en')
+        uri = global.surveyBUrlEng;
+      else
+        uri = global.surveyBUrlFre;
+    }
+    else {
+      if (resources.culture == 'en')
+        uri = global.surveyAUrlEng;
+      else
+        uri = global.surveyAUrlFre;
+    }
+    console.log('Beofore eq:' + uri);
+    let userAgent = Platform.OS == 'ios' ? 'Apple DeviceId/' + global.userToken : 'Android DeviceId/' + global.userToken; console.log('EQ userAgent' + userAgent);
     return (
+      <View
+        style={{ flex: 1, marginTop: 40 }}
+        {...global.panResponder.panHandlers}
+      >
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')}
+                            style={{ marginLeft: 5, marginTop: 10,marginBottom:5 }}>
+                <Image source={require('../../assets/ic_logo_loginmdpi.png')}
+                       style={{ width: 38, height: 38 }} />
+          </TouchableOpacity>
+        </View>
+        {(this.state.webviewLoaded) ? null : <ActivityIndicator size="large" color="lightblue" style={{ position: 'absolute', top: '50%', left: '50%', zIndex: 20 }} />}
         <WebView
           ref={(view) => this.webView = view} incognito={true} useWebKit={true}
           style={[styles.webview]}
           containerStyle={{ flex: 1}}
+          applicationNameForUserAgent={userAgent}
           scrollEnabled={true}
           source={{ uri: uri }}
           javaScriptEnabled={true}
           domStorageEnabled={true}
           scalesPageToFit={true}
           startInLoadingState={true}
-
+          injectedJavaScript={this.state.jsCode}
           automaticallyAdjustsScrollViewInsets={false}
           renderLoading={() => { return this.displaySpinner(); }}
           onLoadEnd={this.onLoadEnd()}
@@ -89,13 +301,9 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
               }
               else this.props.navigation.navigate('Dashboard');
             }
-            else {
-              let disCode1 = 'const meta = document.createElement("meta"); meta.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"); meta.setAttribute("name", "viewport"); document.getElementsByTagName("head")[0].appendChild(meta);';
-               console.log('Injection now...............................');
-               let jsCode2='document.getElementsByClassName("topconteiner")[0].scrollTop=0;true;';
-                let jsCode3='window.scrollTo(0, 0);true;';
-             //  if (Platform.OS == 'ios')this.setState({jsCode: disCode1 });
-              if (Platform.OS == 'ios')this.webView.injectJavaScript(jsCode3);
+            else{
+               let jsCode2='';
+                if (Platform.OS == 'ios')this.webView.injectJavaScript(jsCode2);
             }
           }}
           onMessage={event => {
@@ -118,6 +326,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
             this.props.navigation.navigate('Dashboard');
           }}
         />
+      </View>
     );
   }
 }
@@ -127,8 +336,8 @@ const styles = StyleSheet.create({
     marginTop: 100
   },
   webview: {
-    flex: 1,
-    marginTop: 20,
+    //flex: 1,
+    marginTop: 0,
     width: deviceWidth,
     height:deviceHeight-40     //height: deviceHeight + 2000
   },
