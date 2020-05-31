@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: 'bold',
-    color: '#656262',
+    color: '#000',
   },
   label: {
     color: newTheme.colors.secondary,
