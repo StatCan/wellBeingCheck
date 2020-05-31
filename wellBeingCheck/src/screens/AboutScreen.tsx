@@ -44,8 +44,6 @@ type AboutState = {
   faqC3Q5Expanded: boolean,
   faqC3Q6Expanded: boolean,
 
-
-
   //-------Category 4-------//
   faqC4Expanded: boolean,
   faqC4Q1Expanded: boolean,
@@ -76,7 +74,6 @@ class AboutScreen extends React.Component<Props, AboutState> {
 
       faqMainExpanded: false,
       //-------Category 1-------//
-
       faqC1Expanded: false,
       faqC1Q1Expanded: false,
       faqC1Q2Expanded: false,
@@ -133,6 +130,21 @@ class AboutScreen extends React.Component<Props, AboutState> {
     global.globalTick=0;
     this.props.navigation.navigate('Dashboard');
   }
+
+//   _handleAccordian=()=>
+//   this.setState({
+// switch (key) {
+//   case value:
+    
+//     break;
+
+//   default:
+//     break;
+// }
+
+
+
+//   });
 
   _handleFaqMainExpand = () =>
     this.setState({
@@ -314,7 +326,6 @@ class AboutScreen extends React.Component<Props, AboutState> {
                     expanded={this.state.faqMainExpanded}
                     onPress={this._handleFaqMainExpand}
                   >
-
                     {/* Category 1 */}
                     <View style={styles.faqViewAns}>
                       <List.Accordion
@@ -655,10 +666,6 @@ class AboutScreen extends React.Component<Props, AboutState> {
                               {resources.getString("faq.c5.q2.a")}
                             </ParsedText>
                           </View>
-
-                          {/* <View style={styles.faqListItem}>
-                            <Text>{resources.getString("faq.c5.q2.a")}</Text>
-                          </View> */}
                         </List.Accordion>
                         <List.Accordion
                           title={resources.getString("faq.c5.q3")}
@@ -705,7 +712,6 @@ class AboutScreen extends React.Component<Props, AboutState> {
 
                           { pattern: /Pourquoi nous menons cette étude\?|Notifications|Autorisation et confidentialité|Couplages d’enregistrements/, style: styles.bold },
                           { pattern: /Temps requis pour remplir ce questionnaire|Pour parcourir le questionnaire|Délai d’inactivité d’une session|Définitions et explications|Version/, style: styles.bold },
-
 
                           { pattern: /Statistics Act, Revised Statutes of Canada, 1985, Chapter S-19/, style: styles.italic },
                           { pattern: /Loi sur la statistique, Lois revisees du Canada \(1985\), chapitre S-19/, style: styles.italic },
@@ -777,7 +783,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   title: {
-    marginTop: 20,
+    //marginTop: 10,
     marginLeft: 20,
     color: '#707070',
     marginBottom: 20,
