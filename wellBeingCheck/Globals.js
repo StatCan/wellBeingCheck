@@ -71,7 +71,7 @@ global.repeatCheck=async ()=>{
                global.globalTimeOutCallback();
          }
          else {
-           clearInterval(globla.globalTimer);console.log('Timer killed2..................');
+           clearInterval(global.globalTimer);console.log('Timer killed2..................');
          }
          global.globalTick=0;
     }else if(global.globalTick==0)global.globalTick++;
@@ -89,43 +89,40 @@ global.createPanResponder=()=>{
           onMoveShouldSetPanResponder: () =>{  global.globalTick=0; console.log('On Move.........................');  return true;},
           onStartShouldSetPanResponderCapture: () => {global.globalTick=0; console.log('On Click.................'); return false; },
 
+
          //For performence, just enable what is necceesary
-         /* onStartShouldSetPanResponderCapture: () =>false,
-          onMoveShouldSetPanResponderCapture: () => false,
-          onPanResponderTerminationRequest: () => true,
-          onShouldBlockNativeResponder: () => false,
+          // onStartShouldSetPanResponderCapture: () =>false,
+          // onMoveShouldSetPanResponderCapture: () => false,
+          // onPanResponderTerminationRequest: () => true,
+          // onShouldBlockNativeResponder: () => false,
 
-          onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
-                  global.globalTick=0; console.log('On onMoveShouldSetPanResponderCapture.........................:'+gestureState);
-                  return false;
-                },
-          onPanResponderGrant: (evt, gestureState) => {
-                 global.globalTick=0; console.log('On onPanResponderGrant.........................:'+gestureState);
-                  return false;
-                },
-          onPanResponderMove: (evt, gestureState) => {
-                 global.globalTick=0; console.log('On onPanResponderMove.........................:'+gestureState);
-                  return false;
-                },
-          onPanResponderTerminationRequest: (evt, gestureState) => {
-                   global.globalTick=0; console.log('On onPanResponderTerminationRequest.........................:'+gestureState);
-                  return false
-                },
-          onPanResponderRelease: (evt, gestureState) => {
-                  global.globalTick=0; console.log('On onPanResponderRelease.........................:'+gestureState);
-                  return true;
-                },
-          onPanResponderTerminate: (evt, gestureState) => {
-                  global.globalTick=0; console.log('On onPanResponderTerminate.........................:'+gestureState);
-                  return false;
-                },
-          onShouldBlockNativeResponder: (evt, gestureState) => {
-               global.globalTick=0; console.log('On onShouldBlockNativeResponder.........................:'+gestureState);
-                  return false;
-                },
-*/
-
-
-
+          // onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
+          //         global.globalTick=0; console.log('On onMoveShouldSetPanResponderCapture.........................:'+gestureState);
+          //         return false;
+          //       },
+          // onPanResponderGrant: (evt, gestureState) => {
+          //        global.globalTick=0; console.log('On onPanResponderGrant.........................:'+gestureState);
+          //         return false;
+          //       },
+          // onPanResponderMove: (evt, gestureState) => {
+          //        global.globalTick=0; console.log('On onPanResponderMove.........................:'+gestureState);
+          //         return false;
+          //       },
+          // onPanResponderTerminationRequest: (evt, gestureState) => {
+          //          global.globalTick=0; console.log('On onPanResponderTerminationRequest.........................:'+gestureState);
+          //         return false
+          //       },
+          // onPanResponderRelease: (evt, gestureState) => {
+          //         global.globalTick=0; console.log('On onPanResponderRelease.........................:'+gestureState);
+          //         return true;
+          //       },
+          // onPanResponderTerminate: (evt, gestureState) => {
+          //         global.globalTick=0; console.log('On onPanResponderTerminate.........................:'+gestureState);
+          //         return false;
+          //       },
+          // onShouldBlockNativeResponder: (evt, gestureState) => {
+          //      global.globalTick=0; console.log('On onShouldBlockNativeResponder.........................:'+gestureState);
+          //         return false;
+          //       },
         });
 }
