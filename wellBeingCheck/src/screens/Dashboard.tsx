@@ -54,7 +54,7 @@ class Dashboard extends React.Component<Props, HomeState> {
      this.onSessionOut=this.onSessionOut.bind(this);
      global.globalTimeOutCallback=this.onSessionOut;
      if(global.globalTimer==null){global.createGlobalTimer();console.log('global timer setup.....................');}
-     if(global.panResponder==null)global.createPanResponder();
+     if(global.panResponder==null){global.createPanResponder();}
   }
 
   onSessionOut(){

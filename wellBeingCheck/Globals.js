@@ -62,7 +62,7 @@ global.fetchCount=8;
 global.globalTimer =null;
 global.globalTick=0;
 global.globalTimeOutCallback=null;
-global.timerTime=900000;//30000*1;
+global.timerTime=60000;//900000;//30000*1;
 global.repeatCheck=async ()=>{
     console.log('Timer check..............................');
     if (global.globalTick>0) {
@@ -74,7 +74,8 @@ global.repeatCheck=async ()=>{
            clearInterval(globla.globalTimer);console.log('Timer killed2..................');
          }
          global.globalTick=0;
-    }else if(global.globalTick==0)global.globalTick++;
+    }
+    else if(global.globalTick==0)global.globalTick++;
     else if(global.globalTick<0)clearInterval(global.globalTimer);
 }
 global.createGlobalTimer=()=>global.globalTimer=setInterval(global.repeatCheck,global.timerTime);
