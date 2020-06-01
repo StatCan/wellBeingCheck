@@ -327,7 +327,7 @@ export const resources = {
 
             //category4-Question1
             "faq.c4.q1": "What does the Results menu tell me? How can I interpret my results?",
-            "faq.c4.q1.a": "Category 2 question 1 AnswerThe data visualizations on the Results menu display a snapshot of your self-assessed feelings and how they relate to what you are doing, who you are with, and where you are.\n\n"+
+            "faq.c4.q1.a": "The data visualizations on the Results menu display a snapshot of your self-assessed feelings and how they relate to what you are doing, who you are with, and where you are.\n\n"+
             "For ease of interpretation, your activities and companions have been grouped. Please note, all questions about feelings are based on a scale of 1 meaning ‘not at all’, and 10 meaning ’very’. Based on this, a high rating of feeling happy compared to a high rating of feeling anxious would be interpreted quite differently.\n\n"+
             "These results are reported in real time and have not been validated by Statistics Canada. Caution should be exercised when interpreting the data.",
            

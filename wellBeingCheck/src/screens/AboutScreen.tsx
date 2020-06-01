@@ -452,8 +452,6 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           expanded={this.state.faqC2Q4Expanded}
                           onPress={this._handleFaqC2Q4Expand}
                         >
-                          {/* ///----------------- */}
-                          <Text style={{ paddingLeft: 15, }}>
                             <ParsedText
                               style={styles.faqListItem}
                               parse={
@@ -465,13 +463,9 @@ class AboutScreen extends React.Component<Props, AboutState> {
                               childrenProps={{ allowFontScaling: false }}
                             >
 
-                              <View style={styles.faqListItem}>
-                                {resources.getString("faq.c2.q4.a")}
-                              </View>
+                               {resources.getString("faq.c2.q4.a")}
 
                             </ParsedText>
-                          </Text>
-                          {/* ///----------------------- */}
 
                         </List.Accordion>
                         <List.Accordion
@@ -501,10 +495,6 @@ class AboutScreen extends React.Component<Props, AboutState> {
                               {resources.getString("faq.c2.q6.a")}
                             </ParsedText>
                           </View>
-
-                          {/* <View style={styles.faqListItem}>
-                            <Text>{resources.getString("faq.c2.q6.a")}</Text>
-                          </View> */}
                         </List.Accordion>
                         <List.Accordion
                           title={resources.getString("faq.c2.q7")}
