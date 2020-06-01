@@ -53,6 +53,7 @@ class Dashboard extends React.Component<Props, HomeState> {
     /* --------------------Session Handler--------------------------- */
      this.onSessionOut=this.onSessionOut.bind(this);
      global.globalTimeOutCallback=this.onSessionOut;
+     console.ignoredYellowBox = ['Require cycle:','Setting a timer'];
      if(global.globalTimer==null){global.createGlobalTimer();console.log('global timer setup.....................');}
      if(global.panResponder==null)global.createPanResponder();
   }

@@ -641,35 +641,35 @@ the algorithm will not arrange any notification for the time which has been pass
      return {Count:count,Hour:hour};
  }
  function getAffectedDay(datetime,count) {
-         let result = null;
-         let list =global.schedules;
-         let curDayList = [];
+          let result = null;
+          let list =global.schedules;
+          let curDayList = [];
 
 
-         let curDay = new Date(datetime); curDay.setHours(0); curDay.setMinutes(0); curDay.setSeconds(0); curDay.setMilliseconds(0);
-         list.forEach(function (l, index) {
-             if (+l.Day == +curDay) curDayList.push(l);
-         });
+          let curDay = new Date(datetime); curDay.setHours(0); curDay.setMinutes(0); curDay.setSeconds(0); curDay.setMilliseconds(0);
+          list.forEach(function (l, index) {
+              if (+l.Day == +curDay) curDayList.push(l);
+          });
 
-         var found = list.find(function (l) {
-             return l.Datetime > datetime;
-         });
-         if (found != null) {
-             let sch = found.Day;
-             let ddd = parseInt((sch- curDay) / (1000 * 60 * 60 * 24), 10);
-             if (ddd == 1 && curDayList.length > 0 && count > curDayList.length) {
-                 result = { AffectedDay: curDay, PassedCount: curDayList.length };
-             }
-             else {
-                 let count = 0;
-                 list.forEach(function (l) {
-                     if (+l.Day == +sch && +l.Datetime <= +datetime) count++;
-                 });
-                 result = { AffectedDay: sch, PassedCount: count };
-             }
-         }
-         return result;
-     }
+          var found = list.find(function (l) {
+              return l.Datetime > datetime;
+          });
+          if (found != null) {
+              let sch = found.Day;
+              let ddd = parseInt((sch- curDay) / (1000 * 60 * 60 * 24), 10);
+              if (ddd == 1 && curDayList.length > 0 && count > curDayList.length) {
+                  result = { AffectedDay: curDay, PassedCount: curDayList.length };
+              }
+              else {
+                  let count = 0;
+                  list.forEach(function (l) {
+                      if (+l.Day == +sch && +l.Datetime <= +datetime) count++;
+                  });
+                  result = { AffectedDay: sch, PassedCount: count };
+              }
+          }
+          return result;
+      }
  function filterListByDate(date,list) {
             date = new Date(date.toString().replace(/-/g, '\/'));
             var date1 = new Date(date); date1.setHours(hour); date1.setMinutes(0); date1.setSeconds(0);
