@@ -9,7 +9,7 @@
     "slug": "wellBeingCheck",
     "privacy": "unlisted",
     "sdkVersion": "36.0.0",
-    "version": "1.2.5",
+    "version": "1.2.6",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -28,7 +28,7 @@
     },
     "android": {
       "package": "com.statcan.wellbeingcheck",
-      "versionCode": 20
+      "versionCode": 21
     }
   }
 }
