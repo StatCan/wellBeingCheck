@@ -1,10 +1,9 @@
 {
-  "expoServerPort": 19000,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
   "devToolsPort": 19002,
-  "packagerPort": 19010,
-  "packagerPid": 20776,
-  "webpackServerPort": null
+  "expoServerPort": 19000,
+  "packagerPort": 19011,
+  "packagerPid": 25678,
+  "expoServerNgrokUrl": "https://d8-nq5.saba76.wellbeingcheck.exp.direct",
+  "packagerNgrokUrl": "https://packager.d8-nq5.saba76.wellbeingcheck.exp.direct",
+  "ngrokPid": 25690
 }

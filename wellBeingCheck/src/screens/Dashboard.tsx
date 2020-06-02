@@ -52,10 +52,10 @@ class Dashboard extends React.Component<Props, HomeState> {
     this._firstTimeLogin();
     /* --------------------Session Handler--------------------------- */
      this.onSessionOut=this.onSessionOut.bind(this);
-     global.globalTimeOutCallback=this.onSessionOut;
+     if(global.globalTimeOutCallback==null)global.globalTimeOutCallback=this.onSessionOut;
      console.ignoredYellowBox = ['Require cycle:','Setting a timer'];
      if(global.globalTimer==null){global.createGlobalTimer();console.log('global timer setup.....................');}
-     if(global.panResponder==null)global.createPanResponder();
+     if(global.panResponder==null){global.createPanResponder();}
   }
 
   onSessionOut(){
@@ -103,6 +103,10 @@ class Dashboard extends React.Component<Props, HomeState> {
   }
 
   checkThankYou() {
+     if(global.globalTimeOutCallback==null)global.globalTimeOutCallback=this.onSessionOut;
+     if(global.globalTimer==null){global.createGlobalTimer();console.log('global timer setup.....................');}
+     if(global.panResponder==null){global.createPanResponder();}
+
     if(global.showThankYou ==20){
               const APP_STORE_LINK = 'itms://itunes.apple.com/us/app/apple-store/myiosappid?mt=8';
               const PLAY_STORE_LINK = 'market://details?id=myandroidappid';

@@ -181,7 +181,9 @@ console.log('pppppaaaaggggggggggeeeeee:'+index);
           source={require('../../assets/white.png')}
           style={{ backgroundColor: 'white', flex: 1 }}
         >
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 40, height: 50 }} {...global.panResponder.panHandlers}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 40, height: 50 }} 
+          {...global.panResponder.panHandlers}
+          >
             <TouchableOpacity onPress={() => { global.currentView = 0; this.props.navigation.navigate('Dashboard') }} style={{ marginLeft: 5, marginTop: 10 }}><Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{ width: 38, height: 38 }} /></TouchableOpacity>
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>{indicator}</View>
             {/*   <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} 
@@ -193,7 +195,9 @@ console.log('pppppaaaaggggggggggeeeeee:'+index);
               <Image source={require('../../assets/ic_setting.png')} />
             </TouchableOpacity>
           </View>
-          <View style={{ flex: 1 }} {...global.panResponder.panHandlers}>
+          <View style={{ flex: 1 }} 
+          // {...global.panResponder.panHandlers}
+          >
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Title style={[styles.title, { marginLeft: 5 }]}>{this.state.title}</Title>
               {/*<TouchableOpacity onPress={() => this.helpClick()} style={{marginRight:0}}>
