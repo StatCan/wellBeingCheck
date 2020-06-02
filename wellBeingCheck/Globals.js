@@ -62,7 +62,7 @@ global.fetchCount=8;
 global.globalTimer =null;
 global.globalTick=0;
 global.globalTimeOutCallback=null;
-global.timerTime=60000;//900000;//30000*1;
+global.timerTime=900000;//30000*1;
 global.repeatCheck=async ()=>{
     console.log('Timer check..............................');
     if (global.globalTick>0) {
