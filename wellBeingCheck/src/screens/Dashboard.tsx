@@ -305,7 +305,9 @@ class Dashboard extends React.Component<Props, HomeState> {
 
 
           </View>
-          <View style={styles.homeContainer} {...global.panResponder.panHandlers}>
+          <View style={styles.homeContainer} 
+          // {...global.panResponder.panHandlers}
+          >
           <View >
             <TouchableOpacity onPress={() => this.conductSurvey()}
               style={{ flex: 2, justifyContent: 'center' }}>
@@ -325,7 +327,11 @@ class Dashboard extends React.Component<Props, HomeState> {
               <View>
                 <View>
                   <View>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')}
+                    <TouchableOpacity 
+                    onPress={() => { global.globalTick=0; 
+                    console.log('time out issue testing'); 
+                      
+                        this.props.navigation.navigate('AboutScreen')}}
                       style={styles.smallButton}>
                       <Image source={require('../assets/ic_wbc_about_survey.png')} />
                     </TouchableOpacity>
