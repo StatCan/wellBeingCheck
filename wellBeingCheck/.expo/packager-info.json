@@ -1,1 +1,8 @@
-{}
+{
+  "expoServerPort": null,
+  "expoServerNgrokUrl": "https://7a-krd.saba76.wellbeingcheck.exp.direct",
+  "packagerNgrokUrl": "https://packager.7a-krd.saba76.wellbeingcheck.exp.direct",
+  "ngrokPid": 44365,
+  "packagerPort": null,
+  "packagerPid": null
+}
