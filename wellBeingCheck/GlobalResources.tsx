@@ -17,7 +17,7 @@ export const resources = {
             "answer": "Answer",
             //getting started
             "getting_started": "Getting Started\n",
-            "getting_started_content": `Why we are conducting this study\?\n`+
+            "getting_started_content": `Why we are conducting this study\n`+
             `The purpose of this study is to better understand the everyday well-being of Canadians by asking about activities and feelings as they are happening. To do this, participants will download an app on their smartphones and answer a few questions at different intervals throughout the day, over a short period of time. The results will help us to find connections between activities and well-being, and be used to develop programs that enhance people’s lives. In the future, an app could be used as a faster and more convenient way to complete other Statistics Canada surveys. \n\n`+
             `Information may also be used by Statistics Canada for other statistical and research purposes. \n\n`+
             `Notifications \n`+
@@ -143,7 +143,7 @@ export const resources = {
             "home_first_time_login_content": "Please visit the settings menu if you would like to customize the number of notifications you receive, and the window of time when you would like to receive them.",
             //about
             "about_title": "",
-            "about_content": `Why we are conducting this study\?\n`+
+            "about_content": `Why we are conducting this study\n`+
                 `The purpose of this study is to better understand the everyday well-being of Canadians by asking about activities and feelings as they are happening. To do this, participants will download an app on their smartphones and answer a few questions at different intervals throughout the day, over a short period of time. The results will help us to find connections between activities and well-being, and be used to develop programs that enhance people’s lives. In the future, an app could be used as a faster and more convenient way to complete other Statistics Canada surveys.  \n\n` +
 
                 `Information may also be used by Statistics Canada for other statistical and research purposes.  \n\n` +
@@ -409,7 +409,7 @@ export const resources = {
             "answer": "Répondre",
             //getting started
             "getting_started": "Pour commencer\n",
-            "getting_started_content": `Pourquoi nous menons cette étude\?\n` +
+            "getting_started_content": `Pourquoi nous menons cette étude\n` +
                 `L’objectif de cette enquête est de mieux comprendre le bien-être au quotidien des Canadiens et des Canadiennes en leur demandant de répondre à des questions sur les activités qu’ils entreprennent et les sentiments qu’ils éprouvent en temps réel. Pour ce faire, les participants devront télécharger une application sur leur téléphone intelligent et répondre à quelques questions à divers intervalles au cours de la journée, sur une courte période de temps. Les résultats obtenus nous aideront à établir des liens entre certaines activités et le bien-être, et nous permettront de développer des programmes qui amélioreront la vie des gens. À l’avenir, ce genre d’application pourrait servir à répondre à d’autres enquêtes de Statistique Canada de façon plus rapide et pratique. \n\n` +
 
                 `Les renseignements recueillis pourraient aussi être utilisés par Statistique Canada à d’autres fins statistiques et de recherche. \n\n` +
@@ -545,7 +545,7 @@ export const resources = {
             "home_first_time_login_content": "Veuillez consulter le menu des paramètres pour personnaliser le nombre de notifications que vous recevrez et pour déterminer à quels moments vous souhaitez les recevoir.",
             //about
             "about_title": "",
-            "about_content": `Pourquoi nous menons cette étude\?\n`+
+            "about_content": `Pourquoi nous menons cette étude\n`+
                 `L’objectif de cette enquête est de mieux comprendre le bien-être au quotidien des Canadiens et des Canadiennes en leur demandant de répondre à des questions sur les activités qu’ils entreprennent et les sentiments qu’ils éprouvent en temps réel. Pour ce faire, les participants devront télécharger une application sur leur téléphone intelligent et répondre à quelques questions à divers intervalles au cours de la journée, sur une courte période de temps. Les résultats obtenus nous aideront à établir des liens entre certaines activités et le bien-être, et nous permettront de développer des programmes qui amélioreront la vie des gens. À l’avenir, ce genre d’application pourrait servir à répondre à d’autres enquêtes de Statistique Canada de façon plus rapide et pratique.  \n\n` +
 
                 `Les renseignements recueillis pourraient aussi être utilisés par Statistique Canada à d’autres fins statistiques et de recherche.  \n\n` +
@@ -587,7 +587,7 @@ export const resources = {
             "result": "Résultats",
             "about_the_survey": "A propos de l'enquête",
             "term_and_condition": "Terme et condition",
-            "contact_us": "Contactez nous",
+            "contact_us": "Contactez-nous",
             "warning": "Attention",
             "match_password_error": "Vous devez fournir un mot de passe, une question de sécurité et une réponse correspondants!",
             "ok": "D'accord",
