@@ -306,6 +306,20 @@ class AboutScreen extends React.Component<Props, AboutState> {
   handlePhonePress(phone, matchIndex /*: number*/) {
     Linking.openURL('tel:18779499492');
   };
+  displayNotificationInfo(){
+     global.globalTick=0;
+     let msg1='PingNum:'+global.pingNum+'\n';
+     msg1+='Awake:'+global.awakeHour+'\n';
+     msg1+='Sleep:'+global.sleepHour+'\n';
+     msg1+='LastDay:'+global.lastDate.toDateString()+'\n';
+     let msg2='';
+     let list=global.schedules;
+     for(let i=0;i<list.length;i++){
+            msg2+=list[i].Datetime.toString()+'\n';
+     }
+     let msg=msg1+msg2;
+     alert(msg);
+  }
   render() {
     return (
       <PaperProvider theme={newTheme} >
@@ -721,11 +735,15 @@ class AboutScreen extends React.Component<Props, AboutState> {
           </SafeAreaView>
 
         </BackgroundWhite>
+        <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+          <Button onPress={()=>this.displayNotificationInfo()} style={styles.btnNext}>Info</Button>
         <Button style={styles.btnNext}
           mode="contained"
           onPress={this._onNextBtnHandle}>
           <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
         </Button>
+
+        </View>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
       </PaperProvider>
     );

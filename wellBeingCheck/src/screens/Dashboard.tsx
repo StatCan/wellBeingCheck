@@ -325,7 +325,7 @@ class Dashboard extends React.Component<Props, HomeState> {
               <View>
                 <View>
                   <View>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('AboutScreen')}
+                    <TouchableOpacity onPress={() =>{console.log('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');this.props.navigation.navigate('AboutScreen')} }
                       style={styles.smallButton}>
                       <Image source={require('../assets/ic_wbc_about_survey.png')} />
                     </TouchableOpacity>

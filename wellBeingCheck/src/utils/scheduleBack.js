@@ -216,9 +216,8 @@ export async function setupSchedules(affectCurrent=false){
              global.warningNotificationId=warningNotificationId;
              console.log('warning notification:'+dt+' Id:'+warningNotificationId);
              global.lastDate=lastDate;
-          //   AsyncStorage.setItem('Schedules',JSON.stringify(schedules));global.schedules=schedules;
-             global.curDayPassed =[]; AsyncStorage.setItem('CurDayPassed',JSON.stringify(global.curDayPassed));
-             updatePreScheduleList(schedules,currentDateTime,false);
+             AsyncStorage.setItem('Schedules',JSON.stringify(schedules));
+             global.schedules=schedules;
          }
     }
     else { //Survey B or change setting
@@ -245,7 +244,7 @@ export async function setupSchedules(affectCurrent=false){
                     }
                 }
                 else {
-                    let affectedDay=f.AffectedDay; let leftOverCount=count- f.PassedCount;let passedList = f.PassedList;
+                    let affectedDay=f.AffectedDay; let leftOverCount=count- f.PassedCount;
                     let ddd =parseInt((lastDate - affectedDay)/ (1000 * 60 * 60 * 24), 10); if (ddd == 30) leftOverCount = leftOverCount - 1;
                     console.log('Setup notification will affect current day:'+affectedDay.toString()+'->'+leftOverCount);
                     let days = getFollowingDays(affectedDay,lastDate,true,4,false);
@@ -272,7 +271,6 @@ export async function setupSchedules(affectCurrent=false){
                              }
                           }
                        });
-                       if (passedList.length > 0) updateCurDayPassed(passedList);
                     }
                 }
                 if(schedules.length>0){
@@ -297,9 +295,8 @@ export async function setupSchedules(affectCurrent=false){
                     AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());
                     global.warningNotificationId=warningNotificationId;
                     console.log('warning notification:'+warningNotificationId);
-
-                  //  AsyncStorage.setItem('Schedules',JSON.stringify(schedules)); global.schedules=schedules;
-                  updatePreScheduleList(schedules,currentDateTime,false);
+                    AsyncStorage.setItem('Schedules',JSON.stringify(schedules));
+                    global.schedules=schedules;
                 }
             }
             else{  //for survey B, simply append new schedules
@@ -323,7 +320,6 @@ export async function setupSchedules(affectCurrent=false){
                                         });
                                     }
                                 });
-                     global.curDayPassed = []; AsyncStorage.setItem('CurDayPassed',JSON.stringify(global.curDayPassed));
                }
                if(schedules.length>0){
                      schedules=updateSchedulesList(schedules,currentDateTime);
@@ -347,9 +343,8 @@ export async function setupSchedules(affectCurrent=false){
                      AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());
                      global.warningNotificationId=warningNotificationId;
                      console.log('warning notification:'+warningNotificationId);
-
-                   //  AsyncStorage.setItem('Schedules',JSON.stringify(schedules)); global.schedules=schedules;
-                     updatePreScheduleList(schedules,currentDateTime,true);
+                     AsyncStorage.setItem('Schedules',JSON.stringify(schedules));
+                     global.schedules=schedules;
                  }
             }
         }
@@ -369,7 +364,6 @@ export async function setupSchedules(affectCurrent=false){
                          });
                      }
                  });
-                 global.curDayPassed = []; AsyncStorage.setItem('CurDayPassed',JSON.stringify(global.curDayPassed));
              }
              if(schedules.length>0){
                   cancellAllSchedules();
@@ -392,9 +386,8 @@ export async function setupSchedules(affectCurrent=false){
                  AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());
                  global.warningNotificationId=warningNotificationId;
                  console.log('warning notification:'+warningNotificationId);
-
-               //  AsyncStorage.setItem('Schedules',JSON.stringify(schedules));global.schedules=schedules;
-                 updatePreScheduleList(schedules,currentDateTime,false);
+                 AsyncStorage.setItem('Schedules',JSON.stringify(schedules));
+                 global.schedules=schedules;
              }
     }
     }
@@ -648,69 +641,36 @@ the algorithm will not arrange any notification for the time which has been pass
      return {Count:count,Hour:hour};
  }
  function getAffectedDay(datetime,countNum) {
-         let result = null; let currPassed = [];
-         let list =global.schedules;
-         let fday = list[0]; let lday = list[list.length - 1];
-         let fd = new Date(list[0].Datetime); let ld = new Date(list[list.length - 1].Datetime);
-         let curDay = new Date(datetime); curDay.setHours(0); curDay.setMinutes(0); curDay.setSeconds(0); curDay.setMilliseconds(0);
-         var found = list.find(function (l) {
-             return l.Datetime > datetime;
-         });
-         if (found != null) {
-             let sch = found.Day; let index = list.indexOf(found);
-             if (sch > curDay && list[0].Day > curDay) {
-                 let pnum = global.curDayPassed.length;
-                 result = { AffectedDay: curDay, PassedCount: pnum, PassedList: currPassed };
-                 return result;
-             }
-             let count = 0;
-             list.forEach(function (l) {
-                 if (+l.Day == +sch && +l.Datetime <= +datetime) count++;
-             });
-             let ddd = parseInt((sch - fday.Day) / (1000 * 60 * 60 * 24), 10);
-             if (ddd > 1) {
-                 result = { AffectedDay: sch, PassedCount: count, PassedList: currPassed };
-             }
-             else if (ddd == 1) {
-                 let prev = list[0];
-                 if (index > 0) prev = list[index - 1];
-                 if (+prev.Day != +fday.Day) {
-                     result = { AffectedDay: sch, PassedCount: count, PassedList: currPassed };
-                 }
-                 else {
-                     let numUpdate = index;//update index;
-                     if (global.curDayPassed != null) numUpdate += global.curDayPassed.length;
-                     for (let i = 0; i < index; i++)currPassed.push(list[i]);
-                     result = { AffectedDay: prev.Day, PassedCount: numUpdate, PassedList: currPassed };
-                 }
-             }
-             else if (ddd == 0) {
-                 let numUpdate = count;//update index;
-                 if (global.curDayPassed != null) numUpdate += global.curDayPassed.length;
-                 for (let i = 0; i < index; i++)currPassed.push(list[i]);
-                 result = { AffectedDay: sch, PassedCount: numUpdate, PassedList: currPassed };
-             }
-         }
-         else {
-             if (datetime > ld) {//datetime
-                 if (+curDay == +lday.Day) {
-                     count = 0;
-                     list.forEach(function (l) {
-                         if (+l.Day == +curDay && +l.Datetime <= +datetime) { count++; currPassed.push(l.Datetime); }
-                     });
-                     let numUpdate = count;//update index;
-                     if (global.curDayPassed != null) numUpdate += global.curDayPassed.length;
-                     result = { AffectedDay: curDay, PassedCount: numUpdate };
-                 } else {
-                     result = { AffectedDay: curDay, PassedCount: 0, PassedList: currPassed };
-                 }
-                 //let tomorrow = new Date(currentDateTime); tomorrow.setDate(tomorrow.getDate() + 1); tomorrow.setHours(0); tomorrow.setMinutes(0); tomorrow.setSeconds(0); tomorrow.setMilliseconds(0);
-                 //result = { AffectedDay: tomorrow, PassedCount:0 };
-             }
-             if (datetime < fd) result = { AffectedDay: curDay, PassedCount: 0, PassedList: currPassed};//shouldn't happen
-         }
-         return result;
-     }
+          let result = null;
+          let list =global.schedules;
+          let curDayList = [];
+
+
+          let curDay = new Date(datetime); curDay.setHours(0); curDay.setMinutes(0); curDay.setSeconds(0); curDay.setMilliseconds(0);
+          list.forEach(function (l, index) {
+              if (+l.Day == +curDay) curDayList.push(l);
+          });
+
+          var found = list.find(function (l) {
+              return l.Datetime > datetime;
+          });
+          if (found != null) {
+              let sch = found.Day;
+              let ddd = parseInt((sch- curDay) / (1000 * 60 * 60 * 24), 10);
+              if (ddd == 1 && curDayList.length > 0 && countNum > curDayList.length) {
+                  result = { AffectedDay: curDay, PassedCount: curDayList.length };
+              }
+              else {
+                  let count = 0;
+                  list.forEach(function (l) {
+                      if (+l.Day == +sch && +l.Datetime <= +datetime) count++;
+                  });
+                  result = { AffectedDay: sch, PassedCount: count };
+              }
+          }
+          console.log(result);
+          return result;
+      }
  function filterListByDate(date,list) {
             date = new Date(date.toString().replace(/-/g, '\/'));
             var date1 = new Date(date); date1.setHours(hour); date1.setMinutes(0); date1.setSeconds(0);
@@ -767,37 +727,6 @@ the algorithm will not arrange any notification for the time which has been pass
       list2.forEach(function(l){list.push(l);});
       return list;
  }
-
- function updatePreScheduleList(schedules,datetime, append) {
-         let list1 = global.schedules;
-         let list2 = schedules;
-         let list3 = [];
-         let curDay = new Date(datetime); curDay.setHours(0); curDay.setMinutes(0); curDay.setSeconds(0); curDay.setMilliseconds(0);
-         if (append) {
-             list1.forEach(function (l, index) {
-                 if (+l.Day >= +curDay) list3.push(l);
-             });
-             global.curDayPassed = []; AsyncStorage.setItem('CurDayPassed',JSON.stringify(global.curDayPassed));
-         }
-         else {
-             list1.forEach(function (l, index) {
-                 if (+l.Day == +curDay && +l.Datetime <= +datetime) list3.push(l);
-             });
-             if (global.curDayPassed.length > 0) {
-                 list3 = list3.filter(function (el) {
-                     return global.curDayPassed.indexOf(el) < 0;
-                 });
-             }
-         }
-         global.schedules = list3.concat(list2); AsyncStorage.setItem('Schedules',JSON.stringify(global.schedules));
-         AsyncStorage.setItem('CurDayPassed',JSON.stringify(global.curDayPassed));
-     }
- function updateCurDayPassed(passedList) {
-     var list = global.curDayPassed.concat(passedList.filter((item) =>  global.curDayPassed.indexOf(item) < 0))
-      global.curDayPassed = list.sort(function (a, b) { return a.Datetime - b.Datetime });
-     AsyncStorage.setItem('CurDayPassed',JSON.stringify(global.curDayPassed));
- }
-
  export async function testSchedule(){
      let permission=await askPermissions();if(!permission)return;
      cancellAllSchedules();

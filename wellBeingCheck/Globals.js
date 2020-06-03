@@ -58,6 +58,7 @@ global.notificationState=true;
 global.surveyCount=0;
 global.busy=8;
 global.fetchCount=8;
+global.curDayPassed =[];
 
 global.globalTimer =null;
 global.globalTick=0;
@@ -125,5 +126,18 @@ global.createPanResponder=()=>{
           //      global.globalTick=0; console.log('On onShouldBlockNativeResponder.........................:'+gestureState);
           //         return false;
           //       },
+
+
+
+          /*  this.panResponder = PanResponder.create({
+                onStartShouldSetPanResponder: () => true,
+                onMoveShouldSetPanResponder: () => true,
+                onPanResponderMove: this.handlePanResponderMove,
+                onPanResponderRelease: this.handlePanResponderRelease,
+                onPanResponderGrant: () => this.setState({ active: true }),
+              });*/
+
+
+
         });
 }

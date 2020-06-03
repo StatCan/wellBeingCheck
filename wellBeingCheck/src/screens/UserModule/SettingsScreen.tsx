@@ -319,7 +319,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     global.notificationState = this.state.notificationState;
     if (this.state.notificationState) AsyncStorage.setItem('NotificationState', 'true'); else AsyncStorage.setItem('NotificationState', 'false');
     AsyncStorage.setItem('PingNum', this.state.notificationcount.toString()); global.pingNum = this.state.notificationcount;
-    AsyncStorage.setItem('AwakeHour', this.state.waketime); global.awakeHour = this.state.waketime;
+    AsyncStorage.setItem('AwakeHour', this.state.waketime); global.awakeHour = this.state.waketime;console.log('wake:........'+global.awakeHour);
     AsyncStorage.setItem('SleepHour', this.state.sleeptime); global.sleepHour = this.state.sleeptime;
 
     AsyncStorage.setItem('settings', JSON.stringify(settingsObj), () => {
