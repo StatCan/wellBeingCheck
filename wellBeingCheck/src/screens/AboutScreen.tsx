@@ -326,15 +326,19 @@ class AboutScreen extends React.Component<Props, AboutState> {
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
         <AppBanner />
         <BackgroundWhite>
-          <View style={styles.logo_container} {...global.panResponder.panHandlers}>
+          <View style={styles.logo_container} 
+           //{...global.panResponder.panHandlers}
+            >
             <LogoClearSmall />
           </View>
           <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}
-              {...global.panResponder.panHandlers}
+             // {...global.panResponder.panHandlers}
             >
               <List.Section>
-                <View style={styles.faqView}  {...global.panResponder.panHandlers}>
+                <View style={styles.faqView} 
+                // {...global.panResponder.panHandlers}
+                >
                   <List.Accordion
                     title={resources.getString("faq.title")}
                     expanded={this.state.faqMainExpanded}
@@ -704,7 +708,9 @@ class AboutScreen extends React.Component<Props, AboutState> {
                 </View>
               </List.Section>
               <Title style={styles.title}>{resources.getString("about_title")}</Title>
-              <View style={styles.content} {...global.panResponder.panHandlers}>
+              <View style={styles.content} 
+              // {...global.panResponder.panHandlers}
+              >
                 <Paragraph style={styles.paragraph}>
                   <Text>
                     <ParsedText
@@ -735,15 +741,23 @@ class AboutScreen extends React.Component<Props, AboutState> {
           </SafeAreaView>
 
         </BackgroundWhite>
-        <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-          <Button onPress={()=>this.displayNotificationInfo()} style={styles.btnNext}>Info</Button>
+
+        <Button style={styles.btnNext}  
+          mode="contained"
+          onPress={this._onNextBtnHandle}>
+          <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
+        </Button>
+
+        {/* <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+          <Button onPress={()=>this.displayNotificationInfo()} 
+          style={styles.btnNext}>Info</Button>
         <Button style={styles.btnNext}
           mode="contained"
           onPress={this._onNextBtnHandle}>
           <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
         </Button>
 
-        </View>
+        </View> */}
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
       </PaperProvider>
     );

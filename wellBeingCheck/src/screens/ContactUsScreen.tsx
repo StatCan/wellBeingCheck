@@ -48,12 +48,17 @@ class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
         <BackgroundWhite>
           <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}
-              {...global.panResponder.panHandlers}
+              // {...global.panResponder.panHandlers}
             >
-              <View style={styles.logo_container}  {...global.panResponder.panHandlers}>
+              <View style={styles.logo_container} 
+              //  {...global.panResponder.panHandlers}
+               >
                 <LogoClearSmall />
               </View>
-              <Title style={styles.title}  {...global.panResponder.panHandlers}>{resources.getString("contactus_title")}</Title>
+              <Title style={styles.title}  
+              // {...global.panResponder.panHandlers}
+              >
+                {resources.getString("contactus_title")}</Title>
               <View>
                 <View style={styles.content}>
                   <Text style={styles.content_title}>{resources.getString("contactus_email")}</Text>
