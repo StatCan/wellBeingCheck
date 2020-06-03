@@ -741,15 +741,23 @@ class AboutScreen extends React.Component<Props, AboutState> {
           </SafeAreaView>
 
         </BackgroundWhite>
-        <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-          <Button onPress={()=>this.displayNotificationInfo()} style={styles.btnNext}>Info</Button>
+
+        <Button style={styles.btnNext}  
+          mode="contained"
+          onPress={this._onNextBtnHandle}>
+          <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
+        </Button>
+
+        {/* <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+          <Button onPress={()=>this.displayNotificationInfo()} 
+          style={styles.btnNext}>Info</Button>
         <Button style={styles.btnNext}
           mode="contained"
           onPress={this._onNextBtnHandle}>
           <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
         </Button>
 
-        </View>
+        </View> */}
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
       </PaperProvider>
     );
