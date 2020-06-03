@@ -158,10 +158,7 @@ async onTestD(){
                 <Text style={{ fontSize:20}}>
                   {resources.getString("Well-Being Check")}
                 </Text>
-                  <Button onPress={this.onTestA}><Text> AAA</Text></Button>
-                                                               <Button onPress={this.onTestB}><Text>BBB</Text></Button>
-                                                               <Button onPress={this.onTestC}><Text>CCC</Text></Button>
-                                                               <Button onPress={this.onTestD}><Text>DDD</Text></Button>
+                 
               </View>
 
               <View style={{ flex: 1, flexDirection: 'row' }}>
