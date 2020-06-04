@@ -419,7 +419,9 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     return (
       <PaperProvider theme={newTheme}>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
-        <View style={{ flex: 1, justifyContent: 'space-between' }} {...global.panResponder.panHandlers}>
+        <View style={{ flex: 1, justifyContent: 'space-between' }} 
+        {...global.panResponder.panHandlers}
+        >
           <View style={styles.toolbar}>
             <Text style={styles.toolbarTitle}>{resources.getString("settings")}</Text>
           </View>
