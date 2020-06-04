@@ -24,9 +24,6 @@ const width = Math.floor(Dimensions.get('window').width);
 let startX = 0; let index = 0;
 var busyCheck=null;let cc=0;
 class UserResultsScreen extends React.Component<Props, ScreenState> {
-  _panResponder: any;
-  timer = null
-
   constructor(props) {
     super(props);
     this.state = {
@@ -97,7 +94,7 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
   componentDidMount() {
     if(global.fetchCount<8){this.monitorBusy();}
     else {
-       this.loadImage();
+       this.loadImage();console.log('Done...............');
        this.setState({loaded:true});
     }
   }
