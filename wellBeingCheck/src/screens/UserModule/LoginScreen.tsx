@@ -158,7 +158,6 @@ async onTestD(){
                 <Text style={{ fontSize:20}}>
                   {resources.getString("Well-Being Check")}
                 </Text>
-                 
               </View>
 
               <View style={{ flex: 1, flexDirection: 'row' }}>
