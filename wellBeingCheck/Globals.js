@@ -67,7 +67,9 @@ global.timerTime=900000;//30000*1;
 global.repeatCheck=async ()=>{
     console.log('Timer check..............................');
     if (global.globalTick>0) {
-         clearInterval(global.globalTimer);global.globalTimer =null;console.log('Timer killed1..................');
+         clearInterval(global.globalTimer);
+         global.globalTimer =null;
+         console.log('Timer killed1..................');
          if(global.globalTimeOutCallback!=null && typeof global.globalTimeOutCallback=='function'){
                global.globalTimeOutCallback();
          }
@@ -88,13 +90,21 @@ global.createPanResponder=()=>{
             global.globalTick=0;
             return true;
           },
-       //  onMoveShouldSetPanResponder: () =>{  global.globalTick=0; console.log('On Move.........................');  return true;},
-        //  onStartShouldSetPanResponderCapture: () => {global.globalTick=0; console.log('On Click.................'); return true; },
+         onMoveShouldSetPanResponder: () =>{ 
+            global.globalTick=0; 
+            console.log('On Move.........................');  
+            return true;
+          },
+         onStartShouldSetPanResponderCapture: () => {
+           global.globalTick=0; 
+           console.log('On Click.................'); 
+           return true; 
+          },
 
 
          //For performence, just enable what is necceesary
           // onStartShouldSetPanResponderCapture: () =>false,
-          // onMoveShouldSetPanResponderCapture: () => false,
+          // onMoveShouldSetPanResponderCapture: () => false, 
           // onPanResponderTerminationRequest: () => true,
           // onShouldBlockNativeResponder: () => false,
 
