@@ -327,17 +327,17 @@ class AboutScreen extends React.Component<Props, AboutState> {
         <AppBanner />
         <BackgroundWhite>
           <View style={styles.logo_container} 
-           //{...global.panResponder.panHandlers}
+           {...global.panResponder.panHandlers}
             >
             <LogoClearSmall />
           </View>
           <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}
-             // {...global.panResponder.panHandlers}
+              {...global.panResponder.panHandlers}
             >
               <List.Section>
                 <View style={styles.faqView} 
-                // {...global.panResponder.panHandlers}
+                {...global.panResponder.panHandlers}
                 >
                   <List.Accordion
                     title={resources.getString("faq.title")}
@@ -709,7 +709,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
               </List.Section>
               <Title style={styles.title}>{resources.getString("about_title")}</Title>
               <View style={styles.content} 
-              // {...global.panResponder.panHandlers}
+               {...global.panResponder.panHandlers}
               >
                 <Paragraph style={styles.paragraph}>
                   <Text>
