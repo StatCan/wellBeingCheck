@@ -1,9 +1,1 @@
-{
-  "expoServerPort": 19000,
-  "expoServerNgrokUrl": "https://7a-krd.saba76.wellbeingcheck.exp.direct",
-  "packagerNgrokUrl": "https://packager.7a-krd.saba76.wellbeingcheck.exp.direct",
-  "ngrokPid": 55964,
-  "packagerPort": 19004,
-  "packagerPid": 55940,
-  "devToolsPort": 19002
-}
+{}

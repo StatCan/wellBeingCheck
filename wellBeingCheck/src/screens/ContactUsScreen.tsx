@@ -48,15 +48,15 @@ class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
         <BackgroundWhite>
           <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}
-              // {...global.panResponder.panHandlers}
+               {...global.panResponder.panHandlers}
             >
               <View style={styles.logo_container} 
-              //  {...global.panResponder.panHandlers}
+                {...global.panResponder.panHandlers}
                >
                 <LogoClearSmall />
               </View>
               <Title style={styles.title}  
-              // {...global.panResponder.panHandlers}
+              {...global.panResponder.panHandlers}
               >
                 {resources.getString("contactus_title")}</Title>
               <View>
@@ -72,7 +72,7 @@ class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
                 <View style={styles.content}>
                   <Text style={styles.content_title}>{resources.getString("contactus_website")}</Text>
                   <TouchableOpacity onPress={() => Linking.openURL('https://www.statcan.gc.ca')}>
-                    <Text style={styles.text}>www.statcan.gc.ca</Text>
+                    <Text style={styles.text}>https://www.statcan.gc.ca</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.content}>

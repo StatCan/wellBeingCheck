@@ -19,7 +19,9 @@ interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
 type ScreenState = {
-  Sacode: string, jsCode: string
+  Sacode: string, 
+  jsCode: string,
+  webviewLoaded: boolean
 }
 YellowBox.ignoreWarnings(['Require cycle:']);
 let count = 0;//temporarily limit to get image just once, because eq will show exception page twice.
@@ -31,10 +33,11 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
 
   constructor(Props) {
     super(Props)
+    let aaa='let logo = document.querySelector("#__btnNext");logo.addEventListener("click", addclick); function addclick(){setTimeout(function(){var el=document.querySelector("div.sc-progperc");el.scrollIntoView();let logo = document.querySelector("#__btnNext");logo.addEventListener("click", addclick);let logo1 = document.querySelector("#__btnPrevious");logo1.addEventListener("click", addclick); },250)}';
     let disCode = 'const meta = document.createElement("meta"); meta.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"); meta.setAttribute("name", "viewport"); document.getElementsByTagName("head")[0].appendChild(meta);';
     let clearCookie = 'document.cookie.split(";").forEach(function(c) {document.cookie = c.trim().split("=")[0] + "=;" + "expires=Thu, 01 Jan 1970 00:00:00 UTC;";});';
     jsCode = clearCookie + 'document.addEventListener("message", function (message) { document.getElementById("langtest").click(); });var btn = document.createElement("button");btn.style.visibility ="hidden";btn.onclick = switchlang;btn.setAttribute("id", "langtest");document.body.appendChild(btn);    function switchlang() { var a = document.querySelector("a.sc-js-langchange");var href = a.href;if (href.indexOf("/q/fr")>0) {var res = href.replace("/q/fr", "/q/en");a.setAttribute("href", res);a.click();} else if (href.indexOf("/q/en")>0) {var res = href.replace("/q/en", "/q/fr");a.setAttribute("href", res);a.click();} }';
-    this.state = ({ Sacode: '', jsCode: disCode + jsCode, webviewLoaded: false });
+    this.state = ({ Sacode: '', jsCode:aaa+disCode + jsCode, webviewLoaded: false });
     setTimeout(() => { this.setState({ webviewLoaded: true }) }, 4000);
   }
 
@@ -231,6 +234,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     );
   }
   onLoadEnd() {
+    console.log('webview load end')
   }
   render() {
     let uri = '';//http://barabasy.eastus.cloudapp.azure.com/anonymous-anonyme/en/login-connexion/load-charger/eqgsd0ed709a7df0465da7cb4881b290ff22';
