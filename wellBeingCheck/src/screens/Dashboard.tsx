@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import Background from '../components/Background';
-import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, BackHandler, AsyncStorage, PanResponder, Alert,Linking, YellowBox } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, BackHandler, AsyncStorage, PanResponder, Alert,Linking, YellowBox, Platform } from 'react-native';
 import { checkConnection, hashString, fetchJwToken } from '../utils/fetchJwToken';
 import { resources } from '../../GlobalResources';
 
@@ -28,6 +28,7 @@ type HomeState = {
   firstTimeLoginModal: boolean,
   showThankYou: boolean,
   thankYouText: string,
+  disabled:boolean
 }
 YellowBox.ignoreWarnings(['Require cycle:','Setting a timer']);
 console.ignoredYellowBox = ['Require cycle:','Setting a timer'];
@@ -45,7 +46,7 @@ class Dashboard extends React.Component<Props, HomeState> {
     this.state = {
       refresh: '1',disabled:!(global.busy==8),
       firstTimeLoginModal: false,
-      showThankYou: !global.showThankYou == 0,
+      showThankYou: !(global.showThankYou == 0),
       thankYouText: txt,
     };
     this._refresh = this._refresh.bind(this);
@@ -138,7 +139,7 @@ class Dashboard extends React.Component<Props, HomeState> {
     }
     let txt = '';
     if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2)  txt = resources.getString('ThankYouB');
-    this.setState({ showThankYou: !global.showThankYou == 0, thankYouText: txt });
+    this.setState({ showThankYou: !(global.showThankYou == 0), thankYouText: txt });
     setTimeout(() => { 
       global.showThankYou = 0; 
       this.setState({ showThankYou: false }) }, 6000);
@@ -306,7 +307,7 @@ class Dashboard extends React.Component<Props, HomeState> {
 
           </View>
           <View style={styles.homeContainer} 
-          // {...global.panResponder.panHandlers}
+           {...global.panResponder.panHandlers}
           >
           <View >
             <TouchableOpacity onPress={() => this.conductSurvey()}
