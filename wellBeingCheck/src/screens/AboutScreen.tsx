@@ -675,6 +675,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           title={resources.getString("faq.c5.q2")}
                           expanded={this.state.faqC5Q2Expanded}
                           onPress={this._handleFaqC5Q2Expand}
+                          titleNumberOfLines={3}
                         >
                           <View>
                             <ParsedText
