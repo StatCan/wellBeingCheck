@@ -25,7 +25,7 @@ const deviceWidth = Dimensions.get('window').width;
 
 type HomeState = {
   refresh: string,
-  firstTimeLoginModal: boolean,
+  firstTimeLoginModal: boolean,disabled:boolean,
   showThankYou: boolean,
   thankYouText: string,
 }
@@ -45,7 +45,7 @@ class Dashboard extends React.Component<Props, HomeState> {
     this.state = {
       refresh: '1',disabled:!(global.busy==8),
       firstTimeLoginModal: false,
-      showThankYou: !global.showThankYou == 0,
+      showThankYou: !(global.showThankYou == 0),
       thankYouText: txt,
     };
     this._refresh = this._refresh.bind(this);
@@ -138,7 +138,7 @@ class Dashboard extends React.Component<Props, HomeState> {
     }
     let txt = '';
     if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2)  txt = resources.getString('ThankYouB');
-    this.setState({ showThankYou: !global.showThankYou == 0, thankYouText: txt });
+    this.setState({ showThankYou: !(global.showThankYou == 0), thankYouText: txt });
     setTimeout(() => { 
       global.showThankYou = 0; 
       this.setState({ showThankYou: false }) }, 6000);

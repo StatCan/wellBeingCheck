@@ -1,9 +1,9 @@
 {
   "expoServerPort": 19000,
-  "expoServerNgrokUrl": "https://nv-3sm.anonymous.wellbeingcheck.exp.direct",
-  "packagerNgrokUrl": "https://packager.nv-3sm.anonymous.wellbeingcheck.exp.direct",
-  "ngrokPid": 1701,
+  "expoServerNgrokUrl": "https://dk-666.anonymous.wellbeingcheck.exp.direct",
+  "packagerNgrokUrl": "https://packager.dk-666.anonymous.wellbeingcheck.exp.direct",
+  "ngrokPid": 1798,
   "packagerPort": 19001,
-  "packagerPid": 1677,
+  "packagerPid": 1773,
   "devToolsPort": 19002
 }
