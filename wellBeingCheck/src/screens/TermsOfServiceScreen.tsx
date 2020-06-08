@@ -124,6 +124,9 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
   handleUrlPress(url, matchIndex /*: number*/) {
     Linking.openURL(url);
   }
+  handlePhonePress(phone, matchIndex /*: number*/) {
+    Linking.openURL('tel:18779499492');
+  };
 
   render() {
     // if (!this.state.fontLoaded) {

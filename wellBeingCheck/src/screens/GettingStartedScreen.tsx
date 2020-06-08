@@ -91,10 +91,10 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
                   style={styles.text}
                   parse={
                     [
-                      { pattern: /Why we are conducting this study\?|Notifications|Authorization and confidentiality|Record linkages/, style: styles.bold },
+                      { pattern: /Why we are conducting this study|Notifications|Authorization and confidentiality|Record linkages/, style: styles.bold },
                       { pattern: /Time required to complete this questionnaire|To navigate the questionnaire|Session timeout|Definitions and explanations/, style: styles.bold },
                     
-                      { pattern: /Pourquoi nous menons cette étude\?|Notifications|Autorisation et confidentialité|Couplages d’enregistrements/, style: styles.bold },
+                      { pattern: /Pourquoi nous menons cette étude|Notifications|Autorisation et confidentialité|Couplages d’enregistrements/, style: styles.bold },
                       { pattern: /Temps requis pour remplir ce questionnaire|Pour parcourir le questionnaire|Délai d’inactivité d’une session|Définitions et explications/, style: styles.bold },
                     
                     

@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import Background from '../components/Background';
-import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, BackHandler, AsyncStorage, PanResponder, Alert,Linking, YellowBox } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, BackHandler, AsyncStorage, PanResponder, Alert,Linking, YellowBox, Platform } from 'react-native';
 import { checkConnection, hashString, fetchJwToken } from '../utils/fetchJwToken';
 import { resources } from '../../GlobalResources';
 
@@ -28,6 +28,7 @@ type HomeState = {
   firstTimeLoginModal: boolean,disabled:boolean,
   showThankYou: boolean,
   thankYouText: string,
+  disabled:boolean
 }
 YellowBox.ignoreWarnings(['Require cycle:','Setting a timer']);
 console.ignoredYellowBox = ['Require cycle:','Setting a timer'];
@@ -306,7 +307,7 @@ class Dashboard extends React.Component<Props, HomeState> {
 
           </View>
           <View style={styles.homeContainer} 
-          // {...global.panResponder.panHandlers}
+           {...global.panResponder.panHandlers}
           >
           <View >
             <TouchableOpacity onPress={() => this.conductSurvey()}

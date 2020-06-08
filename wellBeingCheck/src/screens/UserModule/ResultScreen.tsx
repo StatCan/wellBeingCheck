@@ -207,10 +207,12 @@ console.log('pppppaaaaggggggggggeeeeee:'+index);
               </TouchableOpacity>
             </View>
              {(this.state.loaded) ? null : <ActivityIndicator size="large" color="lightblue" style={{ position: 'absolute', top: '50%', left: '50%', zIndex: 20 }} />}
-            <View style={{ height: this.state.height }}>
+            <View style={{ height: this.state.height }} >
               <ScrollView horizontal showsHorizontalScrollIndicator={false} ref={ref => { this.sv = ref; }}
                 contentContainerStyle={{ paddingVertical: 20, justifyContent: 'center', }} onScrollBeginDrag={this.handleScrollB.bind(this)}
-                onTouchStart={this.log} onScrollEndDrag={this.handleScroll.bind(this)}>
+                onTouchStart={this.log} onScrollEndDrag={this.handleScroll.bind(this)}
+           {...global.panResponder.panHandlers}
+           >
                 {this.state.images.map((item, index) => (
                   <View onLayout={this._onLayout.bind(this)} style={{ height: this.state.height }} key={index}>
                     <Image source={{ uri: item }} style={{ width: this.state.width, height: this.state.height - 60, resizeMode: 'stretch' }} />

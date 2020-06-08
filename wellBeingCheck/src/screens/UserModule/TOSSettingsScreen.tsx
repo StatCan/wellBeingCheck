@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet, Dimensions, Linking } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Linking,PanResponder } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Button from '../../components/Button';
 import { newTheme } from '../../core/theme';

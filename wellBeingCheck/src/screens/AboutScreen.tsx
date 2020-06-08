@@ -327,22 +327,23 @@ class AboutScreen extends React.Component<Props, AboutState> {
         <AppBanner />
         <BackgroundWhite>
           <View style={styles.logo_container} 
-           //{...global.panResponder.panHandlers}
+           {...global.panResponder.panHandlers}
             >
             <LogoClearSmall />
           </View>
           <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}
-             // {...global.panResponder.panHandlers}
+              {...global.panResponder.panHandlers}
             >
               <List.Section>
                 <View style={styles.faqView} 
-                // {...global.panResponder.panHandlers}
+                {...global.panResponder.panHandlers}
                 >
                   <List.Accordion
                     title={resources.getString("faq.title")}
                     expanded={this.state.faqMainExpanded}
                     onPress={this._handleFaqMainExpand}
+                    //numberOfLines={titleNumberOfLines}
                   >
                     {/* Category 1 */}
                     <View style={styles.faqViewAns}>
@@ -356,6 +357,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           title={resources.getString("faq.c1.q1")}
                           expanded={this.state.faqC1Q1Expanded}
                           onPress={this._handleFaqC1Q1Expand}
+                          titleNumberOfLines={3}
                         >
                           <View>
                             <ParsedText
@@ -375,6 +377,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           title={resources.getString("faq.c1.q2")}
                           expanded={this.state.faqC1Q2Expanded}
                           onPress={this._handleFaqC1Q2Expand}
+                          titleNumberOfLines={3}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c1.q2.a")}</Text>
@@ -386,6 +389,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           title={resources.getString("faq.c1.q3")}
                           expanded={this.state.faqC1Q3Expanded}
                           onPress={this._handleFaqC1Q3Expand}
+                          titleNumberOfLines={3}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c1.q3.a")}</Text>
@@ -396,6 +400,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           title={resources.getString("faq.c1.q4")}
                           expanded={this.state.faqC1Q4Expanded}
                           onPress={this._handleFaqC1Q4Expand}
+                          titleNumberOfLines={3}
                         >
 
                           <View>
@@ -417,6 +422,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           title={resources.getString("faq.c1.q5")}
                           expanded={this.state.faqC1Q5Expanded}
                           onPress={this._handleFaqC1Q5Expand}
+                          titleNumberOfLines={3}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c1.q5.a")}</Text>
@@ -439,6 +445,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           title={resources.getString("faq.c2.q1")}
                           expanded={this.state.faqC2Q1Expanded}
                           onPress={this._handleFaqC2Q1Expand}
+                          titleNumberOfLines={3}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c2.q1.a")}</Text>
@@ -448,6 +455,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           title={resources.getString("faq.c2.q2")}
                           expanded={this.state.faqC2Q2Expanded}
                           onPress={this._handleFaqC2Q2Expand}
+                          titleNumberOfLines={3}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c2.q2.a")}</Text>
@@ -458,6 +466,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           title={resources.getString("faq.c2.q3")}
                           expanded={this.state.faqC2Q3Expanded}
                           onPress={this._handleFaqC2Q3Expand}
+                          titleNumberOfLines={3}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c2.q3.a")}</Text>
@@ -469,6 +478,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           title={resources.getString("faq.c2.q4")}
                           expanded={this.state.faqC2Q4Expanded}
                           onPress={this._handleFaqC2Q4Expand}
+                          titleNumberOfLines={3}
                         >
                             <ParsedText
                               style={styles.faqListItem}
@@ -490,6 +500,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           title={resources.getString("faq.c2.q5")}
                           expanded={this.state.faqC2Q5Expanded}
                           onPress={this._handleFaqC2Q5Expand}
+                          titleNumberOfLines={3}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c2.q5.a")}</Text>
@@ -499,6 +510,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           title={resources.getString("faq.c2.q6")}
                           expanded={this.state.faqC2Q6Expanded}
                           onPress={this._handleFaqC2Q6Expand}
+                          titleNumberOfLines={3}
                         >
                           <View>
                             <ParsedText
@@ -518,6 +530,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           title={resources.getString("faq.c2.q7")}
                           expanded={this.state.faqC2Q7Expanded}
                           onPress={this._handleFaqC2Q7Expand}
+                          titleNumberOfLines={3}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c2.q7.a")}</Text>
@@ -539,6 +552,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           title={resources.getString("faq.c3.q1")}
                           expanded={this.state.faqC3Q1Expanded}
                           onPress={this._handleFaqC3Q1Expand}
+                          titleNumberOfLines={3}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c3.q1.a")}</Text>
@@ -548,6 +562,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           title={resources.getString("faq.c3.q2")}
                           expanded={this.state.faqC3Q2Expanded}
                           onPress={this._handleFaqC3Q2Expand}
+                          titleNumberOfLines={3}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c3.q2.a")}</Text>
@@ -557,6 +572,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           title={resources.getString("faq.c3.q3")}
                           expanded={this.state.faqC3Q3Expanded}
                           onPress={this._handleFaqC3Q3Expand}
+                          titleNumberOfLines={3}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c3.q3.a")}</Text>
@@ -566,6 +582,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           title={resources.getString("faq.c3.q4")}
                           expanded={this.state.faqC3Q4Expanded}
                           onPress={this._handleFaqC3Q4Expand}
+                          titleNumberOfLines={3}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c3.q4.a")}</Text>
@@ -575,6 +592,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           title={resources.getString("faq.c3.q5")}
                           expanded={this.state.faqC3Q5Expanded}
                           onPress={this._handleFaqC3Q5Expand}
+                          titleNumberOfLines={3}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c3.q5.a")}</Text>
@@ -584,6 +602,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           title={resources.getString("faq.c3.q6")}
                           expanded={this.state.faqC3Q6Expanded}
                           onPress={this._handleFaqC3Q6Expand}
+                          titleNumberOfLines={3}
                         >
                           <View>
                             <ParsedText
@@ -614,6 +633,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           title={resources.getString("faq.c4.q1")}
                           expanded={this.state.faqC4Q1Expanded}
                           onPress={this._handleFaqC4Q1Expand}
+                          titleNumberOfLines={3}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c4.q1.a")}</Text>
@@ -634,6 +654,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           title={resources.getString("faq.c5.q1")}
                           expanded={this.state.faqC5Q1Expanded}
                           onPress={this._handleFaqC5Q1Expand}
+                          titleNumberOfLines={3}
                         >
 
                           <View>
@@ -649,17 +670,12 @@ class AboutScreen extends React.Component<Props, AboutState> {
                               {resources.getString("faq.c5.q1.a")}
                             </ParsedText>
                           </View>
-
-                          {/* <View style={styles.faqListItem}>
-                            <Text>
-                              {resources.getString("faq.c5.q1.a")}
-                            </Text>
-                          </View> */}
                         </List.Accordion>
                         <List.Accordion
                           title={resources.getString("faq.c5.q2")}
                           expanded={this.state.faqC5Q2Expanded}
                           onPress={this._handleFaqC5Q2Expand}
+                          titleNumberOfLines={3}
                         >
                           <View>
                             <ParsedText
@@ -679,6 +695,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           title={resources.getString("faq.c5.q3")}
                           expanded={this.state.faqC5Q3Expanded}
                           onPress={this._handleFaqC5Q3Expand}
+                          titleNumberOfLines={3}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c5.q3.a")}</Text>
@@ -688,6 +705,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           title={resources.getString("faq.c5.q4")}
                           expanded={this.state.faqC5Q4Expanded}
                           onPress={this._handleFaqC5Q4Expand}
+                          titleNumberOfLines={3}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c5.q4.a")}</Text>
@@ -697,6 +715,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           title={resources.getString("faq.c5.q5")}
                           expanded={this.state.faqC5Q5Expanded}
                           onPress={this._handleFaqC5Q5Expand}
+                          titleNumberOfLines={3}
                         >
                           <View style={styles.faqListItem}>
                             <Text>{resources.getString("faq.c5.q5.a")}</Text>
@@ -709,7 +728,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
               </List.Section>
               <Title style={styles.title}>{resources.getString("about_title")}</Title>
               <View style={styles.content} 
-              // {...global.panResponder.panHandlers}
+               {...global.panResponder.panHandlers}
               >
                 <Paragraph style={styles.paragraph}>
                   <Text>
@@ -717,10 +736,10 @@ class AboutScreen extends React.Component<Props, AboutState> {
                       style={styles.text}
                       parse={
                         [
-                          { pattern: /Why we are conducting this study\?|Notifications|Authorization and confidentiality|Record linkages/, style: styles.bold },
+                          { pattern: /Why we are conducting this study|Notifications|Authorization and confidentiality|Record linkages/, style: styles.bold },
                           { pattern: /Time required to complete this questionnaire|To navigate the questionnaire|Session timeout|Definitions and explanations|Version/, style: styles.bold },
 
-                          { pattern: /Pourquoi nous menons cette étude\?|Notifications|Autorisation et confidentialité|Couplages d’enregistrements/, style: styles.bold },
+                          { pattern: /Pourquoi nous menons cette étude|Notifications|Autorisation et confidentialité|Couplages d’enregistrements/, style: styles.bold },
                           { pattern: /Temps requis pour remplir ce questionnaire|Pour parcourir le questionnaire|Délai d’inactivité d’une session|Définitions et explications|Version/, style: styles.bold },
 
                           { pattern: /Statistics Act, Revised Statutes of Canada, 1985, Chapter S-19/, style: styles.italic },
