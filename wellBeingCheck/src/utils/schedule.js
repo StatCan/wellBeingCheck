@@ -361,7 +361,8 @@ export async function setupSchedules(affectCurrent=false){
              if(days.length>0){
                  day5=getNextDay(days[days.length-1]);
                  days.forEach(function (d, index) {
-                     var schObj  =calculateSchedule(awake, sleep, count, d,currentDateTime);
+                     let cc = count; if (index == 0) cc = count - 1;//count minimum=2
+                     var schObj  =calculateSchedule(awake, sleep, cc, d,currentDateTime);
                      var selected=schObj.Selected;
                      if (selected.length > 0) {
                          selected.forEach(function (s) {

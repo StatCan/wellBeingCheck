@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import Background from '../components/Background';
-import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, BackHandler, AsyncStorage, PanResponder, Alert,Linking, YellowBox, Platform } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity,ActivityIndicator, BackHandler, AsyncStorage, PanResponder, Alert,Linking, YellowBox, Platform } from 'react-native';
 import { checkConnection, hashString, fetchJwToken } from '../utils/fetchJwToken';
 import { resources } from '../../GlobalResources';
 
@@ -27,7 +27,7 @@ type HomeState = {
   refresh: string,
   firstTimeLoginModal: boolean,disabled:boolean,
   showThankYou: boolean,
-  thankYouText: string,
+  thankYouText: string,loaded:boolean,
   disabled:boolean
 }
 YellowBox.ignoreWarnings(['Require cycle:','Setting a timer']);
@@ -47,7 +47,7 @@ class Dashboard extends React.Component<Props, HomeState> {
       refresh: '1',disabled:!(global.busy==8),
       firstTimeLoginModal: false,
       showThankYou: !(global.showThankYou == 0),
-      thankYouText: txt,
+      thankYouText: txt,loaded:false,firstTimeLoginModal:true,
     };
     this._refresh = this._refresh.bind(this);
     this._firstTimeLogin();
@@ -62,7 +62,7 @@ class Dashboard extends React.Component<Props, HomeState> {
   onSessionOut(){
     let result=false;
     Alert.alert(
-       resources.getString("session.modal.title"),
+       '',
        resources.getString("session.modal.message"),
        [
          { text: resources.getString("session.modal.sign_in"), onPress: () => {result=false;this.props.navigation.navigate('LoginScreen'); } },
@@ -142,7 +142,7 @@ class Dashboard extends React.Component<Props, HomeState> {
     this.setState({ showThankYou: !(global.showThankYou == 0), thankYouText: txt });
     setTimeout(() => { 
       global.showThankYou = 0; 
-      this.setState({ showThankYou: false }) }, 6000);
+      this.setState({ showThankYou: false,loaded:false }) }, 6000);
   }
 
   handleBackButton() {
@@ -276,13 +276,14 @@ class Dashboard extends React.Component<Props, HomeState> {
       .catch(err => { console.log(err) })
   }
   async conductSurvey() {
+       this.setState({ loaded: true });
        let isConnected = await checkConnection();
-       if (!isConnected) { Alert.alert('',resources.getString('offline')); return; }
+       if (!isConnected) { Alert.alert('',resources.getString('offline')); this.setState({ loaded: false }); return; }
        let n=await this.getConfig();
 
        console.log('deviceId:'+global.userToken+'    password:'+global.password);
        if(n){global.fetchAction=true;this.props.navigation.navigate('EQSurveyScreen');}
-       else {Alert.alert('',resources.getString("securityIssue"));return;}
+       else {Alert.alert('',resources.getString("securityIssue"));this.setState({ loaded: false }); return;}
 
   }
 
@@ -386,14 +387,18 @@ class Dashboard extends React.Component<Props, HomeState> {
             </View>
           </View>
           <NavigationEvents onDidFocus={() => this.checkThankYou()} />
+          {(!this.state.loaded) ? null : <ActivityIndicator size="large" color="lightblue" style={{ position: 'absolute', top: '60%', left: '50%', zIndex: 20 }} />}
           <View>
             <Portal>
               <Dialog
                 visible={this.state.firstTimeLoginModal}
                 onDismiss={this._hide_firstTimeLoginModal}>
                 <Dialog.Content>
+                 <Text style={{fontSize:24,marginTop:5}}>  ⚙</Text>
                   <Paragraph>
+
                     {resources.getString('home_first_time_login_content')}
+
                   </Paragraph>
                 </Dialog.Content>
                 <Dialog.Actions>
