@@ -2,8 +2,8 @@
   "expoServerPort": 19000,
   "expoServerNgrokUrl": "https://nv-3sm.heikako.wellbeingcheck.exp.direct",
   "packagerNgrokUrl": "https://packager.nv-3sm.heikako.wellbeingcheck.exp.direct",
-  "ngrokPid": 6832,
+  "ngrokPid": 16208,
   "devToolsPort": 19002,
   "packagerPort": 19001,
-  "packagerPid": 17084
+  "packagerPid": 4068
 }

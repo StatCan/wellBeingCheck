@@ -47,7 +47,7 @@ class Dashboard extends React.Component<Props, HomeState> {
       refresh: '1',disabled:!(global.busy==8),
       firstTimeLoginModal: false,
       showThankYou: !(global.showThankYou == 0),
-      thankYouText: txt,loaded:false,
+      thankYouText: txt,loaded:false,firstTimeLoginModal:true,
     };
     this._refresh = this._refresh.bind(this);
     this._firstTimeLogin();
@@ -394,8 +394,11 @@ class Dashboard extends React.Component<Props, HomeState> {
                 visible={this.state.firstTimeLoginModal}
                 onDismiss={this._hide_firstTimeLoginModal}>
                 <Dialog.Content>
+                 <Text style={{fontSize:24,marginTop:5}}>  ⚙</Text>
                   <Paragraph>
+
                     {resources.getString('home_first_time_login_content')}
+
                   </Paragraph>
                 </Dialog.Content>
                 <Dialog.Actions>
