@@ -62,7 +62,7 @@ class Dashboard extends React.Component<Props, HomeState> {
   onSessionOut(){
     let result=false;
     Alert.alert(
-       resources.getString("session.modal.title"),
+       '',
        resources.getString("session.modal.message"),
        [
          { text: resources.getString("session.modal.sign_in"), onPress: () => {result=false;this.props.navigation.navigate('LoginScreen'); } },

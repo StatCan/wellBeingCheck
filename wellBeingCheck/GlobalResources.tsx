@@ -360,7 +360,7 @@ export const resources = {
 
             //Session
             "session.modal.title": "Session timeout warning",
-            "session.modal.message": "Sorry your session has already expired. Please sign in again.",
+            "session.modal.message": "Your session has timed out. Please sign in again.",
             "session.modal.sign_in": "Sign in",
 
             //internet connection
@@ -762,7 +762,7 @@ export const resources = {
             "securityIssue":"Erreur de serveur interne, essayez à nouveau, si la même chose se reproduit, contactez StatCan",
             //Session
             "session.modal.title": "Avertissement d'expiration de la session",
-            "session.modal.message": "Désolé, votre session a déjà expiré. S'il vous plaît ouvrir une nouvelle session.",
+            "session.modal.message": "Votre session a expiré. Veuillez vous connecter à nouveau.",
             "session.modal.sign_in": "Ouvrir une session",
 
             //Internet connection
