@@ -276,7 +276,7 @@ class Dashboard extends React.Component<Props, HomeState> {
       .catch(err => { console.log(err) })
   }
   async conductSurvey() {
-       this.setState({ loaded: true });
+     this.setState({ loaded: true });
        let isConnected = await checkConnection();
        if (!isConnected) { Alert.alert('',resources.getString('offline')); this.setState({ loaded: false }); return; }
        let n=await this.getConfig();
@@ -284,7 +284,6 @@ class Dashboard extends React.Component<Props, HomeState> {
        console.log('deviceId:'+global.userToken+'    password:'+global.password);
        if(n){global.fetchAction=true;this.props.navigation.navigate('EQSurveyScreen');}
        else {Alert.alert('',resources.getString("securityIssue"));this.setState({ loaded: false }); return;}
-
   }
 
   render() {
@@ -310,20 +309,22 @@ class Dashboard extends React.Component<Props, HomeState> {
           <View style={styles.homeContainer} 
            {...global.panResponder.panHandlers}
           >
-          <View >
-            <TouchableOpacity onPress={() => this.conductSurvey()}
-              style={{ flex: 2, justifyContent: 'center' }}>
+          <View>
+
               <View style={styles.outer}>
-                <View style={styles.inner}>
-                  <Text style={styles.startButtonText}>{resources.getString("start_survey")}</Text>
+                 <View style={styles.inner}>
+                    <TouchableOpacity onPress={() => this.conductSurvey()} style={{ flex: 0, justifyContent: 'center',width:'85%',height:'85%' }}>
+                      <Text style={styles.startButtonText}>{resources.getString("start_survey")}</Text>
+                    </TouchableOpacity>
                 </View>
+
               </View>
-            </TouchableOpacity>
+
             {this.state.showThankYou &&
               <View style={{ backgroundColor: 'black', width: '80%', position: 'absolute', zIndex: 29, alignSelf: 'center', top: '70%', justifyContent: 'center', alignItems: 'center' }}><Text style={{ color: 'white', fontSize: 14, marginTop: 10, marginBottom: 10 }}>{this.state.thankYouText}</Text></View>
             }
 
-            <View style={[styles.homeButtonContainer, { marginBottom: 0, marginTop: 50 }, { flexDirection: 'row' }]}>
+            <View style={[styles.homeButtonContainer, { marginBottom: 0, marginTop: 50 }, { flexDirection: 'row',alignItems:'center' }]}>
 
               {/*-----------Information button using UX logo ic_wbc_about_survey--------*/}
               <View>
