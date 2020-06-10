@@ -47,7 +47,7 @@ class Dashboard extends React.Component<Props, HomeState> {
       refresh: '1',disabled:!(global.busy==8),
       firstTimeLoginModal: false,
       showThankYou: !(global.showThankYou == 0),
-      thankYouText: txt,loaded:false,firstTimeLoginModal:true,
+      thankYouText: txt,loaded:false,
     };
     this._refresh = this._refresh.bind(this);
     this._firstTimeLogin();
