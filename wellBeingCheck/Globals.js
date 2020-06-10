@@ -94,8 +94,8 @@ global.createPanResponder=()=>{
             return true;
           },
 
-        onMoveShouldSetPanResponder: () =>{  global.globalTick=0; console.log('On Move.........................');  return true;},
-        onStartShouldSetPanResponderCapture: () => {global.globalTick=0; console.log('On Click.................'); return true; },
+        onMoveShouldSetPanResponder: () =>{  global.globalTick=0; console.log('On Move.........................');  return false;},
+        onStartShouldSetPanResponderCapture: () => {global.globalTick=0; console.log('On Click.................'); return false; },
 
          //For performence, just enable what is necceesary
           // onStartShouldSetPanResponderCapture: () =>false,
