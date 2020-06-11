@@ -15,7 +15,6 @@ import {
   NavigationState, NavigationEvents,
 } from 'react-navigation';
 
-YellowBox.ignoreWarnings(['Warning: ReactNative.createElement']);
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
@@ -30,8 +29,9 @@ type HomeState = {
   thankYouText: string,loaded:boolean,
   disabled:boolean
 }
-YellowBox.ignoreWarnings(['Require cycle:','Setting a timer']);
+YellowBox.ignoreWarnings(['Require cycle:','Setting a timer','Warning: ReactNative.createElement']);
 console.ignoredYellowBox = ['Require cycle:','Setting a timer'];
+
 const WEB_API_BASE_URL = global.webApiBaseUrl + 'api';
 
 class Dashboard extends React.Component<Props, HomeState> {
