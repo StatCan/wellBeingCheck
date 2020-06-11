@@ -225,7 +225,10 @@ console.log('pppppaaaaggggggggggeeeeee:'+index);
         <NavigationEvents onDidFocus={() =>{this.loadImage();this.setState({ title: resources.getString("Your feelings")});}} />
         <Button style={styles.btnNext}
           mode="contained"
-          onPress={() => { global.currentView = 0;  global.globalTick=0;this.props.navigation.navigate('Dashboard') }}>
+          onPress={() => {
+              global.currentView = 0;
+              global.resetTimer();//global.globalTick=0;
+              this.props.navigation.navigate('Dashboard') }}>
           <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
         </Button>
       </PaperProvider>

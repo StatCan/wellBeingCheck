@@ -87,7 +87,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   }
 
   wakeTimeHandler(time) {
-    global.globalTick=0;
+    global.resetTimer();//global.globalTick=0;
     time = time.substring(0, 5);
     this.setState({
       waketime: time,
@@ -99,7 +99,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   }
 
   cancelTimeHandler(time) {
-    global.globalTick=0;
+    global.resetTimer();//global.globalTick=0;
     this.setState({
       wakeTimePickerShow: false,
       sleepTimePickerShow: false
@@ -107,7 +107,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   }
 
   sleepTimeHandler(time) {
-    global.globalTick=0;
+    global.resetTimer();//global.globalTick=0;
     time = time.substring(0, 5);
     this.setState({
       sleeptime: time,
@@ -290,7 +290,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   }
 
   _backButtonPressed = () => {
-    global.globalTick=0;
+    global.resetTimer();//global.globalTick=0;
    if (this.state.notificationState){
         console.log("Back button Pressed:" + this.state.waketime + '---' + this.state.sleeptime);
         let valid = validateSetting(this.state.waketime, this.state.sleeptime, this.state.notificationcount);
@@ -382,20 +382,36 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     }
   }
 
-  _showNumPingsModal = () =>{ global.globalTick=0; this.setState({ numPingsModalShow: true });}
-  _hideNumPingsModal = () =>{ global.globalTick=0; this.setState({ numPingsModalShow: false });}
+  _showNumPingsModal = () =>{
+       global.resetTimer();// global.globalTick=0;
+        this.setState({ numPingsModalShow: true });}
+  _hideNumPingsModal = () =>{
+      global.resetTimer();//global.globalTick=0;
+      this.setState({ numPingsModalShow: false });}
 
-  _showLanguageModal = () =>{ global.globalTick=0; this.setState({ languageModalShow: true });}
-  _hideLanguageModal = () =>{  global.globalTick=0;this.setState({ languageModalShow: false });}
+  _showLanguageModal = () =>{
+      global.resetTimer();//global.globalTick=0;
+      this.setState({ languageModalShow: true });}
+  _hideLanguageModal = () =>{
+   global.resetTimer();//global.globalTick=0;
+   this.setState({ languageModalShow: false });}
 
-  _showWakeTimePicker = () =>{ global.globalTick=0; this.setState({ wakeTimePickerShow: true });}
-  _hideWakeTimePicker = () =>{ global.globalTick=0; this.setState({ wakeTimePickerShow: false });}
+  _showWakeTimePicker = () =>{
+      global.resetTimer();//global.globalTick=0;
+      this.setState({ wakeTimePickerShow: true });}
+  _hideWakeTimePicker = () =>{
+      global.resetTimer();//global.globalTick=0;
+      this.setState({ wakeTimePickerShow: false });}
 
-  _showSleepTimePicker = () =>{ global.globalTick=0; this.setState({ sleepTimePickerShow: true });}
-  _hideSleepTimePicker = () =>{ global.globalTick=0;this.setState({ sleepTimePickerShow: false });}
+  _showSleepTimePicker = () =>{
+      global.resetTimer();//global.globalTick=0;
+      this.setState({ sleepTimePickerShow: true });}
+  _hideSleepTimePicker = () =>{
+      global.resetTimer();//global.globalTick=0;
+      this.setState({ sleepTimePickerShow: false });}
 
   _openTermsConditions = () => {
-     global.globalTick=0;
+     global.resetTimer();//global.globalTick=0;
     this.props.navigation.navigate('TOSSettingsScreen');
   }
   // _openAbout = () => {

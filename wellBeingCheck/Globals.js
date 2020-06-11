@@ -66,8 +66,7 @@ global.globalTimeOutCallback=null;
 
 //global.timerTime=30000;//30000*1;
 global.timerTime=900000;//30000*1;
-
-global.repeatCheck=async ()=>{
+global.repeatCheck1=async ()=>{
     console.log('Timer check..............................');
     if (global.globalTick>0) {
          clearInterval(global.globalTimer);
@@ -84,9 +83,82 @@ global.repeatCheck=async ()=>{
     else if(global.globalTick==0)global.globalTick++;
     else if(global.globalTick<0)clearInterval(global.globalTimer);
 }
+global.repeatCheck=async ()=>{
+    console.log('Timer check..............................');
+    clearInterval(global.globalTimer);
+    global.globalTimer =null;
+    if(global.globalTimeOutCallback!=null && typeof global.globalTimeOutCallback=='function'){
+       global.globalTimeOutCallback();
+    }
+}
+global.resetTimer=()=>{
+     clearInterval(global.globalTimer);
+     global.globalTimer =null;
+     global.globalTimer=setInterval(global.repeatCheck,global.timerTime);
+}
 global.createGlobalTimer=()=>global.globalTimer=setInterval(global.repeatCheck,global.timerTime);
 global.panResponder=null;
 global.createPanResponder=()=>{
+    console.log('create pan responder.....................');
+    global.panResponder=PanResponder.create({
+          onStartShouldSetPanResponder: () => {
+            global.resetTimer();
+            return true;
+          },
+
+        onMoveShouldSetPanResponder: () =>{  global.resetTimer(); console.log('On Move.........................');  return false;},
+        onStartShouldSetPanResponderCapture: () => { global.resetTimer(); console.log('On Click.................'); return false; },
+
+         //For performence, just enable what is necceesary
+          // onStartShouldSetPanResponderCapture: () =>false,
+          // onMoveShouldSetPanResponderCapture: () => false, 
+          // onPanResponderTerminationRequest: () => true,
+          // onShouldBlockNativeResponder: () => false,
+
+          // onMoveShouldSetPanResponderCapture: (evt, gestureState) => {
+          //          global.resetTimer(); console.log('On onMoveShouldSetPanResponderCapture.........................:'+gestureState);
+          //         return false;
+          //       },
+          // onPanResponderGrant: (evt, gestureState) => {
+          //         global.resetTimer(); console.log('On onPanResponderGrant.........................:'+gestureState);
+          //         return false;
+          //       },
+          // onPanResponderMove: (evt, gestureState) => {
+          //         global.resetTimer(); console.log('On onPanResponderMove.........................:'+gestureState);
+          //         return false;
+          //       },
+          // onPanResponderTerminationRequest: (evt, gestureState) => {
+          //          global.resetTimer(); console.log('On onPanResponderTerminationRequest.........................:'+gestureState);
+          //         return false
+          //       },
+          // onPanResponderRelease: (evt, gestureState) => {
+          //          global.resetTimer(); console.log('On onPanResponderRelease.........................:'+gestureState);
+          //         return true;
+          //       },
+          // onPanResponderTerminate: (evt, gestureState) => {
+          //          global.resetTimer(); console.log('On onPanResponderTerminate.........................:'+gestureState);
+          //         return false;
+          //       },
+          // onShouldBlockNativeResponder: (evt, gestureState) => {
+          //       global.resetTimer(); console.log('On onShouldBlockNativeResponder.........................:'+gestureState);
+          //         return false;
+          //       },
+
+
+
+          /*  this.panResponder = PanResponder.create({
+                onStartShouldSetPanResponder: () => true,
+                onMoveShouldSetPanResponder: () => true,
+                onPanResponderMove: this.handlePanResponderMove,
+                onPanResponderRelease: this.handlePanResponderRelease,
+                onPanResponderGrant: () => this.setState({ active: true }),
+              });*/
+
+
+
+        });
+}
+global.createPanResponder1=()=>{
     console.log('create pan responder.....................');
     global.panResponder=PanResponder.create({
           onStartShouldSetPanResponder: () => {
@@ -99,7 +171,7 @@ global.createPanResponder=()=>{
 
          //For performence, just enable what is necceesary
           // onStartShouldSetPanResponderCapture: () =>false,
-          // onMoveShouldSetPanResponderCapture: () => false, 
+          // onMoveShouldSetPanResponderCapture: () => false,
           // onPanResponderTerminationRequest: () => true,
           // onShouldBlockNativeResponder: () => false,
 
