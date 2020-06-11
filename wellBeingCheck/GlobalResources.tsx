@@ -213,7 +213,7 @@ export const resources = {
             "about": "Information",
             "num_pings_dialog_title": "Number of notifications per day",
             "ThankYouA": "Thank you for checking in!",
-            "ThankYouB": "Thank you, now check out your Results!",
+            "ThankYouB": "Thank you, now check out your results!",
             "NoDataAlert": "Results will become available once you complete two well-being checks.",
             "Enter password": "Enter password",
             "Well-Being Check": "Well-being Check",
