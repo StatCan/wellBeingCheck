@@ -318,7 +318,7 @@ class Dashboard extends React.Component<Props, HomeState> {
 
               <View style={styles.outer}>
                  <View style={styles.inner}>
-                    <TouchableOpacity onPress={() => this.conductSurvey()} style={{ flex: 0, justifyContent: 'center',width:'85%',height:'85%' }}>
+                    <TouchableOpacity onPress={() => this.conductSurvey()} style={{ flex: 0, justifyContent: 'center',width:'90%',height:'90%' }}>
                       <Text style={styles.startButtonText}>{resources.getString("start_survey")}</Text>
                     </TouchableOpacity>
                 </View>
@@ -497,7 +497,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 5,
     elevation: 16,
-    backgroundColor: 'lightgray'
+    backgroundColor: 'lightgray',
+    marginTop:40,
   },
   smallButton: {
     width: 60,
