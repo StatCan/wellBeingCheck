@@ -41,7 +41,7 @@ interface Props {
 }
 
 const deviceHeight = Dimensions.get('window').height - 145;
-let dirty = false;
+let dirty = false;let testDatetime=new Date();
 class SettingsScreen extends React.Component<Props, SettingsState> {
   _panResponder: any;
   timer = 0
@@ -68,6 +68,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       titleBackgroundColor: "#000",
       settingsFirstTime: true
     };
+    testDatetime.setHours(22);testDatetime.setMinutes(10);
 
     this.wakeTimeHandler = this.wakeTimeHandler.bind(this);
     this.sleepTimeHandler = this.sleepTimeHandler.bind(this);
