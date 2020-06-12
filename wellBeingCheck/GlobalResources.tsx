@@ -140,7 +140,7 @@ export const resources = {
             "password_recovery_change.confirm_password": "Confirm password",
             "password.recovery.incorrectAnswer":"incorrect answer",
             //home screen
-            "home_first_time_login_content": "Customize the number of notifications and the window of time you receive them in the Settings menu",
+            "home_first_time_login_content": "Customize the number of notifications and the window of time you receive them in the Settings menu.",
             //about
             "about_title": "",
             "about_content": `Why we are conducting this study\n`+
