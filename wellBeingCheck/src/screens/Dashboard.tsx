@@ -400,12 +400,11 @@ class Dashboard extends React.Component<Props, HomeState> {
                 visible={this.state.firstTimeLoginModal}
                 onDismiss={this._hide_firstTimeLoginModal}>
                 <Dialog.Content>
-                 <Text style={{fontSize:24,marginTop:5}}>  ⚙</Text>
                   <Paragraph>
-
                     {resources.getString('home_first_time_login_content')}
-
+                    <Image style={{height:15, width:15, paddingLeft:5}} source={require('../assets/ic_setting.png')} />
                   </Paragraph>
+
                 </Dialog.Content>
                 <Dialog.Actions>
                   <View>
