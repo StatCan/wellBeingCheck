@@ -149,8 +149,8 @@ export const resources = {
                 `Information may also be used by Statistics Canada for other statistical and research purposes.  \n\n` +
 
                 `Notifications \n` +
-                `This app will notify you to complete a Well-being Check 2 to 5 times daily between the time you wake up and the time you go to bed. You can customize these parameters at any time in the settings menu on the app’s home page. If you do not customize the parameters, you will receive a default of 2 daily notifications at various times between 08:00 and 22:00. If you do not allow notifications, you can still complete a Well-being Check whenever you like, but the quality of your results may be impacted.  \n\n` +
-
+                `This app will notify you to complete a Well-being Check 2 to 5 times daily. You can customize these parameters, including when we should not disturb you, at any time in the settings menu on the app’s home page. If you do not customize the parameters, you will receive a default of 2 daily notifications at various times between 08:00 and 22:00. If you do not allow notifications, you can still complete a Well-being Check whenever you like, but the quality of your results may be impacted. \n\n`+
+                
                 `Authorization and confidentiality  \n` +
                 `Data are collected under the authority of the Statistics Act, Revised Statutes of Canada, 1985, Chapter S-19. Your information will be kept strictly confidential.  \n\n` +
 
@@ -415,8 +415,8 @@ export const resources = {
                 `Les renseignements recueillis pourraient aussi être utilisés par Statistique Canada à d’autres fins statistiques et de recherche. \n\n` +
 
                 `Notifications \n` +
-                `Cette application vous enverra une notification pour remplir un Bilan bien-être de 2 à 5 fois par jour, entre l’heure de votre réveil et l’heure à laquelle vous vous couchez. Vous pouvez personnaliser ces paramètres à tout moment dans le menu des paramètres sur la page d’accueil de l’application. Si vous ne personnalisez pas les paramètres, vous recevrez par défaut 2 notifications à divers moments entre 8 h et 22 h. Si vous n’acceptez pas les notifications, vous pourrez tout de même remplir un Bilan bien-être quand vous le voudrez, mais la qualité de vos résultats pourrait en être affectée. \n\n` +
-
+                `Cette application vous enverra une notification pour remplir un Bilan bien-être de 2 à 5 fois par jour. Vous pouvez personnaliser ces paramètres, y compris les moments où vous ne souhaitez pas être dérangé, à tout moment dans le menu des paramètres sur la page d’accueil de l’application. Si vous ne personnalisez pas les paramètres, vous recevrez par défaut 2 notifications à divers moments entre 8 h et 22 h. Si vous n’acceptez pas les notifications, vous pourrez tout de même remplir un Bilan bien-être quand vous le voudrez, mais la qualité de vos résultats pourrait en être affectée. \n\n` +
+               
                 `Autorisation et confidentialité \n` +
                 `Ces données sont recueillies en vertu de la Loi sur la statistique, Lois revisees du Canada \(1985\), chapitre S-19. V os renseignements demeureront strictement confidentiels. \n\n` +
 
