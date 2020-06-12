@@ -33,6 +33,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
 
   constructor(Props) {
     super(Props)
+    global.loading=false;
     let aaa='let logo = document.querySelector("#__btnNext");logo.addEventListener("click", addclick); function addclick(){setTimeout(function(){var el=document.querySelector("div.sc-progperc");el.scrollIntoView();let logo = document.querySelector("#__btnNext"); logo.addEventListener("click", addclick);let logo1 = document.querySelector("#__btnPrevious");logo1.addEventListener("click", addclick); },250)}';
 //     let aaa='let logo = document.querySelector("#__btnNext");logo.addEventListener("click", addclick); function addclick(){setTimeout(function(){var el=document.querySelector("div.sc-progperc");el.scrollIntoView();let logo = document.querySelector("#__btnNext"); logo.addEventListener("click", addclick);let logo1 = document.querySelector("#__btnPrevious");logo1.addEventListener("click", addclick); },250)}';
     let bbb='let sc = document.querySelector("#scSurveyBody");sc.addEventListener("change", bodychange);function bodychange(){let b1 = document.querySelector("#__btnNext");b1.addEventListener("click", addclick);let b2 = document.querySelector("#__btnPrevious");b2.addEventListener("click", addclick);} ';
@@ -44,6 +45,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
   }
 
   componentDidMount() {
+    //  this.setState({ webviewLoaded: true });
   }
 
   async handleSurveyAdone(){

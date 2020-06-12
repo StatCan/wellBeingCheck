@@ -47,7 +47,7 @@ class Dashboard extends React.Component<Props, HomeState> {
       refresh: '1',disabled:!(global.busy==8),
       firstTimeLoginModal: false,
       showThankYou: !(global.showThankYou == 0),
-      thankYouText: txt,loaded:false,
+      thankYouText: txt,loaded:global.loading,
     };
     this._refresh = this._refresh.bind(this);
     this._firstTimeLogin();
@@ -140,9 +140,14 @@ class Dashboard extends React.Component<Props, HomeState> {
     let txt = '';
     if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2)  txt = resources.getString('ThankYouB');
     this.setState({ showThankYou: !(global.showThankYou == 0), thankYouText: txt });
-    setTimeout(() => { 
-      global.showThankYou = 0; 
-      this.setState({ showThankYou: false,loaded:false }) }, 6000);
+    if(!(global.showThankYou == 0)){
+       setTimeout(() => {
+             global.showThankYou = 0;
+             this.setState({ showThankYou: false,loaded:false }) }, 5000);
+    }
+    else {
+       this.setState({loaded:false})
+    }
   }
 
   handleBackButton() {
@@ -276,7 +281,7 @@ class Dashboard extends React.Component<Props, HomeState> {
       .catch(err => { console.log(err) })
   }
   async conductSurvey() {
-     this.setState({ loaded: true });
+     this.setState({ loaded: true });global.loading=true;
        let isConnected = await checkConnection();
        if (!isConnected) { Alert.alert('',resources.getString('offline')); this.setState({ loaded: false }); return; }
        let n=await this.getConfig();
