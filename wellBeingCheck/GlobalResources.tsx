@@ -556,8 +556,8 @@ export const resources = {
                 `Cette application vous enverra une notification pour remplir un Bilan bien-être de 2 à 5 fois par jour. Vous pouvez personnaliser ces paramètres, y compris les moments où vous ne souhaitez pas être dérangé, à tout moment dans le menu des paramètres sur la page d’accueil de l’application. Si vous ne personnalisez pas les paramètres, vous recevrez par défaut 2 notifications à divers moments entre 8 h et 22 h. Si vous n’acceptez pas les notifications, vous pourrez tout de même remplir un Bilan bien-être quand vous le voudrez, mais la qualité de vos résultats pourrait en être affectée. \n\n` +
                
                 `Autorisation et confidentialité  \n` +
-                `Ces données sont recueillies en vertu de la Loi sur la statistique, Lois révisées du Canada (1985), chapitre S-19. V os renseignements demeureront strictement confidentiels.  \n\n` +
-
+                `Ces données sont recueillies en vertu de la Loi sur la statistique, Lois révisées du Canada (1985), chapitre S-19. Vos renseignements demeureront strictement confidentiels.  \n\n` +
+               
                 `Couplages d’enregistrements  \n` +
                 `Afin d’améliorer la qualité des données tirées de cette enquête et de réduire le fardeau de réponse, Statistique Canada pourrait combiner les renseignements que vous fournissez avec ceux provenant d’autres enquêtes ou sources de données administratives.  \n\n` +
 
