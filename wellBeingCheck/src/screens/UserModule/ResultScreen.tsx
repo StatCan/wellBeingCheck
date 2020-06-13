@@ -33,7 +33,7 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
       width: 0, height: 0,loaded:false
     };
     global.currentView = 1;
-    this.repeatcheck=this.repeatcheck.bind(this);
+    this.loadingrepeatcheck=this.loadingrepeatcheck.bind(this);
   }
 
   _onNextBtnHandle = () => {
@@ -100,9 +100,9 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
   }
 
   monitorBusy() {
-    busyCheck = setInterval(this.repeatcheck,1000);
+    busyCheck = setInterval(this.loadingrepeatcheck,1000);
   }
-  repeatcheck=()=> {
+  loadingrepeatcheck=()=> {
         if (global.fetchCount==8) {
             clearInterval(busyCheck);
             this.loadImage();
@@ -225,7 +225,10 @@ console.log('pppppaaaaggggggggggeeeeee:'+index);
         <NavigationEvents onDidFocus={() =>{this.loadImage();this.setState({ title: resources.getString("Your feelings")});}} />
         <Button style={styles.btnNext}
           mode="contained"
-          onPress={() => { global.currentView = 0;  global.globalTick=0;this.props.navigation.navigate('Dashboard') }}>
+          onPress={() => {
+              global.currentView = 0;
+              global.resetTimer();//global.globalTick=0;
+              this.props.navigation.navigate('Dashboard') }}>
           <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
         </Button>
       </PaperProvider>

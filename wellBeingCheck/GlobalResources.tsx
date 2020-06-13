@@ -142,7 +142,7 @@ export const resources = {
             "password_recovery_change.confirm_password": "Confirm password",
             "password.recovery.incorrectAnswer":"incorrect answer",
             //home screen
-            "home_first_time_login_content": "Please visit the settings menu if you would like to customize the number of notifications you receive, and the window of time when you would like to receive them.",
+            "home_first_time_login_content": "Customize the number of notifications and the window of time you receive them in the Settings menu.",
             //about
             "about_title": "",
             "about_content": `Why we are conducting this study\n`+
@@ -196,12 +196,12 @@ export const resources = {
             "term_and condition_content": "When you continue use this app, that means you automatically agree on this Term and condition.",
 
             "Your feeling this week": "Your feeling this week",
-            "Your feelings": "Your feelings",
+            "Your feelings": "Your feelings: a snapshot",
             "Detail": "Detail",
             "Summary": "Summary",
-            "How you are feeling by location": "How you are feeling by location",
-            "How you are feeling with others": "How you are feeling with others",
-            "How you are feeling by activity": "How you are feeling by activity",
+            "How you are feeling by location": "Your feelings: by location",
+            "How you are feeling with others": "Your feelings: alone or with others",
+            "How you are feeling by activity": "Your feelings: by activity",
             "How you are feeling by location help": "This is your feeling by location",
             "How you are feeling with others help": "This is your feeling with others",
             "How you are feeling by activity help": "This is your feeling by activity",
@@ -214,9 +214,9 @@ export const resources = {
             "language": "Language",
             "about": "Information",
             "num_pings_dialog_title": "Number of notifications per day",
-            "ThankYouA": "Thank you for completing this survey!",
-            "ThankYouB": "Thank you for completing this survey! You can review your Well-being Check in the Results menu.",
-            "NoDataAlert": "You have to complete the survey at least once.",
+            "ThankYouA": "Thank you for checking in!",
+            "ThankYouB": "Thank you, now check out your results!",
+            "NoDataAlert": "Results will become available once you complete two well-being checks.",
             "Enter password": "Enter password",
             "Well-Being Check": "Well-being Check",
 
@@ -544,7 +544,7 @@ export const resources = {
             "password_recovery_change.confirm_password": "Confirmez le mot de passe",
             "password.recovery.incorrectAnswer":"Mauvaise réponse",
             //home screen
-            "home_first_time_login_content": "Veuillez consulter le menu des paramètres pour personnaliser le nombre de notifications que vous recevrez et pour déterminer à quels moments vous souhaitez les recevoir.",
+            "home_first_time_login_content": "Personnalisez le nombre de notifications et l’intervalle de temps  durant lequel vous les recevrez dans le menu des Paramètres.",
             //about
             "about_title": "",
             "about_content": `Pourquoi nous menons cette étude\n`+
@@ -597,12 +597,12 @@ export const resources = {
             "term_and condition_content": "Lorsque vous continuez à utiliser cette application, cela signifie que vous acceptez automatiquement ces conditions générales.",
 
             "Your feeling this week": "Votre ressenti cette semaine",
-            "Your feelings": "Tes sentiments",
+            "Your feelings": "Aperçu de vos sentiments",
             "Detail": "Détail",
             "Summary": "Sommaire",
-            "How you are feeling by location": "Comment vous vous sentez par emplacement",
-            "How you are feeling with others": "Comment vous vous sentez avec les autres",
-            "How you are feeling by activity": "Comment vous vous sentez par activité",
+            "How you are feeling by location": "Vos sentiments selon l’emplacement",
+            "How you are feeling with others": "Vos sentiments : seul ou avec d’autres",
+            "How you are feeling by activity": "Vos sentiments selon l’activité",
             "How you are feeling by location help": "C'est votre sentiment par emplacement",
             "How you are feeling with others help": "C'est votre sentiment avec les autres",
             "How you are feeling by activity help": "C'est votre sentiment par activité",
@@ -621,9 +621,9 @@ export const resources = {
             "language": "Langue",
             "about": "Information",
             "num_pings_dialog_title": "Nombre de notifications par jour",
-            "ThankYouA": "Nous vous remercions d’avoir participé à l’enquête!",
-            "ThankYouB": "Nous vous remercions d’avoir participé à l’enquête! Vous pouvez consulter votre Bilan bien-être dans le menu Résultats.",
-            "NoDataAlert": "Vous devez remplir l'enquête au moins une fois.",
+            "ThankYouA": "Merci d’avoir rempli le bilan!",
+            "ThankYouB": "Merci, voyez maintenant vos résultats!",
+            "NoDataAlert": "Les résultats seront disponibles lorsque vous aurez rempli deux bilans bien-être.",
             "Enter password": "Entrer un mot de passe",
             "Well-Being Check": "Bilan bien-être",
             "Forgot your password": "Mot de passe oublié?",

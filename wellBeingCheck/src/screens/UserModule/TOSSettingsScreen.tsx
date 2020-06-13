@@ -38,11 +38,13 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
     };
   }
 
-  _openSettingsScreen = () => {  global.globalTick=0;
+  _openSettingsScreen = () => {
+    global.resetTimer();//global.globalTick=0;
     this.props.navigation.navigate('SettingsScreen');
   }
   handleUrlPress(url, matchIndex /*: number*/) {
-      global.globalTick=0;    Linking.openURL(url);
+    global.resetTimer();//  global.globalTick=0;
+         Linking.openURL(url);
   }
 
   render() {

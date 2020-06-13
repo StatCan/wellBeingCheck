@@ -13,7 +13,8 @@ const TimePicker = (props) => {
   const hideTimePicker = () => {
     props.cancelHandler();
   };
-
+   let times=props.time.split(':');
+   let date=new Date(); date.setHours(parseInt(times[0])); date.setMinutes(parseInt(times[1])); date.setSeconds(0); date.setMilliseconds(0);
   const handleConfirm = time => {
     if (global.debugMode) console.log("A time has been picked: ", time);
 
@@ -31,6 +32,7 @@ const TimePicker = (props) => {
   };
 
   return (
+
     <View>
         <DateTimePickerModal
       
@@ -41,7 +43,8 @@ const TimePicker = (props) => {
             //android props
             is24Hour={false} //this in case we need to have 24 hours clock for android is24Hour={true}
             display='spinner'
-         
+
+             date={date}
             //ios props
             headerTextIOS = {resources.getString("timepicker.title")}
             cancelTextIOS= {resources.getString("timepicker.canceltext")}

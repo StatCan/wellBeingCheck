@@ -127,7 +127,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
     return true;
   }
   _onNextBtnHandle = () => {
-    global.globalTick=0;
+   global.resetTimer();// global.globalTick=0;
     this.props.navigation.navigate('Dashboard');
   }
 
@@ -307,7 +307,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
     Linking.openURL('tel:18779499492');
   };
   displayNotificationInfo(){
-     global.globalTick=0;
+     global.resetTimer();//global.globalTick=0;
      let msg1='PingNum:'+global.pingNum+'\n';
      msg1+='Awake:'+global.awakeHour+'\n';
      msg1+='Sleep:'+global.sleepHour+'\n';

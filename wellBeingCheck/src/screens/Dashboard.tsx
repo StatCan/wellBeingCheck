@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import Background from '../components/Background';
-import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, BackHandler, AsyncStorage, PanResponder, Alert,Linking, YellowBox, Platform } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity,ActivityIndicator, BackHandler, AsyncStorage, PanResponder, Alert,Linking, YellowBox, Platform } from 'react-native';
 import { checkConnection, hashString, fetchJwToken } from '../utils/fetchJwToken';
 import { resources } from '../../GlobalResources';
 
@@ -15,7 +15,6 @@ import {
   NavigationState, NavigationEvents,
 } from 'react-navigation';
 
-YellowBox.ignoreWarnings(['Warning: ReactNative.createElement']);
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
@@ -25,13 +24,14 @@ const deviceWidth = Dimensions.get('window').width;
 
 type HomeState = {
   refresh: string,
-  firstTimeLoginModal: boolean,
+  firstTimeLoginModal: boolean,disabled:boolean,
   showThankYou: boolean,
-  thankYouText: string,
+  thankYouText: string,loaded:boolean,
   disabled:boolean
 }
-YellowBox.ignoreWarnings(['Require cycle:','Setting a timer']);
+YellowBox.ignoreWarnings(['Require cycle:','Setting a timer','Warning: ReactNative.createElement']);
 console.ignoredYellowBox = ['Require cycle:','Setting a timer'];
+
 const WEB_API_BASE_URL = global.webApiBaseUrl + 'api';
 
 class Dashboard extends React.Component<Props, HomeState> {
@@ -47,7 +47,7 @@ class Dashboard extends React.Component<Props, HomeState> {
       refresh: '1',disabled:!(global.busy==8),
       firstTimeLoginModal: false,
       showThankYou: !(global.showThankYou == 0),
-      thankYouText: txt,
+      thankYouText: txt,loaded:global.loading,
     };
     this._refresh = this._refresh.bind(this);
     this._firstTimeLogin();
@@ -62,7 +62,7 @@ class Dashboard extends React.Component<Props, HomeState> {
   onSessionOut(){
     let result=false;
     Alert.alert(
-       resources.getString("session.modal.title"),
+       '',
        resources.getString("session.modal.message"),
        [
          { text: resources.getString("session.modal.sign_in"), onPress: () => {result=false;this.props.navigation.navigate('LoginScreen'); } },
@@ -140,9 +140,14 @@ class Dashboard extends React.Component<Props, HomeState> {
     let txt = '';
     if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2)  txt = resources.getString('ThankYouB');
     this.setState({ showThankYou: !(global.showThankYou == 0), thankYouText: txt });
-    setTimeout(() => { 
-      global.showThankYou = 0; 
-      this.setState({ showThankYou: false }) }, 6000);
+    if(!(global.showThankYou == 0)){
+       setTimeout(() => {
+             global.showThankYou = 0;
+             this.setState({ showThankYou: false,loaded:false }) }, 5000);
+    }
+    else {
+       this.setState({loaded:false})
+    }
   }
 
   handleBackButton() {
@@ -276,14 +281,14 @@ class Dashboard extends React.Component<Props, HomeState> {
       .catch(err => { console.log(err) })
   }
   async conductSurvey() {
+     this.setState({ loaded: true });global.loading=true;
        let isConnected = await checkConnection();
-       if (!isConnected) { Alert.alert('',resources.getString('offline')); return; }
+       if (!isConnected) { Alert.alert('',resources.getString('offline')); this.setState({ loaded: false }); return; }
        let n=await this.getConfig();
 
        console.log('deviceId:'+global.userToken+'    password:'+global.password);
        if(n){global.fetchAction=true;this.props.navigation.navigate('EQSurveyScreen');}
-       else {Alert.alert('',resources.getString("securityIssue"));return;}
-
+       else {Alert.alert('',resources.getString("securityIssue"));this.setState({ loaded: false }); return;}
   }
 
   render() {
@@ -309,20 +314,22 @@ class Dashboard extends React.Component<Props, HomeState> {
           <View style={styles.homeContainer} 
            {...global.panResponder.panHandlers}
           >
-          <View >
-            <TouchableOpacity onPress={() => this.conductSurvey()}
-              style={{ flex: 2, justifyContent: 'center' }}>
+          <View>
+
               <View style={styles.outer}>
-                <View style={styles.inner}>
-                  <Text style={styles.startButtonText}>{resources.getString("start_survey")}</Text>
+                 <View style={styles.inner}>
+                    <TouchableOpacity onPress={() => this.conductSurvey()} style={{ flex: 0, justifyContent: 'center',width:'90%',height:'90%' }}>
+                      <Text style={styles.startButtonText}>{resources.getString("start_survey")}</Text>
+                    </TouchableOpacity>
                 </View>
+
               </View>
-            </TouchableOpacity>
+
             {this.state.showThankYou &&
               <View style={{ backgroundColor: 'black', width: '80%', position: 'absolute', zIndex: 29, alignSelf: 'center', top: '70%', justifyContent: 'center', alignItems: 'center' }}><Text style={{ color: 'white', fontSize: 14, marginTop: 10, marginBottom: 10 }}>{this.state.thankYouText}</Text></View>
             }
 
-            <View style={[styles.homeButtonContainer, { marginBottom: 0, marginTop: 50 }, { flexDirection: 'row' }]}>
+            <View style={[styles.homeButtonContainer, { marginBottom: 0, marginTop: 50 }, { flexDirection: 'row',alignItems:'center' }]}>
 
               {/*-----------Information button using UX logo ic_wbc_about_survey--------*/}
               <View>
@@ -386,6 +393,7 @@ class Dashboard extends React.Component<Props, HomeState> {
             </View>
           </View>
           <NavigationEvents onDidFocus={() => this.checkThankYou()} />
+          {(!this.state.loaded) ? null : <ActivityIndicator size="large" color="lightblue" style={{ position: 'absolute', top: '60%', left: '50%', zIndex: 20 }} />}
           <View>
             <Portal>
               <Dialog
@@ -394,7 +402,9 @@ class Dashboard extends React.Component<Props, HomeState> {
                 <Dialog.Content>
                   <Paragraph>
                     {resources.getString('home_first_time_login_content')}
+                    <Image style={{height:15, width:15, paddingLeft:5}} source={require('../assets/ic_setting.png')} />
                   </Paragraph>
+
                 </Dialog.Content>
                 <Dialog.Actions>
                   <View>
@@ -487,7 +497,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 5,
     elevation: 16,
-    backgroundColor: 'lightgray'
+    backgroundColor: 'lightgray',
+    marginTop:40,
   },
   smallButton: {
     width: 60,

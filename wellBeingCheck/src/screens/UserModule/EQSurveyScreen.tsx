@@ -33,15 +33,19 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
 
   constructor(Props) {
     super(Props)
-    let aaa='let logo = document.querySelector("#__btnNext");logo.addEventListener("click", addclick); function addclick(){setTimeout(function(){var el=document.querySelector("div.sc-progperc");el.scrollIntoView();let logo = document.querySelector("#__btnNext");logo.addEventListener("click", addclick);let logo1 = document.querySelector("#__btnPrevious");logo1.addEventListener("click", addclick); },250)}';
+    global.loading=false;
+    let aaa='let logo = document.querySelector("#__btnNext");logo.addEventListener("click", addclick); function addclick(){setTimeout(function(){var el=document.querySelector("div.sc-progperc");el.scrollIntoView();let logo = document.querySelector("#__btnNext"); logo.addEventListener("click", addclick);let logo1 = document.querySelector("#__btnPrevious");logo1.addEventListener("click", addclick); },250)}';
+//     let aaa='let logo = document.querySelector("#__btnNext");logo.addEventListener("click", addclick); function addclick(){setTimeout(function(){var el=document.querySelector("div.sc-progperc");el.scrollIntoView();let logo = document.querySelector("#__btnNext"); logo.addEventListener("click", addclick);let logo1 = document.querySelector("#__btnPrevious");logo1.addEventListener("click", addclick); },250)}';
+    let bbb='let sc = document.querySelector("#scSurveyBody");sc.addEventListener("change", bodychange);function bodychange(){let b1 = document.querySelector("#__btnNext");b1.addEventListener("click", addclick);let b2 = document.querySelector("#__btnPrevious");b2.addEventListener("click", addclick);} ';
     let disCode = 'const meta = document.createElement("meta"); meta.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"); meta.setAttribute("name", "viewport"); document.getElementsByTagName("head")[0].appendChild(meta);';
     let clearCookie = 'document.cookie.split(";").forEach(function(c) {document.cookie = c.trim().split("=")[0] + "=;" + "expires=Thu, 01 Jan 1970 00:00:00 UTC;";});';
     jsCode = clearCookie + 'document.addEventListener("message", function (message) { document.getElementById("langtest").click(); });var btn = document.createElement("button");btn.style.visibility ="hidden";btn.onclick = switchlang;btn.setAttribute("id", "langtest");document.body.appendChild(btn);    function switchlang() { var a = document.querySelector("a.sc-js-langchange");var href = a.href;if (href.indexOf("/q/fr")>0) {var res = href.replace("/q/fr", "/q/en");a.setAttribute("href", res);a.click();} else if (href.indexOf("/q/en")>0) {var res = href.replace("/q/en", "/q/fr");a.setAttribute("href", res);a.click();} }';
-    this.state = ({ Sacode: '', jsCode:aaa+disCode + jsCode, webviewLoaded: false });
+    this.state = ({ Sacode: '', jsCode:aaa+bbb+disCode + jsCode, webviewLoaded: false });
     setTimeout(() => { this.setState({ webviewLoaded: true }) }, 4000);
   }
 
   componentDidMount() {
+    //  this.setState({ webviewLoaded: true });
   }
 
   async handleSurveyAdone(){

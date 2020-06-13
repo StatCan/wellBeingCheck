@@ -36,7 +36,7 @@ class ContactUsScreen extends React.Component<Props, ContactUsScreen> {
     return true;
   }
   _onNextBtnHandle = () => {
-     global.globalTick=0;
+   global.resetTimer();//  global.globalTick=0;
     this.props.navigation.navigate('Dashboard');
   }
 
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   },
   container: {
     width: '100%',
-    height: '85%'
+    height: '90%'
   },
   scrollView: {
     width: '100%',
