@@ -24,7 +24,7 @@ const deviceWidth = Dimensions.get('window').width;
 
 type HomeState = {
   refresh: string,
-  firstTimeLoginModal: boolean,disabled:boolean,
+  firstTimeLoginModal: boolean,
   showThankYou: boolean,
   thankYouText: string,loaded:boolean,
   disabled:boolean
