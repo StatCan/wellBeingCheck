@@ -1,6 +1,6 @@
 import React, { memo, useState, useCallback } from 'react';
 import { Image, View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions, ActivityIndicator,Button,YellowBox, Platform,Alert } from 'react-native';
-import { AsyncStorage,PanResponder } from 'react-native';
+import { AsyncStorage,PanResponder,KeyboardAvoidingView } from 'react-native';
 
 import WebView from 'react-native-webview';
 import { resources } from '../../../GlobalResources';
@@ -257,7 +257,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     console.log('Beofore eq:' + uri);
     let userAgent = Platform.OS == 'ios' ? 'Apple DeviceId/' + global.userToken : 'Android DeviceId/' + global.userToken; console.log('EQ userAgent' + userAgent);
     return (
-      <View
+      <KeyboardAvoidingView
         style={{ flex: 1, marginTop: 40 }}
         {...global.panResponder.panHandlers}
       >
@@ -334,7 +334,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
             this.props.navigation.navigate('Dashboard');
           }}
         />
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }

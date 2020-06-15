@@ -65,7 +65,7 @@ global.globalTick=0;
 global.globalTimeOutCallback=null;
 global.loading=false;
 
-//global.timerTime=30000;//30000*1;
+// global.timerTime=30000;//30000*1;
 global.timerTime=900000;//30000*1;
 global.repeatCheck1=async ()=>{
     console.log('Timer check..............................');
