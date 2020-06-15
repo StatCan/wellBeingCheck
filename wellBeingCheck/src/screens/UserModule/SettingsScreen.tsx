@@ -428,9 +428,6 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
           <Button mode="contained" onPress={this._debugClearAllLocalData}>
             (Debug) Delete user account
         </Button>
-          <Button mode="contained" onPress={() => scheduleNotification20s()}>
-            Schedule 20s Notification
-        </Button>
         </View>);
     }
     return (
