@@ -41,7 +41,6 @@ class Dashboard extends React.Component<Props, HomeState> {
   constructor(HomeState) {
     super(HomeState);
     let txt = '';
-
     if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2) txt = resources.getString('ThankYouB');
     this.state = {
       refresh: '1',disabled:!(global.busy==8),
@@ -141,6 +140,7 @@ class Dashboard extends React.Component<Props, HomeState> {
     if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2)  txt = resources.getString('ThankYouB');
     this.setState({ showThankYou: !(global.showThankYou == 0), thankYouText: txt });
     if(!(global.showThankYou == 0)){
+       this.setState({loaded:false});
        setTimeout(() => {
              global.showThankYou = 0;
              this.setState({ showThankYou: false,loaded:false }) }, 5000);
@@ -289,6 +289,7 @@ class Dashboard extends React.Component<Props, HomeState> {
        console.log('deviceId:'+global.userToken+'    password:'+global.password);
        if(n){global.fetchAction=true;this.props.navigation.navigate('EQSurveyScreen');}
        else {Alert.alert('',resources.getString("securityIssue"));this.setState({ loaded: false }); return;}
+       this.setState({loaded:false});
   }
 
   render() {

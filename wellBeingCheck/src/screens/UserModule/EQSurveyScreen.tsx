@@ -87,7 +87,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
      global.fetchAction=false;
       if (global.notificationState)setupSchedules(false);
      if(!global.paradataSaved)await this.saveDefaultParadata(jwt);
-
+     global.loading=false;
      this.props.navigation.navigate('Dashboard');
   }
   async fetchGraphs(types: string[]) {
