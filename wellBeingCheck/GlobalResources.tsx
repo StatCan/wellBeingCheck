@@ -398,7 +398,7 @@ export const resources = {
              "rateAppMsg":"Tell us how we’re doing by rating us on the",
              "feedback":"We love feedback!",
              "ratenow":"RATE NOW",
-             "later":"Not interested",
+             "later":"No thanks",
         },
         fr: {
             //global
@@ -801,7 +801,7 @@ export const resources = {
               "rateAppMsg":"Dites-nous ce que vous pensez de l’application en l’évaluant sur",
               "feedback":"Nous aimons votre rétroaction!",
               "ratenow":"Évaluez maintenant",
-              "later":"Pas intéressé",
+              "later":"Non merci",
         }
     }
 };
