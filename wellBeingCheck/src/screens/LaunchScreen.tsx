@@ -29,6 +29,7 @@ interface Props {
 }
 YellowBox.ignoreWarnings(['Require cycle:','Setting a timer']);
 console.ignoredYellowBox = ['Require cycle:','Setting a timer'];
+let pkg = require('../../app.json');
 class LaunchScreen extends React.Component<Props, LaunchState> {
 
   constructor(LaunchState) {
@@ -139,7 +140,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           let surveyCount=await AsyncStorage.getItem('SurveyCount');
           if(surveyCount==null)surveyCount=0;else surveyCount=parseInt(surveyCount);global.surveyCount=surveyCount;
 
-          console.log('Culture:'+resources.culture+'  NotificationState:'+global.notificationState+' SurveyCount:'+global.surveyCount);
+          console.log('Current version:'+pkg.expo.version+' Culture:'+resources.culture+'  NotificationState:'+global.notificationState+' SurveyCount:'+global.surveyCount);
           this._bootstrap();
         };
   onNotification(n) {
