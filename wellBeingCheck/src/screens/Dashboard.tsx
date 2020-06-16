@@ -106,11 +106,10 @@ class Dashboard extends React.Component<Props, HomeState> {
      if(global.globalTimeOutCallback==null)global.globalTimeOutCallback=this.onSessionOut;
      if(global.globalTimer==null){global.createGlobalTimer();console.log('global timer setup.....................');}
      if(global.panResponder==null){global.createPanResponder();}
-
     if(global.showThankYou ==20){
               const APP_STORE_LINK = 'itms://itunes.apple.com/us/app/apple-store/myiosappid?mt=8';
               const PLAY_STORE_LINK = 'market://details?id=myandroidappid';
-
+         global.showThankYou=0;
          let msg=resources.getString("rateAppMsg"); let title=resources.getString("notifications");
          if (Platform.OS === 'android')msg+=' Google Play Store.';else msg+=' App Store.';
         Alert.alert(

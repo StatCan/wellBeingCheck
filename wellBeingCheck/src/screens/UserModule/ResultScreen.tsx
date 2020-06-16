@@ -94,7 +94,7 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
   componentDidMount() {
     if(global.fetchCount<8){this.monitorBusy();}
     else {
-       this.loadImage();console.log('Done...............');
+       this.loadImage();
        this.setState({loaded:true});
     }
   }
