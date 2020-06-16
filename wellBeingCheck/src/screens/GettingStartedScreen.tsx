@@ -98,8 +98,8 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
                       { pattern: /Temps requis pour remplir ce questionnaire|Pour parcourir le questionnaire|Délai d’inactivité d’une session|Définitions et explications/, style: styles.bold },
                     
                     
-                      { pattern: /Statistics Act, Revised Statutes of Canada, 1985, Chapter S-19/, style: styles.italic },
-                      { pattern: /Loi sur la statistique, Lois revisees du Canada \(1985\), chapitre S-19/, style: styles.italic},
+                      { pattern: /Statistics Act/, style: styles.italic },
+                      { pattern: /Loi sur la statistique/, style: styles.italic},
                     ]             
                   }
                   childrenProps={{ allowFontScaling: false }}
