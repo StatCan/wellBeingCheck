@@ -97,7 +97,6 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
                       { pattern: /Pourquoi nous menons cette étude|Notifications|Autorisation et confidentialité|Couplages d’enregistrements/, style: styles.bold },
                       { pattern: /Temps requis pour remplir ce questionnaire|Pour parcourir le questionnaire|Délai d’inactivité d’une session|Définitions et explications/, style: styles.bold },
                     
-                    
                       { pattern: /Statistics Act/, style: styles.italic },
                       { pattern: /Loi sur la statistique/, style: styles.italic},
                     ]             
