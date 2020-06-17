@@ -66,7 +66,9 @@ global.globalTimeOutCallback=null;
 global.loading=false;
 
 // global.timerTime=30000;//30000*1;
-global.timerTime=900000;//30000*1;
+//Business wants 7  min (420000 millisecond) for the time-out
+
+global.timerTime=420000;//30000*1;
 global.repeatCheck1=async ()=>{
     console.log('Timer check..............................');
     if (global.globalTick>0) {
