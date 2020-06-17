@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import Background from '../components/Background';
-import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity,ActivityIndicator, BackHandler, AsyncStorage, PanResponder, Alert,Linking, YellowBox, Platform } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity,ActivityIndicator, BackHandler, AsyncStorage, PanResponder, Alert,Linking, YellowBox, Platform,AppState } from 'react-native';
 import { checkConnection, hashString, fetchJwToken } from '../utils/fetchJwToken';
 import { resources } from '../../GlobalResources';
 
@@ -49,6 +49,7 @@ class Dashboard extends React.Component<Props, HomeState> {
       thankYouText: txt,loaded:global.loading,
     };
     this._refresh = this._refresh.bind(this);
+    this.handleAppStateChange=this.handleAppStateChange.bind(this);
     this._firstTimeLogin();
     /* --------------------Session Handler--------------------------- */
      this.onSessionOut=this.onSessionOut.bind(this);
@@ -56,6 +57,7 @@ class Dashboard extends React.Component<Props, HomeState> {
      console.ignoredYellowBox = ['Require cycle:','Setting a timer'];
      if(global.globalTimer==null){global.createGlobalTimer();console.log('global timer setup.....................');}
      if(global.panResponder==null){global.createPanResponder();}
+
   }
 
   onSessionOut(){
@@ -73,10 +75,18 @@ class Dashboard extends React.Component<Props, HomeState> {
 
   componentDidMount() {
       this.backHandler =BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+      AppState.removeEventListener("change", this.handleAppStateChange);
+      AppState.addEventListener("change", this.handleAppStateChange);
   }
 
   componentWillUnmount() {
     this.backHandler.remove();
+     AppState.removeEventListener("change", this.handleAppStateChange);
+  }
+
+  handleAppStateChange=(nextAppState)=>{
+       if(nextAppState=='active')global.resumeTimer();
+       else global.pauseTimer();
   }
 
   _show_firstTimeLoginModal = () => this.setState({ firstTimeLoginModal: true });

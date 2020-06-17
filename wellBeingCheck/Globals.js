@@ -65,7 +65,7 @@ global.globalTick=0;
 global.globalTimeOutCallback=null;
 global.loading=false;
 
-// global.timerTime=30000;//30000*1;
+// global.timerTime=30000*4;
 global.timerTime=900000;//30000*1;
 global.repeatCheck1=async ()=>{
     console.log('Timer check..............................');
@@ -95,9 +95,10 @@ global.repeatCheck=async ()=>{
 global.resetTimer=()=>{
      clearInterval(global.globalTimer);
      global.globalTimer =null;
+     global.timerSatrt=new Date();
      global.globalTimer=setInterval(global.repeatCheck,global.timerTime);
 }
-global.createGlobalTimer=()=>global.globalTimer=setInterval(global.repeatCheck,global.timerTime);
+global.createGlobalTimer=()=>{global.timerStart=new Date();global.globalTimer=setInterval(global.repeatCheck,global.timerTime);}
 global.panResponder=null;
 global.createPanResponder=()=>{
     console.log('create pan responder.....................');
@@ -218,4 +219,19 @@ global.createPanResponder1=()=>{
 
 
         });
+}
+global.timerStart=null;
+global.pauseTimer=()=>{
+    clearInterval(global.globalTimer);global.globalTimer =null;
+}
+global.resumeTimer=()=>{
+     let d1=new Date();let d2=new Date(global.timerStart);console.log(d1);console.log(d2);
+    let diff=parseInt(d1.getTime())-parseInt(d2.getTime());console.log('time tick.......:'+d1.getTime()+'-'+d1.getTime()+'='+diff);
+    if(diff>=global.timerTime) global.globalTimeOutCallback();   //global.repeatCheck();
+    else {
+        clearInterval(global.globalTimer);
+        global.globalTimer =null;
+        global.timerStart=new Date();
+        global.globalTimer=setInterval(global.repeatCheck,global.timerTime-diff);
+    }
 }
