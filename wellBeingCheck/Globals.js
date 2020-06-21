@@ -65,6 +65,9 @@ global.globalTick=0;
 global.globalTimeOutCallback=null;
 global.loading=false;
 
+ //Business wants 7  min (420000 millisecond) for the time-out
+ 
+ global.timerTime=420000;//30000*1;
 // global.timerTime=30000*4;
 global.timerTime=900000;//30000*1;
 global.repeatCheck1=async ()=>{
