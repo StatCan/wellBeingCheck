@@ -257,9 +257,9 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     console.log('Beofore eq:' + uri);
     let userAgent = Platform.OS == 'ios' ? 'Apple DeviceId/' + global.userToken : 'Android DeviceId/' + global.userToken; console.log('EQ userAgent' + userAgent);
     return (
-      <KeyboardAvoidingView
+      <View
         style={{ flex: 1, marginTop: 40 }}
-        {...global.panResponder.panHandlers}
+       {...global.panResponder.panHandlers}
       >
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')}
@@ -334,7 +334,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
             this.props.navigation.navigate('Dashboard');
           }}
         />
-      </KeyboardAvoidingView>
+      </View>
     );
   }
 }
