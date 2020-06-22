@@ -66,7 +66,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       wakeTimePickerShow: false,
       sleepTimePickerShow: false,
       titleBackgroundColor: "#000",
-      settingsFirstTime: true
+      settingsFirstTime: false
     };
     testDatetime.setHours(22);testDatetime.setMinutes(10);
 
