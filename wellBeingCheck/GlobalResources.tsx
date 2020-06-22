@@ -36,7 +36,7 @@ export const resources = {
             `Use the Previous and Next buttons located at the bottom right of each page. \n\n`+
             `Session timeout\n`+
             `After 2 hours of inactivity, your session will time out. You will not be able to access any unsaved information.\n\n`+
-            `After 15 minutes of inactivity, Well-Being Check will lock. You will need to enter your password to continue. \n\n`+
+            `After 7 minutes of inactivity, Well-Being Check will lock. You will need to enter your password to continue. \n\n`+
             `Definitions and explanations\n`+
             `A help button is available for certain questions. Press this button for additional information or clarification.\n\n`,
             
@@ -170,7 +170,7 @@ export const resources = {
                 `Session timeout  \n` +
                 `After 2 hours of inactivity, your session will time out. You will not be able to access any unsaved information. \n\n` +
 
-                `After 15 minutes of inactivity, Well-Being Check will lock. You will need to enter your password to continue.  \n\n` +
+                `After 7 minutes of inactivity, Well-Being Check will lock. You will need to enter your password to continue.  \n\n` +
 
                 `Definitions and explanations  \n` +
                 `A help button is available for certain questions. Press this button for additional information or clarification.\n\n` +
@@ -436,7 +436,7 @@ export const resources = {
                 `Délai d’inactivité d’une session \n` +
                 `Après 2 heures d’inactivité, votre session sera interrompue. Vous ne pourrez accéder à aucun renseignement qui n’a pas été sauvegardé. \n\n` +
 
-                `Après 15 minutes d’inactivité, Bilan bien-être se verrouille. Vous devrez entrer votre mot de passe pour continuer. \n\n` +
+                `Après 7 minutes d’inactivité, Bilan bien-être se verrouille. Vous devrez entrer votre mot de passe pour continuer. \n\n` +
 
                 `Définitions et explications \n` +
                 `Un bouton d’aide est disponible pour certaines questions. Appuyez sur ce bouton pour obtenir plus de renseignements ou des précisions.\n\n`,
@@ -570,7 +570,7 @@ export const resources = {
                 `Délai d’inactivité d’une session \n` +
                 `Après 2 heures d’inactivité, votre session sera interrompue. Vous ne pourrez accéder à aucun renseignement qui n’a pas été sauvegardé.  \n\n` +
 
-                `Après 15 minutes d’inactivité, Bilan bien-être se verrouille. Vous devrez entrer votre mot de passe pour continuer.  \n\n` +
+                `Après 7 minutes d’inactivité, Bilan bien-être se verrouille. Vous devrez entrer votre mot de passe pour continuer.  \n\n` +
 
                 `Définitions et explications \n` +
                 `Un bouton d’aide est disponible pour certaines questions. Appuyez sur ce bouton pour obtenir plus de renseignements ou des précisions. \n\n`+
