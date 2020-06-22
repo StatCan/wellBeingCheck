@@ -257,11 +257,11 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
     console.log('Beofore eq:' + uri);
     let userAgent = Platform.OS == 'ios' ? 'Apple DeviceId/' + global.userToken : 'Android DeviceId/' + global.userToken; console.log('EQ userAgent' + userAgent);
     return (
-      <KeyboardAvoidingView
-        style={{ flex: 1, marginTop: 40 }}
+      <View
+        style={{ flex: 1 }}
         {...global.panResponder.panHandlers}
       >
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between',alignItems:'center',height: 38,marginTop:30,}}>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')}
                             style={{ marginLeft: 5, marginTop: 10,marginBottom:5 }}>
                 <Image source={require('../../assets/ic_logo_loginmdpi.png')}
@@ -269,6 +269,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
           </TouchableOpacity>
         </View>
         {(this.state.webviewLoaded) ? null : <ActivityIndicator size="large" color="lightblue" style={{ position: 'absolute', top: '50%', left: '50%', zIndex: 20 }} />}
+        <KeyboardAvoidingView style={{ height:deviceHeight-40, marginTop: 0, }}>
         <WebView
           ref={(view) => this.webView = view} incognito={true} useWebKit={true}
           style={[styles.webview]}
@@ -334,7 +335,8 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
             this.props.navigation.navigate('Dashboard');
           }}
         />
-      </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
+      </View>
     );
   }
 }
