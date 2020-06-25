@@ -1,6 +1,6 @@
 import NetInfo from '@react-native-community/netinfo';
-import { AsyncStorage } from 'react-native';
-
+import { AsyncStorage,Alert } from 'react-native';
+//import { resources } from '../../GlobalResources';
 export function fetchJwToken1() {
   let token='123456';
   return new Promise(resolve => {
@@ -79,3 +79,70 @@ export function saveParaData(jwt,paraData){
                  } )          // response.json())
              .catch((error)=>{console.log(error.message);return false;});
       }
+
+export async function fetchGraphs(types,deviceWidth,deviceHeight) {
+           let hh = deviceHeight - 220; let hh1 = deviceHeight - 300; let ww = deviceWidth - 80;
+           let index = 0;
+           for (var i = 0; i < types.length; i++) {
+             let url = global.webApiBaseUrl + 'api/dashboard/graph/' + types[i];
+             url += '?width=' + deviceWidth + '&height=' + hh;
+             fetchImage(url, index, 'en'); index++;
+             fetchImage(url, index, 'fr'); index++;
+           }
+           AsyncStorage.setItem('hasImage', '1'); console.log('Fetch images done');
+         }
+export async function fetchGraphTypes() {
+    let types = [];
+    let url = global.webApiBaseUrl + 'api/dashboard/graphs';
+    return fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + global.jwToken,
+      }
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        if (result != null && result.length > 0) {
+          result.forEach(function (graphLink) {
+            types.push(graphLink.type);
+          });
+        }
+        return types;
+      })
+      .catch(
+        error => {
+          console.warn(error);
+          return types;
+        }
+      );
+  }
+export async function fetchImage(url, index, culture) {
+    let token = global.jwToken;
+    fetch(url, {
+      method: 'GET',
+      headers: { 'Authorization': 'Bearer ' + token, 'Accept-language': culture },
+    })
+      .then(response => {
+        console.log(response.status);global.fetchCount++;
+        if (response.status == 200) {
+          response.blob()
+            .then(blob => {
+              var reader = new FileReader();
+              reader.onload = function () {
+                ++global.busy;
+            //    console.log('image' + index); console.log("Busy flag in eq:"+global.busy);
+                AsyncStorage.setItem('image' + index, this.result);
+              };
+              reader.readAsDataURL(blob);
+            })
+        }
+        else {
+        //  let tt = Alert.alert(resources.getString("internet.offline"));
+          throw new Error("Access denied, Try again later, if same thing would happen again contact StatCan");
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }

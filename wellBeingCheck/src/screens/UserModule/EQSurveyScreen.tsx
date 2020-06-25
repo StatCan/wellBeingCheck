@@ -4,7 +4,7 @@ import { AsyncStorage,PanResponder,KeyboardAvoidingView } from 'react-native';
 
 import WebView from 'react-native-webview';
 import { resources } from '../../../GlobalResources';
-import {fetchJwToken,checkConnection,hashString,parseJwt,saveParaData} from '../../utils/fetchJwToken';
+import {fetchJwToken,checkConnection,hashString,parseJwt,saveParaData,fetchGraphs,fetchGraphTypes,fetchImage} from '../../utils/fetchJwToken';
 const deviceHeight =Math.floor(Dimensions.get('window').height);
 const deviceWidth =Math.floor(Dimensions.get('window').width);
 //import {BackEndService} from '../../api/back-end.service';
@@ -72,14 +72,13 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
         result=await this.resetPassword(global.password);console.log('save password:'+result);
         if(result){global.passwordSaved=true;AsyncStorage.setItem('PasswordSaved','true');console.log('password saved');}
      }
-
      let jwt=await fetchJwToken();
      if(jwt==''){Alert.alert('',resources.getString("securityIssue"));return;}
      global.jwToken=jwt;
      global.fetchCount=0;
-     let types=await this.fetchGraphTypes();console.log(types);
+     let types=await fetchGraphTypes();console.log(types);  // let types=await this.fetchGraphTypes();console.log(types);
      if(types!=null && types.length>0){
-          await this.fetchGraphs(types);
+          await fetchGraphs(types,deviceWidth,deviceHeight);  // await this.fetchGraphs(types);
      }
      count=1;AsyncStorage.setItem('hasImage','1');global.hasImage=1;
      // Save Survey B Done State
@@ -90,19 +89,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
      global.loading=false;
      this.props.navigation.navigate('Dashboard');
   }
-  async fetchGraphs(types: string[]) {
-    let hh = deviceHeight - 220; let hh1 = deviceHeight - 300; let ww = deviceWidth - 80;
-    let index = 0;
-    for (var i = 0; i < types.length; i++) {
-      let url = global.webApiBaseUrl + 'api/dashboard/graph/' + types[i];
-      //  if(types[i].type=='overall')url+='?width='+deviceWidth+'&height='+hh;
-      //  else url+='?width='+deviceWidth+'&height='+hh;
-      url += '?width=' + deviceWidth + '&height=' + hh;
-      this.fetchImage(url, index, 'en'); index++;
-      this.fetchImage(url, index, 'fr'); index++;
-    }
-    AsyncStorage.setItem('hasImage', '1'); console.log('Fetch images done');
-  }
+
   setPassword(jwt:string) {
                let url=global.webApiBaseUrl+'api/security/password';
                let data={salt:global.passwordSalt,
@@ -146,7 +133,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
            //  .then((responseJson) => {console.log('resetPassword:'+responseJson);    return responseJson;})
      .catch((error) => {console.error(error);console.log('Bad');return false;});
   }
-  async fetchGraphTypes() {
+/*  async fetchGraphTypes() {
     let types = [];
     let url = global.webApiBaseUrl + 'api/dashboard/graphs';
     return fetch(url, {
@@ -172,7 +159,19 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
         }
       );
   }
-
+  async fetchGraphs(types: string[]) {
+    let hh = deviceHeight - 220; let hh1 = deviceHeight - 300; let ww = deviceWidth - 80;
+    let index = 0;
+    for (var i = 0; i < types.length; i++) {
+      let url = global.webApiBaseUrl + 'api/dashboard/graph/' + types[i];
+      //  if(types[i].type=='overall')url+='?width='+deviceWidth+'&height='+hh;
+      //  else url+='?width='+deviceWidth+'&height='+hh;
+      url += '?width=' + deviceWidth + '&height=' + hh;
+      this.fetchImage(url, index, 'en'); index++;
+      this.fetchImage(url, index, 'fr'); index++;
+    }
+    AsyncStorage.setItem('hasImage', '1'); console.log('Fetch images done');
+  }
   async fetchImage(url: string, index: number, culture: string) {
     let isConnected = await checkConnection();
     if (!isConnected) {
@@ -206,7 +205,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
       .catch(err => {
         console.log(err)
       })
-  }
+  }*/
   async saveDefaultParadata(jwt) {
     let list =global.schedules; var snt = [];
         if(list.length>0){
@@ -269,7 +268,6 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
           </TouchableOpacity>
         </View>
         {(this.state.webviewLoaded) ? null : <ActivityIndicator size="large" color="lightblue" style={{ position: 'absolute', top: '50%', left: '50%', zIndex: 20 }} />}
-        <KeyboardAvoidingView style={{ height:deviceHeight-40, marginTop: 0, }}>
         <WebView
           ref={(view) => this.webView = view} incognito={true} useWebKit={true}
           style={[styles.webview]}
@@ -335,7 +333,6 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
             this.props.navigation.navigate('Dashboard');
           }}
         />
-        </KeyboardAvoidingView>
       </View>
     );
   }

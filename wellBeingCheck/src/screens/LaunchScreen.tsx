@@ -1,12 +1,12 @@
 import React, { memo,useEffect } from 'react';
-import { StyleSheet, StatusBar, View,Image,YellowBox,Button} from 'react-native';
+import { StyleSheet, StatusBar, View,Image,YellowBox,Button,Dimensions,Alert} from 'react-native';
 import { AsyncStorage } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 import Background from '../components/Background';
 import * as Localization from 'expo-localization';
 import { newTheme } from '../core/theme';
 import { Provider as PaperProvider, Title } from 'react-native-paper';
-import { checkConnection } from '../utils/fetchJwToken';
+//import { checkConnection } from '../utils/fetchJwToken';
 import { Notifications } from "expo";
 import Constants from 'expo-constants';
 import { resources } from '../../GlobalResources';
@@ -20,7 +20,9 @@ import {
   NavigationEvents,
 } from 'react-navigation';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
-
+import {fetchJwToken,checkConnection,fetchGraphs,fetchGraphTypes,fetchImage} from '../utils/fetchJwToken';
+const deviceHeight =Math.floor(Dimensions.get('window').height);
+const deviceWidth =Math.floor(Dimensions.get('window').width);
 type LaunchState = {
 }
 
@@ -158,7 +160,25 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           }
      this.setState({title:resources.getString("Well-Being Check")});
    }
-  componentDidMount() {Notifications.addListener(this.onNotification);}
+  componentDidMount() {Notifications.addListener(this.onNotification);this.checkUpgrade();}
+  async checkUpgrade(){
+      console.log('Check upgrade');
+      if(global.hasImage==1){
+          let currentVersion=await AsyncStorage.getItem('CurrentVersion');console.log('currentVersion:'+currentVersion);
+          if(currentVersion!=null && currentVersion!=pkg.expo.version){
+              let isConnected=await checkConnection();
+              if(!isConnected){Alert.alert('',resources.getString('offline'));return;}
+              let jwt=await fetchJwToken();console.log(jwt);
+              if(jwt==''){Alert.alert('',resources.getString("securityIssue"));return;}
+              global.jwToken=jwt;global.busy=0;
+              let types=await fetchGraphTypes();console.log(types);
+              if(types!=null && types.length>0){
+                    await fetchGraphs(types,deviceWidth,deviceHeight);
+              }
+              AsyncStorage.setItem('CurrentVersion', pkg.expo.version);
+          }
+      }
+  }
   render() {
     return (
       <PaperProvider theme={newTheme}>
