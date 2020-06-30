@@ -151,7 +151,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
        }
 
   async getCulture(){
-     let culture=await AsyncStorage.getItem('Culture');
+     let culture=await AsyncStorage.getItem('Culture');console.log('saved culture:'+culture);
      if(culture==null){
          if(Localization.locale.substring(0,2) == 'fr')resources.culture = 'fr';else resources.culture = 'en';
      }

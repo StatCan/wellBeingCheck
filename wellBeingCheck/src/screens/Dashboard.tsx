@@ -86,7 +86,7 @@ class Dashboard extends React.Component<Props, HomeState> {
 
   handleAppStateChange=(nextAppState)=>{
        if(nextAppState=='active')global.resumeTimer();
-       else global.pauseTimer();
+       else {global.pauseTimer();console.log('detect inactive in dashboard');}
   }
 
   _show_firstTimeLoginModal = () => this.setState({ firstTimeLoginModal: true });

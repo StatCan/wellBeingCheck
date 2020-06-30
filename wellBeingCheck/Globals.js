@@ -7,7 +7,7 @@ global.timeStamp=0;
 global.surveyACode='';
 
 global.doneSurveyA=false;
-global.debugMode=true;
+global.debugMode=false;
 global.currentNotificationDate='';
 
 global.jwToken='';
@@ -67,7 +67,7 @@ global.loading=false;
 
  //Business wants 7  min (420000 millisecond) for the time-out  
  global.timerTime=420000;//30000*1;
-// global.timerTime=30000*4;
+//global.timerTime=30000*1;
 //global.timerTime=900000;//30000*1;
 global.repeatCheck1=async ()=>{
     console.log('Timer check..............................');
@@ -91,8 +91,8 @@ global.repeatCheck=async ()=>{
     clearInterval(global.globalTimer);
     global.globalTimer =null;
     if(global.globalTimeOutCallback!=null && typeof global.globalTimeOutCallback=='function'){
-       global.globalTimeOutCallback();
-    }
+           global.globalTimeOutCallback();
+        }
 }
 global.resetTimer=()=>{
      clearInterval(global.globalTimer);
@@ -237,3 +237,4 @@ global.resumeTimer=()=>{
         global.globalTimer=setInterval(global.repeatCheck,global.timerTime-diff);
     }
 }
+global.eeschedule=false;

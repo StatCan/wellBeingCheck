@@ -821,7 +821,7 @@ the algorithm will not arrange any notification for the time which has been pass
  export function validateSetting(awakeHour,sleepHour,count){
      if(awakeHour==sleepHour)return 1;
      result=0;
-     let awake=roundUp(awakeHour); let sleep=roundDown(sleepHour);  console.log('aaa:'+awake+' sss:'+sleep);
+     let awake=roundUp(awakeHour); let sleep=roundDown(sleepHour);
      let awakeInterval = sleep - awake; if (awake > sleep) awakeInterval += 24;
      if(count<2 || count>5)result=4;//never happen,
      if (awakeInterval<3)result=1;

@@ -1,5 +1,5 @@
 import React, { memo, useState, useCallback } from 'react';
-import { View, Text, StyleSheet, ScrollView, Platform, Switch, AsyncStorage, Dimensions, Linking, PanResponder, Alert, BackHandler } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Platform, Switch, AsyncStorage, Dimensions, Linking, PanResponder, Alert, BackHandler,AppState,ActivityIndicator } from 'react-native';
 import Button from '../../components/Button';
 import { newTheme } from '../../core/theme';
 import { List, Divider } from 'react-native-paper';
@@ -66,7 +66,8 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       wakeTimePickerShow: false,
       sleepTimePickerShow: false,
       titleBackgroundColor: "#000",
-      settingsFirstTime: false
+      settingsFirstTime: false,
+      idle:true
     };
     testDatetime.setHours(22);testDatetime.setMinutes(10);
 
@@ -77,26 +78,45 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
 
   componentDidMount() {
     this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+//
+//     AppState.removeEventListener("change", this.handleAppStateChangeInSeeting);
+//     AppState.addEventListener("change", this.handleAppStateChangeInSetting);
   }
 
   componentWillUnmount() {
-    this.backHandler.remove()
-  }
+    //this.handleBackAction();
+    this.backHandler.remove();
+//     AppState.removeEventListener("change", this.handleAppStateChangeInSetting);
+//     console.log('handler removed');
 
+  }
+   handleAppStateChangeInSetting=(nextAppState)=>{
+       if(nextAppState!='active'){
+           console.log('detect inactive in setting');
+           this.handleBackAction(1);
+       }
+  }
   handleBackPress = () => {
     return true;
   }
 
-  wakeTimeHandler(time) {
+  async wakeTimeHandler(time) {
     global.resetTimer();//global.globalTick=0;
     time = time.substring(0, 5);
+
+     let valid = validateSetting(time, this.state.sleeptime, this.state.notificationcount);
+    console.log('validate:------->' + valid);
+    if (valid != 0){Alert.alert('', resources.getString("settingValidation"));return;}
+
     this.setState({
       waketime: time,
-      wakeTimePickerShow: false
+      wakeTimePickerShow: false,idle:false
     })
-    if (global.debugMode)
-      console.log("Value changed - setting dirty flag");
+    console.log("Value changed - setting dirty flag");
     this._isDirty = true;
+     console.log('Awake:'+this.state.waketime);
+     await this.handleBackAction(1);
+     this.setState({idle:true});
   }
 
   cancelTimeHandler(time) {
@@ -107,15 +127,26 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     });
   }
 
-  sleepTimeHandler(time) {
+  async sleepTimeHandler(time) {
     global.resetTimer();//global.globalTick=0;
     time = time.substring(0, 5);
+
+     let valid = validateSetting(this.state.waketime, time, this.state.notificationcount);
+     console.log('validate:------->' + valid);
+     if (valid != 0){Alert.alert('', resources.getString("settingValidation"));return;}
+
+
+    console.log('go process');
     this.setState({
-      sleeptime: time,
-      sleepTimePickerShow: false
-    })
-    if (global.debugMode) console.log("Value changed - setting dirty flag");
+                         sleeptime: time,
+                         sleepTimePickerShow: false,idle:false
+                       });
+
+    console.log("Value changed - setting dirty flag");
     this._isDirty = true;
+    console.log('Sleep:'+this.state.sleeptime);
+    await this.handleBackAction(1);
+    this.setState({idle:true});
   }
 
   askPermissions = async () => {
@@ -170,7 +201,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       return true;
     }
   };
-  handleBackAction = async () => {
+  handleBackAction = async (f) => {
     if (global.debugMode) console.log("Handle Back Action");
     if (this.state.waketime != global.awakeHour) dirty = true;
     if (this.state.sleeptime != global.sleepHour) dirty = true;
@@ -213,29 +244,11 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       AsyncStorage.removeItem('ParadataSaved'); global.paradataSaved = false;
     }
 
-    /*   Old code
-    
-        //if (this._isDirty || this.state.settingsFirstTime) {
-          this.setState({ settingsFirstTime: false });
-          if (this.state.notificationState && dirty){
-               AsyncStorage.removeItem('ParadataSaved');global.paradataSaved=false;
-            //  if (global.debugMode) console.log("Dirty flag set - scheduling notifications");
-            //  notificationAlgo(this.state.waketime, this.state.sleeptime, this.state.notificationcount, this.state.finalDate);
-            let inp=checkInSchedule(new Date());
-            if(inp && global.doneSurveyA && global.schedules.length>0)setupSchedules(true);
-          } else {
-            if (global.debugMode) console.log("Notifications turned off - cancelling all notifications");
-            Notifications.cancelAllScheduledNotificationsAsync();
-    
-          }
-        //}
-    */
-
-    if (this.state.culture === "2") {
-      resources.culture = 'fr';
-    } else if (this.state.culture === "1") {
-      resources.culture = 'en';
-    }
+//    if (this.state.culture === "2") {
+//      resources.culture = 'fr';
+//    } else if (this.state.culture === "1") {
+//      resources.culture = 'en';
+//    }
 
     if (global.debugMode) console.log("Platform version: " + Platform.Version);
     if (global.debugMode) console.log("Device Name: " + Expo.Constants.deviceName);
@@ -248,8 +261,9 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     if (global.debugMode) console.log("Notification Count: " + this.state.notificationcount);
     if (global.debugMode) console.log("Scheduled Notification Times: " + scheduledDateArray);
 
-    this._storeSettings();
+    this._storeSettings(f);
     dirty = false;
+
   }
 
   _handleNotification = (notification) => {
@@ -296,15 +310,15 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
         console.log("Back button Pressed:" + this.state.waketime + '---' + this.state.sleeptime);
         let valid = validateSetting(this.state.waketime, this.state.sleeptime, this.state.notificationcount);
         console.log('validate:------->' + valid);
-        if (valid == 0) this.handleBackAction();
+        if (valid == 0) this.handleBackAction(0);
         else Alert.alert('', resources.getString("settingValidation"));
    }
    else{
-        this.handleBackAction();
+        this.handleBackAction(0);
    }
   }
 
-  _storeSettings = () => {
+  _storeSettings = (f) => {
     //validation passed lets store user
     let settingsObj = {
       notificationState: this.state.notificationState,
@@ -323,17 +337,21 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     AsyncStorage.setItem('AwakeHour', this.state.waketime); global.awakeHour = this.state.waketime;console.log('wake:........'+global.awakeHour);
     AsyncStorage.setItem('SleepHour', this.state.sleeptime); global.sleepHour = this.state.sleeptime;
 
+console.log('current View-------------------------------:' + global.currentView);
+
+
     AsyncStorage.setItem('settings', JSON.stringify(settingsObj), () => {
       if (global.debugMode) console.log("Storing Settings: ", settingsObj);
       console.log('current View:' + global.currentView);
-      if (global.currentView == 1) this.props.navigation.navigate('ResultScreen');
-      else {
-        this.props.navigation.state.params.refresh();
-        this.props.navigation.navigate('Dashboard');
+      if(f==0){
+          if (global.currentView == 1) this.props.navigation.navigate('ResultScreen');
+          else {
+                 this.props.navigation.state.params.refresh();
+                 this.props.navigation.navigate('Dashboard');
+               }
       }
     });
   }
-
   _retrieveData = async (key) => {
 
     await AsyncStorage.getItem(key, (err, result) => {
@@ -370,7 +388,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   _changeLanguage(c) {
 
     this.setState({ culture: c });
-    if (global.debugMode) console.log("Changing language to: " + c);
+    console.log("Changing language to: " + c);
 
     if (c === "2") {
       resources.culture = 'fr';
@@ -381,14 +399,20 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       this.setState({ cultureString: 'English' });
       this.setState({ culture: '1' });
     }
+    AsyncStorage.setItem('Culture', c);
   }
 
   _showNumPingsModal = () =>{
        global.resetTimer();// global.globalTick=0;
-        this.setState({ numPingsModalShow: true });}
-  _hideNumPingsModal = () =>{
+        this.setState({ numPingsModalShow: true,});}
+   _hideNumPingsModal =async () =>{
       global.resetTimer();//global.globalTick=0;
-      this.setState({ numPingsModalShow: false });}
+     //  this.setState({idle:false});
+      await this.handleBackAction(1);
+      setTimeout(() => {
+            this.setState({ numPingsModalShow: false,idle:true});
+            }, 1000);
+      }
 
   _showLanguageModal = () =>{
       global.resetTimer();//global.globalTick=0;
@@ -402,7 +426,9 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       this.setState({ wakeTimePickerShow: true });}
   _hideWakeTimePicker = () =>{
       global.resetTimer();//global.globalTick=0;
-      this.setState({ wakeTimePickerShow: false });}
+      this.setState({ wakeTimePickerShow: false });
+      }
+
 
   _showSleepTimePicker = () =>{
       global.resetTimer();//global.globalTick=0;
@@ -576,6 +602,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
 
               </List.Section>
               {debugButtons}
+              {(this.state.idle) ? null : <ActivityIndicator size="large" color="lightblue" style={{ position: 'absolute', top: '50%', left: '50%', zIndex: 20 }} />}
 
               <View>
                 <Portal>
@@ -625,7 +652,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                       <RadioButton.Group
                         onValueChange={n => {
                           this.setState({ notificationcount: parseInt(n) });
-                          if (global.debugMode) console.log("Value changed - setting dirty flag");
+                          console.log("Value changed - setting dirty flag");
                           this._isDirty = true;
                         }
                         }
