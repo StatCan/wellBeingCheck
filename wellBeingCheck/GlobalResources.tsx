@@ -399,6 +399,12 @@ export const resources = {
              "feedback":"We love feedback!",
              "ratenow":"RATE NOW",
              "later":"No thanks",
+             "message":"Message",
+             "ok":"OK",
+             "declinemsg1": "You must accept Terms and Conditions to use this app. Select “OK” to revise your preferences, or call us at ",
+             "declinemsg2": " for more information.",
+
+
         },
         fr: {
             //global
@@ -802,6 +808,11 @@ export const resources = {
               "feedback":"Nous aimons votre rétroaction!",
               "ratenow":"Évaluez maintenant",
               "later":"Non merci",
+              "message":"Message",
+               "ok":"D'accord",
+               "declinemsg1": "Vous devez accepter les Conditions générales pour utiliser cette application. Sélectionnez « D'accord » pour modifier vos préférences, ou appelez-nous au ",
+               "declinemsg2": " pour obtenir plus de renseignements.",
+
         }
     }
 };

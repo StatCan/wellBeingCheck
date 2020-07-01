@@ -42,7 +42,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
     this.state = {
       termsOfService: false,
       title: resources.getString("Well-Being Check"),
-      fontLoaded: false
+      fontLoaded: false,agree:false
     };
   }
 
@@ -109,11 +109,13 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
     let userTermsAndConditionsObj = {
       termsOfService: false,
     };
+   AsyncStorage.setItem('user_terms_and_conditions', JSON.stringify(userTermsAndConditionsObj));
+   this.props.navigation.navigate('DeclineScreen');
 
-    AsyncStorage.setItem('user_terms_and_conditions', JSON.stringify(userTermsAndConditionsObj), () => {
-      //handle disagree
-      Alert.alert('', resources.getString("terms_and_conditions_disagree"));
-    });
+//    AsyncStorage.setItem('user_terms_and_conditions', JSON.stringify(userTermsAndConditionsObj), () => {
+//      //handle disagree
+//      Alert.alert('', resources.getString("terms_and_conditions_disagree"));
+//    });
   }
 
   toggleLanguage() {
@@ -194,7 +196,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
               </Paragraph>
             </ScrollView>
 
-        
+
         </SafeAreaView>
         <View style={styles.footer}>
           <Button style={styles.btnDecline}
@@ -289,3 +291,13 @@ const styles = StyleSheet.create({
 });
 
 export default memo(TermsOfServiceScreen);
+
+
+
+//            {(this.state.asgree)?null:<View style={{flex:1,position: 'absolute', top: '3%', left: '3%',width:'100%',height:'100%',borderWidth:1,borderColor:'red',backgroundColor:'lightgray'}}>
+//               <View style={{ position: 'absolute', top: '30%', left: '20%', zIndex: 20,backgroundColor:'white',width:240,height:300,opacity:0.9 }}>
+//                  <Text style={{fontSize:16,padding:15}}>{resources.getString("terms_and_conditions_disagree")}</Text>
+//                  <TouchableOpacity onPress={() => Linking.openURL('tel:18779499492')}>
+//                    <Text style={{fontSize:16}}>1-877-949-9492</Text>
+//                  </TouchableOpacity>
+//            </View></View>}

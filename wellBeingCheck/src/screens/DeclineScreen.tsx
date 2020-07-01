@@ -15,28 +15,13 @@ interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
 
-class ContactUsScreen extends React.Component<Props> {
+class DeclineScreen extends React.Component<Props> {
+     constructor(Props) {
+       super(Props)}
 
-  backHandler: any;
-
-  constructor(Props) {
-    super(Props)
-  }
-
-  componentDidMount() {
-    this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
-  }
-
-  componentWillUnmount() {
-    this.backHandler.remove()
-  }
-
-  handleBackPress = () => {
-    return true;
-  }
   _onNextBtnHandle = () => {
    global.resetTimer();//  global.globalTick=0;
-    this.props.navigation.navigate('Dashboard');
+    this.props.navigation.navigate('TermsOfServiceScreen');
   }
 
   render() {
@@ -46,38 +31,17 @@ class ContactUsScreen extends React.Component<Props> {
         <AppBanner />
         <BackgroundWhite>
           <SafeAreaView style={styles.container}>
-            <ScrollView style={styles.scrollView}
-               {...global.panResponder.panHandlers}
-            >
-              <View style={styles.logo_container} 
-                {...global.panResponder.panHandlers}
-               >
+            <ScrollView style={styles.scrollView}>
+              <View style={styles.logo_container}>
                 <LogoClearSmall />
               </View>
-              <Title style={styles.title}  
-              {...global.panResponder.panHandlers}
-              >
-                {resources.getString("contactus_title")}</Title>
-              <View>
+              <View style={{justifyContent:'center',alignItems:'center'}}>
+                <Title style={styles.title}>{resources.getString("message")}</Title>
                 <View style={styles.content}>
-                  <Text style={styles.content_title}>{resources.getString("contactus_email")}</Text>
-                  <TouchableOpacity onPress={() => Linking.openURL('mailto:infostats@canada.ca')}><Text style={styles.text}>infostats@canada.ca</Text></TouchableOpacity>
-                </View>
-                <View style={styles.content}>
-                  <Text style={styles.content_title}>{resources.getString("contactus_telephone")}</Text>
+                  <Text style={styles.content_title}>{resources.getString("declinemsg1")}</Text>
                   <TouchableOpacity onPress={() => Linking.openURL('tel:18779499492')}>
                     <Text style={styles.text}>1-877-949-9492</Text></TouchableOpacity>
-                </View>
-                <View style={styles.content}>
-                  <Text style={styles.content_title}>{resources.getString("contactus_website")}</Text>
-                  <TouchableOpacity onPress={() => Linking.openURL('https://www.statcan.gc.ca')}>
-                    <Text style={styles.text}>https://www.statcan.gc.ca</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.content}>
-                  <Text style={styles.content_title}>{resources.getString("contactus_mail")}</Text>
-                  <Text style={styles.text}>{resources.getString("contactus_text")}
-                  </Text>
+                    <Text style={styles.content_title}>{resources.getString("declinemsg2")}</Text>
                 </View>
               </View>
             </ScrollView>
@@ -86,7 +50,7 @@ class ContactUsScreen extends React.Component<Props> {
         <Button style={styles.btnNext}
           mode="contained"
           onPress={this._onNextBtnHandle}>
-          <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
+          <Text style={styles.btnText}>{resources.getString("ok")}</Text>
         </Button>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
       </PaperProvider >
@@ -113,13 +77,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   content_title: {
-    color: '#66cc99',
+  //  color: '#66cc99',
     fontSize: 18,
-    fontWeight:'bold'
+   // fontWeight:'bold'
   },
   btnNext: {
     color: newTheme.colors.whiteText,
-    width: 100, height: 40,
+    width: 120, height: 40,
     alignSelf: "flex-end",
     marginRight: 20,
     marginBottom: 4, marginTop: 4
@@ -135,10 +99,12 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   text:{
-    fontSize:15,
-    color: '#000',
+    fontSize:20,
+    color: '#000',fontWeight:'bold',
+    marginTop:20,marginBottom:20,
+    alignSelf:'center'
   }
 });
 
-export default memo(ContactUsScreen);
+export default memo(DeclineScreen);
 

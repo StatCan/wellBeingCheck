@@ -165,7 +165,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
       console.log('Check upgrade');
       if(global.hasImage==1){
           let currentVersion=await AsyncStorage.getItem('CurrentVersion');console.log('currentVersion:'+currentVersion);
-          if(currentVersion!=null && currentVersion!=pkg.expo.version){
+          if(currentVersion==null ||(currentVersion!=null && currentVersion!=pkg.expo.version)){
               let isConnected=await checkConnection();
               if(!isConnected){Alert.alert('',resources.getString('offline'));return;}
               let jwt=await fetchJwToken();console.log(jwt);

@@ -13,6 +13,7 @@ import {
   Dashboard,
   SettingsScreen,
   ContactUsScreen,
+  DeclineScreen,
   AboutScreen,
   ResultScreen,
   EQSurveyScreen,
@@ -87,6 +88,12 @@ const Router = createStackNavigator(
         gestureEnabled: false
       },
     },
+    DeclineScreen: {
+          screen: DeclineScreen,
+          navigationOptions: {
+            gestureEnabled: false
+          },
+        },
     AboutScreen: {
       screen: AboutScreen,
       navigationOptions: {

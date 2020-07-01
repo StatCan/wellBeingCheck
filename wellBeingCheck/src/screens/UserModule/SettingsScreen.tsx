@@ -287,6 +287,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       AsyncStorage.removeItem('PingNum'); AsyncStorage.removeItem('AwakeHour'); AsyncStorage.removeItem('SleepHour');
       AsyncStorage.removeItem('hasImage'); global.hasImage = false;
       AsyncStorage.removeItem('ParadataSaved'); global.paradataSaved = false;
+      AsyncStorage.removeItem('CurrentVersion');
 
       AsyncStorage.removeItem('user_terms_and_conditions', (err) => {
         console.log("user terms deleted");
