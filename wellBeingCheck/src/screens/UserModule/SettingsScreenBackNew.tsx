@@ -1,5 +1,5 @@
 import React, { memo, useState, useCallback } from 'react';
-import { View, Text, StyleSheet, ScrollView, Platform, Switch, AsyncStorage, Dimensions, Linking, PanResponder, Alert, BackHandler,AppState,ActivityIndicator,Modal } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Platform, Switch, AsyncStorage, Dimensions, Linking, PanResponder, Alert, BackHandler,AppState,ActivityIndicator } from 'react-native';
 import Button from '../../components/Button';
 import { newTheme } from '../../core/theme';
 import { List, Divider } from 'react-native-paper';
@@ -15,8 +15,6 @@ import * as IntentLauncher from 'expo-intent-launcher';
 import { setupSchedules, checkInSchedule, validateSetting } from '../../utils/schedule';
 import { Updates } from 'expo';
 import ParsedText from 'react-native-parsed-text';
-
-import {TimePickerPane} from '../../components/TimePickerPane';
 
 var scheduledDateArray = new Array();
 
@@ -106,7 +104,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     global.resetTimer();//global.globalTick=0;
     time = time.substring(0, 5);
 
-    let valid = validateSetting(time, this.state.sleeptime, this.state.notificationcount);
+     let valid = validateSetting(time, this.state.sleeptime, this.state.notificationcount);
     console.log('validate:------->' + valid);
     if (valid != 0){Alert.alert('', resources.getString("settingValidation"));return;}
 
@@ -447,38 +445,6 @@ console.log('current View-------------------------------:' + global.currentView)
   // _openAbout = () => {
   //   Alert.alert("test")
   // }
-
-
-    //Test
-    async onWakeConfirm(data){
-         let h=data.Hour,m=data.Minute;
-         let apm='AM';if(data.Apm==1){apm='PM';h+=12;}
-         let time=h+':'+m;
-           console.log('Picked time:'+data.Hour+':'+data.Minute+' '+apm+'-->'+h+':'+m+' --'+time);
-         let valid = validateSetting(time, this.state.sleeptime, this.state.notificationcount);
-             if (valid != 0){Alert.alert('', resources.getString("settingValidation"));return;}
-
-             this.setState({
-               waketime: time,
-               wakeTimePickerShow: false
-             })
-              await this.handleBackAction(1);
-        }
-    onWakeCancel(){console.log('cancelled');this.setState({wakeTimePickerShow:false}); }
-    async onSleepConfirm(data){
-         let h=data.Hour,m=data.Minute;
-         let apm='AM';if(data.Apm==1){apm='PM';h+=12;}
-         let time=h+':'+m;
-           console.log('Picked time:'+data.Hour+':'+data.Minute+' '+apm+'-->'+h+':'+m+' --'+time);
-         let valid = validateSetting(this.state.waketime, time, this.state.notificationcount);
-             if (valid != 0){Alert.alert('', resources.getString("settingValidation"));return;}
-            this.setState({
-                                 sleeptime: time,
-                                 sleepTimePickerShow: false,
-                               });
-            await this.handleBackAction(1);
-        }
-    onSleepCancel(){console.log('cancelled');this.setState({sleepTimePickerShow:false}); }
   render() {
 
     let debugButtons;
@@ -494,7 +460,7 @@ console.log('current View-------------------------------:' + global.currentView)
     return (
       <PaperProvider theme={newTheme}>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
-        <View style={{ flex: 1, justifyContent: 'space-between' }}
+        <View style={{ flex: 1, justifyContent: 'space-between' }} 
         {...global.panResponder.panHandlers}
         >
           <View style={styles.toolbar}>
@@ -570,24 +536,15 @@ console.log('current View-------------------------------:' + global.currentView)
                     description={this.state.waketime}
                     descriptionStyle={styles.descriptionStyle}
                   />
-                     <View style={styles.centeredView}>
-                           <Modal
-                             animationType="slide"
-                             transparent={true}
-                             visible={this.state.wakeTimePickerShow}
-                             onRequestClose={() => {
-                              // Alert.alert("Modal has been closed.");
-                             }}
-                           >
-                           <TimePickerPane title= {resources.getString("wake_time")} onConfirm={this.onWakeConfirm.bind(this)}
-                               onCancel={this.onWakeCancel.bind(this)}
-                               cancelLabel={resources.getString("cancel")} confirmLabel={resources.getString("ok")}
-                               initialValue={this.state.waketime}
-                            />
-                      </Modal>
-                     </View>
-
-
+                  <TimePicker
+                    showTimePicker={this.state.wakeTimePickerShow}
+                    style={styles.timePicker}
+                    time={this.state.waketime}
+                    timeType="wakeTime"
+                    isVisible={this.state.wakeTimePickerShow}
+                    handler={this.wakeTimeHandler}
+                    cancelHandler={this.cancelTimeHandler}
+                  />
 
                   <List.Item
                     style={styles.listStyle1b}
@@ -609,22 +566,15 @@ console.log('current View-------------------------------:' + global.currentView)
                     description={this.state.sleeptime}
                     descriptionStyle={styles.descriptionStyle}
                   />
-                  <View style={styles.centeredView}>
-                                             <Modal
-                                               animationType="slide"
-                                               transparent={true}
-                                               visible={this.state.sleepTimePickerShow}
-                                               onRequestClose={() => {
-                                                // Alert.alert("Modal has been closed.");
-                                               }}
-                                             >
-                                             <TimePickerPane title= {resources.getString("sleep_time")} onConfirm={this.onSleepConfirm.bind(this)}
-                                                 onCancel={this.onSleepCancel.bind(this)}
-                                                 cancelLabel={resources.getString("cancel")} confirmLabel={resources.getString("ok")}
-                                                 initialValue={this.state.sleeptime}
-                                              />
-                                        </Modal>
-                                       </View>
+                  <TimePicker
+                    showTimePicker={this.state.sleepTimePickerShow}
+                    style={styles.timePicker}
+                    time={this.state.sleeptime}
+                    timeType="sleepTime"
+                    isVisible={this.state.sleepTimePickerShow}
+                    handler={this.sleepTimeHandler}
+                    cancelHandler={this.cancelTimeHandler}
+                  />
                 </View>
 
                 <Divider></Divider>
@@ -877,54 +827,6 @@ const styles = StyleSheet.create({
   bold: {
     fontWeight: 'bold',
   },
-
-
-   centeredView: {
-      justifyContent: "center",
-      alignItems: "center",
-      marginTop: 22,
-      backgroundColor: "white",
-    },
-    modalView: {
-      margin: 20,
-      backgroundColor: "white",
-      zIndex:20,
-      borderRadius: 20,
-      padding: 35,
-      alignItems: "center",
-      shadowColor: "white",
-      shadowOffset: {
-        width: 0,
-        height: 2
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5
-    },
-
 });
 
 export default memo(SettingsScreen);
-
-
-//                  <TimePicker
-//                    showTimePicker={this.state.wakeTimePickerShow}
-//                    style={styles.timePicker}
-//                    time={this.state.waketime}
-//                    timeType="wakeTime"
-//                    isVisible={this.state.wakeTimePickerShow}
-//                    handler={this.wakeTimeHandler}
-//                    cancelHandler={this.cancelTimeHandler}
-//                  />
-
-
-/*
-<TimePicker
-                    showTimePicker={this.state.sleepTimePickerShow}
-                    style={styles.timePicker}
-                    time={this.state.sleeptime}
-                    timeType="sleepTime"
-                    isVisible={this.state.sleepTimePickerShow}
-                    handler={this.sleepTimeHandler}
-                    cancelHandler={this.cancelTimeHandler}
-                  />*/
