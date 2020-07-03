@@ -137,7 +137,7 @@ export class TimePickerPane extends React.Component {
             <View style={{flexDirection:'row', width:160,height:height*3,marginLeft:10}}>
               <Text style={{marginTop:height,fontSize:24}}>▶</Text>
               <View style={{width:75,borderColor:'gray',borderWidth:1}}>
-                   <ScrollView style={{height:height, }} showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false} ref={ref => { this.svHour = ref; }}
+                   <ScrollView style={{height:height, }} scrollEventThrottle='1' showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false} ref={ref => { this.svHour = ref; } }
                             onScroll={this.handleScrollHour.bind(this)}
                                       onScrollBeginDrag={this.handleScrollHourBegin.bind(this)}
                                       onTouchStart={this.log}
@@ -149,7 +149,7 @@ export class TimePickerPane extends React.Component {
 
 
               <View style={{width:75,borderColor:'gray',borderWidth:1}}>
-                   <ScrollView style={{height:height, }} showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false} ref={ref => { this.svMinute = ref; }}
+                   <ScrollView style={{height:height, }} scrollEventThrottle='1' showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false} ref={ref => { this.svMinute = ref; }}
                             onScroll={this.handleScrollMinute.bind(this)}
                                       onScrollBeginDrag={this.handleScrollMinuteBegin.bind(this)}
                                       onTouchStart={this.log}
@@ -160,7 +160,7 @@ export class TimePickerPane extends React.Component {
 
 
               <View style={{width:75,borderColor:'gray',borderWidth:1,height:height*2}}>
-                   <ScrollView style={{height:height, }} showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false} ref={ref => { this.svApm = ref; }}
+                   <ScrollView style={{height:height, }} scrollEventThrottle='1' showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false} ref={ref => { this.svApm = ref; }}
                             onScroll={this.handleScrollApm.bind(this)}
                                       onScrollBeginDrag={this.handleScrollApmBegin.bind(this)}
                                       onTouchStart={this.log}
