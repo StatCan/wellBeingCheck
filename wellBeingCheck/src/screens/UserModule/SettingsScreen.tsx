@@ -206,7 +206,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   handleBackAction = async (f) => {
     if (global.debugMode) console.log("Handle Back Action");
     if (this.state.waketime != global.awakeHour) dirty = true;
-    if (this.state.sleeptime != global.sleepHour) dirty = true;  console.log('Dirty:' +global.sleepHour+' state:'+this.state.sleeptime);
+    if (this.state.sleeptime != global.sleepHour) dirty = true;
     if (this.state.notificationcount != global.pingNum) dirty = true;
     console.log('Dirty:' + dirty+' state:'+this.state.notificationState);
     if (this.state.notificationState) {
@@ -458,7 +458,7 @@ console.log('current View-------------------------------:' + global.currentView)
          let valid = validateSetting(time, this.state.sleeptime, this.state.notificationcount);
              if (valid != 0){Alert.alert('', resources.getString("settingValidation"));return;}
 
-             this.setState({
+             await this.setState({
                waketime: time,
                wakeTimePickerShow: false
              })
