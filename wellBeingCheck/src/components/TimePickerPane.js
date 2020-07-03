@@ -13,7 +13,8 @@ export class TimePickerPane extends React.Component {
                 if(vs.length=2){
                   h=vs[0]-1;m=vs[1]-1;if(m<0)m=59;
                   apm+=1;if(apm>1)apm=0;
-                  if(h>12){h-=12;apm=1;}
+                  if(h>12){h-=12;apm=1;}else {apm=0;}
+                  if(apm==0)apm=1;else apm=0;
                 }
                 this.state = {
                    currentHour:h,
