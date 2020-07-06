@@ -210,7 +210,11 @@ async onTestD(){
           </SafeAreaView>
          <NavigationEvents onDidFocus={() =>this.setState({ title: resources.getString("Well-Being Check") }) } />
         </Background >
-        <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
+          <View style={{backgroundColor:'#f7f8f9',width:'100%',height:48,borderColor:'red',bordertWidth:1,alignItems:'flex-end'}}>
+                          <Image source={require('../../assets/img_canadamdpi.png')} style={{ width: 128, height: 40,resizeMode:'stretch'}} />
+
+          </View>
+
       </PaperProvider >
     );
   }
@@ -307,7 +311,7 @@ const styles = StyleSheet.create({
 });
 
 export default memo(LoginScreen);
-
+       // <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
            /* <View style={styles.logo}>
                 <Text>{resources.getString("Well-Being Check")}</Text>
                <Button onPress={this.onTestA}><Text> AAA</Text></Button>
