@@ -570,22 +570,34 @@ console.log('current View-------------------------------:' + global.currentView)
                     description={this.state.waketime}
                     descriptionStyle={styles.descriptionStyle}
                   />
-                     <View style={styles.centeredView}>
-                           <Modal
-                             animationType="slide"
-                             transparent={true}
-                             visible={this.state.wakeTimePickerShow}
-                             onRequestClose={() => {
-                              // Alert.alert("Modal has been closed.");
-                             }}
-                           >
-                           <TimePickerPane title= {resources.getString("wake_time")} onConfirm={this.onWakeConfirm.bind(this)}
-                               onCancel={this.onWakeCancel.bind(this)}
-                               cancelLabel={resources.getString("cancel")} confirmLabel={resources.getString("ok")}
-                               initialValue={this.state.waketime}
-                            />
-                      </Modal>
-                     </View>
+                  {Platform.OS === 'ios'?
+                      <TimePicker
+                         showTimePicker={this.state.wakeTimePickerShow}
+                         style={styles.timePicker}
+                         time={this.state.waketime}
+                         timeType="wakeTime"
+                         isVisible={this.state.wakeTimePickerShow}
+                         handler={this.wakeTimeHandler}
+                         cancelHandler={this.cancelTimeHandler}
+                      />:
+                       <View style={styles.centeredView}>
+                                                 <Modal
+                                                   animationType="slide"
+                                                   transparent={true}
+                                                   visible={this.state.wakeTimePickerShow}
+                                                   onRequestClose={() => {
+                                                    // Alert.alert("Modal has been closed.");
+                                                   }}
+                                                 >
+                                                 <TimePickerPane title= {resources.getString("wake_time")} onConfirm={this.onWakeConfirm.bind(this)}
+                                                     onCancel={this.onWakeCancel.bind(this)}
+                                                     cancelLabel={resources.getString("cancel")} confirmLabel={resources.getString("ok")}
+                                                     initialValue={this.state.waketime}
+                                                  />
+                                            </Modal>
+                                           </View>
+                  }
+
 
 
 
@@ -609,7 +621,17 @@ console.log('current View-------------------------------:' + global.currentView)
                     description={this.state.sleeptime}
                     descriptionStyle={styles.descriptionStyle}
                   />
-                  <View style={styles.centeredView}>
+                   {Platform.OS === 'ios'?
+                        <TimePicker
+                                       showTimePicker={this.state.sleepTimePickerShow}
+                                       style={styles.timePicker}
+                                       time={this.state.sleeptime}
+                                       timeType="sleepTime"
+                                       isVisible={this.state.sleepTimePickerShow}
+                                       handler={this.sleepTimeHandler}
+                                       cancelHandler={this.cancelTimeHandler}
+                                     />:
+                         <View style={styles.centeredView}>
                                              <Modal
                                                animationType="slide"
                                                transparent={true}
@@ -625,6 +647,7 @@ console.log('current View-------------------------------:' + global.currentView)
                                               />
                                         </Modal>
                                        </View>
+                 }
                 </View>
 
                 <Divider></Divider>
