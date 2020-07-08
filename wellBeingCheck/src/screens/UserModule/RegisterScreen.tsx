@@ -280,7 +280,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     const passText = text;
     const pasValLength =  text.length >= 8 ? true : false;
     const passValUpper =  (!/[A-Z]/.test(text)) ? false : true;
-    const passValSpecial =  (!/[@!#$%^&*(),.?:{}|<>]/.test(text));
+    const passValSpecial =  (!/[@!#$%^&*(),.?:{}|<>]/.test(text))?false : true;
     const passValLower =  (!/[a-z]/.test(text)) ? false : true;
     const passValNumber =  (!/[0-9]/.test(text)) ? false : true;
 
@@ -459,31 +459,31 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                       <View style={styles.pr_view}>
                         <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_length")}</Text>
                         <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check" />
+                         {this.state.pasVal_length?<EvilIcons size={25} name="check" />:null}
                         </TouchableOpacity>
                       </View>
                       <View style={styles.pr_view}>
                         <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_upper")}</Text>
                         <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check" />
+                         {this.state.passVal_Upper?<EvilIcons size={25} name="check" />:null}
                         </TouchableOpacity>
                       </View>
                       <View style={styles.pr_view}>
                         <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_special")}</Text>
                         <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check" />
+                          {this.state.passVal_Special?<EvilIcons size={25} name="check" />:null}
                         </TouchableOpacity>
                       </View>
                       <View style={styles.pr_view}>
                         <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_lower")}</Text>
                         <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check" />
+                          {this.state.passVal_Lower?<EvilIcons size={25} name="check" />:null}
                         </TouchableOpacity>
                       </View>
                       <View style={styles.pr_view}>
                         <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_number")}</Text>
                         <TouchableOpacity style={styles.pr_btn}>
-                          <EvilIcons size={25} name="check" />
+                          {this.state.passVal_Number?<EvilIcons size={25} name="check" />:null}
                         </TouchableOpacity>
                       </View>
                     </Dialog.Content>
