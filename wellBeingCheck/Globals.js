@@ -23,7 +23,7 @@ global.surveyExceptionUrlEng='';
 global.surveyExceptionUrlFre='';
 global.doneSurveyA=false;
 global.hasImage=0;
-global.webApiBaseUrl='http://wellbeingcheck.canadacentral.cloudapp.azure.com/wellbeing-bienetre1/';   //'http://localhost:50170/'; ////http://wellbeingcheck.canadacentral.cloudapp.azure.com/WebApiForEsmDev/';    //'http://barabasy.eastus.cloudapp.azure.com/WebApiForEsmDev/';  //'http://localhost:50170/';   //'http://barabasy.eastus.cloudapp.azure.com/WebApiForEsmDev/';      //'http://localhost:49159/'   //'http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/';//'http://localhost:49159/'
+global.webApiBaseUrl='http://wellbeingcheckuat.canadacentral.cloudapp.azure.com/wellbeing-bienetre/';   //'http://localhost:50170/'; ////http://wellbeingcheck.canadacentral.cloudapp.azure.com/WebApiForEsmDev/';    //'http://barabasy.eastus.cloudapp.azure.com/WebApiForEsmDev/';  //'http://localhost:50170/';   //'http://barabasy.eastus.cloudapp.azure.com/WebApiForEsmDev/';      //'http://localhost:49159/'   //'http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/';//'http://localhost:49159/'
 
 global.connectivity=false;
 global.showThankYou=0;
@@ -97,7 +97,7 @@ global.repeatCheck=async ()=>{
 global.resetTimer=()=>{
      clearInterval(global.globalTimer);
      global.globalTimer =null;
-     global.timerSatrt=new Date();
+     global.timerStart=new Date();
      global.globalTimer=setInterval(global.repeatCheck,global.timerTime);
 }
 global.createGlobalTimer=()=>{global.timerStart=new Date();global.globalTimer=setInterval(global.repeatCheck,global.timerTime);}

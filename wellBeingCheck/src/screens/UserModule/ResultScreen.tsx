@@ -7,6 +7,7 @@ import { newTheme } from '../../core/theme';
 import { NavigationParams, NavigationScreenProp, NavigationState,NavigationEvents, } from 'react-navigation';
 import { FailureType } from '../../api/back-end.service';
 import { Updates } from 'expo';
+import { SafeAreaConsumer } from 'react-native-safe-area-context';
 
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
@@ -178,7 +179,7 @@ console.log('pppppaaaaggggggggggeeeeee:'+index);
           source={require('../../assets/white.png')}
           style={{ backgroundColor: 'white', flex: 1 }}
         >
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 40, height: 50 }} 
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 40, height: 50 }}
           {...global.panResponder.panHandlers}
           >
             <TouchableOpacity onPress={() => { global.currentView = 0; this.props.navigation.navigate('Dashboard') }} style={{ marginLeft: 5, marginTop: 10 }}><Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{ width: 38, height: 38 }} /></TouchableOpacity>
@@ -192,7 +193,7 @@ console.log('pppppaaaaggggggggggeeeeee:'+index);
               <Image source={require('../../assets/ic_setting.png')} />
             </TouchableOpacity>
           </View>
-          <View style={{ flex: 1 }} 
+          <View style={{ flex: 1 }}
           // {...global.panResponder.panHandlers}
           >
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -207,9 +208,10 @@ console.log('pppppaaaaggggggggggeeeeee:'+index);
               </TouchableOpacity>
             </View>
              {(this.state.loaded) ? null : <ActivityIndicator size="large" color="lightblue" style={{ position: 'absolute', top: '50%', left: '50%', zIndex: 20 }} />}
-            <View style={{ height: this.state.height }} >
+            <View style={{}} >
               <ScrollView horizontal showsHorizontalScrollIndicator={false} ref={ref => { this.sv = ref; }}
-                contentContainerStyle={{ paddingVertical: 20, justifyContent: 'center', }} onScrollBeginDrag={this.handleScrollB.bind(this)}
+                contentContainerStyle={{ paddingVertical: 20, justifyContent: 'center', }}
+                onScrollBeginDrag={this.handleScrollB.bind(this)}
                 onTouchStart={this.log} onScrollEndDrag={this.handleScroll.bind(this)}
            {...global.panResponder.panHandlers}
            >
@@ -231,6 +233,7 @@ console.log('pppppaaaaggggggggggeeeeee:'+index);
               this.props.navigation.navigate('Dashboard') }}>
           <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
         </Button>
+         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
       </PaperProvider>
     );
   }
