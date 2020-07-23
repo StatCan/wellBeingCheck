@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { Image, StyleSheet } from 'react-native';
 
 const LogoClearSmall = () => (
-  <Image source={require('../assets/logo_clear.png')} style={styles.image} />
+  <Image source={require('../assets/WellnessCheckLogo.png')} style={styles.image} />
 );
 
 const styles = StyleSheet.create({

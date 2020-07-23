@@ -451,10 +451,11 @@ console.log('current View-------------------------------:' + global.currentView)
 
     //Test
     async onWakeConfirm(data){
-         let h=data.Hour,m=data.Minute;
+        /* let h=data.Hour,m=data.Minute;
          let apm='AM';if(data.Apm==1){apm='PM';h+=12;}
-         let time=h+':'+m;
-           console.log('Picked time:'+data.Hour+':'+data.Minute+' '+apm+'-->'+h+':'+m+' --'+time);
+         let time=h+':'+(m < 10 ? '0' : '') + m;
+           console.log('Picked time:'+data.Hour+':'+data.Minute+' '+apm+'-->'+h+':'+m+' --'+time);*/
+         let time=data.Time;
          let valid = validateSetting(time, this.state.sleeptime, this.state.notificationcount);
              if (valid != 0){Alert.alert('', resources.getString("settingValidation"));return;}
 
@@ -466,10 +467,13 @@ console.log('current View-------------------------------:' + global.currentView)
         }
     onWakeCancel(){console.log('cancelled');this.setState({wakeTimePickerShow:false}); }
     async onSleepConfirm(data){
-         let h=data.Hour,m=data.Minute;
-         let apm='AM';if(data.Apm==1){apm='PM';h+=12;}
-         let time=h+':'+m;
+         /*let h=data.Hour,m=data.Minute;
+         let apm='AM';if(data.Apm==1&& h!=12){apm='PM';h+=12;}
+         let time=h+':'+(m < 10 ? '0' : '') + m;
            console.log('Picked time:'+data.Hour+':'+data.Minute+' '+apm+'-->'+h+':'+m+' --'+time);
+*/
+         let time=data.Time;
+
          let valid = validateSetting(this.state.waketime, time, this.state.notificationcount);
              if (valid != 0){Alert.alert('', resources.getString("settingValidation"));return;}
             await this.setState({

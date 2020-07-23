@@ -307,7 +307,7 @@ class Dashboard extends React.Component<Props, HomeState> {
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
         <Background>
           <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
-            <TouchableOpacity style={{ marginLeft: 5, marginTop: 50 }}><Image source={require('../assets/ic_logo_loginmdpi.png')} style={{ width: 38, height: 38 }} /></TouchableOpacity>
+            <TouchableOpacity style={{ marginLeft: 5, marginTop: 50 }}><Image source={require('../assets/WellnessCheckLogo.png')} style={{ width: 38, height: 38 }} /></TouchableOpacity>
 
             {/*-----------Setting button using UX logo ic_setting.png--------*/}
             <View>

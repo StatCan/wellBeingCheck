@@ -8,14 +8,11 @@ let height=40;
 export class TimePickerPane extends React.Component {
     constructor(props) {
         super(props);
-        let h=1,m=0,apm=0;
-                let vs=props.initialValue.split(':');
-                if(vs.length=2){
-                  h=vs[0]-1;m=vs[1]-1;if(m<0)m=59;
-                  apm+=1;if(apm>1)apm=0;
-                  if(h>12){h-=12;apm=1;}else {apm=0;}
-                  if(apm==0)apm=1;else apm=0;
-                }
+        let ut=this.timeToApm(props.initialValue);
+        let h=ut.Hour;if(h==0)h=12;
+         h-=1;if(h<1)h=12;
+        let m=ut.Minute-1; if(m<0)m=59;
+        let apm=ut.Apm;if(apm==0)apm=1;else apm=0;
                 this.state = {
                    currentHour:h,
                    currentMinute:m,
@@ -23,11 +20,17 @@ export class TimePickerPane extends React.Component {
             };
     }
    confirm(){
-      let h=this.state.currentHour,m=this.state.currentMinute,apm=this.state.currentApm;
+      let h=this.state.currentHour,m=parseInt(this.state.currentMinute),apm=this.state.currentApm;
       h+=1;if(h>12)h=1;
       m+=1;if(m>59)m=0;
       apm+=1;if(apm>1)apm=0;
-   this.props.onConfirm({Hour:h,Minute:m,Apm:apm})
+      if(h==12){
+         if(apm==0){
+             h=0;
+         }
+      }
+      let ut=this.apmToTime(h,m,apm);
+   this.props.onConfirm({Hour:h,Minute:m,Apm:apm,Time:ut})
    }
    cancel(){this.props.onCancel();}
    componentDidMount() {
@@ -62,8 +65,8 @@ export class TimePickerPane extends React.Component {
           let y = event.nativeEvent.contentOffset.y;
           let dy=Math.round((startMinuteY-y)/height);
           currentMinute-=dy;
-          if(currentMinute>60)currentMinute-=60;
-          else if(currentMinute<=0)currentMinute+=60;
+          if(currentMinute>59)currentMinute=0;
+          else if(currentMinute<0)currentMinute=59;
 
           let yd = 6* height;
           this.setState({ currentMinute: currentMinute });
@@ -90,8 +93,25 @@ export class TimePickerPane extends React.Component {
               //  InteractionManager.runAfterInteractions(() => console.log('scrolling'));
              //   InteractionManager.runAfterInteractions(() => this.sv.scrollTo({ y: index1*40 }))
    }
-
-
+   apmToTime(h,m,apm){
+      let hh=h;
+      if(h==12){
+          if(apm==0)hh=0;
+      }
+      else {
+         if(apm==1)hh=h+12;
+      }
+      return hh+":"+(m < 10 ? '0' : '') + m;
+   }
+   timeToApm(t){
+       let vs=t.split(':');
+       let h=1,m=0,apm=0;
+       if(vs.length=2){
+           let h=vs[0];let m=vs[1];
+           if(h>=12){h-=12;apm=1;}
+           return {Hour:h,Minute:m,Apm:apm}
+       }
+   }
     render() {
             let hourViews=[];
             let mid=this.state.currentHour;
@@ -101,6 +121,9 @@ export class TimePickerPane extends React.Component {
             }
             for(let j=0;j <6; j++) {
                  let h=mid+j;if(h>12)h-=12;
+
+
+                 if(h!=0)
                  hourViews.push(<View key={h} style={{height:height,justifyContent:'center',alignItems:'center'}}><Text key={h} style={{fontSize:24}}>{h}</Text></View>
                )
             }
@@ -108,11 +131,11 @@ export class TimePickerPane extends React.Component {
             let minuteViews=[];
             mid=this.state.currentMinute;
             for(let j=6;j>0;j--){
-                 let m=mid-j;if(m<0)m+=60;
+                 let m=mid-j;if(m<0)m+=60;console.log(m);
                  minuteViews.push(<View key={m} style={{height:height,justifyContent:'center'}}><Text key={m} style={{fontSize:24,marginLeft:14}}>{(m < 10 ? '0' : '') + m}</Text></View>);
                         }
             for(let j=0;j <6; j++) {
-                 let m=mid+j;if(m>=60)m-=60;
+                 let m=mid+j;if(m>59)m-=60;console.log(m);
                  minuteViews.push(<View key={m} style={{height:height,justifyContent:'center'}}><Text key={m} style={{fontSize:24,marginLeft:14}}>{(m < 10 ? '0' : '') + m}</Text></View>);
                  }
 

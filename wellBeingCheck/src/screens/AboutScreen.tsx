@@ -336,7 +336,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
               {...global.panResponder.panHandlers}
             >
               <List.Section>
-                <View style={styles.faqView} 
+                <View style={styles.faqView}
                 {...global.panResponder.panHandlers}
                 >
                   <List.Accordion
@@ -728,7 +728,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
               </List.Section>
               <Title style={styles.title}>{resources.getString("about_title")}</Title>
               <View style={styles.content} 
-               {...global.panResponder.panHandlers}
+
               >
                 <Paragraph style={styles.paragraph}>
                   <Text>

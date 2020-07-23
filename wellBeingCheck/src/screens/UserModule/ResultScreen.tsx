@@ -22,7 +22,7 @@ type ScreenState = {
 
 const height = Math.floor(Dimensions.get('window').height) - 100;
 const width = Math.floor(Dimensions.get('window').width);
-let startX = 0; let index = 0;
+let startX = 0; let index = 0;let tryNum=10;
 var busyCheck=null;let cc=0;
 class UserResultsScreen extends React.Component<Props, ScreenState> {
   constructor(props) {
@@ -104,11 +104,12 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
     busyCheck = setInterval(this.loadingrepeatcheck,1000);
   }
   loadingrepeatcheck=()=> {
-        if (global.fetchCount==8) {
+        if (global.fetchCount==8 || tryNum<0) {
             clearInterval(busyCheck);
             this.loadImage();
             this.setState({loaded:true});
         }
+        tryNum--;
     }
 
   handleScroll(event) {
@@ -182,7 +183,7 @@ console.log('pppppaaaaggggggggggeeeeee:'+index);
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 40, height: 50 }}
           {...global.panResponder.panHandlers}
           >
-            <TouchableOpacity onPress={() => { global.currentView = 0; this.props.navigation.navigate('Dashboard') }} style={{ marginLeft: 5, marginTop: 10 }}><Image source={require('../../assets/ic_logo_loginmdpi.png')} style={{ width: 38, height: 38 }} /></TouchableOpacity>
+            <TouchableOpacity onPress={() => { global.currentView = 0; this.props.navigation.navigate('Dashboard') }} style={{ marginLeft: 5, marginTop: 10 }}><Image source={require('../../assets/WellnessCheckLogo.png')} style={{ width: 38, height: 38 }} /></TouchableOpacity>
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>{indicator}</View>
             {/*   <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} 
                                    style={{marginRight:5,marginTop:10}}>
