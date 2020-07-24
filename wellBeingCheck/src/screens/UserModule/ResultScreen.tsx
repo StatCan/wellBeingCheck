@@ -122,7 +122,7 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
     }
     // let index = Math.round(x / width1);   //Don't delete it, it is for old way to scroll
     let xd = index * width1;
-    this.setState({ current: index });
+    this.setState({ current: index,loaded:true });
     if (index == 0) { this.setState({ title: resources.getString("Your feelings") }); }
     else if (index == 1) { this.setState({ title: resources.getString("How you are feeling by location") }); }
     else if (index == 2) { this.setState({ title: resources.getString("How you are feeling by activity") }); }
@@ -140,7 +140,7 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
     else if (startX < x){ index = Math.min(++index, 3);
     //if(index-oldPage>1)index=oldPage+1;
     }
-console.log('pppppaaaaggggggggggeeeeee:'+index);
+
     // let index = Math.round(x / width1);   //Don't delete it, it is for old way to scroll
     let xd = index * width1;
     this.setState({ current: index });
@@ -214,7 +214,7 @@ console.log('pppppaaaaggggggggggeeeeee:'+index);
                 contentContainerStyle={{ paddingVertical: 20, justifyContent: 'center', }}
                 onScrollBeginDrag={this.handleScrollB.bind(this)}
                 onTouchStart={this.log} onScrollEndDrag={this.handleScroll.bind(this)}
-           {...global.panResponder.panHandlers}
+                {...global.panResponder.panHandlers}
            >
                 {this.state.images.map((item, index) => (
                   <View onLayout={this._onLayout.bind(this)} style={{ height: this.state.height }} key={index}>
