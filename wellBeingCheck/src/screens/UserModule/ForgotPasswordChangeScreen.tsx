@@ -1,3 +1,4 @@
+
 import React, { memo } from 'react';
 import { Picker, View, Text, StyleSheet, TouchableOpacity, Modal, SafeAreaView, ScrollView, Alert } from 'react-native';
 import { AsyncStorage } from 'react-native';
@@ -402,31 +403,36 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
                     <View style={styles.pr_view}>
                       <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_length")}</Text>
                       <TouchableOpacity style={styles.pr_btn}>
-                        <EvilIcons size={25} name="check" color={this.state.pasVal_length ? "green" : ""} />
+                       {this.state.pasVal_length?<EvilIcons size={25} name="check" />:null}
+
                       </TouchableOpacity>
                     </View>
                     <View style={styles.pr_view}>
                       <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_upper")}</Text>
                       <TouchableOpacity style={styles.pr_btn}>
-                        <EvilIcons size={25} name="check" color={this.state.passVal_Upper ? "green" : ""} />
+                         {this.state.passVal_Upper?<EvilIcons size={25} name="check" />:null}
+
                       </TouchableOpacity>
                     </View>
                     <View style={styles.pr_view}>
                       <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_special")}</Text>
                       <TouchableOpacity style={styles.pr_btn}>
-                        <EvilIcons size={25} name="check" color={this.state.passVal_Special ? "green" : ""} />
+                          {this.state.passVal_Special?<EvilIcons size={25} name="check" />:null}
+
                       </TouchableOpacity>
                     </View>
                     <View style={styles.pr_view}>
                       <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_lower")}</Text>
                       <TouchableOpacity style={styles.pr_btn}>
-                        <EvilIcons size={25} name="check" color={this.state.passVal_Lower ? "green" : ""} />
+                         {this.state.passVal_Lower?<EvilIcons size={25} name="check" />:null}
+
                       </TouchableOpacity>
                     </View>
                     <View style={styles.pr_view}>
                       <Text style={styles.pr_text}>{resources.getString("reg.pass.hint_number")}</Text>
                       <TouchableOpacity style={styles.pr_btn}>
-                        <EvilIcons size={25} name="check" color={this.state.passVal_Number ? "green" : ""} />
+                         {this.state.passVal_Number?<EvilIcons size={25} name="check" />:null}
+
                       </TouchableOpacity>
                     </View>
                   </Dialog.Content>
@@ -595,3 +601,10 @@ const styles = StyleSheet.create({
 });
 
 export default memo(ForgotPasswordChangeScreen);
+
+
+  // <EvilIcons size={25} name="check" color={this.state.pasVal_length ? "green" : ""} />
+  // <EvilIcons size={25} name="check" color={this.state.passVal_Upper ? "green" : ""} />
+  // <EvilIcons size={25} name="check" color={this.state.passVal_Special ? "green" : ""} />
+  //  <EvilIcons size={25} name="check" color={this.state.passVal_Lower ? "green" : ""} />
+  // <EvilIcons size={25} name="check" color={this.state.passVal_Number ? "green" : ""} />

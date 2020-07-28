@@ -7,7 +7,7 @@ global.timeStamp=0;
 global.surveyACode='';
 
 global.doneSurveyA=false;
-global.debugMode=false;
+global.debugMode=true;
 global.currentNotificationDate='';
 
 global.jwToken='';

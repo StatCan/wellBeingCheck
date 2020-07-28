@@ -66,7 +66,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
       securityQuestionError: "",
       securityAnswer: "",
       securityAnswerError: "",
-      modalShow: false,
+      modalShow: true,
       modalSecrectQuestionShow: false,
       title: resources.getString("Well-Being Check"),
       pasVal_length: false,

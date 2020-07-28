@@ -215,8 +215,6 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
                 onScrollBeginDrag={this.handleScrollB.bind(this)}
                 onTouchStart={this.log} onScrollEndDrag={this.handleScroll.bind(this)}
                 {...global.panResponder.panHandlers}
-                style={{borderWidth:1,borderColor:'red'}}
-
            >
                 {this.state.images.map((item, index) => (
                   <View onLayout={this._onLayout.bind(this)} style={{ height: this.state.height }} key={index}>

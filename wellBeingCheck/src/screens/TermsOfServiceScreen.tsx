@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Alert, Linking, ActivityIndicator, BackHandler} from 'react-native';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Alert, Linking, ActivityIndicator, BackHandler,Modal} from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Button from '../components/Button';
 import { newTheme } from '../core/theme';
@@ -27,7 +27,8 @@ import { SafeAreaConsumer } from 'react-native-safe-area-context';
 type TermsOfServiceState = {
   termsOfService: boolean,
   title: string,
-  fontLoaded: boolean
+  fontLoaded: boolean,
+  displayPopup:boolean
 }
 
 interface Props {
@@ -42,7 +43,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
     this.state = {
       termsOfService: false,
       title: resources.getString("Well-Being Check"),
-      fontLoaded: false,agree:false
+      fontLoaded: false,agree:false,displayPopup:false
     };
   }
 
@@ -110,12 +111,18 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
       termsOfService: false,
     };
    AsyncStorage.setItem('user_terms_and_conditions', JSON.stringify(userTermsAndConditionsObj));
-   this.props.navigation.navigate('DeclineScreen');
 
-//    AsyncStorage.setItem('user_terms_and_conditions', JSON.stringify(userTermsAndConditionsObj), () => {
-//      //handle disagree
-//      Alert.alert('', resources.getString("terms_and_conditions_disagree"));
-//    });
+   //handle disagree 2:
+ //  this.props.navigation.navigate('DeclineScreen');
+
+ //handle disagree 3:
+   this.setState({displayPopup:true});
+
+
+//handle disagree 1:
+  //  AsyncStorage.setItem('user_terms_and_conditions', JSON.stringify(userTermsAndConditionsObj), () => {
+  //    Alert.alert('', resources.getString("terms_and_conditions_disagree"));
+   // });
   }
 
   toggleLanguage() {
@@ -198,6 +205,27 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
 
 
         </SafeAreaView>
+
+              <Modal animationType="slide" transparent={true}
+                     visible={this.state.displayPopup}
+                     onRequestClose={() => {
+                         // Alert.alert("Modal has been closed.");
+                     }}
+               >
+                        <View style={styles.modalView}>
+                             <Text style={styles.popupText}>{resources.getString("declinemsg1")}</Text>
+                             <TouchableOpacity onPress={() => Linking.openURL('tel:18779499492')}   hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
+                                       <Text style={styles.highlightText}>1-877-949-9492</Text>
+                             </TouchableOpacity>
+                             <Text style={styles.popupText}>{resources.getString("declinemsg2")}</Text>
+
+                              <TouchableOpacity onPress={()=>this.setState({displayPopup:false})} style={{ alignSelf:'flex-end',marginRight:10}}>
+                               <Text style={styles.popupBtn}>{resources.getString("ok")}</Text>
+                              </TouchableOpacity>
+
+                        </View>
+              </Modal>
+
         <View style={styles.footer}>
           <Button style={styles.btnDecline}
             mode="contained"
@@ -288,6 +316,44 @@ const styles = StyleSheet.create({
     color: 'blue',
     textDecorationLine: 'underline',
   },
+   centeredView: {
+         flex: 1,
+         justifyContent: "center",
+         alignItems: "center",
+         marginTop: 22
+      },
+   modalView: {
+       alignSelf:'center',marginTop:'40%',justifyContent:'flex-start',
+       width:'80%',
+       backgroundColor: "white",
+       borderRadius: 5,
+       padding: 15,
+       alignItems: "center",
+       shadowColor: "#000",
+       shadowOffset: {
+         width: 0,
+         height: 2
+       },
+       shadowOpacity: 0.25,
+       shadowRadius: 3.84,
+       elevation: 5
+     },
+     popupText: {
+       //  color: '#66cc99',
+         fontSize: 18,
+        // fontWeight:'bold'
+        alignSelf:'flex-start'
+       },
+     highlightText:{
+         fontSize:20,
+         color: '#000',fontWeight:'bold',
+         marginTop:20,marginBottom:20,
+         alignSelf:'center'
+       },
+     popupBtn:{
+          fontSize: 18,marginTop:20,
+          fontWeight:'bold',color: '#66cc99',
+     }
 });
 
 export default memo(TermsOfServiceScreen);
