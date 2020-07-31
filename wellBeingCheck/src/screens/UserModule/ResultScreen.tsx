@@ -8,7 +8,7 @@ import { NavigationParams, NavigationScreenProp, NavigationState,NavigationEvent
 import { FailureType } from '../../api/back-end.service';
 import { Updates } from 'expo';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
-
+import { AntDesign } from '@expo/vector-icons';
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
 
@@ -205,7 +205,8 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
 
               <TouchableOpacity onPress={() => this.helpClick()}
                 style={{ marginRight: 5, marginTop: 5 }}>
-                <Image source={require('../../assets/ic_wbc_info.png')} style={{ width: 30, height: 30 }} />
+                /*<Image source={require('../../assets/ic_wbc_info.png')} style={{ width: 30, height: 30 }} /> */
+                 <AntDesign name="questioncircle" size={30} style={{color:'#918196',marginRight:5}} color="black" />
               </TouchableOpacity>
             </View>
              {(this.state.loaded) ? null : <ActivityIndicator size="large" color="lightblue" style={{ position: 'absolute', top: '50%', left: '50%', zIndex: 20 }} />}

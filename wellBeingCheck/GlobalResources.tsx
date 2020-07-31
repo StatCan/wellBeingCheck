@@ -205,7 +205,7 @@ export const resources = {
             "How you are feeling by location help": "This is your feeling by location",
             "How you are feeling with others help": "This is your feeling with others",
             "How you are feeling by activity help": "This is your feeling by activity",
-            "Your feeling help": "These results have not been validated by Statistics Canada. For more information and help interpreting your results, please see the FAQ on the help page.",
+            "Your feeling help": "All questions about feelings are based on a scale of 0 meaning ‘not at all’, and 10 meaning ’completely’. Based on this, a high rating of feeling happy compared to a high rating of feeling anxious would be interpreted quite differently.\r\nThese results are reported in real time and have not been validated by Statistics Canada. Caution should be exercised when interpreting the data.",
 
             "notifications": "Notifications",
             "wake_time": "Do not disturb before",
@@ -612,7 +612,7 @@ export const resources = {
             "How you are feeling by location help": "C'est votre sentiment par emplacement",
             "How you are feeling with others help": "C'est votre sentiment avec les autres",
             "How you are feeling by activity help": "C'est votre sentiment par activité",
-            "Your feeling help": "Ces résultats n’ont pas été validés par Statistique Canada. Pour plus d’informations et pour vous aider à interpréter vos résultats, veuillez consulter la Foire aux questions sur la page d’aide.",
+            "Your feeling help": "Toutes les questions relatives aux sentiments sont évaluées sur une échelle de 0 à 10, où 0 signifie « pas du tout » et 10 signifie « complètement ». En fonction de cette échelle, une cote élevée de sentiment de bonheur par rapport à une cote élevée de sentiment d’anxiété serait interprétée de manière très différente.\r\nCes résultats sont communiqués en temps réel et n’ont pas été validés par Statistique Canada. Il convient d’être prudent lors de l’interprétation des données.",
 
             //Login screen
             "login.forgot_password": "Mot de passe oublié?",

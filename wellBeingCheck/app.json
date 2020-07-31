@@ -11,7 +11,7 @@
     "sdkVersion": "36.0.0",
     "version": "1.3.6",
     "orientation": "portrait",
-    "icon": "./assets/WellnessCheckLogo.png",
+    "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain"
