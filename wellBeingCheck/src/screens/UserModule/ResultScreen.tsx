@@ -205,7 +205,6 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
 
               <TouchableOpacity onPress={() => this.helpClick()}
                 style={{ marginRight: 5, marginTop: 5 }}>
-                /*<Image source={require('../../assets/ic_wbc_info.png')} style={{ width: 30, height: 30 }} /> */
                  <AntDesign name="questioncircle" size={30} style={{color:'#918196',marginRight:5}} color="black" />
               </TouchableOpacity>
             </View>
@@ -295,3 +294,4 @@ const styles = StyleSheet.create({
 });
 
 export default memo(UserResultsScreen);
+//                /*<Image source={require('../../assets/ic_wbc_info.png')} style={{ width: 30, height: 30 }} /> */
