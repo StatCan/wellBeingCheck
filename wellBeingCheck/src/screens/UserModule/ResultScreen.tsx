@@ -163,7 +163,8 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
   }
 
   helpClick() {
-    Alert.alert('', this.state.helpText);
+  //  Alert.alert('', this.state.helpText);
+  Alert.alert('',  resources.getString("Your feeling help"));
   }
 
   render() {
