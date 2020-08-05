@@ -557,18 +557,19 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   pr_view: {
+     flexDirection:'row',
   },
   pr_text: {
-    marginBottom: 8,
+    marginBottom: 8,marginTop:8,width:'89%',
     fontSize: 15,
     color: 'grey',
   },
   pr_btn: {
-    flexDirection: 'row',
+    flexDirection: 'row',width:'10%',
     alignSelf: "flex-end",
     position: 'relative',
     right: 0,
-    bottom: 20,
+    bottom: 8,
     color: '#66cc99',
   },
   passwordHelpBtnText: {
