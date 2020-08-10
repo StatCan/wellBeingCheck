@@ -1,6 +1,6 @@
 import { PanResponder} from 'react-native';
 global.name='AAA';
-global.department='bbb';
+    global.department='bbb';
 global.question='';
 global.answer='';
 global.timeStamp=0;
@@ -66,8 +66,8 @@ global.globalTimeOutCallback=null;
 global.loading=false;
 global.timeoutPopup=false;
  //Business wants 7  min (420000 millisecond) for the time-out  
-// global.timerTime=420000;//30000*1;
-global.timerTime=30000*1;
+global.timerTime=420000;
+//global.timerTime=30000*1;
 //global.timerTime=900000;//30000*1;
 global.repeatCheck1=async ()=>{
     console.log('Timer check..............................');
