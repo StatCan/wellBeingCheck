@@ -61,12 +61,12 @@ class Dashboard extends React.Component<Props, HomeState> {
   }
 
   onSessionOut(){
-    let result=false;
+    let result=false;global.timeoutPopup=true;
     Alert.alert(
        '',
        resources.getString("session.modal.message"),
        [
-         { text: resources.getString("session.modal.sign_in"), onPress: () => {result=false;this.props.navigation.navigate('LoginScreen'); } },
+         { text: resources.getString("session.modal.sign_in"), onPress: () => {result=false;global.timeoutPopup=false;this.props.navigation.navigate('LoginScreen'); } },
        ],
        { cancelable: false }
     )
