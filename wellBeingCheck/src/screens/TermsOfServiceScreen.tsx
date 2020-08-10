@@ -13,7 +13,8 @@ import ParsedText from 'react-native-parsed-text';
 import * as Font from 'expo-font';
 
 //import Text from '../components/CustomFont';
-
+const pheight = (Math.floor(Dimensions.get('window').height) - 100)*0.4;
+const width = Math.floor(Dimensions.get('window').width);
 
 import {
   NavigationParams,
@@ -205,21 +206,21 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
 
 
         </SafeAreaView>
-
-              <Modal animationType="slide" transparent={true}
+              <Modal animationType="slide" transparent={true} style={{flex:1,alignItems:'center',justifyContent:'center',borderColor:'blue'}}
                      visible={this.state.displayPopup}
                      onRequestClose={() => {
                          // Alert.alert("Modal has been closed.");
                      }}
                >
-                        <View style={styles.modalView}>
+                        <View style={[styles.modalView,{marginTop:pheight}]}>
+
                              <Text style={styles.popupText}>{resources.getString("declinemsg1")}</Text>
                              <TouchableOpacity onPress={() => Linking.openURL('tel:18779499492')}   hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
-                                       <Text style={styles.highlightText}>1-877-949-9492</Text>
+                                     <Text style={styles.highlightText}>1-877-949-9492</Text>
                              </TouchableOpacity>
                              <Text style={styles.popupText}>{resources.getString("declinemsg2")}</Text>
 
-                              <TouchableOpacity onPress={()=>this.setState({displayPopup:false})} style={{ alignSelf:'flex-end',marginRight:10}}>
+                              <TouchableOpacity onPress={()=>this.setState({displayPopup:false})} style={{ alignSelf:'flex-end',marginRight:40}}>
                                <Text style={styles.popupBtn}>{resources.getString("ok")}</Text>
                               </TouchableOpacity>
 
@@ -323,7 +324,10 @@ const styles = StyleSheet.create({
          marginTop: 22
       },
    modalView: {
-       alignSelf:'center',marginTop:'40%',justifyContent:'flex-start',
+       borderWidth:1,borderColor:'lightgray',
+       alignSelf:'center',
+       marginTop:200,
+       justifyContent:'center',
        width:'80%',
        backgroundColor: "white",
        borderRadius: 5,
@@ -340,7 +344,7 @@ const styles = StyleSheet.create({
      },
      popupText: {
        //  color: '#66cc99',
-         fontSize: 18,
+         fontSize: 18,flexWrap:'wrap',
         // fontWeight:'bold'
         alignSelf:'flex-start'
        },
