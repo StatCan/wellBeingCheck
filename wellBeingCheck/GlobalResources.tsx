@@ -328,7 +328,7 @@ export const resources = {
             "faq.category4": "The Results menu",
 
             //category4-Question1
-            "faq.c4.q1": "What does the Results menu tell me? How can I interpret my results?",
+            "faq.c4.q1": "What does the Results menu tell me?",
             "faq.c4.q1.a": "The data visualizations on the Results menu display a snapshot of your self-assessed feelings and how they relate to what you are doing, who you are with, and where you are.\n\n"+
             "For ease of interpretation, your activities and companions have been grouped. Please note, all questions about feelings are based on a scale of 0 meaning ‘not at all’, and 10 meaning ’completely’. Based on this, a high rating of feeling happy compared to a high rating of feeling anxious would be interpreted quite differently.\n\n"+
             "These results are reported in real time and have not been validated by Statistics Canada. Caution should be exercised when interpreting the data.",
@@ -737,7 +737,7 @@ export const resources = {
             "faq.category4": "Le menu Résultats",
 
             //category4-Question1
-            "faq.c4.q1": "Que me dit le menu Résultats? Comment puis-je interpréter mes résultats?",
+            "faq.c4.q1": "Que me dit le menu Résultats?",
             "faq.c4.q1.a": "Les visualisations de données du menu Résultats donnent un aperçu de vos sentiments autoévalués et de leur lien avec ce que vous faites, les personnes avec qui vous êtes et l’endroit où vous vous trouvez.\n\n"+
             "Pour faciliter l’interprétation, vos activités et vos compagnons ont été regroupés. Veuillez noter que toutes les questions relatives aux sentiments sont évaluées sur une échelle de 0 à 10, où 0 signifie « pas du tout » et 10 signifie « complètement ». En fonction de cette échelle, une cote élevée de sentiment de bonheur par rapport à une cote élevée de sentiment d’anxiété serait interprétée de manière très différente.\n\n"+
             "Ces résultats sont communiqués en temps réel et n’ont pas été validés par Statistique Canada. Il convient d’être prudent lors de l’interprétation des données.",
@@ -779,7 +779,7 @@ export const resources = {
             //Network error jwt
             "network.error.jwt":"Erreur d'initialisation JSON Web Token , s'il vous plaît réessayer plus tard.",
             "network.error.pwd":"Erreur d'initialisation de mot de passe, s'il vous plaît reéssayer plus tard.",
-            "network.error.general":"Erreur de reseau, s'il vous plaît réessayer plus tard.",
+            "network.error.general":"Erreur de reseau, s'il fvous plaît réessayer plus tard.",
            
             //Notification Request
             "notification.resquest.title":"",

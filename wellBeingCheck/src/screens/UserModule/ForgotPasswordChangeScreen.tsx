@@ -384,7 +384,7 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
             />
 
             <View style={styles.footer}>
-              <Button color={theme.colors.secondary} mode="contained" onPress={() => this.props.navigation.navigate('ForgotPasswordScreen')} style={styles.btnCancel}>
+              <Button color={theme.colors.secondary} mode="contained" onPress={() => this.props.navigation.navigate('LoginScreen')} style={styles.btnCancel}>
                 <Text style={styles.whiteText}>{resources.getString("gl.cancel")}</Text>
               </Button>
               <Button color={newTheme.colors.primary} mode="contained" onPress={this._onSignUpPressed} style={styles.btnNext}>
