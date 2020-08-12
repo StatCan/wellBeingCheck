@@ -48,26 +48,26 @@ export const resources = {
                 `Information collected through the use of the Well-being Check App falls under the authority of the Statistics Act which ensures that any information provided will be kept confidential and will only be used for statistical and research purposes.  It is your responsibility to keep your phone and access to the App secure. We do not recommend removing software restrictions and limitations imposed by the official operating system of your device. Doing so could compromise your phone’s security features and the security/confidentiality of the information collected by this App. \n\n` +
 
                 `General terms and conditions \n` +
-                `The following Terms and Conditions arise from Statistics Canada's character as a public institution that must operate transparently and in conformity with the provisions of federal legislation, notably, but not exclusively, the Statistics Act, the Privacy Act and the Access to Information Act. Statistics Canada's principal objective is to increase the range and depth of statistical information on Canada's population, society and economy available to the Canadian public. \n` +
-                `http://www.statcan.gc.ca/eng/reference/terms-conditions/general \n\n` +
+                `The following Terms and Conditions arise from Statistics Canada's character as a public institution that must operate transparently and in conformity with the provisions of federal legislation, notably, but not exclusively, the Statistics Act, the Privacy Act and the Access to Information Act. Statistics Canada's principal objective is to increase the range and depth of statistical information on Canada's population, society and economy available to the Canadian public. \n\n` +
+                //`http://www.statcan.gc.ca/eng/reference/terms-conditions/general \n\n` +
 
                 `Modification of Terms and Conditions \n` +
                 `Statistics Canada reserves the right to change these Terms and Conditions in its sole discretion.  Modification of these Terms and Conditions by Statistics Canada will require they are accepted prior to using the App. \n\n` +
 
                 `Privacy notice \n` +
-                `Statistics Canada is committed to respecting the privacy of individuals and businesses—whether they are responding to one of our surveys, providing personal information, purchasing a product or service or using our website. To fulfill this commitment, Statistics Canada has created a Privacy Framework that describes the Approved practices, procedures and governance related to privacy. All personal information collected, used, disclosed or retained by Statistics Canada is protected by the Privacy Act and by the Statistics Act whether it was provided by a respondent or received from a third party.  Privacy and confidentiality of personal information \n` +
-                `http://www.statcan.gc.ca/eng/reference/privacy \n\n` +
+                `Statistics Canada is committed to respecting the privacy of individuals and businesses—whether they are responding to one of our surveys, providing personal information, purchasing a product or service or using our website. To fulfill this commitment, Statistics Canada has created a Privacy Framework that describes the Approved practices, procedures and governance related to privacy. All personal information collected, used, disclosed or retained by Statistics Canada is protected by the Privacy Act and by the Statistics Act whether it was provided by a respondent or received from a third party.  Privacy and confidentiality of personal information \n\n` +
+                //`http://www.statcan.gc.ca/eng/reference/privacy \n\n` +
 
                 `Confidentiality statement \n` +
                 `Information collected through the use of the App falls under the authority of the Statistics Act, which ensures that any information provided will be kept confidential and will only be used for statistical and research purposes. \n\n` +
 
                 `Official language notice \n` +
-                `Statistics Canada respects the Official Languages Act and is committed to ensuring that information products of equal quality are available in both English and French. \n` +
-                `http://www.statcan.gc.ca/eng/sc/blog2 \n\n` +
+                `Statistics Canada respects the Official Languages Act and is committed to ensuring that information products of equal quality are available in both English and French. \n\n` +
+                //`http://www.statcan.gc.ca/eng/sc/blog2 \n\n` +
 
                 `Accessibility notice \n` +
-                `The Government of Canada is committed to achieving a high standard of accessibility as defined in the Standard on Optimizing Website and Applications for Mobile Devices.  In the event of difficulty using our web pages, Applications or device-based mobile Applications, please contact us for assistance or to obtain alternative formats such as regular print, Braille or another appropriate format. \n` +
-                `http://www.statcan.gc.ca/eng/reference/accessnotice \n\n` +
+                `The Government of Canada is committed to achieving a high standard of accessibility as defined in the Standard on Optimizing Website and Applications for Mobile Devices.  In the event of difficulty using our web pages, Applications or device-based mobile Applications, please contact us for assistance or to obtain alternative formats such as regular print, Braille or another appropriate format. \n\n` +
+                //`http://www.statcan.gc.ca/eng/reference/accessnotice \n\n` +
 
                 `Use of content\n` +
                 `The App is not for providing content, but is used to assist in the collection of information. You may not alter the App or the content, or use it for commercial purposes. \n\n` +
@@ -88,8 +88,8 @@ export const resources = {
                 `Information presented by Statistics Canada in this App is subject to the Copyright Act of Canada. \n\n` +
 
                 `Trademark notice \n` +
-                `The official symbols of the Government of Canada, including the Canada Wordmark, the Arms of Canada, and the flag symbol may not be reproduced whether for commercial or non-commercial purposes, without prior written authorization. \n` +
-                `http://www.statcan.gc.ca/eng/reference/copyright \n\n` +
+                `The official symbols of the Government of Canada, including the Canada Wordmark, the Arms of Canada, and the flag symbol may not be reproduced whether for commercial or non-commercial purposes, without prior written authorization. \n\n` +
+               // `http://www.statcan.gc.ca/eng/reference/copyright \n\n` +
 
                 `No warranties \n` +
                 `The information in this App is provided ‘as is’, and Statistics Canada makes no representations or warranties whatsoever with respect to the information, whether express or implied, in relation to the information and expressly disclaims any implied warranty of merchantability or fitness for a particular purpose of the information. \n\n` +
@@ -345,7 +345,7 @@ export const resources = {
             "faq.c5.q2.a": "If you are experiencing display issues, crashes, or other bugs please contact us at 1-877-949-9492.",
             
             //category5-Question4
-            "faq.c5.q3": "Can I download the app on multiple devices and sync it?",
+            "faq.c5.q3": "Can I download the app on multiple devices and sync ƒit?",
             "faq.c5.q3.a": "The app does not have syncing capabilities.\n\n"+
             "Your participation in the study is based on the device you first downloaded the Well-being Check app on. If you download the app on a different device, you will be identified as a new user for security purposes and your previous responses will no longer be accessible to you through the Results menu.",
 
@@ -453,8 +453,8 @@ export const resources = {
                 `La collecte des renseignements effectuée au moyen de l’application Bilan bien-être est régie par la Loi sur la statistique, en vertu de laquelle tout renseignement fourni demeure confidentiel et n’est utilisé qu’à des fins statistiques et de recherche. Il vous incombe de protéger votre téléphone et votre accès à l’application. Nous vous recommandons de ne pas supprimer les restrictions et les limites imposées par le système d’exploitation officiel de votre appareil quant à l’utilisation des logiciels. Cela pourrait compromettre les fonctions de sécurité de votre téléphone ainsi que la sécurité et la confidentialité des renseignements recueillis par l’application. \n\n` +
 
                 `Conditions générales  \n` +
-                `Les Conditions générales énoncées ci-dessous résultent du fait que Statistique Canada, à titre d'organisme public, doit faire preuve de transparence et se conformer aux dispositions des lois fédérales, notamment, mais non exclusivement, la Loi sur la statistiques, la Loi sur la protection des renseignements personnels et la Loi sur l'accès à l'information. L'objectif principal de Statistique Canada est d'accroître la portée et la précision de l'information statistique sur la population, la société et l'économie du Canada mise à la disposition du public canadien. \n` +
-                `http://www.statcan.gc.ca/fra/reference/avis/conditions-generales \n\n` +
+                `Les Conditions générales énoncées ci-dessous résultent du fait que Statistique Canada, à titre d'organisme public, doit faire preuve de transparence et se conformer aux dispositions des lois fédérales, notamment, mais non exclusivement, la Loi sur la statistiques, la Loi sur la protection des renseignements personnels et la Loi sur l'accès à l'information. L'objectif principal de Statistique Canada est d'accroître la portée et la précision de l'information statistique sur la population, la société et l'économie du Canada mise à la disposition du public canadien. \n\n` +
+                //`http://www.statcan.gc.ca/fra/reference/avis/conditions-generales \n\n` +
 
                 `Modification des conditions générales \n` +
                 `Statistique Canada se réserve le droit de modifier les présentes conditions générales à sa seule discrétion. Le cas échéant, il vous faudra accepter toute modification avant de pouvoir utiliser l’application. \n\n` +
@@ -462,19 +462,19 @@ export const resources = {
                 `Avis de confidentialité \n` +
                 `Statistique Canada s’est engagé à protéger les renseignements personnels de toutes les personnes et entreprises, et ce, qu’elles répondent à l’une de ses enquêtes, fournissent des renseignements personnels, achètent un produit ou un service ou utilisent notre site Web. Afin de respecter cet engagement, nous avons élaboré un cadre de protection des renseignements personnels qui décrit les pratiques, les procédures et les mesures de gouvernance approuvées en matière de protection de la vie privée. \n\n` +
 
-                `Tous les renseignements personnels recueillis, utilisés, divulgués ou conservés par Statistique Canada sont protégés en vertu de la Loi sur la protection des renseignements personnels et de la Loi sur la statistique, qu’ils aient été fournis par un répondant ou reçus d’une tierce partie. La protection des renseignements personnels et la confidentialité \n` +
-                `http://www.statcan.gc.ca/fra/reference/privee \n\n` +
+                `Tous les renseignements personnels recueillis, utilisés, divulgués ou conservés par Statistique Canada sont protégés en vertu de la Loi sur la protection des renseignements personnels et de la Loi sur la statistique, qu’ils aient été fournis par un répondant ou reçus d’une tierce partie. La protection des renseignements personnels et la confidentialité \n\n` +
+                //`http://www.statcan.gc.ca/fra/reference/privee \n\n` +
 
                 `Énoncé de confidentialité \n` +
                 `La collecte des renseignements effectuée au moyen de l’application est régie par la Loi sur la statistique, en vertu de laquelle tout renseignement fourni demeure confidentiel et n’est utilisé qu’à des fins statistiques et de recherche. \n\n` +
 
                 `Langues officielles  \n` +
-                `Statistique Canada respecte la Loi sur les langues officielles et s'engage à ce que les produits d'information disponibles soient d'égale qualité en français et en anglais. \n` +
-                `http://www.statcan.gc.ca/fra/rb/blogue2 \n\n` +
+                `Statistique Canada respecte la Loi sur les langues officielles et s'engage à ce que les produits d'information disponibles soient d'égale qualité en français et en anglais. \n\n` +
+               // `http://www.statcan.gc.ca/fra/rb/blogue2 \n\n` +
 
                 `Avis de l’accessibilité \n` +
-                `Le gouvernement du Canada est déterminé à maintenir une norme d'accessibilité élevée conformément à la Norme sur l’optimisation des sites Web et des applications pour appareils mobiles. Veuillez communiquer avec nous si vous éprouvez des difficultés à utiliser nos pages Web, les applications ou les applications mobiles axées sur l'appareil, ou si vous désirez obtenir des formats de substitution comme le caractère ordinaire, le Braille ou un autre format approprié. \n` +
-                `http://www.statcan.gc.ca/fra/reference/avisaccess \n\n` +
+                `Le gouvernement du Canada est déterminé à maintenir une norme d'accessibilité élevée conformément à la Norme sur l’optimisation des sites Web et des applications pour appareils mobiles. Veuillez communiquer avec nous si vous éprouvez des difficultés à utiliser nos pages Web, les applications ou les applications mobiles axées sur l'appareil, ou si vous désirez obtenir des formats de substitution comme le caractère ordinaire, le Braille ou un autre format approprié. \n\n` +
+                //`http://www.statcan.gc.ca/fra/reference/avisaccess \n\n` +
 
                 `Utilisation du contenu \n` +
                 `L’application sert non pas à fournir du contenu, mais bien à recueillir des renseignements. Vous ne pouvez pas modifier l’application ou le contenu ni l’utiliser à des fins commerciales. \n\n` +
@@ -497,8 +497,8 @@ export const resources = {
                 `L’information publiée par Statistique Canada sur l’application est assujettie à la Loi sur le droit d'auteur du Canada. \n\n` +
 
                 `Avis concernant l'image de marque \n` +
-                `La reproduction des symboles officiels du gouvernement du Canada, y compris le mot-symbole « Canada », les armoiries du Canada et le symbole du drapeau, à des fins commerciales ou non commerciales, est interdite sans autorisation écrite au préalable. \n` +
-                `http://www.statcan.gc.ca/fra/reference/droit-auteur \n\n` +
+                `La reproduction des symboles officiels du gouvernement du Canada, y compris le mot-symbole « Canada », les armoiries du Canada et le symbole du drapeau, à des fins commerciales ou non commerciales, est interdite sans autorisation écrite au préalable. \n\n` +
+                //`http://www.statcan.gc.ca/fra/reference/droit-auteur \n\n` +
 
                 `Aucune garantie \n` +
                 `Les renseignements contenus dans cette application sont fournis « tels quels », et Statistique Canada n’en fait aucune représentation et ne donne aucune garantie à leur égard, que ce soit de manière explicite ou implicite, et rejette expressément toute garantie implicite de qualité marchande ou d’adéquation de ces renseignements à une fin particulière. \n\n` +
