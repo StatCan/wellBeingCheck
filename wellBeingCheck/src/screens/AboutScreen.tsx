@@ -304,7 +304,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
   }
 
   handlePhonePress(phone, matchIndex /*: number*/) {
-    Linking.openURL('tel:18779499492');
+    Linking.openURL('tel:1-877-949-9492');
   };
   displayNotificationInfo(){
      global.resetTimer();//global.globalTick=0;

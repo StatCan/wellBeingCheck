@@ -345,7 +345,7 @@ export const resources = {
             "faq.c5.q2.a": "If you are experiencing display issues, crashes, or other bugs please contact us at 1-877-949-9492.",
             
             //category5-Question4
-            "faq.c5.q3": "Can I download the app on multiple devices and sync ƒit?",
+            "faq.c5.q3": "Can I download the app on multiple devices and sync it?",
             "faq.c5.q3.a": "The app does not have syncing capabilities.\n\n"+
             "Your participation in the study is based on the device you first downloaded the Well-being Check app on. If you download the app on a different device, you will be identified as a new user for security purposes and your previous responses will no longer be accessible to you through the Results menu.",
 
@@ -779,7 +779,7 @@ export const resources = {
             //Network error jwt
             "network.error.jwt":"Erreur d'initialisation JSON Web Token , s'il vous plaît réessayer plus tard.",
             "network.error.pwd":"Erreur d'initialisation de mot de passe, s'il vous plaît reéssayer plus tard.",
-            "network.error.general":"Erreur de reseau, s'il fvous plaît réessayer plus tard.",
+            "network.error.general":"Erreur de reseau, s'il vous plaît réessayer plus tard.",
            
             //Notification Request
             "notification.resquest.title":"",
