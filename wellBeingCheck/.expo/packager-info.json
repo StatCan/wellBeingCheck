@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
   "expoServerPort": 19000,
-  "packagerPort": 19004,
-  "packagerPid": 23819,
-  "expoServerNgrokUrl": "https://ef-xvn.saba76.wellbeingcheck.exp.direct",
-  "packagerNgrokUrl": "https://packager.ef-xvn.saba76.wellbeingcheck.exp.direct",
-  "ngrokPid": 23831
+  "packagerPort": 19001,
+  "packagerPid": 2036,
+  "expoServerNgrokUrl": "https://ef-xvn.heikako.wellbeingcheck.exp.direct",
+  "packagerNgrokUrl": "https://packager.ef-xvn.heikako.wellbeingcheck.exp.direct",
+  "ngrokPid": 15192
 }
