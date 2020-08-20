@@ -192,7 +192,7 @@ export const resources = {
             "contact_us": "Contact us",
             "warning": "Warning",
             "match_password_error": "You must provide matched password and secrity question and answer !",
-            "ok": "Ok",
+            //"ok": "Ok",
             "term_and condition_content": "When you continue use this app, that means you automatically agree on this Term and condition.",
 
             "Your feeling this week": "Your feeling this week",
@@ -322,7 +322,7 @@ export const resources = {
              "faq.c3.q6": "Why am I no longer receiving notifications?",
              "faq.c3.q6.a": "If you have not completed a Well-being Check in the past 4 days, the app will stop sending you notifications. You can start receiving notifications again by pressing START, located on the app homepage, and completing a Well-being Check.\n\n"+
              "Well-being Check will send you notifications for up to 30 days total. After this period is complete, your participation in the study has ended and you will no longer receive notifications.\n\n"+
-             "If neither of these scenarios reflect your situation, please contact us at 1-877-949-9492.",
+             "If neither of these scenarios reflect your situation, please contact us at ",
 
             //---------------category4---------------
             "faq.category4": "The Results menu",
@@ -338,11 +338,11 @@ export const resources = {
              
             //category5-Question1
             "faq.c5.q1": "I cannot access the questionnaires or my results",
-            "faq.c5.q1.a": "The questionnaire portal and Results menu require a connection to data or wi-fi to function. If the problem persists after checking your connection, please contact us at 1-877-949-9492.",
+            "faq.c5.q1.a": "The questionnaire portal and Results menu require a connection to data or wi-fi to function. If the problem persists after checking your connection, please contact us at ",
             
             //category5-Question3
             "faq.c5.q2": "I am experiencing other technical difficulties",
-            "faq.c5.q2.a": "If you are experiencing display issues, crashes, or other bugs please contact us at 1-877-949-9492.",
+            "faq.c5.q2.a": "If you are experiencing display issues, crashes, or other bugs please contact us at ",
             
             //category5-Question4
             "faq.c5.q3": "Can I download the app on multiple devices and sync it?",
@@ -598,7 +598,7 @@ export const resources = {
             "contact_us": "Contactez-nous",
             "warning": "Attention",
             "match_password_error": "Vous devez fournir un mot de passe, une question de sécurité et une réponse correspondants!",
-            "ok": "D'accord",
+            //"ok": "D'accord",
             "terms_and_conditions_disagree": "Vous devez accepter les Conditions générales pour utiliser cette application. Sélectionnez « OK » pour modifier vos préférences, ou appelez-nous au 1-877-949-9492 pour obtenir plus de renseignements.",
             "term_and condition_content": "Lorsque vous continuez à utiliser cette application, cela signifie que vous acceptez automatiquement ces conditions générales.",
 
@@ -731,7 +731,7 @@ export const resources = {
              "faq.c3.q6": "Pourquoi ne reçois-je plus de notifications?",
              "faq.c3.q6.a": "Si vous n’avez pas effectué de Bilan bien-être au cours des quatre derniers jours, l’application cessera de vous envoyer des notifications. Vous pouvez recommencer à recevoir des notifications en appuyant sur COMMENCER, situé sur la page d’accueil de l’application, et en remplissant un Bilan bien-être.\n\n"+
              "Le Bilan bien-être vous enverra des notifications pour une durée totale de 30 jours maximum. Au terme de cette période, votre participation à l’enquête est terminée et vous ne recevrez plus de notifications.\n\n"+
-             "Si aucun de ces scénarios ne correspond à votre situation, veuillez nous contacter au 1-877-949-9492.",
+             "Si aucun de ces scénarios ne correspond à votre situation, veuillez nous contacter au ",
 
             //---------------category4---------------
             "faq.category4": "Le menu Résultats",
@@ -747,11 +747,11 @@ export const resources = {
              
             //category5-Question1
             "faq.c5.q1": "Je ne peux pas accéder aux questionnaires ou à mes résultats",
-            "faq.c5.q1.a": "Le portail du questionnaire et le menu Résultats nécessitent une connexion aux données ou une connexion Wi-Fi pour fonctionner. Si le problème persiste après avoir vérifié votre connexion, veuillez nous contacter au 1-877-949-9492.",
+            "faq.c5.q1.a": "Le portail du questionnaire et le menu Résultats nécessitent une connexion aux données ou une connexion Wi-Fi pour fonctionner. Si le problème persiste après avoir vérifié votre connexion, veuillez nous contacter au ",
             
             //category5-Question3
             "faq.c5.q2": "Je rencontre d’autres difficultés techniques",
-            "faq.c5.q2.a": "Si vous rencontrez des problèmes d’affichage, des pannes ou d’autres bogues, veuillez nous contacter au 1-877-949-9492.",
+            "faq.c5.q2.a": "Si vous rencontrez des problèmes d’affichage, des pannes ou d’autres bogues, veuillez nous contacter au ",
             
             //category5-Question4
             "faq.c5.q3": "Puis-je télécharger l’application sur plusieurs appareils et la synchroniser?",

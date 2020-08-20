@@ -190,8 +190,6 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                         { pattern: /Énoncé de confidentialité|Langues officielles  |Avis de l’accessibilité|Utilisation du contenu/, style: styles.bold },
                         { pattern: /Use of content|Code d’identification unique |Lois applicables |Limitation de la responsabilité/, style: styles.bold },
                         { pattern: /Avis de divulgations|Droit d’auteur |Avis concernant l'image de marque|Aucune garantie|Indemnité|Restrictions|Modification et accès|Propriété|Maintenance et soutien/, style: styles.bold },
-
-
                         { type: 'url', style: styles.url, onPress: this.handleUrlPress },
 
                       ]
@@ -203,7 +201,6 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                 </Text>
               </Paragraph>
             </ScrollView>
-
 
         </SafeAreaView>
               <Modal animationType="slide" transparent={true} style={{flex:1,alignItems:'center',justifyContent:'center',borderColor:'blue'}}

@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, PanResponder, Alert, BackHandler, Linking, } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, PanResponder, Alert, BackHandler, Linking, TouchableOpacity } from 'react-native';
 import Button from '../components/Button';
 import { Provider as PaperProvider, Title, List, Paragraph } from 'react-native-paper';
 import { newTheme } from '../core/theme';
@@ -127,24 +127,24 @@ class AboutScreen extends React.Component<Props, AboutState> {
     return true;
   }
   _onNextBtnHandle = () => {
-   global.resetTimer();// global.globalTick=0;
+    global.resetTimer();// global.globalTick=0;
     this.props.navigation.navigate('Dashboard');
   }
 
-//   _handleAccordian=()=>
-//   this.setState({
-// switch (key) {
-//   case value:
-    
-//     break;
+  //   _handleAccordian=()=>
+  //   this.setState({
+  // switch (key) {
+  //   case value:
 
-//   default:
-//     break;
-// }
+  //     break;
+
+  //   default:
+  //     break;
+  // }
 
 
 
-//   });
+  //   });
 
   _handleFaqMainExpand = () =>
     this.setState({
@@ -305,20 +305,21 @@ class AboutScreen extends React.Component<Props, AboutState> {
 
   handlePhonePress(phone, matchIndex /*: number*/) {
     Linking.openURL('tel:1-877-949-9492');
+    //  ('tel:555-867-5309')
   };
-  displayNotificationInfo(){
-     global.resetTimer();//global.globalTick=0;
-     let msg1='PingNum:'+global.pingNum+'\n';
-     msg1+='Awake:'+global.awakeHour+'\n';
-     msg1+='Sleep:'+global.sleepHour+'\n';
-     msg1+='LastDay:'+global.lastDate.toDateString()+'\n';
-     let msg2='';
-     let list=global.schedules;
-     for(let i=0;i<list.length;i++){
-            msg2+=list[i].Datetime.toString()+'\n';
-     }
-     let msg=msg1+msg2;
-     alert(msg);
+  displayNotificationInfo() {
+    global.resetTimer();//global.globalTick=0;
+    let msg1 = 'PingNum:' + global.pingNum + '\n';
+    msg1 += 'Awake:' + global.awakeHour + '\n';
+    msg1 += 'Sleep:' + global.sleepHour + '\n';
+    msg1 += 'LastDay:' + global.lastDate.toDateString() + '\n';
+    let msg2 = '';
+    let list = global.schedules;
+    for (let i = 0; i < list.length; i++) {
+      msg2 += list[i].Datetime.toString() + '\n';
+    }
+    let msg = msg1 + msg2;
+    alert(msg);
   }
   render() {
     return (
@@ -326,9 +327,9 @@ class AboutScreen extends React.Component<Props, AboutState> {
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
         <AppBanner />
         <BackgroundWhite>
-          <View style={styles.logo_container} 
-           {...global.panResponder.panHandlers}
-            >
+          <View style={styles.logo_container}
+            {...global.panResponder.panHandlers}
+          >
             <LogoClearSmall />
           </View>
           <SafeAreaView style={styles.container}>
@@ -337,13 +338,13 @@ class AboutScreen extends React.Component<Props, AboutState> {
             >
               <List.Section>
                 <View style={styles.faqView}
-                {...global.panResponder.panHandlers}
+                  {...global.panResponder.panHandlers}
                 >
                   <List.Accordion
                     title={resources.getString("faq.title")}
                     expanded={this.state.faqMainExpanded}
                     onPress={this._handleFaqMainExpand}
-                    //numberOfLines={titleNumberOfLines}
+                  //numberOfLines={titleNumberOfLines}
                   >
                     {/* Category 1 */}
                     <View style={styles.faqViewAns}>
@@ -480,20 +481,20 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           onPress={this._handleFaqC2Q4Expand}
                           titleNumberOfLines={3}
                         >
-                            <ParsedText
-                              style={styles.faqListItem}
-                              parse={
-                                [
-                                  { pattern: /Statistics Act/, style: styles.italic },
-                                  { pattern: /Loi sur la statistique/, style: styles.italic },
-                                ]
-                              }
-                              childrenProps={{ allowFontScaling: false }}
-                            >
+                          <ParsedText
+                            style={styles.faqListItem}
+                            parse={
+                              [
+                                { pattern: /Statistics Act/, style: styles.italic },
+                                { pattern: /Loi sur la statistique/, style: styles.italic },
+                              ]
+                            }
+                            childrenProps={{ allowFontScaling: false }}
+                          >
 
-                               {resources.getString("faq.c2.q4.a")}
+                            {resources.getString("faq.c2.q4.a")}
 
-                            </ParsedText>
+                          </ParsedText>
 
                         </List.Accordion>
                         <List.Accordion
@@ -605,17 +606,15 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           titleNumberOfLines={3}
                         >
                           <View>
-                            <ParsedText
-                              style={styles.faqListItem}
-                              parse={
-                                [
-                                  { type: 'phone', style: styles.phone, onPress: this.handlePhonePress },
-                                ]
-                              }
-                              childrenProps={{ allowFontScaling: false }}
-                            >
-                              {resources.getString("faq.c3.q6.a")}
-                            </ParsedText>
+
+                            <Text style={styles.faqListItem}>
+                              <Text>{resources.getString("faq.c3.q6.a")}
+                              </Text>
+                              <Text style={styles.faqPhone} 
+                                onPress={() => Linking.openURL('tel:18779499492')}>
+                                1-877-949-9492
+                            </Text>
+                            </Text>
                           </View>
                         </List.Accordion>
                       </List.Accordion>
@@ -656,19 +655,13 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           onPress={this._handleFaqC5Q1Expand}
                           titleNumberOfLines={3}
                         >
-
                           <View>
-                            <ParsedText
-                              style={styles.faqListItem}
-                              parse={
-                                [
-                                  { type: 'phone', style: styles.phone, onPress: this.handlePhonePress },
-                                ]
-                              }
-                              childrenProps={{ allowFontScaling: false }}
-                            >
-                              {resources.getString("faq.c5.q1.a")}
-                            </ParsedText>
+                            <Text style={styles.faqListItem}>
+                              <Text > {resources.getString("faq.c5.q1.a")}</Text>
+                              <Text style={styles.faqPhone}
+                                onPress={() => Linking.openURL('tel:18779499492')}>
+                                1-877-949-9492</Text>
+                            </Text>
                           </View>
                         </List.Accordion>
                         <List.Accordion
@@ -678,17 +671,13 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           titleNumberOfLines={3}
                         >
                           <View>
-                            <ParsedText
-                              style={styles.faqListItem}
-                              parse={
-                                [
-                                  { type: 'phone', style: styles.phone, onPress: this.handlePhonePress },
-                                ]
-                              }
-                              childrenProps={{ allowFontScaling: false }}
-                            >
-                              {resources.getString("faq.c5.q2.a")}
-                            </ParsedText>
+                            <Text style={styles.faqListItem}>
+                              <Text> {resources.getString("faq.c5.q2.a")}
+                              </Text>
+                              <Text style={styles.faqPhone}
+                                onPress={() => Linking.openURL('tel:18779499492')}>
+                                1-877-949-9492</Text>
+                            </Text>
                           </View>
                         </List.Accordion>
                         <List.Accordion
@@ -727,7 +716,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                 </View>
               </List.Section>
               <Title style={styles.title}>{resources.getString("about_title")}</Title>
-              <View style={styles.content} 
+              <View style={styles.content}
 
               >
                 <Paragraph style={styles.paragraph}>
@@ -761,7 +750,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
 
         </BackgroundWhite>
 
-        <Button style={styles.btnNext}  
+        <Button style={styles.btnNext}
           mode="contained"
           onPress={this._onNextBtnHandle}>
           <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
@@ -788,7 +777,8 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderColor: '#f8f8f8',
     borderWidth: 2,
-    padding: 10,
+    marginLeft: 10,
+    //padding: 10,
     backgroundColor: '#f8f8f8'
   },
   faqView: {
@@ -822,6 +812,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
     marginLeft: 20,
+  },
+  faqPhone: {
+    borderStyle: 'solid',
+    borderColor: '#f8f8f8',
+    borderWidth: 2,
+    marginLeft: 10,
+    backgroundColor: '#f8f8f8'
   },
   title: {
     //marginTop: 10,
