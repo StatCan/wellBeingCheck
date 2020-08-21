@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Linking, SafeAreaView, ScrollView, PanResponder, Alert, BackHandler } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Linking, SafeAreaView, ScrollView, PanResponder, Alert, BackHandler, Image } from 'react-native';
 import Button from '../components/Button';
 import { Provider as PaperProvider, Title } from 'react-native-paper';
 import { newTheme } from '../core/theme';
@@ -52,7 +52,12 @@ class ContactUsScreen extends React.Component<Props> {
               <View style={styles.logo_container} 
                 {...global.panResponder.panHandlers}
                >
-                <LogoClearSmall />
+                {/* <LogoClearSmall /> */}
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')}
+                            style={{ marginLeft: 5, marginTop: 10,marginBottom:5 }}>
+                <Image source={require('../assets/WellnessCheckLogo.png')}
+                       style={{ width: 38, height: 38 }} />
+            </TouchableOpacity>
               </View>
               <Title style={styles.title}  
               {...global.panResponder.panHandlers}

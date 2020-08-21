@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, PanResponder, Alert, BackHandler, Linking, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, PanResponder, Alert, BackHandler, Linking, TouchableOpacity,Image } from 'react-native';
 import Button from '../components/Button';
 import { Provider as PaperProvider, Title, List, Paragraph } from 'react-native-paper';
 import { newTheme } from '../core/theme';
@@ -328,9 +328,13 @@ class AboutScreen extends React.Component<Props, AboutState> {
         <AppBanner />
         <BackgroundWhite>
           <View style={styles.logo_container}
-            {...global.panResponder.panHandlers}
-          >
-            <LogoClearSmall />
+            {...global.panResponder.panHandlers}>
+            {/* <LogoClearSmall/> */}
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')}
+                            style={{ marginLeft: 5, marginTop: 10,marginBottom:5 }}>
+                <Image source={require('../assets/WellnessCheckLogo.png')}
+                       style={{ width: 38, height: 38 }} />
+            </TouchableOpacity>
           </View>
           <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}
