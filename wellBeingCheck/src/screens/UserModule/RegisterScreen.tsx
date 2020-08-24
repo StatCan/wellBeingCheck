@@ -331,7 +331,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                     error={!!this.state.passwordError}
                     errorText={this.state.passwordError}
                     secureTextEntry={this.state.passwordIsHidden}
-                    onFocus={()=>{console.log('retriving:'+pass);this.setState({password:pass});}}
+                    onFocus={()=>{console.log('retriving:'+pass);if(this.state.passwordIsHidden)this.setState({password:pass});}}
                     onBlur={()=>{pass=this.state.password;console.log('saving:'+pass);}}
                   />
                 </View>
