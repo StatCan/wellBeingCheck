@@ -1,6 +1,6 @@
 
 import React, { memo } from 'react';
-import { Picker, View, Text, StyleSheet, TouchableOpacity, Modal, SafeAreaView, ScrollView, Alert } from 'react-native';
+import { Picker, View, Text, StyleSheet, TouchableOpacity, Modal, SafeAreaView, ScrollView, Alert,Platform } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Background from '../../components/Background';
 import Button from '../../components/Button';
@@ -300,7 +300,7 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
     const passValSpecial =  (!/[@!#$%^&*(),.?:{}|<>]/.test(text));
     const passValLower =  (!/[a-z]/.test(text)) ? false : true;
     const passValNumber =  (!/[0-9]/.test(text)) ? false : true;
-    if(text!='' && this.state.passwordIsHidden){
+    if(Platform.OS == 'ios' && text!='' && this.state.passwordIsHidden){
         console.log('Pass:'+pass+'->'+text);text=pass+text;pass='';console.log('Input:'+text);}
     this.setState({ password: text });
     this.setState({ pasVal_length: pasValLength });

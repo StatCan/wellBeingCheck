@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Picker, View, Text, StyleSheet, TouchableOpacity, Modal, SafeAreaView, ScrollView, BackHandler } from 'react-native';
+import { Picker, View, Text, StyleSheet, TouchableOpacity, Modal, SafeAreaView, ScrollView, BackHandler,Platform } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Background from '../../components/Background';
 import Button from '../../components/Button';
@@ -284,7 +284,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     const passValSpecial =  (!/[@!#$%^&*(),.?:{}|<>]/.test(text))?false : true;
     const passValLower =  (!/[a-z]/.test(text)) ? false : true;
     const passValNumber =  (!/[0-9]/.test(text)) ? false : true;
-    if(text!='' && this.state.passwordIsHidden){
+    if(Platform.OS == 'ios' && text!='' && this.state.passwordIsHidden){
     console.log('Pass:'+pass+'->'+text);text=pass+text;pass='';console.log('Input:'+text);}
     this.setState({ password: text });
     this.setState({ pasVal_length: pasValLength });
