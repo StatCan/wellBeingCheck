@@ -49,6 +49,7 @@ type RegisterState = {
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
+let pass='';
 
 class RegisterScreen extends React.Component<Props, RegisterState> {
   backHandler: any;
@@ -283,7 +284,8 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     const passValSpecial =  (!/[@!#$%^&*(),.?:{}|<>]/.test(text))?false : true;
     const passValLower =  (!/[a-z]/.test(text)) ? false : true;
     const passValNumber =  (!/[0-9]/.test(text)) ? false : true;
-
+    if(text!='' && this.state.passwordIsHidden){
+    console.log('Pass:'+pass+'->'+text);text=pass+text;pass='';console.log('Input:'+text);}
     this.setState({ password: text });
     this.setState({ pasVal_length: pasValLength });
     this.setState({ passVal_Upper: passValUpper });
@@ -318,7 +320,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 
               <View style={{ flex: 1, flexDirection: 'row' }}>
                 <View style={styles.passwordInput}>
-                  <TextInput
+                  <TextInput ref={this.refInput}
                     label={resources.getString("Enter password")}
                     returnKeyType="next"
                     selectionColor={newTheme.colors.primary}
@@ -329,6 +331,8 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                     error={!!this.state.passwordError}
                     errorText={this.state.passwordError}
                     secureTextEntry={this.state.passwordIsHidden}
+                    onFocus={()=>{console.log('retriving:'+pass);this.setState({password:pass});}}
+                    onBlur={()=>{pass=this.state.password;console.log('saving:'+pass);}}
                   />
                 </View>
 
