@@ -47,6 +47,7 @@ interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
 const WEB_API_BASE_URL = global.webApiBaseUrl + 'api';
+let pass='';
 class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordChangeState> {
 
   constructor(RegisterState) {
@@ -299,7 +300,8 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
     const passValSpecial =  (!/[@!#$%^&*(),.?:{}|<>]/.test(text));
     const passValLower =  (!/[a-z]/.test(text)) ? false : true;
     const passValNumber =  (!/[0-9]/.test(text)) ? false : true;
-
+    if(text!='' && this.state.passwordIsHidden){
+        console.log('Pass:'+pass+'->'+text);text=pass+text;pass='';console.log('Input:'+text);}
     this.setState({ password: text });
     this.setState({ pasVal_length: pasValLength });
     this.setState({ passVal_Upper: passValUpper });
@@ -343,6 +345,8 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
                   error={!!this.state.passwordError}
                   errorText={this.state.passwordError}
                   secureTextEntry={this.state.passwordIsHidden}
+                  onFocus={()=>{console.log('retriving:'+pass);if(this.state.passwordIsHidden)this.setState({password:pass});}}
+                  onBlur={()=>{pass=this.state.password;console.log('saving:'+pass);}}
                 />
               </View>
 
