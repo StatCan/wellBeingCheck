@@ -284,8 +284,12 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     const passValSpecial =  (!/[@!#$%^&*(),.?:{}|<>]/.test(text))?false : true;
     const passValLower =  (!/[a-z]/.test(text)) ? false : true;
     const passValNumber =  (!/[0-9]/.test(text)) ? false : true;
-    if(Platform.OS == 'ios' && text!='' && this.state.passwordIsHidden){
-    console.log('Pass:'+pass+'->'+text);text=pass+text;pass='';console.log('Input:'+text);}
+
+ //   if(Platform.OS == 'ios' && text!='' && this.state.passwordIsHidden){
+ //   console.log('Pass:'+pass+'->Text:'+text+'->Satet:'+this.state.password);
+ //            text=pass+text;pass='';
+ //   }
+
     this.setState({ password: text });
     this.setState({ pasVal_length: pasValLength });
     this.setState({ passVal_Upper: passValUpper });
