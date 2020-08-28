@@ -49,7 +49,7 @@ type RegisterState = {
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
-let pass='';
+let pass='';let justFocused=false;
 
 class RegisterScreen extends React.Component<Props, RegisterState> {
   backHandler: any;
@@ -285,10 +285,10 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     const passValLower =  (!/[a-z]/.test(text)) ? false : true;
     const passValNumber =  (!/[0-9]/.test(text)) ? false : true;
 
- //   if(Platform.OS == 'ios' && text!='' && this.state.passwordIsHidden){
- //   console.log('Pass:'+pass+'->Text:'+text+'->Satet:'+this.state.password);
- //            text=pass+text;pass='';
- //   }
+    if(Platform.OS == 'ios' && text!='' && this.state.passwordIsHidden){
+      console.log('Pass:'+pass+'->Text:'+text+'->State:'+this.state.password);
+             text=pass+text;pass='';
+      }
 
     this.setState({ password: text });
     this.setState({ pasVal_length: pasValLength });
@@ -306,7 +306,13 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
       this.setState({ passwordError: passwordErrorText });
     }
   }
-
+ keyPressed=(e)=>{
+      if(Platform.OS == 'ios' && this.state.passwordIsHidden){
+      let ch=e.nativeEvent.key;
+      console.log('Key Press:'+ch);
+       if(ch==='Backspace' && justFocused){pass='';console.log('Backspace clicked new pass='+pass);}
+       justFocused=false;}
+  }
   render() {
     return (
       <PaperProvider theme={newTheme}>
@@ -335,8 +341,9 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                     error={!!this.state.passwordError}
                     errorText={this.state.passwordError}
                     secureTextEntry={this.state.passwordIsHidden}
-                    onFocus={()=>{console.log('retriving:'+pass);if(this.state.passwordIsHidden)this.setState({password:pass});}}
-                    onBlur={()=>{pass=this.state.password;console.log('saving:'+pass);}}
+                    onFocus={()=>{justFocused=true;console.log('retriving:'+pass+'JustFocused:'+justFocused);if(this.state.passwordIsHidden)this.setState({password:pass});}}
+                    onEndEditing={()=>{console.log('End editing');pass=this.state.password;console.log('saving:'+pass);}}
+                    onKeyPress={(e)=>this.keyPressed(e)}
                   />
                 </View>
 
