@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
   image: {
     width: 200,
     height: 200,
-    marginBottom: 1,resizeMode: 'contain',flex:1,
   },
 });
 
