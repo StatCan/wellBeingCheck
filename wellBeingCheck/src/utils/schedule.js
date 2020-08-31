@@ -83,6 +83,7 @@ setupNotification = async (datetime,title,message) => {
     {
       title: title,
       body: message,
+      data: JSON.stringify({scheduledTime:scheduledTime}),   //Test only
       ios: { sound: true },
       android: {
         "channelId": "survey-messages"
@@ -119,6 +120,9 @@ askPermissions = async () => {
 //cancell all notifications which were setup before
 function cancellAllSchedules(){
      Notifications.cancelAllScheduledNotificationsAsync();
+      if (Platform.OS === 'android') {
+         Notifications.deleteChannelAndroidAsync('survey-messages').then(()=>{console.log('channel was cancelled');});
+      }
 }
 //Cancel a notification by notificationId
 export function cancelSchedule(localNotificationId){
@@ -246,7 +250,9 @@ export async function setupSchedules(affectCurrent=false){
                 }
                 else {
                     let affectedDay=f.AffectedDay; let leftOverCount=count- f.PassedCount;let passedList = f.PassedList;
-                    let ddd =parseInt((lastDate - affectedDay)/ (1000 * 60 * 60 * 24), 10); if (ddd == 30) leftOverCount = leftOverCount - 1;
+                    console.log('leftover:'+leftOverCount+'='+count+'-'+f.PassedCount);
+                    let ddd =parseInt((lastDate - affectedDay)/ (1000 * 60 * 60 * 24), 10); if (ddd == 30) leftOverCount = leftOverCount - 1;  //because survey A already conducted 1
+
                     console.log('Setup notification will affect current day:'+affectedDay.toString()+'->'+leftOverCount);
                     let days = getFollowingDays(affectedDay,lastDate,true,4,false);
                     if(days.length>0){

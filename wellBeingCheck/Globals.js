@@ -60,6 +60,8 @@ global.busy=8;
 global.fetchCount=8;
 global.curDayPassed =[];
 
+global.received='';  //test only
+
 global.globalTimer =null;
 global.globalTick=0;
 global.globalTimeOutCallback=null;

@@ -141,13 +141,16 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           global.notificationState=notificationState;
           let surveyCount=await AsyncStorage.getItem('SurveyCount');
           if(surveyCount==null)surveyCount=0;else surveyCount=parseInt(surveyCount);global.surveyCount=surveyCount;
-
+  let received=await AsyncStorage.getItem('Received');if(received!=null)global.received=received;
           console.log('Current version:'+pkg.expo.version+' Culture:'+resources.culture+'  NotificationState:'+global.notificationState+' SurveyCount:'+global.surveyCount);
           this._bootstrap();
         };
   onNotification(n) {
-       console.log('received notification:'+n.title);
+     //  console.log('received notification:'+JSON.stringify(n));
+        let json = n.data; console.log(n.notificationId+':'+json.scheduledTime);
        //this.props.navigation.navigate('Dashboard');
+       global.received+=global.received=n.notificationId+':'+json.scheduledTime+'\r\n';
+       AsyncStorage.setItem('Received',global.received);
        }
 
   async getCulture(){
@@ -163,6 +166,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
   componentDidMount() {Notifications.addListener(this.onNotification);this.checkUpgrade();}
   async checkUpgrade(){
       console.log('Check upgrade');
+      Notifications.cancelAllScheduledNotificationsAsync();
       if(global.hasImage==1){
           let currentVersion=await AsyncStorage.getItem('CurrentVersion');console.log('currentVersion:'+currentVersion);
           if(currentVersion==null ||(currentVersion!=null && currentVersion!=pkg.expo.version)){

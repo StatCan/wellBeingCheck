@@ -38,7 +38,16 @@ class ContactUsScreen extends React.Component<Props> {
    global.resetTimer();//  global.globalTick=0;
     this.props.navigation.navigate('Dashboard');
   }
-
+ printLog=()=>{
+      let list=global.schedules;let str='';
+               for(let i=0;i<list.length;i++){
+                 str+=list[i].Datetime+'\r\n';
+               }
+      alert(str);
+ }
+  printLog1=()=>{
+       alert(global.received);
+  }
   render() {
     return (
       <PaperProvider theme={newTheme}>
@@ -88,11 +97,23 @@ class ContactUsScreen extends React.Component<Props> {
             </ScrollView>
           </SafeAreaView>
         </BackgroundWhite>
+        <View style={{flexDirection:'row',justifyContent:'space-around'}}>
+         <Button style={styles.btnNext}
+                  mode="contained"
+                  onPress={this.printLog}>
+                  <Text style={styles.btnText}>LogS</Text>
+                </Button>
+                 <Button style={styles.btnNext}
+                                  mode="contained"
+                                  onPress={this.printLog1}>
+                                  <Text style={styles.btnText}>LogR</Text>
+                                </Button>
         <Button style={styles.btnNext}
           mode="contained"
           onPress={this._onNextBtnHandle}>
           <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
         </Button>
+        </View>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
       </PaperProvider >
     );
