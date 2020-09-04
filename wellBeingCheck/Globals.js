@@ -61,6 +61,7 @@ global.fetchCount=8;
 global.curDayPassed =[];
 
 global.received='';  //test only
+global.sendouts='';   //test only
 
 global.globalTimer =null;
 global.globalTick=0;

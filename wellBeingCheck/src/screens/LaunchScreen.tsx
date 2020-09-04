@@ -143,13 +143,17 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           if(surveyCount==null)surveyCount=0;else surveyCount=parseInt(surveyCount);global.surveyCount=surveyCount;
   let received=await AsyncStorage.getItem('Received');if(received!=null)global.received=received;
           console.log('Current version:'+pkg.expo.version+' Culture:'+resources.culture+'  NotificationState:'+global.notificationState+' SurveyCount:'+global.surveyCount);
+
+      let sendouts=await AsyncStorage.getItem('Sendouts');
+      if(sendouts!=null)global.sendouts=sendouts;
+
           this._bootstrap();
         };
   onNotification(n) {
      //  console.log('received notification:'+JSON.stringify(n));
         let json = n.data; console.log(n.notificationId+':'+json.scheduledTime);
        //this.props.navigation.navigate('Dashboard');
-       global.received+=global.received=n.notificationId+':'+json.scheduledTime+'\r\n';
+       global.received+=global.received=n.notificationId+':'+new Date(json.scheduledTime)+'\r\n';
        AsyncStorage.setItem('Received',global.received);
        }
 

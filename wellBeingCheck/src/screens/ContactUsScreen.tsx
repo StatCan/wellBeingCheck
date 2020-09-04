@@ -39,14 +39,17 @@ class ContactUsScreen extends React.Component<Props> {
     this.props.navigation.navigate('Dashboard');
   }
  printLog=()=>{
-      let list=global.schedules;let str='';
+      let list=global.schedules;let str='Calculated:\r\n';
                for(let i=0;i<list.length;i++){
-                 str+=list[i].Datetime+'\r\n';
+                 str+=new Date(list[i].Datetime)+'\r\n';
                }
       alert(str);
  }
+ printLogo=()=>{
+        alert('Scheduled:\r\n'+global.sendouts);
+  }
   printLog1=()=>{
-       alert(global.received);
+       alert('Received:\r\n'+global.received);
   }
   render() {
     return (
@@ -101,8 +104,13 @@ class ContactUsScreen extends React.Component<Props> {
          <Button style={styles.btnNext}
                   mode="contained"
                   onPress={this.printLog}>
-                  <Text style={styles.btnText}>LogS</Text>
+                  <Text style={styles.btnText}>LogC</Text>
                 </Button>
+                 <Button style={styles.btnNext}
+                                  mode="contained"
+                                  onPress={this.printLogo}>
+                                  <Text style={styles.btnText}>LogS</Text>
+                                </Button>
                  <Button style={styles.btnNext}
                                   mode="contained"
                                   onPress={this.printLog1}>

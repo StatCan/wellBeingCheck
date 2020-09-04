@@ -166,6 +166,7 @@ It has 2 main scenarios: Does lastDate flag exist ?
                  secondly, we still have to calculate how many days of notification need to be appended beside the current day and setup them
 for how to calculate these notification schedule, the next function will get into play*/
 export async function setupSchedules(affectCurrent=false){
+    let sendouts='';//Test only
     let permission=await askPermissions();if(!permission)return;
     let title=resources.getString("scheduleTitle");//   "Scheduled Notification";
     let message=resources.getString("scheduleMessage");//"Scheduled Notification for the Survey!";
@@ -211,7 +212,7 @@ export async function setupSchedules(affectCurrent=false){
                         schedules[index].Datetime = ss;
                  }
                  let notificationId=await setupNotification(ss,title,message);
-                 console.log('notificationId:'+notificationId+'->'+ss.toString());
+                 console.log('notificationId:'+notificationId+'->'+ss.toString());sendouts+=notificationId+':'+ss.toString()+'\r\n';
              });
              let warningNotificationId=await setupWarning(dt,title,lastMessage);
              var l=lastDate.toString();console.log('Last day:'+l);
@@ -295,7 +296,7 @@ export async function setupSchedules(affectCurrent=false){
                             ss.setMinutes(mm);schedules[index].Datetime = ss;
                          }
                          let notificationId=await setupNotification(ss,title,message);
-                         console.log('notificationId:'+notificationId+'->'+ss.toString());
+                         console.log('notificationId:'+notificationId+'->'+ss.toString());sendouts+=notificationId+':'+ss.toString()+'\r\n';
                     });
 
                     let dt=new Date(day5);dt.setHours(sleep-2);
@@ -346,7 +347,7 @@ export async function setupSchedules(affectCurrent=false){
                                 ss.setMinutes(mm);schedules[index].Datetime = ss;
                            }
                            let notificationId=await setupNotification(ss,title,message);
-                           console.log('notificationId:'+notificationId+'->'+ss.toString());
+                           console.log('notificationId:'+notificationId+'->'+ss.toString());sendouts+=notificationId+':'+ss.toString()+'\r\n';
                       });
                      let dt=new Date(day5);dt.setHours(sleep-2);
                      let warningNotificationId=await setupWarning(dt,title,lastMessage);
@@ -392,7 +393,7 @@ export async function setupSchedules(affectCurrent=false){
                           ss.setMinutes(mm);schedules[index].Datetime = ss;
                        }
                        let notificationId=await setupNotification(ss,title,message);
-                       console.log('notificationId:'+notificationId+'->'+ss.toString());
+                       console.log('notificationId:'+notificationId+'->'+ss.toString());sendouts+=notificationId+':'+ss.toString()+'\r\n';
                   });
                  let dt=new Date(day5);dt.setHours(sleep-2);
                  let warningNotificationId=await setupWarning(dt,title,lastMessage);
@@ -405,6 +406,8 @@ export async function setupSchedules(affectCurrent=false){
              }
     }
     }
+
+    global.sendouts=sendouts; AsyncStorage.setItem('Sendouts', sendouts);
 }
 /*Main function to calculate the notificationschedule, the parameters are used to indicate the schedule date, awake hour,sleep hour,how many times of notification for this day, and current time
 the algorithm will not arrange any notification for the time which has been passed for the day(time<current), for detail see the work flowpdf file*/
