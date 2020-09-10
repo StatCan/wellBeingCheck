@@ -50,7 +50,7 @@
     "jest": "^25.1.0",
     "jest-expo": "~36.0.0",
     "jetifier": "~1.6.4",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "react-native-typescript-transformer": "^1.2.13",
     "ts-jest": "^25.2.1",
     "typescript": "^3.8.3"
