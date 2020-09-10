@@ -57,7 +57,7 @@ const TimePicker = (props) => {
                      //locale="en_GB" this in case we need to have 24 hours clock for iOS
                  />
              </View>;
-});
+},[props.isVisible]);
 
   return (
    <NameDisplay />
