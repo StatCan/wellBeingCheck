@@ -38,19 +38,7 @@ class ContactUsScreen extends React.Component<Props> {
    global.resetTimer();//  global.globalTick=0;
     this.props.navigation.navigate('Dashboard');
   }
- printLog=()=>{
-      let list=global.schedules;let str='Calculated:\r\n';
-               for(let i=0;i<list.length;i++){
-                 str+=new Date(list[i].Datetime)+'\r\n';
-               }
-      alert(str);
- }
- printLogo=()=>{
-        alert('Scheduled:\r\n'+global.sendouts);
-  }
-  printLog1=()=>{
-       alert('Received:\r\n'+global.received);
-  }
+
   render() {
     return (
       <PaperProvider theme={newTheme}>
@@ -100,28 +88,13 @@ class ContactUsScreen extends React.Component<Props> {
             </ScrollView>
           </SafeAreaView>
         </BackgroundWhite>
-        <View style={{flexDirection:'row',justifyContent:'space-around'}}>
-         <Button style={styles.btnNext}
-                  mode="contained"
-                  onPress={this.printLog}>
-                  <Text style={styles.btnText}>LogC</Text>
-                </Button>
-                 <Button style={styles.btnNext}
-                                  mode="contained"
-                                  onPress={this.printLogo}>
-                                  <Text style={styles.btnText}>LogS</Text>
-                                </Button>
-                 <Button style={styles.btnNext}
-                                  mode="contained"
-                                  onPress={this.printLog1}>
-                                  <Text style={styles.btnText}>LogR</Text>
-                                </Button>
+
         <Button style={styles.btnNext}
           mode="contained"
           onPress={this._onNextBtnHandle}>
           <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
         </Button>
-        </View>
+
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
       </PaperProvider >
     );
@@ -176,3 +149,46 @@ const styles = StyleSheet.create({
 
 export default memo(ContactUsScreen);
 
+
+
+//printLog=()=>{
+//      let list=global.schedules;let str='Calculated:\r\n';
+//               for(let i=0;i<list.length;i++){
+//                 str+=new Date(list[i].Datetime)+'\r\n';
+//               }
+//      alert(str);
+// }
+// printLogo=()=>{
+//        alert('Scheduled:\r\n'+global.sendouts);
+//  }
+//  printLog1=()=>{
+//       alert('Received:\r\n'+global.received);
+//  }
+
+
+//  <Button style={styles.btnNext}
+//                  mode="contained"
+//                  onPress={this.printLog}>
+//                  <Text style={styles.btnText}>LogC</Text>
+//                </Button>
+//                 <Button style={styles.btnNext}
+//                                  mode="contained"
+//                                  onPress={this.printLogo}>
+//                                  <Text style={styles.btnText}>LogS</Text>
+//                                </Button>
+//                 <Button style={styles.btnNext}
+//                                  mode="contained"
+//                                  onPress={this.printLog1}>
+//                                  <Text style={styles.btnText}>LogR</Text>
+//                                </Button>
+
+
+
+//<View style={{flexDirection:'row',justifyContent:'space-around'}}>
+//
+//        <Button style={styles.btnNext}
+//          mode="contained"
+//          onPress={this._onNextBtnHandle}>
+//          <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
+//        </Button>
+//        </View>

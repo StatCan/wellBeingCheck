@@ -120,9 +120,9 @@ askPermissions = async () => {
 //cancell all notifications which were setup before
 function cancellAllSchedules(){
      Notifications.cancelAllScheduledNotificationsAsync();
-      if (Platform.OS === 'android') {
-         Notifications.deleteChannelAndroidAsync('survey-messages').then(()=>{console.log('channel was cancelled');});
-      }
+//      if (Platform.OS === 'android') {
+//         Notifications.deleteChannelAndroidAsync('survey-messages').then(()=>{console.log('channel was cancelled');});
+//      }
 }
 //Cancel a notification by notificationId
 export function cancelSchedule(localNotificationId){
