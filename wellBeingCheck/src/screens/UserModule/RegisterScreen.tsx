@@ -308,7 +308,12 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
           <SafeAreaView style={styles.container}>
             <View style={{ flexDirection: 'row', width: '100%', height: 24, marginTop: 0, marginBottom: 10, justifyContent: 'space-between' }}>
               <LogoClearSmall />
-              <TouchableOpacity onPress={() => this.toggleLanguage()} style={{ alignSelf: 'flex-end', marginRight: 0 }}><Text>{resources.getString("Language")}</Text></TouchableOpacity>
+              <TouchableOpacity onPress={() => this.toggleLanguage()} style={{ alignSelf: 'flex-end', marginRight: 0 }}
+              accessible={true}
+              accessibilityRole="button"
+              >
+                
+                <Text>{resources.getString("Language")}</Text></TouchableOpacity>
             </View>
             <ScrollView style={styles.scrollView}>
 
