@@ -290,12 +290,13 @@ class Dashboard extends React.Component<Props, HomeState> {
       .catch(err => { console.log(err) })
   }
   async conductSurvey() {
+  if(this.state.showThankYou){console.log('too quick!!!!!!!');return;}
      this.setState({ loaded: true });global.loading=true;
        let isConnected = await checkConnection();
        if (!isConnected) { Alert.alert('',resources.getString('offline')); this.setState({ loaded: false }); return; }
        let n=await this.getConfig();
 
-       console.log('deviceId:'+global.userToken+'    password:'+global.password);
+       console.log('deviceId:'+global.userToken+'    password:'+global.password+'------->'+global.fetchAction);
        if(n){global.fetchAction=true;this.props.navigation.navigate('EQSurveyScreen');}
        else {Alert.alert('',resources.getString("securityIssue"));this.setState({ loaded: false }); return;}
        this.setState({loaded:false});
