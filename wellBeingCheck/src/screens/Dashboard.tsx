@@ -307,14 +307,22 @@ class Dashboard extends React.Component<Props, HomeState> {
       <PaperProvider theme={newTheme}>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
         <Background>
-          <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
-            <TouchableOpacity style={{ marginLeft: 5, marginTop: 50 }}><Image source={require('../assets/WellnessCheckLogo.png')} style={{ width: 38, height: 38 }} /></TouchableOpacity>
+          <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}
+                accessible={false}
+                >
+            <TouchableOpacity style={{ marginLeft: 5, marginTop: 50 }} >
+              <Image source={require('../assets/WellnessCheckLogo.png')} style={{ width: 38, height: 38 }} />
+            </TouchableOpacity>
 
             {/*-----------Setting button using UX logo ic_setting.png--------*/}
             <View>
               <View>
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen', { refresh: this._refresh })}
-                  style={{ marginRight: 5, marginTop: 50 }}>
+                  style={{ marginRight: 5, marginTop: 50 }}
+                  accessible={true}
+                  accessibilityLabel={resources.getString("settings")}
+                  accessibilityRole="button"
+                  >
                   <Image source={require('../assets/ic_setting.png')} />
                 </TouchableOpacity>
               </View>
@@ -329,8 +337,15 @@ class Dashboard extends React.Component<Props, HomeState> {
 
               <View style={styles.outer}>
                  <View style={styles.inner}>
-                    <TouchableOpacity onPress={() => this.conductSurvey()} style={{ flex: 0, justifyContent: 'center',width:'90%',height:'90%' }}>
-                      <Text style={styles.startButtonText}>{resources.getString("start_survey")}</Text>
+                    <TouchableOpacity onPress={() => this.conductSurvey()} 
+                    style={{ flex: 0, justifyContent: 'center',width:'90%',height:'90%' }}
+                    accessible={true}
+                    accessibilityLabel={resources.getString("start_survey")}
+                    accessibilityRole="button"
+                    >
+                      <Text style={styles.startButtonText}
+                      accessible={false}
+                      >{resources.getString("start_survey")}</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -349,14 +364,20 @@ class Dashboard extends React.Component<Props, HomeState> {
                     <TouchableOpacity 
                     onPress={() => { global.globalTick=0; 
                     console.log('time out issue testing'); 
-                      
-                        this.props.navigation.navigate('AboutScreen')}}
-                      style={styles.smallButton}>
+                    this.props.navigation.navigate('AboutScreen')}}
+                    style={styles.smallButton}
+                    accessible={true}
+                    accessibilityRole="button"
+                    accessibilityLabel={resources.getString("about")}
+                    >
                       <Image source={require('../assets/ic_wbc_about_survey.png')} />
+                     {/* <Text style={styles.HomeMenuButton}> Information</Text> */}
                     </TouchableOpacity>
                   </View>
                   <View>
-                    <Text style={styles.smallButtonText}>{resources.getString("about")}</Text>
+                    <Text style={styles.smallButtonText}
+                      accessible={false}
+                    >{resources.getString("about")}</Text>
                   </View>
                 </View>
               </View>
@@ -366,12 +387,20 @@ class Dashboard extends React.Component<Props, HomeState> {
 
                 <View>
                   <View>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('ContactUsScreen')} style={styles.smallButton}>
+                    <TouchableOpacity 
+                      onPress={() => this.props.navigation.navigate('ContactUsScreen')} 
+                      style={styles.smallButton}
+                      accessible={true}
+                      accessibilityRole="button"
+                      accessibilityLabel={resources.getString("contact_us")}>
                       <Image source={require('../assets/ic_wbc_contact_us.png')} />
                     </TouchableOpacity>
                   </View>
                   <View>
-                    <Text style={styles.smallButtonText}>{resources.getString("contact_us")}</Text>
+                    <Text 
+                    style={styles.smallButtonText}
+                    accessible={false}
+                    >{resources.getString("contact_us")}</Text>
                   </View>
                 </View>
               </View>
@@ -387,12 +416,19 @@ class Dashboard extends React.Component<Props, HomeState> {
                       else Alert.alert('', resources.getString("NoDataAlert"));
                     }
                     }
-                      style={styles.smallButton}>
+                      style={styles.smallButton}
+                      accessible={true}
+                      accessibilityRole="button"
+                      accessibilityLabel={resources.getString("result")}
+                      >
                       <Image source={require('../assets/ic_wbc_dashboard.png')} />
                     </TouchableOpacity>
                   </View>
                   <View>
-                    <Text style={this.state.disabled?styles.smallButtonTextDis:styles.smallButtonText}>{resources.getString("result")}</Text>
+                    <Text style={this.state.disabled?styles.smallButtonTextDis:styles.smallButtonText}
+                      accessible={false}
+                    
+                    >{resources.getString("result")}</Text>
                   </View>
                 </View>
               </View>
@@ -531,7 +567,13 @@ const styles = StyleSheet.create({
       color: 'gray',
       fontSize: 15,
       textAlign: 'center'
-    }
+    },
+    HomeMenuButton: {
+      color: '#000000',
+      fontSize: 15,
+      textAlign: 'center',
+      marginTop: 30,
+    },
 });
 
 export default memo(Dashboard);

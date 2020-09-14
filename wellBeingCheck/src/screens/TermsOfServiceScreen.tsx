@@ -153,7 +153,10 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
 
           <View style={styles.headerContainer}>
             <LogoClearSmall />
-            <TouchableOpacity onPress={() => this.toggleLanguage()} style={{ alignSelf: 'flex-end', marginRight: 0 }}>
+            <TouchableOpacity onPress={() => this.toggleLanguage()} style={{ alignSelf: 'flex-end', marginRight: 0 }}
+            accessibilityRole='button'
+            accessible={true}
+            >
               <Text >{resources.getString("Language")}</Text></TouchableOpacity>
           </View>
 

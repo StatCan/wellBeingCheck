@@ -39,7 +39,11 @@ class DeclineScreen extends React.Component<Props> {
                 <Title style={styles.title}>{resources.getString("message")}</Title>
                 <View style={styles.content}>
                   <Text style={styles.content_title}>{resources.getString("declinemsg1")}</Text>
-                  <TouchableOpacity onPress={() => Linking.openURL('tel:18779499492')}>
+                  <TouchableOpacity onPress={() => Linking.openURL('tel:18779499492')}
+                    accessible={true}
+                    accessibilityRole="link"
+                    accessibilityLabel="18779499492"
+                  >
                     <Text style={styles.text}>1-877-949-9492</Text></TouchableOpacity>
                     <Text style={styles.content_title}>{resources.getString("declinemsg2")}</Text>
                 </View>
@@ -47,11 +51,17 @@ class DeclineScreen extends React.Component<Props> {
             </ScrollView>
           </SafeAreaView>
         </BackgroundWhite>
+        <View>
         <Button style={styles.btnNext}
           mode="contained"
-          onPress={this._onNextBtnHandle}>
-          <Text style={styles.btnText}>{resources.getString("ok")}</Text>
+          onPress={this._onNextBtnHandle}
+          >
+          <Text style={styles.btnText} 
+          accessible={true}
+          accessibilityRole="button"
+          >{resources.getString("ok")}</Text>
         </Button>
+        </View>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
       </PaperProvider >
     );

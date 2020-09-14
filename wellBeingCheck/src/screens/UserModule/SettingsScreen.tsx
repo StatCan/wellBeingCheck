@@ -508,6 +508,10 @@ console.log('current View-------------------------------:' + global.currentView)
             <ScrollView>
               <List.Section style={styles.mainStyle}>
                 <List.Item
+                accessible={true}
+                accessibilityRole="switch"
+                accessibilityLabel="Notifications"
+
                   title={resources.getString("notifications")}
                   left={() => <List.Icon icon="bell-alert" />}
                   right={() => <Switch
@@ -555,6 +559,9 @@ console.log('current View-------------------------------:' + global.currentView)
                 /> */}
                 <View>
                   <List.Item
+                  accessible={true}
+                  accessibilityRole="timer"
+                  
                     style={styles.listStyle1a}
                     title={
                       <ParsedText
@@ -601,11 +608,9 @@ console.log('current View-------------------------------:' + global.currentView)
                                             </Modal>
                                            </View>
                   }
-
-
-
-
                   <List.Item
+                   accessible={true}
+                   accessibilityRole="timer"
                     style={styles.listStyle1b}
                     title={
                       <ParsedText
@@ -656,6 +661,8 @@ console.log('current View-------------------------------:' + global.currentView)
 
                 <Divider></Divider>
                 <List.Item
+                 accessible={true}
+                 accessibilityRole="link"
                   left={() => <List.Icon icon={require('../../assets/ic_wbc_language.png')} />}
                   title={resources.getString("language")}
                   onPress={this._showLanguageModal}
@@ -664,6 +671,8 @@ console.log('current View-------------------------------:' + global.currentView)
                 />
                 <Divider></Divider>
                 <List.Item
+                 accessible={true}
+                 accessibilityRole="link"
                   left={() => <List.Icon icon={require('../../assets/ic_wbc_terms_condition.png')} />}
                   title={resources.getString("terms_and_conditions")}
                   onPress={this._openTermsConditions}

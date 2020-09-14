@@ -146,6 +146,10 @@ async onTestD(){
               <View style={styles.toggleLink}>
                 <TouchableOpacity
                   onPress={() => this.toggleLanguage()}
+                  accessible={true}
+                  accessibilityRole="link"
+                  accessibilityHint="language toggle"
+                
                 >
                   <Text>{resources.getString("Language")}</Text>
                 </TouchableOpacity>
@@ -155,7 +159,11 @@ async onTestD(){
               </View>
 
              <View style={styles.logo}>
-                <Text style={{ fontSize:20}}>
+                <Text style={{ fontSize:20}} 
+                accessible={true}
+                accessibilityRole="text"
+                accessibilityHint="application name"
+                >
                   {resources.getString("Well-Being Check")}
                 </Text>
               </View>
@@ -178,6 +186,10 @@ async onTestD(){
                     style={styles.passwordEyeIconBg}
                     onPress={this._togglePasswordHidden}
                     activeOpacity={1}
+                    accessible={true}
+                    accessibilityRole="button"
+                    accessibilityHint="hide or show password"
+                    accessibilityLabel="hide or show password"
                   >
                     <Feather
                       style={styles.passwordEyeIcon}
@@ -190,6 +202,10 @@ async onTestD(){
               <View style={styles.forgotPassword}>
                 <TouchableOpacity
                   onPress={() => this.props.navigation.navigate('ForgotPasswordScreen')}
+                  accessible={true}
+                    accessibilityRole="link"
+                    accessibilityHint="Forgot Password recovery"
+                    accessibilityLabel="forget password" 
                 >
                   <Text style={styles.label}>{resources.getString("login.forgot_password")}</Text>
                 </TouchableOpacity>
