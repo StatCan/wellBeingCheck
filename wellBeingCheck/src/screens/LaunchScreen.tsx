@@ -151,7 +151,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
         };
   onNotification(n) {
      //  console.log('received notification:'+JSON.stringify(n));
-        let json = n.data; console.log(n.notificationId+':'+json.scheduledTime);
+        let json = n.data; console.log(n.notificationId+':'+new Date(json.scheduledTime));
        //this.props.navigation.navigate('Dashboard');
        global.received+=global.received=n.notificationId+':'+new Date(json.scheduledTime)+'\r\n';
        AsyncStorage.setItem('Received',global.received);
