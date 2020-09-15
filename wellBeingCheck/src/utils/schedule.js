@@ -78,11 +78,12 @@ setupNotification = async (datetime,title,message) => {
       vibrate: true,
     });
   }
-  let scheduledTime = new Date(datetime);
+  let scheduledTime = new Date(datetime);let msg=message+':'+new Date(datetime);
+ // console.log(msg);
   let notificationId =await Notifications.scheduleLocalNotificationAsync(
     {
       title: title,
-      body: message,
+      body: msg,
       data: JSON.stringify({scheduledTime:scheduledTime}),   //Test only
       ios: { sound: true },
       android: {
@@ -234,6 +235,7 @@ export async function setupSchedules(affectCurrent=false){
             if(affectCurrent){  //for change setting,  This part is hard core
                 let f=getAffectedDay(currentDateTime,count);  let day5=getNextDay(currentDateTime);
                 if(f==null){  //No affected day, go normal schedule
+                    console.log('No affected day');
                     let tomorrow = new Date(currentDateTime); tomorrow.setDate(tomorrow.getDate() + 1); tomorrow.setHours(0); tomorrow.setMinutes(0); tomorrow.setSeconds(0); tomorrow.setMilliseconds(0);
                     let days = getFollowingDays(tomorrow,lastDate,true,4,false);
                     if(days.length>0){
