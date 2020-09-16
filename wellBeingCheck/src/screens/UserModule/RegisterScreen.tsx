@@ -286,7 +286,8 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
         const passValNumber =  (/[0-9]/.test(text));
 
         if(Platform.OS == 'ios' && text!='' && this.state.passwordIsHidden){
-            console.log('Pass:'+pass+'->'+text);text=pass+text;pass='';console.log('Input:'+text);}
+            text=pass+text;pass='';
+            }
         const isPasswordValid = passwordValidator(text);
         let passwordErrorText = this._getPasswordErrorText(isPasswordValid)
         if (isPasswordValid == 200)passwordErrorText='';
@@ -295,8 +296,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
  keyPressed=(e)=>{
       if(Platform.OS == 'ios' && this.state.passwordIsHidden){
       let ch=e.nativeEvent.key;
-      console.log('Key Press:'+ch);
-       if(ch==='Backspace' && justFocused){pass='';console.log('Backspace clicked new pass='+pass);}
+       if(ch==='Backspace' && justFocused){pass='';}
        justFocused=false;}
   }
   render() {
