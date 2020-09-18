@@ -12,7 +12,9 @@ export class TimePickerKnob extends React.Component {
                         let vs=props.initialValue.split(':');  // console.log(props.initialValue);console.log(vs);
                         if(vs.length=2){
                         h=parseInt(vs[0]);m=parseInt(vs[1]);
-                        if(h>12){h-=12;apm=1;}
+                        if(h==12)apm=1;
+                        else if(h>12){h-=12;apm=1;}
+                        else if(h==0){h=12;apm=0;}
                         }
                         this.state = {
                            currentHour:h,
@@ -122,11 +124,11 @@ export class TimePickerKnob extends React.Component {
             let hourViews=[];
             let mid=this.state.currentHour;
             for(let j=6;j>0;j--){
-               let h=mid-j;if(h<1)h+=12;
+               let h=mid-j;if(h<1)h+=12;    // console.log(h);
                hourViews.push(<View key={h} style={{height:height,justifyContent:'center'}}><Text key={h} style={{fontSize:24}}>{h}</Text></View>);
             }
             for(let j=0;j <6; j++) {
-                 let h=mid+j;if(h>12)h-=12;
+                 let h=mid+j;if(h>12)h-=12;   ///console.log(h);
                  hourViews.push(<View key={h} style={{height:height,justifyContent:'center'}}><Text key={h} style={{fontSize:24}}>{h}</Text></View>
                )
             }
