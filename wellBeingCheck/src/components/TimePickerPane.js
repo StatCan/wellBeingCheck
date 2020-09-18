@@ -131,11 +131,11 @@ export class TimePickerPane extends React.Component {
             let minuteViews=[];
             mid=this.state.currentMinute;
             for(let j=6;j>0;j--){
-                 let m=mid-j;if(m<0)m+=60;console.log(m);
+                 let m=mid-j;if(m<0)m+=60;     //console.log(m);
                  minuteViews.push(<View key={m} style={{height:height,justifyContent:'center'}}><Text key={m} style={{fontSize:24,marginLeft:14}}>{(m < 10 ? '0' : '') + m}</Text></View>);
                         }
             for(let j=0;j <6; j++) {
-                 let m=mid+j;if(m>59)m-=60;console.log(m);
+                 let m=mid+j;if(m>59)m-=60;    //console.log(m);
                  minuteViews.push(<View key={m} style={{height:height,justifyContent:'center'}}><Text key={m} style={{fontSize:24,marginLeft:14}}>{(m < 10 ? '0' : '') + m}</Text></View>);
                  }
 

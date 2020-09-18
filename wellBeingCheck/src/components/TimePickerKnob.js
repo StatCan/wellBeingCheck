@@ -6,10 +6,10 @@ let startApmY=0;
 let height=40;
 
 export class TimePickerKnob extends React.Component {
-    constructor(props) {
+   constructor(props) {
         super(props);
         let h=1,m=0,apm=0;
-                        let vs=props.initialValue.split(':');console.log(props.initialValue);console.log(vs);
+                        let vs=props.initialValue.split(':');  // console.log(props.initialValue);console.log(vs);
                         if(vs.length=2){
                         h=parseInt(vs[0]);m=parseInt(vs[1]);
                         if(h>12){h-=12;apm=1;}
@@ -20,7 +20,16 @@ export class TimePickerKnob extends React.Component {
                            currentApm:apm
                     };
     }
-   confirm(){this.props.onConfirm({Hour:this.state.currentHour,Minute:this.state.currentMinute,Apm:this.state.currentApm})}
+   confirm(){
+     let h=this.state.currentHour,m=parseInt(this.state.currentMinute),apm=this.state.currentApm;
+     if(h==12){
+            if(apm==0){
+                h=0;
+            }
+         }
+       let ut=this.apmToTime(h,m,apm);
+       this.props.onConfirm({Hour:this.state.currentHour,Minute:this.state.currentMinute,Apm:this.state.currentApm,Time:ut});
+   }
    cancel(){this.props.onCancel();}
    componentDidMount() {
     setTimeout(()=>{
@@ -82,7 +91,25 @@ export class TimePickerKnob extends React.Component {
               //  InteractionManager.runAfterInteractions(() => console.log('scrolling'));
              //   InteractionManager.runAfterInteractions(() => this.sv.scrollTo({ y: index1*40 }))
    }
-
+   apmToTime(h,m,apm){
+      let hh=h;
+      if(h==12){
+          if(apm==0)hh=0;
+      }
+      else {
+         if(apm==1)hh=h+12;
+      }
+      return hh+":"+(m < 10 ? '0' : '') + m;
+   }
+   timeToApm(t){
+       let vs=t.split(':');
+       let h=1,m=0,apm=0;
+       if(vs.length=2){
+           let h=vs[0];let m=vs[1];
+           if(h>=12){h-=12;apm=1;}
+           return {Hour:h,Minute:m,Apm:apm}
+       }
+   }
 
     render() {
             let dialers=[];
