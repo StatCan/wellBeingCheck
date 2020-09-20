@@ -160,6 +160,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
       finalStatus = status;
       Notifications.cancelAllScheduledNotificationsAsync();
+       global.sendouts='';AsyncStorage.setItem('Sendouts', sendouts);
     }
     if (finalStatus !== "granted") {
 
@@ -167,6 +168,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       if (global.debugMode) console.log("Notifications Permission Not Granted");
       this.setState({ notificationState: false });
       Notifications.cancelAllScheduledNotificationsAsync();
+       global.sendouts='';AsyncStorage.setItem('Sendouts', sendouts);
 
       Alert.alert(
         resources.getString("notification.resquest.title"),
@@ -527,16 +529,17 @@ console.log('current View-------------------------------:' + global.currentView)
                       if (!this.state.notificationState) {
                         console.log("Switch ON: Asking for Permissions");
                         this.askPermissions();
-                        this._isDirty = true;
+                        this._isDirty = true;dirty=true;
                         this.setState({
                           titleBackgroundColor: "#000"
                         });
                       }
 
                       if (this.state.notificationState) {
-                        console.log("Switch OFF: Disabling Notifications");
+                        console.log("Switch OFF: Disabling Notifications, all notifications were removed");
                         Notifications.cancelAllScheduledNotificationsAsync();
-                        this._isDirty = true;
+                        global.sendouts='';AsyncStorage.setItem('Sendouts', sendouts);
+                        this._isDirty = true;dirty=true;
                         this.setState({
                           titleBackgroundColor: "#777"
                         });

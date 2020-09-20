@@ -107,11 +107,13 @@ askPermissions = async () => {
       const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
       finalStatus = status;
       Notifications.cancelAllScheduledNotificationsAsync();
+      global.sendouts='';AsyncStorage.setItem('Sendouts', sendouts);
     }
     if (finalStatus !== "granted") {
       // In final status, we asked for permission of the OS and we were denied, so we need to ask
       if (global.debugMode) console.log("Notifications Permission Not Granted");
       Notifications.cancelAllScheduledNotificationsAsync();
+       global.sendouts='';AsyncStorage.setItem('Sendouts', sendouts);
     }else{
       if (global.debugMode) console.log("Notifications Permission Granted");
       result=true;
@@ -121,6 +123,7 @@ askPermissions = async () => {
 //cancell all notifications which were setup before
 function cancellAllSchedules(){
      Notifications.cancelAllScheduledNotificationsAsync();
+     global.sendouts='';AsyncStorage.setItem('Sendouts', sendouts);
 //      if (Platform.OS === 'android') {
 //         Notifications.deleteChannelAndroidAsync('survey-messages').then(()=>{console.log('channel was cancelled');});
 //      }
