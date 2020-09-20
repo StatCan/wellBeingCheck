@@ -262,7 +262,11 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
       >
         <View style={{ flexDirection: 'row', justifyContent: 'space-between',alignItems:'center',height: 38,marginTop:30,}}>
           <TouchableOpacity onPress={() => this.props.navigation.navigate('Dashboard')}
-                            style={{ marginLeft: 5, marginTop: 10,marginBottom:5 }}>
+                            style={{ marginLeft: 5, marginTop: 10,marginBottom:5 }}
+                            accessible={true}
+                            accessibilityRole='button'
+                            accessibilityLabel={resources.getString("Accessiblity.ReturnLogoButton")}
+                            >
                 <Image source={require('../../assets/WellnessCheckLogo.png')}
                        style={{ width: 38, height: 38 }} />
           </TouchableOpacity>

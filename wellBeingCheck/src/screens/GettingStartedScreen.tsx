@@ -80,9 +80,12 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
         <SafeAreaView style={styles.container}>
           <View style={styles.headerContainer}>
             <LogoClearSmall />
-            <TouchableOpacity onPress={() => this.toggleLanguage()} style={{ alignSelf: 'flex-end', marginRight: 0 }}
+            <TouchableOpacity 
+            onPress={() => this.toggleLanguage()} 
+            style={{ alignSelf: 'flex-end', marginRight: 0 }}
             accessibilityRole='button'
             accessible={true}
+            accessibilityLabel={resources.getString("Language")}
             >
               <Text>{resources.getString("Language")}</Text>
             </TouchableOpacity>
