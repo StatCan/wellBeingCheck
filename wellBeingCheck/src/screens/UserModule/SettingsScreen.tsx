@@ -17,7 +17,7 @@ import { Updates } from 'expo';
 import ParsedText from 'react-native-parsed-text';
 
 import {TimePickerPane} from '../../components/TimePickerPane';
-import {TimePickerKnob} from '../../components/TimePickerKnob';
+
 var scheduledDateArray = new Array();
 
 type SettingsState = {
