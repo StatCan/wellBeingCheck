@@ -147,9 +147,8 @@ async onTestD(){
                 <TouchableOpacity
                   onPress={() => this.toggleLanguage()}
                   accessible={true}
-                  accessibilityRole="link"
+                  accessibilityRole="button"
                   accessibilityHint="language toggle"
-                
                 >
                   <Text>{resources.getString("Language")}</Text>
                 </TouchableOpacity>
@@ -203,9 +202,9 @@ async onTestD(){
                 <TouchableOpacity
                   onPress={() => this.props.navigation.navigate('ForgotPasswordScreen')}
                   accessible={true}
-                    accessibilityRole="link"
+                    accessibilityRole="button"
                     accessibilityHint="Forgot Password recovery"
-                    accessibilityLabel="forget password" 
+                    accessibilityLabel="forget password"
                 >
                   <Text style={styles.label}>{resources.getString("login.forgot_password")}</Text>
                 </TouchableOpacity>

@@ -403,6 +403,8 @@ export const resources = {
              "ok":"OK",
              "declinemsg1": "You must accept Terms and Conditions to use this app. Select “OK” to revise your preferences, or call us at ",
              "declinemsg2": " for more information.",
+             "Accessiblity.ReturnLogoButton":"Return",
+             
 
 
         },
@@ -812,6 +814,7 @@ export const resources = {
                "ok":"D'accord",
                "declinemsg1": "Vous devez accepter les Conditions générales pour utiliser cette application. Sélectionnez « D'accord » pour modifier vos préférences, ou appelez-nous au ",
                "declinemsg2": " pour obtenir plus de renseignements.",
+               "Accessiblity.ReturnLogoButton":"Retour",
 
         }
     }
