@@ -10,6 +10,7 @@ import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-n
 import BackgroundWhite from '../components/BackgroundWhite';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import { Updates } from 'expo';
+import { sendDelayedNotification} from '../utils/schedule';
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
@@ -41,6 +42,9 @@ class ContactUsScreen extends React.Component<Props> {
 printLogo=()=>{
         alert('Scheduled:\r\n'+global.sendouts);
  }
+ printTest=()=>{
+        sendDelayedNotification(new Date(),'Test Notification','When you see it, your setting is good');
+  }
   render() {
     return (
       <PaperProvider theme={newTheme}>
@@ -96,6 +100,11 @@ printLogo=()=>{
               onPress={this.printLogo}>
               <Text style={styles.btnText}>Info</Text>
         </Button>
+         <Button style={styles.btnNext}
+                      mode="contained"
+                      onPress={this.printTest}>
+                      <Text style={styles.btnText}>Test</Text>
+                </Button>
         <Button style={styles.btnNext}
           mode="contained"
           onPress={this._onNextBtnHandle}>

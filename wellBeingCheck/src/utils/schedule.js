@@ -96,6 +96,32 @@ setupNotification = async (datetime,title,message) => {
   );
   return notificationId;
 };
+
+export function sendDelayedNotification(datetime,title,message){
+  if (Platform.OS === 'android') {
+    Notifications.createChannelAndroidAsync('survey-messages', {
+      name: 'Survey messages',
+      sound: true,
+      vibrate: true,
+    });
+  }
+  let scheduledTime = new Date(datetime).getTime() + 5000;
+  Notifications.scheduleLocalNotificationAsync(
+    {
+      title: title,
+      body: message,
+      data:JSON.stringify({scheduledTime:scheduledTime}),
+      ios: { sound: true },
+      android: {
+        "channelId": "survey-messages"
+      }
+    },
+    {
+      time: scheduledTime  //(new Date()).getTime() + 5000
+    }
+  );
+};
+
 //Ask the permission to setup notification, this function return true/false, we can setup notification only when this function return true
 askPermissions = async () => {
     let result=false;
