@@ -78,7 +78,7 @@ setupNotification = async (datetime,title,message) => {
       vibrate: true,
     });
   }
-  let scheduledTime = new Date(datetime);let msg='Info:'+new Date(datetime)+' '+message;
+  let scheduledTime = new Date(datetime);let msg='Info4:'+new Date(datetime)+' '+message;  //4 test only
  // console.log(msg);
   let notificationId =await Notifications.scheduleLocalNotificationAsync(
     {
