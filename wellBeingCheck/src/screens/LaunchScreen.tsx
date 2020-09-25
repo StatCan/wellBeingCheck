@@ -170,7 +170,8 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
   componentDidMount() {Notifications.addListener(this.onNotification);this.checkUpgrade();}
   async checkUpgrade(){
       console.log('Check upgrade');
-      Notifications.cancelAllScheduledNotificationsAsync();
+      //Disable this line to test discontinue notification problem
+   //   Notifications.cancelAllScheduledNotificationsAsync(); global.sendouts='';AsyncStorage.setItem('Sendouts', sendouts);
       if(global.hasImage==1){
           let currentVersion=await AsyncStorage.getItem('CurrentVersion');console.log('currentVersion:'+currentVersion);
           if(currentVersion==null ||(currentVersion!=null && currentVersion!=pkg.expo.version)){
