@@ -141,7 +141,8 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           global.notificationState=notificationState;
           let surveyCount=await AsyncStorage.getItem('SurveyCount');
           if(surveyCount==null)surveyCount=0;else surveyCount=parseInt(surveyCount);global.surveyCount=surveyCount;
-  let received=await AsyncStorage.getItem('Received');if(received!=null)global.received=received;
+          let received=await AsyncStorage.getItem('Received');if(received!=null)global.received=received;
+          global.currentVersion=pkg.expo.version;
           console.log('Current version:'+pkg.expo.version+' Culture:'+resources.culture+'  NotificationState:'+global.notificationState+' SurveyCount:'+global.surveyCount);
 
       let sendouts=await AsyncStorage.getItem('Sendouts');
@@ -170,10 +171,14 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
   componentDidMount() {Notifications.addListener(this.onNotification);this.checkUpgrade();}
   async checkUpgrade(){
       console.log('Check upgrade');
-      //Disable this line to test discontinue notification problem
-   //   Notifications.cancelAllScheduledNotificationsAsync(); global.sendouts='';AsyncStorage.setItem('Sendouts', sendouts);
+      let currentVersion=await AsyncStorage.getItem('CurrentVersion');console.log('currentVersion:'+currentVersion);
+      if(currentVersion==null){
+           console.log('Notification cancelled');
+           Notifications.cancelAllScheduledNotificationsAsync(); global.sendouts='(Re)Install,Cancelled';AsyncStorage.setItem('Sendouts', sendouts);
+           AsyncStorage.setItem('CurrentVersion', pkg.expo.version);
+      }
+
       if(global.hasImage==1){
-          let currentVersion=await AsyncStorage.getItem('CurrentVersion');console.log('currentVersion:'+currentVersion);
           if(currentVersion==null ||(currentVersion!=null && currentVersion!=pkg.expo.version)){
               let isConnected=await checkConnection();
               if(!isConnected){Alert.alert('',resources.getString('offline'));return;}
