@@ -100,11 +100,7 @@ printLogo=()=>{
               onPress={this.printLogo}>
               <Text style={styles.btnText}>Info</Text>
         </Button>
-         <Button style={styles.btnNext}
-                      mode="contained"
-                      onPress={this.printTest}>
-                      <Text style={styles.btnText}>Test</Text>
-                </Button>
+
         <Button style={styles.btnNext}
           mode="contained"
           onPress={this._onNextBtnHandle}>
@@ -198,7 +194,11 @@ export default memo(ContactUsScreen);
 //                                  <Text style={styles.btnText}>LogR</Text>
 //                                </Button>
 
-
+//  <Button style={styles.btnNext}
+//                      mode="contained"
+//                      onPress={this.printTest}>
+//                      <Text style={styles.btnText}>Test</Text>
+//                </Button>
 
 //<View style={{flexDirection:'row',justifyContent:'space-around'}}>
 //
