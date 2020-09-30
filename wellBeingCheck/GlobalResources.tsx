@@ -13,7 +13,7 @@ export const resources = {
             "gl.cancel": "Cancel",
             "gl.decline": "Decline",
             "gl.agree": "Accept",
-            "gl.return": "Return",
+            "gl.return": "Back",
             "answer": "Answer",
             //getting started
             "getting_started": "Getting Started\n",
@@ -232,7 +232,7 @@ export const resources = {
             "contactus_email": "Email",
             "contactus_telephone": "Telephone",
             "contactus_website": "Website",
-            "contactus_mail": "Mail",
+            "contactus_mail": "Mailling address",
             "contactus_text": `Statistics Canada\nAttention of Director Jean Labbé\n150 Tunney’s Pasture Driveway\nOttawa, ON\nK1A 0T6`,
 
             //FAQ
@@ -403,7 +403,7 @@ export const resources = {
              "ok":"OK",
              "declinemsg1": "You must accept Terms and Conditions to use this app. Select “OK” to revise your preferences, or call us at ",
              "declinemsg2": " for more information.",
-             "Accessiblity.ReturnLogoButton":"Return",
+             "Accessiblity.ReturnLogoButton":"Back",
              
 
 
