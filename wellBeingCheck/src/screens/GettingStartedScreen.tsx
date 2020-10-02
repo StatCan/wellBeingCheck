@@ -96,8 +96,8 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
             <Title style={styles.title}
             accessible={true}
             accessibilityRole='text'
-            accessibilityLabel= 'getting started page title'
-            >{resources.getString("getting_started")}</Title>
+            accessibilityLabel= {resources.getString("getting_started_accessibility")} //'getting started page title'
+            >{resources.getString("Accessiblity.getting_started_title")}</Title>
            
            
            

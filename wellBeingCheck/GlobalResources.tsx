@@ -145,36 +145,36 @@ export const resources = {
             "home_first_time_login_content": "Customize the number of notifications and the window of time you receive them in the Settings menu.",
             //about
             "about_title": "",
-            "about_content": `Why we are conducting this study\n`+
-                `The purpose of this study is to better understand the everyday well-being of Canadians by asking about activities and feelings as they are happening. To do this, participants will download an app on their smartphones and answer a few questions at different intervals throughout the day, over a short period of time. The results will help us to find connections between activities and well-being, and be used to develop programs that enhance people’s lives. In the future, an app could be used as a faster and more convenient way to complete other Statistics Canada surveys.  \n\n` +
+            // "about_content": `Why we are conducting this study\n`+
+            //     `The purpose of this study is to better understand the everyday well-being of Canadians by asking about activities and feelings as they are happening. To do this, participants will download an app on their smartphones and answer a few questions at different intervals throughout the day, over a short period of time. The results will help us to find connections between activities and well-being, and be used to develop programs that enhance people’s lives. In the future, an app could be used as a faster and more convenient way to complete other Statistics Canada surveys.  \n\n` +
 
-                `Information may also be used by Statistics Canada for other statistical and research purposes.  \n\n` +
+            //     `Information may also be used by Statistics Canada for other statistical and research purposes.  \n\n` +
 
-                `Notifications \n` +
-                `This app will notify you to complete a Well-being Check 2 to 5 times daily. You can customize these parameters, including when we should not disturb you, at any time in the settings menu on the app’s home page. If you do not customize the parameters, you will receive a default of 2 daily notifications at various times between 08:00 and 22:00. If you do not allow notifications, you can still complete a Well-being Check whenever you like, but the quality of your results may be impacted. \n\n`+
+            //     `Notifications \n` +
+            //     `This app will notify you to complete a Well-being Check 2 to 5 times daily. You can customize these parameters, including when we should not disturb you, at any time in the settings menu on the app’s home page. If you do not customize the parameters, you will receive a default of 2 daily notifications at various times between 08:00 and 22:00. If you do not allow notifications, you can still complete a Well-being Check whenever you like, but the quality of your results may be impacted. \n\n`+
                 
-                `Authorization and confidentiality  \n` +
-                `Data are collected under the authority of the Statistics Act, Revised Statutes of Canada, 1985, Chapter S-19. Your information will be kept strictly confidential.  \n\n` +
+            //     `Authorization and confidentiality  \n` +
+            //     `Data are collected under the authority of the Statistics Act, Revised Statutes of Canada, 1985, Chapter S-19. Your information will be kept strictly confidential.  \n\n` +
 
-                `Record linkages  \n` +
-                `To enhance the data from this survey and to reduce the reporting burden, Statistics Canada may combine the information you provide with other survey or administrative data sources.  \n\n` +
+            //     `Record linkages  \n` +
+            //     `To enhance the data from this survey and to reduce the reporting burden, Statistics Canada may combine the information you provide with other survey or administrative data sources.  \n\n` +
 
-                `Time required to complete this questionnaire  \n` +
-                `This questionnaire will take about 2 minutes to complete.  \n\n` +
+            //     `Time required to complete this questionnaire  \n` +
+            //     `This questionnaire will take about 2 minutes to complete.  \n\n` +
 
-                `Please note that you will not be able to change any information you reported once you have submitted the questionnaire.  \n\n` +
+            //     `Please note that you will not be able to change any information you reported once you have submitted the questionnaire.  \n\n` +
 
-                `To navigate the questionnaire  \n` +
-                `Use the Previous and Next buttons located at the bottom right of each page.  \n\n` +
+            //     `To navigate the questionnaire  \n` +
+            //     `Use the Previous and Next buttons located at the bottom right of each page.  \n\n` +
 
-                `Session timeout  \n` +
-                `After 2 hours of inactivity, your session will time out. You will not be able to access any unsaved information. \n\n` +
+            //     `Session timeout  \n` +
+            //     `After 2 hours of inactivity, your session will time out. You will not be able to access any unsaved information. \n\n` +
 
-                `After 7 minutes of inactivity, Well-Being Check will lock. You will need to enter your password to continue.  \n\n` +
+            //     `After 7 minutes of inactivity, Well-Being Check will lock. You will need to enter your password to continue.  \n\n` +
 
-                `Definitions and explanations  \n` +
-                `A help button is available for certain questions. Press this button for additional information or clarification.\n\n` +
-                `Version`,
+            //     `Definitions and explanations  \n` +
+            //     `A help button is available for certain questions. Press this button for additional information or clarification.\n\n` +
+            //     `Version`,
 
 //
 
@@ -449,9 +449,11 @@ export const resources = {
              "ok":"OK",
              "declinemsg1": "You must accept Terms and Conditions to use this app. Select “OK” to revise your preferences, or call us at ",
              "declinemsg2": " for more information.",
-             "Accessiblity.ReturnLogoButton":"Back",
-             
+             // accessibility bilingual text 
 
+             "Accessiblity.ReturnLogoButton":"Back",
+             "getting_started_accessibility":"Getting Started Page title",
+             "Accessiblity.setting_title":"Parametres titre de la page",
 
         },
         fr: {
@@ -601,35 +603,66 @@ export const resources = {
             "home_first_time_login_content": "Personnalisez le nombre de notifications et l’intervalle de temps  durant lequel vous les recevrez dans le menu des Paramètres.",
             //about
             "about_title": "",
-            "about_content": `Pourquoi nous menons cette étude\n`+
-                `L’objectif de cette enquête est de mieux comprendre le bien-être au quotidien des Canadiens et des Canadiennes en leur demandant de répondre à des questions sur les activités qu’ils entreprennent et les sentiments qu’ils éprouvent en temps réel. Pour ce faire, les participants devront télécharger une application sur leur téléphone intelligent et répondre à quelques questions à divers intervalles au cours de la journée, sur une courte période de temps. Les résultats obtenus nous aideront à établir des liens entre certaines activités et le bien-être, et nous permettront de développer des programmes qui amélioreront la vie des gens. À l’avenir, ce genre d’application pourrait servir à répondre à d’autres enquêtes de Statistique Canada de façon plus rapide et pratique.  \n\n` +
 
-                `Les renseignements recueillis pourraient aussi être utilisés par Statistique Canada à d’autres fins statistiques et de recherche.  \n\n` +
+            // "about_content": `Pourquoi nous menons cette étude\n`+
+            //     `L’objectif de cette enquête est de mieux comprendre le bien-être au quotidien des Canadiens et des Canadiennes en leur demandant de répondre à des questions sur les activités qu’ils entreprennent et les sentiments qu’ils éprouvent en temps réel. Pour ce faire, les participants devront télécharger une application sur leur téléphone intelligent et répondre à quelques questions à divers intervalles au cours de la journée, sur une courte période de temps. Les résultats obtenus nous aideront à établir des liens entre certaines activités et le bien-être, et nous permettront de développer des programmes qui amélioreront la vie des gens. À l’avenir, ce genre d’application pourrait servir à répondre à d’autres enquêtes de Statistique Canada de façon plus rapide et pratique.  \n\n` +
 
-                `Notifications \n` +
-                `Cette application vous enverra une notification pour remplir un Bilan bien-être de 2 à 5 fois par jour. Vous pouvez personnaliser ces paramètres, y compris les moments où vous ne souhaitez pas être dérangé, à tout moment dans le menu des paramètres sur la page d’accueil de l’application. Si vous ne personnalisez pas les paramètres, vous recevrez par défaut 2 notifications à divers moments entre 8 h et 22 h. Si vous n’acceptez pas les notifications, vous pourrez tout de même remplir un Bilan bien-être quand vous le voudrez, mais la qualité de vos résultats pourrait en être affectée. \n\n` +
+            //     `Les renseignements recueillis pourraient aussi être utilisés par Statistique Canada à d’autres fins statistiques et de recherche.  \n\n` +
+
+            //     `Notifications \n` +
+            //     `Cette application vous enverra une notification pour remplir un Bilan bien-être de 2 à 5 fois par jour. Vous pouvez personnaliser ces paramètres, y compris les moments où vous ne souhaitez pas être dérangé, à tout moment dans le menu des paramètres sur la page d’accueil de l’application. Si vous ne personnalisez pas les paramètres, vous recevrez par défaut 2 notifications à divers moments entre 8 h et 22 h. Si vous n’acceptez pas les notifications, vous pourrez tout de même remplir un Bilan bien-être quand vous le voudrez, mais la qualité de vos résultats pourrait en être affectée. \n\n` +
                
-                `Autorisation et confidentialité  \n` +
-                `Ces données sont recueillies en vertu de la Loi sur la statistique, Lois révisées du Canada (1985), chapitre S-19. Vos renseignements demeureront strictement confidentiels.  \n\n` +
+            //     `Autorisation et confidentialité  \n` +
+            //     `Ces données sont recueillies en vertu de la Loi sur la statistique, Lois révisées du Canada (1985), chapitre S-19. Vos renseignements demeureront strictement confidentiels.  \n\n` +
                
-                `Couplages d’enregistrements  \n` +
-                `Afin d’améliorer la qualité des données tirées de cette enquête et de réduire le fardeau de réponse, Statistique Canada pourrait combiner les renseignements que vous fournissez avec ceux provenant d’autres enquêtes ou sources de données administratives.  \n\n` +
+            //     `Couplages d’enregistrements  \n` +
+            //     `Afin d’améliorer la qualité des données tirées de cette enquête et de réduire le fardeau de réponse, Statistique Canada pourrait combiner les renseignements que vous fournissez avec ceux provenant d’autres enquêtes ou sources de données administratives.  \n\n` +
 
-                `Temps requis pour remplir ce questionnaire  \n` +
-                `Ce questionnaire prendra 2 minutes à remplir. Veuillez noter que vous ne serez pas en mesure de modifier les renseignements déclarés une fois votre questionnaire soumis.  \n\n` +
+            //     `Temps requis pour remplir ce questionnaire  \n` +
+            //     `Ce questionnaire prendra 2 minutes à remplir. Veuillez noter que vous ne serez pas en mesure de modifier les renseignements déclarés une fois votre questionnaire soumis.  \n\n` +
 
-                `Pour parcourir le questionnaire \n` +
-                `Utilisez les boutons Précédent et Suivant situés dans le coin inférieur droit de chaque page.  \n\n` +
+            //     `Pour parcourir le questionnaire \n` +
+            //     `Utilisez les boutons Précédent et Suivant situés dans le coin inférieur droit de chaque page.  \n\n` +
 
-                `Délai d’inactivité d’une session \n` +
-                `Après 2 heures d’inactivité, votre session sera interrompue. Vous ne pourrez accéder à aucun renseignement qui n’a pas été sauvegardé.  \n\n` +
+            //     `Délai d’inactivité d’une session \n` +
+            //     `Après 2 heures d’inactivité, votre session sera interrompue. Vous ne pourrez accéder à aucun renseignement qui n’a pas été sauvegardé.  \n\n` +
 
-                `Après 7 minutes d’inactivité, Bilan bien-être se verrouille. Vous devrez entrer votre mot de passe pour continuer.  \n\n` +
+            //     `Après 7 minutes d’inactivité, Bilan bien-être se verrouille. Vous devrez entrer votre mot de passe pour continuer.  \n\n` +
 
-                `Définitions et explications \n` +
-                `Un bouton d’aide est disponible pour certaines questions. Appuyez sur ce bouton pour obtenir plus de renseignements ou des précisions. \n\n`,
-                
-                
+            //     `Définitions et explications \n` +
+            //     `Un bouton d’aide est disponible pour certaines questions. Appuyez sur ce bouton pour obtenir plus de renseignements ou des précisions. \n\n`,
+           
+            "about_content.Study": `Pourquoi nous menons cette étude`,
+            "about_content.Study.a":`L’objectif de cette enquête est de mieux comprendre le bien-être au quotidien des Canadiens et des Canadiennes en leur demandant de répondre à des questions sur les activités qu’ils entreprennent et les sentiments qu’ils éprouvent en temps réel. Pour ce faire, les participants devront télécharger une application sur leur téléphone intelligent et répondre à quelques questions à divers intervalles au cours de la journée, sur une courte période de temps. Les résultats obtenus nous aideront à établir des liens entre certaines activités et le bien-être, et nous permettront de développer des programmes qui amélioreront la vie des gens. À l’avenir, ce genre d’application pourrait servir à répondre à d’autres enquêtes de Statistique Canada de façon plus rapide et pratique.  \n` +
+
+            `Les renseignements recueillis pourraient aussi être utilisés par Statistique Canada à d’autres fins statistiques et de recherche.  \n`,
+
+            "about_content.Notification":`Notifications` ,
+            "about_content.Notification.a":`Cette application vous enverra une notification pour remplir un Bilan bien-être de 2 à 5 fois par jour. Vous pouvez personnaliser ces paramètres, y compris les moments où vous ne souhaitez pas être dérangé, à tout moment dans le menu des paramètres sur la page d’accueil de l’application. Si vous ne personnalisez pas les paramètres, vous recevrez par défaut 2 notifications à divers moments entre 8 h et 22 h. Si vous n’acceptez pas les notifications, vous pourrez tout de même remplir un Bilan bien-être quand vous le voudrez, mais la qualité de vos résultats pourrait en être affectée. \n`,
+
+            "about_content.Authorization": `Autorisation et confidentialité` ,
+            "about_content.Authorization.a":`Ces données sont recueillies en vertu de la Loi sur la statistique, Lois révisées du Canada (1985), chapitre S-19. Vos renseignements demeureront strictement confidentiels. \n`,
+
+            "about_content.linkages":`Couplages d’enregistrements` ,
+            "about_content.linkages.a":`Afin d’améliorer la qualité des données tirées de cette enquête et de réduire le fardeau de réponse, Statistique Canada pourrait combiner les renseignements que vous fournissez avec ceux provenant d’autres enquêtes ou sources de données administratives. \n`,
+
+            "about_content.time":`Temps requis pour remplir ce questionnaire` ,
+            "about_content.time.a":`Ce questionnaire prendra 2 minutes à remplir.  \n` +
+
+            `Veuillez noter que vous ne serez pas en mesure de modifier les renseignements déclarés une fois votre questionnaire soumis.  \n` ,
+
+            "about_content.navigate":`Pour parcourir le questionnaire` ,
+            "about_content.navigate.a":`Utilisez les boutons Précédent et Suivant situés dans le coin inférieur droit de chaque page. \n` ,
+
+            "about_content.timeout":`Délai d’inactivité d’une session` ,
+            "about_content.timeout.a":`Après 2 heures d’inactivité, votre session sera interrompue. Vous ne pourrez accéder à aucun renseignement qui n’a pas été sauvegardé. \n` +
+
+            `Après 7 minutes d’inactivité, Bilan bien-être se verrouille. Vous devrez entrer votre mot de passe pour continuer.  \n` ,
+
+            "about_content.def":`Définitions et explications` ,
+            "about_content.def.a":`Un bouton d’aide est disponible pour certaines questions. Appuyez sur ce bouton pour obtenir plus de renseignements ou des précisions. \n`,
+         
+
             "about_title_two": "FR_Authorization and confidentiality",
             "about_content_two": "FR_Data are collected under the authority Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
             "create_password": "Créer un mot de passe",
@@ -860,7 +893,11 @@ export const resources = {
                "ok":"D'accord",
                "declinemsg1": "Vous devez accepter les Conditions générales pour utiliser cette application. Sélectionnez « D'accord » pour modifier vos préférences, ou appelez-nous au ",
                "declinemsg2": " pour obtenir plus de renseignements.",
+              
                "Accessiblity.ReturnLogoButton":"Retour",
+               "Accessiblity.getting_started_title":"Pour commencer titre de la page",
+               "Accessiblity.setting_title":"Parametres titre de la page"
+
 
         }
     }

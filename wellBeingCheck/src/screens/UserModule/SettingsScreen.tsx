@@ -505,7 +505,11 @@ console.log('current View-------------------------------:' + global.currentView)
         {...global.panResponder.panHandlers}
         >
           <View style={styles.toolbar}>
-            <Text style={styles.toolbarTitle}>{resources.getString("settings")}</Text>
+            <Text style={styles.toolbarTitle}
+             accessible={true}
+             accessibilityRole='text'
+             accessibilityLabel= {resources.getString("Accessiblity.setting_title")} 
+            >{resources.getString("settings")}</Text>
           </View>
           <View style={styles.containerStyle}>
             <ScrollView>
