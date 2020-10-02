@@ -310,7 +310,9 @@ class Dashboard extends React.Component<Props, HomeState> {
           <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}
                 accessible={false}
                 >
-            <TouchableOpacity style={{ marginLeft: 5, marginTop: 50 }} >
+            <TouchableOpacity style={{ marginLeft: 5, marginTop: 50 }} 
+            accessible={false}
+            >
               <Image source={require('../assets/WellnessCheckLogo.png')} style={{ width: 38, height: 38 }} />
             </TouchableOpacity>
 

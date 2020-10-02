@@ -71,22 +71,48 @@ printLogo=()=>{
                 {resources.getString("contactus_title")}</Title>
               <View>
                 <View style={styles.content}>
-                  <Text style={styles.content_title}>{resources.getString("contactus_email")}</Text>
-                  <TouchableOpacity onPress={() => Linking.openURL('mailto:infostats@canada.ca')}><Text style={styles.text}>infostats@canada.ca</Text></TouchableOpacity>
+                  <Text style={styles.content_title}
+                  accessible={true}
+                  accessibilityRole='header'
+                  accessibilityLabel={resources.getString("contactus_email")}
+                  >{resources.getString("contactus_email")}</Text>
+                  <TouchableOpacity onPress={() => Linking.openURL('mailto:infostats@canada.ca')}>
+                    <Text 
+                    style={styles.text}
+                    >infostats@canada.ca</Text>
+                    </TouchableOpacity>
                 </View>
                 <View style={styles.content}>
-                  <Text style={styles.content_title}>{resources.getString("contactus_telephone")}</Text>
+                  <Text style={styles.content_title}
+                  accessible={true}
+                  accessibilityRole='header'
+                  accessibilityLabel={resources.getString("contactus_telephone")}
+                  >{resources.getString("contactus_telephone")}</Text>
                   <TouchableOpacity onPress={() => Linking.openURL('tel:18779499492')}>
                     <Text style={styles.text}>1-877-949-9492</Text></TouchableOpacity>
                 </View>
                 <View style={styles.content}>
-                  <Text style={styles.content_title}>{resources.getString("contactus_website")}</Text>
-                  <TouchableOpacity onPress={() => Linking.openURL('https://www.statcan.gc.ca')}>
-                    <Text style={styles.text}>https://www.statcan.gc.ca</Text>
+                  <Text style={styles.content_title}
+                   accessible={true}
+                   accessibilityRole='header'
+                   accessibilityLabel={resources.getString("contactus_website")}
+                  >{resources.getString("contactus_website")}</Text>
+                  <TouchableOpacity onPress={() => Linking.openURL('https://www.statcan.gc.ca')}
+                 
+                  >
+                    <Text style={styles.text}
+                      accessible={true}
+                      accessibilityRole='link'
+                      accessibilityLabel='https://www.statcan.gc.ca'
+                    >https://www.statcan.gc.ca</Text>
                   </TouchableOpacity>
                 </View>
                 <View style={styles.content}>
-                  <Text style={styles.content_title}>{resources.getString("contactus_mail")}</Text>
+                  <Text style={styles.content_title}
+                  accessible={true}
+                  accessibilityRole='header'
+                  accessibilityLabel={resources.getString("contactus_mail")}
+                  >{resources.getString("contactus_mail")}</Text>
                   <Text style={styles.text}>{resources.getString("contactus_text")}
                   </Text>
                 </View>

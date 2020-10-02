@@ -71,7 +71,8 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       settingsFirstTime: false,
       idle:true
     };
-    testDatetime.setHours(22);testDatetime.setMinutes(10);
+    testDatetime.setHours(22);
+    testDatetime.setMinutes(10);
 
     this.wakeTimeHandler = this.wakeTimeHandler.bind(this);
     this.sleepTimeHandler = this.sleepTimeHandler.bind(this);
@@ -510,7 +511,7 @@ console.log('current View-------------------------------:' + global.currentView)
             <ScrollView>
               <List.Section style={styles.mainStyle}>
                 <List.Item
-                accessible={true}
+                accessible={false}
                 accessibilityRole="switch"
                 accessibilityLabel="Notifications"
 
@@ -518,7 +519,10 @@ console.log('current View-------------------------------:' + global.currentView)
                   left={() => <List.Icon icon="bell-alert" />}
                   right={() => <Switch
                     style={{ margin: 10 }}
-                    value={this.state.notificationState}
+                    value={this.state.notificationState} 
+                    accessible={true}
+                    accessibilityLabel={ 'Notification switch is'+ this.state.notificationState}
+
                     onValueChange={() => {
                       this.setState({
                         notificationState: !this.state.notificationState

@@ -162,6 +162,7 @@ async onTestD(){
                 accessible={true}
                 accessibilityRole="text"
                 accessibilityHint="application name"
+                accessibilityLabel={resources.getString("Well-Being Check")}
                 >
                   {resources.getString("Well-Being Check")}
                 </Text>
@@ -177,6 +178,7 @@ async onTestD(){
                     error={!!this.state.passwordError}
                     errorText={this.state.passwordError}
                     secureTextEntry={this.state.passwordIsHidden}
+                    accessibilityLabel={resources.getString("Enter password")}
                   />
                 </View>
 

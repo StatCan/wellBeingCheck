@@ -176,6 +176,52 @@ export const resources = {
                 `A help button is available for certain questions. Press this button for additional information or clarification.\n\n` +
                 `Version`,
 
+//
+
+
+            "about_content.Study": `Why we are conducting this study`,
+            "about_content.Study.a":`The purpose of this study is to better understand the everyday well-being of Canadians by asking about activities and feelings as they are happening. To do this, participants will download an app on their smartphones and answer a few questions at different intervals throughout the day, over a short period of time. The results will help us to find connections between activities and well-being, and be used to develop programs that enhance people’s lives. In the future, an app could be used as a faster and more convenient way to complete other Statistics Canada surveys.  \n` +
+
+            `Information may also be used by Statistics Canada for other statistical and research purposes.  \n`,
+
+            "about_content.Notification":`Notifications` ,
+            "about_content.Notification.a":`This app will notify you to complete a Well-being Check 2 to 5 times daily. You can customize these parameters, including when we should not disturb you, at any time in the settings menu on the app’s home page. If you do not customize the parameters, you will receive a default of 2 daily notifications at various times between 08:00 and 22:00. If you do not allow notifications, you can still complete a Well-being Check whenever you like, but the quality of your results may be impacted. \n`,
+
+            "about_content.Authorization": `Authorization and confidentiality` ,
+            "about_content.Authorization.a":`Data are collected under the authority of the Statistics Act, Revised Statutes of Canada, 1985, Chapter S-19. Your information will be kept strictly confidential.  \n`,
+
+            "about_content.linkages":`Record linkages` ,
+            "about_content.linkages.a":`To enhance the data from this survey and to reduce the reporting burden, Statistics Canada may combine the information you provide with other survey or administrative data sources.  \n`,
+
+            "about_content.time":`Time required to complete this questionnaire` ,
+            "about_content.time.a":`This questionnaire will take about 2 minutes to complete.  \n` +
+
+            `Please note that you will not be able to change any information you reported once you have submitted the questionnaire.  \n` ,
+
+            "about_content.navigate":`To navigate the questionnaire` ,
+            "about_content.navigate.a":`Use the Previous and Next buttons located at the bottom right of each page.  \n` ,
+
+            "about_content.timeout":`Session timeout` ,
+            "about_content.timeout.a":`After 2 hours of inactivity, your session will time out. You will not be able to access any unsaved information. \n` +
+
+            `After 7 minutes of inactivity, Well-Being Check will lock. You will need to enter your password to continue.  \n` ,
+
+            "about_content.def":`Definitions and explanations` ,
+            "about_content.def.a":`A help button is available for certain questions. Press this button for additional information or clarification.\n`,
+           
+
+
+
+
+
+//
+
+
+
+
+
+
+
             "about_title_two": "Authorization and confidentiality",
             "about_content_two": "Data are collected under the authority Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
             "create_password": "Create Password",
@@ -581,8 +627,8 @@ export const resources = {
                 `Après 7 minutes d’inactivité, Bilan bien-être se verrouille. Vous devrez entrer votre mot de passe pour continuer.  \n\n` +
 
                 `Définitions et explications \n` +
-                `Un bouton d’aide est disponible pour certaines questions. Appuyez sur ce bouton pour obtenir plus de renseignements ou des précisions. \n\n`+
-                `Version`,
+                `Un bouton d’aide est disponible pour certaines questions. Appuyez sur ce bouton pour obtenir plus de renseignements ou des précisions. \n\n`,
+                
                 
             "about_title_two": "FR_Authorization and confidentiality",
             "about_content_two": "FR_Data are collected under the authority Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
