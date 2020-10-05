@@ -279,7 +279,7 @@ export const resources = {
             "contactus_telephone": "Telephone",
             "contactus_website": "Website",
             "contactus_mail": "Mailling address",
-            "contactus_text": `Statistics Canada\nAttention of Director Jean Labbé\n150 Tunney’s Pasture Driveway\nOttawa, ON\nK1A 0T6`,
+            "contactus_text": `Statistics Canada\nAttention of Director Sylvie Cyr\n150 Tunney’s Pasture Driveway\nOttawa, ON\nK1A 0T6`,
 
             //FAQ
             "faq.title": "FAQ",
@@ -288,7 +288,7 @@ export const resources = {
             
             //category1-Question1
             "faq.c1.q1": "Is this a legitimate Statistics Canada study?",
-            "faq.c1.q1.a": `Yes. More information can be found on Statistics Canada’s website: [tobe updated] http://www.statcan.gc.ca`,
+            "faq.c1.q1.a": `Yes. More information can be found on Statistics Canada’s website: https://www.statcan.gc.ca/wellbeing`,
             
             //category1-Question2
             "faq.c1.q2": "Am I required to complete this study?",
@@ -300,7 +300,7 @@ export const resources = {
             
             //category1-Question4
             "faq.c1.q4": "Why are you conducting this study?",
-            "faq.c1.q4.a": "The purpose of this study is to better understand the everyday well-being of Canadians by asking in the moment questions about their activities and feelings. For more information about this study, please visit [tobe updated] http://www.statcan.gc.ca",
+            "faq.c1.q4.a": "The purpose of this study is to better understand the everyday well-being of Canadians by asking in the moment questions about their activities and feelings. For more information about this study, please visit https://www.statcan.gc.ca/wellbeing",
 
             //category1-Question5
             "faq.c1.q5": "How long will it take me to complete the study?",
@@ -721,7 +721,7 @@ export const resources = {
             "contactus_telephone": "Téléphone",
             "contactus_website": "Site Web",
             "contactus_mail": "Courrier",
-            "contactus_text": `Statistique Canada\nÀ l’attention du directeur Jean Labbé\n150, promenade Tunney’s Pasture\nOttawa (Ontario)\nK1A 0T6`,
+            "contactus_text": `Statistique Canada\nÀ l’attention de la directrice Sylvie Cyr\n150, promenade Tunney’s Pasture\nOttawa (Ontario)\nK1A 0T6`,
 
             
             //FAQ
@@ -731,7 +731,7 @@ export const resources = {
             
             //category1-Question1
             "faq.c1.q1": "Est-ce une enquête légitime de Statistique Canada?",
-            "faq.c1.q1.a": "Oui. Vous trouverez de plus amples informations sur le site Web de Statistique Canada [à mettre à jour] http://www.statcan.gc.ca",
+            "faq.c1.q1.a": "Oui. Vous trouverez de plus amples informations sur le site Web de Statistique Canada https://www.statcan.gc.ca/bienetre",
             
             //category1-Question2
             "faq.c1.q2": "Suis-je obligé de répondre à cette enquête?",
@@ -744,7 +744,7 @@ export const resources = {
             
             //category1-Question4
             "faq.c1.q4": "Pourquoi menez-vous cette enquête?",
-            "faq.c1.q4.a": "L’objectif de cette enquête est de mieux comprendre le bien-être au quotidien des Canadiens. Pour ce faire, nous leur avons posé des questions sur leurs activités et leurs sentiments au moment présent. Pour plus d’informations sur cette enquête, veuillez consulter [à mettre à jour] http://www.statcan.gc.ca.",
+            "faq.c1.q4.a": "L’objectif de cette enquête est de mieux comprendre le bien-être au quotidien des Canadiens. Pour ce faire, nous leur avons posé des questions sur leurs activités et leurs sentiments au moment présent. Pour plus d’informations sur cette enquête, veuillez consulter https://www.statcan.gc.ca/bienetre",
 
             //category1-Question5
             "faq.c1.q5": "Combien de temps me faudra-t-il pour terminer l’enquête?",
