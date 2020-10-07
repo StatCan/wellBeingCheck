@@ -43,10 +43,12 @@ class Dashboard extends React.Component<Props, HomeState> {
     let txt = '';
     if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2) txt = resources.getString('ThankYouB');
     this.state = {
-      refresh: '1',disabled:!(global.busy==8),
+      refresh: '1',
+      disabled:!(global.busy==8),
       firstTimeLoginModal: false,
       showThankYou: !(global.showThankYou == 0),
-      thankYouText: txt,loaded:global.loading,
+      thankYouText: txt,
+      loaded:global.loading,
     };
     this._refresh = this._refresh.bind(this);
     this.handleAppStateChange=this.handleAppStateChange.bind(this);
@@ -130,7 +132,7 @@ class Dashboard extends React.Component<Props, HomeState> {
                     text: resources.getString("ratenow"),
                     onPress: () => {
                      if (Platform.OS === 'ios') {Linking.openURL('https://www.apple.com/ca/ios/app-store/'); }
-                     else { Linking.openURL('https://play.google.com/store/apps/')}
+                     else { Linking.openURL('https://play.google.com/store/apps/details?id=com.statcan.wellbeingcheck')}
                     },
                     style: 'cancel',
                   },
@@ -146,7 +148,8 @@ class Dashboard extends React.Component<Props, HomeState> {
         return;
     }
     let txt = '';
-    if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); else if (global.showThankYou == 2)  txt = resources.getString('ThankYouB');
+    if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); 
+    else if (global.showThankYou == 2)  txt = resources.getString('ThankYouB');
     this.setState({ showThankYou: !(global.showThankYou == 0), thankYouText: txt });
     if(!(global.showThankYou == 0)){
        this.setState({loaded:false});
