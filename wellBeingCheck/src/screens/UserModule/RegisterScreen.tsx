@@ -312,7 +312,6 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
               accessible={true}
               accessibilityRole="button"
               >
-                
                 <Text>{resources.getString("Language")}</Text></TouchableOpacity>
             </View>
             <ScrollView style={styles.scrollView}>
@@ -332,9 +331,11 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                     error={!!this.state.passwordError}
                     errorText={this.state.passwordError}
                     secureTextEntry={this.state.passwordIsHidden}
-                    onFocus={()=>{justFocused=true;console.log('retriving:'+pass+'JustFocused:'+justFocused);if(this.state.passwordIsHidden)this.setState({password:pass});}}
+                    onFocus={()=>{justFocused=true;console.log('retriving:'+pass+'JustFocused:'+justFocused);
+                    if(this.state.passwordIsHidden)this.setState({password:pass});}}
                     onEndEditing={()=>{console.log('End editing');pass=this.state.password;console.log('saving:'+pass);}}
                     onKeyPress={(e)=>this.keyPressed(e)}
+                    accessibilityLabel='Password  input text box'            
                   />
                 </View>
 

@@ -29,7 +29,8 @@ type TermsOfServiceState = {
   termsOfService: boolean,
   title: string,
   fontLoaded: boolean,
-  displayPopup:boolean
+  displayPopup:boolean,
+  agree:boolean
 }
 
 interface Props {
@@ -163,7 +164,1046 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
             <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
               <Title style={styles.title}>{resources.getString("terms_and_conditions")}</Title>
 
-              <Paragraph style={styles.paragraph}>
+             
+             
+             {/* // */}
+
+
+
+             <Text 
+                accessibilityRole='header' 
+                accessible={true} 
+                accessibilityLabel={resources.getString("terms_and_conditions_content.Disclaimer")} 
+                style={styles.ParagraphHeader}
+                >{resources.getString("terms_and_conditions_content.Disclaimer")} </Text>
+
+                <Paragraph style={styles.paragraph}>
+                  <Text>
+                    
+                 <ParsedText 
+                      style={styles.text}
+                      parse={
+                        [
+                          { pattern: /Statistics Act/, style: styles.italic },
+                          { pattern: /Privacy Act/, style: styles.italic },
+                          { pattern: /Access to Information Act/, style: styles.italic },
+                          { pattern: /Official Languages Act/, style: styles.italic },
+                          { pattern: /Standard on Optimizing Website and Applications for Mobile Devices/, style: styles.italic },
+                          { pattern: /Copyright Act of Canada/, style: styles.italic },
+  
+                          { pattern: /Loi sur la statistique/, style: styles.italic },
+                          { pattern: /Loi sur la protection des renseignements personnels/, style: styles.italic },
+                          { pattern: /Loi sur l'accès à l'information/, style: styles.italic },
+                          { pattern: /Loi sur les langues officielles/, style: styles.italic },
+                          { pattern: /Norme sur l’optimisation des sites Web et des applications pour appareils mobiles/, style: styles.italic },
+                          { pattern: /Loi sur le droit d'auteur du Canada/, style: styles.italic },
+  
+                          { pattern: /Disclaimer  |General terms and conditions|Modification of Terms and Conditions|Privacy notice/, style: styles.bold },
+                          { pattern: /Confidentiality statement| Confidentiality statement|Official language notice|Accessibility notice/, style: styles.bold },
+                          { pattern: /Use of content|Unique identifier|Applicable law  |Limitation of liability/, style: styles.bold },
+                          { pattern: /Disclosure statement|Copyright notice |Trademark notice|No warranties|Indemnity|Restrictions|Modifications and access|Ownership|Maintenance and support/, style: styles.bold },
+  
+                          { pattern: /Désistement |Conditions générales  |Modification des conditions générales|Avis de confidentialité/, style: styles.bold },
+                          { pattern: /Énoncé de confidentialité|Langues officielles  |Avis de l’accessibilité|Utilisation du contenu/, style: styles.bold },
+                          { pattern: /Use of content|Code d’identification unique |Lois applicables |Limitation de la responsabilité/, style: styles.bold },
+                          { pattern: /Avis de divulgations|Droit d’auteur |Avis concernant l'image de marque|Aucune garantie|Indemnité|Restrictions|Modification et accès|Propriété|Maintenance et soutien/, style: styles.bold },
+                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
+                        ]
+                      }
+                      childrenProps={{ allowFontScaling: false }}
+                    >
+                      {resources.getString("terms_and_conditions_content.Disclaimer.a")}
+
+                    </ParsedText>
+                  </Text>
+                </Paragraph>
+
+             {/* // */}
+
+      {/* // */}
+
+             <Text 
+                accessibilityRole='header' 
+                accessible={true} 
+                accessibilityLabel={resources.getString("terms_and_conditions_content.T&A")} 
+                style={styles.ParagraphHeader}
+                >{resources.getString("terms_and_conditions_content.T&A")} </Text>
+
+                <Paragraph style={styles.paragraph}>
+                  <Text>
+                    
+                 <ParsedText 
+                      style={styles.text}
+                      parse={
+                        [
+                          { pattern: /Statistics Act/, style: styles.italic },
+                          { pattern: /Privacy Act/, style: styles.italic },
+                          { pattern: /Access to Information Act/, style: styles.italic },
+                          { pattern: /Official Languages Act/, style: styles.italic },
+                          { pattern: /Standard on Optimizing Website and Applications for Mobile Devices/, style: styles.italic },
+                          { pattern: /Copyright Act of Canada/, style: styles.italic },
+  
+                          { pattern: /Loi sur la statistique/, style: styles.italic },
+                          { pattern: /Loi sur la protection des renseignements personnels/, style: styles.italic },
+                          { pattern: /Loi sur l'accès à l'information/, style: styles.italic },
+                          { pattern: /Loi sur les langues officielles/, style: styles.italic },
+                          { pattern: /Norme sur l’optimisation des sites Web et des applications pour appareils mobiles/, style: styles.italic },
+                          { pattern: /Loi sur le droit d'auteur du Canada/, style: styles.italic },
+  
+                          { pattern: /Disclaimer  |General terms and conditions|Modification of Terms and Conditions|Privacy notice/, style: styles.bold },
+                          { pattern: /Confidentiality statement| Confidentiality statement|Official language notice|Accessibility notice/, style: styles.bold },
+                          { pattern: /Use of content|Unique identifier|Applicable law  |Limitation of liability/, style: styles.bold },
+                          { pattern: /Disclosure statement|Copyright notice |Trademark notice|No warranties|Indemnity|Restrictions|Modifications and access|Ownership|Maintenance and support/, style: styles.bold },
+  
+                          { pattern: /Désistement |Conditions générales  |Modification des conditions générales|Avis de confidentialité/, style: styles.bold },
+                          { pattern: /Énoncé de confidentialité|Langues officielles  |Avis de l’accessibilité|Utilisation du contenu/, style: styles.bold },
+                          { pattern: /Use of content|Code d’identification unique |Lois applicables |Limitation de la responsabilité/, style: styles.bold },
+                          { pattern: /Avis de divulgations|Droit d’auteur |Avis concernant l'image de marque|Aucune garantie|Indemnité|Restrictions|Modification et accès|Propriété|Maintenance et soutien/, style: styles.bold },
+                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
+                        ]
+                      }
+                      childrenProps={{ allowFontScaling: false }}
+                    >
+                      {resources.getString("terms_and_conditions_content.T&A.a")}
+
+                    </ParsedText>
+                  </Text>
+                </Paragraph>
+
+             {/* // */}        
+            {/* // */}
+
+              <Text 
+                accessibilityRole='header' 
+                accessible={true} 
+                accessibilityLabel={resources.getString("terms_and_conditions_content.Modif")} 
+                style={styles.ParagraphHeader}
+                >{resources.getString("terms_and_conditions_content.Modif")} </Text>
+
+                <Paragraph style={styles.paragraph}>
+                  <Text>
+                    
+                 <ParsedText 
+                      style={styles.text}
+                      parse={
+                        [
+                          { pattern: /Statistics Act/, style: styles.italic },
+                          { pattern: /Privacy Act/, style: styles.italic },
+                          { pattern: /Access to Information Act/, style: styles.italic },
+                          { pattern: /Official Languages Act/, style: styles.italic },
+                          { pattern: /Standard on Optimizing Website and Applications for Mobile Devices/, style: styles.italic },
+                          { pattern: /Copyright Act of Canada/, style: styles.italic },
+  
+                          { pattern: /Loi sur la statistique/, style: styles.italic },
+                          { pattern: /Loi sur la protection des renseignements personnels/, style: styles.italic },
+                          { pattern: /Loi sur l'accès à l'information/, style: styles.italic },
+                          { pattern: /Loi sur les langues officielles/, style: styles.italic },
+                          { pattern: /Norme sur l’optimisation des sites Web et des applications pour appareils mobiles/, style: styles.italic },
+                          { pattern: /Loi sur le droit d'auteur du Canada/, style: styles.italic },
+  
+                          { pattern: /Disclaimer  |General terms and conditions|Modification of Terms and Conditions|Privacy notice/, style: styles.bold },
+                          { pattern: /Confidentiality statement| Confidentiality statement|Official language notice|Accessibility notice/, style: styles.bold },
+                          { pattern: /Use of content|Unique identifier|Applicable law  |Limitation of liability/, style: styles.bold },
+                          { pattern: /Disclosure statement|Copyright notice |Trademark notice|No warranties|Indemnity|Restrictions|Modifications and access|Ownership|Maintenance and support/, style: styles.bold },
+  
+                          { pattern: /Désistement |Conditions générales  |Modification des conditions générales|Avis de confidentialité/, style: styles.bold },
+                          { pattern: /Énoncé de confidentialité|Langues officielles  |Avis de l’accessibilité|Utilisation du contenu/, style: styles.bold },
+                          { pattern: /Use of content|Code d’identification unique |Lois applicables |Limitation de la responsabilité/, style: styles.bold },
+                          { pattern: /Avis de divulgations|Droit d’auteur |Avis concernant l'image de marque|Aucune garantie|Indemnité|Restrictions|Modification et accès|Propriété|Maintenance et soutien/, style: styles.bold },
+                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
+                        ]
+                      }
+                      childrenProps={{ allowFontScaling: false }}
+                    >
+                      {resources.getString("terms_and_conditions_content.Modif.a")}
+
+                    </ParsedText>
+                  </Text>
+                </Paragraph>
+
+             {/* // */}                 
+       {/* // */}
+
+       <Text 
+                accessibilityRole='header' 
+                accessible={true} 
+                accessibilityLabel={resources.getString("terms_and_conditions_content.privacy")} 
+                style={styles.ParagraphHeader}
+                >{resources.getString("terms_and_conditions_content.privacy")} </Text>
+
+                <Paragraph style={styles.paragraph}>
+                  <Text>
+                    
+                 <ParsedText 
+                      style={styles.text}
+                      parse={
+                        [
+                          { pattern: /Statistics Act/, style: styles.italic },
+                          { pattern: /Privacy Act/, style: styles.italic },
+                          { pattern: /Access to Information Act/, style: styles.italic },
+                          { pattern: /Official Languages Act/, style: styles.italic },
+                          { pattern: /Standard on Optimizing Website and Applications for Mobile Devices/, style: styles.italic },
+                          { pattern: /Copyright Act of Canada/, style: styles.italic },
+  
+                          { pattern: /Loi sur la statistique/, style: styles.italic },
+                          { pattern: /Loi sur la protection des renseignements personnels/, style: styles.italic },
+                          { pattern: /Loi sur l'accès à l'information/, style: styles.italic },
+                          { pattern: /Loi sur les langues officielles/, style: styles.italic },
+                          { pattern: /Norme sur l’optimisation des sites Web et des applications pour appareils mobiles/, style: styles.italic },
+                          { pattern: /Loi sur le droit d'auteur du Canada/, style: styles.italic },
+  
+                          { pattern: /Disclaimer  |General terms and conditions|Modification of Terms and Conditions|Privacy notice/, style: styles.bold },
+                          { pattern: /Confidentiality statement| Confidentiality statement|Official language notice|Accessibility notice/, style: styles.bold },
+                          { pattern: /Use of content|Unique identifier|Applicable law  |Limitation of liability/, style: styles.bold },
+                          { pattern: /Disclosure statement|Copyright notice |Trademark notice|No warranties|Indemnity|Restrictions|Modifications and access|Ownership|Maintenance and support/, style: styles.bold },
+  
+                          { pattern: /Désistement |Conditions générales  |Modification des conditions générales|Avis de confidentialité/, style: styles.bold },
+                          { pattern: /Énoncé de confidentialité|Langues officielles  |Avis de l’accessibilité|Utilisation du contenu/, style: styles.bold },
+                          { pattern: /Use of content|Code d’identification unique |Lois applicables |Limitation de la responsabilité/, style: styles.bold },
+                          { pattern: /Avis de divulgations|Droit d’auteur |Avis concernant l'image de marque|Aucune garantie|Indemnité|Restrictions|Modification et accès|Propriété|Maintenance et soutien/, style: styles.bold },
+                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
+                        ]
+                      }
+                      childrenProps={{ allowFontScaling: false }}
+                    >
+                      {resources.getString("terms_and_conditions_content.privacy.a")}
+
+                    </ParsedText>
+                  </Text>
+                </Paragraph>
+
+             {/* // */}            
+
+  {/* // */}
+
+               <Text 
+                accessibilityRole='header' 
+                accessible={true} 
+                accessibilityLabel={resources.getString("terms_and_conditions_content.confidentiality")} 
+                style={styles.ParagraphHeader}
+                >{resources.getString("terms_and_conditions_content.confidentiality")} </Text>
+
+                <Paragraph style={styles.paragraph}>
+                  <Text>
+                    
+                 <ParsedText 
+                      style={styles.text}
+                      parse={
+                        [
+                          { pattern: /Statistics Act/, style: styles.italic },
+                          { pattern: /Privacy Act/, style: styles.italic },
+                          { pattern: /Access to Information Act/, style: styles.italic },
+                          { pattern: /Official Languages Act/, style: styles.italic },
+                          { pattern: /Standard on Optimizing Website and Applications for Mobile Devices/, style: styles.italic },
+                          { pattern: /Copyright Act of Canada/, style: styles.italic },
+  
+                          { pattern: /Loi sur la statistique/, style: styles.italic },
+                          { pattern: /Loi sur la protection des renseignements personnels/, style: styles.italic },
+                          { pattern: /Loi sur l'accès à l'information/, style: styles.italic },
+                          { pattern: /Loi sur les langues officielles/, style: styles.italic },
+                          { pattern: /Norme sur l’optimisation des sites Web et des applications pour appareils mobiles/, style: styles.italic },
+                          { pattern: /Loi sur le droit d'auteur du Canada/, style: styles.italic },
+  
+                          { pattern: /Disclaimer  |General terms and conditions|Modification of Terms and Conditions|Privacy notice/, style: styles.bold },
+                          { pattern: /Confidentiality statement| Confidentiality statement|Official language notice|Accessibility notice/, style: styles.bold },
+                          { pattern: /Use of content|Unique identifier|Applicable law  |Limitation of liability/, style: styles.bold },
+                          { pattern: /Disclosure statement|Copyright notice |Trademark notice|No warranties|Indemnity|Restrictions|Modifications and access|Ownership|Maintenance and support/, style: styles.bold },
+  
+                          { pattern: /Désistement |Conditions générales  |Modification des conditions générales|Avis de confidentialité/, style: styles.bold },
+                          { pattern: /Énoncé de confidentialité|Langues officielles  |Avis de l’accessibilité|Utilisation du contenu/, style: styles.bold },
+                          { pattern: /Use of content|Code d’identification unique |Lois applicables |Limitation de la responsabilité/, style: styles.bold },
+                          { pattern: /Avis de divulgations|Droit d’auteur |Avis concernant l'image de marque|Aucune garantie|Indemnité|Restrictions|Modification et accès|Propriété|Maintenance et soutien/, style: styles.bold },
+                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
+                        ]
+                      }
+                      childrenProps={{ allowFontScaling: false }}
+                    >
+                      {resources.getString("terms_and_conditions_content.confidentiality.a")}
+
+                    </ParsedText>
+                  </Text>
+                </Paragraph>
+
+             {/* // */}     
+
+{/* // */}
+
+<Text 
+                accessibilityRole='header' 
+                accessible={true} 
+                accessibilityLabel={resources.getString("terms_and_conditions_content.language")} 
+                style={styles.ParagraphHeader}
+                >{resources.getString("terms_and_conditions_content.language")} </Text>
+
+                <Paragraph style={styles.paragraph}>
+                  <Text>
+                    
+                 <ParsedText 
+                      style={styles.text}
+                      parse={
+                        [
+                          { pattern: /Statistics Act/, style: styles.italic },
+                          { pattern: /Privacy Act/, style: styles.italic },
+                          { pattern: /Access to Information Act/, style: styles.italic },
+                          { pattern: /Official Languages Act/, style: styles.italic },
+                          { pattern: /Standard on Optimizing Website and Applications for Mobile Devices/, style: styles.italic },
+                          { pattern: /Copyright Act of Canada/, style: styles.italic },
+  
+                          { pattern: /Loi sur la statistique/, style: styles.italic },
+                          { pattern: /Loi sur la protection des renseignements personnels/, style: styles.italic },
+                          { pattern: /Loi sur l'accès à l'information/, style: styles.italic },
+                          { pattern: /Loi sur les langues officielles/, style: styles.italic },
+                          { pattern: /Norme sur l’optimisation des sites Web et des applications pour appareils mobiles/, style: styles.italic },
+                          { pattern: /Loi sur le droit d'auteur du Canada/, style: styles.italic },
+  
+                          { pattern: /Disclaimer  |General terms and conditions|Modification of Terms and Conditions|Privacy notice/, style: styles.bold },
+                          { pattern: /Confidentiality statement| Confidentiality statement|Official language notice|Accessibility notice/, style: styles.bold },
+                          { pattern: /Use of content|Unique identifier|Applicable law  |Limitation of liability/, style: styles.bold },
+                          { pattern: /Disclosure statement|Copyright notice |Trademark notice|No warranties|Indemnity|Restrictions|Modifications and access|Ownership|Maintenance and support/, style: styles.bold },
+  
+                          { pattern: /Désistement |Conditions générales  |Modification des conditions générales|Avis de confidentialité/, style: styles.bold },
+                          { pattern: /Énoncé de confidentialité|Langues officielles  |Avis de l’accessibilité|Utilisation du contenu/, style: styles.bold },
+                          { pattern: /Use of content|Code d’identification unique |Lois applicables |Limitation de la responsabilité/, style: styles.bold },
+                          { pattern: /Avis de divulgations|Droit d’auteur |Avis concernant l'image de marque|Aucune garantie|Indemnité|Restrictions|Modification et accès|Propriété|Maintenance et soutien/, style: styles.bold },
+                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
+                        ]
+                      }
+                      childrenProps={{ allowFontScaling: false }}
+                    >
+                      {resources.getString("terms_and_conditions_content.language.a")}
+
+                    </ParsedText>
+                  </Text>
+                </Paragraph>
+
+             {/* // */}  
+
+              {/* // */}
+
+              <Text 
+                accessibilityRole='header' 
+                accessible={true} 
+                accessibilityLabel={resources.getString("terms_and_conditions_content.accessibility")} 
+                style={styles.ParagraphHeader}
+                >{resources.getString("terms_and_conditions_content.accessibility")} </Text>
+
+                <Paragraph style={styles.paragraph}>
+                  <Text>
+                    
+                 <ParsedText 
+                      style={styles.text}
+                      parse={
+                        [
+                          { pattern: /Statistics Act/, style: styles.italic },
+                          { pattern: /Privacy Act/, style: styles.italic },
+                          { pattern: /Access to Information Act/, style: styles.italic },
+                          { pattern: /Official Languages Act/, style: styles.italic },
+                          { pattern: /Standard on Optimizing Website and Applications for Mobile Devices/, style: styles.italic },
+                          { pattern: /Copyright Act of Canada/, style: styles.italic },
+  
+                          { pattern: /Loi sur la statistique/, style: styles.italic },
+                          { pattern: /Loi sur la protection des renseignements personnels/, style: styles.italic },
+                          { pattern: /Loi sur l'accès à l'information/, style: styles.italic },
+                          { pattern: /Loi sur les langues officielles/, style: styles.italic },
+                          { pattern: /Norme sur l’optimisation des sites Web et des applications pour appareils mobiles/, style: styles.italic },
+                          { pattern: /Loi sur le droit d'auteur du Canada/, style: styles.italic },
+  
+                          { pattern: /Disclaimer  |General terms and conditions|Modification of Terms and Conditions|Privacy notice/, style: styles.bold },
+                          { pattern: /Confidentiality statement| Confidentiality statement|Official language notice|Accessibility notice/, style: styles.bold },
+                          { pattern: /Use of content|Unique identifier|Applicable law  |Limitation of liability/, style: styles.bold },
+                          { pattern: /Disclosure statement|Copyright notice |Trademark notice|No warranties|Indemnity|Restrictions|Modifications and access|Ownership|Maintenance and support/, style: styles.bold },
+  
+                          { pattern: /Désistement |Conditions générales  |Modification des conditions générales|Avis de confidentialité/, style: styles.bold },
+                          { pattern: /Énoncé de confidentialité|Langues officielles  |Avis de l’accessibilité|Utilisation du contenu/, style: styles.bold },
+                          { pattern: /Use of content|Code d’identification unique |Lois applicables |Limitation de la responsabilité/, style: styles.bold },
+                          { pattern: /Avis de divulgations|Droit d’auteur |Avis concernant l'image de marque|Aucune garantie|Indemnité|Restrictions|Modification et accès|Propriété|Maintenance et soutien/, style: styles.bold },
+                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
+                        ]
+                      }
+                      childrenProps={{ allowFontScaling: false }}
+                    >
+                      {resources.getString("terms_and_conditions_content.accessibility.a")}
+
+                    </ParsedText>
+                  </Text>
+                </Paragraph>
+
+             {/* // */}  
+
+             {/* // */}
+
+             <Text 
+                accessibilityRole='header' 
+                accessible={true} 
+                accessibilityLabel={resources.getString("terms_and_conditions_content.useofcontent")} 
+                style={styles.ParagraphHeader}
+                >{resources.getString("terms_and_conditions_content.useofcontent")} </Text>
+
+                <Paragraph style={styles.paragraph}>
+                  <Text>
+                    
+                 <ParsedText 
+                      style={styles.text}
+                      parse={
+                        [
+                          { pattern: /Statistics Act/, style: styles.italic },
+                          { pattern: /Privacy Act/, style: styles.italic },
+                          { pattern: /Access to Information Act/, style: styles.italic },
+                          { pattern: /Official Languages Act/, style: styles.italic },
+                          { pattern: /Standard on Optimizing Website and Applications for Mobile Devices/, style: styles.italic },
+                          { pattern: /Copyright Act of Canada/, style: styles.italic },
+  
+                          { pattern: /Loi sur la statistique/, style: styles.italic },
+                          { pattern: /Loi sur la protection des renseignements personnels/, style: styles.italic },
+                          { pattern: /Loi sur l'accès à l'information/, style: styles.italic },
+                          { pattern: /Loi sur les langues officielles/, style: styles.italic },
+                          { pattern: /Norme sur l’optimisation des sites Web et des applications pour appareils mobiles/, style: styles.italic },
+                          { pattern: /Loi sur le droit d'auteur du Canada/, style: styles.italic },
+  
+                          { pattern: /Disclaimer  |General terms and conditions|Modification of Terms and Conditions|Privacy notice/, style: styles.bold },
+                          { pattern: /Confidentiality statement| Confidentiality statement|Official language notice|Accessibility notice/, style: styles.bold },
+                          { pattern: /Use of content|Unique identifier|Applicable law  |Limitation of liability/, style: styles.bold },
+                          { pattern: /Disclosure statement|Copyright notice |Trademark notice|No warranties|Indemnity|Restrictions|Modifications and access|Ownership|Maintenance and support/, style: styles.bold },
+  
+                          { pattern: /Désistement |Conditions générales  |Modification des conditions générales|Avis de confidentialité/, style: styles.bold },
+                          { pattern: /Énoncé de confidentialité|Langues officielles  |Avis de l’accessibilité|Utilisation du contenu/, style: styles.bold },
+                          { pattern: /Use of content|Code d’identification unique |Lois applicables |Limitation de la responsabilité/, style: styles.bold },
+                          { pattern: /Avis de divulgations|Droit d’auteur |Avis concernant l'image de marque|Aucune garantie|Indemnité|Restrictions|Modification et accès|Propriété|Maintenance et soutien/, style: styles.bold },
+                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
+                        ]
+                      }
+                      childrenProps={{ allowFontScaling: false }}
+                    >
+                      {resources.getString("terms_and_conditions_content.useofcontent.a")}
+
+                    </ParsedText>
+                  </Text>
+                </Paragraph>
+
+             {/* // */} 
+
+
+            {/* // */}
+
+            <Text 
+                accessibilityRole='header' 
+                accessible={true} 
+                accessibilityLabel={resources.getString("terms_and_conditions_content.uniqueIdentifier")} 
+                style={styles.ParagraphHeader}
+                >{resources.getString("terms_and_conditions_content.uniqueIdentifier")} </Text>
+
+                <Paragraph style={styles.paragraph}>
+                  <Text>
+                    
+                 <ParsedText 
+                      style={styles.text}
+                      parse={
+                        [
+                          { pattern: /Statistics Act/, style: styles.italic },
+                          { pattern: /Privacy Act/, style: styles.italic },
+                          { pattern: /Access to Information Act/, style: styles.italic },
+                          { pattern: /Official Languages Act/, style: styles.italic },
+                          { pattern: /Standard on Optimizing Website and Applications for Mobile Devices/, style: styles.italic },
+                          { pattern: /Copyright Act of Canada/, style: styles.italic },
+  
+                          { pattern: /Loi sur la statistique/, style: styles.italic },
+                          { pattern: /Loi sur la protection des renseignements personnels/, style: styles.italic },
+                          { pattern: /Loi sur l'accès à l'information/, style: styles.italic },
+                          { pattern: /Loi sur les langues officielles/, style: styles.italic },
+                          { pattern: /Norme sur l’optimisation des sites Web et des applications pour appareils mobiles/, style: styles.italic },
+                          { pattern: /Loi sur le droit d'auteur du Canada/, style: styles.italic },
+  
+                          { pattern: /Disclaimer  |General terms and conditions|Modification of Terms and Conditions|Privacy notice/, style: styles.bold },
+                          { pattern: /Confidentiality statement| Confidentiality statement|Official language notice|Accessibility notice/, style: styles.bold },
+                          { pattern: /Use of content|Unique identifier|Applicable law  |Limitation of liability/, style: styles.bold },
+                          { pattern: /Disclosure statement|Copyright notice |Trademark notice|No warranties|Indemnity|Restrictions|Modifications and access|Ownership|Maintenance and support/, style: styles.bold },
+  
+                          { pattern: /Désistement |Conditions générales  |Modification des conditions générales|Avis de confidentialité/, style: styles.bold },
+                          { pattern: /Énoncé de confidentialité|Langues officielles  |Avis de l’accessibilité|Utilisation du contenu/, style: styles.bold },
+                          { pattern: /Use of content|Code d’identification unique |Lois applicables |Limitation de la responsabilité/, style: styles.bold },
+                          { pattern: /Avis de divulgations|Droit d’auteur |Avis concernant l'image de marque|Aucune garantie|Indemnité|Restrictions|Modification et accès|Propriété|Maintenance et soutien/, style: styles.bold },
+                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
+                        ]
+                      }
+                      childrenProps={{ allowFontScaling: false }}
+                    >
+                      {resources.getString("terms_and_conditions_content.uniqueIdentifier.a")}
+
+                    </ParsedText>
+                  </Text>
+                </Paragraph>
+
+             {/* // */} 
+
+           {/* // */}
+
+           <Text 
+                accessibilityRole='header' 
+                accessible={true} 
+                accessibilityLabel={resources.getString("terms_and_conditions_content.Law")} 
+                style={styles.ParagraphHeader}
+                >{resources.getString("terms_and_conditions_content.Law")} </Text>
+
+                <Paragraph style={styles.paragraph}>
+                  <Text>
+                    
+                 <ParsedText 
+                      style={styles.text}
+                      parse={
+                        [
+                          { pattern: /Statistics Act/, style: styles.italic },
+                          { pattern: /Privacy Act/, style: styles.italic },
+                          { pattern: /Access to Information Act/, style: styles.italic },
+                          { pattern: /Official Languages Act/, style: styles.italic },
+                          { pattern: /Standard on Optimizing Website and Applications for Mobile Devices/, style: styles.italic },
+                          { pattern: /Copyright Act of Canada/, style: styles.italic },
+  
+                          { pattern: /Loi sur la statistique/, style: styles.italic },
+                          { pattern: /Loi sur la protection des renseignements personnels/, style: styles.italic },
+                          { pattern: /Loi sur l'accès à l'information/, style: styles.italic },
+                          { pattern: /Loi sur les langues officielles/, style: styles.italic },
+                          { pattern: /Norme sur l’optimisation des sites Web et des applications pour appareils mobiles/, style: styles.italic },
+                          { pattern: /Loi sur le droit d'auteur du Canada/, style: styles.italic },
+  
+                          { pattern: /Disclaimer  |General terms and conditions|Modification of Terms and Conditions|Privacy notice/, style: styles.bold },
+                          { pattern: /Confidentiality statement| Confidentiality statement|Official language notice|Accessibility notice/, style: styles.bold },
+                          { pattern: /Use of content|Unique identifier|Applicable law  |Limitation of liability/, style: styles.bold },
+                          { pattern: /Disclosure statement|Copyright notice |Trademark notice|No warranties|Indemnity|Restrictions|Modifications and access|Ownership|Maintenance and support/, style: styles.bold },
+  
+                          { pattern: /Désistement |Conditions générales  |Modification des conditions générales|Avis de confidentialité/, style: styles.bold },
+                          { pattern: /Énoncé de confidentialité|Langues officielles  |Avis de l’accessibilité|Utilisation du contenu/, style: styles.bold },
+                          { pattern: /Use of content|Code d’identification unique |Lois applicables |Limitation de la responsabilité/, style: styles.bold },
+                          { pattern: /Avis de divulgations|Droit d’auteur |Avis concernant l'image de marque|Aucune garantie|Indemnité|Restrictions|Modification et accès|Propriété|Maintenance et soutien/, style: styles.bold },
+                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
+                        ]
+                      }
+                      childrenProps={{ allowFontScaling: false }}
+                    >
+                      {resources.getString("terms_and_conditions_content.Law.a")}
+
+                    </ParsedText>
+                  </Text>
+                </Paragraph>
+
+             {/* // */} 
+   {/* // */}
+
+   <Text 
+                accessibilityRole='header' 
+                accessible={true} 
+                accessibilityLabel={resources.getString("terms_and_conditions_content.Liability")} 
+                style={styles.ParagraphHeader}
+                >{resources.getString("terms_and_conditions_content.Liability")} </Text>
+
+                <Paragraph style={styles.paragraph}>
+                  <Text>
+                    
+                 <ParsedText 
+                      style={styles.text}
+                      parse={
+                        [
+                          { pattern: /Statistics Act/, style: styles.italic },
+                          { pattern: /Privacy Act/, style: styles.italic },
+                          { pattern: /Access to Information Act/, style: styles.italic },
+                          { pattern: /Official Languages Act/, style: styles.italic },
+                          { pattern: /Standard on Optimizing Website and Applications for Mobile Devices/, style: styles.italic },
+                          { pattern: /Copyright Act of Canada/, style: styles.italic },
+  
+                          { pattern: /Loi sur la statistique/, style: styles.italic },
+                          { pattern: /Loi sur la protection des renseignements personnels/, style: styles.italic },
+                          { pattern: /Loi sur l'accès à l'information/, style: styles.italic },
+                          { pattern: /Loi sur les langues officielles/, style: styles.italic },
+                          { pattern: /Norme sur l’optimisation des sites Web et des applications pour appareils mobiles/, style: styles.italic },
+                          { pattern: /Loi sur le droit d'auteur du Canada/, style: styles.italic },
+  
+                          { pattern: /Disclaimer  |General terms and conditions|Modification of Terms and Conditions|Privacy notice/, style: styles.bold },
+                          { pattern: /Confidentiality statement| Confidentiality statement|Official language notice|Accessibility notice/, style: styles.bold },
+                          { pattern: /Use of content|Unique identifier|Applicable law  |Limitation of liability/, style: styles.bold },
+                          { pattern: /Disclosure statement|Copyright notice |Trademark notice|No warranties|Indemnity|Restrictions|Modifications and access|Ownership|Maintenance and support/, style: styles.bold },
+  
+                          { pattern: /Désistement |Conditions générales  |Modification des conditions générales|Avis de confidentialité/, style: styles.bold },
+                          { pattern: /Énoncé de confidentialité|Langues officielles  |Avis de l’accessibilité|Utilisation du contenu/, style: styles.bold },
+                          { pattern: /Use of content|Code d’identification unique |Lois applicables |Limitation de la responsabilité/, style: styles.bold },
+                          { pattern: /Avis de divulgations|Droit d’auteur |Avis concernant l'image de marque|Aucune garantie|Indemnité|Restrictions|Modification et accès|Propriété|Maintenance et soutien/, style: styles.bold },
+                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
+                        ]
+                      }
+                      childrenProps={{ allowFontScaling: false }}
+                    >
+                      {resources.getString("terms_and_conditions_content.Liability.a")}
+
+                    </ParsedText>
+                  </Text>
+                </Paragraph>
+
+             {/* // */} 
+
+
+  {/* // */}
+
+  <Text 
+                accessibilityRole='header' 
+                accessible={true} 
+                accessibilityLabel={resources.getString("terms_and_conditions_content.disclosure")} 
+                style={styles.ParagraphHeader}
+                >{resources.getString("terms_and_conditions_content.disclosure")} </Text>
+
+                <Paragraph style={styles.paragraph}>
+                  <Text>
+                    
+                 <ParsedText 
+                      style={styles.text}
+                      parse={
+                        [
+                          { pattern: /Statistics Act/, style: styles.italic },
+                          { pattern: /Privacy Act/, style: styles.italic },
+                          { pattern: /Access to Information Act/, style: styles.italic },
+                          { pattern: /Official Languages Act/, style: styles.italic },
+                          { pattern: /Standard on Optimizing Website and Applications for Mobile Devices/, style: styles.italic },
+                          { pattern: /Copyright Act of Canada/, style: styles.italic },
+  
+                          { pattern: /Loi sur la statistique/, style: styles.italic },
+                          { pattern: /Loi sur la protection des renseignements personnels/, style: styles.italic },
+                          { pattern: /Loi sur l'accès à l'information/, style: styles.italic },
+                          { pattern: /Loi sur les langues officielles/, style: styles.italic },
+                          { pattern: /Norme sur l’optimisation des sites Web et des applications pour appareils mobiles/, style: styles.italic },
+                          { pattern: /Loi sur le droit d'auteur du Canada/, style: styles.italic },
+  
+                          { pattern: /Disclaimer  |General terms and conditions|Modification of Terms and Conditions|Privacy notice/, style: styles.bold },
+                          { pattern: /Confidentiality statement| Confidentiality statement|Official language notice|Accessibility notice/, style: styles.bold },
+                          { pattern: /Use of content|Unique identifier|Applicable law  |Limitation of liability/, style: styles.bold },
+                          { pattern: /Disclosure statement|Copyright notice |Trademark notice|No warranties|Indemnity|Restrictions|Modifications and access|Ownership|Maintenance and support/, style: styles.bold },
+  
+                          { pattern: /Désistement |Conditions générales  |Modification des conditions générales|Avis de confidentialité/, style: styles.bold },
+                          { pattern: /Énoncé de confidentialité|Langues officielles  |Avis de l’accessibilité|Utilisation du contenu/, style: styles.bold },
+                          { pattern: /Use of content|Code d’identification unique |Lois applicables |Limitation de la responsabilité/, style: styles.bold },
+                          { pattern: /Avis de divulgations|Droit d’auteur |Avis concernant l'image de marque|Aucune garantie|Indemnité|Restrictions|Modification et accès|Propriété|Maintenance et soutien/, style: styles.bold },
+                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
+                        ]
+                      }
+                      childrenProps={{ allowFontScaling: false }}
+                    >
+                      {resources.getString("terms_and_conditions_content.disclosure.a")}
+
+                    </ParsedText>
+                  </Text>
+                </Paragraph>
+
+             {/* // */} 
+ {/* // */}
+
+ <Text 
+                accessibilityRole='header' 
+                accessible={true} 
+                accessibilityLabel={resources.getString("terms_and_conditions_content.copyright")} 
+                style={styles.ParagraphHeader}
+                >{resources.getString("terms_and_conditions_content.copyright")} </Text>
+
+                <Paragraph style={styles.paragraph}>
+                  <Text>
+                    
+                 <ParsedText 
+                      style={styles.text}
+                      parse={
+                        [
+                          { pattern: /Statistics Act/, style: styles.italic },
+                          { pattern: /Privacy Act/, style: styles.italic },
+                          { pattern: /Access to Information Act/, style: styles.italic },
+                          { pattern: /Official Languages Act/, style: styles.italic },
+                          { pattern: /Standard on Optimizing Website and Applications for Mobile Devices/, style: styles.italic },
+                          { pattern: /Copyright Act of Canada/, style: styles.italic },
+  
+                          { pattern: /Loi sur la statistique/, style: styles.italic },
+                          { pattern: /Loi sur la protection des renseignements personnels/, style: styles.italic },
+                          { pattern: /Loi sur l'accès à l'information/, style: styles.italic },
+                          { pattern: /Loi sur les langues officielles/, style: styles.italic },
+                          { pattern: /Norme sur l’optimisation des sites Web et des applications pour appareils mobiles/, style: styles.italic },
+                          { pattern: /Loi sur le droit d'auteur du Canada/, style: styles.italic },
+  
+                          { pattern: /Disclaimer  |General terms and conditions|Modification of Terms and Conditions|Privacy notice/, style: styles.bold },
+                          { pattern: /Confidentiality statement| Confidentiality statement|Official language notice|Accessibility notice/, style: styles.bold },
+                          { pattern: /Use of content|Unique identifier|Applicable law  |Limitation of liability/, style: styles.bold },
+                          { pattern: /Disclosure statement|Copyright notice |Trademark notice|No warranties|Indemnity|Restrictions|Modifications and access|Ownership|Maintenance and support/, style: styles.bold },
+  
+                          { pattern: /Désistement |Conditions générales  |Modification des conditions générales|Avis de confidentialité/, style: styles.bold },
+                          { pattern: /Énoncé de confidentialité|Langues officielles  |Avis de l’accessibilité|Utilisation du contenu/, style: styles.bold },
+                          { pattern: /Use of content|Code d’identification unique |Lois applicables |Limitation de la responsabilité/, style: styles.bold },
+                          { pattern: /Avis de divulgations|Droit d’auteur |Avis concernant l'image de marque|Aucune garantie|Indemnité|Restrictions|Modification et accès|Propriété|Maintenance et soutien/, style: styles.bold },
+                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
+                        ]
+                      }
+                      childrenProps={{ allowFontScaling: false }}
+                    >
+                      {resources.getString("terms_and_conditions_content.copyright.a")}
+
+                    </ParsedText>
+                  </Text>
+                </Paragraph>
+
+             {/* // */} 
+
+{/* // */}
+
+<Text 
+                accessibilityRole='header' 
+                accessible={true} 
+                accessibilityLabel={resources.getString("terms_and_conditions_content.trademark")} 
+                style={styles.ParagraphHeader}
+                >{resources.getString("terms_and_conditions_content.trademark")} </Text>
+
+                <Paragraph style={styles.paragraph}>
+                  <Text>
+                    
+                 <ParsedText 
+                      style={styles.text}
+                      parse={
+                        [
+                          { pattern: /Statistics Act/, style: styles.italic },
+                          { pattern: /Privacy Act/, style: styles.italic },
+                          { pattern: /Access to Information Act/, style: styles.italic },
+                          { pattern: /Official Languages Act/, style: styles.italic },
+                          { pattern: /Standard on Optimizing Website and Applications for Mobile Devices/, style: styles.italic },
+                          { pattern: /Copyright Act of Canada/, style: styles.italic },
+  
+                          { pattern: /Loi sur la statistique/, style: styles.italic },
+                          { pattern: /Loi sur la protection des renseignements personnels/, style: styles.italic },
+                          { pattern: /Loi sur l'accès à l'information/, style: styles.italic },
+                          { pattern: /Loi sur les langues officielles/, style: styles.italic },
+                          { pattern: /Norme sur l’optimisation des sites Web et des applications pour appareils mobiles/, style: styles.italic },
+                          { pattern: /Loi sur le droit d'auteur du Canada/, style: styles.italic },
+  
+                          { pattern: /Disclaimer  |General terms and conditions|Modification of Terms and Conditions|Privacy notice/, style: styles.bold },
+                          { pattern: /Confidentiality statement| Confidentiality statement|Official language notice|Accessibility notice/, style: styles.bold },
+                          { pattern: /Use of content|Unique identifier|Applicable law  |Limitation of liability/, style: styles.bold },
+                          { pattern: /Disclosure statement|Copyright notice |Trademark notice|No warranties|Indemnity|Restrictions|Modifications and access|Ownership|Maintenance and support/, style: styles.bold },
+  
+                          { pattern: /Désistement |Conditions générales  |Modification des conditions générales|Avis de confidentialité/, style: styles.bold },
+                          { pattern: /Énoncé de confidentialité|Langues officielles  |Avis de l’accessibilité|Utilisation du contenu/, style: styles.bold },
+                          { pattern: /Use of content|Code d’identification unique |Lois applicables |Limitation de la responsabilité/, style: styles.bold },
+                          { pattern: /Avis de divulgations|Droit d’auteur |Avis concernant l'image de marque|Aucune garantie|Indemnité|Restrictions|Modification et accès|Propriété|Maintenance et soutien/, style: styles.bold },
+                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
+                        ]
+                      }
+                      childrenProps={{ allowFontScaling: false }}
+                    >
+                      {resources.getString("terms_and_conditions_content.trademark.a")}
+
+                    </ParsedText>
+                  </Text>
+                </Paragraph>
+
+             {/* // */} 
+
+          {/* // */}
+
+            <Text 
+                accessibilityRole='header' 
+                accessible={true} 
+                accessibilityLabel={resources.getString("terms_and_conditions_content.nowarranties")} 
+                style={styles.ParagraphHeader}
+                >{resources.getString("terms_and_conditions_content.nowarranties")} </Text>
+
+                <Paragraph style={styles.paragraph}>
+                  <Text>
+                    
+                 <ParsedText 
+                      style={styles.text}
+                      parse={
+                        [
+                          { pattern: /Statistics Act/, style: styles.italic },
+                          { pattern: /Privacy Act/, style: styles.italic },
+                          { pattern: /Access to Information Act/, style: styles.italic },
+                          { pattern: /Official Languages Act/, style: styles.italic },
+                          { pattern: /Standard on Optimizing Website and Applications for Mobile Devices/, style: styles.italic },
+                          { pattern: /Copyright Act of Canada/, style: styles.italic },
+  
+                          { pattern: /Loi sur la statistique/, style: styles.italic },
+                          { pattern: /Loi sur la protection des renseignements personnels/, style: styles.italic },
+                          { pattern: /Loi sur l'accès à l'information/, style: styles.italic },
+                          { pattern: /Loi sur les langues officielles/, style: styles.italic },
+                          { pattern: /Norme sur l’optimisation des sites Web et des applications pour appareils mobiles/, style: styles.italic },
+                          { pattern: /Loi sur le droit d'auteur du Canada/, style: styles.italic },
+  
+                          { pattern: /Disclaimer  |General terms and conditions|Modification of Terms and Conditions|Privacy notice/, style: styles.bold },
+                          { pattern: /Confidentiality statement| Confidentiality statement|Official language notice|Accessibility notice/, style: styles.bold },
+                          { pattern: /Use of content|Unique identifier|Applicable law  |Limitation of liability/, style: styles.bold },
+                          { pattern: /Disclosure statement|Copyright notice |Trademark notice|No warranties|Indemnity|Restrictions|Modifications and access|Ownership|Maintenance and support/, style: styles.bold },
+  
+                          { pattern: /Désistement |Conditions générales  |Modification des conditions générales|Avis de confidentialité/, style: styles.bold },
+                          { pattern: /Énoncé de confidentialité|Langues officielles  |Avis de l’accessibilité|Utilisation du contenu/, style: styles.bold },
+                          { pattern: /Use of content|Code d’identification unique |Lois applicables |Limitation de la responsabilité/, style: styles.bold },
+                          { pattern: /Avis de divulgations|Droit d’auteur |Avis concernant l'image de marque|Aucune garantie|Indemnité|Restrictions|Modification et accès|Propriété|Maintenance et soutien/, style: styles.bold },
+                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
+                        ]
+                      }
+                      childrenProps={{ allowFontScaling: false }}
+                    >
+                      {resources.getString("terms_and_conditions_content.nowarranties.a")}
+
+                    </ParsedText>
+                  </Text>
+                </Paragraph>
+
+             {/* // */} 
+
+{/* // */}
+
+<Text 
+                accessibilityRole='header' 
+                accessible={true} 
+                accessibilityLabel={resources.getString("terms_and_conditions_content.indemnity")} 
+                style={styles.ParagraphHeader}
+                >{resources.getString("terms_and_conditions_content.indemnity")} </Text>
+
+                <Paragraph style={styles.paragraph}>
+                  <Text>
+                    
+                 <ParsedText 
+                      style={styles.text}
+                      parse={
+                        [
+                          { pattern: /Statistics Act/, style: styles.italic },
+                          { pattern: /Privacy Act/, style: styles.italic },
+                          { pattern: /Access to Information Act/, style: styles.italic },
+                          { pattern: /Official Languages Act/, style: styles.italic },
+                          { pattern: /Standard on Optimizing Website and Applications for Mobile Devices/, style: styles.italic },
+                          { pattern: /Copyright Act of Canada/, style: styles.italic },
+  
+                          { pattern: /Loi sur la statistique/, style: styles.italic },
+                          { pattern: /Loi sur la protection des renseignements personnels/, style: styles.italic },
+                          { pattern: /Loi sur l'accès à l'information/, style: styles.italic },
+                          { pattern: /Loi sur les langues officielles/, style: styles.italic },
+                          { pattern: /Norme sur l’optimisation des sites Web et des applications pour appareils mobiles/, style: styles.italic },
+                          { pattern: /Loi sur le droit d'auteur du Canada/, style: styles.italic },
+  
+                          { pattern: /Disclaimer  |General terms and conditions|Modification of Terms and Conditions|Privacy notice/, style: styles.bold },
+                          { pattern: /Confidentiality statement| Confidentiality statement|Official language notice|Accessibility notice/, style: styles.bold },
+                          { pattern: /Use of content|Unique identifier|Applicable law  |Limitation of liability/, style: styles.bold },
+                          { pattern: /Disclosure statement|Copyright notice |Trademark notice|No warranties|Indemnity|Restrictions|Modifications and access|Ownership|Maintenance and support/, style: styles.bold },
+  
+                          { pattern: /Désistement |Conditions générales  |Modification des conditions générales|Avis de confidentialité/, style: styles.bold },
+                          { pattern: /Énoncé de confidentialité|Langues officielles  |Avis de l’accessibilité|Utilisation du contenu/, style: styles.bold },
+                          { pattern: /Use of content|Code d’identification unique |Lois applicables |Limitation de la responsabilité/, style: styles.bold },
+                          { pattern: /Avis de divulgations|Droit d’auteur |Avis concernant l'image de marque|Aucune garantie|Indemnité|Restrictions|Modification et accès|Propriété|Maintenance et soutien/, style: styles.bold },
+                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
+                        ]
+                      }
+                      childrenProps={{ allowFontScaling: false }}
+                    >
+                      {resources.getString("terms_and_conditions_content.indemnity.a")}
+
+                    </ParsedText>
+                  </Text>
+                </Paragraph>
+
+             {/* // */} 
+
+            {/* // */}
+
+              <Text 
+                accessibilityRole='header' 
+                accessible={true} 
+                accessibilityLabel={resources.getString("terms_and_conditions_content.restrictions")} 
+                style={styles.ParagraphHeader}
+                >{resources.getString("terms_and_conditions_content.restrictions")} </Text>
+
+                <Paragraph style={styles.paragraph}>
+                  <Text>
+                    
+                 <ParsedText 
+                      style={styles.text}
+                      parse={
+                        [
+                          { pattern: /Statistics Act/, style: styles.italic },
+                          { pattern: /Privacy Act/, style: styles.italic },
+                          { pattern: /Access to Information Act/, style: styles.italic },
+                          { pattern: /Official Languages Act/, style: styles.italic },
+                          { pattern: /Standard on Optimizing Website and Applications for Mobile Devices/, style: styles.italic },
+                          { pattern: /Copyright Act of Canada/, style: styles.italic },
+  
+                          { pattern: /Loi sur la statistique/, style: styles.italic },
+                          { pattern: /Loi sur la protection des renseignements personnels/, style: styles.italic },
+                          { pattern: /Loi sur l'accès à l'information/, style: styles.italic },
+                          { pattern: /Loi sur les langues officielles/, style: styles.italic },
+                          { pattern: /Norme sur l’optimisation des sites Web et des applications pour appareils mobiles/, style: styles.italic },
+                          { pattern: /Loi sur le droit d'auteur du Canada/, style: styles.italic },
+  
+                          { pattern: /Disclaimer  |General terms and conditions|Modification of Terms and Conditions|Privacy notice/, style: styles.bold },
+                          { pattern: /Confidentiality statement| Confidentiality statement|Official language notice|Accessibility notice/, style: styles.bold },
+                          { pattern: /Use of content|Unique identifier|Applicable law  |Limitation of liability/, style: styles.bold },
+                          { pattern: /Disclosure statement|Copyright notice |Trademark notice|No warranties|Indemnity|Restrictions|Modifications and access|Ownership|Maintenance and support/, style: styles.bold },
+  
+                          { pattern: /Désistement |Conditions générales  |Modification des conditions générales|Avis de confidentialité/, style: styles.bold },
+                          { pattern: /Énoncé de confidentialité|Langues officielles  |Avis de l’accessibilité|Utilisation du contenu/, style: styles.bold },
+                          { pattern: /Use of content|Code d’identification unique |Lois applicables |Limitation de la responsabilité/, style: styles.bold },
+                          { pattern: /Avis de divulgations|Droit d’auteur |Avis concernant l'image de marque|Aucune garantie|Indemnité|Restrictions|Modification et accès|Propriété|Maintenance et soutien/, style: styles.bold },
+                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
+                        ]
+                      }
+                      childrenProps={{ allowFontScaling: false }}
+                    >
+                      {resources.getString("terms_and_conditions_content.restrictions.a")}
+
+                    </ParsedText>
+                  </Text>
+                </Paragraph>
+
+             {/* // */} 
+
+            {/* // */}
+
+              <Text 
+                accessibilityRole='header' 
+                accessible={true} 
+                accessibilityLabel={resources.getString("terms_and_conditions_content.modifications")} 
+                style={styles.ParagraphHeader}
+                >{resources.getString("terms_and_conditions_content.modifications")} </Text>
+
+                <Paragraph style={styles.paragraph}>
+                  <Text>
+                    
+                 <ParsedText 
+                      style={styles.text}
+                      parse={
+                        [
+                          { pattern: /Statistics Act/, style: styles.italic },
+                          { pattern: /Privacy Act/, style: styles.italic },
+                          { pattern: /Access to Information Act/, style: styles.italic },
+                          { pattern: /Official Languages Act/, style: styles.italic },
+                          { pattern: /Standard on Optimizing Website and Applications for Mobile Devices/, style: styles.italic },
+                          { pattern: /Copyright Act of Canada/, style: styles.italic },
+  
+                          { pattern: /Loi sur la statistique/, style: styles.italic },
+                          { pattern: /Loi sur la protection des renseignements personnels/, style: styles.italic },
+                          { pattern: /Loi sur l'accès à l'information/, style: styles.italic },
+                          { pattern: /Loi sur les langues officielles/, style: styles.italic },
+                          { pattern: /Norme sur l’optimisation des sites Web et des applications pour appareils mobiles/, style: styles.italic },
+                          { pattern: /Loi sur le droit d'auteur du Canada/, style: styles.italic },
+  
+                          { pattern: /Disclaimer  |General terms and conditions|Modification of Terms and Conditions|Privacy notice/, style: styles.bold },
+                          { pattern: /Confidentiality statement| Confidentiality statement|Official language notice|Accessibility notice/, style: styles.bold },
+                          { pattern: /Use of content|Unique identifier|Applicable law  |Limitation of liability/, style: styles.bold },
+                          { pattern: /Disclosure statement|Copyright notice |Trademark notice|No warranties|Indemnity|Restrictions|Modifications and access|Ownership|Maintenance and support/, style: styles.bold },
+  
+                          { pattern: /Désistement |Conditions générales  |Modification des conditions générales|Avis de confidentialité/, style: styles.bold },
+                          { pattern: /Énoncé de confidentialité|Langues officielles  |Avis de l’accessibilité|Utilisation du contenu/, style: styles.bold },
+                          { pattern: /Use of content|Code d’identification unique |Lois applicables |Limitation de la responsabilité/, style: styles.bold },
+                          { pattern: /Avis de divulgations|Droit d’auteur |Avis concernant l'image de marque|Aucune garantie|Indemnité|Restrictions|Modification et accès|Propriété|Maintenance et soutien/, style: styles.bold },
+                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
+                        ]
+                      }
+                      childrenProps={{ allowFontScaling: false }}
+                    >
+                      {resources.getString("terms_and_conditions_content.modifications.a")}
+
+                    </ParsedText>
+                  </Text>
+                </Paragraph>
+
+             {/* // */} 
+
+{/* // */}
+
+<Text 
+                accessibilityRole='header' 
+                accessible={true} 
+                accessibilityLabel={resources.getString("terms_and_conditions_content.ownership")} 
+                style={styles.ParagraphHeader}
+                >{resources.getString("terms_and_conditions_content.ownership")} </Text>
+
+                <Paragraph style={styles.paragraph}>
+                  <Text>
+                    
+                 <ParsedText 
+                      style={styles.text}
+                      parse={
+                        [
+                          { pattern: /Statistics Act/, style: styles.italic },
+                          { pattern: /Privacy Act/, style: styles.italic },
+                          { pattern: /Access to Information Act/, style: styles.italic },
+                          { pattern: /Official Languages Act/, style: styles.italic },
+                          { pattern: /Standard on Optimizing Website and Applications for Mobile Devices/, style: styles.italic },
+                          { pattern: /Copyright Act of Canada/, style: styles.italic },
+  
+                          { pattern: /Loi sur la statistique/, style: styles.italic },
+                          { pattern: /Loi sur la protection des renseignements personnels/, style: styles.italic },
+                          { pattern: /Loi sur l'accès à l'information/, style: styles.italic },
+                          { pattern: /Loi sur les langues officielles/, style: styles.italic },
+                          { pattern: /Norme sur l’optimisation des sites Web et des applications pour appareils mobiles/, style: styles.italic },
+                          { pattern: /Loi sur le droit d'auteur du Canada/, style: styles.italic },
+  
+                          { pattern: /Disclaimer  |General terms and conditions|Modification of Terms and Conditions|Privacy notice/, style: styles.bold },
+                          { pattern: /Confidentiality statement| Confidentiality statement|Official language notice|Accessibility notice/, style: styles.bold },
+                          { pattern: /Use of content|Unique identifier|Applicable law  |Limitation of liability/, style: styles.bold },
+                          { pattern: /Disclosure statement|Copyright notice |Trademark notice|No warranties|Indemnity|Restrictions|Modifications and access|Ownership|Maintenance and support/, style: styles.bold },
+  
+                          { pattern: /Désistement |Conditions générales  |Modification des conditions générales|Avis de confidentialité/, style: styles.bold },
+                          { pattern: /Énoncé de confidentialité|Langues officielles  |Avis de l’accessibilité|Utilisation du contenu/, style: styles.bold },
+                          { pattern: /Use of content|Code d’identification unique |Lois applicables |Limitation de la responsabilité/, style: styles.bold },
+                          { pattern: /Avis de divulgations|Droit d’auteur |Avis concernant l'image de marque|Aucune garantie|Indemnité|Restrictions|Modification et accès|Propriété|Maintenance et soutien/, style: styles.bold },
+                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
+                        ]
+                      }
+                      childrenProps={{ allowFontScaling: false }}
+                    >
+                      {resources.getString("terms_and_conditions_content.ownership.a")}
+
+                    </ParsedText>
+                  </Text>
+                </Paragraph>
+              {/* // */} 
+              {/* // */}
+              <Text 
+                accessibilityRole='header' 
+                accessible={true} 
+                accessibilityLabel={resources.getString("terms_and_conditions_content.maintenance")} 
+                style={styles.ParagraphHeader}
+                >{resources.getString("terms_and_conditions_content.maintenance")} </Text>
+
+                <Paragraph style={styles.paragraph}>
+                  <Text>
+                    
+                 <ParsedText 
+                      style={styles.text}
+                      parse={
+                        [
+                          { pattern: /Statistics Act/, style: styles.italic },
+                          { pattern: /Privacy Act/, style: styles.italic },
+                          { pattern: /Access to Information Act/, style: styles.italic },
+                          { pattern: /Official Languages Act/, style: styles.italic },
+                          { pattern: /Standard on Optimizing Website and Applications for Mobile Devices/, style: styles.italic },
+                          { pattern: /Copyright Act of Canada/, style: styles.italic },
+  
+                          { pattern: /Loi sur la statistique/, style: styles.italic },
+                          { pattern: /Loi sur la protection des renseignements personnels/, style: styles.italic },
+                          { pattern: /Loi sur l'accès à l'information/, style: styles.italic },
+                          { pattern: /Loi sur les langues officielles/, style: styles.italic },
+                          { pattern: /Norme sur l’optimisation des sites Web et des applications pour appareils mobiles/, style: styles.italic },
+                          { pattern: /Loi sur le droit d'auteur du Canada/, style: styles.italic },
+  
+                          { pattern: /Disclaimer  |General terms and conditions|Modification of Terms and Conditions|Privacy notice/, style: styles.bold },
+                          { pattern: /Confidentiality statement| Confidentiality statement|Official language notice|Accessibility notice/, style: styles.bold },
+                          { pattern: /Use of content|Unique identifier|Applicable law  |Limitation of liability/, style: styles.bold },
+                          { pattern: /Disclosure statement|Copyright notice |Trademark notice|No warranties|Indemnity|Restrictions|Modifications and access|Ownership|Maintenance and support/, style: styles.bold },
+  
+                          { pattern: /Désistement |Conditions générales  |Modification des conditions générales|Avis de confidentialité/, style: styles.bold },
+                          { pattern: /Énoncé de confidentialité|Langues officielles  |Avis de l’accessibilité|Utilisation du contenu/, style: styles.bold },
+                          { pattern: /Use of content|Code d’identification unique |Lois applicables |Limitation de la responsabilité/, style: styles.bold },
+                          { pattern: /Avis de divulgations|Droit d’auteur |Avis concernant l'image de marque|Aucune garantie|Indemnité|Restrictions|Modification et accès|Propriété|Maintenance et soutien/, style: styles.bold },
+                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
+                        ]
+                      }
+                      childrenProps={{ allowFontScaling: false }}
+                    >
+                      {resources.getString("terms_and_conditions_content.maintenance.a")}
+
+                    </ParsedText>
+                  </Text>
+                </Paragraph>
+
+             {/* // */} 
+
+              {/* <Paragraph style={styles.paragraph}>
                 <Text >
                   <ParsedText
                     style={styles.text}
@@ -202,7 +1242,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                     {resources.getString("terms_and_conditions_content")}
                   </ParsedText>
                 </Text>
-              </Paragraph>
+              </Paragraph> */}
             </ScrollView>
 
         </SafeAreaView>
@@ -253,6 +1293,13 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginTop: 15,
     justifyContent: 'space-between'
+  },
+
+  ParagraphHeader:{
+    fontWeight: 'bold',
+    color: '#66cc99',
+    //fontFamily: 'Lato-Bold',
+    fontSize: 18
   },
   footer: {
     flexDirection: 'row',
