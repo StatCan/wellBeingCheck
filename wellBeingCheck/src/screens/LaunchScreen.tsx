@@ -148,6 +148,10 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
       let sendouts=await AsyncStorage.getItem('Sendouts');
       if(sendouts!=null)global.sendouts=sendouts;
 
+         let warningDate=await AsyncStorage.getItem('WarningDate');
+         if(warningDate==null ||warningDate==''){global.warningDate=new Date();AsyncStorage.setItem('WarningDate',global.warningDate.toString());}else global.warningDate=new Date(warningDate);
+         console.log('Warning Date:'+global.warningDate);
+
           this._bootstrap();
         };
   onNotification(n) {

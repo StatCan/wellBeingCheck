@@ -212,7 +212,8 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     if (this.state.notificationcount != global.pingNum) dirty = true;
     console.log('Dirty:' + dirty+' state:'+this.state.notificationState);
     if (this.state.notificationState) {
-      if (global.doneSurveyA) {
+       let today=new Date();
+      if (global.doneSurveyA && (today<global.warningDate)) {
         if (global.notificationState) {
           //notification was enabled, right now it is enabled too, so need to re-schedule only there is some setting value changed otherwise waiting to suvey B done
           if (dirty) {
@@ -235,6 +236,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       if (global.notificationState) {
         //the notification was enabled before come in the setting screen, so we need cancell all the notifications
         Notifications.cancelAllScheduledNotificationsAsync();
+        global.sendouts='';AsyncStorage.setItem('Sendouts', sendouts);
         AsyncStorage.removeItem('Schedules'); global.schedules = [];
         console.log('remove all notifications');
       }

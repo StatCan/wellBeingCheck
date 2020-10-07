@@ -248,6 +248,7 @@ export async function setupSchedules(affectCurrent=false){
              var l=lastDate.toString();console.log('Last day:'+l);
              AsyncStorage.setItem('LastDate',lastDate.toString());
              AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());
+             AsyncStorage.setItem('WarningDate',dt.toString());global.warningDate=dt;
              global.warningNotificationId=warningNotificationId;
              console.log('warning notification:'+dt+' Id:'+warningNotificationId);
              global.lastDate=lastDate;
@@ -333,6 +334,7 @@ export async function setupSchedules(affectCurrent=false){
                     let dt=new Date(day5);dt.setHours(sleep-2);
                     let warningNotificationId=await setupWarning(dt,title,lastMessage);
                     AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());
+                    AsyncStorage.setItem('WarningDate',dt.toString());global.warningDate=dt;
                     global.warningNotificationId=warningNotificationId;
                     console.log('warning notification:'+warningNotificationId);
 
@@ -383,6 +385,7 @@ export async function setupSchedules(affectCurrent=false){
                      let dt=new Date(day5);dt.setHours(sleep-2);
                      let warningNotificationId=await setupWarning(dt,title,lastMessage);
                      AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());
+                     AsyncStorage.setItem('WarningDate',dt.toString());global.warningDate=dt;
                      global.warningNotificationId=warningNotificationId;
                      console.log('warning notification:'+warningNotificationId);
 
@@ -429,6 +432,7 @@ export async function setupSchedules(affectCurrent=false){
                  let dt=new Date(day5);dt.setHours(sleep-2);
                  let warningNotificationId=await setupWarning(dt,title,lastMessage);
                  AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());
+                 AsyncStorage.setItem('WarningDate',dt.toString());global.warningDate=dt;
                  global.warningNotificationId=warningNotificationId;
                  console.log('warning notification:'+warningNotificationId);
 

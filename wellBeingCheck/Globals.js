@@ -63,6 +63,7 @@ global.curDayPassed =[];
 
 global.received='';  //test only
 global.sendouts='';   //test only
+global.warningDate=null;
 
 global.globalTimer =null;
 global.globalTick=0;
