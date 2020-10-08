@@ -141,11 +141,16 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           global.notificationState=notificationState;
           let surveyCount=await AsyncStorage.getItem('SurveyCount');
           if(surveyCount==null)surveyCount=0;else surveyCount=parseInt(surveyCount);global.surveyCount=surveyCount;
-  let received=await AsyncStorage.getItem('Received');if(received!=null)global.received=received;
+          let received=await AsyncStorage.getItem('Received');if(received!=null)global.received=received;
+          global.currentVersion=pkg.expo.version;
           console.log('Current version:'+pkg.expo.version+' Culture:'+resources.culture+'  NotificationState:'+global.notificationState+' SurveyCount:'+global.surveyCount);
 
       let sendouts=await AsyncStorage.getItem('Sendouts');
       if(sendouts!=null)global.sendouts=sendouts;
+
+         let warningDate=await AsyncStorage.getItem('WarningDate');
+         if(warningDate==null ||warningDate==''){global.warningDate=new Date();AsyncStorage.setItem('WarningDate',global.warningDate.toString());}else global.warningDate=new Date(warningDate);
+         console.log('Warning Date:'+global.warningDate);
 
           this._bootstrap();
         };
@@ -170,23 +175,33 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
   componentDidMount() {Notifications.addListener(this.onNotification);this.checkUpgrade();}
   async checkUpgrade(){
       console.log('Check upgrade');
-      //Disable this line to test discontinue notification problem
-   //   Notifications.cancelAllScheduledNotificationsAsync(); global.sendouts='';AsyncStorage.setItem('Sendouts', sendouts);
-      if(global.hasImage==1){
-          let currentVersion=await AsyncStorage.getItem('CurrentVersion');console.log('currentVersion:'+currentVersion);
-          if(currentVersion==null ||(currentVersion!=null && currentVersion!=pkg.expo.version)){
-              let isConnected=await checkConnection();
-              if(!isConnected){Alert.alert('',resources.getString('offline'));return;}
-              let jwt=await fetchJwToken();console.log(jwt);
-              if(jwt==''){Alert.alert('',resources.getString("securityIssue"));return;}
-              global.jwToken=jwt;global.busy=0;
-              let types=await fetchGraphTypes();console.log(types);
-              if(types!=null && types.length>0){
-                    await fetchGraphs(types,deviceWidth,deviceHeight);
-              }
-              AsyncStorage.setItem('CurrentVersion', pkg.expo.version);
+      let currentVersion=await AsyncStorage.getItem('CurrentVersion');console.log('currentVersion:'+currentVersion);
+      if(currentVersion==null){
+           console.log('Notification cancelled');
+           Notifications.cancelAllScheduledNotificationsAsync(); global.sendouts='(Re)Install,Cancelled';AsyncStorage.setItem('Sendouts', sendouts);
+           AsyncStorage.setItem('CurrentVersion', pkg.expo.version);
+      }
+      else {
+          if(global.hasImage==1){
+                if(currentVersion!=pkg.expo.version){
+                    let isConnected=await checkConnection();
+                    if(!isConnected){Alert.alert('',resources.getString('offline'));return;}
+                    let jwt=await fetchJwToken();console.log(jwt);
+                    if(jwt==''){Alert.alert('',resources.getString("securityIssue"));return;}
+                    global.jwToken=jwt;global.busy=0;
+                    let types=await fetchGraphTypes();console.log(types);
+                    if(types!=null && types.length>0){
+                          await fetchGraphs(types,deviceWidth,deviceHeight);
+                    }
+                    AsyncStorage.setItem('CurrentVersion', pkg.expo.version);
+                }
+            }
+          else {
+             if(currentVersion!=pkg.expo.version) AsyncStorage.setItem('CurrentVersion', pkg.expo.version);
           }
       }
+
+
   }
   render() {
     return (
@@ -214,3 +229,31 @@ const styles = StyleSheet.create({
 });
 
 export default memo(LaunchScreen);
+
+
+
+//async checkUpgrade(){
+//      console.log('Check upgrade');
+//      let currentVersion=await AsyncStorage.getItem('CurrentVersion');console.log('currentVersion:'+currentVersion);
+//      if(currentVersion==null){
+//           console.log('Notification cancelled');
+//           Notifications.cancelAllScheduledNotificationsAsync(); global.sendouts='(Re)Install,Cancelled';AsyncStorage.setItem('Sendouts', sendouts);
+//           AsyncStorage.setItem('CurrentVersion', pkg.expo.version);
+//      }
+//
+//      if(global.hasImage==1){
+//          if(currentVersion==null ||(currentVersion!=null && currentVersion!=pkg.expo.version)){
+//              let isConnected=await checkConnection();
+//              if(!isConnected){Alert.alert('',resources.getString('offline'));return;}
+//              let jwt=await fetchJwToken();console.log(jwt);
+//              if(jwt==''){Alert.alert('',resources.getString("securityIssue"));return;}
+//              global.jwToken=jwt;global.busy=0;
+//              let types=await fetchGraphTypes();console.log(types);
+//              if(types!=null && types.length>0){
+//                    await fetchGraphs(types,deviceWidth,deviceHeight);
+//              }
+//              AsyncStorage.setItem('CurrentVersion', pkg.expo.version);
+//          }
+//      }
+//
+//  }

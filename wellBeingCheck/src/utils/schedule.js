@@ -78,11 +78,11 @@ setupNotification = async (datetime,title,message) => {
       vibrate: true,
     });
   }
-  let scheduledTime = new Date(datetime);let msg='Info4:'+new Date(datetime)+' '+message;  //4 test only
+  let scheduledTime = new Date(datetime);let msg='Info:'+new Date(datetime)+' '+message;  //4 test only
  // console.log(msg);
   let notificationId =await Notifications.scheduleLocalNotificationAsync(
     {
-      title: title,
+      title: title+":"+global.currentVersion,
       body: msg,
       data: JSON.stringify({scheduledTime:scheduledTime}),   //Test only
       ios: { sound: true },
@@ -108,7 +108,7 @@ export function sendDelayedNotification(datetime,title,message){
   let scheduledTime = new Date(datetime).getTime() + 5000;
   Notifications.scheduleLocalNotificationAsync(
     {
-      title: title,
+      title: title+":"+global.currentVersion,
       body: message,
       data:JSON.stringify({scheduledTime:scheduledTime}),
       ios: { sound: true },
@@ -170,7 +170,7 @@ async function setupWarning(dt,title,message){
     let scheduledTime = new Date(dt);
     let warningId=await Notifications.scheduleLocalNotificationAsync(
                             {
-                              title: title,
+                              title: title+":"+global.currentVersion,
                               body: message,
                               ios: { sound: true },
                               android: {
@@ -248,6 +248,7 @@ export async function setupSchedules(affectCurrent=false){
              var l=lastDate.toString();console.log('Last day:'+l);
              AsyncStorage.setItem('LastDate',lastDate.toString());
              AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());
+             AsyncStorage.setItem('WarningDate',dt.toString());global.warningDate=dt;
              global.warningNotificationId=warningNotificationId;
              console.log('warning notification:'+dt+' Id:'+warningNotificationId);
              global.lastDate=lastDate;
@@ -333,6 +334,7 @@ export async function setupSchedules(affectCurrent=false){
                     let dt=new Date(day5);dt.setHours(sleep-2);
                     let warningNotificationId=await setupWarning(dt,title,lastMessage);
                     AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());
+                    AsyncStorage.setItem('WarningDate',dt.toString());global.warningDate=dt;
                     global.warningNotificationId=warningNotificationId;
                     console.log('warning notification:'+warningNotificationId);
 
@@ -383,6 +385,7 @@ export async function setupSchedules(affectCurrent=false){
                      let dt=new Date(day5);dt.setHours(sleep-2);
                      let warningNotificationId=await setupWarning(dt,title,lastMessage);
                      AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());
+                     AsyncStorage.setItem('WarningDate',dt.toString());global.warningDate=dt;
                      global.warningNotificationId=warningNotificationId;
                      console.log('warning notification:'+warningNotificationId);
 
@@ -429,6 +432,7 @@ export async function setupSchedules(affectCurrent=false){
                  let dt=new Date(day5);dt.setHours(sleep-2);
                  let warningNotificationId=await setupWarning(dt,title,lastMessage);
                  AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());
+                 AsyncStorage.setItem('WarningDate',dt.toString());global.warningDate=dt;
                  global.warningNotificationId=warningNotificationId;
                  console.log('warning notification:'+warningNotificationId);
 
