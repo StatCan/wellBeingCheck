@@ -162,7 +162,7 @@ async onTestD(){
                 accessible={true}
                 accessibilityRole="text"
                 accessibilityHint="application name"
-                accessibilityLabel={resources.getString("Well-Being Check")}
+                accessibilityLabel={resources.getString("Accessibility.ApplicationName")}
                 >
                   {resources.getString("Well-Being Check")}
                 </Text>
@@ -178,7 +178,7 @@ async onTestD(){
                     error={!!this.state.passwordError}
                     errorText={this.state.passwordError}
                     secureTextEntry={this.state.passwordIsHidden}
-                    accessibilityLabel={resources.getString("Enter password")}
+                    accessibilityLabel={resources.getString('Accessibility.passwordInputText')}    
                   />
                 </View>
 
@@ -187,10 +187,7 @@ async onTestD(){
                     style={styles.passwordEyeIconBg}
                     onPress={this._togglePasswordHidden}
                     activeOpacity={1}
-                    accessible={true}
-                    accessibilityRole="button"
-                    accessibilityHint="hide or show password"
-                    accessibilityLabel="hide or show password"
+                    accessible={false}
                   >
                     <Feather
                       style={styles.passwordEyeIcon}
@@ -206,7 +203,7 @@ async onTestD(){
                   accessible={true}
                     accessibilityRole="button"
                     accessibilityHint="Forgot Password recovery"
-                    accessibilityLabel="forget password"
+                    accessibilityLabel={resources.getString("login.forgot_password")}
                 >
                   <Text style={styles.label}>{resources.getString("login.forgot_password")}</Text>
                 </TouchableOpacity>

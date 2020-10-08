@@ -188,7 +188,7 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
             onPress={() => { global.currentView = 0; this.props.navigation.navigate('Dashboard') }} 
             style={{ marginLeft: 5, marginTop: 10 }}
             accessible={true}
-            accessibilityLabel={resources.getString("Accessiblity.ReturnLogoButton")}
+            accessibilityLabel={resources.getString("Accessibility.ReturnLogoButton")}
             accessibilityRole="button"
             >
               <Image source={require('../../assets/WellnessCheckLogo.png')} 

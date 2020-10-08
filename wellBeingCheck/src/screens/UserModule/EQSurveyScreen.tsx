@@ -265,7 +265,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
                             style={{ marginLeft: 5, marginTop: 10,marginBottom:5 }}
                             accessible={true}
                             accessibilityRole='button'
-                            accessibilityLabel={resources.getString("Accessiblity.ReturnLogoButton")}
+                            accessibilityLabel={resources.getString("Accessibility.ReturnLogoButton")}
                             >
                 <Image source={require('../../assets/WellnessCheckLogo.png')}
                        style={{ width: 38, height: 38 }} />

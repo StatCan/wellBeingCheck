@@ -508,7 +508,7 @@ console.log('current View-------------------------------:' + global.currentView)
             <Text style={styles.toolbarTitle}
              accessible={true}
              accessibilityRole='text'
-             accessibilityLabel= {resources.getString("Accessiblity.setting_title")} 
+             accessibilityLabel= {resources.getString("Accessibility.setting_title")} 
             >{resources.getString("settings")}</Text>
           </View>
           <View style={styles.containerStyle}>

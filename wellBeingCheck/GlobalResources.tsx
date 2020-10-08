@@ -449,11 +449,14 @@ export const resources = {
              "ok":"OK",
              "declinemsg1": "You must accept Terms and Conditions to use this app. Select “OK” to revise your preferences, or call us at ",
              "declinemsg2": " for more information.",
-             // accessibility bilingual text 
 
+             // accessibility bilingual text 
+             "Accessibility.ApplicationName":"Well being check application name ",
              "Accessibility.ReturnLogoButton":"Back",
              "Accessibility.getting_started_title":"Getting Started Page title\n",
              "Accessibility.setting_title":"Parametres titre de la page",
+             "Accessibility.passwordInputText":"Password textinput",
+
 
         },
         fr: {
@@ -964,9 +967,11 @@ export const resources = {
                "declinemsg1": "Vous devez accepter les Conditions générales pour utiliser cette application. Sélectionnez « D'accord » pour modifier vos préférences, ou appelez-nous au ",
                "declinemsg2": " pour obtenir plus de renseignements.",
               
-               "Accessiblity.ReturnLogoButton":"Retour",
+               "Accessibility.ApplicationName":"le nom de l'application est Bilan bien-être ",
+               "Accessibility.ReturnLogoButton":"Retour",
                "Accessibility.getting_started_title":"Pour commencer titre de la page",
-               "Accessiblity.setting_title":"Parametres titre de la page"
+               "Accessibility.setting_title":"Parametres titre de la page",
+               "Accessibility.passwordInputText":"Saisir le mot de passe",
 
 
         }

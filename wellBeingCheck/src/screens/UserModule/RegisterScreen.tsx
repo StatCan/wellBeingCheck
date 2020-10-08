@@ -335,7 +335,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                     if(this.state.passwordIsHidden)this.setState({password:pass});}}
                     onEndEditing={()=>{console.log('End editing');pass=this.state.password;console.log('saving:'+pass);}}
                     onKeyPress={(e)=>this.keyPressed(e)}
-                    accessibilityLabel='Password  input text box'            
+                    accessibilityLabel={resources.getString('Accessibility.passwordInputText')}           
                   />
                 </View>
 
