@@ -457,7 +457,6 @@ export const resources = {
              "Accessibility.setting_title":"Parametres titre de la page",
              "Accessibility.passwordInputText":"Password textinput",
 
-
         },
         fr: {
             //global
@@ -625,8 +624,6 @@ export const resources = {
      "terms_and_conditions_content.nowarranties" :     `Aucune garantie`,
      "terms_and_conditions_content.nowarranties.a" :   `Les renseignements contenus dans cette application sont fournis « tels quels », et Statistique Canada n’en fait aucune représentation et ne donne aucune garantie à leur égard, que ce soit de manière explicite ou implicite, et rejette expressément toute garantie implicite de qualité marchande ou d’adéquation de ces renseignements à une fin particulière. \n`,
    
-
-
      "terms_and_conditions_content.indemnity" :      `Indemnité` ,
      "terms_and_conditions_content.indemnity.a" :     `Les utilisateurs de l’application indemnisent et dégagent Statistique Canada, ses représentants, fonctionnaires, employés et/ou mandataires et entrepreneurs de toute perte ou condition, qu’elle soit expresse, implicite ou légale, y compris les garanties et conditions implicites de qualité marchande, d’adéquation à une fin particulière, et de non-infraction. \n`,
 
