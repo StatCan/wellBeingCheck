@@ -278,7 +278,7 @@ export const resources = {
             "contactus_email": "Email",
             "contactus_telephone": "Telephone",
             "contactus_website": "Website",
-            "contactus_mail": "Mailling address",
+            "contactus_mail": "Mailing address",
             "contactus_text": `Statistics Canada\nAttention of Director Sylvie Cyr\n150 Tunney’s Pasture Driveway\nOttawa, ON\nK1A 0T6`,
 
             //FAQ
@@ -790,7 +790,7 @@ export const resources = {
             "contactus_email": "Courriel",
             "contactus_telephone": "Téléphone",
             "contactus_website": "Site Web",
-            "contactus_mail": "Courrier",
+            "contactus_mail": "L'adresse postale",
             "contactus_text": `Statistique Canada\nÀ l’attention de la directrice Sylvie Cyr\n150, promenade Tunney’s Pasture\nOttawa (Ontario)\nK1A 0T6`,
 
             
