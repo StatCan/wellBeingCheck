@@ -3,13 +3,17 @@ import { Button, View, Text, StyleSheet } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Appearance } from 'react-native-appearance';
 import { resources } from '../../GlobalResources';
+import { DepthDataAccuracy } from "expo/build/AR";
 
 const TimePicker = (props) => {
 
+  // state ={
+  //   locale:"en_GB"
+  // }
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
 
   isDarkModeEnabled = Appearance.getColorScheme() === 'dark'
-
+  
   const hideTimePicker = () => {
     props.cancelHandler();
   };
@@ -27,12 +31,9 @@ const TimePicker = (props) => {
       if (global.debugMode) console.log("The timetype is: " + props.timeType);
       props.handler(time.toLocaleTimeString([], options));
     }
-
     hideTimePicker();
   };
-
  const NameDisplay = React.memo(function () {
-
   return  <View>
                  <DateTimePickerModal
 
@@ -41,20 +42,21 @@ const TimePicker = (props) => {
                      isVisible={props.isVisible}
 
                      //android props
-                     is24Hour={false} //this in case we need to have 24 hours clock for android is24Hour={true}
+                     is24Hour={resources.getString("Is24hours")} //this in case we need to have 24 hours clock for android is24Hour={true}
                      display='spinner'
+                     date={date}
 
-                      date={date}
                      //ios props
                      headerTextIOS = {resources.getString("timepicker.title")}
-                     cancelTextIOS= {resources.getString("timepicker.canceltext")}
-                     confirmTextIOS= {resources.getString("timepicker.confirmtext")}
+                     cancelTextIOS = {resources.getString("timepicker.canceltext")}
+                     confirmTextIOS = {resources.getString("timepicker.confirmtext")}
 
                      //handler
                      onConfirm={handleConfirm}
                      onCancel={hideTimePicker}
-
-                     //locale="en_GB" this in case we need to have 24 hours clock for iOS
+                    
+                    //locale={TimePickerlanguage.value=="fr"? "en_GB":""}
+                     locale={resources.getString("Local24")}
                  />
              </View>;
 },[props.isVisible]);

@@ -34,7 +34,8 @@ type SettingsState = {
   wakeTimePickerShow: boolean,
   sleepTimePickerShow: boolean,
   titleBackgroundColor: string,
-  settingsFirstTime: boolean
+  settingsFirstTime: boolean,
+  idle:boolean,
 }
 
 interface Props {
@@ -432,6 +433,7 @@ console.log('current View-------------------------------:' + global.currentView)
   _showWakeTimePicker = () =>{
       global.resetTimer();//global.globalTick=0;
       this.setState({ wakeTimePickerShow: true });}
+      
   _hideWakeTimePicker = () =>{
       global.resetTimer();//global.globalTick=0;
       this.setState({ wakeTimePickerShow: false });
@@ -671,7 +673,6 @@ console.log('current View-------------------------------:' + global.currentView)
                                                                </View>
                                          }
                 </View>
-
                 <Divider></Divider>
                 <List.Item
                  accessible={true}

@@ -55,7 +55,7 @@ export const resources = {
             "terms_and_conditions_content.Modif.a" :  `Statistics Canada reserves the right to change these Terms and Conditions in its sole discretion.  Modification of these Terms and Conditions by Statistics Canada will require they are accepted prior to using the App. \n` ,
 
             "terms_and_conditions_content.privacy" : `Privacy notice` ,
-            "terms_and_conditions_content.privacy.a" :    `Statistics Canada is committed to respecting the privacy of individuals and businesses—whether they are responding to one of our surveys, providing personal information, purchasing a product or service or using our website. To fulfill this commitment, Statistics Canada has created a Privacy Framework that describes the Approved practices, procedures and governance related to privacy. All personal information collected, used, disclosed or retained by Statistics Canada is protected by the Privacy Act and by the Statistics Act whether it was provided by a respondent or received from a third party.  Privacy and confidentiality of personal information \n`,
+            "terms_and_conditions_content.privacy.a" :    `Statistics Canada is committed to respecting the privacy of individuals and businesses—whether they are responding to one of our surveys, providing personal information, purchasing a product or service or using our website. To fulfill this commitment, Statistics Canada has created a Privacy Framework that describes the Approved practices, procedures and governance related to privacy. All personal information collected, used, disclosed or retained by Statistics Canada is protected by the Privacy Act and by the Statistics Act whether it was provided by a respondent or received from a third party.\n`,
                 //`http://www.statcan.gc.ca/eng/reference/privacy \n\n` +
 
             "terms_and_conditions_content.confidentiality" :  `Confidentiality statement` ,
@@ -209,18 +209,6 @@ export const resources = {
             "about_content.def":`Definitions and explanations` ,
             "about_content.def.a":`A help button is available for certain questions. Press this button for additional information or clarification.\n`,
            
-
-
-
-
-
-//
-
-
-
-
-
-
 
             "about_title_two": "Authorization and confidentiality",
             "about_content_two": "Data are collected under the authority Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
@@ -456,6 +444,9 @@ export const resources = {
              "Accessibility.getting_started_title":"Getting Started Page title\n",
              "Accessibility.setting_title":"Parametres titre de la page",
              "Accessibility.passwordInputText":"Password textinput",
+             "Local24":"",
+             "Is24hours":"false",
+
 
         },
         fr: {
@@ -969,6 +960,8 @@ export const resources = {
                "Accessibility.getting_started_title":"Pour commencer titre de la page",
                "Accessibility.setting_title":"Parametres titre de la page",
                "Accessibility.passwordInputText":"Saisir le mot de passe",
+               "Local24":"en_GB",
+               "Is24hours":"true",
 
 
         }
