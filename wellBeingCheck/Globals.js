@@ -1,4 +1,5 @@
 import { PanResponder} from 'react-native';
+import { resources } from './GlobalResources';
 global.name='AAA';
     global.department='bbb';
 global.question='';
@@ -48,6 +49,17 @@ global.fetchAction=true;
 
 global.currentVersion='';
 global.pingNum=2;
+
+// --------------future change to make timer follow the culture change--------
+// if (resources.culture == "fr") {
+//   global.awakeHour='8:00';
+//   global.sleepHour='22:00'; 
+//   console.log("-------------------fr----------s----------s----------")
+// } else {
+//   global.awakeHour='8:00 AM';
+//   global.sleepHour='10:00 PM';
+//   console.log("-------------------en----------s----------s----------")
+// }
 global.awakeHour='8:00';
 global.sleepHour='22:00';
 global.schedules=[];

@@ -107,7 +107,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   async wakeTimeHandler(time) {
     global.resetTimer();//global.globalTick=0;
     time = time.substring(0, 5);
-
+console.log("wakeup time handler"+this.state.sleeptime)
     let valid = validateSetting(time, this.state.sleeptime, this.state.notificationcount);
     console.log('validate:------->' + valid);
     if (valid != 0){Alert.alert('', resources.getString("settingValidation"));return;}
@@ -343,10 +343,13 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     global.notificationState = this.state.notificationState;
     if (this.state.notificationState) AsyncStorage.setItem('NotificationState', 'true'); else AsyncStorage.setItem('NotificationState', 'false');
     AsyncStorage.setItem('PingNum', this.state.notificationcount.toString()); global.pingNum = this.state.notificationcount;
-    AsyncStorage.setItem('AwakeHour', this.state.waketime); global.awakeHour = this.state.waketime;console.log('wake:........'+global.awakeHour);
-    AsyncStorage.setItem('SleepHour', this.state.sleeptime); global.sleepHour = this.state.sleeptime;
+    AsyncStorage.setItem('AwakeHour', this.state.waketime); 
+    console.log('wakeTime__________:........'+this.state.waketime);
+    global.awakeHour = this.state.waketime;console.log('wake:........'+global.awakeHour);
+    AsyncStorage.setItem('SleepHour', this.state.sleeptime); 
+    global.sleepHour = this.state.sleeptime;
 
-console.log('current View-------------------------------:' + global.currentView);
+    console.log('current View-------------------------------:' + global.currentView);
 
 
     AsyncStorage.setItem('settings', JSON.stringify(settingsObj), () => {
@@ -439,7 +442,6 @@ console.log('current View-------------------------------:' + global.currentView)
       this.setState({ wakeTimePickerShow: false });
       }
 
-
   _showSleepTimePicker = () =>{
       global.resetTimer();//global.globalTick=0;
       this.setState({ sleepTimePickerShow: true });}
@@ -490,6 +492,22 @@ console.log('current View-------------------------------:' + global.currentView)
             await this.handleBackAction(1);
         }
     onSleepCancel(){console.log('cancelled');this.setState({sleepTimePickerShow:false}); }
+
+     convertFrom24To12Format = (time24) => {
+      const [sHours, minutes] = time24.match(/([0-9]{1,2}):([0-9]{2})/).slice(1);
+      const period = +sHours < 12 ? 'AM' : 'PM';
+      const hours = +sHours % 12 || 12;
+    
+      return `${hours}:${minutes} ${period}`;
+    }
+     convertFrom12To24Format = (time12) => {
+      const [sHours, minutes, period] = time12.match(/([0-9]{1,2}):([0-9]{2}) (AM|PM)/).slice(1);
+      const PM = period === 'PM';
+      const hours = (+sHours % 12) + (PM ? 12 : 0);
+    console.log( `${('0' + hours).slice(-2)}:${minutes}`)
+      return `${('0' + hours).slice(-2)}:${minutes}`;
+    }
+
   render() {
 
     let debugButtons;
@@ -642,7 +660,7 @@ console.log('current View-------------------------------:' + global.currentView)
                     titleStyle={{ color: this.state.titleBackgroundColor }}
                     onPress={this._showSleepTimePicker}
                     disabled={!this.state.notificationState}
-                    description={this.state.sleeptime}
+                    description= {this.state.sleeptime}
                     descriptionStyle={styles.descriptionStyle}
                   />
                          {Platform.OS === 'ios'?
@@ -664,9 +682,11 @@ console.log('current View-------------------------------:' + global.currentView)
                                                                         // Alert.alert("Modal has been closed.");
                                                                        }}
                                                                      >
-                                                                     <TimePickerPane title= {resources.getString("sleep_time")} onConfirm={this.onSleepConfirm.bind(this)}
+                                                                     <TimePickerPane title= {resources.getString("sleep_time")} 
+                                                                         onConfirm={this.onSleepConfirm.bind(this)}
                                                                          onCancel={this.onSleepCancel.bind(this)}
-                                                                         cancelLabel={resources.getString("cancel")} confirmLabel={resources.getString("ok")}
+                                                                         cancelLabel={resources.getString("cancel")} 
+                                                                         confirmLabel={resources.getString("ok")}
                                                                          initialValue={this.state.sleeptime}
                                                                       />
                                                                 </Modal>

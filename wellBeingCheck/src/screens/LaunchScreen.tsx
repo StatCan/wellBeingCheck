@@ -109,15 +109,33 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
               AsyncStorage.setItem('EsmUserToken',userToken);
           }
           else global.sac=sac;
-          global.userToken=userToken;console.log('DeviceId:'+global.userToken);console.log('Sac:'+global.sac);
-          let doneSurveyA = await AsyncStorage.getItem('doneSurveyA');global.doneSurveyA=doneSurveyA;
+          global.userToken=userToken;
+          console.log('DeviceId:'+global.userToken);
+          console.log('Sac:'+global.sac);
+          let doneSurveyA = await AsyncStorage.getItem('doneSurveyA');
+          global.doneSurveyA=doneSurveyA;
           console.log('SurveyA:'+global.doneSurveyA);
-          let hasImage = await AsyncStorage.getItem('hasImage');if(hasImage!=null)global.hasImage=hasImage;
+          let hasImage = await AsyncStorage.getItem('hasImage');
+          if(hasImage!=null)global.hasImage=hasImage;
           console.log('Has image on startup.............:'+global.hasImage);
 
-          let pingNum=await AsyncStorage.getItem('PingNum');if(pingNum==null)pingNum=2;global.pingNum=pingNum;
-          let awakeHour=await AsyncStorage.getItem('AwakeHour');if(awakeHour==null)awakeHour='8:00';global.awakeHour=awakeHour;
-          let sleepHour=await AsyncStorage.getItem('SleepHour');if(sleepHour==null)sleepHour='22:00';global.sleepHour=sleepHour;
+          let pingNum=await AsyncStorage.getItem('PingNum');
+          if(pingNum==null)pingNum=2;global.pingNum=pingNum;
+
+           // if (resources.culture == "fr") {
+            //   global.awakeHour='8:00';
+            //   global.sleepHour='22:00'; 
+            //   console.log("-------------------fr----------s----------s----------")
+            // } else {
+            //   global.awakeHour='8:00 AM';
+            //   global.sleepHour='10:00 PM';
+            //   console.log("-------------------en----------s----------s----------")
+            // }
+          let awakeHour=await AsyncStorage.getItem('AwakeHour');
+          if(awakeHour==null)awakeHour='8:00';global.awakeHour=awakeHour;
+          let sleepHour=await AsyncStorage.getItem('SleepHour');
+          if(sleepHour==null)sleepHour='22:00';global.sleepHour=sleepHour;
+
           let paradataSaved=await AsyncStorage.getItem('ParadataSaved');
           if(paradataSaved==null || paradataSaved=='false')paradataSaved=false;else paradataSaved=true;
           global.paradataSaved=paradataSaved;
@@ -172,7 +190,10 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           }
      this.setState({title:resources.getString("Well-Being Check")});
    }
-  componentDidMount() {Notifications.addListener(this.onNotification);this.checkUpgrade();}
+  componentDidMount() {
+    Notifications.addListener(this.onNotification);
+    this.checkUpgrade();
+  }
   async checkUpgrade(){
       console.log('Check upgrade');
       let currentVersion=await AsyncStorage.getItem('CurrentVersion');console.log('currentVersion:'+currentVersion);
