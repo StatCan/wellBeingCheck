@@ -208,7 +208,7 @@ console.log("wakeup time handler"+this.state.sleeptime)
     }
   };
   handleBackAction = async (f) => {
-    if (global.debugMode) console.log("Handle Back Action");
+    console.log("Handle Back Action");
     if (this.state.waketime != global.awakeHour) dirty = true;
     if (this.state.sleeptime != global.sleepHour) dirty = true;
     if (this.state.notificationcount != global.pingNum) dirty = true;

@@ -212,12 +212,12 @@ export async function setupSchedules(affectCurrent=false){
          lastDate.setDate(currentDateTime.getDate()+30);lastDate.setHours(0);lastDate.setMinutes(0);lastDate.setSeconds(0);lastDate.setMilliseconds(0);
          let days = getFollowingDays(currentDateTime,lastDate,true,4,nightShiftUpdate);console.log('days:'+days);
          let day5=getNextDay(currentDateTime);
-         let cdt=new Date(currentDateTime);cdt.setHours(cdt.getHours()+1);
+         let cdt=new Date(currentDateTime);cdt.setHours(cdt.getHours()+1);  //Send notification only after one hour later you finish survey A, affect the day you done survey A
          if(days.length>0){
             day5=getNextDay(days[days.length-1]);
             days.forEach(function (d, index) {
                   let ccc=count;let cdtf=currentDateTime;
-                  if(index==0){ccc=Math.max(1,count-1);cdtf=cdt; }
+                  if(index==0){ccc=Math.max(1,count-1);cdtf=cdt; }  //For the day you finish survey A, the count will reduce by 1 because survey A already contain one time survey B, and  Don't send notification within one hour of your survey A,
                   var schObj  =calculateSchedule(awake, sleep, ccc, d,cdtf);
                   var selected=schObj.Selected;
                   if (selected.length > 0) {
@@ -228,9 +228,9 @@ export async function setupSchedules(affectCurrent=false){
             });
          }
          if(schedules.length>0){
-             let dt=new Date(day5);dt.setHours(sleep-2);
+             let dt=new Date(day5);dt.setHours(sleep-2);  //The day 5 notification(or called last chance notification) will be sent 2 hour before sleep
              schedules.forEach(async function(s,index){
-                 let cont = true;
+                 let cont = true;  //cont is used to indicate wheather or not to random Hour, we do the random Hour only for the schedule whose following schedule is at least one hour later
                  if (index < schedules.length - 1) {
                       let s1 = schedules[index + 1];
                       if ((s1.Day == s.Day) && (s1.Hour - s.Hour == 1)) cont = false;
@@ -253,7 +253,7 @@ export async function setupSchedules(affectCurrent=false){
              console.log('warning notification:'+dt+' Id:'+warningNotificationId);
              global.lastDate=lastDate;
           //   AsyncStorage.setItem('Schedules',JSON.stringify(schedules));global.schedules=schedules;
-             global.curDayPassed =[]; AsyncStorage.setItem('CurDayPassed',JSON.stringify(global.curDayPassed));
+             global.curDayPassed =[]; AsyncStorage.setItem('CurDayPassed',JSON.stringify(global.curDayPassed));// For survey A, the curDayPassed is empty
              updatePreScheduleList(schedules,currentDateTime,false);
          }
     }
@@ -343,12 +343,13 @@ export async function setupSchedules(affectCurrent=false){
                 }
             }
             else{  //for survey B, simply append new schedules
-               let nob=getNecessary(currentDateTime);
+               let nob=getNecessary(currentDateTime);   //check if we need to append new days and how many day to append
                let necessary=nob.Necessary;let moredays=nob.Days;
                if(!necessary ||moredays==0){console.log('Already have 4 days schedules, no need to add more');return;}
                //cancelSchedule(warningId);
 
                let startDay=getStartDay();console.log('Setup notification will not affect current day,and the re-schedule start day:'+startDay.toString());
+              //Because we already know isInSchedules=true so using getStartDay is making sense, the startDay is just the following day of the last scheduled day in the previous schedule list
                if(startDay>global.lastDate)return;
                let days = getFollowingDays(startDay,lastDate,true,Math.min(moredays, 4), false);
                let day5=getNextDay(currentDateTime);
@@ -364,6 +365,7 @@ export async function setupSchedules(affectCurrent=false){
                                     }
                                 });
                      global.curDayPassed = []; AsyncStorage.setItem('CurDayPassed',JSON.stringify(global.curDayPassed));
+                     //because we just calculated the new day, not affect current day, so set this temporary list empty
                }
                if(schedules.length>0){
                      schedules=updateSchedulesList(schedules,currentDateTime);
@@ -659,12 +661,12 @@ the algorithm will not arrange any notification for the time which has been pass
        var date = new Date(currentDay);
        date.setHours(0); date.setMinutes(0); date.setSeconds(0); date.setMilliseconds(0);
        if (nightShiftUpdate) date.setDate(date.getDate()-1);
-       if (lastDay == null) { lastDay = new Date(date); lastDay.setDate(date.getDate()+29); }
+       if (lastDay == null) { lastDay = new Date(date); lastDay.setDate(date.getDate()+29); }  //The final day was set to 30 after survey A(hh:mm=00:00), so the last eligible day to send notification is 29 days after survey A
        else lastDay = new Date(lastDay);  //new Date(lastDay.toString().replace(/-/g, '\/'));
        if (!includeCurrentDay) date.setDate(date.getDate() + 1);
        var days = [];
        if (date > lastDay) return days;
-       var timeDiff = (lastDay -date);
+       var timeDiff = (lastDay -date);   //calculate how many days before finish date
        var ds = timeDiff / (1000 * 60 * 60 * 24);
        var count = Math.min(maxDays,ds);
        for (var i = 0; i < count; i++) {
@@ -773,15 +775,15 @@ the algorithm will not arrange any notification for the time which has been pass
     let result = false;
     let list =global.schedules;
     if (list.length > 0) {
-         var d1 = new Date(list[0].Datetime); d1.setHours(0);d1.setMinutes(0);d1.setSeconds(0);d1.setMilliseconds(0);
-         var d2 = new Date(list[list.length - 1].Datetime); d2.setHours(0);d2.setMinutes(0);d2.setSeconds(0);d2.setMilliseconds(0);
+         var d1 = new Date(list[0].Datetime); d1.setHours(0);d1.setMinutes(0);d1.setSeconds(0);d1.setMilliseconds(0);  //first schedule by schedule datetime
+         var d2 = new Date(list[list.length - 1].Datetime); d2.setHours(0);d2.setMinutes(0);d2.setSeconds(0);d2.setMilliseconds(0);//last schedule by schedule datetime
          var d = new Date(datetime);  d.setHours(0);d.setMinutes(0);d.setSeconds(0);d.setMilliseconds(0);console.log(d.toString());
        //  if (+d >= +d1 && +d <= +d2) result = true;
-         if (+d <= +d2) result = true;
+         if (+d <= +d2) result = true;   //determine if datetime is earlier than last schedule
     }
     return result;
  }
- function getStartDay(){
+ function getStartDay(){  //get the day after the schedule 4th day(4th day's tomorrow)
     let list =global.schedules; let s=list[list.length - 1];
     var d2 = new Date(s.Day); d2.setHours(0);d2.setMinutes(0);d2.setSeconds(0);d2.setMilliseconds(0);
     d2.setDate(d2.getDate()+1);
@@ -793,6 +795,8 @@ the algorithm will not arrange any notification for the time which has been pass
       var d1 = new Date(datetime); d1.setHours(0);d1.setMinutes(0);d1.setSeconds(0);d1.setMilliseconds(0);
       var d2 = new Date(s.Day); d2.setHours(0);d2.setMinutes(0);d2.setSeconds(0);d2.setMilliseconds(0);
       var d3=new Date(d1);d3.setDate(datetime.getDate()+3);
+      //calculate the 4th day(the last day need to re-caculaute schedule), the 4th day must be less than the final day
+      //if the 4th day is less than last 4th day, no need to append new days, otherwise, calculate how many days to append
       if(d3>global.lastDate)d3=global.lastDate;
       if(d3>d2){
          result=true;
@@ -805,7 +809,7 @@ the algorithm will not arrange any notification for the time which has been pass
  function updateSchedulesList(schedules,startDatetime){
       let list=[];
       var ds = new Date(startDatetime); ds.setHours(0);ds.setMinutes(0);ds.setSeconds(0);ds.setMilliseconds(0);
-      let list1 =global.schedules;let list2=schedules;
+      let list1 =global.schedules;let list2=schedules;  //list1 is previous schedule list, list2 is current calculated schedule list, we will combine them and only return the list which date is greater than current datetime
       list1.forEach(function(l){
           if(+l.Day>=+ds)list.push(l);
       });
@@ -815,7 +819,7 @@ the algorithm will not arrange any notification for the time which has been pass
 
  function updatePreScheduleList(schedules,datetime, append) {
          let list1 = global.schedules;
-         let list2 = schedules;
+         let list2 = schedules;   //newly calucalated schedule list
          let list3 = [];
          let curDay = new Date(datetime); curDay.setHours(0); curDay.setMinutes(0); curDay.setSeconds(0); curDay.setMilliseconds(0);
          if (append) {
@@ -826,11 +830,11 @@ the algorithm will not arrange any notification for the time which has been pass
          }
          else {
              list1.forEach(function (l, index) {
-                 if (+l.Day == +curDay && +l.Datetime <= +datetime) list3.push(l);
+                 if (+l.Day == +curDay && +l.Datetime <= +datetime) list3.push(l);  //Add current day's schedules which is earlier than current Datetime, that means not passed yet
              });
              if (global.curDayPassed.length > 0) {
                  list3 = list3.filter(function (el) {
-                     return global.curDayPassed.indexOf(el) < 0;
+                     return global.curDayPassed.indexOf(el) < 0;  //Filter current day's schedules which is not passed yet
                  });
              }
          }

@@ -1,10 +1,10 @@
 {
-  "devToolsPort": 19003,
+  "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 78782,
-  "expoServerNgrokUrl": "https://fa-qwb.saba76.wellbeingcheck.exp.direct",
-  "packagerNgrokUrl": "https://packager.fa-qwb.saba76.wellbeingcheck.exp.direct",
-  "ngrokPid": 78799,
+  "packagerPid": 13752,
+  "expoServerNgrokUrl": "https://fa-qwb.heikako.wellbeingcheck.exp.direct",
+  "packagerNgrokUrl": "https://packager.fa-qwb.heikako.wellbeingcheck.exp.direct",
+  "ngrokPid": 9100,
   "webpackServerPort": null
 }
