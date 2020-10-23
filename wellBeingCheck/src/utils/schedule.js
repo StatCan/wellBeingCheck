@@ -262,7 +262,7 @@ export async function setupSchedules(affectCurrent=false){
         let isInSchedules=checkInSchedule(currentDateTime);console.log('is in period:'+isInSchedules);
         if(isInSchedules){
             let warningId=global.warningNotificationId;console.log('current is in schedules');
-            if(affectCurrent){  //for change setting,  This part is hard core
+            if(affectCurrent){  //for change setting,  This part is hard core,need to understand the curDay passedList, be aware it is living only in change setting, if the user changed setting and do a survey B, because it is in same day, won't need the curDay passList.
                 let f=getAffectedDay(currentDateTime,count);  let day5=getNextDay(currentDateTime);
                 if(f==null){  //No affected day, go normal schedule
                     console.log('No affected day');
@@ -365,10 +365,10 @@ export async function setupSchedules(affectCurrent=false){
                                     }
                                 });
                      global.curDayPassed = []; AsyncStorage.setItem('CurDayPassed',JSON.stringify(global.curDayPassed));
-                     //because we just calculated the new day, not affect current day, so set this temporary list empty
+                     //because we just calculated the new day, not affect current day, so set this temporary list empty, Check it later
                }
                if(schedules.length>0){
-                     schedules=updateSchedulesList(schedules,currentDateTime);
+                   //  schedules=updateSchedulesList(schedules,currentDateTime);  //combine first and then setup schedule, will make duplicated, move this line after setup schedule
                      if(global.warningNotificationId!=null) cancelSchedule(global.warningNotificationId);
                       schedules.forEach(async function(s,index){
                            let cont = true;
@@ -384,6 +384,7 @@ export async function setupSchedules(affectCurrent=false){
                            let notificationId=await setupNotification(ss,title,message);
                            console.log('notificationId:'+notificationId+'->'+ss.toString());sendouts+=notificationId+':'+ss.toString()+'\r\n';
                       });
+                      schedules=updateSchedulesList(schedules,currentDateTime); //Move to here
                      let dt=new Date(day5);dt.setHours(sleep-2);
                      let warningNotificationId=await setupWarning(dt,title,lastMessage);
                      AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());
@@ -416,7 +417,7 @@ export async function setupSchedules(affectCurrent=false){
                  global.curDayPassed = []; AsyncStorage.setItem('CurDayPassed',JSON.stringify(global.curDayPassed));
              }
              if(schedules.length>0){
-                  cancellAllSchedules();
+                  cancellAllSchedules();   //no use actually, because the old schedules are all passed
                   schedules.forEach(async function(s,index){
                        let cont = true;
                        if (index < schedules.length - 1) {
@@ -705,30 +706,30 @@ the algorithm will not arrange any notification for the time which has been pass
          });
          if (found != null) {
              let sch = found.Day; let index = list.indexOf(found);
-             if (sch > curDay && list[0].Day > curDay) {
+             if (sch > curDay && list[0].Day > curDay) {  //all the schedules for curDay are done, no items for curDay in pre-schedule, but you want to setup more schedule for curDay, so the passedCount=global.curDayPassed.length. It happens just before the end of the day
                  let pnum = global.curDayPassed.length;
                  result = { AffectedDay: curDay, PassedCount: pnum, PassedList: currPassed };
                  return result;
              }
-             let count = 0;
+             let count = 0;   //in the middle of the curDay, count the schedule which are passed.
              list.forEach(function (l) {
                  if (+l.Day == +sch && +l.Datetime <= +datetime) count++;
              });
-             let ddd = parseInt((sch - fday.Day) / (1000 * 60 * 60 * 24), 10);
-             if (ddd > 1) {
+             let ddd = parseInt((sch - fday.Day) / (1000 * 60 * 60 * 24), 10);  //how many days between curDay and the first day in the list
+             if (ddd > 1) {   //if more than one day, so it is simple, the passedCount=0
                  result = { AffectedDay: sch, PassedCount: count, PassedList: currPassed };
              }
-             else if (ddd == 1) {
+             else if (ddd == 1) {   //if it is the following day
                  let prev = list[0];
-                 if (index > 0) prev = list[index - 1];
-                 if (+prev.Day != +fday.Day) {
+                 if (index > 0) prev = list[index - 1];  //get the prev one of found, if no just use first one
+                 if (+prev.Day != +fday.Day) {   //if prev of found and first is not same day, so the passedCount=the count we found
                      result = { AffectedDay: sch, PassedCount: count, PassedList: currPassed };
                  }
                  else {
-                     let numUpdate = index;//update index;
+                     let numUpdate = index;//update index;   //if it is nightshift, update the currPassed by adding first half shift count(global.curDayPassed.length) and second half shift count(index)
                      if (global.curDayPassed != null) numUpdate += global.curDayPassed.length;
                      for (let i = 0; i < index; i++)currPassed.push(list[i]);
-                     result = { AffectedDay: prev.Day, PassedCount: numUpdate, PassedList: currPassed };
+                     result = { AffectedDay: prev.Day, PassedCount: numUpdate, PassedList: currPassed };   //affected day is prev day, because it is night shift
                  }
              }
              else if (ddd == 0) {
@@ -738,9 +739,9 @@ the algorithm will not arrange any notification for the time which has been pass
                  result = { AffectedDay: sch, PassedCount: numUpdate, PassedList: currPassed };
              }
          }
-         else {
-             if (datetime > ld) {//datetime
-                 if (+curDay == +lday.Day) {
+         else {     //not found, not in the list
+             if (datetime > ld) {//datetime,
+                 if (+curDay == +lday.Day) {   //it is out of the list, but still in the last day
                      count = 0;
                      list.forEach(function (l) {
                          if (+l.Day == +curDay && +l.Datetime <= +datetime) { count++; currPassed.push(l.Datetime); }
@@ -809,7 +810,7 @@ the algorithm will not arrange any notification for the time which has been pass
  function updateSchedulesList(schedules,startDatetime){
       let list=[];
       var ds = new Date(startDatetime); ds.setHours(0);ds.setMinutes(0);ds.setSeconds(0);ds.setMilliseconds(0);
-      let list1 =global.schedules;let list2=schedules;  //list1 is previous schedule list, list2 is current calculated schedule list, we will combine them and only return the list which date is greater than current datetime
+      let list1 =global.schedules;let list2=schedules;  //list1 is previous schedule list, pick up the not passed list, list2 is current calculated schedule list, we will combine them and  return, the list 2 is start from the day after the last pre-schedule list(list1), so no duplicated in it.
       list1.forEach(function(l){
           if(+l.Day>=+ds)list.push(l);
       });
@@ -822,19 +823,19 @@ the algorithm will not arrange any notification for the time which has been pass
          let list2 = schedules;   //newly calucalated schedule list
          let list3 = [];
          let curDay = new Date(datetime); curDay.setHours(0); curDay.setMinutes(0); curDay.setSeconds(0); curDay.setMilliseconds(0);
-         if (append) {
+         if (append) {  //for append(which means for survey B), pickup the pre-schedule list which is not passed yet and combine with the new schedule
              list1.forEach(function (l, index) {
                  if (+l.Day >= +curDay) list3.push(l);
              });
              global.curDayPassed = []; AsyncStorage.setItem('CurDayPassed',JSON.stringify(global.curDayPassed));
          }
-         else {
+         else {  //for the change setting, pickup the current day's passed list from pre-schedule list, remove items which is in curDayPassed(because the item in curDayPassed were already done,be aware of there are some items passed but not in curDayPassed yet, for example when opened this time), and combine with new list
              list1.forEach(function (l, index) {
-                 if (+l.Day == +curDay && +l.Datetime <= +datetime) list3.push(l);  //Add current day's schedules which is earlier than current Datetime, that means not passed yet
+                 if (+l.Day == +curDay && +l.Datetime <= +datetime) list3.push(l);
              });
              if (global.curDayPassed.length > 0) {
                  list3 = list3.filter(function (el) {
-                     return global.curDayPassed.indexOf(el) < 0;  //Filter current day's schedules which is not passed yet
+                     return global.curDayPassed.indexOf(el) < 0;
                  });
              }
          }
@@ -842,7 +843,7 @@ the algorithm will not arrange any notification for the time which has been pass
          AsyncStorage.setItem('CurDayPassed',JSON.stringify(global.curDayPassed));
      }
  function updateCurDayPassed(passedList) {
-     var list = global.curDayPassed.concat(passedList.filter((item) =>  global.curDayPassed.indexOf(item) < 0))
+     var list = global.curDayPassed.concat(passedList.filter((item) =>  global.curDayPassed.indexOf(item) < 0))   //only add the one not existed, no duplication here
       global.curDayPassed = list.sort(function (a, b) { return a.Datetime - b.Datetime });
      AsyncStorage.setItem('CurDayPassed',JSON.stringify(global.curDayPassed));
  }
