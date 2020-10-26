@@ -262,7 +262,7 @@ export async function setupSchedules(affectCurrent=false){
         let isInSchedules=checkInSchedule(currentDateTime);console.log('is in period:'+isInSchedules);
         if(isInSchedules){
             let warningId=global.warningNotificationId;console.log('current is in schedules');
-            if(affectCurrent){  //for change setting,  This part is hard core,need to understand the curDay passedList, be aware it is living only in change setting, if the user changed setting and do a survey B, because it is in same day, won't need the curDay passList.
+            if(affectCurrent){  //for change setting,  This part is hard core,need to understand the curDay passedList, be aware it is living only in change setting or continuous change settings, if the user changed setting and do a survey B, because it is in same day, won't need the curDay passList(trigger shortcut: Already have 4 days schedules, no need to add more),curDay passList is still live for next change setting.
                 let f=getAffectedDay(currentDateTime,count);  let day5=getNextDay(currentDateTime);
                 if(f==null){  //No affected day, go normal schedule
                     console.log('No affected day');
@@ -695,7 +695,7 @@ the algorithm will not arrange any notification for the time which has been pass
      });
      return {Count:count,Hour:hour};
  }
- function getAffectedDay(datetime,countNum) {
+ function getAffectedDay1(datetime,countNum) {
          let result = null; let currPassed = [];
          let list =global.schedules;
          let fday = list[0]; let lday = list[list.length - 1];
@@ -704,35 +704,38 @@ the algorithm will not arrange any notification for the time which has been pass
          var found = list.find(function (l) {
              return l.Datetime > datetime;
          });
-         if (found != null) {
+         if (found != null) {   //case 1
              let sch = found.Day; let index = list.indexOf(found);
              if (sch > curDay && list[0].Day > curDay) {  //all the schedules for curDay are done, no items for curDay in pre-schedule, but you want to setup more schedule for curDay, so the passedCount=global.curDayPassed.length. It happens just before the end of the day
                  let pnum = global.curDayPassed.length;
                  result = { AffectedDay: curDay, PassedCount: pnum, PassedList: currPassed };
-                 return result;
+                 return result;  //case 1A
              }
              let count = 0;   //in the middle of the curDay, count the schedule which are passed.
              list.forEach(function (l) {
-                 if (+l.Day == +sch && +l.Datetime <= +datetime) count++;
+                 if (+l.Day == +sch && +l.Datetime <= +datetime){
+                 count++;
+
+                 }
              });
              let ddd = parseInt((sch - fday.Day) / (1000 * 60 * 60 * 24), 10);  //how many days between curDay and the first day in the list
              if (ddd > 1) {   //if more than one day, so it is simple, the passedCount=0
-                 result = { AffectedDay: sch, PassedCount: count, PassedList: currPassed };
+                 result = { AffectedDay: sch, PassedCount: count, PassedList: currPassed };   //case 1B,   should get new currPassed check it later
              }
              else if (ddd == 1) {   //if it is the following day
                  let prev = list[0];
                  if (index > 0) prev = list[index - 1];  //get the prev one of found, if no just use first one
                  if (+prev.Day != +fday.Day) {   //if prev of found and first is not same day, so the passedCount=the count we found
-                     result = { AffectedDay: sch, PassedCount: count, PassedList: currPassed };
+                     result = { AffectedDay: sch, PassedCount: count, PassedList: currPassed };   //case 1C
                  }
-                 else {
-                     let numUpdate = index;//update index;   //if it is nightshift, update the currPassed by adding first half shift count(global.curDayPassed.length) and second half shift count(index)
+                 else {  //case 1D
+                     let numUpdate = index;//update index;   //if it is in the samy day
                      if (global.curDayPassed != null) numUpdate += global.curDayPassed.length;
                      for (let i = 0; i < index; i++)currPassed.push(list[i]);
                      result = { AffectedDay: prev.Day, PassedCount: numUpdate, PassedList: currPassed };   //affected day is prev day, because it is night shift
                  }
              }
-             else if (ddd == 0) {
+             else if (ddd == 0) {  //case 1E
                  let numUpdate = count;//update index;
                  if (global.curDayPassed != null) numUpdate += global.curDayPassed.length;
                  for (let i = 0; i < index; i++)currPassed.push(list[i]);
@@ -759,6 +762,75 @@ the algorithm will not arrange any notification for the time which has been pass
          }
          return result;
      }
+ function getAffectedDay(datetime,countNum) {
+          let result = null; let currPassed = [];let currPassed1 = []; //currPassed1 is used to calculate passed schedules for jumped day,
+          let list =global.schedules;
+          let fday = list[0]; let lday = list[list.length - 1];
+          let fd = new Date(list[0].Datetime); let ld = new Date(list[list.length - 1].Datetime);
+          let curDay = new Date(datetime); curDay.setHours(0); curDay.setMinutes(0); curDay.setSeconds(0); curDay.setMilliseconds(0);
+          var found = list.find(function (l) {
+              return l.Datetime > datetime;
+          });
+          if (found != null) {   //case 1
+              let sch = found.Day; let index = list.indexOf(found);
+              if (sch > curDay && list[0].Day > curDay) {  //all the schedules for curDay are done, no items for curDay in pre-schedule, but you want to setup more schedule for curDay, so the passedCount=global.curDayPassed.length. It happens just before the end of the day
+                  let pnum = global.curDayPassed.length;
+                  result = { AffectedDay: curDay, PassedCount: pnum, PassedList: currPassed };
+                  return result;  //case 1A
+              }
+              let count = 0;   //in the middle of the curDay, count the schedule which are passed.
+              list.forEach(function (l) {
+                  if (+l.Day == +sch && +l.Datetime <= +datetime){
+                  count++;
+                  currPassed1.push(l);
+                  }
+              });
+              let ddd = parseInt((sch - fday.Day) / (1000 * 60 * 60 * 24), 10);  //how many days between curDay and the first day in the list
+              if (ddd > 1) {   //if more than one day, so it is simple, the passedCount=0
+                  global.curDayPassed=currPassed1;  //not the same day now,set here for save storage later in setup Schedule function
+                  result = { AffectedDay: sch, PassedCount: count, PassedList: currPassed1 };   //case 1B,   should get new currPassed check it later
+              }
+              else if (ddd == 1) {   //if it is the following day
+                  let prev = list[0];
+                  if (index > 0) prev = list[index - 1];  //get the prev one of found, if no just use first one
+                  if (+prev.Day != +fday.Day) {   //if prev of found and first is not same day, so the passedCount=the count we found
+                      result = { AffectedDay: sch, PassedCount: count, PassedList: currPassed1 };   //case 1C
+                       global.curDayPassed=currPassed1; //not the same day now,set here for save storage later in setup Schedule function
+                  }
+                  else {  //case 1D
+                      let numUpdate = index;//update index;   //if it is in the samy day
+                      if (global.curDayPassed != null) numUpdate += global.curDayPassed.length;
+                      for (let i = 0; i < index; i++)currPassed.push(list[i]);
+                      result = { AffectedDay: prev.Day, PassedCount: numUpdate, PassedList: currPassed };   //affected day is prev day, because it is night shift
+                  }
+              }
+              else if (ddd == 0) {  //case 1E
+                  let numUpdate = count;//update index;
+                  if (global.curDayPassed != null) numUpdate += global.curDayPassed.length;
+                  for (let i = 0; i < index; i++)currPassed.push(list[i]);
+                  result = { AffectedDay: sch, PassedCount: numUpdate, PassedList: currPassed };
+              }
+          }
+          else {     //not found, not in the list
+              if (datetime > ld) {//datetime,
+                  if (+curDay == +lday.Day) {   //it is out of the list, but still in the last day
+                      count = 0;
+                      list.forEach(function (l) {
+                          if (+l.Day == +curDay && +l.Datetime <= +datetime) { count++; currPassed.push(l); }
+                      });
+                      let numUpdate = count;//update index;
+                      if (global.curDayPassed != null) numUpdate += global.curDayPassed.length;
+                      result = { AffectedDay: curDay, PassedCount: numUpdate,PassedList: currPassed };
+                  } else {
+                      result = { AffectedDay: curDay, PassedCount: 0, PassedList: currPassed };
+                  }
+                  //let tomorrow = new Date(currentDateTime); tomorrow.setDate(tomorrow.getDate() + 1); tomorrow.setHours(0); tomorrow.setMinutes(0); tomorrow.setSeconds(0); tomorrow.setMilliseconds(0);
+                  //result = { AffectedDay: tomorrow, PassedCount:0 };
+              }
+              if (datetime < fd) result = { AffectedDay: curDay, PassedCount: 0, PassedList: currPassed};//shouldn't happen
+          }
+          return result;
+      }
  function filterListByDate(date,list) {
             date = new Date(date.toString().replace(/-/g, '\/'));
             var date1 = new Date(date); date1.setHours(hour); date1.setMinutes(0); date1.setSeconds(0);
