@@ -730,7 +730,8 @@ hours_am_pmSleep(time) {
                     description={resources.culture=='fr'? this.state.waketime +' h':this.state.waketime}
                     descriptionStyle={styles.descriptionStyle}
                   />
-                       {Platform.OS === 'ios'?
+                       {
+                       //Platform.OS === 'ios'?
                                     <TimePicker
                                      showTimePicker={this.state.wakeTimePickerShow}
                                      style={styles.timePicker}
@@ -739,23 +740,24 @@ hours_am_pmSleep(time) {
                                      isVisible={this.state.wakeTimePickerShow}
                                      handler={this.wakeTimeHandler}
                                      cancelHandler={this.cancelTimeHandler}
-                                    />:
-                                    <View style={styles.centeredView}>
-                                          <Modal
-                                           animationType="slide"
-                                           transparent={true}
-                                           visible={this.state.wakeTimePickerShow}
-                                           onRequestClose={() => {
-                                                                           // Alert.alert("Modal has been closed.");
-                                                                          }}
-                                                                        >
-                                                                        <TimePickerPane title= {resources.getString("wake_time")} onConfirm={this.onWakeConfirm.bind(this)}
-                                                                            onCancel={this.onWakeCancel.bind(this)}
-                                                                            cancelLabel={resources.getString("cancel")} confirmLabel={resources.getString("ok")}
-                                                                            initialValue={this.state.waketime}
-                                                                         />
-                                                                   </Modal>
-                                                                  </View>
+                                    />
+                                //  //   :
+                                //     <View style={styles.centeredView}>
+                                //           <Modal
+                                //            animationType="slide"
+                                //            transparent={true}
+                                //            visible={this.state.wakeTimePickerShow}
+                                //            onRequestClose={() => {
+                                //                                            // Alert.alert("Modal has been closed.");
+                                //                                           }}
+                                //                                         >
+                                //                                         <TimePickerPane title= {resources.getString("wake_time")} onConfirm={this.onWakeConfirm.bind(this)}
+                                //                                             onCancel={this.onWakeCancel.bind(this)}
+                                //                                             cancelLabel={resources.getString("cancel")} confirmLabel={resources.getString("ok")}
+                                //                                             initialValue={this.state.waketime}
+                                //                                          />
+                                //                                    </Modal>
+                                //                                   </View>
                                          }
                   <List.Item
                    accessible={true}
@@ -779,7 +781,8 @@ hours_am_pmSleep(time) {
                     description={resources.culture=='fr'? this.state.sleeptime +' h':this.state.sleeptime}
                     descriptionStyle={styles.descriptionStyle}
                   />
-                         {Platform.OS === 'ios'?
+                         {
+                        //  Platform.OS === 'ios'?
                                       <TimePicker
                                        showTimePicker={this.state.sleepTimePickerShow}
                                        style={styles.timePicker}
@@ -789,25 +792,26 @@ hours_am_pmSleep(time) {
                                        isVisible={this.state.sleepTimePickerShow}
                                        handler={this.sleepTimeHandler}
                                        cancelHandler={this.cancelTimeHandler}
-                                       />:
-                                        <View style={styles.centeredView}>
-                                                                     <Modal
-                                                                       animationType="slide"
-                                                                       transparent={true}
-                                                                       visible={this.state.sleepTimePickerShow}
-                                                                       onRequestClose={() => {
-                                                                        // Alert.alert("Modal has been closed.");
-                                                                       }}
-                                                                     >
-                                                                     <TimePickerPane title= {resources.getString("sleep_time")} 
-                                                                         onConfirm={this.onSleepConfirm.bind(this)}
-                                                                         onCancel={this.onSleepCancel.bind(this)}
-                                                                         cancelLabel={resources.getString("cancel")} 
-                                                                         confirmLabel={resources.getString("ok")}
-                                                                         initialValue={this.state.sleeptime}
-                                                                      />
-                                                                </Modal>
-                                                               </View>
+                                       />
+                                      //  :
+                                      //   <View style={styles.centeredView}>
+                                      //                                <Modal
+                                      //                                  animationType="slide"
+                                      //                                  transparent={true}
+                                      //                                  visible={this.state.sleepTimePickerShow}
+                                      //                                  onRequestClose={() => {
+                                      //                                   // Alert.alert("Modal has been closed.");
+                                      //                                  }}
+                                      //                                >
+                                      //                                <TimePickerPane title= {resources.getString("sleep_time")} 
+                                      //                                    onConfirm={this.onSleepConfirm.bind(this)}
+                                      //                                    onCancel={this.onSleepCancel.bind(this)}
+                                      //                                    cancelLabel={resources.getString("cancel")} 
+                                      //                                    confirmLabel={resources.getString("ok")}
+                                      //                                    initialValue={this.state.sleeptime}
+                                      //                                 />
+                                      //                           </Modal>
+                                      //                          </View>
                                          }
                 </View>
                 <Divider></Divider>

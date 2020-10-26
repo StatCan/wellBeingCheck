@@ -25,21 +25,22 @@ const TimePicker = (props) => {
   const handleConfirm = (time) => {
 
     if (global.debugMode) console.log("A time has been picked: ", time);
-      // var options = { hour12: false, hour: "2-digit", minute: "2-digit" };
+      //var options = { hour12: false, hour: "2-digit", minute: "2-digit" };
+
 
     if (resources.culture == "fr") {
       var options = { hour12: false, hour: "2-digit", minute: "2-digit" };
-   //   console.log ("--------------------this is a french language")
+      console.log ("--------------------this is a french language")
     } else {
       var options = { hour12: true, hour: "2-digit", minute: "2-digit" };
-  //    console.log ("--------------------this is a english language")
+      console.log ("--------------------this is a english language")
     }
 
     if (props.timeType === "wakeTime") {
-     // if (global.debugMode) console.log("The timetype is: " + props.timeType);
+      if (global.debugMode) console.log("The timetype is: " + props.timeType);
       props.handler(time.toLocaleTimeString([], options));
     } else if (props.timeType === "sleepTime") {
-    //  if (global.debugMode) console.log("The timetype is: " + props.timeType);
+      if (global.debugMode) console.log("The timetype is: " + props.timeType);
       props.handler(time.toLocaleTimeString([], options));
     }
     hideTimePicker();
@@ -53,8 +54,10 @@ const TimePicker = (props) => {
             isDarkModeEnabled={isDarkModeEnabled}
             isVisible={props.isVisible}
             //android props
-            is24Hour={resources.getString("Is24hours")} //this in case we need to have 24 hours clock for android is24Hour={true}
-            display="spinner"
+           // is24Hour={resources.getString("Is24hours")} //this in case we need to have 24 hours clock for android is24Hour={true}
+            is24Hour={resources.culture=="fr"? true:false} //this in case we need to have 24 hours clock for android is24Hour={true}
+
+            display="spinner"            
             date={date}
             //ios props
             headerTextIOS={resources.getString("timepicker.title")}
