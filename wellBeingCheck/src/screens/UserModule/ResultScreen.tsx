@@ -232,7 +232,10 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
            >
                 {this.state.images.map((item, index) => (
                   <View onLayout={this._onLayout.bind(this)} style={{ height: this.state.height }} key={index}>
-                    <Image source={{ uri: item }} style={{ width: this.state.width, height: this.state.height - 60, resizeMode: 'stretch' }} />
+                    <Image source={{ uri: item }} style={{ width: this.state.width, height: this.state.height - 60, resizeMode: 'stretch' }}
+                    accessibilityLabel="texting..." 
+                    accessible={true}
+                    />
                   </View>
                 ))}
               </ScrollView>

@@ -25,22 +25,21 @@ const TimePicker = (props) => {
   const handleConfirm = (time) => {
 
     if (global.debugMode) console.log("A time has been picked: ", time);
+      // var options = { hour12: false, hour: "2-digit", minute: "2-digit" };
+
+    if (resources.culture == "fr") {
       var options = { hour12: false, hour: "2-digit", minute: "2-digit" };
-
-
-    // if (resources.culture == "fr") {
-    //   var options = { hour12: false, hour: "2-digit", minute: "2-digit" };
-    //   console.log ("--------------------this is a french language")
-    // } else {
-    //   var options = { hour12: true, hour: "2-digit", minute: "2-digit" };
-    //   console.log ("--------------------this is a english language")
-    // }
+   //   console.log ("--------------------this is a french language")
+    } else {
+      var options = { hour12: true, hour: "2-digit", minute: "2-digit" };
+  //    console.log ("--------------------this is a english language")
+    }
 
     if (props.timeType === "wakeTime") {
-      if (global.debugMode) console.log("The timetype is: " + props.timeType);
+     // if (global.debugMode) console.log("The timetype is: " + props.timeType);
       props.handler(time.toLocaleTimeString([], options));
     } else if (props.timeType === "sleepTime") {
-      if (global.debugMode) console.log("The timetype is: " + props.timeType);
+    //  if (global.debugMode) console.log("The timetype is: " + props.timeType);
       props.handler(time.toLocaleTimeString([], options));
     }
     hideTimePicker();

@@ -204,7 +204,25 @@ export async function setupSchedules(affectCurrent=false){
     let schedules = [];let currentDateTime=new Date();console.log('current date:'+currentDateTime);currentDateTime.setMinutes(currentDateTime.getMinutes()+5);  //give 5 minute for the program to run
     let today=new Date(currentDateTime);today.setHours(0);today.setMinutes(0);today.setSeconds(0);today.setMilliseconds(0);
     let currentTime=roundUp(currentDateTime.toLocaleTimeString());
-    let awake=roundUp(global.awakeHour); let sleep=roundDown(global.sleepHour);let count=global.pingNum;console.log('LastDate:'+global.lastDate);
+
+    // if (resources.culture=='fr' ) {
+    //     let awake=roundUp(global.awakeHour); 
+    //     let sleep=roundDown(global.sleepHour);  
+    //     console.log('schedule french version-------------------------------------------------------------------schedule'+ sleep);
+
+    // } else{
+
+        let convertWake=convertTime12to24(global.awakeHour);
+        let awake=roundUp(convertWake); 
+        console.log('this is converting time for am to 24------------------------------------------------------schedule'+ awake);
+        let convertSleep=convertTime12to24(global.sleepHour);
+        let sleep=roundDown(convertSleep);  
+        console.log('this is converting time for am to 24------------------------------------------------------schedule'+ sleep);
+    // }
+
+    // let awake=roundUp(global.awakeHour); 
+    // let sleep=roundDown(global.sleepHour);  
+    let count=global.pingNum;console.log('LastDate:'+global.lastDate);
     let ch = currentDateTime.getHours();
     let nightShiftUpdate = false; if ((awake > sleep) && (ch >= 0 && ch < sleep)) nightShiftUpdate = true;
     if(global.lastDate==null){   //Survey A
@@ -624,6 +642,29 @@ the algorithm will not arrange any notification for the time which has been pass
          return { Selected: selected, LogInfo: str };
 
      }
+
+     const convertTime12to24 = (time12h) => {
+        const [time, modifier] = time12h.split(' ');
+      
+        let [hours, minutes] = time.split(':');
+      
+        if (hours === '12') {
+          hours = '00';
+        }
+      
+        if (modifier === 'PM') {
+          hours = parseInt(hours, 10) + 12;
+        }
+      
+        return `${hours}:${minutes}`;
+      }
+     convertFrom12To24Format = (time12) => {
+        const [sHours, minutes, period] = time12.match(/([0-9]{1,2}):([0-9]{2}) (AM|PM)/).slice(1);
+        const PM = period === 'PM';
+        const hours = (+sHours % 12) + (PM ? 12 : 0);
+        console.log( `${('0' + hours).slice(-2)}:${minutes}`)
+        return `${('0' + hours).slice(-2)}:${minutes}`;
+      }    
  function convertToDateTime(str) {
         var v = str.split(':');
         var h = v[0];
@@ -668,7 +709,7 @@ the algorithm will not arrange any notification for the time which has been pass
        var ds = timeDiff / (1000 * 60 * 60 * 24);
        var count = Math.min(maxDays,ds);
        for (var i = 0; i < count; i++) {
-           var day = new Date(date);
+           var day = new Date(date); 
            day.setDate(date.getDate() + i);
            days.push(day);
        }

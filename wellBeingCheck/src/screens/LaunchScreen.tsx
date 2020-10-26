@@ -106,6 +106,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
               var valid=isValidDeviceId(deviceId);
               if (global.debugMode) console.log('is valid:'+valid);
               userToken= deviceId;
+              console.log('Launch Screen---device id',deviceId)
               AsyncStorage.setItem('EsmUserToken',userToken);
           }
           else global.sac=sac;
@@ -122,19 +123,33 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           let pingNum=await AsyncStorage.getItem('PingNum');
           if(pingNum==null)pingNum=2;global.pingNum=pingNum;
 
-           // if (resources.culture == "fr") {
-            //   global.awakeHour='8:00';
-            //   global.sleepHour='22:00'; 
-            //   console.log("-------------------fr----------s----------s----------")
-            // } else {
-            //   global.awakeHour='8:00 AM';
-            //   global.sleepHour='10:00 PM';
-            //   console.log("-------------------en----------s----------s----------")
-            // }
-          let awakeHour=await AsyncStorage.getItem('AwakeHour');
-          if(awakeHour==null)awakeHour='8:00';global.awakeHour=awakeHour;
-          let sleepHour=await AsyncStorage.getItem('SleepHour');
-          if(sleepHour==null)sleepHour='22:00';global.sleepHour=sleepHour;
+           if (resources.culture == "fr") {
+
+            let awakeHour=await AsyncStorage.getItem('AwakeHour');
+            if(awakeHour==null)awakeHour='8:00';
+            global.awakeHour=awakeHour;
+            let sleepHour=await AsyncStorage.getItem('SleepHour');
+            if(sleepHour==null)sleepHour='22:00';
+            global.sleepHour=sleepHour;
+
+              // global.awakeHour='8:00';
+              // global.sleepHour='22:00'; 
+              console.log("-------------------fr----------s----------s----------")
+            } else {
+              let awakeHour=await AsyncStorage.getItem('AwakeHour');
+              if(awakeHour==null)awakeHour='8:00 AM';
+              global.awakeHour=awakeHour;
+              let sleepHour=await AsyncStorage.getItem('SleepHour');
+              if(sleepHour==null)sleepHour='10:00 PM';
+              global.sleepHour=sleepHour;
+              // global.awakeHour='8:00 AM';
+              // global.sleepHour='10:00 PM';
+              console.log("-------------------en----------s----------s----------")
+            }
+          // let awakeHour=await AsyncStorage.getItem('AwakeHour');
+          // if(awakeHour==null)awakeHour='8:00';global.awakeHour=awakeHour;
+          // let sleepHour=await AsyncStorage.getItem('SleepHour');
+          // if(sleepHour==null)sleepHour='22:00';global.sleepHour=sleepHour;
 
           let paradataSaved=await AsyncStorage.getItem('ParadataSaved');
           if(paradataSaved==null || paradataSaved=='false')paradataSaved=false;else paradataSaved=true;
@@ -172,7 +187,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
 
           this._bootstrap();
         };
-  onNotification(n) {
+      onNotification(n) {
      //  console.log('received notification:'+JSON.stringify(n));
         let json = n.data; console.log(n.notificationId+':'+new Date(json.scheduledTime));
        //this.props.navigation.navigate('Dashboard');

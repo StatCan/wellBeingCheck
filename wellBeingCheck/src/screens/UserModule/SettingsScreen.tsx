@@ -15,7 +15,6 @@ import * as IntentLauncher from 'expo-intent-launcher';
 import { setupSchedules, checkInSchedule, validateSetting } from '../../utils/schedule';
 import { Updates } from 'expo';
 import ParsedText from 'react-native-parsed-text';
-
 import {TimePickerPane} from '../../components/TimePickerPane';
 
 var scheduledDateArray = new Array();
@@ -36,6 +35,8 @@ type SettingsState = {
   titleBackgroundColor: string,
   settingsFirstTime: boolean,
   idle:boolean,
+  tempSleepTime:string
+  
 }
 
 interface Props {
@@ -67,10 +68,11 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       cultureString: resources.culture == 'fr' ? 'Français' : 'English',
       languageModalShow: false,
       wakeTimePickerShow: false,
-      sleepTimePickerShow: false,
+      sleepTimePickerShow: true,
       titleBackgroundColor: "#000",
       settingsFirstTime: false,
-      idle:true
+      idle:true,
+      tempSleepTime:'',
     };
     testDatetime.setHours(22);
     testDatetime.setMinutes(10);
@@ -82,11 +84,26 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
 
   componentDidMount() {
     this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+    var tt= ''
+    console.log('temps time for sleep time',tt);
+    console.log('temps time for sleep time',this.state.sleeptime.substring(5,7));
+    console.log('temps time for sleep time',(parseInt(this.state.sleeptime.substring(0,2)) + 12).toString());
+    console.log('temps time for sleep time',this.state.sleeptime);
+
+
+
 //
 //     AppState.removeEventListener("change", this.handleAppStateChangeInSeeting);
 //     AppState.addEventListener("change", this.handleAppStateChangeInSetting);
   }
 
+  getPMvalue(){
+
+    if (this.state.sleeptime.substring(5,7)=='P'){
+      var tt= (parseInt(this.state.sleeptime.substring(0,2)) + 12).toString();
+    this.setState({tempSleepTime:tt})
+}
+  }
   componentWillUnmount() {
     //this.handleBackAction();
     this.backHandler.remove();
@@ -106,8 +123,10 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
 
   async wakeTimeHandler(time) {
     global.resetTimer();//global.globalTick=0;
-    time = time.substring(0, 5);
-console.log("wakeup time handler"+this.state.sleeptime)
+    console.log("wakeup time handler------------------------------------time from time picker before the substring:"+ time)
+    //time = time.substring(0, 5);
+    console.log("wakeup time handler------------------------------------time from time picker:"+ time)
+    console.log("wakeup time handler"+this.state.sleeptime)
     let valid = validateSetting(time, this.state.sleeptime, this.state.notificationcount);
     console.log('validate:------->' + valid);
     if (valid != 0){Alert.alert('', resources.getString("settingValidation"));return;}
@@ -123,7 +142,7 @@ console.log("wakeup time handler"+this.state.sleeptime)
      this.setState({idle:true});
   }
 
-  cancelTimeHandler(time) {
+cancelTimeHandler(time) {
     global.resetTimer();//global.globalTick=0;
     this.setState({
       wakeTimePickerShow: false,
@@ -133,12 +152,14 @@ console.log("wakeup time handler"+this.state.sleeptime)
 
   async sleepTimeHandler(time) {
     global.resetTimer();//global.globalTick=0;
-    time = time.substring(0, 5);
+
+    //console.log("get the time substring missing the PM "+time);
+    time = time.substring(0, 8);
+   // console.log("get the time substring missing the PM after substring time.substring(0, 5); "+time);
 
      let valid = validateSetting(this.state.waketime, time, this.state.notificationcount);
      console.log('validate:------->' + valid);
      if (valid != 0){Alert.alert('', resources.getString("settingValidation"));return;}
-
 
     console.log('go process');
     this.setState({
@@ -153,10 +174,8 @@ console.log("wakeup time handler"+this.state.sleeptime)
     this.setState({idle:true});
   }
 
-  askPermissions = async () => {
-    const { status: existingStatus } = await Permissions.getAsync(
-      Permissions.NOTIFICATIONS
-    );
+  askPermissions = async () => {const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+  
     let finalStatus = existingStatus;
     if (existingStatus !== "granted") {
       const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
@@ -251,13 +270,11 @@ console.log("wakeup time handler"+this.state.sleeptime)
     if (dirty || this.state.notificationState != global.notificationState) {
       AsyncStorage.removeItem('ParadataSaved'); global.paradataSaved = false;
     }
-
 //    if (this.state.culture === "2") {
 //      resources.culture = 'fr';
 //    } else if (this.state.culture === "1") {
 //      resources.culture = 'en';
 //    }
-
     if (global.debugMode) console.log("Platform version: " + Platform.Version);
     if (global.debugMode) console.log("Device Name: " + Expo.Constants.deviceName);
     if (global.debugMode) console.log("Native App Version: " + Expo.Constants.nativeAppVersion);
@@ -397,6 +414,117 @@ console.log("wakeup time handler"+this.state.sleeptime)
     }
   }
 
+  
+
+  am_pm_to_hourswake(time) {
+    console.log('this the wake time that we want to use'+time);
+    var hours = Number(time.match(/^(\d+)/)[1]);
+    console.log('this the wake hours that we want to use'+hours);
+
+    var minutes = Number(time.match(/:(\d+)/)[1]);
+    console.log('this the wake minutes that we want to use'+minutes);
+
+    var AMPM = time.match(/\s(.*)$/)[1];
+    console.log('this the wake AMPM that we want to use'+AMPM);
+
+    if (AMPM == "PM" && hours < 12) hours = hours + 12;
+    if (AMPM == "" && hours == 12) hours = hours - 12;
+    var sHours = hours.toString();
+    var sMinutes = minutes.toString();
+    if (hours < 10) sHours = "0" + sHours;
+    if (minutes < 10) sMinutes = "0" + sMinutes;
+    console.log('here the final hours change'+sHours +':'+sMinutes);
+   
+  this.setState({waketime:sHours +':'+sMinutes})
+
+    
+    //return (sHours +':'+sMinutes);
+}
+am_pm_to_hoursSleep(time) {
+
+  console.log('this how to get P from PM'+this.state.sleeptime.substring(5,7))
+  console.log('this how to get hour number + 12 '+ (parseInt(this.state.sleeptime.substring(0,2)) + 12))
+  
+
+  console.log('this the sleep time that we want to use'+time);
+  var hours = Number(time.match(/^(\d+)/)[1]);
+  console.log('this the sleep hours that we want to use'+hours);
+
+  var minutes = Number(time.match(/:(\d+)/)[1]);
+  console.log('this the sleep minutes that we want to use'+minutes);
+
+
+  var AMPM = time.match(/\s(.*)$/)[1];
+  console.log('this the sleep AMPM that we want to use '+AMPM);
+
+
+  if (AMPM == "PM" && hours < 12) hours = hours + 12;
+  if (AMPM == "AM" && hours == 12) hours = hours - 12;
+  var sHours = hours.toString();
+  var sMinutes = minutes.toString();
+  if (hours < 10) sHours = "0" + sHours;
+  if (minutes < 10) sMinutes = "0" + sMinutes;
+  console.log('here the sleep final hours change'+sHours +':'+sMinutes);
+ 
+  this.setState({sleeptime:sHours +':'+sMinutes})
+  
+  //return (sHours +':'+sMinutes);
+}
+
+ hours_am_pmWake(time) {
+  console.log(' awake input time:   '+time);
+  console.log(' awake input time0:   '+time[0]);
+  console.log(' awake input time1:   '+time[1]);
+  console.log(' awake input time2:   '+time[2]);
+  console.log(' awake input time3:   '+time[3]);
+  console.log(' awake input time4:   '+time[4]);
+
+  var hours = time[0] + time[1];
+  console.log('here the wake time hours change from 24 to ampm:   '+hours);
+
+
+  var min = time[3] + time[4];
+  console.log('here the wake time mins change from 24 to ampm:   '+min);
+
+  if (hours < 12) {
+      //return hours + ':' + min + ' AM';
+      this.setState({waketime:hours+ ':' + min + ' AM'})
+  console.log('here the wake time mins change from 24 to ampm:    '+hours+ ':' + min + ' AM');
+
+
+  } else {
+      hours=hours - 12;
+      hours=(hours.length < 10) ? '0'+hours:hours;
+      this.setState({waketime:hours+ ':' + min + ' PM'})
+      //return hours+ ':' + min + ' PM';
+  }
+}
+
+hours_am_pmSleep(time) {
+
+  var hours = time[0] + time[1];
+  console.log('here the wake time hours change from 24 to ampm:   '+hours);
+
+  var min = time[3] + time[4];
+  console.log('here the wake time hours change from 24 to ampm:   '+hours);
+
+  if (hours < 12) {
+      //return hours + ':' + min + ' AM';
+      console.log('here the sleep time mins change from 24 to ampm:   '+hours+ ':' + min + ' AM');
+
+      this.setState({sleeptime:hours+ ':' + min + ' AM'})
+
+
+  } else {
+      hours=hours - 12;
+      hours=(hours.length < 10) ? '0'+hours:hours;
+      console.log('here the sleep time mins change from 24 to ampm:   '+hours+ ':' + min + ' PM');
+      this.setState({sleeptime:hours+ ':' + min + ' PM'})
+
+      //return hours+ ':' + min + ' PM';
+  }
+}
+ 
   _changeLanguage(c) {
 
     this.setState({ culture: c });
@@ -406,10 +534,16 @@ console.log("wakeup time handler"+this.state.sleeptime)
       resources.culture = 'fr';
       this.setState({ cultureString: 'Français' });
       this.setState({ culture: '2' });
+      this.am_pm_to_hourswake(this.state.waketime);
+      this.am_pm_to_hoursSleep(this.state.sleeptime);
+      
     } else if (c === "1") {
       resources.culture = 'en';
       this.setState({ cultureString: 'English' });
       this.setState({ culture: '1' });
+      this.hours_am_pmWake(this.state.waketime);
+      this.hours_am_pmSleep(this.state.sleeptime);
+      
     }
     AsyncStorage.setItem('Culture', c);
   }
@@ -465,9 +599,9 @@ console.log("wakeup time handler"+this.state.sleeptime)
          let time=h+':'+(m < 10 ? '0' : '') + m;
            console.log('Picked time:'+data.Hour+':'+data.Minute+' '+apm+'-->'+h+':'+m+' --'+time);*/
          let time=data.Time;
+
          let valid = validateSetting(time, this.state.sleeptime, this.state.notificationcount);
              if (valid != 0){Alert.alert('', resources.getString("settingValidation"));return;}
-
              await this.setState({
                waketime: time,
                wakeTimePickerShow: false
@@ -482,9 +616,8 @@ console.log("wakeup time handler"+this.state.sleeptime)
            console.log('Picked time:'+data.Hour+':'+data.Minute+' '+apm+'-->'+h+':'+m+' --'+time);
 */
          let time=data.Time;
-
          let valid = validateSetting(this.state.waketime, time, this.state.notificationcount);
-             if (valid != 0){Alert.alert('', resources.getString("settingValidation"));return;}
+            if (valid != 0){Alert.alert('', resources.getString("settingValidation"));return;}
             await this.setState({
                 sleeptime: time,
                 sleepTimePickerShow: false,
@@ -492,21 +625,6 @@ console.log("wakeup time handler"+this.state.sleeptime)
             await this.handleBackAction(1);
         }
     onSleepCancel(){console.log('cancelled');this.setState({sleepTimePickerShow:false}); }
-
-     convertFrom24To12Format = (time24) => {
-      const [sHours, minutes] = time24.match(/([0-9]{1,2}):([0-9]{2})/).slice(1);
-      const period = +sHours < 12 ? 'AM' : 'PM';
-      const hours = +sHours % 12 || 12;
-    
-      return `${hours}:${minutes} ${period}`;
-    }
-     convertFrom12To24Format = (time12) => {
-      const [sHours, minutes, period] = time12.match(/([0-9]{1,2}):([0-9]{2}) (AM|PM)/).slice(1);
-      const PM = period === 'PM';
-      const hours = (+sHours % 12) + (PM ? 12 : 0);
-    console.log( `${('0' + hours).slice(-2)}:${minutes}`)
-      return `${('0' + hours).slice(-2)}:${minutes}`;
-    }
 
   render() {
 
@@ -540,7 +658,6 @@ console.log("wakeup time handler"+this.state.sleeptime)
                 accessible={false}
                 accessibilityRole="switch"
                 accessibilityLabel="Notifications"
-
                   title={resources.getString("notifications")}
                   left={() => <List.Icon icon="bell-alert" />}
                   right={() => <Switch
@@ -594,7 +711,6 @@ console.log("wakeup time handler"+this.state.sleeptime)
                   <List.Item
                   accessible={true}
                   accessibilityRole="timer"
-                  
                     style={styles.listStyle1a}
                     title={
                       <ParsedText
@@ -611,25 +727,25 @@ console.log("wakeup time handler"+this.state.sleeptime)
                     titleStyle={{ color: this.state.titleBackgroundColor }}
                     onPress={this._showWakeTimePicker}
                     disabled={!this.state.notificationState}
-                    description={this.state.waketime}
+                    description={resources.culture=='fr'? this.state.waketime +' h':this.state.waketime}
                     descriptionStyle={styles.descriptionStyle}
                   />
                        {Platform.OS === 'ios'?
-                                             <TimePicker
-                                                showTimePicker={this.state.wakeTimePickerShow}
-                                                style={styles.timePicker}
-                                                time={this.state.waketime}
-                                                timeType="wakeTime"
-                                                isVisible={this.state.wakeTimePickerShow}
-                                                handler={this.wakeTimeHandler}
-                                                cancelHandler={this.cancelTimeHandler}
-                                             />:
-                                              <View style={styles.centeredView}>
-                                                                        <Modal
-                                                                          animationType="slide"
-                                                                          transparent={true}
-                                                                          visible={this.state.wakeTimePickerShow}
-                                                                          onRequestClose={() => {
+                                    <TimePicker
+                                     showTimePicker={this.state.wakeTimePickerShow}
+                                     style={styles.timePicker}
+                                     time={this.state.waketime}
+                                     timeType="wakeTime"
+                                     isVisible={this.state.wakeTimePickerShow}
+                                     handler={this.wakeTimeHandler}
+                                     cancelHandler={this.cancelTimeHandler}
+                                    />:
+                                    <View style={styles.centeredView}>
+                                          <Modal
+                                           animationType="slide"
+                                           transparent={true}
+                                           visible={this.state.wakeTimePickerShow}
+                                           onRequestClose={() => {
                                                                            // Alert.alert("Modal has been closed.");
                                                                           }}
                                                                         >
@@ -660,20 +776,21 @@ console.log("wakeup time handler"+this.state.sleeptime)
                     titleStyle={{ color: this.state.titleBackgroundColor }}
                     onPress={this._showSleepTimePicker}
                     disabled={!this.state.notificationState}
-                    description= {this.state.sleeptime}
+                    description={resources.culture=='fr'? this.state.sleeptime +' h':this.state.sleeptime}
                     descriptionStyle={styles.descriptionStyle}
                   />
                          {Platform.OS === 'ios'?
-                                                <TimePicker
-                                                               showTimePicker={this.state.sleepTimePickerShow}
-                                                               style={styles.timePicker}
-                                                               time={this.state.sleeptime}
-                                                               timeType="sleepTime"
-                                                               isVisible={this.state.sleepTimePickerShow}
-                                                               handler={this.sleepTimeHandler}
-                                                               cancelHandler={this.cancelTimeHandler}
-                                                             />:
-                                                 <View style={styles.centeredView}>
+                                      <TimePicker
+                                       showTimePicker={this.state.sleepTimePickerShow}
+                                       style={styles.timePicker}
+                                       time={this.state.sleeptime}
+                                      // time={this.state.sleeptime.substring(5,7)=='P'?(parseInt(this.state.sleeptime.substring(0,2) + 12)).toString:this.state.sleeptime}
+                                       timeType="sleepTime"
+                                       isVisible={this.state.sleepTimePickerShow}
+                                       handler={this.sleepTimeHandler}
+                                       cancelHandler={this.cancelTimeHandler}
+                                       />:
+                                        <View style={styles.centeredView}>
                                                                      <Modal
                                                                        animationType="slide"
                                                                        transparent={true}
