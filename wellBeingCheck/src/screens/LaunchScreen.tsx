@@ -1,5 +1,5 @@
 import React, { memo,useEffect } from 'react';
-import { StyleSheet, StatusBar, View,Image,YellowBox,Button,Dimensions,Alert} from 'react-native';
+import { StyleSheet, StatusBar, View,Image,YellowBox,Button,Dimensions,Alert,Platform} from 'react-native';
 import { AsyncStorage } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 import Background from '../components/Background';
@@ -123,6 +123,8 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           let pingNum=await AsyncStorage.getItem('PingNum');
           if(pingNum==null)pingNum=2;global.pingNum=pingNum;
 
+// fix for timepicker accessibility
+          if (Platform.OS === 'ios'){
            if (resources.culture == "fr") {
 
             let awakeHour=await AsyncStorage.getItem('AwakeHour');
@@ -145,11 +147,14 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
               // global.awakeHour='8:00 AM';
               // global.sleepHour='10:00 PM';
               console.log("-------------------en----------s----------s----------")
-            }
-          // let awakeHour=await AsyncStorage.getItem('AwakeHour');
-          // if(awakeHour==null)awakeHour='8:00';global.awakeHour=awakeHour;
-          // let sleepHour=await AsyncStorage.getItem('SleepHour');
-          // if(sleepHour==null)sleepHour='22:00';global.sleepHour=sleepHour;
+            } }else{
+          let awakeHour=await AsyncStorage.getItem('AwakeHour');
+          if(awakeHour==null)awakeHour='8:00';global.awakeHour=awakeHour;
+          let sleepHour=await AsyncStorage.getItem('SleepHour');
+          if(sleepHour==null)sleepHour='22:00';global.sleepHour=sleepHour;
+        }
+
+
 
           let paradataSaved=await AsyncStorage.getItem('ParadataSaved');
           if(paradataSaved==null || paradataSaved=='false')paradataSaved=false;else paradataSaved=true;
