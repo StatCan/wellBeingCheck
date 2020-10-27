@@ -165,7 +165,16 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           global.passwordSaved=paradataSaved;
           console.log('Paradata saved:'+global.paradataSaved+'    Password saved:'+global.passwordSaved);
           let curDayPassed=await AsyncStorage.getItem('CurDayPassed');if(curDayPassed==null)curDayPassed=[];else curDayPassed=JSON.parse(curDayPassed);global.curDayPassed=curDayPassed;
-          let schedules=await AsyncStorage.getItem('Schedules');if(schedules==null)schedules=[];else schedules=JSON.parse(schedules);global.schedules=schedules;
+          let schedules=await AsyncStorage.getItem('Schedules');if(schedules==null)schedules=[];else schedules=JSON.parse(schedules);
+          //global.schedules=schedules;
+//fix greenwich time issue:Change it to local time
+          global.schedules=[];
+          schedules.forEach(function(l){
+                    var s={Datetime:new Date(l.Datetime),Hour:l.Hour,Over:l.Over,Day:new Date(l.Day)};
+                    global.schedules.push(s);
+                 });
+          console.log('list length:'+global.schedules.length);
+
           let lastDate=await AsyncStorage.getItem('LastDate'); if(lastDate!=null)global.lastDate=new Date(lastDate);console.log('LastDate:'+global.lastDate);
           let warningNotificationId=await AsyncStorage.getItem('WarningNotificationId');if(warningNotificationId!=null)global.warningNotificationId=parseInt(warningNotificationId);
           console.log('schedule:'+global.pingNum+' '+global.awakeHour+' '+global.sleepHour+' '+global.lastDate+' wid:'+global.warningNotificationId+' s_length:'+global.schedules.length+'Schedules:');

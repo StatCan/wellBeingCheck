@@ -127,8 +127,8 @@ global.createPanResponder=()=>{
             return true;
           },
 
-        onMoveShouldSetPanResponder: () =>{  global.resetTimer(); console.log('On Move.........................');  return false;},
-        onStartShouldSetPanResponderCapture: () => { global.resetTimer(); console.log('On Click.................'); return false; },
+        onMoveShouldSetPanResponder: () =>{  global.resetTimer();   return false;},
+        onStartShouldSetPanResponderCapture: () => { global.resetTimer();  return false; },
 
          //For performence, just enable what is necceesary
           // onStartShouldSetPanResponderCapture: () =>false,
@@ -187,8 +187,8 @@ global.createPanResponder1=()=>{
             return true;
           },
 
-        onMoveShouldSetPanResponder: () =>{  global.globalTick=0; console.log('On Move.........................');  return false;},
-        onStartShouldSetPanResponderCapture: () => {global.globalTick=0; console.log('On Click.................'); return false; },
+        onMoveShouldSetPanResponder: () =>{  global.globalTick=0;   return false;},
+        onStartShouldSetPanResponderCapture: () => {global.globalTick=0;  return false; },
 
          //For performence, just enable what is necceesary
           // onStartShouldSetPanResponderCapture: () =>false,
