@@ -1,10 +1,10 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 68410,
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
   "expoServerNgrokUrl": "https://fa-qwb.saba76.wellbeingcheck.exp.direct",
   "packagerNgrokUrl": "https://packager.fa-qwb.saba76.wellbeingcheck.exp.direct",
-  "ngrokPid": 68428,
+  "ngrokPid": 72348,
   "webpackServerPort": null
 }
