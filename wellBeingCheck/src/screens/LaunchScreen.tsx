@@ -228,12 +228,14 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
       let currentVersion=await AsyncStorage.getItem('CurrentVersion');console.log('currentVersion:'+currentVersion);
       if(currentVersion==null){
            console.log('Notification cancelled');
-           Notifications.cancelAllScheduledNotificationsAsync(); global.sendouts='(Re)Install,Cancelled';AsyncStorage.setItem('Sendouts', sendouts);
+           Notifications.cancelAllScheduledNotificationsAsync();
+           global.sendouts='App (Re)Installed,All schedule Cancelled';AsyncStorage.setItem('Sendouts', sendouts);
            AsyncStorage.setItem('CurrentVersion', pkg.expo.version);
       }
       else {
           if(global.hasImage==1){
                 if(currentVersion!=pkg.expo.version){
+                     global.sendouts='App Updated,All schedule should kept';AsyncStorage.setItem('Sendouts', sendouts);
                     let isConnected=await checkConnection();
                     if(!isConnected){Alert.alert('',resources.getString('offline'));return;}
                     let jwt=await fetchJwToken();console.log(jwt);
