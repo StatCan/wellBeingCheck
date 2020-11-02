@@ -75,6 +75,7 @@ setupNotification = async (datetime,title,message) => {
     Notifications.createChannelAndroidAsync('survey-messages', {
       name: 'Survey messages',
       sound: true,
+      priority: 'max',
       vibrate: true,
     });
   }
