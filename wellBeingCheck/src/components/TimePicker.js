@@ -23,14 +23,15 @@ const TimePicker = (props) => {
 
   if (contains(times[1], 'p')||contains(times[1], 'P')){
         var pmTime=times[0];
-        console.log('ttttt----this the add fonction2222',pmTime);
+        console.log('------------------------:this is the PM time',pmTime);
         times[0]=parseInt(pmTime)+12;
-        console.log('1111111111----this the add after update',times[0]);
+        console.log('------------------------:this is the PM time after update',times[0]);
       }
 
+ //add the pm value      
   date.setHours(parseInt(times[0]));
 
-  console.log('0- timer props ;',props);
+  //console.log('0- timer props ;',props);
   console.log('1- timer times ;',times);
   console.log('3- timepicker    times[0]));',times[0]);
 
@@ -46,10 +47,10 @@ const TimePicker = (props) => {
 
     if (resources.culture == "fr") {
       var options = { hour12: false, hour: "2-digit", minute: "2-digit" };
-      console.log ("--------------------this is a french language")
+      console.log ("--------------------Options time picker this is a french language")
     } else {
       var options = { hour12: true, hour: "2-digit", minute: "2-digit" };
-      console.log ("--------------------this is a english language")
+      console.log ("--------------------Options time picker this is a english language")
     }
 
     if (props.timeType === "wakeTime") {

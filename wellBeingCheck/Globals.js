@@ -8,7 +8,7 @@ global.timeStamp=0;
 global.surveyACode='';
 
 global.doneSurveyA=false;
-global.debugMode=false;
+global.debugMode=true;
 global.currentNotificationDate='';
 
 global.jwToken='';
@@ -51,17 +51,17 @@ global.currentVersion='';
 global.pingNum=2;
 
 // --------------future change to make timer follow the culture change--------
-// if (resources.culture == "fr") {
-//   global.awakeHour='8:00';
-//   global.sleepHour='22:00'; 
-//   console.log("-------------------fr----------s----------s----------")
-// } else {
-//   global.awakeHour='8:00 AM';
-//   global.sleepHour='10:00 PM';
-//   console.log("-------------------en----------s----------s----------")
-// }
-global.awakeHour='8:00';
-global.sleepHour='22:00';
+if (resources.culture == "fr") {
+  global.awakeHour='8:00 h';
+  global.sleepHour='22:00 h'; 
+  console.log("-------------------fr----------s----------s----------")
+} else {
+  global.awakeHour='8:00 AM';
+  global.sleepHour='10:00 PM';
+  console.log("-------------------en----------s----------s----------")
+}
+// global.awakeHour='08:00';
+// global.sleepHour='22:00';
 global.schedules=[];
 global.lastDate=null;
 global.warningNotificationId=null;

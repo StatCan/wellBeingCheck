@@ -3,7 +3,6 @@ import Background from '../components/Background';
 import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity,ActivityIndicator, BackHandler, AsyncStorage, PanResponder, Alert,Linking, YellowBox, Platform,AppState } from 'react-native';
 import { checkConnection, hashString, fetchJwToken } from '../utils/fetchJwToken';
 import { resources } from '../../GlobalResources';
-
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import { Provider as PaperProvider, Portal, Dialog, Paragraph, Button } from 'react-native-paper';
 import { newTheme } from '../core/theme';
@@ -26,7 +25,8 @@ type HomeState = {
   refresh: string,
   firstTimeLoginModal: boolean,
   showThankYou: boolean,
-  thankYouText: string,loaded:boolean,
+  thankYouText: string,
+  loaded:boolean,
   disabled:boolean
 }
 YellowBox.ignoreWarnings(['Require cycle:','Setting a timer','Warning: ReactNative.createElement']);
@@ -356,8 +356,12 @@ class Dashboard extends React.Component<Props, HomeState> {
 
               </View>
 
-            {this.state.showThankYou &&
-              <View style={{ backgroundColor: 'black', width: '80%', position: 'absolute', zIndex: 29, alignSelf: 'center', top: '70%', justifyContent: 'center', alignItems: 'center' }}><Text style={{ color: 'white', fontSize: 14, marginTop: 10, marginBottom: 10 }}>{this.state.thankYouText}</Text></View>
+            {this.state.showThankYou && Alert.alert('',  this.state.thankYouText)
+              // <View style={{ backgroundColor: 'black', width: '80%', position: 'absolute', zIndex: 29, alignSelf: 'center', top: '70%', justifyContent: 'center', alignItems: 'center' }}>
+              //   <Text style={{ color: 'white', fontSize: 14, marginTop: 10, marginBottom: 10 }}>
+              //     {this.state.thankYouText}
+              //     </Text>
+              // </View>
             }
 
             <View style={[styles.homeButtonContainer, { marginBottom: 0, marginTop: 50 }, { flexDirection: 'row',alignItems:'center' }]}>

@@ -89,7 +89,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     console.log('temps time for sleep time this.state.sleeptime.substring(5,7))',this.state.sleeptime.substring(5,7));
     console.log('temps time for sleep time (parseInt(this.state.sleeptime.substring(0,2)) + 12).toString())',(parseInt(this.state.sleeptime.substring(0,2)) + 12).toString());
     console.log('temps time for sleep time this.state.sleeptime)',this.state.sleeptime);
-    this.getPMvalue
+    this._changeLanguage
 
 
 //
@@ -317,8 +317,11 @@ cancelTimeHandler(time) {
       AsyncStorage.removeItem('EsmCulture');
       AsyncStorage.removeItem('doneSurveyA');
       global.doneSurveyA = false;
-      AsyncStorage.removeItem('LastDate'); AsyncStorage.removeItem('Schedules');
-      AsyncStorage.removeItem('PingNum'); AsyncStorage.removeItem('AwakeHour'); AsyncStorage.removeItem('SleepHour');
+      AsyncStorage.removeItem('LastDate'); 
+      AsyncStorage.removeItem('Schedules');
+      AsyncStorage.removeItem('PingNum'); 
+      AsyncStorage.removeItem('AwakeHour'); 
+      AsyncStorage.removeItem('SleepHour');
       AsyncStorage.removeItem('hasImage'); global.hasImage = false;
       AsyncStorage.removeItem('ParadataSaved'); global.paradataSaved = false;
       AsyncStorage.removeItem('CurrentVersion');
@@ -367,18 +370,32 @@ cancelTimeHandler(time) {
       cultureString: this.state.cultureString,
       settingsFirstTime: this.state.settingsFirstTime
     };
+    //store the language
     AsyncStorage.setItem('Culture', this.state.culture);
+    
+    //store the notification state
     global.notificationState = this.state.notificationState;
     if (this.state.notificationState) AsyncStorage.setItem('NotificationState', 'true'); else AsyncStorage.setItem('NotificationState', 'false');
-    AsyncStorage.setItem('PingNum', this.state.notificationcount.toString()); global.pingNum = this.state.notificationcount;
+    
+    //store the number of notications 
+    AsyncStorage.setItem('PingNum', this.state.notificationcount.toString()); 
+    global.pingNum = this.state.notificationcount;
+
+    //TODO: Need to change this when saving the settings value to the local storage 
+    //------------save wake time to the local storage
     AsyncStorage.setItem('AwakeHour', this.state.waketime); 
-    console.log('wakeTime__________:........'+this.state.waketime);
-    global.awakeHour = this.state.waketime;console.log('wake:........'+global.awakeHour);
+    global.awakeHour = this.state.waketime;
+
+    console.log('Settings wakeTime this.state.waketime:........'+this.state.waketime);
+    console.log('Settings wake global.awakeHour:........'+global.awakeHour);
+   
+    //TODO: Need to change this when saving the settings value to the local storage 
     AsyncStorage.setItem('SleepHour', this.state.sleeptime); 
     global.sleepHour = this.state.sleeptime;
 
-    console.log('current View-------------------------------:' + global.currentView);
-
+    console.log('Settings wakeTime this.state.sleeptime:........'+this.state.sleeptime);
+    console.log('Settings wake global.sleepHour:........'+global.sleepHour);
+    // console.log('current View-------------------------------:' + global.currentView);
 
     AsyncStorage.setItem('settings', JSON.stringify(settingsObj), () => {
       if (global.debugMode) console.log("Storing Settings: ", settingsObj);
@@ -392,6 +409,7 @@ cancelTimeHandler(time) {
       }
     });
   }
+  //Retreive the variable from the local the storage 
   _retrieveData = async (key) => {
 
     await AsyncStorage.getItem(key, (err, result) => {
@@ -426,7 +444,7 @@ cancelTimeHandler(time) {
   }
 
   
-
+//convert waketime am-pm to 24 hours  
   am_pm_to_hourswake(time) {
     console.log('this the wake time that we want to use'+time);
     var hours = Number(time.match(/^(\d+)/)[1]);
@@ -451,6 +469,8 @@ cancelTimeHandler(time) {
     
     //return (sHours +':'+sMinutes);
 }
+//convert sleeptime am-pm to 24 hours  
+
 am_pm_to_hoursSleep(time) {
 
   console.log('this how to get P from PM'+this.state.sleeptime.substring(5,7))
@@ -482,6 +502,7 @@ am_pm_to_hoursSleep(time) {
   
   //return (sHours +':'+sMinutes);
 }
+//convert waketime 24 hours  to  am-pm 
 
  hours_am_pmWake(time) {
   console.log(' awake input time:   '+time);
@@ -511,6 +532,7 @@ am_pm_to_hoursSleep(time) {
       //return hours+ ':' + min + ' PM';
   }
 }
+//convert sleep 24 hours  to  am-pm 
 
 hours_am_pmSleep(time) {
 
@@ -536,6 +558,7 @@ hours_am_pmSleep(time) {
       //return hours+ ':' + min + ' PM';
   }
 }
+// this function to change the language
  
   _changeLanguage(c) {
 
@@ -609,6 +632,8 @@ hours_am_pmSleep(time) {
 
 
     //Test
+
+// this function handle the timepicker confirm button  for the waketime 
     async onWakeConfirm(data){
         /* let h=data.Hour,m=data.Minute;
          let apm='AM';if(data.Apm==1){apm='PM';h+=12;}
@@ -625,8 +650,12 @@ hours_am_pmSleep(time) {
              })
               await this.handleBackAction(1);
         }
-    onWakeCancel(){console.log('cancelled');this.setState({wakeTimePickerShow:false}); }
-    async onSleepConfirm(data){
+// this function handle the timepicker for the waketime 
+
+        onWakeCancel(){console.log('cancelled');this.setState({wakeTimePickerShow:false}); }
+
+// this function handle the timepicker confirm button for the sleeptime 
+        async onSleepConfirm(data){
          /*let h=data.Hour,m=data.Minute;
          let apm='AM';if(data.Apm==1&& h!=12){apm='PM';h+=12;}
          let time=h+':'+(m < 10 ? '0' : '') + m;
@@ -641,6 +670,7 @@ hours_am_pmSleep(time) {
                 });
             await this.handleBackAction(1);
         }
+    
     onSleepCancel(){console.log('cancelled');this.setState({sleepTimePickerShow:false}); }
 
   render() {
@@ -744,7 +774,11 @@ hours_am_pmSleep(time) {
                     titleStyle={{ color: this.state.titleBackgroundColor }}
                     onPress={this._showWakeTimePicker}
                     disabled={!this.state.notificationState}
-                    description={resources.culture=='fr'? this.state.waketime +' h':this.state.waketime}
+                    description={this.state.waketime}
+
+                    //description={resources.culture=='fr'? this.state.waketime +' h':this.state.waketime}
+                   // description={(resources.culture=='fr'? this.state.waketime +' h':this.state.waketime)||(resources.culture=='en'&& parseInt(this.state.waketime) >12? this.state.waketime +'PM':this.state.waketime+'AM')} 
+
                     descriptionStyle={styles.descriptionStyle}
                   />
                        {
@@ -795,7 +829,8 @@ hours_am_pmSleep(time) {
                     titleStyle={{ color: this.state.titleBackgroundColor }}
                     onPress={this._showSleepTimePicker}
                     disabled={!this.state.notificationState}
-                    description={resources.culture=='fr'? this.state.sleeptime +' h':this.state.sleeptime}
+                    description={this.state.sleeptime}
+                   // description={(resources.culture=='fr'? this.state.sleeptime +' h':this.state.sleeptime)||(resources.culture=='en'&& parseInt(this.state.sleeptime) >12? this.state.sleeptime +'PM':this.state.sleeptime+'AM')} 
                     descriptionStyle={styles.descriptionStyle}
                   />
                          {

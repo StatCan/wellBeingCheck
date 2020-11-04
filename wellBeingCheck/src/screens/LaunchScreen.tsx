@@ -128,7 +128,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
            if (resources.culture == "fr") {
 
             let awakeHour=await AsyncStorage.getItem('AwakeHour');
-            if(awakeHour==null)awakeHour='8:00';
+            if(awakeHour==null)awakeHour='08:00';
             global.awakeHour=awakeHour;
             let sleepHour=await AsyncStorage.getItem('SleepHour');
             if(sleepHour==null)sleepHour='22:00';
@@ -149,7 +149,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
               console.log("-------------------en----------s----------s----------")
             } }else{
           let awakeHour=await AsyncStorage.getItem('AwakeHour');
-          if(awakeHour==null)awakeHour='8:00';global.awakeHour=awakeHour;
+          if(awakeHour==null)awakeHour='08:00';global.awakeHour=awakeHour;
           let sleepHour=await AsyncStorage.getItem('SleepHour');
           if(sleepHour==null)sleepHour='22:00';global.sleepHour=sleepHour;
         }

@@ -71,6 +71,9 @@ class LoginScreen extends React.Component<Props, LoginState> {
         let resultAsObj = JSON.parse(result)
         let currentPassword = resultAsObj.password;
         const inputPassword = this.state.password;
+         console.log('------------------------login global.awakeHour:',global.awakeHour);
+         console.log('------------------------login global.awakeHour:',global.sleepHour);
+
 
         if (global.debugMode) {
           alert('skipping password check due to debug mode')
@@ -118,7 +121,7 @@ async onTestA(){
    Alert.alert('',resources.getString('offline'));
      setupSchedules();
    }
-onTestB(){
+onTestB(){ 
     setupSchedules(false);
     }
 onTestC(){

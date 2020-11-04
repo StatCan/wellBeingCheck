@@ -211,10 +211,12 @@ export async function setupSchedules(affectCurrent=false){
     //     console.log('schedule french version-------------------------------------------------------------------schedule'+ sleep);
 
     // } else{
-
+        console.log('global.awakeHour------------------------------------------------------schedule'+ global.awakeHour);
         let convertWake=convertTime12to24(global.awakeHour);
         let awake=roundUp(convertWake); 
         console.log('this is converting time for am to 24------------------------------------------------------schedule'+ awake);
+        
+        console.log('global.sleepHour------------------------------------------------------schedule'+ global.sleepHour);
         let convertSleep=convertTime12to24(global.sleepHour);
         let sleep=roundDown(convertSleep);  
         console.log('this is converting time for am to 24------------------------------------------------------schedule'+ sleep);
