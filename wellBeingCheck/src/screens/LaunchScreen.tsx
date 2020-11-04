@@ -8,6 +8,7 @@ import { newTheme } from '../core/theme';
 import { Provider as PaperProvider, Title } from 'react-native-paper';
 //import { checkConnection } from '../utils/fetchJwToken';
 import { Notifications } from "expo";
+import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
 import { resources } from '../../GlobalResources';
 import LogoClear from '../components/LogoClear';
@@ -21,6 +22,8 @@ import {
 } from 'react-navigation';
 import { SafeAreaConsumer } from 'react-native-safe-area-context';
 import {fetchJwToken,checkConnection,fetchGraphs,fetchGraphTypes,fetchImage} from '../utils/fetchJwToken';
+import {sendNotificationList} from '../utils/schedule';
+
 const deviceHeight =Math.floor(Dimensions.get('window').height);
 const deviceWidth =Math.floor(Dimensions.get('window').width);
 type LaunchState = {
@@ -223,19 +226,50 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
     Notifications.addListener(this.onNotification);
     this.checkUpgrade();
   }
+  askPermissions = async () => {
+      const { status: existingStatus } = await Permissions.getAsync(
+        Permissions.NOTIFICATIONS
+      );
+      let finalStatus = existingStatus;
+      if (existingStatus !== "granted") {
+        const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+        finalStatus = status;
+      }
+      if (finalStatus !== "granted") {
+        console.log("Notifications Permission Not Granted");
+        global.notificationState = false; AsyncStorage.setItem('NotificationState', 'false');
+        return false;
+      }
+      console.log("Notifications Permission Granted");
+      global.notificationState = true; AsyncStorage.setItem('NotificationState', 'true');
+      return true;
+    };
   async checkUpgrade(){
-      console.log('Check upgrade');
+     // console.log('Check upgrade');currentVersion='1.3.3'; console.log('TestOnly    old version  >>>>>>>>>>>>>>>>>>>>>>>>:'+currentVersion);
       let currentVersion=await AsyncStorage.getItem('CurrentVersion');console.log('currentVersion:'+currentVersion);
       if(currentVersion==null){
-           console.log('Notification cancelled');
+           console.log('Notification cancelled>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
            Notifications.cancelAllScheduledNotificationsAsync();
            global.sendouts='App (Re)Installed,All schedule Cancelled';AsyncStorage.setItem('Sendouts', sendouts);
            AsyncStorage.setItem('CurrentVersion', pkg.expo.version);
       }
       else {
+       if(currentVersion!=pkg.expo.version) {
+             let cont=await this.askPermissions();
+             if(cont){
+              global.sendouts='App Updated,All schedule should be kept';AsyncStorage.setItem('Sendouts', sendouts);
+                         //reschedule here,
+                         Notifications.cancelAllScheduledNotificationsAsync();
+                         sendNotificationList();
+             }
+            else{
+             global.sendouts='App Updated,but schedule is not alowed';AsyncStorage.setItem('Sendouts', sendouts);
+             Alert.alert("Notification is not allowed, chech your OS setting");
+            }
+       }
           if(global.hasImage==1){
                 if(currentVersion!=pkg.expo.version){
-                     global.sendouts='App Updated,All schedule should kept';AsyncStorage.setItem('Sendouts', sendouts);
+
                     let isConnected=await checkConnection();
                     if(!isConnected){Alert.alert('',resources.getString('offline'));return;}
                     let jwt=await fetchJwToken();console.log(jwt);

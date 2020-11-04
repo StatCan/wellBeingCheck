@@ -82,6 +82,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     this.cancelTimeHandler = this.cancelTimeHandler.bind(this);
   }
 
+
   componentDidMount() {
     this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
     var tt= ''

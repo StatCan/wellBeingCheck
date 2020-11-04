@@ -1001,3 +1001,30 @@ the algorithm will not arrange any notification for the time which has been pass
      let notificationId=await setupWarning(dt,title,msg);
 
  }
+ export async function sendNotificationList(){
+     console.log('Reset schedule list..........');
+     let warningDate=global.warningDate;
+    if(schedules.length>0){
+      let sendouts='';//Test only
+      let permission=await askPermissions();if(!permission)return;
+      let title=resources.getString("scheduleTitle");//   "Scheduled Notification";
+      let message=resources.getString("scheduleMessage");//"Scheduled Notification for the Survey!";
+      let lastMessage=resources.getString("scheduleMessage1");//"We haven’t heard from you in a while. Sign in for a Well-being Check!";///"Nous n’avons pas eu de vos nouvelles depuis un certain temps. Connectez-vous pour obtenir un Bilan bien-être!";
+
+      schedules.forEach(async function(s,index){
+               let ss = new Date(s.Datetime);
+               if(ss > new Date()){
+                 let notificationId=await setupNotification(ss,title,message);
+                 console.log('reset notificationId:'+notificationId+'->'+ss.toString());sendouts+=notificationId+':'+ss.toString()+'\r\n';
+
+               }
+       });
+      let dt=new Date(warningDate);
+      let warningNotificationId=await setupWarning(dt,title,lastMessage);
+      AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());
+      global.warningDate=dt;
+      global.warningNotificationId=warningNotificationId;
+      console.log('warning notification:'+warningNotificationId);
+      global.sendouts=sendouts; AsyncStorage.setItem('Sendouts', sendouts);
+      }
+ }
