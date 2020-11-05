@@ -131,7 +131,7 @@ class Dashboard extends React.Component<Props, HomeState> {
                   {
                     text: resources.getString("ratenow"),
                     onPress: () => {
-                     if (Platform.OS === 'ios') {Linking.openURL('https://www.apple.com/ca/ios/app-store/'); }
+                     if (Platform.OS === 'ios') {Linking.openURL('https://apps.apple.com/app/id1496401127?action=write-review'); }
                      else { Linking.openURL('https://play.google.com/store/apps/details?id=com.statcan.wellbeingcheck')}
                     },
                     style: 'cancel',
