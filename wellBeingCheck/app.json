@@ -9,7 +9,7 @@
     "slug": "wellBeingCheck",
     "privacy": "unlisted",
     "sdkVersion": "36.0.0",
-    "version": "1.4.7",
+    "version": "1.4.8",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -25,11 +25,11 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.statcan.wellbeingcheck",
-      "buildNumber": "2.3.0"
+      "buildNumber": "2.3.1"
     },
     "android": {
       "package": "com.statcan.wellbeingcheck",
-      "versionCode": 42
+      "versionCode": 43
     }
   }
 }
