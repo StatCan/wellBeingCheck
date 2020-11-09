@@ -201,7 +201,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
          let warningDate=await AsyncStorage.getItem('WarningDate');
          if(warningDate==null ||warningDate==''){global.warningDate=new Date();AsyncStorage.setItem('WarningDate',global.warningDate.toString());}else global.warningDate=new Date(warningDate);
          console.log('Warning Date:'+global.warningDate);
-
+          this.checkUpgrade();   //Test for 1.4.9
           this._bootstrap();
         };
       onNotification(n) {
@@ -224,7 +224,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
    }
   componentDidMount() {
     Notifications.addListener(this.onNotification);
-    this.checkUpgrade();
+  //  this.checkUpgrade();   //the global.schedules is not set yet when running this line. so move it to the end of bootstrapA
   }
   askPermissions = async () => {
       const { status: existingStatus } = await Permissions.getAsync(
@@ -245,7 +245,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
       return true;
     };
   async checkUpgrade(){
-     // console.log('Check upgrade');currentVersion='1.3.3'; console.log('TestOnly    old version  >>>>>>>>>>>>>>>>>>>>>>>>:'+currentVersion);
+    //  console.log('Check upgrade');currentVersion='1.3.3'; console.log('TestOnly    old version  >>>>>>>>>>>>>>>>>>>>>>>>:'+currentVersion);
       let currentVersion=await AsyncStorage.getItem('CurrentVersion');console.log('currentVersion:'+currentVersion);
       if(currentVersion==null){
            console.log('Notification cancelled>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
@@ -260,6 +260,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
               global.sendouts='App Updated,All schedule should be kept';AsyncStorage.setItem('Sendouts', sendouts);
                          //reschedule here,
                          Notifications.cancelAllScheduledNotificationsAsync();
+                         let s=await
                          sendNotificationList();
              }
             else{

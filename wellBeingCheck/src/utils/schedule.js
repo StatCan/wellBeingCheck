@@ -1004,6 +1004,8 @@ the algorithm will not arrange any notification for the time which has been pass
  export async function sendNotificationList(){
      console.log('Reset schedule list..........');
      let warningDate=global.warningDate;
+     let schedules=global.schedules;
+     console.log('schedule length:>>>>>>'+schedules.length);
     if(schedules.length>0){
       let sendouts='';//Test only
       let permission=await askPermissions();if(!permission)return;
