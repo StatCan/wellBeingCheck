@@ -6,52 +6,99 @@ let startApmY=0;
 let height=40;
 
 export class TimePickerPane extends React.Component {
-    constructor(props) {
+   constructor(props) {
         super(props);
-        let ut=this.timeToApm(props.initialValue);
-        let h=ut.Hour;if(h==0)h=12;
-         h-=1;if(h<1)h=12;
-        let m=ut.Minute-1; if(m<0)m=59;
-        let apm=ut.Apm;if(apm==0)apm=1;else apm=0;
-                this.state = {
-                   currentHour:h,
-                   currentMinute:m,
-                   currentApm:apm
-            };
+        console.log(props.is24);
+        if(props.is24){
+           let ut=this.timeTo24(props.initialValue);
+           console.log('ut.Hour:'+ut.Hour);
+            let h=ut.Hour;
+            let m=ut.Minute-1; if(m<0)m=59;
+           this.state = {
+              currentHour:h,
+              currentMinute:m,
+              currentApm:0
+              };
+               console.log('state.Hour:'+this.state.currentHour);
+        }
+        else{
+            let ut=this.timeToApm(props.initialValue);
+                    let h=ut.Hour;if(h==0)h=12;
+                    h-=1;if(h<1)h=12;
+                    let m=ut.Minute-1; if(m<0)m=59;
+                    let apm=ut.Apm;if(apm==0)apm=1;else apm=0;
+                            this.state = {
+                               currentHour:h,
+                               currentMinute:m,
+                               currentApm:apm
+                        };
+        }
+
     }
    confirm(){
       let h=this.state.currentHour,m=parseInt(this.state.currentMinute),apm=this.state.currentApm;
-      h+=1;if(h>12)h=1;
-      m+=1;if(m>59)m=0;
-      apm+=1;if(apm>1)apm=0;
-      if(h==12){
-         if(apm==0){
-             h=0;
-         }
+       m+=1;if(m>59)m=0;
+      let ut=h+':'+m;
+      if(!this.props.is24)
+      {
+            h+=1;if(h>12)h=1;
+
+            apm+=1;if(apm>1)apm=0;
+            if(h==12){
+               if(apm==0){
+                   h=0;
+               }
+            }
+            ut=this.apmToTime(h,m,apm);
       }
-      let ut=this.apmToTime(h,m,apm);
+
    this.props.onConfirm({Hour:h,Minute:m,Apm:apm,Time:ut})
    }
    cancel(){this.props.onCancel();}
    componentDidMount() {
-    setTimeout(()=>{
-        this.svHour.scrollTo({y:height*6, animated:false });
-        this.svMinute.scrollTo({y:height*6, animated:false });
-        this.svApm.scrollTo({y:height*1, animated:false });
-        },500);
+        if(this.props.is24){
+           setTimeout(()=>{
+                   this.svHour.scrollTo({y:height*6, animated:false });
+                   this.svMinute.scrollTo({y:height*6, animated:false });
+                  // this.svApm.scrollTo({y:height*1, animated:false });
+                   },500);
+        }
+        else{
+           setTimeout(()=>{
+                   this.svHour.scrollTo({y:height*6, animated:false });
+                   this.svMinute.scrollTo({y:height*6, animated:false });
+                   this.svApm.scrollTo({y:height*1, animated:false });
+                   },500);
+        }
+
   }
    handleScrollHourBegin(event) { startHourY = event.nativeEvent.contentOffset.y; }
    handleScrollHourEnd(event) {
+   if(this.props.is24){
           let currentHour=this.state.currentHour;
           let y = event.nativeEvent.contentOffset.y;
           let dy=Math.round((startHourY-y)/height);
           currentHour-=dy;
-          if(currentHour>12)currentHour-=12;
-          else if(currentHour<0)currentHour+=12;
+          if(currentHour>=24)currentHour-=24;
+          else if(currentHour<0)currentHour+=24;
 
           let yd = 6* height;
           this.setState({ currentHour: currentHour });
           this.svHour.scrollTo({ y: yd });
+   }
+   else{
+       let currentHour=this.state.currentHour;
+       let y = event.nativeEvent.contentOffset.y;
+       let dy=Math.round((startHourY-y)/height);
+       currentHour-=dy;
+       if(currentHour>12)currentHour-=12;
+       else if(currentHour<0)currentHour+=12;
+
+       let yd = 6* height;
+       this.setState({ currentHour: currentHour });
+       this.svHour.scrollTo({ y: yd });
+   }
+
         //  InteractionManager.runAfterInteractions(() => this.svHour.scrollTo({ y: yd }))
         }
    handleScrollHour(event) {
@@ -112,21 +159,47 @@ export class TimePickerPane extends React.Component {
            return {Hour:h,Minute:m,Apm:apm}
        }
    }
+   timeTo24(t){
+          let vs=t.split(':');
+          let h=1,m=0;console.log('Hour:'+vs[0]+'  Minutes:'+vs[1]);
+          if(vs.length=2){
+              h=parseInt(vs[0]);
+              m=parseInt(vs[1]);
+               console.log('Hour111:'+h+'  Minutes111:'+m);
+            }
+          return {Hour:h,Minute:m}
+      }
     render() {
             let hourViews=[];
-            let mid=this.state.currentHour;
-            for(let j=6;j>0;j--){
-               let h=mid-j;if(h<1)h+=12;
-               hourViews.push(<View key={h} style={{height:height,justifyContent:'center',alignItems:'center'}}><Text key={h} style={{fontSize:24}}>{h}</Text></View>);
+            let mid=this.state.currentHour;console.log('current--------->:'+mid);
+            if(this.props.is24){
+                 for(let j=7;j>=0;j--){
+                       let h=mid-j; console.log(h);
+                       if(h<0)h+=24;
+                       hourViews.push(<View key={h} style={{height:height,justifyContent:'center',alignItems:'center'}}><Text key={h} style={{fontSize:24}}>{h}</Text></View>);
+                 }
+                 for(let j=1;j <6; j++) {
+                       let h=mid+j;if(h>=24)h-=24;
+
+console.log(h);
+                       hourViews.push(<View key={h} style={{height:height,justifyContent:'center',alignItems:'center'}}><Text key={h} style={{fontSize:24}}>{h}</Text></View>);
+                 }
             }
-            for(let j=0;j <6; j++) {
-                 let h=mid+j;if(h>12)h-=12;
+            else{
+                          for(let j=6;j>0;j--){
+                             let h=mid-j;if(h<1)h+=12;
+                             hourViews.push(<View key={h} style={{height:height,justifyContent:'center',alignItems:'center'}}><Text key={h} style={{fontSize:24}}>{h}</Text></View>);
+                          }
+                          for(let j=0;j <6; j++) {
+                               let h=mid+j;if(h>12)h-=12;
 
 
-                 if(h!=0)
-                 hourViews.push(<View key={h} style={{height:height,justifyContent:'center',alignItems:'center'}}><Text key={h} style={{fontSize:24}}>{h}</Text></View>
-               )
+                               if(h!=0)
+                               hourViews.push(<View key={h} style={{height:height,justifyContent:'center',alignItems:'center'}}><Text key={h} style={{fontSize:24}}>{h}</Text></View>
+                             )
+                          }
             }
+
 
             let minuteViews=[];
             mid=this.state.currentMinute;
@@ -180,7 +253,7 @@ export class TimePickerPane extends React.Component {
                                   { minuteViews }
               </ScrollView>
               </View>
-
+              {!this.props.is24 &&(
 
               <View style={{width:75,borderColor:'gray',borderWidth:1,height:height*2}}>
                    <ScrollView style={{height:height, }} scrollEventThrottle='1' showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false} ref={ref => { this.svApm = ref; }}
@@ -191,6 +264,7 @@ export class TimePickerPane extends React.Component {
                                   { apmViews }
               </ScrollView>
               </View>
+              )}
               </View>
               <View style={{flexDirection:'row',justifyContent:'space-around'}}>
                 <TouchableOpacity onPress={() => {this.cancel()}}>

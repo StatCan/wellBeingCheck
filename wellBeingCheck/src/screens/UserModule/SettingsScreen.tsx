@@ -45,7 +45,7 @@ interface Props {
 }
 
 const deviceHeight = Dimensions.get('window').height - 145;
-let dirty = false;let testDatetime=new Date();
+let dirty = false;let testDatetime=new Date();let is24=false;
 class SettingsScreen extends React.Component<Props, SettingsState> {
   _panResponder: any;
   timer = 0
@@ -74,6 +74,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       idle:true,
       tempSleepTime:'',
     };
+    is24=resources.culture == 'fr' ? true : false;
     testDatetime.setHours(22);
     testDatetime.setMinutes(10);
 
@@ -772,7 +773,7 @@ hours_am_pmSleep(time) {
                                                                         <TimePickerPane title= {resources.getString("wake_time")} onConfirm={this.onWakeConfirm.bind(this)}
                                                                             onCancel={this.onWakeCancel.bind(this)}
                                                                             cancelLabel={resources.getString("cancel")} confirmLabel={resources.getString("ok")}
-                                                                            initialValue={this.state.waketime}
+                                                                            initialValue={this.state.waketime}  is24={this.state.culture=='2'}
                                                                          />
                                                                    </Modal>
                                                                   </View>
@@ -825,7 +826,7 @@ hours_am_pmSleep(time) {
                                                                          onCancel={this.onSleepCancel.bind(this)}
                                                                          cancelLabel={resources.getString("cancel")} 
                                                                          confirmLabel={resources.getString("ok")}
-                                                                         initialValue={this.state.sleeptime}
+                                                                         initialValue={this.state.sleeptime} is24={this.state.culture=='2'}
                                                                       />
                                                                 </Modal>
                                                                </View>
