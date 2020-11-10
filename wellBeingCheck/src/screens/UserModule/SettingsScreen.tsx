@@ -36,7 +36,7 @@ type SettingsState = {
   settingsFirstTime: boolean,
   idle:boolean,
   tempSleepTime:string
-  
+
 }
 
 interface Props {
@@ -45,7 +45,7 @@ interface Props {
 }
 
 const deviceHeight = Dimensions.get('window').height - 145;
-let dirty = false;let testDatetime=new Date();let is24=false;
+let dirty = false;let testDatetime=new Date();
 class SettingsScreen extends React.Component<Props, SettingsState> {
   _panResponder: any;
   timer = 0
@@ -74,7 +74,6 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       idle:true,
       tempSleepTime:'',
     };
-    is24=resources.culture == 'fr' ? true : false;
     testDatetime.setHours(22);
     testDatetime.setMinutes(10);
 
@@ -186,7 +185,7 @@ cancelTimeHandler(time) {
   }
 
   askPermissions = async () => {const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
-  
+
     let finalStatus = existingStatus;
     if (existingStatus !== "granted") {
       const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
@@ -373,10 +372,10 @@ cancelTimeHandler(time) {
     global.notificationState = this.state.notificationState;
     if (this.state.notificationState) AsyncStorage.setItem('NotificationState', 'true'); else AsyncStorage.setItem('NotificationState', 'false');
     AsyncStorage.setItem('PingNum', this.state.notificationcount.toString()); global.pingNum = this.state.notificationcount;
-    AsyncStorage.setItem('AwakeHour', this.state.waketime); 
+    AsyncStorage.setItem('AwakeHour', this.state.waketime);
     console.log('wakeTime__________:........'+this.state.waketime);
     global.awakeHour = this.state.waketime;console.log('wake:........'+global.awakeHour);
-    AsyncStorage.setItem('SleepHour', this.state.sleeptime); 
+    AsyncStorage.setItem('SleepHour', this.state.sleeptime);
     global.sleepHour = this.state.sleeptime;
 
     console.log('current View-------------------------------:' + global.currentView);
@@ -427,7 +426,7 @@ cancelTimeHandler(time) {
     }
   }
 
-  
+
 
   am_pm_to_hourswake(time) {
     console.log('this the wake time that we want to use'+time);
@@ -447,17 +446,17 @@ cancelTimeHandler(time) {
     if (hours < 10) sHours = "0" + sHours;
     if (minutes < 10) sMinutes = "0" + sMinutes;
     console.log('here the final hours change'+sHours +':'+sMinutes);
-   
+
   this.setState({waketime:sHours +':'+sMinutes})
 
-    
+
     //return (sHours +':'+sMinutes);
 }
 am_pm_to_hoursSleep(time) {
 
   console.log('this how to get P from PM'+this.state.sleeptime.substring(5,7))
   console.log('this how to get hour number + 12 '+ (parseInt(this.state.sleeptime.substring(0,2)) + 12))
-  
+
 
   console.log('this the sleep time that we want to use'+time);
   var hours = Number(time.match(/^(\d+)/)[1]);
@@ -479,9 +478,9 @@ am_pm_to_hoursSleep(time) {
   if (hours < 10) sHours = "0" + sHours;
   if (minutes < 10) sMinutes = "0" + sMinutes;
   console.log('here the sleep final hours change'+sHours +':'+sMinutes);
- 
+
   this.setState({sleeptime:sHours +':'+sMinutes})
-  
+
   //return (sHours +':'+sMinutes);
 }
 
@@ -538,7 +537,7 @@ hours_am_pmSleep(time) {
       //return hours+ ':' + min + ' PM';
   }
 }
- 
+
   _changeLanguage(c) {
 
     this.setState({ culture: c });
@@ -548,7 +547,7 @@ hours_am_pmSleep(time) {
       resources.culture = 'fr';
       this.setState({ cultureString: 'Français' });
       this.setState({ culture: '2' });
-   
+
     if (Platform.OS === 'ios'){
       this.am_pm_to_hourswake(this.state.waketime);
       this.am_pm_to_hoursSleep(this.state.sleeptime);
@@ -561,7 +560,7 @@ hours_am_pmSleep(time) {
       this.hours_am_pmWake(this.state.waketime);
       this.hours_am_pmSleep(this.state.sleeptime);
       }
-      
+
     }
     AsyncStorage.setItem('Culture', c);
   }
@@ -588,7 +587,7 @@ hours_am_pmSleep(time) {
   _showWakeTimePicker = () =>{
       global.resetTimer();//global.globalTick=0;
       this.setState({ wakeTimePickerShow: true });}
-      
+
   _hideWakeTimePicker = () =>{
       global.resetTimer();//global.globalTick=0;
       this.setState({ wakeTimePickerShow: false });
@@ -667,7 +666,7 @@ hours_am_pmSleep(time) {
             <Text style={styles.toolbarTitle}
              accessible={true}
              accessibilityRole='text'
-             accessibilityLabel= {resources.getString("Accessibility.setting_title")} 
+             accessibilityLabel= {resources.getString("Accessibility.setting_title")}
             >{resources.getString("settings")}</Text>
           </View>
           <View style={styles.containerStyle}>
@@ -681,7 +680,7 @@ hours_am_pmSleep(time) {
                   left={() => <List.Icon icon="bell-alert" />}
                   right={() => <Switch
                     style={{ margin: 10 }}
-                    value={this.state.notificationState} 
+                    value={this.state.notificationState}
                     accessible={true}
                     accessibilityLabel={ 'Notification switch is'+ this.state.notificationState}
 
@@ -773,7 +772,7 @@ hours_am_pmSleep(time) {
                                                                         <TimePickerPane title= {resources.getString("wake_time")} onConfirm={this.onWakeConfirm.bind(this)}
                                                                             onCancel={this.onWakeCancel.bind(this)}
                                                                             cancelLabel={resources.getString("cancel")} confirmLabel={resources.getString("ok")}
-                                                                            initialValue={this.state.waketime}  is24={this.state.culture=='2'}
+                                                                            initialValue={this.state.waketime}
                                                                          />
                                                                    </Modal>
                                                                   </View>
@@ -821,12 +820,12 @@ hours_am_pmSleep(time) {
                                                                         // Alert.alert("Modal has been closed.");
                                                                        }}
                                                                      >
-                                                                     <TimePickerPane title= {resources.getString("sleep_time")} 
+                                                                     <TimePickerPane title= {resources.getString("sleep_time")}
                                                                          onConfirm={this.onSleepConfirm.bind(this)}
                                                                          onCancel={this.onSleepCancel.bind(this)}
-                                                                         cancelLabel={resources.getString("cancel")} 
+                                                                         cancelLabel={resources.getString("cancel")}
                                                                          confirmLabel={resources.getString("ok")}
-                                                                         initialValue={this.state.sleeptime} is24={this.state.culture=='2'}
+                                                                         initialValue={this.state.sleeptime}
                                                                       />
                                                                 </Modal>
                                                                </View>
