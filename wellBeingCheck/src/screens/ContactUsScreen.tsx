@@ -42,6 +42,9 @@ class ContactUsScreen extends React.Component<Props> {
 printLogo=()=>{
         alert('Scheduled:\r\n'+global.sendouts);
  }
+ printLog=()=>{
+         alert('Sys Log:\r\n'+global.syslog);
+  }
  printTest=()=>{
         sendDelayedNotification(new Date(),'Test Notification','When you see it, your setting is good');
   }
@@ -126,7 +129,11 @@ printLogo=()=>{
               onPress={this.printLogo}>
               <Text style={styles.btnText}>Info</Text>
         </Button>
-
+         <Button style={styles.btnNext}
+              mode="contained"
+              onPress={this.printLog}>
+              <Text style={styles.btnText}>Log</Text>
+        </Button>
         <Button style={styles.btnNext}
           mode="contained"
           onPress={this._onNextBtnHandle}>

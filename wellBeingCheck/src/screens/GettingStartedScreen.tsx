@@ -64,6 +64,7 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
     };
 
     AsyncStorage.setItem('user_getting_started', JSON.stringify(userGettingStartedObj), () => {
+      global.syslog+='getting_started:'+(new Date()).toString()+','; AsyncStorage.setItem('Syslog',global.syslog); //Test only
       this.props.navigation.navigate('TermsOfServiceScreen');
     });
   }

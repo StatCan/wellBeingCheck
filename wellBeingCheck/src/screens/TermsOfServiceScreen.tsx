@@ -103,6 +103,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
     };
 
     AsyncStorage.setItem('user_terms_and_conditions', JSON.stringify(userTermsAndConditionsObj), () => {
+       global.syslog+='terms:'+(new Date()).toString()+','; AsyncStorage.setItem('Syslog',global.syslog); //Test only
       this.props.navigation.navigate('RegisterScreen');
     });
   }

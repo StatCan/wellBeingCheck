@@ -55,8 +55,6 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
   }
   //determine if user already has an account
   _bootstrap = () => {
-
-
     AsyncStorage.getItem('user_account', (err, userAccountResult) => {
       if (global.debugMode) console.log(userAccountResult);
       let userAccountResultObj = JSON.parse(userAccountResult)
@@ -72,7 +70,6 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
         if (userGettingStartedResultObj) {
           gettingStarted = userGettingStartedResultObj.gettingStarted
         }
-
         AsyncStorage.getItem('user_terms_and_conditions', (err, userTermsResult) => {
           if (global.debugMode) console.log(userTermsResult);
           let userTermsResultObj = JSON.parse(userTermsResult)
@@ -111,6 +108,8 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
               userToken= deviceId;
               console.log('Launch Screen---device id',deviceId)
               AsyncStorage.setItem('EsmUserToken',userToken);
+
+              global.syslog+='CreateUserToken:'+(new Date()).toString()+','; AsyncStorage.setItem('Syslog',global.syslog); //Test only
           }
           else global.sac=sac;
           global.userToken=userToken;
@@ -198,6 +197,9 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
       let sendouts=await AsyncStorage.getItem('Sendouts');
       if(sendouts!=null)global.sendouts=sendouts;
 
+      let syslog=await AsyncStorage.getItem('Syslog');console.log('System log:'+syslog);
+      if(syslog!=null)global.syslog=syslog;
+
          let warningDate=await AsyncStorage.getItem('WarningDate');
          if(warningDate==null ||warningDate==''){global.warningDate=new Date();AsyncStorage.setItem('WarningDate',global.warningDate.toString());}else global.warningDate=new Date(warningDate);
          console.log('Warning Date:'+global.warningDate);
@@ -245,7 +247,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
       return true;
     };
   async checkUpgrade(){
-    //  console.log('Check upgrade');currentVersion='1.3.3'; console.log('TestOnly    old version  >>>>>>>>>>>>>>>>>>>>>>>>:'+currentVersion);
+   //   console.log('Check upgrade');currentVersion='1.3.3'; console.log('TestOnly    old version  >>>>>>>>>>>>>>>>>>>>>>>>:'+currentVersion);
       let currentVersion=await AsyncStorage.getItem('CurrentVersion');console.log('currentVersion:'+currentVersion);
       if(currentVersion==null){
            console.log('Notification cancelled>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
@@ -260,7 +262,6 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
               global.sendouts='App Updated,All schedule should be kept';AsyncStorage.setItem('Sendouts', sendouts);
                          //reschedule here,
                          Notifications.cancelAllScheduledNotificationsAsync();
-                         let s=await
                          sendNotificationList();
              }
             else{

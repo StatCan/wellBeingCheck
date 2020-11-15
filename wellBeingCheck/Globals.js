@@ -73,6 +73,7 @@ global.busy=8;
 global.fetchCount=8;
 global.curDayPassed =[];
 
+global.syslog='';//test only
 global.received='';  //test only
 global.sendouts='';   //test only
 global.warningDate=null;
