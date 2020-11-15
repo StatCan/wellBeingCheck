@@ -45,7 +45,7 @@ interface Props {
 }
 
 const deviceHeight = Dimensions.get('window').height - 145;
-let dirty = false;let testDatetime=new Date();
+let dirty = false;let testDatetime=new Date();let is24=false;
 class SettingsScreen extends React.Component<Props, SettingsState> {
   _panResponder: any;
   timer = 0
@@ -74,6 +74,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       idle:true,
       tempSleepTime:'',
     };
+    is24=resources.culture == 'fr' ? true : false;
     testDatetime.setHours(22);
     testDatetime.setMinutes(10);
 
@@ -611,11 +612,11 @@ hours_am_pmSleep(time) {
 
     //Test
     async onWakeConfirm(data){
-        /* let h=data.Hour,m=data.Minute;
+         let h=data.Hour,m=data.Minute;
          let apm='AM';if(data.Apm==1){apm='PM';h+=12;}
          let time=h+':'+(m < 10 ? '0' : '') + m;
-           console.log('Picked time:'+data.Hour+':'+data.Minute+' '+apm+'-->'+h+':'+m+' --'+time);*/
-         let time=data.Time;
+           console.log('Picked time:'+data.Hour+':'+data.Minute+' '+apm+'-->'+h+':'+m+' --'+time);
+      //   let time=data.Time;
         // TODO: we need to change the validation if this is am-pm
         //  let valid = validateSetting(time, this.state.sleeptime, this.state.notificationcount);
         let valid = 0;
@@ -628,12 +629,12 @@ hours_am_pmSleep(time) {
         }
     onWakeCancel(){console.log('cancelled');this.setState({wakeTimePickerShow:false}); }
     async onSleepConfirm(data){
-         /*let h=data.Hour,m=data.Minute;
+         let h=data.Hour,m=data.Minute;
          let apm='AM';if(data.Apm==1&& h!=12){apm='PM';h+=12;}
          let time=h+':'+(m < 10 ? '0' : '') + m;
            console.log('Picked time:'+data.Hour+':'+data.Minute+' '+apm+'-->'+h+':'+m+' --'+time);
-*/
-         let time=data.Time;
+
+       //  let time=data.Time;
          let valid = validateSetting(this.state.waketime, time, this.state.notificationcount);
             if (valid != 0){Alert.alert('', resources.getString("settingValidation"));return;}
             await this.setState({
@@ -644,7 +645,37 @@ hours_am_pmSleep(time) {
         }
     onSleepCancel(){console.log('cancelled');this.setState({sleepTimePickerShow:false}); }
 
+
+ timeToApm(t){
+       let vs=t.split(':');
+       let h=1,m=0,apm=0;
+       if(vs.length=2){
+           let h=vs[0];let m=vs[1];
+           if(h>=12){h-=12;apm=1;}
+           return {Hour:h,Minute:m,Apm:apm}
+       }
+   }
   render() {
+    let wakeDesc='';let sleepDesc='';let is24H=this.state.culture=='2';
+
+    if( Platform.OS === 'ios'){
+        wakeDesc=resources.culture=='fr'? this.state.waketime +' h':this.state.waketime;
+        sleepDesc=resources.culture=='fr'? this.state.sleeptime +' h':this.state.sleeptime;
+    }else{
+        if(is24H){
+              wakeDesc=this.state.waketime +' h';
+              sleepDesc=this.state.sleeptime +' h';
+        }
+        else{
+           let ddd1=this.timeToApm(this.state.waketime);
+           let apm1='AM';if(ddd1.Apm==1&& ddd1.Hour!=12){apm1='PM';}
+           wakeDesc=ddd1.Hour+':'+ddd1.Minute+' '+apm1;
+           let ddd2=this.timeToApm(this.state.sleeptime);
+           let apm2='AM';if(ddd2.Apm==1&& ddd2.Hour!=12){apm2='PM';}
+           sleepDesc=ddd2.Hour+':'+ddd2.Minute+' '+apm2;
+        }
+    }
+
 
     let debugButtons;
 
@@ -745,7 +776,7 @@ hours_am_pmSleep(time) {
                     titleStyle={{ color: this.state.titleBackgroundColor }}
                     onPress={this._showWakeTimePicker}
                     disabled={!this.state.notificationState}
-                    description={resources.culture=='fr'? this.state.waketime +' h':this.state.waketime}
+                    description={wakeDesc}
                     descriptionStyle={styles.descriptionStyle}
                   />
                        {
@@ -772,7 +803,7 @@ hours_am_pmSleep(time) {
                                                                         <TimePickerPane title= {resources.getString("wake_time")} onConfirm={this.onWakeConfirm.bind(this)}
                                                                             onCancel={this.onWakeCancel.bind(this)}
                                                                             cancelLabel={resources.getString("cancel")} confirmLabel={resources.getString("ok")}
-                                                                            initialValue={this.state.waketime}
+                                                                            initialValue={this.state.waketime} is24={is24H}
                                                                          />
                                                                    </Modal>
                                                                   </View>
@@ -796,7 +827,7 @@ hours_am_pmSleep(time) {
                     titleStyle={{ color: this.state.titleBackgroundColor }}
                     onPress={this._showSleepTimePicker}
                     disabled={!this.state.notificationState}
-                    description={resources.culture=='fr'? this.state.sleeptime +' h':this.state.sleeptime}
+                    description={sleepDesc}
                     descriptionStyle={styles.descriptionStyle}
                   />
                          {
@@ -825,7 +856,7 @@ hours_am_pmSleep(time) {
                                                                          onCancel={this.onSleepCancel.bind(this)}
                                                                          cancelLabel={resources.getString("cancel")}
                                                                          confirmLabel={resources.getString("ok")}
-                                                                         initialValue={this.state.sleeptime}
+                                                                         initialValue={this.state.sleeptime} is24={is24H}
                                                                       />
                                                                 </Modal>
                                                                </View>
