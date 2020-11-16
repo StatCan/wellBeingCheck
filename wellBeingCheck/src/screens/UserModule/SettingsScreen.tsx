@@ -713,7 +713,7 @@ hours_am_pmSleep(time) {
                     style={{ margin: 10 }}
                     value={this.state.notificationState}
                     accessible={true}
-                    accessibilityLabel={ 'Notification switch is'+ this.state.notificationState}
+                    accessibilityLabel={ 'Notifications'+ this.state.notificationState}
 
                     onValueChange={() => {
                       this.setState({
