@@ -112,6 +112,11 @@ class AboutScreen extends React.Component<Props, AboutState> {
       faqC5Q3Expanded: false,
       faqC5Q4Expanded: false,
       faqC5Q5Expanded: false,
+
+       //-------Category 6-------//
+       faqC6Expanded: false,
+       faqC6Q1Expanded: false,
+       faqC6Q2Expanded: false,
     };
   }
 
@@ -299,10 +304,35 @@ class AboutScreen extends React.Component<Props, AboutState> {
       faqC5Q5Expanded: !this.state.faqC5Q5Expanded
     });
 
+//-------Category 6-------//
+  _handleFaqC6Expand = () =>
+    this.setState({
+      faqC6Expanded: !this.state.faqC6Expanded
+    });
+
+  _handleFaqC6Q1Expand = () =>
+    this.setState({
+      faqC6Q1Expanded: !this.state.faqC6Q1Expanded
+    });
+
+
   handleUrlPress(url, matchIndex /*: number*/) {
     Linking.openURL(url);
   }
-
+  handleNamePress(name, matchIndex /*: number*/) {
+ //   Alert.alert(`Hello ${name}`);
+    if(name=="Mental Health and Wellness"){
+        Linking.openURL('https://www.canada.ca/en/public-health/topics/mental-health-wellness.html');
+    }else if(name=="Santé mentale et bien-être"){
+        Linking.openURL('https://www.canada.ca/fr/sante-publique/sujets/sante-mentale-et-bien-etre.html');
+    }
+    else  if(name=="Wellness Together Canada"){
+        Linking.openURL('https://ca.portal.gs/');
+    } else  if(name=="Espace mieux-être Canada"){
+             Linking.openURL('https://ca.portal.gs/?lang=fr-ca');
+         }
+     global.resetTimer();
+  }
   handlePhonePress(phone, matchIndex /*: number*/) {
     Linking.openURL('tel:1-877-949-9492');
     //  ('tel:555-867-5309')
@@ -719,8 +749,41 @@ class AboutScreen extends React.Component<Props, AboutState> {
                         </List.Accordion>
                       </List.Accordion>
                     </View>
+                    {/* Category 6 */}
+                                                                          <View style={styles.faqViewAns}>
+                                                                            <List.Accordion
+                                                                              style={styles.faqCategories}
+                                                                              title={resources.getString("faq.category6")}
+                                                                              expanded={this.state.faqC6Expanded}
+                                                                              onPress={this._handleFaqC6Expand}
+                                                                            >
+                                                                              <List.Accordion
+                                                                                title={resources.getString("faq.c6.q1")}
+                                                                                expanded={this.state.faqC6Q1Expanded}
+                                                                                onPress={this._handleFaqC6Q1Expand}
+                                                                                titleNumberOfLines={3}
+                                                                              >
+                                                                                <View>
+                                                                                                           <ParsedText
+                                                                                                             style={styles.faqListItem}
+                                                                                                             parse={
+                                                                                                               [
+                                                                                                                 {pattern: /Mental Health and Wellness|Wellness Together Canada/, style: styles.url, onPress: this.handleNamePress},
+                                                                                                                 {pattern: /Santé mentale et bien-être|Espace mieux-être Canada/, style: styles.url, onPress: this.handleNamePress},
+                                                                                                               ]
+                                                                                                             }
+                                                                                                             childrenProps={{ allowFontScaling: false }}
+                                                                                                           >
+                                                                                                             {resources.getString("faq.c6.q1.a")}
+                                                                                                           </ParsedText>
+                                                                                                         </View>
+                                                                              </List.Accordion>
+                                                                            </List.Accordion>
+                                                                          </View>
                   </List.Accordion>
+
                 </View>
+
               </List.Section>
               <Title style={styles.title}>{resources.getString("about_title")}</Title>
               <View style={styles.content}

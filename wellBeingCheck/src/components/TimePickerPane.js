@@ -11,7 +11,7 @@ export class TimePickerPane extends React.Component {
         console.log(props.is24);
         if(props.is24){
            let ut=this.timeTo24(props.initialValue);
-           console.log('ut.Hour:........>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'+ut.Hour);
+         //  console.log('ut.Hour:........>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>'+ut.Hour);
             let h=ut.Hour;
             let m=ut.Minute-1; if(m<0)m=59;
            this.state = {
@@ -19,7 +19,7 @@ export class TimePickerPane extends React.Component {
               currentMinute:m,
               currentApm:0
               };
-               console.log('state.Hour:'+this.state.currentHour);
+         //      console.log('state.Hour:'+this.state.currentHour);
         }
         else{
             let ut=this.timeToApm(props.initialValue);
@@ -171,17 +171,17 @@ export class TimePickerPane extends React.Component {
       }
     render() {
             let hourViews=[];
-            let mid=this.state.currentHour;console.log('current--------->:'+mid);
+            let mid=this.state.currentHour;  //console.log('current--------->:'+mid);
             if(this.props.is24){
                  for(let j=7;j>=0;j--){
-                       let h=mid-j; console.log(h);
+                       let h=mid-j; //console.log(h);
                        if(h<0)h+=24;
                        hourViews.push(<View key={h} style={{height:height,justifyContent:'center',alignItems:'center'}}><Text key={h} style={{fontSize:24}}>{h}</Text></View>);
                  }
                  for(let j=1;j <6; j++) {
                        let h=mid+j;if(h>=24)h-=24;
 
-console.log(h);
+//console.log(h);
                        hourViews.push(<View key={h} style={{height:height,justifyContent:'center',alignItems:'center'}}><Text key={h} style={{fontSize:24}}>{h}</Text></View>);
                  }
             }

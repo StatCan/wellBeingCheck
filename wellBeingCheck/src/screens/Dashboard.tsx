@@ -156,6 +156,7 @@ class Dashboard extends React.Component<Props, HomeState> {
        setTimeout(() => {
              global.showThankYou = 0;
              this.setState({ showThankYou: false,loaded:false }) }, 5000);
+             Alert.alert('',txt);
     }
     else {
        this.setState({loaded:false})

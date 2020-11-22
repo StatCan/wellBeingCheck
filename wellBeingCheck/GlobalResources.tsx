@@ -356,7 +356,9 @@ export const resources = {
              "faq.c3.q6": "Why am I no longer receiving notifications?",
              "faq.c3.q6.a": "If you have not completed a Well-being Check in the past 4 days, the app will stop sending you notifications. You can start receiving notifications again by pressing START, located on the app homepage, and completing a Well-being Check.\n\n"+
              "Well-being Check will send you notifications for up to 30 days total. After this period is complete, your participation in the study has ended and you will no longer receive notifications.\n\n"+
-             "If neither of these scenarios reflect your situation, please contact us at ",
+             "Your device's Battery Saver Mode may be suppressing notifications from the Well-being Check app. Try changing your settings to remove any battery saving restrictions.\n\n"+
+             "For Android users, the app may stop sending you notifications if you recently restarted your device. You can receive notifications again by pressing START, located on the app homepage, and completing a Well-being Check.\n\n"+
+             "If none of these scenarios reflect your situation, please contact us at ",
 
             //---------------category4---------------
             "faq.category4": "The Results menu",
@@ -390,6 +392,22 @@ export const resources = {
             //category5-Question5
             "faq.c5.q5": "How much data does the app require?",
             "faq.c5.q5.a": "[tbd]",
+ //---------------category6---------------
+            "faq.category6": "Respondent Well-being",
+
+            //category6-Question1
+            "faq.c6.q1": "Looking for well-being resources?",
+             "faq.c6.q1.a":"Please make use of either of the following resources or contact a healthcare professional:\n\n"+
+
+            "Mental Health and Wellness\n\n"+
+            "Mental health and wellness resources compiled by the Government of Canada\n\n"+
+            "Wellness Together Canada\n\n"+
+            "Mental health and substance use support, resources, and counselling with a mental health professional\n\n"+
+            "Adults: Text WELLNESS to 741741\n\n"+
+            "Front Line Workers: Text FRONTLINE to 741741",
+
+
+
 
             "offline":"You are offline, try it later.",
             "securityIssue":"Internal server error, Try again, if same thing would happen again contact StatCan",
@@ -444,6 +462,7 @@ export const resources = {
              "Accessibility.getting_started_title":"Getting Started Page title\n",
              "Accessibility.setting_title":"Parametres titre de la page",
              "Accessibility.passwordInputText":"Password textinput",
+             "Accessibility.graphText":"Contact us and we will send your result information at the end of the survey",
              "Local24":"",
              "Is24hours":"false",
 
@@ -872,8 +891,10 @@ export const resources = {
              //category3-Question6
              "faq.c3.q6": "Pourquoi ne reçois-je plus de notifications?",
              "faq.c3.q6.a": "Si vous n’avez pas effectué de Bilan bien-être au cours des quatre derniers jours, l’application cessera de vous envoyer des notifications. Vous pouvez recommencer à recevoir des notifications en appuyant sur COMMENCER, situé sur la page d’accueil de l’application, et en remplissant un Bilan bien-être.\n\n"+
-             "Le Bilan bien-être vous enverra des notifications pour une durée totale de 30 jours maximum. Au terme de cette période, votre participation à l’enquête est terminée et vous ne recevrez plus de notifications.\n\n"+
-             "Si aucun de ces scénarios ne correspond à votre situation, veuillez nous contacter au ",
+              "Le Bilan bien-être vous enverra des notifications pour une durée totale de 30 jours maximum. Au terme de cette période, votre participation à l’enquête est terminée et vous ne recevrez plus de notifications.\n\n"+
+             "Le mode d’économie d’énergie de votre appareil supprime peut-être les notifications de l’application Bilan bien-être. Essayez de modifier vos paramètres pour supprimer toute restriction relative à l’économie d’énergie.\n\n"+
+             "Si vous utilisez un appareil Android, il se peut que l’application arrête de vous envoyer des notifications si vous avez redémarré votre appareil récemment. Vous pouvez recevoir à nouveau des notifications en appuyant sur COMMENCER, situé sur la page d’accueil de l’application, et en remplissant un Bilan bien-être.\n\n"+
+              "Si aucun de ces scénarios ne correspond à votre situation, veuillez nous contacter au ",
 
             //---------------category4---------------
             "faq.category4": "Le menu Résultats",
@@ -907,6 +928,22 @@ export const resources = {
             //category5-Question5
             "faq.c5.q5": "Combien de données l’application nécessite-t-elle?",
             "faq.c5.q5.a": "[tbd]",
+
+//---------------category6---------------
+            "faq.category6": "Bien-être du répondant",
+
+            //category6-Question1
+            "faq.c6.q1": "Vous cherchez des ressources sur le bien-être?",
+            "faq.c6.q1.a": "N’hésitez pas à utiliser l’une des ressources suivantes ou à communiquer avec un professionnel de la santé:\n\n"+
+            "Santé mentale et bien-être\n\n"+
+            "Ressources sur la santé mentale et le bien-être compilées par le gouvernement du Canada\n\n"+
+            "Espace mieux-être Canada\n\n"+     //
+            "Un service de soutien en matière de santé mentale et d’abus d’alcool ou d’autres drogues, des ressources et des consultations avec un professionnel de la santé mentale\n\n"+
+            "Adultes : Textez MIEUX au 741741\n\n"+
+            "Intervenants de première ligne :Textez FRONTLINE au 741741",
+
+
+
 
             "offline":"Vous êtes hors ligne, essayez-le plus tard.",
             "securityIssue":"Erreur de serveur interne, essayez à nouveau, si la même chose se reproduit, contactez StatCan",
@@ -960,6 +997,7 @@ export const resources = {
                "Accessibility.getting_started_title":"Pour commencer titre de la page",
                "Accessibility.setting_title":"Parametres titre de la page",
                "Accessibility.passwordInputText":"Saisir le mot de passe",
+               "Accessibility.graphText":"Contactez-nous et nous vous enverrons vos informations de résultat à la fin de l'enquête",
                "Local24":"en_GB",
                "Is24hours":"true",
 
