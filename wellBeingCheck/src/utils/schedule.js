@@ -1022,11 +1022,13 @@ the algorithm will not arrange any notification for the time which has been pass
                }
        });
       let dt=new Date(warningDate);
-      let warningNotificationId=await setupWarning(dt,title,lastMessage);
-      AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());
-      global.warningDate=dt;
-      global.warningNotificationId=warningNotificationId;
-      console.log('warning notification:'+warningNotificationId);
+      if(dt>new Date()){
+          let warningNotificationId=await setupWarning(dt,title,lastMessage);
+               AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());
+               global.warningDate=dt;
+               global.warningNotificationId=warningNotificationId;
+               console.log('warning notification:'+warningNotificationId);
+      }
       global.sendouts=sendouts; AsyncStorage.setItem('Sendouts', sendouts);
       }
  }
