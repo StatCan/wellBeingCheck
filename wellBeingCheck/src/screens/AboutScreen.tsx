@@ -649,7 +649,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                               </Text>
                               <Text style={styles.faqPhone} 
                                 onPress={() => Linking.openURL('tel:18779499492')}>
-                                1-877-949-9492
+                                1-877-949-9492.
                             </Text>
                             </Text>
                           </View>
