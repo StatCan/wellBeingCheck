@@ -129,11 +129,7 @@ printLogo=()=>{
               onPress={this.printLogo}>
               <Text style={styles.btnText}>Info</Text>
         </Button>
-         <Button style={styles.btnNext}
-              mode="contained"
-              onPress={this.printLog}>
-              <Text style={styles.btnText}>Log</Text>
-        </Button>
+
         <Button style={styles.btnNext}
           mode="contained"
           onPress={this._onNextBtnHandle}>

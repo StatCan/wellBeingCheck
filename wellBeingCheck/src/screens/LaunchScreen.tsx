@@ -261,8 +261,8 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
              if(cont){
               global.sendouts='App Updated,All schedule should be kept';AsyncStorage.setItem('Sendouts', sendouts);
                          //reschedule here,    due to cancelAllNotification only works for current version, so it will duplicate, so after test disable sendNotificationList
-                         Notifications.cancelAllScheduledNotificationsAsync();
-                         sendNotificationList();
+//                         Notifications.cancelAllScheduledNotificationsAsync();
+//                         sendNotificationList();
              }
             else{
              global.sendouts='App Updated,but schedule is not alowed';AsyncStorage.setItem('Sendouts', sendouts);

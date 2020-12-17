@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Text, View, ScrollView, StyleSheet, TouchableOpacity, Dimensions, Image, ImageBackground, InteractionManager, AsyncStorage, PanResponder, Alert,ActivityIndicator } from 'react-native';
+import { Text, View, ScrollView, StyleSheet, TouchableOpacity, Dimensions, Image, ImageBackground, InteractionManager, AsyncStorage, PanResponder, Alert,ActivityIndicator,Linking } from 'react-native';
 import { Provider as PaperProvider, Title } from 'react-native-paper';
 import Button from '../../components/Button';
 import { resources } from '../../../GlobalResources';
@@ -233,7 +233,7 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
                 {this.state.images.map((item, index) => (
                   <View onLayout={this._onLayout.bind(this)} style={{ height: this.state.height }} key={index}>
                     <Image source={{ uri: item }} style={{ width: this.state.width, height: this.state.height - 60, resizeMode: 'stretch' }}
-                    accessibilityLabel={resources.getString("Accessibility.graphText")}
+                    accessibilityLabel={resources.getString("Accessibility.graphText")} accessibilityRole="link" onPress={() => Linking.openURL("https://www.google.com")}
                     accessible={true}
                     />
                   </View>
@@ -243,6 +243,7 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
           </View>
         </ImageBackground>
         <NavigationEvents onDidFocus={() =>{this.loadImage();this.setState({ title: resources.getString("Your feelings")});}} />
+
         <Button style={styles.btnNext}
           mode="contained"
           onPress={() => {
@@ -307,8 +308,26 @@ const styles = StyleSheet.create({
     marginLeft: 20, backgroundColor: 'white'
   },
   smallDot: { fontSize: 16, color: 'black', marginLeft: 5, marginRight: 5 },
-  bigDot: { fontSize: 34, color: 'lightblue', marginLeft: 5, marginRight: 5 }
+  bigDot: { fontSize: 34, color: 'lightblue', marginLeft: 5, marginRight: 5 },
+  hidden: {
+      width: 0,
+      height: 0,
+    }
 });
 
 export default memo(UserResultsScreen);
 //                /*<Image source={require('../../assets/ic_wbc_info.png')} style={{ width: 30, height: 30 }} /> */
+
+// <View style={styles.hidden}>
+//           <Text accessible={true} accessibilityRole="link" onPress={() => Linking.openURL("https://www.google.com")}> Here is a link </Text>
+//                          <Text style={styles.content_title}
+//                          accessible={true}
+//                          accessibilityRole='header'
+//                          accessibilityLabel={resources.getString("contactus_email")}
+//                          >{resources.getString("contactus_email")}</Text>
+//                          <TouchableOpacity onPress={() => Linking.openURL('mailto: STATCAN.wellbeingcheck-bilanbien-etre.STATCAN@canada.ca')}>
+//                            <Text
+//                            style={styles.text}
+//                            >STATCAN.wellbeingcheck-bilanbien-etre.STATCAN@canada.ca</Text>
+//                            </TouchableOpacity>
+//          </View>

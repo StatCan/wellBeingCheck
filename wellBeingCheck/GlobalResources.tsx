@@ -462,7 +462,7 @@ export const resources = {
              "Accessibility.getting_started_title":"Getting Started Page title\n",
              "Accessibility.setting_title":"Parametres titre de la page",
              "Accessibility.passwordInputText":"Password textinput",
-             "Accessibility.graphText":"Contact us and we will send your result information at the end of the survey",
+             "Accessibility.graphText":"The 'Results' section of the Well-being Check contains summaries of your responses to the questionnaire. There is a snapshot of your overall self-rated feelings, and three bar charts that display a summary of your feelings by location, activity, and who you are with. If your screen reader cannot read these results, we would be happy to send them to you in a different format. Please contact Statistics Canada at STATCAN.wellbeingcheck-bilanbien-etre.STATCAN@canada.ca with your name and postal code as entered in the first well-being check you completed.",
              "Local24":"",
              "Is24hours":"false",
 
@@ -997,7 +997,7 @@ export const resources = {
                "Accessibility.getting_started_title":"Pour commencer titre de la page",
                "Accessibility.setting_title":"Parametres titre de la page",
                "Accessibility.passwordInputText":"Saisir le mot de passe",
-               "Accessibility.graphText":"Contactez-nous et nous vous enverrons vos informations de résultat à la fin de l'enquête",
+               "Accessibility.graphText":"La section des résultats du Bilan bien-être contient des sommaires de vos réponses au questionnaire. On y trouve un aperçu de vos sentiments généraux autoévalués, ainsi que trois graphiques à barres qui affichent un sommaire de vos sentiments selon votre emplacement, l’activité que vous faites et avec qui vous vous trouvez. Si votre lecteur d’écran n’arrive pas à lire ces résultats, nous pouvons vous les envoyer dans un autre format. Veuillez écrire à Statistique Canada à l’adresse STATCAN.wellbeingcheck-bilanbien-etre.STATCAN@canada.ca en indiquant votre nom et votre code postal comme vous les avez entrés dans le premier Bilan bien-être que vous avez rempli.",
                "Local24":"en_GB",
                "Is24hours":"true",
 

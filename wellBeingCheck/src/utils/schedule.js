@@ -389,8 +389,10 @@ export async function setupSchedules(affectCurrent=false){
                if(schedules.length>0){
                    //v1.4.7
                    //  schedules=updateSchedulesList(schedules,currentDateTime);  //combine first and then setup schedule, will make duplicated, move this line after setup schedule
-                      cancellAllSchedules();
-                     schedules=updateSchedulesList(schedules,currentDateTime);
+
+//                      cancellAllSchedules();
+//                     schedules=updateSchedulesList(schedules,currentDateTime);
+
                      if(global.warningNotificationId!=null) cancelSchedule(global.warningNotificationId);
                       schedules.forEach(async function(s,index){
                            let cont = true;
@@ -406,7 +408,7 @@ export async function setupSchedules(affectCurrent=false){
                            let notificationId=await setupNotification(ss,title,message);
                            console.log('notificationId:'+notificationId+'->'+ss.toString());sendouts+=notificationId+':'+ss.toString()+'\r\n';
                       });
-                   //   schedules=updateSchedulesList(schedules,currentDateTime); //Move to here   v1.4.7
+                     schedules=updateSchedulesList(schedules,currentDateTime); //Move to here   v1.4.10
                      let dt=new Date(day5);dt.setHours(sleep-2);
                      let warningNotificationId=await setupWarning(dt,title,lastMessage);
                      AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());
@@ -420,7 +422,7 @@ export async function setupSchedules(affectCurrent=false){
             }
         }
         else{
-             if(today>global.lastDate)return;
+             if(today>global.lastDate){console.log('out of 30 days');return;}
              console.log('Current is NOT in schedules');
              let days = getFollowingDays(currentDateTime,lastDate,true, 4, false);
              let day5=getNextDay(currentDateTime);
