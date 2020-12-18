@@ -25,11 +25,11 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.statcan.wellbeingcheck",
-      "buildNumber": "2.3.3"
+      "buildNumber": "2.3.4"
     },
     "android": {
       "package": "com.statcan.wellbeingcheck",
-      "versionCode": 45
+      "versionCode": 46
     }
   }
 }

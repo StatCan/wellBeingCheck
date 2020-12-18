@@ -498,7 +498,7 @@ the algorithm will not arrange any notification for the time which has been pass
          if (awakeHour <= sleepHour) {
              for (var i = awakeHour; i < sleepHour; i++) {
                  var dt = new Date(date); dt.setMinutes(0); dt.setSeconds(0); dt.setMilliseconds(0); dt.setHours(i);
-                 if (dt < current) continue;   //if this interval has already passed, no neeed to schedule
+                 if (dt < current) continue;   //if this interval has already passed, no neeed to schedule.  // Later,may need current+1Hour, in case too close to survey B
                  var found = primeTimeAwakeIntervals.find(function (element) {
                      return element.awakeHour == i;
                  });
