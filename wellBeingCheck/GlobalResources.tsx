@@ -360,6 +360,10 @@ export const resources = {
              "For Android users, the app may stop sending you notifications if you recently restarted your device. You can receive notifications again by pressing START, located on the app homepage, and completing a Well-being Check.\n\n"+
              "If none of these scenarios reflect your situation, please contact us at ",
 
+             //category3-Question7
+              "faq.c3.q7": "Why am I receiving duplicate notifications?",
+              "faq.c3.q7.a": "If Statistics Canada is forced to perform an update to the Well-being Check App during your participation in this study, there is a chance that you will receive duplicate notifications for up to four days. If you experience this, there is no need to respond to the questionnaire two times in a row.",
+
             //---------------category4---------------
             "faq.category4": "The Results menu",
 
@@ -391,7 +395,7 @@ export const resources = {
 
             //category5-Question5
             "faq.c5.q5": "How much data does the app require?",
-            "faq.c5.q5.a": "[tbd]",
+            "faq.c5.q5.a": "If you are not connected to Wi-Fi and choose to use mobile data to complete a Well-being Check, the first Well-Being Check will use approximately 1 MB. Subsequent Well-Being Checks will use less than 0.8 MB. Viewing your dashboard will use approximately 0.5 MB. Receiving notifications does not use any data.",
  //---------------category6---------------
             "faq.category6": "Respondent Well-being",
 
@@ -896,6 +900,11 @@ export const resources = {
              "Si vous utilisez un appareil Android, il se peut que l’application arrête de vous envoyer des notifications si vous avez redémarré votre appareil récemment. Vous pouvez recevoir à nouveau des notifications en appuyant sur COMMENCER, situé sur la page d’accueil de l’application, et en remplissant un Bilan bien-être.\n\n"+
               "Si aucun de ces scénarios ne correspond à votre situation, veuillez nous contacter au ",
 
+//category3-Question7
+              "faq.c3.q7": "Pourquoi est-ce que je reçois des avis en double?",
+              "faq.c3.q7.a": "Si Statistique Canada doit mettre à jour l’application Bilan bien-être pendant que vous participez à cette étude, il est possible que vous receviez des avis en double pendant un maximum de quatre jours. Si cette situation se produit, il n’est pas nécessaire de remplir le questionnaire deux fois d’affilée.",
+
+
             //---------------category4---------------
             "faq.category4": "Le menu Résultats",
 
@@ -927,7 +936,7 @@ export const resources = {
 
             //category5-Question5
             "faq.c5.q5": "Combien de données l’application nécessite-t-elle?",
-            "faq.c5.q5.a": "[tbd]",
+            "faq.c5.q5.a": "Si vous utilisez des données mobiles au lieu d’une connexion WiFi pour remplir le Bilan bien-être, le premier bilan utilisera environ 1 Mo. Les bilans suivants utiliseront moins de 0,8 Mo. La visualisation de votre tableau de bord nécessitera environ 0,5 Mo. La réception d’avis ne nécessite aucune donnée.",
 
 //---------------category6---------------
             "faq.category6": "Bien-être du répondant",

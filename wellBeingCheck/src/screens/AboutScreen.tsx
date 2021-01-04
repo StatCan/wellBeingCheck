@@ -654,6 +654,22 @@ class AboutScreen extends React.Component<Props, AboutState> {
                             </Text>
                           </View>
                         </List.Accordion>
+
+
+                        <List.Accordion
+                                                  title={resources.getString("faq.c3.q7")}
+                                                  expanded={this.state.faqC3Q7Expanded}
+                                                  onPress={this._handleFaqC3Q7Expand}
+                                                  titleNumberOfLines={3}
+                                                >
+                                                  <View>
+                                                    <Text style={styles.faqListItem}>
+                                                      {resources.getString("faq.c3.q7.a")}
+                                                    </Text>
+                                                  </View>
+                                                </List.Accordion>
+
+
                       </List.Accordion>
                     </View>
 
