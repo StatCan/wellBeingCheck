@@ -24,6 +24,7 @@ type AboutState = {
   faqC1Q3Expanded: boolean,
   faqC1Q4Expanded: boolean,
   faqC1Q5Expanded: boolean,
+  faqC1Q6Expanded: boolean,
 
   //-------Category 2-------//
   faqC2Expanded: boolean,
@@ -80,6 +81,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
       faqC1Q3Expanded: false,
       faqC1Q4Expanded: false,
       faqC1Q5Expanded: false,
+      faqC1Q6Expanded: false,
 
       //-------Category 2-------//
       faqC2Expanded: false,
@@ -186,6 +188,12 @@ class AboutScreen extends React.Component<Props, AboutState> {
     this.setState({
       faqC1Q5Expanded: !this.state.faqC1Q5Expanded
     });
+     _handleFaqC1Q6Expand = () =>
+        this.setState({
+          faqC1Q6Expanded: !this.state.faqC1Q6Expanded
+        });
+
+
   //-------Category 2-------//
 
   _handleFaqC2Expand = () =>
@@ -455,6 +463,18 @@ class AboutScreen extends React.Component<Props, AboutState> {
                             </ParsedText>
                           </View>
                         </List.Accordion>
+
+                       <List.Accordion
+                          title={resources.getString("faq.c1.q6")}
+                          expanded={this.state.faqC1Q6Expanded}
+                          onPress={this._handleFaqC1Q6Expand}
+                          titleNumberOfLines={4}
+                        >
+                          <View style={styles.faqListItem}>
+                            <Text>{resources.getString("faq.c1.q6.a")}</Text>
+                          </View>
+                        </List.Accordion>
+
 
                         <List.Accordion
                           title={resources.getString("faq.c1.q5")}

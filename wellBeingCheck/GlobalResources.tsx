@@ -294,6 +294,10 @@ export const resources = {
             "faq.c1.q5": "How long will it take me to complete the study?",
             "faq.c1.q5.a": "Daily Well-being Checks should take about 2 minutes to complete. You can choose how many times to participate each day by customizing the number of notifications you will receive in the settings menu. We are asking you to participate in the study for one month.",
 
+//category1-Question6
+            "faq.c1.q6": "Why are some things that are prohibited due to COVID-19 restrictions included as potential responses to questions in this survey?",
+            "faq.c1.q6.a": "Some of the response categories to the questions ‘Where are you?’, ‘What are you doing?’, or ‘Who are you with?’ may go against COVID-19 restrictions in your region. They have still been included because provincial and municipal responses to the pandemic vary and may be adjusted throughout the survey collection period. Additionally, many activities that used to be only available in-person are now being conducted virtually. For example, you might be visiting a museum through an online exhibit while still being at your own home.",
+
             //---------------category2---------------
             "faq.category2": "Privacy and confidentiality",
 
@@ -833,6 +837,12 @@ export const resources = {
             //category1-Question5
             "faq.c1.q5": "Combien de temps me faudra-t-il pour terminer l’enquête?",
             "faq.c1.q5.a": "Le Bilan bien-être devrait prendre environ 2 minutes à remplir. Vous pouvez choisir le nombre de fois que vous souhaitez participer chaque jour en personnalisant le nombre de notifications que vous recevrez dans le menu des paramètres. Nous vous demandons de participer à l’étude pendant un mois.",
+
+//category1-Question6
+            "faq.c1.q6": "Pourquoi certaines choses interdites en raison des restrictions liées à la COVID-19 sont-elles incluses comme réponses possibles aux questions de cette enquête?",
+            "faq.c1.q6.a": "Certaines catégories de réponse aux questions « Où êtes-vous? », « Que faites-vous? » ou « Avec qui êtes-vous? » peuvent aller à l’encontre des restrictions liées à la COVID-19 dans votre région. Elles ont quand même été incluses parce que les mesures prises par les provinces et les municipalités en réponse à la pandémie varient et peuvent être ajustées tout au long de la période de collecte de l’enquête. De plus, de nombreuses activités autrefois offertes en personne seulement ont maintenant lieu virtuellement. Par exemple, vous pourriez visiter un musée au moyen d’une exposition en ligne sans quitter votre domicile.",
+
+
 
             //---------------category2---------------
             "faq.category2": "Vie privée et confidentialité",
