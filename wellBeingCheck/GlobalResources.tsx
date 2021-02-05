@@ -326,13 +326,13 @@ export const resources = {
             //category2-Question6
             "faq.c2.q6": "How is my data stored and transmitted? How will my data be protected?",
             "faq.c2.q6.a": "The Well-being Check app fully complies with all privacy and security regulations in place to protect Canadians’ information.\n\n"+
-            "Well-being Check uses Statistics Canada’s Electronic Collection Portal to collect your responses. No data from the app is stored on your device after you submit it. For more information about the security features in place to protect your data, please visit [tobe updated] http://www.statcan.gc.ca.",
+            "Well-being Check uses Statistics Canada’s Electronic Collection Portal to collect your responses. For more information about the security features in place to protect your data, please visit https://surveys-enquetes.statcan.gc.ca/en/faq/security-securite.html.",
             
             //category2-Question7
             "faq.c2.q7": "I want to stop participating in this study",
             "faq.c2.q7.a": "If you want to stop participating in the study at any point, you can turn off notifications in the settings menu or delete the app from your device.",
-          
-            
+
+
             //---------------category3--------------- 
             "faq.category3": "Settings and notifications",
 
@@ -872,7 +872,7 @@ export const resources = {
             //category2-Question6
             "faq.c2.q6": "Comment mes données sont-elles stockées et transmises? Comment mes données seront-elles protégées?",
             "faq.c2.q6.a": "L’application Bilan bien-être est entièrement conforme à toutes les réglementations en matière de protection de la vie privée et de sécurité mises en place pour protéger les informations des Canadiens.\n\n"+
-            "Le Bilan bien-être utilise le portail de collecte électronique de Statistique Canada pour recueillir vos réponses. Aucune donnée de l’application n’est stockée sur votre appareil après que vous les avez soumises. Pour plus d’informations sur les dispositifs de sécurité mis en place pour protéger vos données, veuillez consulter [à mettre à jour] http://www.statcan.gc.ca.",
+            "Le Bilan bien-être utilise le portail de collecte électronique de Statistique Canada pour recueillir vos réponses. Pour plus d’informations sur les dispositifs de sécurité mis en place pour protéger vos données, veuillez consulter https://surveys-enquetes.statcan.gc.ca/fr/faq/security-securite.html.",
             
             //category2-Question7
             "faq.c2.q7": "Je ne veux plus participer à cette enquête",
