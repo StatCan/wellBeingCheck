@@ -253,7 +253,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
       else
         uri = global.surveyAUrlFre;
     }
-    console.log('Beofore eq:' + uri);
+    console.log('Beofore eq:============================================' + uri+'   global.doneSurveyA:======='+global.doneSurveyA);
     let userAgent = Platform.OS == 'ios' ? 'Apple DeviceId/' + global.userToken : 'Android DeviceId/' + global.userToken; console.log('EQ userAgent' + userAgent);
     return (
       <View
