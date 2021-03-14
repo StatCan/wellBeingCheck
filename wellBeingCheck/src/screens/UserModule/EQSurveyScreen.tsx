@@ -49,6 +49,7 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
   }
 
   async handleSurveyAdone(){
+   if (global.notificationState)setupSchedules();
      let isConnected=await checkConnection();
      if(!isConnected){Alert.alert('',resources.getString('offline'));return;}
      let jwt=await fetchJwToken();  console.log('Token:'+jwt);
@@ -60,11 +61,11 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
      global.passwordSaved=true;AsyncStorage.setItem('PasswordSaved','true');
      count=1;
      global.fetchAction=false;
-      if (global.notificationState)setupSchedules();
      await this.saveDefaultParadata(jwt);
      global.surveyCount=1;AsyncStorage.setItem('SurveyCount','1');
  }
   async handleSurveyBdone(){
+    if (global.notificationState)setupSchedules(false);
      let isConnected=await checkConnection();console.log('In handle B');global.busy=0;
      if(!isConnected){Alert.alert('',resources.getString('offline'));return;}
      if(!global.passwordSaved && global.sac!=''){
@@ -79,12 +80,12 @@ export default class EQSurveyScreen extends React.Component<Props, ScreenState> 
      let types=await fetchGraphTypes();console.log(types);  // let types=await this.fetchGraphTypes();console.log(types);
      if(types!=null && types.length>0){
           await fetchGraphs(types,deviceWidth,deviceHeight);  // await this.fetchGraphs(types);
+          AsyncStorage.setItem('hasImage','1');global.hasImage=1;
      }
-     count=1;AsyncStorage.setItem('hasImage','1');global.hasImage=1;
+     count=1;
      // Save Survey B Done State
      AsyncStorage.setItem('doneSurveyB','true');
      global.fetchAction=false;
-      if (global.notificationState)setupSchedules(false);
      if(!global.paradataSaved)await this.saveDefaultParadata(jwt);
      global.loading=false;
      this.props.navigation.navigate('Dashboard');

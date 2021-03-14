@@ -1,15 +1,15 @@
 {
-  "name": "Well-being Check",
-  "displayName": "Well-being Check",
+  "name": "Well-being Check | Bilan bien-être",
+  "displayName": "Well-being Check | Bilan bien-être",
   "expo": {
     "androidStatusBar": {
       "backgroundColor": "#000000"
     },
-    "name": "Well-being Check",
+    "name": "Well-being Check | Bilan bien-être",
     "slug": "wellBeingCheck",
     "privacy": "unlisted",
     "sdkVersion": "36.0.0",
-    "version": "1.4.15",
+    "version": "1.4.16",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -25,11 +25,11 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.statcan.wellbeingcheck",
-      "buildNumber": "2.3.6"
+      "buildNumber": "2.3.7"
     },
     "android": {
       "package": "com.statcan.wellbeingcheck",
-      "versionCode": 48
+      "versionCode": 49
     }
   }
 }
