@@ -240,6 +240,7 @@ export const resources = {
             "How you are feeling with others help": "This is your feeling with others",
             "How you are feeling by activity help": "This is your feeling by activity",
             "Your feeling help": "All questions about feelings are based on a scale of 0 meaning ‘not at all’, and 10 meaning ’completely’. Based on this, a high rating of feeling happy compared to a high rating of feeling anxious would be interpreted quite differently.\n\nThese results are reported in real time and have not been validated by Statistics Canada. Caution should be exercised when interpreting the data.",
+            "wellbeing resource":"https://www.statcan.gc.ca/eng/survey/household/5333#a13",
 
             "notifications": "Notifications",
             "wake_time": "Do not disturb before",
@@ -782,7 +783,7 @@ export const resources = {
             "How you are feeling with others help": "C'est votre sentiment avec les autres",
             "How you are feeling by activity help": "C'est votre sentiment par activité",
             "Your feeling help": "Toutes les questions relatives aux sentiments sont évaluées sur une échelle de 0 à 10, où 0 signifie « pas du tout » et 10 signifie « complètement ». En fonction de cette échelle, une cote élevée de sentiment de bonheur par rapport à une cote élevée de sentiment d’anxiété serait interprétée de manière très différente.\n\nCes résultats sont communiqués en temps réel et n’ont pas été validés par Statistique Canada. Il convient d’être prudent lors de l’interprétation des données.",
-
+            "wellbeing resource":"https://www.statcan.gc.ca/fra/enquete/menages/5333#a13",
             //Login screen
             "login.forgot_password": "Mot de passe oublié?",
             "login.login": "Entrer",

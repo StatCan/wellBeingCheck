@@ -147,6 +147,7 @@ async onTestD(){
                 <TouchableOpacity
                   onPress={() => this.toggleLanguage()}
                   accessible={true}
+                  accessibilityLabel={resources.getString("Language")}
                   accessibilityRole="button"
                   accessibilityHint="language toggle"
                 >

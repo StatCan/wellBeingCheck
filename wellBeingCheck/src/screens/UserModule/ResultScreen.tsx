@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Text, View, ScrollView, StyleSheet, TouchableOpacity, Dimensions, Image, ImageBackground, InteractionManager, AsyncStorage, PanResponder, Alert,ActivityIndicator,Linking } from 'react-native';
+import { Text, View, ScrollView, StyleSheet, TouchableOpacity, Dimensions, Image, ImageBackground, InteractionManager, AsyncStorage, PanResponder, Alert,ActivityIndicator,Linking,Modal} from 'react-native';
 import { Provider as PaperProvider, Title } from 'react-native-paper';
 import Button from '../../components/Button';
 import { resources } from '../../../GlobalResources';
@@ -31,7 +31,7 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
       picture1Base64: null,
       images: [], current: 0, title: resources.getString("Your feelings"),
       helpText: resources.getString("Your feeling help"),
-      width: 0, height: 0,loaded:false
+      width: 0, height: 0,loaded:false,showPopup:false
     };
     global.currentView = 1;
     this.loadingrepeatcheck=this.loadingrepeatcheck.bind(this);
@@ -163,8 +163,7 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
   }
 
   helpClick() {
-  //  Alert.alert('', this.state.helpText);
-  Alert.alert('',  resources.getString("Your feeling help"));
+        this.setState({showPopup:!this.state.showPopup});
   }
 
   render() {
@@ -221,7 +220,51 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
                 style={{ marginRight: 5, marginTop: 5 }}>
                  <AntDesign name="questioncircle" size={30} style={{color:'#918196',marginRight:5}} color="black" />
               </TouchableOpacity>
+
+
+
+
             </View>
+
+            <View style={styles.centeredView}>
+                                <Modal
+                                  animationType="none"
+                                  transparent={true}
+                                  visible={this.state.showPopup}
+                                  onRequestClose={() => {
+                                   // Alert.alert('Modal has been closed.');
+                                  }}>
+                                  <View style={styles.centeredView}>
+                                    <View style={styles.modalView}>
+                                      <Text style={styles.modalText}
+                                         accessible={true}
+                                         accessibilityRole='header'
+                                         accessibilityLabel={resources.getString("Your feeling help")}>{resources.getString("Your feeling help")}</Text>
+                                       <TouchableOpacity onPress={() => Linking.openURL(resources.getString("wellbeing resource"))}>
+                                                          <Text style={styles.text}
+                                                            accessible={true}
+                                                            accessibilityRole='link'
+                                                            accessibilityLabel={resources.getString("faq.c6.q1")}
+                                                          >{resources.getString("faq.c6.q1")}</Text>
+                                       </TouchableOpacity>
+                                      <TouchableOpacity
+                                        style={{ ...styles.openButton}}
+                                        onPress={() => {
+                                          this.helpClick();
+                                        }}>
+                                        <Text style={styles.textStyle}
+                                             accessible={true}
+                                             accessibilityRole='button'
+                                             accessibilityLabel={resources.getString("ok")}
+                                         >
+                                        {resources.getString("ok")}</Text>
+                                      </TouchableOpacity>
+                                    </View>
+                                  </View>
+                                </Modal>
+                              </View>
+
+
              {(this.state.loaded) ? null : <ActivityIndicator size="large" color="lightblue" style={{ position: 'absolute', top: '50%', left: '50%', zIndex: 20 }} />}
             <View style={{}} >
               <ScrollView horizontal showsHorizontalScrollIndicator={false} ref={ref => { this.sv = ref; }}
@@ -312,7 +355,46 @@ const styles = StyleSheet.create({
   hidden: {
       width: 0,
       height: 0,
-    }
+    },
+   centeredView: {
+       flex: 1,
+       justifyContent: 'center',
+       alignItems: 'center',
+       marginTop: 22,
+     },
+     modalView: {
+       margin: 20,
+       backgroundColor: 'white',
+       borderRadius: 4,
+       padding: 35,
+     //  alignItems: 'center',
+       shadowColor: '#000',
+       shadowOffset: {
+         width: 0,
+         height: 2,
+       },
+       shadowOpacity: 0.25,
+       shadowRadius: 3.84,
+       elevation: 5,
+     },
+     openButton: {
+    //   backgroundColor: 'lightblue',
+    //   borderColor:'white',
+   //    borderRadius: 2,
+
+       padding: 10,
+       elevation: 2,
+     },
+     textStyle: {
+       color: 'blue', fontSize:14,
+     //  fontWeight: 'bold',
+       textAlign: 'center',
+     },
+     modalText: {
+       marginBottom: 15,
+    //   textAlign: 'center',
+     }
+
 });
 
 export default memo(UserResultsScreen);
