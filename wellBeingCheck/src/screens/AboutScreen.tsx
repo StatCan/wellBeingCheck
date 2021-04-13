@@ -1241,6 +1241,7 @@ const styles = StyleSheet.create({
   scrollView: {
     width: '100%',
     // marginHorizontal: 20,
+    paddingRight:10
   },
   paragraph: {
     alignSelf: 'baseline',
