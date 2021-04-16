@@ -51,7 +51,7 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
         this.setState({ images: newArray });
       }
       else {
-        // do something else
+        Alert.alert('', resources.getString("GraphNotAvailable"));
       }
     })
     imageId = 'image2'; if (resources.culture == 'fr') imageId = 'image3';

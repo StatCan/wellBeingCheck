@@ -167,8 +167,8 @@ cancelTimeHandler(time) {
 
     // console.log("get the time substring missing the PM after substring time.substring(0, 5); "+time);
     // TODO: we need to change the validation if this is am-pm
-    //  let valid = validateSetting(this.state.waketime, time, this.state.notificationcount);
-     let valid = 0;
+      let valid = validateSetting(this.state.waketime, time, this.state.notificationcount);
+   //  let valid = 0;
      console.log('validate:------->' + valid);
      if (valid != 0){Alert.alert('', resources.getString("settingValidation"));return;}
 

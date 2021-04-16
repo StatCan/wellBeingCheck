@@ -131,7 +131,7 @@ export async function fetchImage(url, index, culture) {
               var reader = new FileReader();
               reader.onload = function () {
                 ++global.busy;
-            //    console.log('image' + index); console.log("Busy flag in eq:"+global.busy);
+              //  console.log('********************image' + index); console.log("Busy flag in eq:"+global.busy);
                 AsyncStorage.setItem('image' + index, this.result);
               };
               reader.readAsDataURL(blob);

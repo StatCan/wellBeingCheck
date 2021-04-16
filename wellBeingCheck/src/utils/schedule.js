@@ -356,7 +356,7 @@ export async function setupSchedules(affectCurrent=false){
                     AsyncStorage.setItem('WarningDate',dt.toString());global.warningDate=dt;
                     global.warningNotificationId=warningNotificationId;
                     console.log('warning notification:'+warningNotificationId);
-
+                  //  let dt1=new Date();  dt1.setMinutes(dt1.getMinutes()+1);let testid=await setupWarning(dt1,title,lastMessage);console.log('testid========='+testid);   //Test only
                   //  AsyncStorage.setItem('Schedules',JSON.stringify(schedules)); global.schedules=schedules;
                   updatePreScheduleList(schedules,currentDateTime,false);
                 }

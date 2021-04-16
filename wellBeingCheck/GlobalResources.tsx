@@ -252,6 +252,7 @@ export const resources = {
             "ThankYouA": "Thank you for checking in!",
             "ThankYouB": "Thank you, now check out your results!",
             "NoDataAlert": "Results will become available once you complete two well-being checks.",
+            "GraphNotAvailable":"The result maybe not ready due to the slow server response.",
             "Enter password": "Enter password",
             "Well-Being Check": "Well-being Check",
 
@@ -800,6 +801,7 @@ export const resources = {
             "ThankYouA": "Merci d’avoir rempli le bilan!",
             "ThankYouB": "Merci, voyez maintenant vos résultats!",
             "NoDataAlert": "Les résultats seront disponibles lorsque vous aurez rempli deux bilans bien-être.",
+            "GraphNotAvailable":"Le résultat n'est peut-être pas prêt en raison de la lenteur de la réponse du serveur.",
             "Enter password": "Entrer un mot de passe",
             "Well-Being Check": "Bilan bien-être",
             "Forgot your password": "Mot de passe oublié?",

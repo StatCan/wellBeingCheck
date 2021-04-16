@@ -40,7 +40,7 @@ class ContactUsScreen extends React.Component<Props> {
     this.props.navigation.navigate('Dashboard');
   }
 printLogo=()=>{
-        alert('Scheduled:\r\n'+global.sendouts);
+        alert('Scheduled:\r\n'+global.sendouts+'\r\nIndicator:'+global.busy);
  }
  printLog=()=>{
          alert('Sys Log:\r\n'+global.syslog);
@@ -119,6 +119,27 @@ printLogo=()=>{
                   <Text style={styles.text}>{resources.getString("contactus_text")}
                   </Text>
                 </View>
+
+
+                <View style={styles.content}>
+                                  <Text style={styles.content_title}
+                                   accessible={true}
+                                   accessibilityRole='header'
+                                   accessibilityLabel={resources.getString("contactus_website")}
+                                  >Message</Text>
+                                  <TouchableOpacity onPress={() => Linking.openURL('sms:6134158507')}
+
+                                  >
+                                    <Text style={styles.text}
+                                      accessible={true}
+                                      accessibilityRole='link'
+                                      accessibilityLabel='https://www.statcan.gc.ca'
+                                    >(613)415-8507</Text>
+                                  </TouchableOpacity>
+                                </View>
+
+
+
               </View>
             </ScrollView>
           </SafeAreaView>
