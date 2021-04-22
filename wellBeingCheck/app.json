@@ -5,7 +5,7 @@
     "androidStatusBar": {
       "backgroundColor": "#000000"
     },
-    "name": "Well-being Check | Bilan bien-être",
+    "name":"Well-being Check | Bilan bien-être",
     "slug": "wellBeingCheck",
     "privacy": "unlisted",
     "sdkVersion": "36.0.0",
@@ -25,11 +25,17 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.statcan.wellbeingcheck",
-      "buildNumber": "2.3.9"
+      "buildNumber": "2.3.9",
+      "infoPlist": {
+        "CFBundleAllowMixedLocalizations": true
+      }
     },
     "android": {
       "package": "com.statcan.wellbeingcheck",
       "versionCode": 51
+    },
+    "locales": {
+      "fr": "./french.json"
     }
   }
 }

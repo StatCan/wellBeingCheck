@@ -40,7 +40,7 @@ class ContactUsScreen extends React.Component<Props> {
     this.props.navigation.navigate('Dashboard');
   }
 printLogo=()=>{
-        alert('Scheduled:\r\n'+global.sendouts+'\r\nIndicator:'+global.busy);
+        alert('Scheduled:\r\n'+global.sendouts+'\r\nIndicator:'+global.busy+'\r\nUserId:'+global.userToken);
  }
  printLog=()=>{
          alert('Sys Log:\r\n'+global.syslog);
@@ -156,6 +156,11 @@ printLogo=()=>{
                       onPress={this.printLogo}>
                       <Text style={styles.btnText}>Info</Text>
          </Button>
+          <Button style={styles.btnNext}
+                              mode="contained"
+                               onPress={this.printTest}>
+                               <Text style={styles.btnText}>Test</Text>
+                  </Button>
      </View>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
       </PaperProvider >
