@@ -259,7 +259,7 @@ export const resources = {
             //Login screen
             "login.forgot_password": "Forgot password?",
             "login.login": "Login",
-            "Language":"French",// "Français",
+            "Language":"Français",//"French",
             "Secure your account": "Secure your account",
             "login.Wrongpassword.message":"incorrect password",
 
@@ -805,7 +805,7 @@ export const resources = {
             "Enter password": "Entrer un mot de passe",
             "Well-Being Check": "Bilan bien-être",
             "Forgot your password": "Mot de passe oublié?",
-            "Language":"Anglaise",// "English",
+            "Language": "English",//"Anglaise",
             "Secure your account": "Sécuriser votre compte",
             "contactus_title": "Nous Contacter",
             "contactus_email": "Courriel",

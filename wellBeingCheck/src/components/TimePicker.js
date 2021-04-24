@@ -59,7 +59,7 @@ const TimePicker = (props) => {
       if (global.debugMode) console.log("The timetype is sleep time: " + props.timeType);
       props.handler(time.toLocaleTimeString([], options));
     }
-    hideTimePicker();
+  //  hideTimePicker();
   };
   const NameDisplay = React.memo(
     function () {

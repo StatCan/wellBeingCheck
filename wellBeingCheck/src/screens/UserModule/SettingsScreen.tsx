@@ -130,8 +130,17 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
     console.log("wakeup time handler------------------------------------time from time picker:"+ time)
     console.log("wakeup time handler"+this.state.sleeptime)
     // TODO: we need to change the validation if this is am-pm
+     let valid = 0;
+     if(resources.culture=="fr"){
+             valid = validateSetting(time, this.state.sleeptime, this.state.notificationcount);
+     }else{
+            let w=this.timeTo24(time);let s=this.timeTo24(this.state.sleeptime);
+            valid = validateSetting(w,s, this.state.notificationcount);
+     }
+
+
     // let valid = validateSetting(time, this.state.sleeptime, this.state.notificationcount);
-    let valid = 0;
+    //let valid = 0;
 
     console.log('validate:------->' + valid);
     if (valid != 0){Alert.alert('', resources.getString("settingValidation"));return;}
@@ -167,7 +176,14 @@ cancelTimeHandler(time) {
 
     // console.log("get the time substring missing the PM after substring time.substring(0, 5); "+time);
     // TODO: we need to change the validation if this is am-pm
-      let valid = validateSetting(this.state.waketime, time, this.state.notificationcount);
+     let valid = 0;
+     if(resources.culture=="fr"){
+         valid = validateSetting(this.state.waketime, time, this.state.notificationcount);
+     }else{
+        let w=this.timeTo24(this.state.waketime);let s=this.timeTo24(time);
+        valid = validateSetting(w,s, this.state.notificationcount);
+     }
+   //   let valid = validateSetting(this.state.waketime, time, this.state.notificationcount);
    //  let valid = 0;
      console.log('validate:------->' + valid);
      if (valid != 0){Alert.alert('', resources.getString("settingValidation"));return;}
@@ -184,7 +200,27 @@ cancelTimeHandler(time) {
     await this.handleBackAction(1);
     this.setState({idle:true});
   }
+timeTo24(time) {
+  console.log('this the sleep time that we want to use'+time);
+  var hours = Number(time.match(/^(\d+)/)[1]);
+  console.log('this the sleep hours that we want to use'+hours);
 
+  var minutes = Number(time.match(/:(\d+)/)[1]);
+  console.log('this the sleep minutes that we want to use'+minutes);
+
+  var AMPM = time.match(/\s(.*)$/)[1];
+  console.log('this the sleep AMPM that we want to use '+AMPM);
+
+  if ((AMPM == "PM" || AMPM == "P.M." ||AMPM=="p.m.") && hours < 12) hours = hours + 12;
+  if ((AMPM == "AM" || AMPM == "A.M." ||AMPM=="a.m.") && hours == 12) hours = hours - 12;
+  var sHours = hours.toString();
+  var sMinutes = minutes.toString();
+  if (hours < 10) sHours = "0" + sHours;
+  if (minutes < 10) sMinutes = "0" + sMinutes;
+  console.log('here the sleep final hours change'+sHours +':'+sMinutes);
+
+  return (sHours +':'+sMinutes);
+}
   askPermissions = async () => {const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
 
     let finalStatus = existingStatus;
@@ -618,8 +654,8 @@ hours_am_pmSleep(time) {
            console.log('Picked time:'+data.Hour+':'+data.Minute+' '+apm+'-->'+h+':'+m+' --'+time);
       //   let time=data.Time;
         // TODO: we need to change the validation if this is am-pm
-        //  let valid = validateSetting(time, this.state.sleeptime, this.state.notificationcount);
-        let valid = 0;
+          let valid = validateSetting(time, this.state.sleeptime, this.state.notificationcount);
+       // let valid = 0;
              if (valid != 0){Alert.alert('', resources.getString("settingValidation"));return;}
              await this.setState({
                waketime: time,
@@ -635,6 +671,7 @@ hours_am_pmSleep(time) {
            console.log('Picked time:'+data.Hour+':'+data.Minute+' '+apm+'-->'+h+':'+m+' --'+time);
 
        //  let time=data.Time;
+      // let valid =0;
          let valid = validateSetting(this.state.waketime, time, this.state.notificationcount);
             if (valid != 0){Alert.alert('', resources.getString("settingValidation"));return;}
             await this.setState({
