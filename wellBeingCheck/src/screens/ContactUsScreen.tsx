@@ -156,11 +156,7 @@ printLogo=()=>{
                       onPress={this.printLogo}>
                       <Text style={styles.btnText}>Info</Text>
          </Button>
-          <Button style={styles.btnNext}
-                              mode="contained"
-                               onPress={this.printTest}>
-                               <Text style={styles.btnText}>Test</Text>
-                  </Button>
+
      </View>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
       </PaperProvider >
@@ -270,3 +266,10 @@ export default memo(ContactUsScreen);
 //              onPress={this.printLogo}>
 //              <Text style={styles.btnText}>Info</Text>
 //        </Button>
+
+/*
+  <Button style={styles.btnNext}
+                              mode="contained"
+                               onPress={this.printTest}>
+                               <Text style={styles.btnText}>Test</Text>
+                  </Button>*/
