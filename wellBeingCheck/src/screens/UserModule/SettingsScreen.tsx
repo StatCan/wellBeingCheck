@@ -5,7 +5,8 @@ import { newTheme } from '../../core/theme';
 import { List, Divider } from 'react-native-paper';
 import TimePicker from '../../components/TimePicker'
 //import { notificationAlgo, scheduleNotification20s } from '../../utils/notificationAlgo'
-import { Notifications } from "expo";
+//import { Notifications } from "expo";
+import * as Notifications from 'expo-notifications';
 import * as Permissions from 'expo-permissions';
 import { NavigationParams, NavigationScreenProp, NavigationState } from 'react-navigation';
 import { resources } from '../../../GlobalResources';
@@ -15,8 +16,9 @@ import * as IntentLauncher from 'expo-intent-launcher';
 import { setupSchedules, checkInSchedule, validateSetting } from '../../utils/schedule';
 import { Updates } from 'expo';
 import ParsedText from 'react-native-parsed-text';
-import {TimePickerPane} from '../../components/TimePickerPane';
 
+import {TimePickerPane} from '../../components/TimePickerPane';
+import {TimePickerKnob} from '../../components/TimePickerKnob';
 var scheduledDateArray = new Array();
 
 type SettingsState = {
@@ -36,7 +38,6 @@ type SettingsState = {
   settingsFirstTime: boolean,
   idle:boolean,
   tempSleepTime:string
-
 }
 
 interface Props {
@@ -54,51 +55,47 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   _isDirty: boolean;
   backHandler: any;
 
-  constructor(SettingsState) {
-    super(SettingsState)
-    this.state = {
-      numPingsModalShow: false,
-      notificationState: global.notificationState,
-      chosenNotificationState: true,
-      notification: true,
-      waketime: global.awakeHour,
-      sleeptime: global.sleepHour,
-      notificationcount: global.pingNum,
-      culture: resources.culture == 'fr' ? '2' : '1',
-      cultureString: resources.culture == 'fr' ? 'Français' : 'English',
-      languageModalShow: false,
-      wakeTimePickerShow: false,
-      sleepTimePickerShow: false,
-      titleBackgroundColor: "#000",
-      settingsFirstTime: false,
-      idle:true,
-      tempSleepTime:'',
-    };
-    is24=resources.culture == 'fr' ? true : false;
-    testDatetime.setHours(22);
-    testDatetime.setMinutes(10);
+    constructor(SettingsState) {
+      super(SettingsState)
+      this.state = {
+        numPingsModalShow: false,
+        notificationState: global.notificationState,
+        chosenNotificationState: true,
+        notification: true,
+        waketime: global.awakeHour,
+        sleeptime: global.sleepHour,
+        notificationcount: global.pingNum,
+        culture: resources.culture == 'fr' ? '2' : '1',
+        cultureString: resources.culture == 'fr' ? 'Français' : 'English',
+        languageModalShow: false,
+        wakeTimePickerShow: false,
+        sleepTimePickerShow: false,
+        titleBackgroundColor: "#000",
+        settingsFirstTime: false,
+        idle:true,
+        tempSleepTime:'',
+      };
+      is24=resources.culture == 'fr' ? true : false;
+      testDatetime.setHours(22);
+      testDatetime.setMinutes(10);
 
-    this.wakeTimeHandler = this.wakeTimeHandler.bind(this);
-    this.sleepTimeHandler = this.sleepTimeHandler.bind(this);
-    this.cancelTimeHandler = this.cancelTimeHandler.bind(this);
+      this.wakeTimeHandler = this.wakeTimeHandler.bind(this);
+      this.sleepTimeHandler = this.sleepTimeHandler.bind(this);
+      this.cancelTimeHandler = this.cancelTimeHandler.bind(this);
   }
 
-
   componentDidMount() {
-    this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
-    var tt= ''
-    console.log('temps time for sleep time',tt);
-    console.log('temps time for sleep time this.state.sleeptime.substring(5,7))',this.state.sleeptime.substring(5,7));
-    console.log('temps time for sleep time (parseInt(this.state.sleeptime.substring(0,2)) + 12).toString())',(parseInt(this.state.sleeptime.substring(0,2)) + 12).toString());
-    console.log('temps time for sleep time this.state.sleeptime)',this.state.sleeptime);
-    this.getPMvalue
-
-
+       this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+       var tt= ''
+       console.log('temps time for sleep time',tt);
+       console.log('temps time for sleep time this.state.sleeptime.substring(5,7))',this.state.sleeptime.substring(5,7));
+       console.log('temps time for sleep time (parseInt(this.state.sleeptime.substring(0,2)) + 12).toString())',(parseInt(this.state.sleeptime.substring(0,2)) + 12).toString());
+       console.log('temps time for sleep time this.state.sleeptime)',this.state.sleeptime);
+       this.getPMvalue
 //
 //     AppState.removeEventListener("change", this.handleAppStateChangeInSeeting);
 //     AppState.addEventListener("change", this.handleAppStateChangeInSetting);
   }
-
   getPMvalue(){
 
     if (this.state.sleeptime.substring(5,7)=='P'){
@@ -221,22 +218,28 @@ timeTo24(time) {
 
   return (sHours +':'+sMinutes);
 }
-  askPermissions = async () => {const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
-
-    let finalStatus = existingStatus;
-    if (existingStatus !== "granted") {
-      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-      finalStatus = status;
-      Notifications.cancelAllScheduledNotificationsAsync();
-       global.sendouts='';AsyncStorage.setItem('Sendouts', sendouts);
+  askPermissions = async () => {
+    let finalStatus =true;
+    if(Platform.OS=='ios'){
+      let settings=await Notifications.getPermissionsAsync();
+      if(settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL){
+         finalStatus= await Notifications.requestPermissionsAsync({
+            ios:{
+               allowAlert:true,
+               aloowSound:true,
+               allowBadge:true,
+               allowAnnouncements:true,
+            },
+         });
+      }
     }
-    if (finalStatus !== "granted") {
 
+    if (!finalStatus) {
+      Notifications.cancelAllScheduledNotificationsAsync().then(()=>console.log('Notifications were cancelled'));
       // In final status, we asked for permission of the OS and we were denied, so we need to ask
       if (global.debugMode) console.log("Notifications Permission Not Granted");
       this.setState({ notificationState: false });
-      Notifications.cancelAllScheduledNotificationsAsync();
-       global.sendouts='';AsyncStorage.setItem('Sendouts', sendouts);
+      Notifications.cancelAllScheduledNotificationsAsync().then(()=>console.log('Notifications were cancelled'));
 
       Alert.alert(
         resources.getString("notification.resquest.title"),
@@ -273,70 +276,71 @@ timeTo24(time) {
       return true;
     }
   };
-  handleBackAction = async (f) => {
-    console.log("Handle Back Action");
-    if (this.state.waketime != global.awakeHour) dirty = true;
-    if (this.state.sleeptime != global.sleepHour) dirty = true;
-    if (this.state.notificationcount != global.pingNum) dirty = true;
-    console.log('Dirty:' + dirty+' state:'+this.state.notificationState);
-    if (this.state.notificationState) {
-       let today=new Date();
-      if (global.doneSurveyA && (today<global.warningDate)) {
-        if (global.notificationState) {
-          //notification was enabled, right now it is enabled too, so need to re-schedule only there is some setting value changed otherwise waiting to suvey B done
-          if (dirty) {
-            let inp = checkInSchedule(new Date());
-            if (inp && global.schedules.length > 0) setupSchedules(true);
-            else setupSchedules(false);
+   handleBackAction = async (f) => {
+      console.log("Handle Back Action");
+      if (this.state.waketime != global.awakeHour) dirty = true;
+      if (this.state.sleeptime != global.sleepHour) dirty = true;
+      if (this.state.notificationcount != global.pingNum) dirty = true;
+      console.log('Dirty:' + dirty+' state:'+this.state.notificationState);
+      if (this.state.notificationState) {
+         let today=new Date();console.log('xxxxxxxxxxxxxxxxxxxx:'+global.warningDate);
+        if (global.doneSurveyA && (today<global.warningDate)) {
+          if (global.notificationState) {
+            //notification was enabled, right now it is enabled too, so need to re-schedule only there is some setting value changed otherwise waiting to suvey B done
+            if (dirty) {
+              let inp = checkInSchedule(new Date());      console.log('hhhhhhhhhhhhhhhhhhhhh->'+inp+' lllll:'+global.schedules.length);
+              if (inp && global.schedules.length > 0) setupSchedules(true);
+              else setupSchedules(false);
+            }
+          }
+          else {
+            //notification was disabled, but right now it is enabled,need to setup schedules immediately, without waiting for surveyBdone, in case user never go survey B,but can still get 4 days notification,because he just turn it on
+            setupSchedules(false);
           }
         }
         else {
-          //notification was disabled, but right now it is enabled,need to setup schedules immediately, without waiting for surveyBdone, in case user never go survey B,but can still get 4 days notification,because he just turn it on
-          setupSchedules(false);
+          //do nothing because survey A is not done yet
         }
       }
       else {
-        //do nothing because survey A is not done yet
+        //notification disabled
+        if (global.notificationState) {
+          //the notification was enabled before come in the setting screen, so we need cancell all the notifications
+          Notifications.cancelAllScheduledNotificationsAsync();
+          global.sendouts='';AsyncStorage.setItem('Sendouts', sendouts);
+          AsyncStorage.removeItem('Schedules'); global.schedules = [];
+          console.log('remove all notifications');
+        }
+        else {
+          //do nothing, the schedule was removed already
+        }
       }
-    }
-    else {
-      //notification disabled
-      if (global.notificationState) {
-        //the notification was enabled before come in the setting screen, so we need cancell all the notifications
-        Notifications.cancelAllScheduledNotificationsAsync();
-        global.sendouts='';AsyncStorage.setItem('Sendouts', sendouts);
-        AsyncStorage.removeItem('Schedules'); global.schedules = [];
-        console.log('remove all notifications');
+
+      this.setState({ settingsFirstTime: false });
+      if (dirty || this.state.notificationState != global.notificationState) {
+        AsyncStorage.removeItem('ParadataSaved'); global.paradataSaved = false;
       }
-      else {
-        //do nothing, the schedule was removed already
-      }
+  //    if (this.state.culture === "2") {
+  //      resources.culture = 'fr';
+  //    } else if (this.state.culture === "1") {
+  //      resources.culture = 'en';
+  //    }
+      if (global.debugMode) console.log("Platform version: " + Platform.Version);
+      if (global.debugMode) console.log("Device Name: " + Expo.Constants.deviceName);
+      if (global.debugMode) console.log("Native App Version: " + Expo.Constants.nativeAppVersion);
+      if (global.debugMode) console.log("Native Build Version: " + Expo.Constants.nativeBuildVersion);
+      if (global.debugMode) console.log("Device Year Class: " + Expo.Constants.deviceYearClass);
+      if (global.debugMode) console.log("Session ID: " + Expo.Constants.sessionId);
+      if (global.debugMode) console.log("Wake Time: " + this.state.waketime);
+      if (global.debugMode) console.log("Sleep Time: " + this.state.sleeptime);
+      if (global.debugMode) console.log("Notification Count: " + this.state.notificationcount);
+      if (global.debugMode) console.log("Scheduled Notification Times: " + scheduledDateArray);
+
+      this._storeSettings(f);
+      dirty = false;
+
     }
 
-    this.setState({ settingsFirstTime: false });
-    if (dirty || this.state.notificationState != global.notificationState) {
-      AsyncStorage.removeItem('ParadataSaved'); global.paradataSaved = false;
-    }
-//    if (this.state.culture === "2") {
-//      resources.culture = 'fr';
-//    } else if (this.state.culture === "1") {
-//      resources.culture = 'en';
-//    }
-    if (global.debugMode) console.log("Platform version: " + Platform.Version);
-    if (global.debugMode) console.log("Device Name: " + Expo.Constants.deviceName);
-    if (global.debugMode) console.log("Native App Version: " + Expo.Constants.nativeAppVersion);
-    if (global.debugMode) console.log("Native Build Version: " + Expo.Constants.nativeBuildVersion);
-    if (global.debugMode) console.log("Device Year Class: " + Expo.Constants.deviceYearClass);
-    if (global.debugMode) console.log("Session ID: " + Expo.Constants.sessionId);
-    if (global.debugMode) console.log("Wake Time: " + this.state.waketime);
-    if (global.debugMode) console.log("Sleep Time: " + this.state.sleeptime);
-    if (global.debugMode) console.log("Notification Count: " + this.state.notificationcount);
-    if (global.debugMode) console.log("Scheduled Notification Times: " + scheduledDateArray);
-
-    this._storeSettings(f);
-    dirty = false;
-
-  }
 
   _handleNotification = (notification) => {
     if (global.debugMode) console.log("Notification was clicked - navigating to Survey");
@@ -574,7 +578,6 @@ hours_am_pmSleep(time) {
       //return hours+ ':' + min + ' PM';
   }
 }
-
   _changeLanguage(c) {
 
     this.setState({ culture: c });
@@ -712,8 +715,6 @@ hours_am_pmSleep(time) {
            sleepDesc=ddd2.Hour+':'+ddd2.Minute+' '+apm2;
         }
     }
-
-
     let debugButtons;
 
     if (global.debugMode) {

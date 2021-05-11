@@ -1,4 +1,4 @@
-import { Notifications } from "expo";
+import * as Notifications from 'expo-notifications';
 import { AsyncStorage } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { resources } from '../../GlobalResources';
@@ -71,117 +71,60 @@ const primeTimeAwakeIntervals = [
   }];
 //Setup notification with notification 3 parameters to specify when the notification will be fired, the title and body message string
 setupNotification = async (datetime,title,message) => {
-  if (Platform.OS === 'android') {
-    Notifications.createChannelAndroidAsync('survey-messages', {
-      name: 'Survey messages',
-      sound: true,
-      priority: 'max',
-      vibrate: true,
-    });
-  }
-  let scheduledTime = new Date(datetime);let msg='Info:'+new Date(datetime)+' '+message;  //4 test only
- // console.log(msg);
-  let notificationId =await Notifications.scheduleLocalNotificationAsync(
-    {
-      title: title+":"+global.currentVersion,
-      body: msg,
-      data: JSON.stringify({scheduledTime:scheduledTime}),   //Test only
-      ios: { sound: true },
-      android: {
-        "channelId": "survey-messages"
-      }
-    },
-    {
-      time: scheduledTime
-    }
-  );
+  let trigger=new Date(datetime);
+  let msg=+'Info:'+new Date(datetime)+' '+message;
+  let notificationId=await Notifications.scheduleNotificationAsync(
+      {
+         content:{title:title,body:message},
+         trigger,
+      })
   return notificationId;
 };
-
 export function sendDelayedNotification(datetime,title,message){
-  if (Platform.OS === 'android') {
-    Notifications.createChannelAndroidAsync('survey-messages', {
-      name: 'Survey messages',
-      sound: true,
-      vibrate: true,
-    });
-  }
-  let scheduledTime = new Date(datetime).getTime() + 5000;
-  Notifications.scheduleLocalNotificationAsync(
-    {
-      title: title+":"+global.currentVersion,
-      body: message,
-      data:JSON.stringify({scheduledTime:scheduledTime}),
-      ios: { sound: true },
-      android: {
-        "channelId": "survey-messages"
-      }
-    },
-    {
-      time: scheduledTime  //(new Date()).getTime() + 5000
-    }
-  );
+  let trigger = new Date(datetime).getTime() + 5000;
+  Notifications.scheduleNotificationAsync(
+                      {
+                         content:{title:title,body:message},
+                         trigger,
+                      })
 };
+export async function sendNotificationRepeatly(){
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Test",
+        body: "This is repeat notification",
+      },
+      trigger: { seconds: 10, repeats: true },
+    }).then(()=>console.log('send out'));
 
+  }
 //Ask the permission to setup notification, this function return true/false, we can setup notification only when this function return true
 askPermissions = async () => {
-    let result=false;
-    const { status: existingStatus } = await Permissions.getAsync(
-      Permissions.NOTIFICATIONS
-    );
-    let finalStatus = existingStatus;
-    if (existingStatus !== "granted") {
-      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-      finalStatus = status;
-      Notifications.cancelAllScheduledNotificationsAsync();
-      global.sendouts='';AsyncStorage.setItem('Sendouts', sendouts);
+    if(Platform.OS=='android')return true;
+    let settings=await Notifications.getPermissionsAsync();
+    if(settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL){
+       return await Notifications.requestPermissionsAsync({
+          ios:{
+             allowAlert:true,
+             aloowSound:true,
+             allowBadge:true,
+             allowAnnouncements:true,
+          },
+       });
     }
-    if (finalStatus !== "granted") {
-      // In final status, we asked for permission of the OS and we were denied, so we need to ask
-      if (global.debugMode) console.log("Notifications Permission Not Granted");
-      Notifications.cancelAllScheduledNotificationsAsync();
-       global.sendouts='';AsyncStorage.setItem('Sendouts', sendouts);
-    }else{
-      if (global.debugMode) console.log("Notifications Permission Granted");
-      result=true;
-    }
-    return result;
+    return false;
   };
 //cancell all notifications which were setup before
 function cancellAllSchedules(){
-     Notifications.cancelAllScheduledNotificationsAsync();
-     global.sendouts='';AsyncStorage.setItem('Sendouts', sendouts);
-//      if (Platform.OS === 'android') {
-//         Notifications.deleteChannelAndroidAsync('survey-messages').then(()=>{console.log('channel was cancelled');});
-//      }
+     Notifications.cancelAllScheduledNotificationsAsync().then(()=>console.log('Notifications were cancelled'));
 }
 //Cancel a notification by notificationId
-export function cancelSchedule(localNotificationId){
-    Notifications.cancelScheduledNotificationAsync(localNotificationId);
+export async function cancelSchedule(localNotificationId){
+    await Notifications.cancelScheduledNotificationAsync(localNotificationId);
 }
 //Setup Day5 notification, basically is same function with setupNotification,will consider to be eliminated in next version
 async function setupWarning(dt,title,message){
-    if (Platform.OS === 'android') {
-                            Notifications.createChannelAndroidAsync('survey-messages', {
-                              name: 'Survey messages',
-                              sound: true,
-                              vibrate: true,
-                            });
-                          }
-    let scheduledTime = new Date(dt);
-    let warningId=await Notifications.scheduleLocalNotificationAsync(
-                            {
-                              title: title+":"+global.currentVersion,
-                              body: message,
-                              ios: { sound: true },
-                              android: {
-                                "channelId": "survey-messages"
-                              }
-                            },
-                            {
-                              time: new Date(dt)
-                            }
-                          );
+    let warningId=await setupNotification(dt,title,message);
     return warningId;
 }
 /*Main workflow function, its parameter is used to specify whether or not the new notification will affect the current's old notification
@@ -197,6 +140,13 @@ It has 2 main scenarios: Does lastDate flag exist ?
                  secondly, we still have to calculate how many days of notification need to be appended beside the current day and setup them
 for how to calculate these notification schedule, the next function will get into play*/
 export async function setupSchedules(affectCurrent=false){
+    Notifications.setNotificationHandler({
+     handleNotification: async () => ({
+       shouldShowAlert: true,
+       shouldPlaySound: true,
+       shouldSetBadge: true,
+     }),
+   });
     let sendouts='';//Test only
     let permission=await askPermissions();if(!permission)return;
     let title=resources.getString("scheduleTitle");//   "Scheduled Notification";
@@ -207,22 +157,22 @@ export async function setupSchedules(affectCurrent=false){
     let currentTime=roundUp(currentDateTime.toLocaleTimeString());
 
     // if (resources.culture=='fr' ) {
-    //     let awake=roundUp(global.awakeHour); 
-    //     let sleep=roundDown(global.sleepHour);  
+    //     let awake=roundUp(global.awakeHour);
+    //     let sleep=roundDown(global.sleepHour);
     //     console.log('schedule french version-------------------------------------------------------------------schedule'+ sleep);
 
     // } else{
 
         let convertWake=convertTime12to24(global.awakeHour);
-        let awake=roundUp(convertWake); 
+        let awake=roundUp(convertWake);
         console.log('this is converting time for am to 24------------------------------------------------------schedule'+ awake);
         let convertSleep=convertTime12to24(global.sleepHour);
-        let sleep=roundDown(convertSleep);  
+        let sleep=roundDown(convertSleep);
         console.log('this is converting time for am to 24------------------------------------------------------schedule'+ sleep);
     // }
 
-    // let awake=roundUp(global.awakeHour); 
-    // let sleep=roundDown(global.sleepHour);  
+    // let awake=roundUp(global.awakeHour);
+    // let sleep=roundDown(global.sleepHour);
     let count=global.pingNum;console.log('LastDate:'+global.lastDate);
     let ch = currentDateTime.getHours();
     let nightShiftUpdate = false; if ((awake > sleep) && (ch >= 0 && ch < sleep)) nightShiftUpdate = true;
@@ -473,7 +423,7 @@ export async function setupSchedules(affectCurrent=false){
 }
 /*Main function to calculate the notificationschedule, the parameters are used to indicate the schedule date, awake hour,sleep hour,how many times of notification for this day, and current time
 the algorithm will not arrange any notification for the time which has been passed for the day(time<current), for detail see the work flowpdf file*/
- function calculateSchedule(awakeHour, sleepHour, count, date, current) {
+function calculateSchedule(awakeHour, sleepHour, count, date, current) {
       //The current is the affected day time, if current is in this date, then thisd date will partially schedule
          var selected = []; var selected1 = []; var str = '';
          if (current == null) current = new Date(2020, 1, 1, 0, 0, 0, 0);
@@ -651,166 +601,98 @@ the algorithm will not arrange any notification for the time which has been pass
          return { Selected: selected, LogInfo: str };
 
      }
-
      const convertTime12to24 = (time12h) => {
-        const [time, modifier] = time12h.split(' ');
-      
-        let [hours, minutes] = time.split(':');
-      
-        if (hours === '12') {
-          hours = '00';
-        }
-      
-        if (modifier === 'PM') {
-          hours = parseInt(hours, 10) + 12;
-        }
-      
-        return `${hours}:${minutes}`;
-      }
-     convertFrom12To24Format = (time12) => {
-        const [sHours, minutes, period] = time12.match(/([0-9]{1,2}):([0-9]{2}) (AM|PM)/).slice(1);
-        const PM = period === 'PM';
-        const hours = (+sHours % 12) + (PM ? 12 : 0);
-        console.log( `${('0' + hours).slice(-2)}:${minutes}`)
-        return `${('0' + hours).slice(-2)}:${minutes}`;
-      }    
+             const [time, modifier] = time12h.split(' ');
+
+             let [hours, minutes] = time.split(':');
+
+             if (hours === '12') {
+               hours = '00';
+             }
+
+             if (modifier === 'PM') {
+               hours = parseInt(hours, 10) + 12;
+             }
+
+             return `${hours}:${minutes}`;
+           }
+          convertFrom12To24Format = (time12) => {
+             const [sHours, minutes, period] = time12.match(/([0-9]{1,2}):([0-9]{2}) (AM|PM)/).slice(1);
+             const PM = period === 'PM';
+             const hours = (+sHours % 12) + (PM ? 12 : 0);
+             console.log( `${('0' + hours).slice(-2)}:${minutes}`)
+             return `${('0' + hours).slice(-2)}:${minutes}`;
+           }
  function convertToDateTime(str) {
-        var v = str.split(':');
-        var h = v[0];
-        var m = v[1];
-        var s = v[2];
-        var d = new Date(); d.setHours(h); d.setMinutes(m); d.setSeconds(s);
-        return d;
-    }
- function roundUp(time) {
-        var v = time.split(':');
-        var r = v[0]; var isSharp = true;
-        if (v[1] > 0 || v[2] > 0) {
-            r++; isSharp = false;
-        }
-       // return {Hour:parseInt(r),IsSharp:isSharp};
-       return parseInt(r);
-    }
- function roundDown(time) {
-        var v = time.split(':');
-        var isSharp = true;
-        if (v[1] > 0 || v[2] > 0)isSharp = false;
-      //  return { Hour: parseInt(v[0]), IsSharp: isSharp };
-      return parseInt(v[0]);
-    }
+         var v = str.split(':');
+         var h = v[0];
+         var m = v[1];
+         var s = v[2];
+         var d = new Date(); d.setHours(h); d.setMinutes(m); d.setSeconds(s);
+         return d;
+     }
+  function roundUp(time) {
+         var v = time.split(':');
+         var r = v[0]; var isSharp = true;
+         if (v[1] > 0 || v[2] > 0) {
+             r++; isSharp = false;
+         }
+        // return {Hour:parseInt(r),IsSharp:isSharp};
+        return parseInt(r);
+     }
+  function roundDown(time) {
+         var v = time.split(':');
+         var isSharp = true;
+         if (v[1] > 0 || v[2] > 0)isSharp = false;
+       //  return { Hour: parseInt(v[0]), IsSharp: isSharp };
+       return parseInt(v[0]);
+     }
  function isWeekendDay(date) {
             //   date = new Date(date.toString().replace(/-/g, '\/'));
-            var day = date.getDay();
-            var isWeekend = (day === 6) || (day === 0);
-            return isWeekend;
+                       var day = date.getDay();
+                       var isWeekend = (day === 6) || (day === 0);
+                       return isWeekend;
         }
  function getFollowingDays(currentDay, lastDay, includeCurrentDay,maxDays=4,nightShiftUpdate=false) {
        //  var date = new Date(currentDay.toString().replace(/-/g, '\/'));
-       var date = new Date(currentDay);
-       date.setHours(0); date.setMinutes(0); date.setSeconds(0); date.setMilliseconds(0);
-       if (nightShiftUpdate) date.setDate(date.getDate()-1);
-       if (lastDay == null) { lastDay = new Date(date); lastDay.setDate(date.getDate()+29); }  //The final day was set to 30 after survey A(hh:mm=00:00), so the last eligible day to send notification is 29 days after survey A
-       else lastDay = new Date(lastDay);  //new Date(lastDay.toString().replace(/-/g, '\/'));
-       if (!includeCurrentDay) date.setDate(date.getDate() + 1);
-       var days = [];
-       if (date > lastDay) return days;
-       var timeDiff = (lastDay -date);   //calculate how many days before finish date
-       var ds = timeDiff / (1000 * 60 * 60 * 24);
-       var count = Math.min(maxDays,ds);
-       for (var i = 0; i < count; i++) {
-           var day = new Date(date); 
-           day.setDate(date.getDate() + i);
-           days.push(day);
-       }
-       return days;
+              var date = new Date(currentDay);
+              date.setHours(0); date.setMinutes(0); date.setSeconds(0); date.setMilliseconds(0);
+              if (nightShiftUpdate) date.setDate(date.getDate()-1);
+              if (lastDay == null) { lastDay = new Date(date); lastDay.setDate(date.getDate()+29); }  //The final day was set to 30 after survey A(hh:mm=00:00), so the last eligible day to send notification is 29 days after survey A
+              else lastDay = new Date(lastDay);  //new Date(lastDay.toString().replace(/-/g, '\/'));
+              if (!includeCurrentDay) date.setDate(date.getDate() + 1);
+              var days = [];
+              if (date > lastDay) return days;
+              var timeDiff = (lastDay -date);   //calculate how many days before finish date
+              var ds = timeDiff / (1000 * 60 * 60 * 24);
+              var count = Math.min(maxDays,ds);
+              for (var i = 0; i < count; i++) {
+                  var day = new Date(date);
+                  day.setDate(date.getDate() + i);
+                  days.push(day);
+              }
+              return days;
   }
  function getNextDay(date){
      var temp=new Date(date);temp.setHours(0);temp.setMinutes(0);temp.setSeconds(0);temp.setMilliseconds(0);
-     var date1 = new Date(temp);var nextDay = date1.setDate(temp.getDate() + 1);
-     return date1;
+         var date1 = new Date(temp);var nextDay = date1.setDate(temp.getDate() + 1);
+         return date1;
  }
  function getNonPassedCountOfADay(datetime) {  //This approach is socomplecated, use getAffectedDay approach
-     var count = 0;let hour=23;let firstMatch=true;
-     let list =global.schedules;
-     let list1=[];
-     let cur=new Date(datetime);cur.setHours(0);cur.setMinutes(0);cur.setSeconds(0);cur.setMilliseconds(0);
-     list.forEach(function (l) {
-                if (+l.Day == +cur && l.Datetime>datetime) {
-                    count++;
-                    if(firstMatch){hour=l.Hour;firstMatch=false;}
-                }
-     });
-     return {Count:count,Hour:hour};
+      var count = 0;let hour=23;let firstMatch=true;
+          let list =global.schedules;
+          let list1=[];
+          let cur=new Date(datetime);cur.setHours(0);cur.setMinutes(0);cur.setSeconds(0);cur.setMilliseconds(0);
+          list.forEach(function (l) {
+                     if (+l.Day == +cur && l.Datetime>datetime) {
+                         count++;
+                         if(firstMatch){hour=l.Hour;firstMatch=false;}
+                     }
+          });
+          return {Count:count,Hour:hour};
  }
- function getAffectedDay1(datetime,countNum) {
-         let result = null; let currPassed = [];
-         let list =global.schedules;
-         let fday = list[0]; let lday = list[list.length - 1];
-         let fd = new Date(list[0].Datetime); let ld = new Date(list[list.length - 1].Datetime);
-         let curDay = new Date(datetime); curDay.setHours(0); curDay.setMinutes(0); curDay.setSeconds(0); curDay.setMilliseconds(0);
-         var found = list.find(function (l) {
-             return l.Datetime > datetime;
-         });
-         if (found != null) {   //case 1
-             let sch = found.Day; let index = list.indexOf(found);
-             if (sch > curDay && list[0].Day > curDay) {  //all the schedules for curDay are done, no items for curDay in pre-schedule, but you want to setup more schedule for curDay, so the passedCount=global.curDayPassed.length. It happens just before the end of the day
-                 let pnum = global.curDayPassed.length;
-                 result = { AffectedDay: curDay, PassedCount: pnum, PassedList: currPassed };
-                 return result;  //case 1A
-             }
-             let count = 0;   //in the middle of the curDay, count the schedule which are passed.
-             list.forEach(function (l) {
-                 if (+l.Day == +sch && +l.Datetime <= +datetime){
-                 count++;
-
-                 }
-             });
-             let ddd = parseInt((sch - fday.Day) / (1000 * 60 * 60 * 24), 10);  //how many days between curDay and the first day in the list
-             if (ddd > 1) {   //if more than one day, so it is simple, the passedCount=0
-                 result = { AffectedDay: sch, PassedCount: count, PassedList: currPassed };   //case 1B,   should get new currPassed check it later
-             }
-             else if (ddd == 1) {   //if it is the following day
-                 let prev = list[0];
-                 if (index > 0) prev = list[index - 1];  //get the prev one of found, if no just use first one
-                 if (+prev.Day != +fday.Day) {   //if prev of found and first is not same day, so the passedCount=the count we found
-                     result = { AffectedDay: sch, PassedCount: count, PassedList: currPassed };   //case 1C
-                 }
-                 else {  //case 1D
-                     let numUpdate = index;//update index;   //if it is in the samy day
-                     if (global.curDayPassed != null) numUpdate += global.curDayPassed.length;
-                     for (let i = 0; i < index; i++)currPassed.push(list[i]);
-                     result = { AffectedDay: prev.Day, PassedCount: numUpdate, PassedList: currPassed };   //affected day is prev day, because it is night shift
-                 }
-             }
-             else if (ddd == 0) {  //case 1E
-                 let numUpdate = count;//update index;
-                 if (global.curDayPassed != null) numUpdate += global.curDayPassed.length;
-                 for (let i = 0; i < index; i++)currPassed.push(list[i]);
-                 result = { AffectedDay: sch, PassedCount: numUpdate, PassedList: currPassed };
-             }
-         }
-         else {     //not found, not in the list
-             if (datetime > ld) {//datetime,
-                 if (+curDay == +lday.Day) {   //it is out of the list, but still in the last day
-                     count = 0;
-                     list.forEach(function (l) {
-                         if (+l.Day == +curDay && +l.Datetime <= +datetime) { count++; currPassed.push(l.Datetime); }
-                     });
-                     let numUpdate = count;//update index;
-                     if (global.curDayPassed != null) numUpdate += global.curDayPassed.length;
-                     result = { AffectedDay: curDay, PassedCount: numUpdate };
-                 } else {
-                     result = { AffectedDay: curDay, PassedCount: 0, PassedList: currPassed };
-                 }
-                 //let tomorrow = new Date(currentDateTime); tomorrow.setDate(tomorrow.getDate() + 1); tomorrow.setHours(0); tomorrow.setMinutes(0); tomorrow.setSeconds(0); tomorrow.setMilliseconds(0);
-                 //result = { AffectedDay: tomorrow, PassedCount:0 };
-             }
-             if (datetime < fd) result = { AffectedDay: curDay, PassedCount: 0, PassedList: currPassed};//shouldn't happen
-         }
-         return result;
-     }
- function getAffectedDay(datetime,countNum) {
-          let result = null; let currPassed = [];let currPassed1 = []; //currPassed1 is used to calculate passed schedules for jumped day,
+  function getAffectedDay1(datetime,countNum) {
+          let result = null; let currPassed = [];
           let list =global.schedules;
           let fday = list[0]; let lday = list[list.length - 1];
           let fd = new Date(list[0].Datetime); let ld = new Date(list[list.length - 1].Datetime);
@@ -829,20 +711,18 @@ the algorithm will not arrange any notification for the time which has been pass
               list.forEach(function (l) {
                   if (+l.Day == +sch && +l.Datetime <= +datetime){
                   count++;
-                  currPassed1.push(l);
+
                   }
               });
               let ddd = parseInt((sch - fday.Day) / (1000 * 60 * 60 * 24), 10);  //how many days between curDay and the first day in the list
               if (ddd > 1) {   //if more than one day, so it is simple, the passedCount=0
-                  global.curDayPassed=currPassed1;  //not the same day now,set here for save storage later in setup Schedule function
-                  result = { AffectedDay: sch, PassedCount: count, PassedList: currPassed1 };   //case 1B,   should get new currPassed check it later
+                  result = { AffectedDay: sch, PassedCount: count, PassedList: currPassed };   //case 1B,   should get new currPassed check it later
               }
               else if (ddd == 1) {   //if it is the following day
                   let prev = list[0];
                   if (index > 0) prev = list[index - 1];  //get the prev one of found, if no just use first one
                   if (+prev.Day != +fday.Day) {   //if prev of found and first is not same day, so the passedCount=the count we found
-                      result = { AffectedDay: sch, PassedCount: count, PassedList: currPassed1 };   //case 1C
-                       global.curDayPassed=currPassed1; //not the same day now,set here for save storage later in setup Schedule function
+                      result = { AffectedDay: sch, PassedCount: count, PassedList: currPassed };   //case 1C
                   }
                   else {  //case 1D
                       let numUpdate = index;//update index;   //if it is in the samy day
@@ -863,11 +743,11 @@ the algorithm will not arrange any notification for the time which has been pass
                   if (+curDay == +lday.Day) {   //it is out of the list, but still in the last day
                       count = 0;
                       list.forEach(function (l) {
-                          if (+l.Day == +curDay && +l.Datetime <= +datetime) { count++; currPassed.push(l); }
+                          if (+l.Day == +curDay && +l.Datetime <= +datetime) { count++; currPassed.push(l.Datetime); }
                       });
                       let numUpdate = count;//update index;
                       if (global.curDayPassed != null) numUpdate += global.curDayPassed.length;
-                      result = { AffectedDay: curDay, PassedCount: numUpdate,PassedList: currPassed };
+                      result = { AffectedDay: curDay, PassedCount: numUpdate };
                   } else {
                       result = { AffectedDay: curDay, PassedCount: 0, PassedList: currPassed };
                   }
@@ -878,39 +758,108 @@ the algorithm will not arrange any notification for the time which has been pass
           }
           return result;
       }
+ function getAffectedDay(datetime,countNum) {
+          let result = null; let currPassed = [];let currPassed1 = []; //currPassed1 is used to calculate passed schedules for jumped day,
+                   let list =global.schedules;
+                   let fday = list[0]; let lday = list[list.length - 1];
+                   let fd = new Date(list[0].Datetime); let ld = new Date(list[list.length - 1].Datetime);
+                   let curDay = new Date(datetime); curDay.setHours(0); curDay.setMinutes(0); curDay.setSeconds(0); curDay.setMilliseconds(0);
+                   var found = list.find(function (l) {
+                       return l.Datetime > datetime;
+                   });
+                   if (found != null) {   //case 1
+                       let sch = found.Day; let index = list.indexOf(found);
+                       if (sch > curDay && list[0].Day > curDay) {  //all the schedules for curDay are done, no items for curDay in pre-schedule, but you want to setup more schedule for curDay, so the passedCount=global.curDayPassed.length. It happens just before the end of the day
+                           let pnum = global.curDayPassed.length;
+                           result = { AffectedDay: curDay, PassedCount: pnum, PassedList: currPassed };
+                           return result;  //case 1A
+                       }
+                       let count = 0;   //in the middle of the curDay, count the schedule which are passed.
+                       list.forEach(function (l) {
+                           if (+l.Day == +sch && +l.Datetime <= +datetime){
+                           count++;
+                           currPassed1.push(l);
+                           }
+                       });
+                       let ddd = parseInt((sch - fday.Day) / (1000 * 60 * 60 * 24), 10);  //how many days between curDay and the first day in the list
+                       if (ddd > 1) {   //if more than one day, so it is simple, the passedCount=0
+                           global.curDayPassed=currPassed1;  //not the same day now,set here for save storage later in setup Schedule function
+                           result = { AffectedDay: sch, PassedCount: count, PassedList: currPassed1 };   //case 1B,   should get new currPassed check it later
+                       }
+                       else if (ddd == 1) {   //if it is the following day
+                           let prev = list[0];
+                           if (index > 0) prev = list[index - 1];  //get the prev one of found, if no just use first one
+                           if (+prev.Day != +fday.Day) {   //if prev of found and first is not same day, so the passedCount=the count we found
+                               result = { AffectedDay: sch, PassedCount: count, PassedList: currPassed1 };   //case 1C
+                                global.curDayPassed=currPassed1; //not the same day now,set here for save storage later in setup Schedule function
+                           }
+                           else {  //case 1D
+                               let numUpdate = index;//update index;   //if it is in the samy day
+                               if (global.curDayPassed != null) numUpdate += global.curDayPassed.length;
+                               for (let i = 0; i < index; i++)currPassed.push(list[i]);
+                               result = { AffectedDay: prev.Day, PassedCount: numUpdate, PassedList: currPassed };   //affected day is prev day, because it is night shift
+                           }
+                       }
+                       else if (ddd == 0) {  //case 1E
+                           let numUpdate = count;//update index;
+                           if (global.curDayPassed != null) numUpdate += global.curDayPassed.length;
+                           for (let i = 0; i < index; i++)currPassed.push(list[i]);
+                           result = { AffectedDay: sch, PassedCount: numUpdate, PassedList: currPassed };
+                       }
+                   }
+                   else {     //not found, not in the list
+                       if (datetime > ld) {//datetime,
+                           if (+curDay == +lday.Day) {   //it is out of the list, but still in the last day
+                               count = 0;
+                               list.forEach(function (l) {
+                                   if (+l.Day == +curDay && +l.Datetime <= +datetime) { count++; currPassed.push(l); }
+                               });
+                               let numUpdate = count;//update index;
+                               if (global.curDayPassed != null) numUpdate += global.curDayPassed.length;
+                               result = { AffectedDay: curDay, PassedCount: numUpdate,PassedList: currPassed };
+                           } else {
+                               result = { AffectedDay: curDay, PassedCount: 0, PassedList: currPassed };
+                           }
+                           //let tomorrow = new Date(currentDateTime); tomorrow.setDate(tomorrow.getDate() + 1); tomorrow.setHours(0); tomorrow.setMinutes(0); tomorrow.setSeconds(0); tomorrow.setMilliseconds(0);
+                           //result = { AffectedDay: tomorrow, PassedCount:0 };
+                       }
+                       if (datetime < fd) result = { AffectedDay: curDay, PassedCount: 0, PassedList: currPassed};//shouldn't happen
+                   }
+                   return result;
+     }
  function filterListByDate(date,list) {
             date = new Date(date.toString().replace(/-/g, '\/'));
-            var date1 = new Date(date); date1.setHours(hour); date1.setMinutes(0); date1.setSeconds(0);
-            var date2 = new Date(date); date2.setHours(24); date2.setMinutes(0); date2.setSeconds(0);
-            var list1 = [];
-            list.forEach(function (l) {
-                //debugger;
-                //var a = +l; var b = +date1; var c = l.getTime(); var d = date1.getTime();
-                if (+l >= +date1 && l < date2)
-                    list1.push(l);
-            })
-            return list1;
+                        var date1 = new Date(date); date1.setHours(hour); date1.setMinutes(0); date1.setSeconds(0);
+                        var date2 = new Date(date); date2.setHours(24); date2.setMinutes(0); date2.setSeconds(0);
+                        var list1 = [];
+                        list.forEach(function (l) {
+                            //debugger;
+                            //var a = +l; var b = +date1; var c = l.getTime(); var d = date1.getTime();
+                            if (+l >= +date1 && l < date2)
+                                list1.push(l);
+                        })
+                        return list1;
         }
  export function checkInSchedule(datetime){
     let result = false;
-    let list =global.schedules;
-    if (list.length > 0) {
-         var d1 = new Date(list[0].Datetime); d1.setHours(0);d1.setMinutes(0);d1.setSeconds(0);d1.setMilliseconds(0);  //first schedule by schedule datetime
-         var d2 = new Date(list[list.length - 1].Datetime); d2.setHours(0);d2.setMinutes(0);d2.setSeconds(0);d2.setMilliseconds(0);//last schedule by schedule datetime
-         var d = new Date(datetime);  d.setHours(0);d.setMinutes(0);d.setSeconds(0);d.setMilliseconds(0);console.log(d.toString());
-       //  if (+d >= +d1 && +d <= +d2) result = true;
-         if (+d <= +d2) result = true;   //determine if datetime is earlier than last schedule
-    }
-    return result;
+        let list =global.schedules;
+        if (list.length > 0) {
+             var d1 = new Date(list[0].Datetime); d1.setHours(0);d1.setMinutes(0);d1.setSeconds(0);d1.setMilliseconds(0);  //first schedule by schedule datetime
+             var d2 = new Date(list[list.length - 1].Datetime); d2.setHours(0);d2.setMinutes(0);d2.setSeconds(0);d2.setMilliseconds(0);//last schedule by schedule datetime
+             var d = new Date(datetime);  d.setHours(0);d.setMinutes(0);d.setSeconds(0);d.setMilliseconds(0);console.log(d.toString());
+           //  if (+d >= +d1 && +d <= +d2) result = true;
+             if (+d <= +d2) result = true;   //determine if datetime is earlier than last schedule
+        }
+        return result;
  }
- function getStartDay(){  //get the day after the schedule 4th day(4th day's tomorrow)
-    let list =global.schedules; let s=list[list.length - 1];
-    var d2 = new Date(s.Day); d2.setHours(0);d2.setMinutes(0);d2.setSeconds(0);d2.setMilliseconds(0);
-    d2.setDate(d2.getDate()+1);
-    return d2;
+ function getStartDay(){
+        let list =global.schedules; let s=list[list.length - 1];
+        var d2 = new Date(s.Day); d2.setHours(0);d2.setMinutes(0);d2.setSeconds(0);d2.setMilliseconds(0);
+        d2.setDate(d2.getDate()+1);
+        return d2;
  }
  function getNecessary(datetime){  //datetime is in period:datetime< last schedule day
-      let result=false;let moredays=0;
+    let result=false;let moredays=0;
       let list =global.schedules; let s=list[list.length - 1];
       var d1 = new Date(datetime); d1.setHours(0);d1.setMinutes(0);d1.setSeconds(0);d1.setMilliseconds(0);
       var d2 = new Date(s.Day); d2.setHours(0);d2.setMinutes(0);d2.setSeconds(0);d2.setMilliseconds(0);
@@ -927,83 +876,82 @@ the algorithm will not arrange any notification for the time which has been pass
       return {Necessary:result,Days:moredays};
  }
  function updateSchedulesList(schedules,startDatetime){
-      let list=[];
-      var ds = new Date(startDatetime); ds.setHours(0);ds.setMinutes(0);ds.setSeconds(0);ds.setMilliseconds(0);
-      let list1 =global.schedules;let list2=schedules;  //list1 is previous schedule list, pick up the not passed list, list2 is current calculated schedule list, we will combine them and  return, the list 2 is start from the day after the last pre-schedule list(list1), so no duplicated in it.
-      list1.forEach(function(l){
-          if(+l.Day>=+ds)list.push(l);
-      });
-      list2.forEach(function(l){list.push(l);});
-      return list;
+            let list=[];
+            var ds = new Date(startDatetime); ds.setHours(0);ds.setMinutes(0);ds.setSeconds(0);ds.setMilliseconds(0);
+            let list1 =global.schedules;let list2=schedules;  //list1 is previous schedule list, pick up the not passed list, list2 is current calculated schedule list, we will combine them and  return, the list 2 is start from the day after the last pre-schedule list(list1), so no duplicated in it.
+            list1.forEach(function(l){
+                if(+l.Day>=+ds)list.push(l);
+            });
+            list2.forEach(function(l){list.push(l);});
+            return list;
  }
 
  function updatePreScheduleList(schedules,datetime, append) {
-         let list1 = global.schedules;
-         let list2 = schedules;   //newly calucalated schedule list
-         let list3 = [];
-         let curDay = new Date(datetime); curDay.setHours(0); curDay.setMinutes(0); curDay.setSeconds(0); curDay.setMilliseconds(0);
-         if (append) {  //for append(which means for survey B), pickup the pre-schedule list which is not passed yet and combine with the new schedule
-             list1.forEach(function (l, index) {
-                 if (+l.Day >= +curDay) list3.push(l);
-             });
-             global.curDayPassed = []; AsyncStorage.setItem('CurDayPassed',JSON.stringify(global.curDayPassed));
-         }
-         else {  //for the change setting, pickup the current day's passed list from pre-schedule list, remove items which is in curDayPassed(because the item in curDayPassed were already done,be aware of there are some items passed but not in curDayPassed yet, for example when opened this time), and combine with new list
-             list1.forEach(function (l, index) {
-                 if (+l.Day == +curDay && +l.Datetime <= +datetime) list3.push(l);
-             });
-             if (global.curDayPassed.length > 0) {
-                 list3 = list3.filter(function (el) {
-                     return global.curDayPassed.indexOf(el) < 0;
-                 });
-             }
-         }
-         global.schedules = list3.concat(list2); AsyncStorage.setItem('Schedules',JSON.stringify(global.schedules));
-         AsyncStorage.setItem('CurDayPassed',JSON.stringify(global.curDayPassed));
+          let list1 = global.schedules;
+                  let list2 = schedules;   //newly calucalated schedule list
+                  let list3 = [];
+                  let curDay = new Date(datetime); curDay.setHours(0); curDay.setMinutes(0); curDay.setSeconds(0); curDay.setMilliseconds(0);
+                  if (append) {  //for append(which means for survey B), pickup the pre-schedule list which is not passed yet and combine with the new schedule
+                      list1.forEach(function (l, index) {
+                          if (+l.Day >= +curDay) list3.push(l);
+                      });
+                      global.curDayPassed = []; AsyncStorage.setItem('CurDayPassed',JSON.stringify(global.curDayPassed));
+                  }
+                  else {  //for the change setting, pickup the current day's passed list from pre-schedule list, remove items which is in curDayPassed(because the item in curDayPassed were already done,be aware of there are some items passed but not in curDayPassed yet, for example when opened this time), and combine with new list
+                      list1.forEach(function (l, index) {
+                          if (+l.Day == +curDay && +l.Datetime <= +datetime) list3.push(l);
+                      });
+                      if (global.curDayPassed.length > 0) {
+                          list3 = list3.filter(function (el) {
+                              return global.curDayPassed.indexOf(el) < 0;
+                          });
+                      }
+                  }
+                  global.schedules = list3.concat(list2); AsyncStorage.setItem('Schedules',JSON.stringify(global.schedules));
+                  AsyncStorage.setItem('CurDayPassed',JSON.stringify(global.curDayPassed));
      }
  function updateCurDayPassed(passedList) {
-     var list = global.curDayPassed.concat(passedList.filter((item) =>  global.curDayPassed.indexOf(item) < 0))   //only add the one not existed, no duplication here
-      global.curDayPassed = list.sort(function (a, b) { return a.Datetime - b.Datetime });
-     AsyncStorage.setItem('CurDayPassed',JSON.stringify(global.curDayPassed));
+      var list = global.curDayPassed.concat(passedList.filter((item) =>  global.curDayPassed.indexOf(item) < 0))   //only add the one not existed, no duplication here
+           global.curDayPassed = list.sort(function (a, b) { return a.Datetime - b.Datetime });
+          AsyncStorage.setItem('CurDayPassed',JSON.stringify(global.curDayPassed));
  }
 
  export async function testSchedule(){
      let permission=await askPermissions();if(!permission)return;
-     cancellAllSchedules();
-    let schedules=[];
-    let current=new Date();
-    for(var i=0;i<2;i++){
-       let d=new Date(current);d.setMinutes(current.getMinutes()+i+1);
-       schedules.push(d);
-    }
-    let d5=new Date(schedules[schedules.length-1]);d5.setMinutes(d5.getMinutes()+2);
-    let title='test1';let message='message1';let message2='warning message';
-    schedules.forEach(async function(s,index){
-           let ttt=title+index;console.log('ddd:'+s);
-           let notificationId=await setupNotification(s,ttt,message);
-           console.log('notificationId:'+notificationId+' dt:'+s);
-      });
-     let warningNotificationId=await setupWarning(d5,'Waaaaarrrrrnnnning',message2);
-     console.log('warningId:'+warningNotificationId+' dt:'+d5);global.warningNotificationId=warningNotificationId;
+          cancellAllSchedules();
+         let schedules=[];
+         let current=new Date();
+         for(var i=0;i<2;i++){
+            let d=new Date(current);d.setMinutes(current.getMinutes()+i+1);
+            schedules.push(d);
+         }
+         let d5=new Date(schedules[schedules.length-1]);d5.setMinutes(d5.getMinutes()+2);
+         let title='test1';let message='message1';let message2='warning message';
+         schedules.forEach(async function(s,index){
+                let ttt=title+index;console.log('ddd:'+s);
+                let notificationId=await setupNotification(s,ttt,message);
+                console.log('notificationId:'+notificationId+' dt:'+s);
+           });
+          let warningNotificationId=await setupWarning(d5,'Waaaaarrrrrnnnning',message2);
+          console.log('warningId:'+warningNotificationId+' dt:'+d5);global.warningNotificationId=warningNotificationId;
  }
  export function validateSetting(awakeHour,sleepHour,count){
      if(awakeHour==sleepHour)return 1;
-     result=0;
-     let awake=roundUp(awakeHour); let sleep=roundDown(sleepHour);
-     let awakeInterval = sleep - awake; if (awake > sleep) awakeInterval += 24;
-     if(count<2 || count>5)result=4;//never happen,
-     if (awakeInterval<3)result=1;
-     return result;
+          result=0;
+          let awake=roundUp(awakeHour); let sleep=roundDown(sleepHour);
+          let awakeInterval = sleep - awake; if (awake > sleep) awakeInterval += 24;
+          if(count<2 || count>5)result=4;//never happen,
+          if (awakeInterval<3)result=1;
+          return result;
  }
  export async function sendRateAppNotification(){
      let msg=resources.getString("rateAppMsg"); let title=resources.getString("notifications");
-     if (Platform.OS === 'android')msg+=' Google Play Store.';
-     else msg+=' App Store.';
-     let dt=new Date();dt.setHours(dt.getHours()+1);
-     let notificationId=await setupWarning(dt,title,msg);
-
+          if (Platform.OS === 'android')msg+=' Google Play Store.';
+          else msg+=' App Store.';
+          let dt=new Date();dt.setHours(dt.getHours()+1);
+          let notificationId=await setupWarning(dt,title,msg);
  }
- export async function sendNotificationList(){
+export async function sendNotificationList(){
      console.log('Reset schedule list..........');
      let warningDate=global.warningDate;
      let schedules=global.schedules;

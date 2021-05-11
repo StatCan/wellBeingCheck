@@ -1,5 +1,4 @@
 import { PanResponder} from 'react-native';
-import { resources } from './GlobalResources';
 global.name='AAA';
     global.department='bbb';
 global.question='';
@@ -24,7 +23,7 @@ global.surveyExceptionUrlEng='';
 global.surveyExceptionUrlFre='';
 global.doneSurveyA=false;
 global.hasImage=0;
-global.webApiBaseUrl='https://surveys-enquetes.statcan.gc.ca/mobileapp/';   //'http://wellbeingcheckuat.canadacentral.cloudapp.azure.com/wellbeing-bienetre/';    //'https://surveys-enquetes.statcan.gc.ca/mobileapp/'
+global.webApiBaseUrl='https://surveys-enquetes.statcan.gc.ca/mobileapp/';   //'http://wellbeingcheckuat.canadacentral.cloudapp.azure.com/wellbeing-bienetre/';   //'http://localhost:50170/'; ////http://wellbeingcheck.canadacentral.cloudapp.azure.com/WebApiForEsmDev/';    //'http://barabasy.eastus.cloudapp.azure.com/WebApiForEsmDev/';  //'http://localhost:50170/';   //'http://barabasy.eastus.cloudapp.azure.com/WebApiForEsmDev/';      //'http://localhost:49159/'   //'http://barabasy.eastus.cloudapp.azure.com/WebApiForEsm/';//'http://localhost:49159/'
 
 global.connectivity=false;
 global.showThankYou=0;
@@ -46,20 +45,8 @@ global.graphType7='';
 global.configurationReady=false;
 global.currentView=0;
 global.fetchAction=true;
-
 global.currentVersion='';
 global.pingNum=2;
-
-// --------------future change to make timer follow the culture change--------
-// if (resources.culture == "fr") {
-//   global.awakeHour='8:00';
-//   global.sleepHour='22:00'; 
-//   console.log("-------------------fr----------s----------s----------")
-// } else {
-//   global.awakeHour='8:00 AM';
-//   global.sleepHour='10:00 PM';
-//   console.log("-------------------en----------s----------s----------")
-// }
 global.awakeHour='8:00';
 global.sleepHour='22:00';
 global.schedules=[];
@@ -128,8 +115,8 @@ global.createPanResponder=()=>{
             return true;
           },
 
-        onMoveShouldSetPanResponder: () =>{  global.resetTimer();   return false;},
-        onStartShouldSetPanResponderCapture: () => { global.resetTimer();  return false; },
+        onMoveShouldSetPanResponder: () =>{  global.resetTimer(); console.log('On Move.........................');  return false;},
+        onStartShouldSetPanResponderCapture: () => { global.resetTimer(); console.log('On Click.................'); return false; },
 
          //For performence, just enable what is necceesary
           // onStartShouldSetPanResponderCapture: () =>false,
@@ -188,8 +175,8 @@ global.createPanResponder1=()=>{
             return true;
           },
 
-        onMoveShouldSetPanResponder: () =>{  global.globalTick=0;   return false;},
-        onStartShouldSetPanResponderCapture: () => {global.globalTick=0;  return false; },
+        onMoveShouldSetPanResponder: () =>{  global.globalTick=0; console.log('On Move.........................');  return false;},
+        onStartShouldSetPanResponderCapture: () => {global.globalTick=0; console.log('On Click.................'); return false; },
 
          //For performence, just enable what is necceesary
           // onStartShouldSetPanResponderCapture: () =>false,

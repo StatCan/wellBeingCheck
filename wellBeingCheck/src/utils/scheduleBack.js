@@ -78,11 +78,13 @@ setupNotification = async (datetime,title,message) => {
       vibrate: true,
     });
   }
-  let scheduledTime = new Date(datetime);
+  let scheduledTime = new Date(datetime);let msg=+'Info:'+new Date(datetime)+' '+message;
+ // console.log(msg);
   let notificationId =await Notifications.scheduleLocalNotificationAsync(
     {
       title: title,
-      body: message,
+      body: msg,
+      data: JSON.stringify({scheduledTime:scheduledTime}),   //Test only
       ios: { sound: true },
       android: {
         "channelId": "survey-messages"
@@ -119,6 +121,9 @@ askPermissions = async () => {
 //cancell all notifications which were setup before
 function cancellAllSchedules(){
      Notifications.cancelAllScheduledNotificationsAsync();
+//      if (Platform.OS === 'android') {
+//         Notifications.deleteChannelAndroidAsync('survey-messages').then(()=>{console.log('channel was cancelled');});
+//      }
 }
 //Cancel a notification by notificationId
 export function cancelSchedule(localNotificationId){
@@ -162,6 +167,7 @@ It has 2 main scenarios: Does lastDate flag exist ?
                  secondly, we still have to calculate how many days of notification need to be appended beside the current day and setup them
 for how to calculate these notification schedule, the next function will get into play*/
 export async function setupSchedules(affectCurrent=false){
+    let sendouts='';//Test only
     let permission=await askPermissions();if(!permission)return;
     let title=resources.getString("scheduleTitle");//   "Scheduled Notification";
     let message=resources.getString("scheduleMessage");//"Scheduled Notification for the Survey!";
@@ -207,7 +213,7 @@ export async function setupSchedules(affectCurrent=false){
                         schedules[index].Datetime = ss;
                  }
                  let notificationId=await setupNotification(ss,title,message);
-                 console.log('notificationId:'+notificationId+'->'+ss.toString());
+                 console.log('notificationId:'+notificationId+'->'+ss.toString());sendouts+=notificationId+':'+ss.toString()+'\r\n';
              });
              let warningNotificationId=await setupWarning(dt,title,lastMessage);
              var l=lastDate.toString();console.log('Last day:'+l);
@@ -216,8 +222,9 @@ export async function setupSchedules(affectCurrent=false){
              global.warningNotificationId=warningNotificationId;
              console.log('warning notification:'+dt+' Id:'+warningNotificationId);
              global.lastDate=lastDate;
-             AsyncStorage.setItem('Schedules',JSON.stringify(schedules));
-             global.schedules=schedules;
+          //   AsyncStorage.setItem('Schedules',JSON.stringify(schedules));global.schedules=schedules;
+             global.curDayPassed =[]; AsyncStorage.setItem('CurDayPassed',JSON.stringify(global.curDayPassed));
+             updatePreScheduleList(schedules,currentDateTime,false);
          }
     }
     else { //Survey B or change setting
@@ -228,6 +235,7 @@ export async function setupSchedules(affectCurrent=false){
             if(affectCurrent){  //for change setting,  This part is hard core
                 let f=getAffectedDay(currentDateTime,count);  let day5=getNextDay(currentDateTime);
                 if(f==null){  //No affected day, go normal schedule
+                    console.log('No affected day');
                     let tomorrow = new Date(currentDateTime); tomorrow.setDate(tomorrow.getDate() + 1); tomorrow.setHours(0); tomorrow.setMinutes(0); tomorrow.setSeconds(0); tomorrow.setMilliseconds(0);
                     let days = getFollowingDays(tomorrow,lastDate,true,4,false);
                     if(days.length>0){
@@ -244,8 +252,10 @@ export async function setupSchedules(affectCurrent=false){
                     }
                 }
                 else {
-                    let affectedDay=f.AffectedDay; let leftOverCount=count- f.PassedCount;
-                    let ddd =parseInt((lastDate - affectedDay)/ (1000 * 60 * 60 * 24), 10); if (ddd == 30) leftOverCount = leftOverCount - 1;
+                    let affectedDay=f.AffectedDay; let leftOverCount=count- f.PassedCount;let passedList = f.PassedList;
+                    console.log('leftover:'+leftOverCount+'='+count+'-'+f.PassedCount);
+                    let ddd =parseInt((lastDate - affectedDay)/ (1000 * 60 * 60 * 24), 10); if (ddd == 30) leftOverCount = leftOverCount - 1;  //because survey A already conducted 1
+
                     console.log('Setup notification will affect current day:'+affectedDay.toString()+'->'+leftOverCount);
                     let days = getFollowingDays(affectedDay,lastDate,true,4,false);
                     if(days.length>0){
@@ -271,6 +281,7 @@ export async function setupSchedules(affectCurrent=false){
                              }
                           }
                        });
+                       if (passedList.length > 0) updateCurDayPassed(passedList);
                     }
                 }
                 if(schedules.length>0){
@@ -287,7 +298,7 @@ export async function setupSchedules(affectCurrent=false){
                             ss.setMinutes(mm);schedules[index].Datetime = ss;
                          }
                          let notificationId=await setupNotification(ss,title,message);
-                         console.log('notificationId:'+notificationId+'->'+ss.toString());
+                         console.log('notificationId:'+notificationId+'->'+ss.toString());sendouts+=notificationId+':'+ss.toString()+'\r\n';
                     });
 
                     let dt=new Date(day5);dt.setHours(sleep-2);
@@ -295,8 +306,9 @@ export async function setupSchedules(affectCurrent=false){
                     AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());
                     global.warningNotificationId=warningNotificationId;
                     console.log('warning notification:'+warningNotificationId);
-                    AsyncStorage.setItem('Schedules',JSON.stringify(schedules));
-                    global.schedules=schedules;
+
+                  //  AsyncStorage.setItem('Schedules',JSON.stringify(schedules)); global.schedules=schedules;
+                  updatePreScheduleList(schedules,currentDateTime,false);
                 }
             }
             else{  //for survey B, simply append new schedules
@@ -320,6 +332,7 @@ export async function setupSchedules(affectCurrent=false){
                                         });
                                     }
                                 });
+                     global.curDayPassed = []; AsyncStorage.setItem('CurDayPassed',JSON.stringify(global.curDayPassed));
                }
                if(schedules.length>0){
                      schedules=updateSchedulesList(schedules,currentDateTime);
@@ -336,15 +349,16 @@ export async function setupSchedules(affectCurrent=false){
                                 ss.setMinutes(mm);schedules[index].Datetime = ss;
                            }
                            let notificationId=await setupNotification(ss,title,message);
-                           console.log('notificationId:'+notificationId+'->'+ss.toString());
+                           console.log('notificationId:'+notificationId+'->'+ss.toString());sendouts+=notificationId+':'+ss.toString()+'\r\n';
                       });
                      let dt=new Date(day5);dt.setHours(sleep-2);
                      let warningNotificationId=await setupWarning(dt,title,lastMessage);
                      AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());
                      global.warningNotificationId=warningNotificationId;
                      console.log('warning notification:'+warningNotificationId);
-                     AsyncStorage.setItem('Schedules',JSON.stringify(schedules));
-                     global.schedules=schedules;
+
+                   //  AsyncStorage.setItem('Schedules',JSON.stringify(schedules)); global.schedules=schedules;
+                     updatePreScheduleList(schedules,currentDateTime,true);
                  }
             }
         }
@@ -356,7 +370,8 @@ export async function setupSchedules(affectCurrent=false){
              if(days.length>0){
                  day5=getNextDay(days[days.length-1]);
                  days.forEach(function (d, index) {
-                     var schObj  =calculateSchedule(awake, sleep, count, d,currentDateTime);
+                     let cc = count; if (index == 0) cc = count - 1;//count minimum=2
+                     var schObj  =calculateSchedule(awake, sleep, cc, d,currentDateTime);
                      var selected=schObj.Selected;
                      if (selected.length > 0) {
                          selected.forEach(function (s) {
@@ -364,6 +379,7 @@ export async function setupSchedules(affectCurrent=false){
                          });
                      }
                  });
+                 global.curDayPassed = []; AsyncStorage.setItem('CurDayPassed',JSON.stringify(global.curDayPassed));
              }
              if(schedules.length>0){
                   cancellAllSchedules();
@@ -379,18 +395,21 @@ export async function setupSchedules(affectCurrent=false){
                           ss.setMinutes(mm);schedules[index].Datetime = ss;
                        }
                        let notificationId=await setupNotification(ss,title,message);
-                       console.log('notificationId:'+notificationId+'->'+ss.toString());
+                       console.log('notificationId:'+notificationId+'->'+ss.toString());sendouts+=notificationId+':'+ss.toString()+'\r\n';
                   });
                  let dt=new Date(day5);dt.setHours(sleep-2);
                  let warningNotificationId=await setupWarning(dt,title,lastMessage);
                  AsyncStorage.setItem('WarningNotificationId',warningNotificationId.toString());
                  global.warningNotificationId=warningNotificationId;
                  console.log('warning notification:'+warningNotificationId);
-                 AsyncStorage.setItem('Schedules',JSON.stringify(schedules));
-                 global.schedules=schedules;
+
+               //  AsyncStorage.setItem('Schedules',JSON.stringify(schedules));global.schedules=schedules;
+                 updatePreScheduleList(schedules,currentDateTime,false);
              }
     }
     }
+
+    global.sendouts=sendouts; AsyncStorage.setItem('Sendouts', sendouts);
 }
 /*Main function to calculate the notificationschedule, the parameters are used to indicate the schedule date, awake hour,sleep hour,how many times of notification for this day, and current time
 the algorithm will not arrange any notification for the time which has been passed for the day(time<current), for detail see the work flowpdf file*/
@@ -641,36 +660,69 @@ the algorithm will not arrange any notification for the time which has been pass
      return {Count:count,Hour:hour};
  }
  function getAffectedDay(datetime,countNum) {
-          let result = null;
-          let list =global.schedules;
-          let curDayList = [];
-
-
-          let curDay = new Date(datetime); curDay.setHours(0); curDay.setMinutes(0); curDay.setSeconds(0); curDay.setMilliseconds(0);
-          list.forEach(function (l, index) {
-              if (+l.Day == +curDay) curDayList.push(l);
-          });
-
-          var found = list.find(function (l) {
-              return l.Datetime > datetime;
-          });
-          if (found != null) {
-              let sch = found.Day;
-              let ddd = parseInt((sch- curDay) / (1000 * 60 * 60 * 24), 10);
-              if (ddd == 1 && curDayList.length > 0 && countNum > curDayList.length) {
-                  result = { AffectedDay: curDay, PassedCount: curDayList.length };
-              }
-              else {
-                  let count = 0;
-                  list.forEach(function (l) {
-                      if (+l.Day == +sch && +l.Datetime <= +datetime) count++;
-                  });
-                  result = { AffectedDay: sch, PassedCount: count };
-              }
-          }
-          console.log(result);
-          return result;
-      }
+         let result = null; let currPassed = [];
+         let list =global.schedules;
+         let fday = list[0]; let lday = list[list.length - 1];
+         let fd = new Date(list[0].Datetime); let ld = new Date(list[list.length - 1].Datetime);
+         let curDay = new Date(datetime); curDay.setHours(0); curDay.setMinutes(0); curDay.setSeconds(0); curDay.setMilliseconds(0);
+         var found = list.find(function (l) {
+             return l.Datetime > datetime;
+         });
+         if (found != null) {
+             let sch = found.Day; let index = list.indexOf(found);
+             if (sch > curDay && list[0].Day > curDay) {
+                 let pnum = global.curDayPassed.length;
+                 result = { AffectedDay: curDay, PassedCount: pnum, PassedList: currPassed };
+                 return result;
+             }
+             let count = 0;
+             list.forEach(function (l) {
+                 if (+l.Day == +sch && +l.Datetime <= +datetime) count++;
+             });
+             let ddd = parseInt((sch - fday.Day) / (1000 * 60 * 60 * 24), 10);
+             if (ddd > 1) {
+                 result = { AffectedDay: sch, PassedCount: count, PassedList: currPassed };
+             }
+             else if (ddd == 1) {
+                 let prev = list[0];
+                 if (index > 0) prev = list[index - 1];
+                 if (+prev.Day != +fday.Day) {
+                     result = { AffectedDay: sch, PassedCount: count, PassedList: currPassed };
+                 }
+                 else {
+                     let numUpdate = index;//update index;
+                     if (global.curDayPassed != null) numUpdate += global.curDayPassed.length;
+                     for (let i = 0; i < index; i++)currPassed.push(list[i]);
+                     result = { AffectedDay: prev.Day, PassedCount: numUpdate, PassedList: currPassed };
+                 }
+             }
+             else if (ddd == 0) {
+                 let numUpdate = count;//update index;
+                 if (global.curDayPassed != null) numUpdate += global.curDayPassed.length;
+                 for (let i = 0; i < index; i++)currPassed.push(list[i]);
+                 result = { AffectedDay: sch, PassedCount: numUpdate, PassedList: currPassed };
+             }
+         }
+         else {
+             if (datetime > ld) {//datetime
+                 if (+curDay == +lday.Day) {
+                     count = 0;
+                     list.forEach(function (l) {
+                         if (+l.Day == +curDay && +l.Datetime <= +datetime) { count++; currPassed.push(l.Datetime); }
+                     });
+                     let numUpdate = count;//update index;
+                     if (global.curDayPassed != null) numUpdate += global.curDayPassed.length;
+                     result = { AffectedDay: curDay, PassedCount: numUpdate };
+                 } else {
+                     result = { AffectedDay: curDay, PassedCount: 0, PassedList: currPassed };
+                 }
+                 //let tomorrow = new Date(currentDateTime); tomorrow.setDate(tomorrow.getDate() + 1); tomorrow.setHours(0); tomorrow.setMinutes(0); tomorrow.setSeconds(0); tomorrow.setMilliseconds(0);
+                 //result = { AffectedDay: tomorrow, PassedCount:0 };
+             }
+             if (datetime < fd) result = { AffectedDay: curDay, PassedCount: 0, PassedList: currPassed};//shouldn't happen
+         }
+         return result;
+     }
  function filterListByDate(date,list) {
             date = new Date(date.toString().replace(/-/g, '\/'));
             var date1 = new Date(date); date1.setHours(hour); date1.setMinutes(0); date1.setSeconds(0);
@@ -727,6 +779,37 @@ the algorithm will not arrange any notification for the time which has been pass
       list2.forEach(function(l){list.push(l);});
       return list;
  }
+
+ function updatePreScheduleList(schedules,datetime, append) {
+         let list1 = global.schedules;
+         let list2 = schedules;
+         let list3 = [];
+         let curDay = new Date(datetime); curDay.setHours(0); curDay.setMinutes(0); curDay.setSeconds(0); curDay.setMilliseconds(0);
+         if (append) {
+             list1.forEach(function (l, index) {
+                 if (+l.Day >= +curDay) list3.push(l);
+             });
+             global.curDayPassed = []; AsyncStorage.setItem('CurDayPassed',JSON.stringify(global.curDayPassed));
+         }
+         else {
+             list1.forEach(function (l, index) {
+                 if (+l.Day == +curDay && +l.Datetime <= +datetime) list3.push(l);
+             });
+             if (global.curDayPassed.length > 0) {
+                 list3 = list3.filter(function (el) {
+                     return global.curDayPassed.indexOf(el) < 0;
+                 });
+             }
+         }
+         global.schedules = list3.concat(list2); AsyncStorage.setItem('Schedules',JSON.stringify(global.schedules));
+         AsyncStorage.setItem('CurDayPassed',JSON.stringify(global.curDayPassed));
+     }
+ function updateCurDayPassed(passedList) {
+     var list = global.curDayPassed.concat(passedList.filter((item) =>  global.curDayPassed.indexOf(item) < 0))
+      global.curDayPassed = list.sort(function (a, b) { return a.Datetime - b.Datetime });
+     AsyncStorage.setItem('CurDayPassed',JSON.stringify(global.curDayPassed));
+ }
+
  export async function testSchedule(){
      let permission=await askPermissions();if(!permission)return;
      cancellAllSchedules();
@@ -749,7 +832,7 @@ the algorithm will not arrange any notification for the time which has been pass
  export function validateSetting(awakeHour,sleepHour,count){
      if(awakeHour==sleepHour)return 1;
      result=0;
-     let awake=roundUp(awakeHour); let sleep=roundDown(sleepHour);  console.log('aaa:'+awake+' sss:'+sleep);
+     let awake=roundUp(awakeHour); let sleep=roundDown(sleepHour);
      let awakeInterval = sleep - awake; if (awake > sleep) awakeInterval += 24;
      if(count<2 || count>5)result=4;//never happen,
      if (awakeInterval<3)result=1;

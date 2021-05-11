@@ -165,18 +165,18 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
             <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
               <Title style={styles.title}>{resources.getString("terms_and_conditions")}</Title>
 
-           
-             <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("terms_and_conditions_content.Disclaimer")} 
+
+             <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("terms_and_conditions_content.Disclaimer")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("terms_and_conditions_content.Disclaimer")} </Text>
 
                 <Paragraph style={styles.paragraph}>
                   <Text>
-                    
-                 <ParsedText 
+
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -194,17 +194,17 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                 </Paragraph>
 
 
-             <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("terms_and_conditions_content.T&A")} 
+             <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("terms_and_conditions_content.T&A")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("terms_and_conditions_content.T&A")} </Text>
 
                 <Paragraph style={styles.paragraph}>
                   <Text>
-                    
-                 <ParsedText 
+
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -225,17 +225,17 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                   </Text>
                 </Paragraph>
 
-              <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("terms_and_conditions_content.Modif")} 
+              <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("terms_and_conditions_content.Modif")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("terms_and_conditions_content.Modif")} </Text>
 
                 <Paragraph style={styles.paragraph}>
                   <Text>
-                    
-                 <ParsedText 
+
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -250,17 +250,17 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                   </Text>
                 </Paragraph>
 
-                <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("terms_and_conditions_content.privacy")} 
+                <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("terms_and_conditions_content.privacy")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("terms_and_conditions_content.privacy")} </Text>
 
                 <Paragraph style={styles.paragraph}>
                   <Text>
-                    
-                 <ParsedText 
+
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -278,17 +278,17 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                     </ParsedText>
                   </Text>
                 </Paragraph>
-                <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("terms_and_conditions_content.confidentiality")} 
+                <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("terms_and_conditions_content.confidentiality")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("terms_and_conditions_content.confidentiality")} </Text>
 
                 <Paragraph style={styles.paragraph}>
                   <Text>
-                    
-                 <ParsedText 
+
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -304,17 +304,17 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                     </ParsedText>
                   </Text>
                 </Paragraph>
-                <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("terms_and_conditions_content.language")} 
+                <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("terms_and_conditions_content.language")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("terms_and_conditions_content.language")} </Text>
 
                 <Paragraph style={styles.paragraph}>
                   <Text>
-                    
-                 <ParsedText 
+
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -330,17 +330,17 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                     </ParsedText>
                   </Text>
                 </Paragraph>
-               <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("terms_and_conditions_content.accessibility")} 
+               <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("terms_and_conditions_content.accessibility")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("terms_and_conditions_content.accessibility")} </Text>
 
                 <Paragraph style={styles.paragraph}>
                   <Text>
-                    
-                 <ParsedText 
+
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -354,16 +354,16 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                     </ParsedText>
                   </Text>
                 </Paragraph>
-               <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("terms_and_conditions_content.useofcontent")} 
+               <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("terms_and_conditions_content.useofcontent")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("terms_and_conditions_content.useofcontent")} </Text>
 
                 <Paragraph style={styles.paragraph}>
-                 <Text>        
-                 <ParsedText 
+                 <Text>
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -375,16 +375,16 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                     </ParsedText>
                   </Text>
                 </Paragraph>
-            <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("terms_and_conditions_content.uniqueIdentifier")} 
+            <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("terms_and_conditions_content.uniqueIdentifier")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("terms_and_conditions_content.uniqueIdentifier")} </Text>
 
                 <Paragraph style={styles.paragraph}>
                   <Text>
-                 <ParsedText 
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -397,15 +397,15 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                     </ParsedText>
                   </Text>
                 </Paragraph>
-                <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("terms_and_conditions_content.Law")} 
+                <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("terms_and_conditions_content.Law")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("terms_and_conditions_content.Law")} </Text>
                 <Paragraph style={styles.paragraph}>
                   <Text>
-                 <ParsedText 
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -417,16 +417,16 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                     </ParsedText>
                   </Text>
                 </Paragraph>
-                <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("terms_and_conditions_content.Liability")} 
+                <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("terms_and_conditions_content.Liability")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("terms_and_conditions_content.Liability")} </Text>
 
                 <Paragraph style={styles.paragraph}>
                   <Text>
-                 <ParsedText 
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -439,15 +439,15 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                     </ParsedText>
                   </Text>
                 </Paragraph>
-                <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("terms_and_conditions_content.disclosure")} 
+                <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("terms_and_conditions_content.disclosure")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("terms_and_conditions_content.disclosure")} </Text>
                 <Paragraph style={styles.paragraph}>
                   <Text>
-                 <ParsedText 
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -460,16 +460,16 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                   </Text>
                 </Paragraph>
 
-                <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("terms_and_conditions_content.copyright")} 
+                <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("terms_and_conditions_content.copyright")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("terms_and_conditions_content.copyright")} </Text>
 
                 <Paragraph style={styles.paragraph}>
                   <Text>
-                  <ParsedText 
+                  <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -484,15 +484,15 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                     </ParsedText>
                   </Text>
                 </Paragraph>
-                <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("terms_and_conditions_content.trademark")} 
+                <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("terms_and_conditions_content.trademark")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("terms_and_conditions_content.trademark")} </Text>
                 <Paragraph style={styles.paragraph}>
                  <Text>
-                 <ParsedText 
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -504,15 +504,15 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                     </ParsedText>
                   </Text>
                 </Paragraph>
-                <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("terms_and_conditions_content.nowarranties")} 
+                <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("terms_and_conditions_content.nowarranties")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("terms_and_conditions_content.nowarranties")} </Text>
                 <Paragraph style={styles.paragraph}>
                   <Text>
-                 <ParsedText 
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -524,15 +524,15 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                     </ParsedText>
                   </Text>
                 </Paragraph>
-                <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("terms_and_conditions_content.indemnity")} 
+                <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("terms_and_conditions_content.indemnity")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("terms_and_conditions_content.indemnity")} </Text>
                 <Paragraph style={styles.paragraph}>
                 <Text>
-                 <ParsedText 
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -544,15 +544,15 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                     </ParsedText>
                   </Text>
                 </Paragraph>
-                <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("terms_and_conditions_content.restrictions")} 
+                <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("terms_and_conditions_content.restrictions")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("terms_and_conditions_content.restrictions")} </Text>
                 <Paragraph style={styles.paragraph}>
                   <Text>
-                 <ParsedText 
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -564,15 +564,15 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                     </ParsedText>
                   </Text>
                 </Paragraph>
-               <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("terms_and_conditions_content.modifications")} 
+               <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("terms_and_conditions_content.modifications")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("terms_and_conditions_content.modifications")} </Text>
                 <Paragraph style={styles.paragraph}>
                   <Text>
-                 <ParsedText 
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -584,15 +584,15 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                     </ParsedText>
                   </Text>
                 </Paragraph>
-               <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("terms_and_conditions_content.ownership")} 
+               <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("terms_and_conditions_content.ownership")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("terms_and_conditions_content.ownership")} </Text>
                 <Paragraph style={styles.paragraph}>
-                 <Text>    
-                 <ParsedText 
+                 <Text>
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -604,15 +604,15 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                     </ParsedText>
                   </Text>
                 </Paragraph>
-                <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("terms_and_conditions_content.maintenance")} 
+                <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("terms_and_conditions_content.maintenance")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("terms_and_conditions_content.maintenance")} </Text>
                 <Paragraph style={styles.paragraph}>
                   <Text>
-                 <ParsedText 
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [

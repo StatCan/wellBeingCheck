@@ -3,10 +3,10 @@ import { Button, View, Text, StyleSheet } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Appearance } from "react-native-appearance";
 import { resources } from "../../GlobalResources";
-import { DepthDataAccuracy } from "expo/build/AR";
+//import { DepthDataAccuracy } from "expo/build/AR";
 
 const TimePicker = (props) => {
-  
+
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
 
   isDarkModeEnabled = Appearance.getColorScheme() === "dark";
@@ -71,7 +71,7 @@ const TimePicker = (props) => {
             isVisible={props.isVisible}
             //android props
             is24Hour={resources.culture=="fr"? true:false} //this in case we need to have 24 hours clock for android is24Hour={true}
-            display='spinner'            
+            display='spinner'
             date={date}
             //ios props
             headerTextIOS={resources.getString("timepicker.title")}

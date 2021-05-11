@@ -19,8 +19,6 @@ import { SafeAreaConsumer } from 'react-native-safe-area-context';
 // import StyleText from 'react-native-styled-text';
 import ParsedText from 'react-native-parsed-text';
 import { expo } from '../../app.json';
-
-
 type GettingStartedState = {
   gettingStarted: boolean,
   bannerVisibility: boolean,
@@ -64,7 +62,6 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
     };
 
     AsyncStorage.setItem('user_getting_started', JSON.stringify(userGettingStartedObj), () => {
-      global.syslog+='getting_started:'+(new Date()).toString()+','; AsyncStorage.setItem('Syslog',global.syslog); //Test only
       this.props.navigation.navigate('TermsOfServiceScreen');
     });
   }
@@ -83,307 +80,17 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
         <SafeAreaView style={styles.container}>
           <View style={styles.headerContainer}>
             <LogoClearSmall />
-            <TouchableOpacity 
-            onPress={() => this.toggleLanguage()} 
-            style={{ alignSelf: 'flex-end', marginRight: 0 }}
+            <TouchableOpacity onPress={() => this.toggleLanguage()} style={{ alignSelf: 'flex-end', marginRight: 0 }}
             accessibilityRole='button'
             accessible={true}
-            accessibilityLabel={resources.getString("Language")}
             >
               <Text>{resources.getString("Language")}</Text>
             </TouchableOpacity>
           </View>
           <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-            <Title style={styles.title}
-            accessible={true}
-            accessibilityRole='text'
-            accessibilityLabel= {resources.getString("Accessibility.getting_started_title")} //'getting started page title'
-            >{resources.getString("getting_started")}</Title>
-           
-           
-           
-           
-           
+            <Title style={styles.title}>{resources.getString("getting_started")}</Title>
             <View style={{}}>
-
-            <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("about_content.Study")} 
-                style={styles.ParagraphHeader}
-                >{resources.getString("about_content.Study")} </Text>
-
-                <Paragraph style={styles.paragraph}>
-                  <Text>
-                    
-                 <ParsedText 
-                      style={styles.text}
-                      parse={
-                        [
-                          { pattern: /Why we are conducting this study|Notifications|Authorization and confidentiality|Record linkages/, style: styles.bold },
-                          { pattern: /Time required to complete this questionnaire|To navigate the questionnaire|Session timeout|Definitions and explanations|Version/, style: styles.bold },
-
-                          { pattern: /Pourquoi nous menons cette étude|Notifications|Autorisation et confidentialité|Couplages d’enregistrements/, style: styles.bold },
-                          { pattern: /Temps requis pour remplir ce questionnaire|Pour parcourir le questionnaire|Délai d’inactivité d’une session|Définitions et explications|Version/, style: styles.bold },
-
-                          { pattern: /Statistics Act/, style: styles.italic },
-                          { pattern: /Loi sur la statistique/, style: styles.italic },
-                        ]
-                      }
-                      childrenProps={{ allowFontScaling: false }}
-                    >
-                     
-                       
-                      {resources.getString("about_content.Study.a")}
-
-                    </ParsedText>
-                  </Text>
-                </Paragraph>
-               
-
-                <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("about_content.Notification")} 
-                style={styles.ParagraphHeader}
-                >{resources.getString("about_content.Notification")} </Text>
-
-                <Paragraph style={styles.paragraph}>
-                  <Text>
-                    
-                 <ParsedText 
-                      style={styles.text}
-                      parse={
-                        [
-                          { pattern: /Why we are conducting this study|Notifications|Authorization and confidentiality|Record linkages/, style: styles.bold },
-                          { pattern: /Time required to complete this questionnaire|To navigate the questionnaire|Session timeout|Definitions and explanations|Version/, style: styles.bold },
-
-                          { pattern: /Pourquoi nous menons cette étude|Notifications|Autorisation et confidentialité|Couplages d’enregistrements/, style: styles.bold },
-                          { pattern: /Temps requis pour remplir ce questionnaire|Pour parcourir le questionnaire|Délai d’inactivité d’une session|Définitions et explications|Version/, style: styles.bold },
-
-                          { pattern: /Statistics Act/, style: styles.italic },
-                          { pattern: /Loi sur la statistique/, style: styles.italic },
-                        ]
-                      }
-                      childrenProps={{ allowFontScaling: false }}
-                    >
-                     
-                       
-                      {resources.getString("about_content.Notification.a")}
-
-                    </ParsedText>
-                  </Text>
-                </Paragraph>
-
-
-                <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("about_content.Authorization")} 
-                style={styles.ParagraphHeader}
-                >{resources.getString("about_content.Authorization")} </Text>
-
-                <Paragraph style={styles.paragraph}>
-                  <Text>
-                    
-                 <ParsedText 
-                      style={styles.text}
-                      parse={
-                        [
-                          { pattern: /Why we are conducting this study|Notifications|Authorization and confidentiality|Record linkages/, style: styles.bold },
-                          { pattern: /Time required to complete this questionnaire|To navigate the questionnaire|Session timeout|Definitions and explanations|Version/, style: styles.bold },
-
-                          { pattern: /Pourquoi nous menons cette étude|Notifications|Autorisation et confidentialité|Couplages d’enregistrements/, style: styles.bold },
-                          { pattern: /Temps requis pour remplir ce questionnaire|Pour parcourir le questionnaire|Délai d’inactivité d’une session|Définitions et explications|Version/, style: styles.bold },
-
-                          { pattern: /Statistics Act/, style: styles.italic },
-                          { pattern: /Loi sur la statistique/, style: styles.italic },
-                        ]
-                      }
-                      childrenProps={{ allowFontScaling: false }}
-                    >
-                     
-                       
-                      {resources.getString("about_content.Authorization.a")}
-
-                    </ParsedText>
-                  </Text>
-                </Paragraph>
-
-
-                <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("about_content.linkages")} 
-                style={styles.ParagraphHeader}
-                >{resources.getString("about_content.linkages")} </Text>
-
-                <Paragraph style={styles.paragraph}>
-                  <Text>
-                    
-                 <ParsedText 
-                      style={styles.text}
-                      parse={
-                        [
-                          { pattern: /Why we are conducting this study|Notifications|Authorization and confidentiality|Record linkages/, style: styles.bold },
-                          { pattern: /Time required to complete this questionnaire|To navigate the questionnaire|Session timeout|Definitions and explanations|Version/, style: styles.bold },
-
-                          { pattern: /Pourquoi nous menons cette étude|Notifications|Autorisation et confidentialité|Couplages d’enregistrements/, style: styles.bold },
-                          { pattern: /Temps requis pour remplir ce questionnaire|Pour parcourir le questionnaire|Délai d’inactivité d’une session|Définitions et explications|Version/, style: styles.bold },
-
-                          { pattern: /Statistics Act/, style: styles.italic },
-                          { pattern: /Loi sur la statistique/, style: styles.italic },
-                        ]
-                      }
-                      childrenProps={{ allowFontScaling: false }}
-                    >
-                     
-                       
-                      {resources.getString("about_content.linkages.a")}
-
-                    </ParsedText>
-                  </Text>
-                </Paragraph>
-
-
-                <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("about_content.time")} 
-                style={styles.ParagraphHeader}
-                >{resources.getString("about_content.time")} </Text>
-
-                <Paragraph style={styles.paragraph}>
-                  <Text>
-                    
-                 <ParsedText 
-                      style={styles.text}
-                      parse={
-                        [
-                          { pattern: /Why we are conducting this study|Notifications|Authorization and confidentiality|Record linkages/, style: styles.bold },
-                          { pattern: /Time required to complete this questionnaire|To navigate the questionnaire|Session timeout|Definitions and explanations|Version/, style: styles.bold },
-
-                          { pattern: /Pourquoi nous menons cette étude|Notifications|Autorisation et confidentialité|Couplages d’enregistrements/, style: styles.bold },
-                          { pattern: /Temps requis pour remplir ce questionnaire|Pour parcourir le questionnaire|Délai d’inactivité d’une session|Définitions et explications|Version/, style: styles.bold },
-
-                          { pattern: /Statistics Act/, style: styles.italic },
-                          { pattern: /Loi sur la statistique/, style: styles.italic },
-                        ]
-                      }
-                      childrenProps={{ allowFontScaling: false }}
-                    >
-                     
-                       
-                      {resources.getString("about_content.time.a")}
-
-                    </ParsedText>
-                  </Text>
-                </Paragraph>
-
-                <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("about_content.navigate")} 
-                style={styles.ParagraphHeader}
-                >{resources.getString("about_content.navigate")} </Text>
-
-                <Paragraph style={styles.paragraph}>
-                  <Text>
-                    
-                 <ParsedText 
-                      style={styles.text}
-                      parse={
-                        [
-                          { pattern: /Why we are conducting this study|Notifications|Authorization and confidentiality|Record linkages/, style: styles.bold },
-                          { pattern: /Time required to complete this questionnaire|To navigate the questionnaire|Session timeout|Definitions and explanations|Version/, style: styles.bold },
-
-                          { pattern: /Pourquoi nous menons cette étude|Notifications|Autorisation et confidentialité|Couplages d’enregistrements/, style: styles.bold },
-                          { pattern: /Temps requis pour remplir ce questionnaire|Pour parcourir le questionnaire|Délai d’inactivité d’une session|Définitions et explications|Version/, style: styles.bold },
-
-                          { pattern: /Statistics Act/, style: styles.italic },
-                          { pattern: /Loi sur la statistique/, style: styles.italic },
-                        ]
-                      }
-                      childrenProps={{ allowFontScaling: false }}
-                    >
-                    
-                      {resources.getString("about_content.navigate.a")}
-
-                    </ParsedText>
-                  </Text>
-                </Paragraph>
-
-                <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("about_content.timeout")} 
-                style={styles.ParagraphHeader}
-                >{resources.getString("about_content.timeout")} </Text>
-
-                <Paragraph style={styles.paragraph}>
-                  <Text>
-                    
-                 <ParsedText 
-                      style={styles.text}
-                      parse={
-                        [
-                          { pattern: /Why we are conducting this study|Notifications|Authorization and confidentiality|Record linkages/, style: styles.bold },
-                          { pattern: /Time required to complete this questionnaire|To navigate the questionnaire|Session timeout|Definitions and explanations|Version/, style: styles.bold },
-
-                          { pattern: /Pourquoi nous menons cette étude|Notifications|Autorisation et confidentialité|Couplages d’enregistrements/, style: styles.bold },
-                          { pattern: /Temps requis pour remplir ce questionnaire|Pour parcourir le questionnaire|Délai d’inactivité d’une session|Définitions et explications|Version/, style: styles.bold },
-
-                          { pattern: /Statistics Act/, style: styles.italic },
-                          { pattern: /Loi sur la statistique/, style: styles.italic },
-                        ]
-                      }
-                      childrenProps={{ allowFontScaling: false }}
-                    >
-   
-                      {resources.getString("about_content.timeout.a")}
-
-                    </ParsedText>
-                  </Text>
-                </Paragraph>
-
-
-                <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("about_content.def")} 
-                style={styles.ParagraphHeader}
-                >{resources.getString("about_content.def")} </Text>
-
-                <Paragraph style={styles.paragraph}>
-                  <Text>
-                    
-                 <ParsedText 
-                      style={styles.text}
-                      parse={
-                        [
-                          { pattern: /Why we are conducting this study|Notifications|Authorization and confidentiality|Record linkages/, style: styles.bold },
-                          { pattern: /Time required to complete this questionnaire|To navigate the questionnaire|Session timeout|Definitions and explanations|Version/, style: styles.bold },
-
-                          { pattern: /Pourquoi nous menons cette étude|Notifications|Autorisation et confidentialité|Couplages d’enregistrements/, style: styles.bold },
-                          { pattern: /Temps requis pour remplir ce questionnaire|Pour parcourir le questionnaire|Délai d’inactivité d’une session|Définitions et explications|Version/, style: styles.bold },
-
-                          { pattern: /Statistics Act/, style: styles.italic },
-                          { pattern: /Loi sur la statistique/, style: styles.italic },
-                        ]
-                      }
-                      childrenProps={{ allowFontScaling: false }}
-                    >
-   
-                      {resources.getString("about_content.def.a")}
-
-                    </ParsedText>
-                  </Text>
-                </Paragraph>
-
-
-
-
-              {/* <Paragraph style={styles.paragraph}>
+              <Paragraph style={styles.paragraph}>
 
                 <ParsedText
                   style={styles.text}
@@ -391,32 +98,31 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
                     [
                       { pattern: /Why we are conducting this study|Notifications|Authorization and confidentiality|Record linkages/, style: styles.bold },
                       { pattern: /Time required to complete this questionnaire|To navigate the questionnaire|Session timeout|Definitions and explanations/, style: styles.bold },
-                    
+
                       { pattern: /Pourquoi nous menons cette étude|Notifications|Autorisation et confidentialité|Couplages d’enregistrements/, style: styles.bold },
                       { pattern: /Temps requis pour remplir ce questionnaire|Pour parcourir le questionnaire|Délai d’inactivité d’une session|Définitions et explications/, style: styles.bold },
-                    
+
                       { pattern: /Statistics Act/, style: styles.italic },
                       { pattern: /Loi sur la statistique/, style: styles.italic},
-                    ]             
+                    ]
                   }
                   childrenProps={{ allowFontScaling: false }}
                 >
                   {resources.getString("getting_started_content")}
                 </ParsedText>
-              </Paragraph> */}
-                 <View >
+              </Paragraph>
+               <View >
                   <Text style={styles.bold}
-                  accessible={true}
-                  accessibilityRole="header"
-                  accessibilityLabel='Version'
-                  > Version
-                  </Text>
-                </View>
-                <View >
-                  <Text style={styles.appVersion}>{expo.version}</Text>
-                </View>
+                     accessible={true}
+                     accessibilityRole="header"
+                     accessibilityLabel='Version'
+                       > Version
+                   </Text>
+               </View>
+               <View >
+                   <Text style={styles.appVersion}>{expo.version}</Text>
+               </View>
             </View>
-
           </ScrollView>
         </SafeAreaView>
         <Button style={styles.btnNext}
@@ -440,10 +146,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 25
   },
-  appVersion:
-  {
-    color: 'black',
-  },
   title: {
     alignSelf: 'baseline',
     fontSize: 22,
@@ -455,12 +157,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     width: '100%',
     direction: "ltr"
-  },
-  ParagraphHeader:{
-    fontWeight: 'bold',
-    color: '#66cc99',
-    //fontFamily: 'Lato-Bold',
-    fontSize: 18
   },
   label: {
     color: newTheme.colors.secondary,

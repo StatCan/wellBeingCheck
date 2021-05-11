@@ -1,11 +1,11 @@
 import React from 'react';
-import {YellowBox} from 'react-native';
+import {LogBox} from 'react-native';
 import { Provider } from 'react-native-paper';
 import App from './src';
 import { theme } from './src/core/theme';
 import './Globals.js';
-YellowBox.ignoreWarnings(['Require cycle:','Setting a timer']);
-console.ignoredYellowBox = ['Require cycle:','Setting a timer'];
+LogBox.ignoreLogs(['Require cycle:','Setting a timer']);  //,'React Native version mismatch'
+//console.ignoredYellowBox = ['Require cycle:','Setting a timer'];
 const Main = () => (
   <Provider theme={theme}>
     <App />

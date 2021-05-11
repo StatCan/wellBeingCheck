@@ -183,18 +183,18 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 40, height: 50 }}
           {...global.panResponder.panHandlers}
           >
-            <TouchableOpacity 
-            onPress={() => { global.currentView = 0; this.props.navigation.navigate('Dashboard') }} 
+            <TouchableOpacity
+            onPress={() => { global.currentView = 0; this.props.navigation.navigate('Dashboard') }}
             style={{ marginLeft: 5, marginTop: 10 }}
             accessible={true}
             accessibilityLabel={resources.getString("Accessibility.ReturnLogoButton")}
             accessibilityRole="button"
             >
-              <Image source={require('../../assets/WellnessCheckLogo.png')} 
+              <Image source={require('../../assets/WellnessCheckLogo.png')}
             style={{ width: 38, height: 38 }} />
             </TouchableOpacity>
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>{indicator}</View>
-            {/*   <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')} 
+            {/*   <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen')}
                                    style={{marginRight:5,marginTop:10}}>
                    <FontAwesome name="gear" size={30} color="black" />
                  </TouchableOpacity> */}

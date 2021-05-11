@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import Background from '../components/Background';
-import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity,ActivityIndicator, BackHandler, AsyncStorage, PanResponder, Alert,Linking, YellowBox, Platform,AppState } from 'react-native';
+import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity,ActivityIndicator, BackHandler, AsyncStorage, PanResponder, Alert,Linking, Platform,AppState,LogBox } from 'react-native';
 import { checkConnection, hashString, fetchJwToken } from '../utils/fetchJwToken';
 import { resources } from '../../GlobalResources';
 
@@ -29,8 +29,8 @@ type HomeState = {
   thankYouText: string,loaded:boolean,
   disabled:boolean
 }
-YellowBox.ignoreWarnings(['Require cycle:','Setting a timer','Warning: ReactNative.createElement']);
-console.ignoredYellowBox = ['Require cycle:','Setting a timer'];
+LogBox.ignoreLogs(['Require cycle:','Setting a timer','Warning: ReactNative.createElement']);
+//console.ignoredYellowBox = ['Require cycle:','Setting a timer'];
 
 const WEB_API_BASE_URL = global.webApiBaseUrl + 'api';
 
@@ -148,7 +148,7 @@ class Dashboard extends React.Component<Props, HomeState> {
         return;
     }
     let txt = '';
-    if (global.showThankYou == 1) txt = resources.getString('ThankYouA'); 
+    if (global.showThankYou == 1) txt = resources.getString('ThankYouA');
     else if (global.showThankYou == 2)  txt = resources.getString('ThankYouB');
     this.setState({ showThankYou: !(global.showThankYou == 0), thankYouText: txt });
     if(!(global.showThankYou == 0)){
@@ -314,7 +314,7 @@ class Dashboard extends React.Component<Props, HomeState> {
           <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}
                 accessible={false}
                 >
-            <TouchableOpacity style={{ marginLeft: 5, marginTop: 50 }} 
+            <TouchableOpacity style={{ marginLeft: 5, marginTop: 50 }}
             accessible={false}
             >
               <Image source={require('../assets/WellnessCheckLogo.png')} style={{ width: 38, height: 38 }} />
@@ -336,14 +336,14 @@ class Dashboard extends React.Component<Props, HomeState> {
 
 
           </View>
-          <View style={styles.homeContainer} 
+          <View style={styles.homeContainer}
            {...global.panResponder.panHandlers}
           >
           <View>
 
               <View style={styles.outer}>
                  <View style={styles.inner}>
-                    <TouchableOpacity onPress={() => this.conductSurvey()} 
+                    <TouchableOpacity onPress={() => this.conductSurvey()}
                     style={{ flex: 0, justifyContent: 'center',width:'90%',height:'90%' }}
                     accessible={true}
                     accessibilityLabel={resources.getString("start_survey")}
@@ -368,9 +368,9 @@ class Dashboard extends React.Component<Props, HomeState> {
               <View>
                 <View>
                   <View>
-                    <TouchableOpacity 
-                    onPress={() => { global.globalTick=0; 
-                    console.log('time out issue testing'); 
+                    <TouchableOpacity
+                    onPress={() => { global.globalTick=0;
+                    console.log('time out issue testing');
                     this.props.navigation.navigate('AboutScreen')}}
                     style={styles.smallButton}
                     accessible={true}
@@ -394,8 +394,8 @@ class Dashboard extends React.Component<Props, HomeState> {
 
                 <View>
                   <View>
-                    <TouchableOpacity 
-                      onPress={() => this.props.navigation.navigate('ContactUsScreen')} 
+                    <TouchableOpacity
+                      onPress={() => this.props.navigation.navigate('ContactUsScreen')}
                       style={styles.smallButton}
                       accessible={true}
                       accessibilityRole="button"
@@ -404,7 +404,7 @@ class Dashboard extends React.Component<Props, HomeState> {
                     </TouchableOpacity>
                   </View>
                   <View>
-                    <Text 
+                    <Text
                     style={styles.smallButtonText}
                     accessible={false}
                     >{resources.getString("contact_us")}</Text>
@@ -434,7 +434,7 @@ class Dashboard extends React.Component<Props, HomeState> {
                   <View>
                     <Text style={this.state.disabled?styles.smallButtonTextDis:styles.smallButtonText}
                       accessible={false}
-                    
+
                     >{resources.getString("result")}</Text>
                   </View>
                 </View>

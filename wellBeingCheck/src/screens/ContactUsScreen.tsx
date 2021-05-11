@@ -40,7 +40,7 @@ class ContactUsScreen extends React.Component<Props> {
     this.props.navigation.navigate('Dashboard');
   }
 printLogo=()=>{
-        alert('Scheduled:\r\n'+global.sendouts+'\r\nIndicator:'+global.busy+'\r\nUserId:'+global.userToken);
+        alert('Scheduled:\r\n'+global.sendouts+'\r\nIndicator:'+global.busy+'\r\nUserId:'+global.userToken+'\r\nSac:'+global.sac);
  }
  printLog=()=>{
          alert('Sys Log:\r\n'+global.syslog);
@@ -58,7 +58,7 @@ printLogo=()=>{
             <ScrollView style={styles.scrollView}
                {...global.panResponder.panHandlers}
             >
-              <View style={styles.logo_container} 
+              <View style={styles.logo_container}
                 {...global.panResponder.panHandlers}
                >
                 {/* <LogoClearSmall /> */}
@@ -68,7 +68,7 @@ printLogo=()=>{
                        style={{ width: 38, height: 38 }} />
             </TouchableOpacity>
               </View>
-              <Title style={styles.title}  
+              <Title style={styles.title}
               {...global.panResponder.panHandlers}
               >
                 {resources.getString("contactus_title")}</Title>
@@ -80,7 +80,7 @@ printLogo=()=>{
                   accessibilityLabel={resources.getString("contactus_email")}
                   >{resources.getString("contactus_email")}</Text>
                   <TouchableOpacity onPress={() => Linking.openURL('mailto:infostats@canada.ca')}>
-                    <Text 
+                    <Text
                     style={styles.text}
                     >infostats@canada.ca</Text>
                     </TouchableOpacity>
@@ -101,7 +101,7 @@ printLogo=()=>{
                    accessibilityLabel={resources.getString("contactus_website")}
                   >{resources.getString("contactus_website")}</Text>
                   <TouchableOpacity onPress={() => Linking.openURL('https://www.statcan.gc.ca')}
-                 
+
                   >
                     <Text style={styles.text}
                       accessible={true}
@@ -120,23 +120,6 @@ printLogo=()=>{
                   </Text>
                 </View>
 
-
-                <View style={styles.content}>
-                                  <Text style={styles.content_title}
-                                   accessible={true}
-                                   accessibilityRole='header'
-                                   accessibilityLabel={resources.getString("contactus_website")}
-                                  >Message</Text>
-                                  <TouchableOpacity onPress={() => Linking.openURL('sms:6134158507')}
-
-                                  >
-                                    <Text style={styles.text}
-                                      accessible={true}
-                                      accessibilityRole='link'
-                                      accessibilityLabel='https://www.statcan.gc.ca'
-                                    >(613)415-8507</Text>
-                                  </TouchableOpacity>
-                                </View>
 
 
 
@@ -273,3 +256,23 @@ export default memo(ContactUsScreen);
                                onPress={this.printTest}>
                                <Text style={styles.btnText}>Test</Text>
                   </Button>*/
+
+
+
+ /*<View style={styles.content}>
+                                  <Text style={styles.content_title}
+                                   accessible={true}
+                                   accessibilityRole='header'
+                                   accessibilityLabel={resources.getString("contactus_website")}
+                                  >Message</Text>
+                                  <TouchableOpacity onPress={() => Linking.openURL('sms:6134158507')}
+
+                                  >
+                                    <Text style={styles.text}
+                                      accessible={true}
+                                      accessibilityRole='link'
+                                      accessibilityLabel='https://www.statcan.gc.ca'
+                                    >(613)415-8507</Text>
+                                  </TouchableOpacity>
+                                </View>
+*/

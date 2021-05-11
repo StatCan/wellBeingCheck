@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, SafeAreaView,Alert,YellowBox } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, SafeAreaView,Alert,LogBox } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Background from '../../components/Background';
 import Button from '../../components/Button';
@@ -9,7 +9,7 @@ import { resources } from '../../../GlobalResources';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { EvilIcons, Feather, FontAwesome } from '@expo/vector-icons';
 import md5 from "react-native-md5";
-import { setupSchedules,cancelSchedule} from '../../utils/schedule';
+import { setupSchedules,cancelSchedule,sendDelayedNotification} from '../../utils/schedule';
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -34,8 +34,8 @@ type LoginState = {
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
-YellowBox.ignoreWarnings(['Require cycle:','Setting a timer']);
-console.ignoredYellowBox = ['Require cycle:','Setting a timer'];
+LogBox.ignoreLogs(['Require cycle:','Setting a timer']);
+//console.ignoredYellowBox = ['Require cycle:','Setting a timer'];
 class LoginScreen extends React.Component<Props, LoginState> {
 
   constructor(LoginState) {
@@ -57,7 +57,7 @@ class LoginScreen extends React.Component<Props, LoginState> {
       AsyncStorage.setItem('Culture', '1');
     }
     this.setState({ title: resources.getString("Well-Being Check") });
-    
+
     //correct error message for password if already set
     if (this.state.passwordError != '') {
       this.setState({ passwordError: resources.getString("login.Wrongpassword.message") });
@@ -124,6 +124,9 @@ onTestB(){
 onTestC(){
    setupSchedules(true);
 }
+onTestD(){
+   sendDelayedNotification(new Date(),"aaaa","vvvv");
+}
 async onTestD(){
     AsyncStorage.removeItem('LastDate');global.lastDate=null;
     AsyncStorage.removeItem('Schedules');global.schedules=[];
@@ -142,7 +145,7 @@ async onTestD(){
           <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollView}>
 
-             
+
               <View style={styles.toggleLink}>
                 <TouchableOpacity
                   onPress={() => this.toggleLanguage()}
@@ -159,7 +162,7 @@ async onTestD(){
               </View>
 
              <View style={styles.logo}>
-                <Text style={{ fontSize:20}} 
+                <Text style={{ fontSize:20}}
                 accessible={true}
                 accessibilityRole="text"
                 accessibilityHint="application name"
@@ -179,7 +182,7 @@ async onTestD(){
                     error={!!this.state.passwordError}
                     errorText={this.state.passwordError}
                     secureTextEntry={this.state.passwordIsHidden}
-                    accessibilityLabel={resources.getString('Accessibility.passwordInputText')}    
+                    accessibilityLabel={resources.getString('Accessibility.passwordInputText')}
                   />
                 </View>
 
@@ -218,7 +221,6 @@ async onTestD(){
                   onPress={this._onLoginPressed}>
                   <Text style={styles.whiteText}>{resources.getString("login.login")}</Text>
                 </Button>
-
 
               </View>
             </ScrollView>
@@ -265,7 +267,7 @@ const styles = StyleSheet.create({
    // bottom: 140,
   },
   logoClear: {
-   
+
     flexDirection: 'row',
     flex: 1,
     justifyContent: 'center'

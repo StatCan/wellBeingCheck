@@ -20,13 +20,13 @@ export const resources = {
             "getting_started_content": `Why we are conducting this study\n`+
             `The purpose of this study is to better understand the everyday well-being of Canadians by asking about activities and feelings as they are happening. To do this, participants will download an app on their smartphones and answer a few questions at different intervals throughout the day, over a short period of time. The results will help us to find connections between activities and well-being, and be used to develop programs that enhance people’s lives. In the future, an app could be used as a faster and more convenient way to complete other Statistics Canada surveys. \n\n`+
             `Information may also be used by Statistics Canada for other statistical and research purposes. \n\n`+
-           
+
             `Notifications \n`+
             `This app will notify you to complete a Well-being Check 2 to 5 times daily. You can customize these parameters, including when we should not disturb you, at any time in the settings menu on the app’s home page. If you do not customize the parameters, you will receive a default of 2 daily notifications at various times between 08:00 and 22:00. If you do not allow notifications, you can still complete a Well-being Check whenever you like, but the quality of your results may be impacted. \n\n` +
             `Authorization and confidentiality\n`+
             `Data are collected under the authority of the Statistics Act, Revised Statutes of Canada, 1985, Chapter S-19. Your information will be kept strictly confidential. \n\n`+
             `Although voluntary, your participation is important so that the information collected is as accurate and complete as possible. \n\n`+
-           
+
             `Record linkages \n`+
             `To enhance the data from this survey and to reduce the reporting burden, Statistics Canada may combine the information you provide with other survey or administrative data sources. \n\n`+
             `Time required to complete this questionnaire\n`+
@@ -39,8 +39,8 @@ export const resources = {
             `After 7 minutes of inactivity, Well-Being Check will lock. You will need to enter your password to continue. \n\n`+
             `Definitions and explanations\n`+
             `A help button is available for certain questions. Press this button for additional information or clarification.\n\n`,
-            
-          
+
+
             //terms & conditions
             "terms_and_conditions": "Terms and conditions \n",
             "terms_and_conditions_disagree": "You must accept Terms and Conditions to use this app. Select “OK” to revise your preferences, or call us at 1-877-949-9492 for more information.",
@@ -108,8 +108,8 @@ export const resources = {
 
             "terms_and_conditions_content.maintenance" :      `Maintenance and support` ,
             "terms_and_conditions_content.maintenance.a" :      `Statistics Canada may not provide any maintenance or support for this App. Statistics Canada may provide periodic updates to the App which may include bug fixes and enhancements.`,
-        
-        
+
+
             //Register screen
             "reg.pass.validation.empty": "Password cannot be empty",
             "reg.pass.validation.min_eight": "Password must be at least 8 characters",
@@ -154,7 +154,7 @@ export const resources = {
 
             //     `Notifications \n` +
             //     `This app will notify you to complete a Well-being Check 2 to 5 times daily. You can customize these parameters, including when we should not disturb you, at any time in the settings menu on the app’s home page. If you do not customize the parameters, you will receive a default of 2 daily notifications at various times between 08:00 and 22:00. If you do not allow notifications, you can still complete a Well-being Check whenever you like, but the quality of your results may be impacted. \n\n`+
-                
+
             //     `Authorization and confidentiality  \n` +
             //     `Data are collected under the authority of the Statistics Act, Revised Statutes of Canada, 1985, Chapter S-19. Your information will be kept strictly confidential.  \n\n` +
 
@@ -205,10 +205,10 @@ export const resources = {
 
             "about_content.timeout":`Session timeout` ,
             "about_content.timeout.a":`After 7 minutes of inactivity, your session will time out and Well-Being Check will lock. You will need to enter your password to continue. You will not be able to access any unsaved information. \n`,
-           
+
             "about_content.def":`Definitions and explanations` ,
             "about_content.def.a":`A help button is available for certain questions. Press this button for additional information or clarification.\n`,
-           
+
 
             "about_title_two": "Authorization and confidentiality",
             "about_content_two": "Data are collected under the authority Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
@@ -275,11 +275,11 @@ export const resources = {
             "faq.title": "FAQ",
             //---------------category1---------------
             "faq.category1": "General",
-            
+
             //category1-Question1
             "faq.c1.q1": "Is this a legitimate Statistics Canada study?",
             "faq.c1.q1.a": `Yes. More information can be found on Statistics Canada’s website: https://www.statcan.gc.ca/wellbeing`,
-            
+
             //category1-Question2
             "faq.c1.q2": "Am I required to complete this study?",
             "faq.c1.q2.a": "No. Participation is voluntary.",
@@ -287,7 +287,7 @@ export const resources = {
             //category1-Question3
             "faq.c1.q3": "Who is participating in this study? ",
             "faq.c1.q3.a": "Anyone in Canada over 15 years of age with a compatible smartphone or tablet can download Well-being Check from GooglePlay or the App Store to participate. You can participate with or without an invitation code. Please share this information with your friends so they can download the app too!",
-            
+
             //category1-Question4
             "faq.c1.q4": "Why are you conducting this study?",
             "faq.c1.q4.a": "The purpose of this study is to better understand the everyday well-being of Canadians by asking in the moment questions about their activities and feelings. For more information about this study, please visit https://www.statcan.gc.ca/wellbeing",
@@ -307,15 +307,15 @@ export const resources = {
             "faq.c2.q1": "Why do I need a password and security question?",
             "faq.c2.q1.a": "Well-being Check requests users to respond to daily questionnaires to identify how their feelings change in different settings. By password protecting the app, we can ensure your data trend has not been impacted by others who may use your phone and access the app. Also, Well-being Check provides users with a Results menu, which displays a trend of your self-assessed feelings and how they relate to what you are doing, who you are with, and where you are. By password protecting the app, we can ensure your trend is not viewed by others unless you log into the app and choose to share it with them.\n\n"+
             "Statistics Canada does not collect your password when you create it, and therefore will not be able to assist you in resetting your password if required. The security question provides a second tier of security which you can use to reset your password.",
-             
+
             //category2-Question2
             "faq.c2.q2": "Can I change my password?",
             "faq.c2.q2.a": "You can change your password through the ‘Forgot password?’ option on the login screen. You will need to answer your security question in order to access the password reset function.",
-            
+
             //category2-Question3
             "faq.c2.q3": "What if I forgot my password or security question?",
             "faq.c2.q3.a": "You can change your password through the ‘Forgot password?’ option on the login screen. You will need to answer your security question in order to access the password reset function. If you have forgotten the answer to your security question, you will need to delete the app and download it again. Your previous responses will no longer be accessible to you through your My Results menu, as the app will identify you as a new user for security purposes.",
-            
+
             //category2-Question4
             "faq.c2.q4": "Is the information I provide confidential?",
             "faq.c2.q4.a": "Yes, Statistics Canada guarantees the confidentiality of your responses under the Statistics Act.\n\n"+
@@ -324,40 +324,40 @@ export const resources = {
              //category2-Question5
             "faq.c2.q5": "What data does Well-being Check collect?",
             "faq.c2.q5.a": "The Well-being Check app collects the responses you provide to questionnaires, as well as the number of notifications you receive each day. It does not collect your password, your security question and answer, or data from your device such as location and app usage.",
-            
+
             //category2-Question6
             "faq.c2.q6": "How is my data stored and transmitted? How will my data be protected?",
             "faq.c2.q6.a": "The Well-being Check app fully complies with all privacy and security regulations in place to protect Canadians’ information.\n\n"+
             "Well-being Check uses Statistics Canada’s Electronic Collection Portal to collect your responses. For more information about the security features in place to protect your data, please visit https://surveys-enquetes.statcan.gc.ca/en/faq/security-securite.html.",
-            
+
             //category2-Question7
             "faq.c2.q7": "I want to stop participating in this study",
             "faq.c2.q7.a": "If you want to stop participating in the study at any point, you can turn off notifications in the settings menu or delete the app from your device.",
 
 
-            //---------------category3--------------- 
+            //---------------category3---------------
             "faq.category3": "Settings and notifications",
 
              //category3-Question1
              "faq.c3.q1": "What notifications will I receive?",
              "faq.c3.q1.a": "The app will send you a notification when it is time to complete a Well-being Check. These notifications are sent at random times based on the parameters you have chosen in your settings menu. You can change your settings at any time.",
-              
+
              //category3-Question2
              "faq.c3.q2": "Can I disable notifications?",
              "faq.c3.q2.a": "Notifications are an essential part of this study as they let you know when a Well-being Check is available to be completed. If you need to turn off notifications, you can do it through the Settings page.",
-             
+
              //category3-Question3
              "faq.c3.q3": "How do I change my settings?",
              "faq.c3.q3.a": "You can change your settings at any time through the Settings menu, located on the app homepage. ",
-             
+
              //category3-Question4
              "faq.c3.q4": "Can I complete a Well-being Check if I have not received a notification?",
              "faq.c3.q4.a": "Of course! You can complete a Well-being Check at any time by pressing START, located on the app homepage.",
- 
+
              //category3-Question5
              "faq.c3.q5": "What if I have missed a notification and have now received another?",
              "faq.c3.q5.a": "Not a problem! While our goal is for you to respond to all notifications, we understand life can be busy and sometimes a notification will be missed. Respond once based on what you are doing and who you are with when you receive the second notification. ",
-             
+
              //category3-Question6
              "faq.c3.q6": "Why am I no longer receiving notifications?",
              "faq.c3.q6.a": "If you have not completed a Well-being Check in the past 4 days, the app will stop sending you notifications. You can start receiving notifications again by pressing START, located on the app homepage, and completing a Well-being Check.\n\n"+
@@ -378,18 +378,18 @@ export const resources = {
             "faq.c4.q1.a": "The data visualizations on the Results menu display a snapshot of your self-assessed feelings and how they relate to what you are doing, who you are with, and where you are.\n\n"+
             "For ease of interpretation, your activities and companions have been grouped. Please note, all questions about feelings are based on a scale of 0 meaning ‘not at all’, and 10 meaning ’completely’. Based on this, a high rating of feeling happy compared to a high rating of feeling anxious would be interpreted quite differently.\n\n"+
             "These results are reported in real time and have not been validated by Statistics Canada. Caution should be exercised when interpreting the data.",
-           
+
             //---------------category5---------------
             "faq.category5": "Technical difficulties",
-             
+
             //category5-Question1
             "faq.c5.q1": "I cannot access the questionnaires or my results",
             "faq.c5.q1.a": "The questionnaire portal and Results menu require a connection to data or wi-fi to function. If the problem persists after checking your connection, please contact us at ",
-            
+
             //category5-Question3
             "faq.c5.q2": "I am experiencing other technical difficulties",
             "faq.c5.q2.a": "If you are experiencing display issues, crashes, or other bugs please contact us at ",
-            
+
             //category5-Question4
             "faq.c5.q3": "Can I download the app on multiple devices and sync it?",
             "faq.c5.q3.a": "The app does not have syncing capabilities.\n\n"+
@@ -443,7 +443,7 @@ export const resources = {
             "notification.scheduleTitle":"Scheduled Notification",
             "notification.scheduleMessage":"How are you feeling right now? Sign in for a Well-being Check!",
             "notification.lastAttemptMessage":"We haven’t heard from you in a while. Sign in for a Well-being Check!",
-          
+
              //time picker title
              "timepicker.title":"Pick a time",
              "timepicker.canceltext":"Cancel",
@@ -466,7 +466,7 @@ export const resources = {
              "declinemsg1": "You must accept Terms and Conditions to use this app. Select “OK” to revise your preferences, or call us at ",
              "declinemsg2": " for more information.",
 
-             // accessibility bilingual text 
+             // accessibility bilingual text
              "Accessibility.ApplicationName":"Well being check application name ",
              "Accessibility.ReturnLogoButton":"Back",
              "Accessibility.getting_started_title":"Getting Started Page title\n",
@@ -496,7 +496,7 @@ export const resources = {
 
                 `Notifications \n` +
                 `Cette application vous enverra une notification pour remplir un Bilan bien-être de 2 à 5 fois par jour. Vous pouvez personnaliser ces paramètres, y compris les moments où vous ne souhaitez pas être dérangé, à tout moment dans le menu des paramètres sur la page d’accueil de l’application. Si vous ne personnalisez pas les paramètres, vous recevrez par défaut 2 notifications à divers moments entre 8 h et 22 h. Si vous n’acceptez pas les notifications, vous pourrez tout de même remplir un Bilan bien-être quand vous le voudrez, mais la qualité de vos résultats pourrait en être affectée. \n\n` +
-               
+
                 `Autorisation et confidentialité \n` +
                 `Ces données sont recueillies en vertu de la Loi sur la statistique, Lois revisees du Canada \(1985\), chapitre S-19. V os renseignements demeureront strictement confidentiels. \n\n` +
 
@@ -518,7 +518,7 @@ export const resources = {
 
                 `Définitions et explications \n` +
                 `Un bouton d’aide est disponible pour certaines questions. Appuyez sur ce bouton pour obtenir plus de renseignements ou des précisions.\n\n`,
-                
+
             //terms & conditions
            // "terms_and_conditions": "Conditions générales\n",
             "terms_and_conditions_content": `Désistement \n` +
@@ -589,8 +589,8 @@ export const resources = {
 
                 `Maintenance et soutien \n` +
                 `Statistique Canada pourrait ne pas offrir ni maintenance ni soutien pour l’application. Statistique Canada pourrait fournir des mises à jour périodiques de l’application, y compris la réparation d’erreurs du système et des améliorations.`,
-           
-           
+
+
      //terms & conditions
      "terms_and_conditions": "Conditions générales \n",
      "terms_and_conditions_disagree": "Vous devez accepter les Conditions générales pour utiliser cette application. Sélectionnez « OK » pour modifier vos préférences, ou appelez-nous au 1-877-949-9492 pour obtenir plus de renseignements.",
@@ -643,7 +643,7 @@ export const resources = {
 
      "terms_and_conditions_content.nowarranties" :     `Aucune garantie`,
      "terms_and_conditions_content.nowarranties.a" :   `Les renseignements contenus dans cette application sont fournis « tels quels », et Statistique Canada n’en fait aucune représentation et ne donne aucune garantie à leur égard, que ce soit de manière explicite ou implicite, et rejette expressément toute garantie implicite de qualité marchande ou d’adéquation de ces renseignements à une fin particulière. \n`,
-   
+
      "terms_and_conditions_content.indemnity" :      `Indemnité` ,
      "terms_and_conditions_content.indemnity.a" :     `Les utilisateurs de l’application indemnisent et dégagent Statistique Canada, ses représentants, fonctionnaires, employés et/ou mandataires et entrepreneurs de toute perte ou condition, qu’elle soit expresse, implicite ou légale, y compris les garanties et conditions implicites de qualité marchande, d’adéquation à une fin particulière, et de non-infraction. \n`,
 
@@ -657,8 +657,8 @@ export const resources = {
      "terms_and_conditions_content.ownership.a" :      `Statistique Canada garantit qu’il est le propriétaire légitime de l’application et des documents qui s’y rapportent, et qui font l’objet de la présente entente. \n`,
 
      "terms_and_conditions_content.maintenance" :      `Maintenance et soutien` ,
-     "terms_and_conditions_content.maintenance.a" :      `Statistique Canada pourrait ne pas offrir ni maintenance ni soutien pour l’application. Statistique Canada pourrait fournir des mises à jour périodiques de l’application, y compris la réparation d’erreurs du système et des améliorations.`,       
-           
+     "terms_and_conditions_content.maintenance.a" :      `Statistique Canada pourrait ne pas offrir ni maintenance ni soutien pour l’application. Statistique Canada pourrait fournir des mises à jour périodiques de l’application, y compris la réparation d’erreurs du système et des améliorations.`,
+
     //Register screen
             "reg.pass.validation.empty": "Le mot de passe ne peut pas être vide",
             "reg.pass.validation.min_eight": "Le mot de passe doit comporter au moins 8 caractères",
@@ -703,10 +703,10 @@ export const resources = {
 
             //     `Notifications \n` +
             //     `Cette application vous enverra une notification pour remplir un Bilan bien-être de 2 à 5 fois par jour. Vous pouvez personnaliser ces paramètres, y compris les moments où vous ne souhaitez pas être dérangé, à tout moment dans le menu des paramètres sur la page d’accueil de l’application. Si vous ne personnalisez pas les paramètres, vous recevrez par défaut 2 notifications à divers moments entre 8 h et 22 h. Si vous n’acceptez pas les notifications, vous pourrez tout de même remplir un Bilan bien-être quand vous le voudrez, mais la qualité de vos résultats pourrait en être affectée. \n\n` +
-               
+
             //     `Autorisation et confidentialité  \n` +
             //     `Ces données sont recueillies en vertu de la Loi sur la statistique, Lois révisées du Canada (1985), chapitre S-19. Vos renseignements demeureront strictement confidentiels.  \n\n` +
-               
+
             //     `Couplages d’enregistrements  \n` +
             //     `Afin d’améliorer la qualité des données tirées de cette enquête et de réduire le fardeau de réponse, Statistique Canada pourrait combiner les renseignements que vous fournissez avec ceux provenant d’autres enquêtes ou sources de données administratives.  \n\n` +
 
@@ -723,7 +723,7 @@ export const resources = {
 
             //     `Définitions et explications \n` +
             //     `Un bouton d’aide est disponible pour certaines questions. Appuyez sur ce bouton pour obtenir plus de renseignements ou des précisions. \n\n`,
-           
+
             "about_content.Study": `Pourquoi nous menons cette étude`,
             "about_content.Study.a":`L’objectif de cette enquête est de mieux comprendre le bien-être au quotidien des Canadiens et des Canadiennes en leur demandant de répondre à des questions sur les activités qu’ils entreprennent et les sentiments qu’ils éprouvent en temps réel. Pour ce faire, les participants devront télécharger une application sur leur téléphone intelligent et répondre à quelques questions à divers intervalles au cours de la journée, sur une courte période de temps. Les résultats obtenus nous aideront à établir des liens entre certaines activités et le bien-être, et nous permettront de développer des programmes qui amélioreront la vie des gens. À l’avenir, ce genre d’application pourrait servir à répondre à d’autres enquêtes de Statistique Canada de façon plus rapide et pratique.  \n` +
 
@@ -751,7 +751,7 @@ export const resources = {
 
             "about_content.def":`Définitions et explications` ,
             "about_content.def.a":`Un bouton d’aide est disponible pour certaines questions. Appuyez sur ce bouton pour obtenir plus de renseignements ou des précisions. \n`,
-         
+
 
             "about_title_two": "FR_Authorization and confidentiality",
             "about_content_two": "FR_Data are collected under the authority Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
@@ -789,7 +789,7 @@ export const resources = {
             "login.forgot_password": "Mot de passe oublié?",
             "login.login": "Entrer",
             "login.Wrongpassword.message":"mot de passe incorrect",
-            
+
 
             "notifications": "Notifications",
             "wake_time": "Ne pas déranger avant",
@@ -814,16 +814,16 @@ export const resources = {
             "contactus_mail": "L'adresse postale",
             "contactus_text": `Statistique Canada\nÀ l’attention de la directrice Sylvie Cyr\n150, promenade Tunney’s Pasture\nOttawa (Ontario)\nK1A 0T6`,
 
-            
+
             //FAQ
             "faq.title": "FAQ",
             //---------------category1---------------
             "faq.category1": "Questions générales",
-            
+
             //category1-Question1
             "faq.c1.q1": "Est-ce une enquête légitime de Statistique Canada?",
             "faq.c1.q1.a": "Oui. Vous trouverez de plus amples informations sur le site Web de Statistique Canada https://www.statcan.gc.ca/bienetre",
-            
+
             //category1-Question2
             "faq.c1.q2": "Suis-je obligé de répondre à cette enquête?",
             "faq.c1.q2.a": "Non. La participation est volontaire.",
@@ -832,7 +832,7 @@ export const resources = {
             "faq.c1.q3": "Qui participe à cette enquête?  ",
             "faq.c1.q3.a": "Toute personne au Canada de plus de 15 ans qui possède un téléphone intelligent ou une tablette compatible peut télécharger l’application Bilan bien-être sur Google Play ou sur l’App Store pour participer à l’enquête. Vous pouvez participer avec ou sans code d’invitation.\n"+
              "Veuillez partager cette information avec vos amis afin qu’ils puissent eux aussi télécharger l’application.",
-            
+
             //category1-Question4
             "faq.c1.q4": "Pourquoi menez-vous cette enquête?",
             "faq.c1.q4.a": "L’objectif de cette enquête est de mieux comprendre le bien-être au quotidien des Canadiens. Pour ce faire, nous leur avons posé des questions sur leurs activités et leurs sentiments au moment présent. Pour plus d’informations sur cette enquête, veuillez consulter https://www.statcan.gc.ca/bienetre",
@@ -854,15 +854,15 @@ export const resources = {
             "faq.c2.q1": "Pourquoi ai-je besoin d’un mot de passe et d’une question de sécurité?",
             "faq.c2.q1.a": "Le Bilan bien-être demande aux utilisateurs de répondre quotidiennement à des questionnaires afin de déterminer la façon dont leurs sentiments changent dans différents contextes. En protégeant l’application par un mot de passe, nous pouvons nous assurer que la tendance de vos données n’a pas été influencée par d’autres personnes qui pourraient utiliser votre téléphone et accéder à l’application. De plus, le Bilan bien-être fournit aux utilisateurs un menu Résultats, qui affiche la tendance de vos sentiments autoévalués et de la façon dont ils sont liés à ce que vous faites, aux gens avec qui vous êtes et à l’endroit où vous vous trouvez. En protégeant l’application par un mot de passe, nous pouvons nous assurer que cette tendance n’est pas vue par d’autres personnes, à moins que vous vous connectiez à l’application et que vous choisissiez de la partager avec eux.\n\n"+
             "Statistique Canada ne recueille pas votre mot de passe lorsque vous le créez, et ne pourra donc pas vous aider à le réinitialiser si nécessaire. La question de sécurité fournit un deuxième niveau de sécurité, que vous pouvez utiliser pour réinitialiser votre mot de passe.",
-             
+
             //category2-Question2
             "faq.c2.q2": "Puis-je changer mon mot de passe?",
             "faq.c2.q2.a": "Vous pouvez changer votre mot de passe en utilisant l’option « Mot de passe oublié » à l’écran d’ouverture de session. Vous devrez répondre à votre question de sécurité afin d’accéder à la fonction de réinitialisation du mot de passe.",
-            
+
             //category2-Question3
             "faq.c2.q3": "Que faire si j’ai oublié mon mot de passe ou ma question de sécurité?",
             "faq.c2.q3.a": "Vous pouvez changer votre mot de passe en utilisant l’option « Mot de passe oublié » à l’écran d’ouverture de session. Vous devrez répondre à votre question de sécurité afin d’accéder à la fonction de réinitialisation du mot de passe. Si vous avez oublié la réponse à votre question de sécurité, vous devrez supprimer l’application et la télécharger à nouveau. Vos réponses précédentes ne seront plus accessibles dans votre menu Résultats, car l’application vous identifiera comme un nouvel utilisateur pour des raisons de sécurité.",
-            
+
             //category2-Question4
             "faq.c2.q4": "Les informations que je fournis sont-elles confidentielles?",
             "faq.c2.q4.a": "Oui, Statistique Canada garantit la confidentialité de vos réponses en vertu de la Loi sur la statistique.\n\n"+
@@ -871,40 +871,40 @@ export const resources = {
              //category2-Question5
             "faq.c2.q5": "Quelles sont les données recueillies par le Bilan bien-être?",
             "faq.c2.q5.a": "L’application Bilan bien-être recueille les réponses que vous fournissez aux questionnaires, ainsi que le nombre de notifications que vous recevez chaque jour. Elle ne recueille pas votre mot de passe, votre question de sécurité et sa réponse, ni les données de votre appareil telles que l’emplacement et l’utilisation de l’application.",
-            
+
             //category2-Question6
             "faq.c2.q6": "Comment mes données sont-elles stockées et transmises? Comment mes données seront-elles protégées?",
             "faq.c2.q6.a": "L’application Bilan bien-être est entièrement conforme à toutes les réglementations en matière de protection de la vie privée et de sécurité mises en place pour protéger les informations des Canadiens.\n\n"+
             "Le Bilan bien-être utilise le portail de collecte électronique de Statistique Canada pour recueillir vos réponses. Pour plus d’informations sur les dispositifs de sécurité mis en place pour protéger vos données, veuillez consulter https://surveys-enquetes.statcan.gc.ca/fr/faq/security-securite.html.",
-            
+
             //category2-Question7
             "faq.c2.q7": "Je ne veux plus participer à cette enquête",
             "faq.c2.q7.a": "Si vous souhaitez, à tout moment, cesser de participer à l’enquête, vous pouvez désactiver les notifications dans le menu des paramètres ou supprimer l’application de votre appareil.",
-          
-            
-            //---------------category3--------------- 
+
+
+            //---------------category3---------------
             "faq.category3": "Paramètres et notifications",
 
              //category3-Question1
              "faq.c3.q1": "Quelles notifications vais-je recevoir?",
              "faq.c3.q1.a": "L’application vous enverra une notification lorsqu’il sera temps de remplir un Bilan bien-être. Ces notifications sont envoyées à des moments aléatoires en fonction des paramètres que vous avez choisis dans votre menu de configuration. Vous pouvez modifier vos paramètres à tout moment.",
-              
+
              //category3-Question2
              "faq.c3.q2": "Puis-je désactiver les notifications?",
              "faq.c3.q2.a": "Les notifications sont un élément essentiel de cette enquête, car elles vous permettent de savoir quand un Bilan bien-être peut être réalisé. Si vous avez besoin de désactiver les notifications, vous pouvez le faire dans le menu Paramètres.",
-             
+
              //category3-Question3
              "faq.c3.q3": "Comment puis-je modifier mes paramètres?",
              "faq.c3.q3.a": "Vous pouvez modifier vos paramètres à tout moment dans le menu Paramètres, situé sur la page d’accueil de l’application.",
-             
+
              //category3-Question4
              "faq.c3.q4": "Puis-je effectuer un Bilan bien-être si je n’ai pas reçu de notification?",
              "faq.c3.q4.a": "Bien sûr! Vous pouvez effectuer un Bilan bien-être à tout moment en appuyant sur COMMENCER, situé sur la page d’accueil de l’application.",
- 
+
              //category3-Question5
              "faq.c3.q5": "Que se passe-t-il si j’ai manqué une notification et que j’en ai reçu une autre?",
              "faq.c3.q5.a": "Pas de problème! Bien que notre objectif soit que vous répondiez à toutes les notifications, nous comprenons que la vie peut être chargée et qu’il arrive parfois qu’une notification soit manquée. Répondez une fois en fonction de ce que vous faites et des personnes qui sont avec vous lorsque vous recevez la deuxième notification.",
-             
+
              //category3-Question6
              "faq.c3.q6": "Pourquoi ne reçois-je plus de notifications?",
              "faq.c3.q6.a": "Si vous n’avez pas effectué de Bilan bien-être au cours des quatre derniers jours, l’application cessera de vous envoyer des notifications. Vous pouvez recommencer à recevoir des notifications en appuyant sur COMMENCER, situé sur la page d’accueil de l’application, et en remplissant un Bilan bien-être.\n\n"+
@@ -926,18 +926,18 @@ export const resources = {
             "faq.c4.q1.a": "Les visualisations de données du menu Résultats donnent un aperçu de vos sentiments autoévalués et de leur lien avec ce que vous faites, les personnes avec qui vous êtes et l’endroit où vous vous trouvez.\n\n"+
             "Pour faciliter l’interprétation, vos activités et vos compagnons ont été regroupés. Veuillez noter que toutes les questions relatives aux sentiments sont évaluées sur une échelle de 0 à 10, où 0 signifie « pas du tout » et 10 signifie « complètement ». En fonction de cette échelle, une cote élevée de sentiment de bonheur par rapport à une cote élevée de sentiment d’anxiété serait interprétée de manière très différente.\n\n"+
             "Ces résultats sont communiqués en temps réel et n’ont pas été validés par Statistique Canada. Il convient d’être prudent lors de l’interprétation des données.",
-           
+
             //---------------category5---------------
             "faq.category5": "Difficultés techniques",
-             
+
             //category5-Question1
             "faq.c5.q1": "Je ne peux pas accéder aux questionnaires ou à mes résultats",
             "faq.c5.q1.a": "Le portail du questionnaire et le menu Résultats nécessitent une connexion aux données ou une connexion Wi-Fi pour fonctionner. Si le problème persiste après avoir vérifié votre connexion, veuillez nous contacter au ",
-            
+
             //category5-Question3
             "faq.c5.q2": "Je rencontre d’autres difficultés techniques",
             "faq.c5.q2.a": "Si vous rencontrez des problèmes d’affichage, des pannes ou d’autres bogues, veuillez nous contacter au ",
-            
+
             //category5-Question4
             "faq.c5.q3": "Puis-je télécharger l’application sur plusieurs appareils et la synchroniser?",
             "faq.c5.q3.a": "L’application n’a pas de capacités de synchronisation.\n\n"+
@@ -981,7 +981,7 @@ export const resources = {
             "network.error.jwt":"Erreur d'initialisation JSON Web Token , s'il vous plaît réessayer plus tard.",
             "network.error.pwd":"Erreur d'initialisation de mot de passe, s'il vous plaît reéssayer plus tard.",
             "network.error.general":"Erreur de reseau, s'il vous plaît réessayer plus tard.",
-           
+
             //Notification Request
             "notification.resquest.title":"",
             "notification.resquest.message":"Accédez aux paramètres de votre appareil pour activer les notifications?",
@@ -990,12 +990,12 @@ export const resources = {
             "notification.scheduleTitle":"Notification planifiée",
             "notification.scheduleMessage":"Comment vous sentez-vous en ce moment? Connectez-vous pour obtenir un Bilan bien-être!",
             "notification.lastAttemptMessage":"Nous n’avons pas eu de vos nouvelles depuis un certain temps. Connectez-vous pour obtenir un Bilan bien-être!",
-          
+
             //time picker title
             "timepicker.title":"Choisir une heure",
             "timepicker.canceltext":"Annuler",
             "timepicker.confirmtext":"Confirmer",
-            
+
               "scheduleTitle":"Notification planifiée",
               "scheduleMessage":"Comment vous sentez-vous en ce moment? Connectez-vous pour obtenir un Bilan bien-être!",
               "scheduleMessage1":"Nous n’avons pas eu de vos nouvelles depuis un certain temps. Connectez-vous pour obtenir un Bilan bien-être!",
@@ -1013,7 +1013,7 @@ export const resources = {
                "ok":"D'accord",
                "declinemsg1": "Vous devez accepter les Conditions générales pour utiliser cette application. Sélectionnez « D'accord » pour modifier vos préférences, ou appelez-nous au ",
                "declinemsg2": " pour obtenir plus de renseignements.",
-              
+
                "Accessibility.ApplicationName":"le nom de l'application est Bilan bien-être ",
                "Accessibility.ReturnLogoButton":"Retour",
                "Accessibility.getting_started_title":"Pour commencer titre de la page",

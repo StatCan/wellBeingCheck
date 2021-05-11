@@ -1,3 +1,4 @@
+import 'react-native-get-random-values';
 import shortUUID from 'short-uuid';
 import {Modulus2833Radix62} from './modulo-check-scheme';
 

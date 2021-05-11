@@ -1,5 +1,6 @@
+
 import React, { memo,useEffect } from 'react';
-import { StyleSheet, StatusBar, View,Image,YellowBox,Button,Dimensions,Alert,Platform} from 'react-native';
+import { StyleSheet, StatusBar, View,Image,Button,Dimensions,Alert,LogBox,Platform} from 'react-native';
 import { AsyncStorage } from 'react-native';
 import NetInfo from '@react-native-community/netinfo';
 import Background from '../components/Background';
@@ -7,8 +8,8 @@ import * as Localization from 'expo-localization';
 import { newTheme } from '../core/theme';
 import { Provider as PaperProvider, Title } from 'react-native-paper';
 //import { checkConnection } from '../utils/fetchJwToken';
-import { Notifications } from "expo";
-import * as Permissions from 'expo-permissions';
+//import { Notifications } from "expo";
+import * as Notifications from 'expo-notifications';
 import Constants from 'expo-constants';
 import { resources } from '../../GlobalResources';
 import LogoClear from '../components/LogoClear';
@@ -32,9 +33,19 @@ type LaunchState = {
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
 }
-YellowBox.ignoreWarnings(['Require cycle:','Setting a timer']);
-console.ignoredYellowBox = ['Require cycle:','Setting a timer'];
+LogBox.ignoreLogs(['Require cycle:','Setting a timer']);
+//YellowBox.ignoreWarnings(['Require cycle:','Setting a timer']);
+//console.ignoredYellowBox = ['Require cycle:','Setting a timer'];
 let pkg = require('../../app.json');
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+  }),
+});
+
 class LaunchScreen extends React.Component<Props, LaunchState> {
 
   constructor(LaunchState) {
@@ -55,6 +66,8 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
   }
   //determine if user already has an account
   _bootstrap = () => {
+
+
     AsyncStorage.getItem('user_account', (err, userAccountResult) => {
       if (global.debugMode) console.log(userAccountResult);
       let userAccountResultObj = JSON.parse(userAccountResult)
@@ -70,6 +83,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
         if (userGettingStartedResultObj) {
           gettingStarted = userGettingStartedResultObj.gettingStarted
         }
+
         AsyncStorage.getItem('user_terms_and_conditions', (err, userTermsResult) => {
           if (global.debugMode) console.log(userTermsResult);
           let userTermsResultObj = JSON.parse(userTermsResult)
@@ -137,7 +151,7 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
             global.sleepHour=sleepHour;
 
               // global.awakeHour='8:00';
-              // global.sleepHour='22:00'; 
+              // global.sleepHour='22:00';
               console.log("-------------------fr----------s----------s----------")
             } else {
               let awakeHour=await AsyncStorage.getItem('AwakeHour');
@@ -206,12 +220,10 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           this.checkUpgrade();   //Test for 1.4.9
           this._bootstrap();
         };
-      onNotification(n) {
-     //  console.log('received notification:'+JSON.stringify(n));
-        let json = n.data; console.log(n.notificationId+':'+new Date(json.scheduledTime));
-       //this.props.navigation.navigate('Dashboard');
-       global.received+=global.received=n.notificationId+':'+new Date(json.scheduledTime)+'\r\n';
-       AsyncStorage.setItem('Received',global.received);
+  async onNotification(n) {
+    console.log('received notification:'+n.request.identifier);
+        global.received+=n.request.identifier+':'+new Date()+'\r\n';
+             AsyncStorage.setItem('Received',global.received);
        }
 
   async getCulture(){
@@ -225,28 +237,28 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
      this.setState({title:resources.getString("Well-Being Check")});
    }
   componentDidMount() {
-    Notifications.addListener(this.onNotification);
-  //  this.checkUpgrade();   //the global.schedules is not set yet when running this line. so move it to the end of bootstrapA
+      Notifications.addNotificationReceivedListener(this.onNotification);
+      Notifications.addNotificationResponseReceivedListener((response) => {
+           console.log(response);
+       });
+
+      this.checkUpgrade();}
+askPermissions = async () => {
+    if(Platform.OS=='android')return true;
+    let settings=await Notifications.getPermissionsAsync();
+    if(settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL){
+       return await Notifications.requestPermissionsAsync({
+          ios:{
+             allowAlert:true,
+             aloowSound:true,
+             allowBadge:true,
+             allowAnnouncements:true,
+          },
+       });
+    }
+    return false;
   }
-  askPermissions = async () => {
-      const { status: existingStatus } = await Permissions.getAsync(
-        Permissions.NOTIFICATIONS
-      );
-      let finalStatus = existingStatus;
-      if (existingStatus !== "granted") {
-        const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-        finalStatus = status;
-      }
-      if (finalStatus !== "granted") {
-        console.log("Notifications Permission Not Granted");
-        global.notificationState = false; AsyncStorage.setItem('NotificationState', 'false');
-        return false;
-      }
-      console.log("Notifications Permission Granted");
-      global.notificationState = true; AsyncStorage.setItem('NotificationState', 'true');
-      return true;
-    };
-  async checkUpgrade(){
+async checkUpgrade(){
       console.log('Check upgrade');currentVersion='1.3.3'; console.log('TestOnly    old version  >>>>>>>>>>>>>>>>>>>>>>>>:'+currentVersion);
       let currentVersion=await AsyncStorage.getItem('CurrentVersion');console.log('currentVersion:'+currentVersion);
       if(currentVersion==null){
@@ -317,31 +329,3 @@ const styles = StyleSheet.create({
 });
 
 export default memo(LaunchScreen);
-
-
-
-//async checkUpgrade(){
-//      console.log('Check upgrade');
-//      let currentVersion=await AsyncStorage.getItem('CurrentVersion');console.log('currentVersion:'+currentVersion);
-//      if(currentVersion==null){
-//           console.log('Notification cancelled');
-//           Notifications.cancelAllScheduledNotificationsAsync(); global.sendouts='(Re)Install,Cancelled';AsyncStorage.setItem('Sendouts', sendouts);
-//           AsyncStorage.setItem('CurrentVersion', pkg.expo.version);
-//      }
-//
-//      if(global.hasImage==1){
-//          if(currentVersion==null ||(currentVersion!=null && currentVersion!=pkg.expo.version)){
-//              let isConnected=await checkConnection();
-//              if(!isConnected){Alert.alert('',resources.getString('offline'));return;}
-//              let jwt=await fetchJwToken();console.log(jwt);
-//              if(jwt==''){Alert.alert('',resources.getString("securityIssue"));return;}
-//              global.jwToken=jwt;global.busy=0;
-//              let types=await fetchGraphTypes();console.log(types);
-//              if(types!=null && types.length>0){
-//                    await fetchGraphs(types,deviceWidth,deviceHeight);
-//              }
-//              AsyncStorage.setItem('CurrentVersion', pkg.expo.version);
-//          }
-//      }
-//
-//  }

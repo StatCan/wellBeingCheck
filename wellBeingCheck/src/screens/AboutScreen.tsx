@@ -368,10 +368,10 @@ class AboutScreen extends React.Component<Props, AboutState> {
           <View style={styles.logo_container}
             {...global.panResponder.panHandlers}>
             {/* <LogoClearSmall/> */}
-            <TouchableOpacity 
+            <TouchableOpacity
             onPress={() => this.props.navigation.navigate('Dashboard')}
             style={{ marginLeft: 5, marginTop: 10,marginBottom:5 }}
-            accessible={false}        
+            accessible={false}
                             >
                 <Image source={require('../assets/WellnessCheckLogo.png')}
                        style={{ width: 38, height: 38 }} />
@@ -667,7 +667,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                             <Text style={styles.faqListItem}>
                               <Text>{resources.getString("faq.c3.q6.a")}
                               </Text>
-                              <Text style={styles.faqPhone} 
+                              <Text style={styles.faqPhone}
                                 onPress={() => Linking.openURL('tel:18779499492')}>
                                 1-877-949-9492.
                             </Text>
@@ -825,17 +825,17 @@ class AboutScreen extends React.Component<Props, AboutState> {
               <View style={styles.content}
 
               >
-                <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("about_content.Study")} 
+                <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("about_content.Study")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("about_content.Study")} </Text>
 
                 <Paragraph style={styles.paragraph}>
                   <Text>
-                    
-                 <ParsedText 
+
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -851,26 +851,26 @@ class AboutScreen extends React.Component<Props, AboutState> {
                       }
                       childrenProps={{ allowFontScaling: false }}
                     >
-                     
-                       
+
+
                       {resources.getString("about_content.Study.a")}
 
                     </ParsedText>
                   </Text>
                 </Paragraph>
-               
 
-                <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("about_content.Notification")} 
+
+                <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("about_content.Notification")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("about_content.Notification")} </Text>
 
                 <Paragraph style={styles.paragraph}>
                   <Text>
-                    
-                 <ParsedText 
+
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -886,8 +886,8 @@ class AboutScreen extends React.Component<Props, AboutState> {
                       }
                       childrenProps={{ allowFontScaling: false }}
                     >
-                     
-                       
+
+
                       {resources.getString("about_content.Notification.a")}
 
                     </ParsedText>
@@ -895,17 +895,17 @@ class AboutScreen extends React.Component<Props, AboutState> {
                 </Paragraph>
 
 
-                <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("about_content.Authorization")} 
+                <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("about_content.Authorization")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("about_content.Authorization")} </Text>
 
                 <Paragraph style={styles.paragraph}>
                   <Text>
-                    
-                 <ParsedText 
+
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -921,8 +921,8 @@ class AboutScreen extends React.Component<Props, AboutState> {
                       }
                       childrenProps={{ allowFontScaling: false }}
                     >
-                     
-                       
+
+
                       {resources.getString("about_content.Authorization.a")}
 
                     </ParsedText>
@@ -930,17 +930,17 @@ class AboutScreen extends React.Component<Props, AboutState> {
                 </Paragraph>
 
 
-                <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("about_content.linkages")} 
+                <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("about_content.linkages")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("about_content.linkages")} </Text>
 
                 <Paragraph style={styles.paragraph}>
                   <Text>
-                    
-                 <ParsedText 
+
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -956,8 +956,8 @@ class AboutScreen extends React.Component<Props, AboutState> {
                       }
                       childrenProps={{ allowFontScaling: false }}
                     >
-                     
-                       
+
+
                       {resources.getString("about_content.linkages.a")}
 
                     </ParsedText>
@@ -965,17 +965,17 @@ class AboutScreen extends React.Component<Props, AboutState> {
                 </Paragraph>
 
 
-                <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("about_content.time")} 
+                <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("about_content.time")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("about_content.time")} </Text>
 
                 <Paragraph style={styles.paragraph}>
                   <Text>
-                    
-                 <ParsedText 
+
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -991,25 +991,25 @@ class AboutScreen extends React.Component<Props, AboutState> {
                       }
                       childrenProps={{ allowFontScaling: false }}
                     >
-                     
-                       
+
+
                       {resources.getString("about_content.time.a")}
 
                     </ParsedText>
                   </Text>
                 </Paragraph>
 
-                <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("about_content.navigate")} 
+                <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("about_content.navigate")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("about_content.navigate")} </Text>
 
                 <Paragraph style={styles.paragraph}>
                   <Text>
-                    
-                 <ParsedText 
+
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -1025,24 +1025,24 @@ class AboutScreen extends React.Component<Props, AboutState> {
                       }
                       childrenProps={{ allowFontScaling: false }}
                     >
-                    
+
                       {resources.getString("about_content.navigate.a")}
 
                     </ParsedText>
                   </Text>
                 </Paragraph>
 
-                <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("about_content.timeout")} 
+                <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("about_content.timeout")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("about_content.timeout")} </Text>
 
                 <Paragraph style={styles.paragraph}>
                   <Text>
-                    
-                 <ParsedText 
+
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -1058,7 +1058,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                       }
                       childrenProps={{ allowFontScaling: false }}
                     >
-   
+
                       {resources.getString("about_content.timeout.a")}
 
                     </ParsedText>
@@ -1066,17 +1066,17 @@ class AboutScreen extends React.Component<Props, AboutState> {
                 </Paragraph>
 
 
-                <Text 
-                accessibilityRole='header' 
-                accessible={true} 
-                accessibilityLabel={resources.getString("about_content.def")} 
+                <Text
+                accessibilityRole='header'
+                accessible={true}
+                accessibilityLabel={resources.getString("about_content.def")}
                 style={styles.ParagraphHeader}
                 >{resources.getString("about_content.def")} </Text>
 
                 <Paragraph style={styles.paragraph}>
                   <Text>
-                    
-                 <ParsedText 
+
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -1092,18 +1092,18 @@ class AboutScreen extends React.Component<Props, AboutState> {
                       }
                       childrenProps={{ allowFontScaling: false }}
                     >
-   
+
                       {resources.getString("about_content.def.a")}
 
                     </ParsedText>
                   </Text>
                 </Paragraph>
 
-                
+
                 {/* <Paragraph style={styles.paragraph}>
                   <Text>
-                    
-                 <ParsedText 
+
+                 <ParsedText
                       style={styles.text}
                       parse={
                         [
@@ -1119,8 +1119,8 @@ class AboutScreen extends React.Component<Props, AboutState> {
                       }
                       childrenProps={{ allowFontScaling: false }}
                     >
-                     
-                       
+
+
                       {resources.getString("about_content")}
 
                     </ParsedText>
@@ -1150,7 +1150,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
         </Button>
 
         {/* <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-          <Button onPress={()=>this.displayNotificationInfo()} 
+          <Button onPress={()=>this.displayNotificationInfo()}
           style={styles.btnNext}>Info</Button>
         <Button style={styles.btnNext}
           mode="contained"
