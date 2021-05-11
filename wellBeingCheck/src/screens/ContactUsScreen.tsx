@@ -121,6 +121,23 @@ printLogo=()=>{
                 </View>
 
 
+                <View style={styles.content}>
+                                  <Text style={styles.content_title}
+                                   accessible={true}
+                                   accessibilityRole='header'
+                                   accessibilityLabel={resources.getString("contactus_website")}
+                                  >Message</Text>
+                                  <TouchableOpacity onPress={() => Linking.openURL('sms:6134158507')}
+
+                                  >
+                                    <Text style={styles.text}
+                                      accessible={true}
+                                      accessibilityRole='link'
+                                      accessibilityLabel='https://www.statcan.gc.ca'
+                                    >(613)415-8507</Text>
+                                  </TouchableOpacity>
+                                </View>
+
 
 
               </View>
@@ -256,23 +273,3 @@ export default memo(ContactUsScreen);
                                onPress={this.printTest}>
                                <Text style={styles.btnText}>Test</Text>
                   </Button>*/
-
-
-
- /*<View style={styles.content}>
-                                  <Text style={styles.content_title}
-                                   accessible={true}
-                                   accessibilityRole='header'
-                                   accessibilityLabel={resources.getString("contactus_website")}
-                                  >Message</Text>
-                                  <TouchableOpacity onPress={() => Linking.openURL('sms:6134158507')}
-
-                                  >
-                                    <Text style={styles.text}
-                                      accessible={true}
-                                      accessibilityRole='link'
-                                      accessibilityLabel='https://www.statcan.gc.ca'
-                                    >(613)415-8507</Text>
-                                  </TouchableOpacity>
-                                </View>
-*/

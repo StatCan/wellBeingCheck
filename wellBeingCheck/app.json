@@ -25,14 +25,15 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.statcan.wellbeingchecktest",
-      "buildNumber": "1.0.0",
+      "buildNumber": "2.3.12",
       "infoPlist": {
         "CFBundleAllowMixedLocalizations": true
       }
     },
     "android": {
       "package": "com.statcan.wellbeingcheck",
-      "versionCode": 57
+      "versionCode": 58,
+      "permissions": []
     },
     "locales": {
       "fr": "./french.json"
