@@ -386,7 +386,8 @@ const styles = StyleSheet.create({
        elevation: 2,
      },
      textStyle: {
-       color: 'blue', fontSize:14,
+     //  color: 'blue',
+        fontSize:14,
      //  fontWeight: 'bold',
        textAlign: 'center',
      },

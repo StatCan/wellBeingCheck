@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, SafeAreaView,Alert,LogBox } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, SafeAreaView,Alert,LogBox,BackHandler } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Background from '../../components/Background';
 import Button from '../../components/Button';
@@ -63,7 +63,12 @@ class LoginScreen extends React.Component<Props, LoginState> {
       this.setState({ passwordError: resources.getString("login.Wrongpassword.message") });
     }
   }
-
+    componentDidMount() {
+      this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+    }
+  handleBackPress = () => {
+    return true;
+  }
   _onLoginPressed = () => {
     AsyncStorage.getItem('user_account', (err, result) => {
       console.log(result);

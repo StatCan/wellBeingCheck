@@ -2,8 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="68eb5ccb-ac57-4f6b-b6e1-bf4c6bc72738" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/components/TimePickerPaneBack.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/screens/UserModule/SettingsScreenToBe.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.expo/packager-info.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/packager-info.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalResources.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalResources.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TimePickerPane.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TimePickerPane.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/UserModule/LoginScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/UserModule/LoginScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/UserModule/ResultScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/UserModule/ResultScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/UserModule/SettingsScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/UserModule/SettingsScreen.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -12,31 +18,6 @@
   </component>
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>IntentLauncher</find>
-      <find>YellowBox</find>
-      <find>.ignoreWarnings</find>
-      <find>62.2</find>
-      <find>cancelAllScheduledNotificationsAsync</find>
-      <find>uuid</find>
-      <find>DateTimePickerModal</find>
-      <find>Notifications</find>
-      <find>askPermissions</find>
-      <find>DepthDataAccuracy</find>
-      <find>onSleepConfirm</find>
-      <find>handleBackAction</find>
-      <find>convertFrom12</find>
-      <find>ask</find>
-      <find>currentVer</find>
-      <find>SafeAreaConsumer</find>
-      <find>expo</find>
-      <find>Button</find>
-      <find>faq.c1.q</find>
-      <find>is24</find>
-      <find>about_content.Study</find>
-    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -59,10 +40,12 @@
   </component>
   <component name="PropertiesComponent">
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/screens/UserModule" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\guojian\Documents\GitHub\wellbeingcheck\wellBeingCheck\src\screens\UserModule" />
+      <recent name="C:\Users\guojian\Documents\GitHub\wellbeingcheck\wellBeingCheck\src\components" />
       <recent name="C:\Users\Jim\Documents\ReactNative\wellBeingCheck\src\components" />
     </key>
   </component>
@@ -80,9 +63,9 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="92" y="92" width="1182" height="544" key="AVDManager" timestamp="1620759773426">
+    <state x="21" y="98" width="1182" height="544" key="AVDManager" timestamp="1621269350773">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="92" y="92" width="1182" height="544" key="AVDManager/0.0.1366.728@0.0.1366.728" timestamp="1620759773426" />
+    <state x="21" y="98" width="1182" height="544" key="AVDManager/0.0.1366.728@0.0.1366.728" timestamp="1621269350773" />
   </component>
 </project>
