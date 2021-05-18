@@ -652,7 +652,7 @@ hours_am_pmSleep(time) {
     //Test
     async onWakeConfirm(data){
          let h=data.Hour,m=data.Minute;
-         let apm='AM';if(data.Apm==1){apm='PM';h+=12;}
+         let apm='AM';if(data.Apm==1&& h!=12){apm='PM';h+=12;}
          let time=h+':'+(m < 10 ? '0' : '') + m;
            console.log('Picked time:'+data.Hour+':'+data.Minute+' '+apm+'-->'+h+':'+m+' --'+time);
       //   let time=data.Time;
