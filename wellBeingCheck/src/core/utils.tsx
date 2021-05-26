@@ -18,7 +18,7 @@ export const passwordValidator = (password: string) => {
   if (!password || password.length <= 0) return 10;
   if (password.length < 8) return 20;
   if (!/[A-Z]/.test(password)) return 30;
-  if (!/[@!#$%^&*(),.?:{}|<>]/.test(password)) return 40;
+  if (!/[~@!#$%^&*(),.?:{}|<>=\/_-`|\[\];'"\\\-\+]/.test(password)) return 40;
   if (!/[a-z]/.test(password)) return 50;
   if (!/[0-9]/.test(password)) return 60;
   return 200;

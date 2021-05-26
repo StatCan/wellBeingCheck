@@ -337,7 +337,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
     else  if(name=="Wellness Together Canada"){
         Linking.openURL('https://ca.portal.gs/');
     } else  if(name=="Espace mieux-être Canada"){
-             Linking.openURL('https://ca.portal.gs/?lang=fr-ca');
+             Linking.openURL('https://wellnesstogether.ca/fr-CA');
          }
      global.resetTimer();
   }

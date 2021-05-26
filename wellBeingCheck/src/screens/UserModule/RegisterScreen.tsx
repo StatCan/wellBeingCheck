@@ -282,7 +282,9 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     const passText = text;
         const pasValLength =  text.length >= 8;
         const passValUpper =  (/[A-Z]/.test(text));
-        const passValSpecial =  (/[@!#$%^&*(),.?:{}|<>]/.test(text));
+        const passValSpecial =  (/[~@!#$%^&*(),.?:{}|<>=\/_-`|\[\];'"\\\-\+]/.test(text));
+   //  const passValSpecial =  (/[/~!@#$%^&*`|(){}]/.test(text));
+   //     const passValSpecial =  (/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi.test(text));
         const passValLower =  (/[a-z]/.test(text));
         const passValNumber =  (/[0-9]/.test(text));
 
@@ -543,8 +545,9 @@ const styles = StyleSheet.create({
   secretQuestionViewInput: {
     color: 'grey',
     fontSize: 16,
-    top: 15,
-    left: 10,
+    marginLeft:13,marginRight:13,
+  //  top: 15,
+   // left: 10,
   },
   secretQuestionView: {
     backgroundColor: 'white',
@@ -552,7 +555,7 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderWidth: 1.5,
     borderColor: '#a7a6a5',
-    borderRadius: 2,
+    borderRadius: 2,justifyContent: 'center',
   },
   container: {
     width: '100%',

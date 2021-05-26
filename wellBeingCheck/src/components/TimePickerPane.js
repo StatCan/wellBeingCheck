@@ -155,7 +155,10 @@ export class TimePickerPane extends React.Component {
        let h=1,m=0,apm=0;
        if(vs.length=2){
            let h=vs[0];let m=vs[1];
-           if(h>=12){h-=12;apm=1;}
+            if(h>=12){
+              if(h<24){ h-=12;apm=1;}
+              else{h=0;apm=0;}    //Change for QLTY-10
+            }
            return {Hour:h,Minute:m,Apm:apm}
        }
    }

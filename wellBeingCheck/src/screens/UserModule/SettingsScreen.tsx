@@ -652,7 +652,11 @@ hours_am_pmSleep(time) {
     //Test
     async onWakeConfirm(data){
          let h=data.Hour,m=data.Minute;
-         let apm='AM';if(data.Apm==1&& h!=12){apm='PM';h+=12;}
+         let apm='AM';
+         if(data.Apm==1){    //Change for QLTY-10
+               apm='PM';
+               if(h!=12)h+=12;
+         }
          let time=h+':'+(m < 10 ? '0' : '') + m;
            console.log('Picked time:'+data.Hour+':'+data.Minute+' '+apm+'-->'+h+':'+m+' --'+time);
       //   let time=data.Time;
@@ -669,7 +673,11 @@ hours_am_pmSleep(time) {
     onWakeCancel(){console.log('cancelled');this.setState({wakeTimePickerShow:false}); }
     async onSleepConfirm(data){
          let h=data.Hour,m=data.Minute;
-         let apm='AM';if(data.Apm==1&& h!=12){apm='PM';h+=12;}
+         let apm='AM';
+         if(data.Apm==1){   //Change for QLTY-10
+             apm='PM';
+             if(h!=12)h+=12;
+         }
          let time=h+':'+(m < 10 ? '0' : '') + m;
            console.log('Picked time:'+data.Hour+':'+data.Minute+' '+apm+'-->'+h+':'+m+' --'+time);
 
@@ -691,7 +699,10 @@ hours_am_pmSleep(time) {
        let h=1,m=0,apm=0;
        if(vs.length=2){
            let h=vs[0];let m=vs[1];
-           if(h>=12){h-=12;apm=1;}
+            if(h>=12){
+                         if(h<24){ h-=12;apm=1;}
+                         else{h-=12;apm=0;}    //Change for QLTY-10
+                      }
            return {Hour:h,Minute:m,Apm:apm}
        }
    }
@@ -709,9 +720,11 @@ hours_am_pmSleep(time) {
         else{
            let ddd1=this.timeToApm(this.state.waketime);
            let apm1='AM';if(ddd1.Apm==1&& ddd1.Hour!=12){apm1='PM';}
+               if(ddd1.Hour==0)ddd1.Hour=12;   //Change for QLTY-10
            wakeDesc=ddd1.Hour+':'+ddd1.Minute+' '+apm1;
            let ddd2=this.timeToApm(this.state.sleeptime);
            let apm2='AM';if(ddd2.Apm==1&& ddd2.Hour!=12){apm2='PM';}
+            if(ddd2.Hour==0)ddd2.Hour=12;   //Change for QLTY-10
            sleepDesc=ddd2.Hour+':'+ddd2.Minute+' '+apm2;
         }
     }
