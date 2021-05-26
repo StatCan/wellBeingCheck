@@ -5,8 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.expo/packager-info.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/packager-info.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GlobalResources.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalResources.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/french.json" beforeDir="false" afterPath="$PROJECT_DIR$/french.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/ContactUsScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/ContactUsScreen.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
