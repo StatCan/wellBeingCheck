@@ -8,7 +8,7 @@ export const resources = {
     data: {
         en: {
             //global
-            "app.name": "Well-being Check",
+            "app.name": "StatCan Attitude",
             "gl.next": "Next",
             "gl.cancel": "Cancel",
             "gl.decline": "Decline",
@@ -480,7 +480,7 @@ export const resources = {
         },
         fr: {
             //global
-            "app.name": "Bilan bien-être",
+            "app.name": "StatCan Attitude",
             "gl.next": "Suivant",
             "gl.cancel": "Annuler",
             "gl.decline": "Décliner",

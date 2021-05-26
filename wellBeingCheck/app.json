@@ -1,15 +1,15 @@
 {
-  "name": "Well-being Check|Bilan bien-être",
-  "displayName": "Well-being Check|Bilan bien-être",
+  "name": "StatCan Attitude",
+  "displayName": "StatCan Attitude",
   "expo": {
     "androidStatusBar": {
       "backgroundColor": "#000000"
     },
-    "name":"Well-being Check|Bilan bien-être",
+    "name":"StatCan Attitude",
     "slug": "wellBeingCheck",
     "privacy": "unlisted",
     "sdkVersion": "39.0.0",
-    "version": "1.4.23",
+    "version": "1.4.24",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -25,14 +25,14 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.statcan.wellbeingchecktest",
-      "buildNumber": "2.3.14",
+      "buildNumber": "2.3.15",
       "infoPlist": {
         "CFBundleAllowMixedLocalizations": true
       }
     },
     "android": {
       "package": "com.statcan.wellbeingcheck",
-      "versionCode": 59,
+      "versionCode": 60,
       "permissions": []
     },
     "locales": {
