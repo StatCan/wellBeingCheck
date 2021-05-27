@@ -25,7 +25,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.statcan.wellbeingchecktest",
-      "buildNumber": "2.3.15",
+      "buildNumber": "2.3.16",
       "infoPlist": {
         "CFBundleAllowMixedLocalizations": true
       }

@@ -47,7 +47,7 @@
       <recent name="C:\Users\Jim\Documents\ReactNative\wellBeingCheck\src\components" />
     </key>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpellCheckerSettings" BundledDictionaries="0" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" Dictionaries="0" CorrectionsLimit="5" DefaultDictionary="application-level" UseSingleDictionary="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -62,10 +62,10 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="21" y="98" width="1182" height="544" key="AVDManager" timestamp="1622142935317">
+    <state x="21" y="98" width="1182" height="544" key="AVDManager" timestamp="1622144335587">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="21" y="98" width="1182" height="544" key="AVDManager/0.0.1366.728@0.0.1366.728" timestamp="1622142935317" />
+    <state x="21" y="98" width="1182" height="544" key="AVDManager/0.0.1366.728@0.0.1366.728" timestamp="1622144335587" />
     <state x="415" y="118" key="FileChooserDialogImpl" timestamp="1621626575636">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
