@@ -523,7 +523,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
 //color={this.state.passVal_Number ? "green" : ""}   //temparily remove it, it has problem
 const styles = StyleSheet.create({
   passwordInput: {
-    width: 190,
+    width: 208,
     borderRightWidth: 0,
   },
   passwordEyeIcon: {
@@ -535,7 +535,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     height: 58.6,
     top: 17.8,
-    width: 50,
+    width: 45,
     borderStyle: 'solid',
     borderColor: '#a7a6a5',
     borderTopWidth: 1.5,
@@ -584,12 +584,12 @@ const styles = StyleSheet.create({
     color: '#66cc99',
   },
   passwordHelpBtnText: {
-    fontSize: 25,
+    fontSize: 23,
     color: "black",
   },
   passwordHelpBtnBg: {
     backgroundColor: "white",
-    paddingHorizontal: 23,
+    paddingHorizontal: 9,
     paddingVertical: 10,
     borderRadius: 2,
     height: 58,

@@ -490,7 +490,7 @@ const styles = StyleSheet.create({
   gearIcon: {
   },
   startButtonText: {
-    fontSize: 25,
+    fontSize: 22,
     color: '#fff',
     textAlign: 'center',
     fontWeight: '700'

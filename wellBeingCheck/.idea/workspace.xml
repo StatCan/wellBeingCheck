@@ -5,7 +5,10 @@
       <change beforePath="$PROJECT_DIR$/.expo/packager-info.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/packager-info.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GlobalResources.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalResources.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/ContactUsScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/ContactUsScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Globals.js" beforeDir="false" afterPath="$PROJECT_DIR$/Globals.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Dashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/UserModule/RegisterScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/UserModule/RegisterScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/UserModule/SettingsScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/UserModule/SettingsScreen.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,10 +62,10 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="21" y="98" width="1182" height="544" key="AVDManager" timestamp="1622031917945">
+    <state x="21" y="98" width="1182" height="544" key="AVDManager" timestamp="1622142935317">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="21" y="98" width="1182" height="544" key="AVDManager/0.0.1366.728@0.0.1366.728" timestamp="1622031917945" />
+    <state x="21" y="98" width="1182" height="544" key="AVDManager/0.0.1366.728@0.0.1366.728" timestamp="1622142935317" />
     <state x="415" y="118" key="FileChooserDialogImpl" timestamp="1621626575636">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

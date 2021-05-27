@@ -814,11 +814,7 @@ hours_am_pmSleep(time) {
                     style={styles.listStyle1a}
                     title={
                       <ParsedText
-                        parse={
-                          [
-                            { pattern: /before|after |avant|après/, style: styles.bold },
-                          ]
-                        }
+
                         childrenProps={{ allowFontScaling: false }}
                       >
                         {resources.getString("wake_time")}
@@ -865,11 +861,7 @@ hours_am_pmSleep(time) {
                     style={styles.listStyle1b}
                     title={
                       <ParsedText
-                        parse={
-                          [
-                            { pattern: /before|after|avant|après/, style: styles.bold },
-                          ]
-                        }
+
                         childrenProps={{ allowFontScaling: false }}
                       >
                         {resources.getString("sleep_time")}
