@@ -18,11 +18,11 @@ export const resources = {
             //getting started
             "getting_started": "Getting Started\n",
             "getting_started_content": `Why we are conducting this study\n`+
-            `The purpose of this study is to better understand the everyday well-being of Canadians by asking about activities and feelings as they are happening. To do this, participants will download an app on their smartphones and answer a few questions at different intervals throughout the day, over a short period of time. The results will help us to find connections between activities and well-being, and be used to develop programs that enhance people’s lives. In the future, an app could be used as a faster and more convenient way to complete other Statistics Canada surveys. \n\n`+
+            `This pilot study asks Canadians in-the-moment questions about their activities and feelings. Our goal is to gain a better understanding of the factors that influence well-being, particularly arts and culture activities, which are the main focus of this pilot. This initiative is in collaboration with Canada Council for the Arts and Canadian Heritage. The data will provide insight on the connections between activities and well-being, and could be used to develop programs that enhance people’s lives. Although voluntary, your participation is appreciated and will help ensure we gather accurate information about the well-being of Canadians.\n\n`+
             `Information may also be used by Statistics Canada for other statistical and research purposes. \n\n`+
 
             `Notifications \n`+
-            `This app will notify you to complete a StatCan Attitude 2 to 5 times daily. You can customize these parameters, including when we should not disturb you, at any time in the settings menu on the app’s home page. If you do not customize the parameters, you will receive a default of 2 daily notifications at various times between 08:00 and 22:00. If you do not allow notifications, you can still complete a StatCan Attitude whenever you like, but the quality of your results may be impacted. \n\n` +
+            `This App will notify you to complete a well-being check 2 to 5 times daily. You can customize these parameters, including when we should not disturb you, at any time in the settings menu on the App’s home page. If you do not customize the parameters, you will receive a default of 2 daily notifications at various times between 08:00 and 22:00. If you do not allow notifications, you can still complete a  well-being check whenever you like, but the quality of your results may be impacted. \n\n` +
             `Authorization and confidentiality\n`+
             `Data are collected under the authority of the Statistics Act, Revised Statutes of Canada, 1985, Chapter S-19. Your information will be kept strictly confidential. \n\n`+
             `Although voluntary, your participation is important so that the information collected is as accurate and complete as possible. \n\n`+
@@ -43,7 +43,7 @@ export const resources = {
 
             //terms & conditions
             "terms_and_conditions": "Terms and conditions \n",
-            "terms_and_conditions_disagree": "You must accept Terms and Conditions to use this app. Select “OK” to revise your preferences, or call us at 1-877-949-9492 for more information.",
+            "terms_and_conditions_disagree": "You must accept Terms and Conditions to use this App. Select “OK” to revise your preferences, or call us at 1-877-949-9492 for more information.",
             "terms_and_conditions_content.Disclaimer": `Disclaimer`,
             "terms_and_conditions_content.Disclaimer.a": `Information collected through the use of the StatCan Attitude App falls under the authority of the Statistics Act which ensures that any information provided will be kept confidential and will only be used for statistical and research purposes.  It is your responsibility to keep your phone and access to the App secure. We do not recommend removing software restrictions and limitations imposed by the official operating system of your device. Doing so could compromise your phone’s security features and the security/confidentiality of the information collected by this App. \n`,
 
@@ -52,7 +52,7 @@ export const resources = {
                 //`http://www.statcan.gc.ca/eng/reference/terms-conditions/general \n\n` +
 
             "terms_and_conditions_content.Modif" : `Modification of Terms and Conditions` ,
-            "terms_and_conditions_content.Modif.a" :  `Statistics Canada reserves the right to change these Terms and Conditions in its sole discretion.  Modification of these Terms and Conditions by Statistics Canada will require they are accepted prior to using the App. \n` ,
+            "terms_and_conditions_content.Modif.a" :  `Statistics Canada reserves the right to change these Terms and Conditions in its sole discretion.  Any modifications to these Terms and Conditions by Statistics Canada must be accepted before continuing to use the App. \n` ,
 
             "terms_and_conditions_content.privacy" : `Privacy notice` ,
             "terms_and_conditions_content.privacy.a" :    `Statistics Canada is committed to respecting the privacy of individuals and businesses—whether they are responding to one of our surveys, providing personal information, purchasing a product or service or using our website. To fulfill this commitment, Statistics Canada has created a Privacy Framework that describes the Approved practices, procedures and governance related to privacy. All personal information collected, used, disclosed or retained by Statistics Canada is protected by the Privacy Act and by the Statistics Act whether it was provided by a respondent or received from a third party.\n`,
@@ -66,7 +66,7 @@ export const resources = {
                 //`http://www.statcan.gc.ca/eng/sc/blog2 \n\n` +
 
             "terms_and_conditions_content.accessibility" :  `Accessibility notice` ,
-            "terms_and_conditions_content.accessibility.a" :  `The Government of Canada is committed to achieving a high standard of accessibility as defined in the Standard on Optimizing Website and Applications for Mobile Devices.  In the event of difficulty using our web pages, Applications or device-based mobile Applications, please contact us for assistance or to obtain alternative formats such as regular print, Braille or another appropriate format. \n`,
+            "terms_and_conditions_content.accessibility.a" :  `The Government of Canada is committed to achieving a high standard of accessibility as defined in the Standard on Optimizing Website and Applications for Mobile Devices.  In the event of difficulty using our web pages, applications or device-based mobile applications, please contact us for assistance or to obtain alternative formats such as regular print, Braille or another appropriate format. \n`,
                 //`http://www.statcan.gc.ca/eng/reference/accessnotice \n\n` +
 
             "terms_and_conditions_content.useofcontent" :   `Use of content`,
@@ -79,7 +79,7 @@ export const resources = {
             "terms_and_conditions_content.Law.a" :   `This App and its Terms and Conditions are governed by the laws of the province of Ontario and Applicable laws of Canada. Legal proceedings related to this App and its Terms and Conditions may only be brought in the courts of Ontario or the Federal Court of Canada. \n`,
 
             "terms_and_conditions_content.Liability" :     `Limitation of liability`,
-            "terms_and_conditions_content.Liability.a" :    `The Government of Canada, its officers, servants, employees and/or agents shall not be held liable for any injury to any person, including death, or for any loss or damage to any person’s property, incurred or suffered arising out of or in connection with the use of the App. By downloading, accessing or using this App or any page of this App, you signify your assent to this disclaimer. Mobile phone use while driving is widely considered dangerous due to its potential for causing distracted driving and accidents. Activities such as voice calling, texting, web browsing, playing video games, mobile App use or phone use in general can increase the risk of an accident. Use of this App should only be done when appropriate and safe to do so. \n`,
+            "terms_and_conditions_content.Liability.a" :    `The Government of Canada, its officers, servants, employees and/or agents shall not be held liable for any injury to any person, including death, or for any loss or damage to any person’s property, incurred or suffered arising out of or in connection with the use of the App. By downloading, accessing or using this App or any page of this App, you signify your assent to this disclaimer. Mobile phone use while driving is widely considered dangerous due to its potential for causing distracted driving and accidents. Activities such as voice calling, texting, web browsing, playing video games, mobile app use or phone use in general can increase the risk of an accident. Use of this App should only be done when appropriate and safe to do so. \n`,
 
             "terms_and_conditions_content.disclosure" :  `Disclosure statement`,
             "terms_and_conditions_content.disclosure.a" :   `Statistics Canada is allowed to disclose identifiable information when the respondent has given written consent to release it. \n`,
@@ -118,7 +118,7 @@ export const resources = {
             "reg.pass.validation.lower": "Password must contain at least 1 lower case",
             "reg.pass.validation.number": "Password must contain at least 1 number",
             "reg.ques.select": "Select question",
-            "reg.ques.mother": "What is your mother’s maiden name1234 4567?",
+            "reg.ques.mother": "What is your mother’s maiden name?",
             "reg.ques.school": "What primary school did you go to?",
             "reg.ques.car": "What was your first car?",
             "reg.ques.sport": "What is your favourite game or sport?",
@@ -148,12 +148,12 @@ export const resources = {
             //about
             "about_title": "",
             "about_content.Study": `Why we are conducting this study`,
-            "about_content.Study.a":`The purpose of this study is to better understand the everyday well-being of Canadians by asking about activities and feelings as they are happening. To do this, participants will download an app on their smartphones and answer a few questions at different intervals throughout the day, over a short period of time. The results will help us to find connections between activities and well-being, and be used to develop programs that enhance people’s lives. In the future, an app could be used as a faster and more convenient way to complete other Statistics Canada surveys.  \n` +
+            "about_content.Study.a":`This pilot study asks Canadians in-the-moment questions about their activities and feelings. Our goal is to gain a better understanding of the factors that influence well-being, particularly arts and culture activities, which are the main focus of this pilot. This initiative is in collaboration with Canada Council for the Arts and Canadian Heritage. The data will provide insight on the connections between activities and well-being, and could be used to develop programs that enhance people’s lives. Although voluntary, your participation is appreciated and will help ensure we gather accurate information about the well-being of Canadians. \n` +
 
             `Information may also be used by Statistics Canada for other statistical and research purposes.  \n`,
 
             "about_content.Notification":`Notifications` ,
-            "about_content.Notification.a":`This app will notify you to complete a StatCan Attitude 2 to 5 times daily. You can customize these parameters, including when we should not disturb you, at any time in the settings menu on the app’s home page. If you do not customize the parameters, you will receive a default of 2 daily notifications at various times between 08:00 and 22:00. If you do not allow notifications, you can still complete a StatCan Attitude whenever you like, but the quality of your results may be impacted. \n`,
+            "about_content.Notification.a":`This App will notify you to complete a well-being check 2 to 5 times daily. You can customize these parameters, including when we should not disturb you, at any time in the settings menu on the app’s home page. If you do not customize the parameters, you will receive a default of 2 daily notifications at various times between 08:00 and 22:00. If you do not allow notifications, you can still complete a well-being check whenever you like, but the quality of your results may be impacted. \n`,
 
             "about_content.Authorization": `Authorization and confidentiality` ,
             "about_content.Authorization.a":`Data are collected under the authority of the Statistics Act, Revised Statutes of Canada, 1985, Chapter S-19. Your information will be kept strictly confidential.  \n`,
@@ -191,9 +191,9 @@ export const resources = {
             "term_and_condition": "Term & Condition",
             "contact_us": "Contact us",
             "warning": "Warning",
-            "match_password_error": "You must provide matched password and secrity question and answer !",
+            "match_password_error": "You must provide matched password and security question and answer!",
             //"ok": "Ok",
-            "term_and condition_content": "When you continue use this app, that means you automatically agree on this Term and condition.",
+            "term_and condition_content": "When you continue use this App, that means you automatically agree on this Term and condition.",
 
             "Your feeling this week": "Your feeling this week",
             "Your feelings": "Your feelings: a snapshot",
@@ -218,7 +218,7 @@ export const resources = {
             "ThankYouA": "Thank you for checking in!",
             "ThankYouB": "Thank you, now check out your results!",
             "NoDataAlert": "Results will become available once you complete two StatCan Attitude.",
-            "GraphNotAvailable":"The result maybe not ready due to the slow server response.",
+            "GraphNotAvailable":"The result maybe not be ready due to the slow server response.",
             "Enter password": "Enter password",
             "Well-Being Check": "StatCan Attitude",
 
@@ -252,15 +252,15 @@ export const resources = {
 
             //category1-Question3
             "faq.c1.q3": "Who is participating in this study? ",
-            "faq.c1.q3.a": "Anyone in Canada over 15 years of age with a compatible smartphone or tablet can download StatCan Attitude from GooglePlay or the App Store to participate. You can participate with or without an invitation code. Please share this information with your friends so they can download the app too!",
+            "faq.c1.q3.a": "Anyone in Canada over 15 years of age with a compatible smartphone or tablet can download StatCan Attitude from GooglePlay or the App Store to participate. You can participate with or without an invitation code. Please share this information with your friends so they can download the App too!",
 
             //category1-Question4
             "faq.c1.q4": "Why are you conducting this study?",
-            "faq.c1.q4.a": "The purpose of this study is to better understand the everyday well-being of Canadians by asking in the moment questions about their activities and feelings. For more information about this study, please visit https://www.statcan.gc.ca/wellbeing",
+            "faq.c1.q4.a": "The purpose of this pilot study is to better understand the everyday well-being of Canadians by asking in the moment questions about their activities and feelings. For more information about this study, please visit https://www.statcan.gc.ca/wellbeing",
 
             //category1-Question5
             "faq.c1.q5": "How long will it take me to complete the study?",
-            "faq.c1.q5.a": "Daily StatCan Attitude should take about 2 minutes to complete. You can choose how many times to participate each day by customizing the number of notifications you will receive in the settings menu. We are asking you to participate in the study for one month.",
+            "faq.c1.q5.a": "Daily well-being checks should take about 2 minutes to complete. You can choose how many times to participate each day by customizing the number of notifications you will receive in the settings menu. We are asking you to participate in the study for one month.",
 
 //category1-Question6
             "faq.c1.q6": "Why are some things that are prohibited due to COVID-19 restrictions included as potential responses to questions in this survey?",
@@ -271,7 +271,7 @@ export const resources = {
 
             //category2-Question1
             "faq.c2.q1": "Why do I need a password and security question?",
-            "faq.c2.q1.a": "StatCan Attitude requests users to respond to daily questionnaires to identify how their feelings change in different settings. By password protecting the app, we can ensure your data trend has not been impacted by others who may use your phone and access the app. Also, StatCan Attitude provides users with a Results menu, which displays a trend of your self-assessed feelings and how they relate to what you are doing, who you are with, and where you are. By password protecting the app, we can ensure your trend is not viewed by others unless you log into the app and choose to share it with them.\n\n"+
+            "faq.c2.q1.a": "StatCan Attitude requests users to respond to daily questionnaires to identify how their feelings change in different settings. By password protecting the App, we can ensure your data trend has not been impacted by others who may use your phone and access the App. Also, StatCan Attitude provides users with a Results menu, which displays a trend of your self-assessed feelings and how they relate to what you are doing, who you are with, and where you are. By password protecting the App, we can ensure your trend is not viewed by others unless you log into the App and choose to share it with them.\n\n"+
             "Statistics Canada does not collect your password when you create it, and therefore will not be able to assist you in resetting your password if required. The security question provides a second tier of security which you can use to reset your password.",
 
             //category2-Question2
@@ -280,7 +280,7 @@ export const resources = {
 
             //category2-Question3
             "faq.c2.q3": "What if I forgot my password or security question?",
-            "faq.c2.q3.a": "You can change your password through the ‘Forgot password?’ option on the login screen. You will need to answer your security question in order to access the password reset function. If you have forgotten the answer to your security question, you will need to delete the app and download it again. Your previous responses will no longer be accessible to you through your My Results menu, as the app will identify you as a new user for security purposes.",
+            "faq.c2.q3.a": "You can change your password through the ‘Forgot password?’ option on the login screen. You will need to answer your security question in order to access the password reset function. If you have forgotten the answer to your security question, you will need to delete the App and download it again. Your previous responses will no longer be accessible to you through your My Results menu, as the App will identify you as a new user for security purposes.",
 
             //category2-Question4
             "faq.c2.q4": "Is the information I provide confidential?",
@@ -298,7 +298,7 @@ export const resources = {
 
             //category2-Question7
             "faq.c2.q7": "I want to stop participating in this study",
-            "faq.c2.q7.a": "If you want to stop participating in the study at any point, you can turn off notifications in the settings menu or delete the app from your device.",
+            "faq.c2.q7.a": "If you want to stop participating in the study at any point, you can turn off notifications in the settings menu or delete the App from your device.",
 
 
             //---------------category3---------------
@@ -306,19 +306,19 @@ export const resources = {
 
              //category3-Question1
              "faq.c3.q1": "What notifications will I receive?",
-             "faq.c3.q1.a": "The app will send you a notification when it is time to complete a StatCan Attitude. These notifications are sent at random times based on the parameters you have chosen in your settings menu. You can change your settings at any time.",
+             "faq.c3.q1.a": "The App will send you a notification when it is time to complete a well-being check. These notifications are sent at random times based on the parameters you have chosen in your settings menu. You can change your settings at any time.",
 
              //category3-Question2
              "faq.c3.q2": "Can I disable notifications?",
-             "faq.c3.q2.a": "Notifications are an essential part of this study as they let you know when a StatCan Attitude is available to be completed. If you need to turn off notifications, you can do it through the Settings page.",
+             "faq.c3.q2.a": "Notifications are an essential part of this study as they let you know when a well-being check is available to be completed. If you need to turn off notifications, you can do it through the Settings page.",
 
              //category3-Question3
              "faq.c3.q3": "How do I change my settings?",
-             "faq.c3.q3.a": "You can change your settings at any time through the Settings menu, located on the app homepage. ",
+             "faq.c3.q3.a": "You can change your settings at any time through the Settings menu, located on the App homepage. ",
 
              //category3-Question4
-             "faq.c3.q4": "Can I complete a StatCan Attitude if I have not received a notification?",
-             "faq.c3.q4.a": "Of course! You can complete a StatCan Attitude at any time by pressing START, located on the app homepage.",
+             "faq.c3.q4": "Can I complete a well-being check if I have not received a notification?",
+             "faq.c3.q4.a": "Of course! You can complete a well-being check at any time by pressing START, located on the App homepage.",
 
              //category3-Question5
              "faq.c3.q5": "What if I have missed a notification and have now received another?",
@@ -326,10 +326,10 @@ export const resources = {
 
              //category3-Question6
              "faq.c3.q6": "Why am I no longer receiving notifications?",
-             "faq.c3.q6.a": "If you have not completed a StatCan Attitude in the past 4 days, the app will stop sending you notifications. You can start receiving notifications again by pressing START, located on the app homepage, and completing a StatCan Attitude.\n\n"+
+             "faq.c3.q6.a": "If you have not completed a well-being check in the past 4 days, the App will stop sending you notifications. You can start receiving notifications again by pressing START, located on the App homepage, and completing a well-being check.\n\n"+
              "StatCan Attitude will send you notifications for up to 30 days total. After this period is complete, your participation in the study has ended and you will no longer receive notifications.\n\n"+
-             "Your device's Battery Saver Mode may be suppressing notifications from the StatCan Attitude app. Try changing your settings to remove any battery saving restrictions.\n\n"+
-             "For Android users, the app may stop sending you notifications if you recently restarted your device. You can receive notifications again by pressing START, located on the app homepage, and completing a StatCan Attitude.\n\n"+
+             "Your device's Battery Saver Mode may be suppressing notifications from the StatCan Attitude App. Try changing your settings to remove any battery saving restrictions.\n\n"+
+             "For Android users, the app may stop sending you notifications if you recently restarted your device. You can receive notifications again by pressing START, located on the app homepage, and completing a well-being check.\n\n"+
              "If none of these scenarios reflect your situation, please contact us at ",
 
              //category3-Question7
@@ -342,7 +342,7 @@ export const resources = {
             //category4-Question1
             "faq.c4.q1": "What does the Results menu tell me?",
             "faq.c4.q1.a": "The data visualizations on the Results menu display a snapshot of your self-assessed feelings and how they relate to what you are doing, who you are with, and where you are.\n\n"+
-            "For ease of interpretation, your activities and companions have been grouped. Please note, all questions about feelings are based on a scale of 0 meaning ‘not at all’, and 10 meaning ’completely’. Based on this, a high rating of feeling happy compared to a high rating of feeling anxious would be interpreted quite differently.\n\n"+
+            "For ease of interpretation, your activities and companions have been grouped. Please note, all questions about feelings are based on a scale of 0 meaning ‘not at all’, and 10 meaning ‘completely’. Based on this, a high rating of feeling happy compared to a high rating of feeling anxious would be interpreted quite differently.\n\n"+
             "These results are reported in real time and have not been validated by Statistics Canada. Caution should be exercised when interpreting the data.",
 
             //---------------category5---------------
@@ -357,17 +357,17 @@ export const resources = {
             "faq.c5.q2.a": "If you are experiencing display issues, crashes, or other bugs please contact us at ",
 
             //category5-Question4
-            "faq.c5.q3": "Can I download the app on multiple devices and sync it?",
-            "faq.c5.q3.a": "The app does not have syncing capabilities.\n\n"+
-            "Your participation in the study is based on the device you first downloaded the StatCan Attitude app on. If you download the app on a different device, you will be identified as a new user for security purposes and your previous responses will no longer be accessible to you through the Results menu.",
+            "faq.c5.q3": "Can I download the App on multiple devices and sync it?",
+            "faq.c5.q3.a": "The App does not have syncing capabilities.\n\n"+
+            "Your participation in the study is based on the device you first downloaded the StatCan Attitude App on. If you download the App on a different device, you will be identified as a new user for security purposes and your previous responses will no longer be accessible to you through the Results menu.",
 
             //category5-Question5
             "faq.c5.q4": "How much memory does the app require?",
             "faq.c5.q4.a": "StatCan Attitude requires 53 MB on Apple devices, and 90 MB on Android devices. ",
 
             //category5-Question5
-            "faq.c5.q5": "How much data does the app require?",
-            "faq.c5.q5.a": "If you are not connected to Wi-Fi and choose to use mobile data to complete a StatCan Attitude, the first StatCan Attitude will use approximately 1 MB. Subsequent StatCan Attitude will use less than 0.8 MB. Viewing your dashboard will use approximately 0.5 MB. Receiving notifications does not use any data.",
+            "faq.c5.q5": "How much data does the App require?",
+            "faq.c5.q5.a": "If you are not connected to wi-fi and choose to use mobile data to complete a well-being check , the first well-being check will use approximately 1 MB. Subsequent well-being checks will use less than 0.8 MB. Viewing your dashboard will use approximately 0.5 MB. Receiving notifications does not use any data.",
  //---------------category6---------------
             "faq.category6": "Respondent Well-being",
 
@@ -407,16 +407,16 @@ export const resources = {
 
             //Notification messages
             "notification.scheduleTitle":"Scheduled Notification",
-            "notification.scheduleMessage":"How are you feeling right now? Sign in for a StatCan Attitude!",
-            "notification.lastAttemptMessage":"We haven’t heard from you in a while. Sign in for a StatCan Attitude!",
+            "notification.scheduleMessage":"How are you feeling right now? Sign in for a well-being check!",
+            "notification.lastAttemptMessage":"We haven’t heard from you in a while. Sign in for a well-being check!",
 
              //time picker title
              "timepicker.title":"Pick a time",
              "timepicker.canceltext":"Cancel",
              "timepicker.confirmtext":"Confirm",
             "scheduleTitle":"Scheduled Notification",
-            "scheduleMessage":"How are you feeling right now? Sign in for a StatCan Attitude!",
-            "scheduleMessage1":"We haven’t heard from you in a while. Sign in for a StatCan Attitude!",
+            "scheduleMessage":"How are you feeling right now? Sign in for a well-being check!",
+            "scheduleMessage1":"We haven’t heard from you in a while. Sign in for a well-being check!",
              "cancel":"Cancel",
              "continue":"Continue",
              "settingValidation":"There needs to be a minimum of 3 hours between the 'Do not disturb before' and 'Do not disturb after' time settings",
@@ -429,7 +429,7 @@ export const resources = {
              "later":"No thanks",
              "message":"Message",
              "ok":"OK",
-             "declinemsg1": "You must accept Terms and Conditions to use this app. Select “OK” to revise your preferences, or call us at ",
+             "declinemsg1": "You must accept Terms and Conditions to use this App. Select “OK” to revise your preferences, or call us at ",
              "declinemsg2": " for more information.",
 
              // accessibility bilingual text
@@ -456,15 +456,15 @@ export const resources = {
             //getting started
             "getting_started": "Pour commencer\n",
             "getting_started_content": `Pourquoi nous menons cette étude\n` +
-                `L’objectif de cette enquête est de mieux comprendre le bien-être au quotidien des Canadiens et des Canadiennes en leur demandant de répondre à des questions sur les activités qu’ils entreprennent et les sentiments qu’ils éprouvent en temps réel. Pour ce faire, les participants devront télécharger une application sur leur téléphone intelligent et répondre à quelques questions à divers intervalles au cours de la journée, sur une courte période de temps. Les résultats obtenus nous aideront à établir des liens entre certaines activités et le bien-être, et nous permettront de développer des programmes qui amélioreront la vie des gens. À l’avenir, ce genre d’application pourrait servir à répondre à d’autres enquêtes de Statistique Canada de façon plus rapide et pratique. \n\n` +
+                `Cette étude pilote pose des questions sur le vif aux Canadiens au sujet de leurs activités et de leurs sentiments. Notre objectif est de mieux comprendre les facteurs qui influent sur le bien-être, en particulier les activités artistiques et culturelles, qui sont au cœur de cette étude pilote. Il s’agit d’une initiative menée en collaboration avec le Conseil des arts du Canada et Patrimoine canadien. Les données fourniront un éclairage sur les liens qui existent entre les activités et le bien-être et elles pourraient servir à élaborer des programmes qui améliorent la vie des gens. Bien que votre participation soit volontaire, elle est importante et nous permettra de recueillir de l’information pertinente sur le bien-être des Canadiens.\n\n` +
 
                 `Les renseignements recueillis pourraient aussi être utilisés par Statistique Canada à d’autres fins statistiques et de recherche. \n\n` +
 
                 `Notifications \n` +
-                `Cette application vous enverra une notification pour remplir un StatCan Attitude de 2 à 5 fois par jour. Vous pouvez personnaliser ces paramètres, y compris les moments où vous ne souhaitez pas être dérangé, à tout moment dans le menu des paramètres sur la page d’accueil de l’application. Si vous ne personnalisez pas les paramètres, vous recevrez par défaut 2 notifications à divers moments entre 8 h et 22 h. Si vous n’acceptez pas les notifications, vous pourrez tout de même remplir un StatCan Attitude quand vous le voudrez, mais la qualité de vos résultats pourrait en être affectée. \n\n` +
+                `Cette application vous enverra une notification pour remplir un bilan de bien-être de 2 à 5 fois par jour. Vous pouvez personnaliser ces paramètres, y compris les moments où vous ne souhaitez pas être dérangé, à tout moment dans le menu des paramètres sur la page d’accueil de l’application. Si vous ne personnalisez pas les paramètres, vous recevrez par défaut 2 notifications à divers moments entre 8 h et 22 h. Si vous n’acceptez pas les notifications, vous pourrez tout de même remplir un bilan de bien-être quand vous le voudrez, mais la qualité de vos résultats pourrait en être affectée.\n\n` +
 
                 `Autorisation et confidentialité \n` +
-                `Ces données sont recueillies en vertu de la Loi sur la statistique, Lois revisees du Canada \(1985\), chapitre S-19. V os renseignements demeureront strictement confidentiels. \n\n` +
+                `Ces données sont recueillies en vertu de la Loi sur la statistique, Lois révisées du Canada \(1985\), chapitre S-19. V os renseignements demeureront strictement confidentiels. \n\n` +
 
                 `Bien qu’elle soit volontaire, votre participation est importante afin que les renseignements recueillis soient les plus exacts et les plus complets possible. \n\n` +
 
@@ -478,7 +478,7 @@ export const resources = {
                 `Utilisez les boutons Précédent et Suivant situés dans le coin inférieur droit de chaque page. \n\n` +
 
                 `Délai d’inactivité d’une session \n` +
-                `Après 2 heures d’inactivité, votre session sera interrompue. Vous ne pourrez accéder à aucun renseignement qui n’a pas été sauvegardé. \n\n` +
+                `Après 2 heures d’inactivité, votre session sera interrompue. Vous ne pourrez accéder à aucun renseignement qui n’a pas été sauvegardé.\n\n` +
 
                 `Après 7 minutes d’inactivité, StatCan Attitude se verrouille. Vous devrez entrer votre mot de passe pour continuer. \n\n` +
 
@@ -495,7 +495,7 @@ export const resources = {
                 //`http://www.statcan.gc.ca/fra/reference/avis/conditions-generales \n\n` +
 
                 `Modification des conditions générales \n` +
-                `Statistique Canada se réserve le droit de modifier les présentes conditions générales à sa seule discrétion. Le cas échéant, il vous faudra accepter toute modification avant de pouvoir utiliser l’application. \n\n` +
+                `Statistique Canada se réserve le droit de modifier les présentes conditions générales à sa seule discrétion. Le cas échéant, il vous faudra accepter toute modification avant de pouvoir continuer à utiliser l’application. \n\n` +
 
                 `Avis de confidentialité \n` +
                 `Statistique Canada s’est engagé à protéger les renseignements personnels de toutes les personnes et entreprises, et ce, qu’elles répondent à l’une de ses enquêtes, fournissent des renseignements personnels, achètent un produit ou un service ou utilisent notre site Web. Afin de respecter cet engagement, nous avons élaboré un cadre de protection des renseignements personnels qui décrit les pratiques, les procédures et les mesures de gouvernance approuvées en matière de protection de la vie privée. \n\n` +
@@ -568,7 +568,7 @@ export const resources = {
          //`http://www.statcan.gc.ca/eng/reference/terms-conditions/general \n\n` +
 
      "terms_and_conditions_content.Modif" : `Modification des conditions générales` ,
-     "terms_and_conditions_content.Modif.a" : `Statistique Canada se réserve le droit de modifier les présentes conditions générales à sa seule discrétion. Le cas échéant, il vous faudra accepter toute modification avant de pouvoir utiliser l’application. \n` ,
+     "terms_and_conditions_content.Modif.a" : ` Statistique Canada se réserve le droit de modifier les présentes conditions générales à sa seule discrétion. Le cas échéant, il vous faudra accepter toute modification avant de pouvoir continuer à utiliser l’application. \n` ,
 
      "terms_and_conditions_content.privacy" : `Avis de confidentialité` ,
      "terms_and_conditions_content.privacy.a" :    `Statistique Canada s’est engagé à protéger les renseignements personnels de toutes les personnes et entreprises, et ce, qu’elles répondent à l’une de ses enquêtes, fournissent des renseignements personnels, achètent un produit ou un service ou utilisent notre site Web. Afin de respecter cet engagement, nous avons élaboré un cadre de protection des renseignements personnels qui décrit les pratiques, les procédures et les mesures de gouvernance approuvées en matière de protection de la vie privée. \n`,
@@ -658,45 +658,17 @@ export const resources = {
             "password_recovery_change.confirm_password": "Confirmez le mot de passe",
             "password.recovery.incorrectAnswer":"Mauvaise réponse",
             //home screen
-            "home_first_time_login_content": "Personnalisez le nombre de notifications et l’intervalle de temps  durant lequel vous les recevrez dans le menu des Paramètres.",
+            "home_first_time_login_content": "Personnalisez le nombre de notifications et l’intervalle de temps durant lequel vous les recevrez dans le menu des Paramètres.",
             //about
             "about_title": "",
 
-            // "about_content": `Pourquoi nous menons cette étude\n`+
-            //     `L’objectif de cette enquête est de mieux comprendre le bien-être au quotidien des Canadiens et des Canadiennes en leur demandant de répondre à des questions sur les activités qu’ils entreprennent et les sentiments qu’ils éprouvent en temps réel. Pour ce faire, les participants devront télécharger une application sur leur téléphone intelligent et répondre à quelques questions à divers intervalles au cours de la journée, sur une courte période de temps. Les résultats obtenus nous aideront à établir des liens entre certaines activités et le bien-être, et nous permettront de développer des programmes qui amélioreront la vie des gens. À l’avenir, ce genre d’application pourrait servir à répondre à d’autres enquêtes de Statistique Canada de façon plus rapide et pratique.  \n\n` +
-
-            //     `Les renseignements recueillis pourraient aussi être utilisés par Statistique Canada à d’autres fins statistiques et de recherche.  \n\n` +
-
-            //     `Notifications \n` +
-            //     `Cette application vous enverra une notification pour remplir un StatCan Attitude de 2 à 5 fois par jour. Vous pouvez personnaliser ces paramètres, y compris les moments où vous ne souhaitez pas être dérangé, à tout moment dans le menu des paramètres sur la page d’accueil de l’application. Si vous ne personnalisez pas les paramètres, vous recevrez par défaut 2 notifications à divers moments entre 8 h et 22 h. Si vous n’acceptez pas les notifications, vous pourrez tout de même remplir un StatCan Attitude quand vous le voudrez, mais la qualité de vos résultats pourrait en être affectée. \n\n` +
-
-            //     `Autorisation et confidentialité  \n` +
-            //     `Ces données sont recueillies en vertu de la Loi sur la statistique, Lois révisées du Canada (1985), chapitre S-19. Vos renseignements demeureront strictement confidentiels.  \n\n` +
-
-            //     `Couplages d’enregistrements  \n` +
-            //     `Afin d’améliorer la qualité des données tirées de cette enquête et de réduire le fardeau de réponse, Statistique Canada pourrait combiner les renseignements que vous fournissez avec ceux provenant d’autres enquêtes ou sources de données administratives.  \n\n` +
-
-            //     `Temps requis pour remplir ce questionnaire  \n` +
-            //     `Ce questionnaire prendra 2 minutes à remplir. Veuillez noter que vous ne serez pas en mesure de modifier les renseignements déclarés une fois votre questionnaire soumis.  \n\n` +
-
-            //     `Pour parcourir le questionnaire \n` +
-            //     `Utilisez les boutons Précédent et Suivant situés dans le coin inférieur droit de chaque page.  \n\n` +
-
-            //     `Délai d’inactivité d’une session \n` +
-            //     `Après 2 heures d’inactivité, votre session sera interrompue. Vous ne pourrez accéder à aucun renseignement qui n’a pas été sauvegardé.  \n\n` +
-
-            //     `Après 7 minutes d’inactivité, StatCan Attitude se verrouille. Vous devrez entrer votre mot de passe pour continuer.  \n\n` +
-
-            //     `Définitions et explications \n` +
-            //     `Un bouton d’aide est disponible pour certaines questions. Appuyez sur ce bouton pour obtenir plus de renseignements ou des précisions. \n\n`,
-
             "about_content.Study": `Pourquoi nous menons cette étude`,
-            "about_content.Study.a":`L’objectif de cette enquête est de mieux comprendre le bien-être au quotidien des Canadiens et des Canadiennes en leur demandant de répondre à des questions sur les activités qu’ils entreprennent et les sentiments qu’ils éprouvent en temps réel. Pour ce faire, les participants devront télécharger une application sur leur téléphone intelligent et répondre à quelques questions à divers intervalles au cours de la journée, sur une courte période de temps. Les résultats obtenus nous aideront à établir des liens entre certaines activités et le bien-être, et nous permettront de développer des programmes qui amélioreront la vie des gens. À l’avenir, ce genre d’application pourrait servir à répondre à d’autres enquêtes de Statistique Canada de façon plus rapide et pratique.  \n` +
+            "about_content.Study.a":`Cette étude pilote pose des questions sur le vif aux Canadiens au sujet de leurs activités et de leurs sentiments. Notre objectif est de mieux comprendre les facteurs qui influent sur le bien-être, en particulier les activités artistiques et culturelles, qui sont au cœur de cette étude pilote. Il s’agit d’une initiative menée en collaboration avec le Conseil des arts du Canada et Patrimoine canadien. Les données fourniront un éclairage sur les liens qui existent entre les activités et le bien-être et elles pourraient servir à élaborer des programmes qui améliorent la vie des gens. Bien que votre participation soit volontaire, elle est importante et nous permettra de recueillir de l’information pertinente sur le bien-être des Canadiens.\n` +
 
             `Les renseignements recueillis pourraient aussi être utilisés par Statistique Canada à d’autres fins statistiques et de recherche.  \n`,
 
             "about_content.Notification":`Notifications` ,
-            "about_content.Notification.a":`Cette application vous enverra une notification pour remplir un StatCan Attitude de 2 à 5 fois par jour. Vous pouvez personnaliser ces paramètres, y compris les moments où vous ne souhaitez pas être dérangé, à tout moment dans le menu des paramètres sur la page d’accueil de l’application. Si vous ne personnalisez pas les paramètres, vous recevrez par défaut 2 notifications à divers moments entre 8 h et 22 h. Si vous n’acceptez pas les notifications, vous pourrez tout de même remplir un StatCan Attitude quand vous le voudrez, mais la qualité de vos résultats pourrait en être affectée. \n`,
+            "about_content.Notification.a":`Cette application vous enverra une notification pour remplir un bilan de bien-être de 2 à 5 fois par jour. Vous pouvez personnaliser ces paramètres, y compris les moments où vous ne souhaitez pas être dérangé, à tout moment dans le menu des paramètres sur la page d’accueil de l’application. Si vous ne personnalisez pas les paramètres, vous recevrez par défaut 2 notifications à divers moments entre 8 h et 22 h. Si vous n’acceptez pas les notifications, vous pourrez tout de même remplir un bilan de bien-être quand vous le voudrez, mais la qualité de vos résultats pourrait en être affectée. \n`,
 
             "about_content.Authorization": `Autorisation et confidentialité` ,
             "about_content.Authorization.a":`Ces données sont recueillies en vertu de la Loi sur la statistique, Lois révisées du Canada (1985), chapitre S-19. Vos renseignements demeureront strictement confidentiels. \n`,
@@ -730,7 +702,7 @@ export const resources = {
             "start_survey": "COMMENCER",
             "settings": "Paramètres",
             "result": "Résultats",
-            "about_the_survey": "A propos de l'enquête",
+            "about_the_survey": "À propos de l'enquête",
             "term_and_condition": "Terme et condition",
             "contact_us": "Contactez-nous",
             "warning": "Attention",
@@ -795,17 +767,17 @@ export const resources = {
             "faq.c1.q2.a": "Non. La participation est volontaire.",
 
             //category1-Question3
-            "faq.c1.q3": "Qui participe à cette enquête?  ",
+            "faq.c1.q3": "Qui participe à cette enquête?",
             "faq.c1.q3.a": "Toute personne au Canada de plus de 15 ans qui possède un téléphone intelligent ou une tablette compatible peut télécharger l’application StatCan Attitude sur Google Play ou sur l’App Store pour participer à l’enquête. Vous pouvez participer avec ou sans code d’invitation.\n"+
              "Veuillez partager cette information avec vos amis afin qu’ils puissent eux aussi télécharger l’application.",
 
             //category1-Question4
             "faq.c1.q4": "Pourquoi menez-vous cette enquête?",
-            "faq.c1.q4.a": "L’objectif de cette enquête est de mieux comprendre le bien-être au quotidien des Canadiens. Pour ce faire, nous leur avons posé des questions sur leurs activités et leurs sentiments au moment présent. Pour plus d’informations sur cette enquête, veuillez consulter https://www.statcan.gc.ca/bienetre",
+            "faq.c1.q4.a": "L’objectif de cette enquête pilote est de mieux comprendre le bien-être au quotidien des Canadiens. Pour ce faire, nous leur avons posé des questions sur leurs activités et leurs sentiments au moment présent. Pour plus d’informations sur cette enquête, veuillez consulter https://www.statcan.gc.ca/bienetre",
 
             //category1-Question5
             "faq.c1.q5": "Combien de temps me faudra-t-il pour terminer l’enquête?",
-            "faq.c1.q5.a": "Le StatCan Attitude devrait prendre environ 2 minutes à remplir. Vous pouvez choisir le nombre de fois que vous souhaitez participer chaque jour en personnalisant le nombre de notifications que vous recevrez dans le menu des paramètres. Nous vous demandons de participer à l’étude pendant un mois.",
+            "faq.c1.q5.a": "Un bilan de bien-être devrait prendre environ 2 minutes à remplir. Vous pouvez choisir le nombre de fois que vous souhaitez participer chaque jour en personnalisant le nombre de notifications que vous recevrez dans le menu des paramètres. Nous vous demandons de participer à l’étude pendant un mois.",
 
 //category1-Question6
             "faq.c1.q6": "Pourquoi certaines choses interdites en raison des restrictions liées à la COVID-19 sont-elles incluses comme réponses possibles aux questions de cette enquête?",
@@ -818,7 +790,7 @@ export const resources = {
 
             //category2-Question1
             "faq.c2.q1": "Pourquoi ai-je besoin d’un mot de passe et d’une question de sécurité?",
-            "faq.c2.q1.a": "Le StatCan Attitude demande aux utilisateurs de répondre quotidiennement à des questionnaires afin de déterminer la façon dont leurs sentiments changent dans différents contextes. En protégeant l’application par un mot de passe, nous pouvons nous assurer que la tendance de vos données n’a pas été influencée par d’autres personnes qui pourraient utiliser votre téléphone et accéder à l’application. De plus, le StatCan Attitude fournit aux utilisateurs un menu Résultats, qui affiche la tendance de vos sentiments autoévalués et de la façon dont ils sont liés à ce que vous faites, aux gens avec qui vous êtes et à l’endroit où vous vous trouvez. En protégeant l’application par un mot de passe, nous pouvons nous assurer que cette tendance n’est pas vue par d’autres personnes, à moins que vous vous connectiez à l’application et que vous choisissiez de la partager avec eux.\n\n"+
+            "faq.c2.q1.a": "L’application StatCan Attitude demande aux utilisateurs de répondre quotidiennement à des questionnaires afin de déterminer la façon dont leurs sentiments changent dans différents contextes. En protégeant l’application par un mot de passe, nous pouvons nous assurer que la tendance de vos données n’a pas été influencée par d’autres personnes qui pourraient utiliser votre téléphone et accéder à l’application. De plus, l’application StatCan Attitude fournit aux utilisateurs un menu Résultats, qui affiche la tendance de vos sentiments autoévalués et de la façon dont ils sont liés à ce que vous faites, aux gens avec qui vous êtes et à l’endroit où vous vous trouvez. En protégeant l’application par un mot de passe, nous pouvons nous assurer que cette tendance n’est pas vue par d’autres personnes, à moins que vous vous connectiez à l’application et que vous choisissiez de la partager avec eux.\n\n"+
             "Statistique Canada ne recueille pas votre mot de passe lorsque vous le créez, et ne pourra donc pas vous aider à le réinitialiser si nécessaire. La question de sécurité fournit un deuxième niveau de sécurité, que vous pouvez utiliser pour réinitialiser votre mot de passe.",
 
             //category2-Question2
@@ -835,13 +807,13 @@ export const resources = {
             "Les recherches, rapports ou publications basés sur cette enquête utiliseront uniquement des données agrégées et ne vous identifieront pas, ni aucune autre personne, comme étant affilié à cette enquête.",
 
              //category2-Question5
-            "faq.c2.q5": "Quelles sont les données recueillies par le StatCan Attitude?",
+            "faq.c2.q5": "Quelles sont les données recueillies par l’application StatCan Attitude?",
             "faq.c2.q5.a": "L’application StatCan Attitude recueille les réponses que vous fournissez aux questionnaires, ainsi que le nombre de notifications que vous recevez chaque jour. Elle ne recueille pas votre mot de passe, votre question de sécurité et sa réponse, ni les données de votre appareil telles que l’emplacement et l’utilisation de l’application.",
 
             //category2-Question6
             "faq.c2.q6": "Comment mes données sont-elles stockées et transmises? Comment mes données seront-elles protégées?",
             "faq.c2.q6.a": "L’application StatCan Attitude est entièrement conforme à toutes les réglementations en matière de protection de la vie privée et de sécurité mises en place pour protéger les informations des Canadiens.\n\n"+
-            "Le StatCan Attitude utilise le portail de collecte électronique de Statistique Canada pour recueillir vos réponses. Pour plus d’informations sur les dispositifs de sécurité mis en place pour protéger vos données, veuillez consulter https://surveys-enquetes.statcan.gc.ca/fr/faq/security-securite.html.",
+            "L’application StatCan Attitude utilise le portail de collecte électronique de Statistique Canada pour recueillir vos réponses. Pour plus d’informations sur les dispositifs de sécurité mis en place pour protéger vos données, veuillez consulter https://surveys-enquetes.statcan.gc.ca/fr/faq/security-securite.html.",
 
             //category2-Question7
             "faq.c2.q7": "Je ne veux plus participer à cette enquête",
@@ -853,19 +825,19 @@ export const resources = {
 
              //category3-Question1
              "faq.c3.q1": "Quelles notifications vais-je recevoir?",
-             "faq.c3.q1.a": "L’application vous enverra une notification lorsqu’il sera temps de remplir un StatCan Attitude. Ces notifications sont envoyées à des moments aléatoires en fonction des paramètres que vous avez choisis dans votre menu de configuration. Vous pouvez modifier vos paramètres à tout moment.",
+             "faq.c3.q1.a": "L’application vous enverra une notification lorsqu’il sera temps de remplir un bilan de bien-être. Ces notifications sont envoyées à des moments aléatoires en fonction des paramètres que vous avez choisis dans votre menu de configuration. Vous pouvez modifier vos paramètres à tout moment.",
 
              //category3-Question2
              "faq.c3.q2": "Puis-je désactiver les notifications?",
-             "faq.c3.q2.a": "Les notifications sont un élément essentiel de cette enquête, car elles vous permettent de savoir quand un StatCan Attitude peut être réalisé. Si vous avez besoin de désactiver les notifications, vous pouvez le faire dans le menu Paramètres.",
+             "faq.c3.q2.a": "Les notifications sont un élément essentiel de cette enquête, car elles vous permettent de savoir quand un bilan de bien-être peut être réalisé. Si vous avez besoin de désactiver les notifications, vous pouvez le faire dans le menu Paramètres.",
 
              //category3-Question3
              "faq.c3.q3": "Comment puis-je modifier mes paramètres?",
              "faq.c3.q3.a": "Vous pouvez modifier vos paramètres à tout moment dans le menu Paramètres, situé sur la page d’accueil de l’application.",
 
              //category3-Question4
-             "faq.c3.q4": "Puis-je effectuer un StatCan Attitude si je n’ai pas reçu de notification?",
-             "faq.c3.q4.a": "Bien sûr! Vous pouvez effectuer un StatCan Attitude à tout moment en appuyant sur COMMENCER, situé sur la page d’accueil de l’application.",
+             "faq.c3.q4": "Puis-je effectuer un bilan de bien-être si je n’ai pas reçu de notification?",
+             "faq.c3.q4.a": "Bien sûr! Vous pouvez effectuer un bilan de bien-être à tout moment en appuyant sur COMMENCER, situé sur la page d’accueil de l’application.",
 
              //category3-Question5
              "faq.c3.q5": "Que se passe-t-il si j’ai manqué une notification et que j’en ai reçu une autre?",
@@ -873,11 +845,11 @@ export const resources = {
 
              //category3-Question6
              "faq.c3.q6": "Pourquoi ne reçois-je plus de notifications?",
-             "faq.c3.q6.a": "Si vous n’avez pas effectué de StatCan Attitude au cours des quatre derniers jours, l’application cessera de vous envoyer des notifications. Vous pouvez recommencer à recevoir des notifications en appuyant sur COMMENCER, situé sur la page d’accueil de l’application, et en remplissant un StatCan Attitude.\n\n"+
-              "Le StatCan Attitude vous enverra des notifications pour une durée totale de 30 jours maximum. Au terme de cette période, votre participation à l’enquête est terminée et vous ne recevrez plus de notifications.\n\n"+
-             "Le mode d’économie d’énergie de votre appareil supprime peut-être les notifications de l’application StatCan Attitude. Essayez de modifier vos paramètres pour supprimer toute restriction relative à l’économie d’énergie.\n\n"+
-             "Si vous utilisez un appareil Android, il se peut que l’application arrête de vous envoyer des notifications si vous avez redémarré votre appareil récemment. Vous pouvez recevoir à nouveau des notifications en appuyant sur COMMENCER, situé sur la page d’accueil de l’application, et en remplissant un StatCan Attitude.\n\n"+
-              "Si aucun de ces scénarios ne correspond à votre situation, veuillez nous contacter au ",
+             "faq.c3.q6.a":"Si vous n’avez pas effectué un bilan de bien-être au cours des quatre derniers jours, l’application cessera de vous envoyer des notifications. Vous pouvez recommencer à recevoir des notifications en appuyant sur COMMENCER, situé sur la page d’accueil de l’application, et en remplissant un bilan de bien-être.\n\n"+
+                           "L’application StatCan Attitude vous enverra des notifications pour une durée totale de 30 jours maximum. Au terme de cette période, votre participation à l’enquête est terminée et vous ne recevrez plus de notifications.\n\n"+
+                           "Le mode d’économie d’énergie de votre appareil supprime peut-être les notifications de l’application StatCan Attitude. Essayez de modifier vos paramètres pour supprimer toute restriction relative à l’économie d’énergie.\n\n"+
+                           "Si vous utilisez un appareil Android, il se peut que l’application arrête de vous envoyer des notifications si vous avez redémarré votre appareil récemment. Vous pouvez recevoir à nouveau des notifications en appuyant sur COMMENCER, situé sur la page d’accueil de l’application, et en remplissant un bilan de bien-être.\n\n"+
+                           "Si aucun de ces scénarios ne correspond à votre situation, veuillez nous contacter au ",
 
 //category3-Question7
               "faq.c3.q7": "Pourquoi est-ce que je reçois des avis en double?",
@@ -907,7 +879,7 @@ export const resources = {
             //category5-Question4
             "faq.c5.q3": "Puis-je télécharger l’application sur plusieurs appareils et la synchroniser?",
             "faq.c5.q3.a": "L’application n’a pas de capacités de synchronisation.\n\n"+
-            "Votre participation à l’enquête est basée sur l’appareil sur lequel vous avez téléchargé l’application StatCan Attitude pour la première fois. Si vous téléchargez l’application sur un autre appareil, vous serez identifié comme un nouvel utilisateur pour des raisons de sécurité, et vos réponses précédentes ne seront plus accessibles dans le menu Résultats.",
+            "Votre participation à l’enquête pilote est basée sur l’appareil sur lequel vous avez téléchargé l’application StatCan Attitude pour la première fois. Si vous téléchargez l’application sur un autre appareil, vous serez identifié comme un nouvel utilisateur pour des raisons de sécurité, et vos réponses précédentes ne seront plus accessibles dans le menu Résultats.",
 
             //category5-Question5
             "faq.c5.q4": "Quelle est la quantité de mémoire requise par l’application?",
@@ -915,7 +887,7 @@ export const resources = {
 
             //category5-Question5
             "faq.c5.q5": "Combien de données l’application nécessite-t-elle?",
-            "faq.c5.q5.a": "Si vous utilisez des données mobiles au lieu d’une connexion WiFi pour remplir le StatCan Attitude, le premier bilan utilisera environ 1 Mo. Les bilans suivants utiliseront moins de 0,8 Mo. La visualisation de votre tableau de bord nécessitera environ 0,5 Mo. La réception d’avis ne nécessite aucune donnée.",
+            "faq.c5.q5.a": "Si vous utilisez des données mobiles au lieu d’une connexion Wi-Fi pour remplir un bilan de bien-être, le premier bilan utilisera environ 1 Mo. Les bilans suivants utiliseront moins de 0,8 Mo. La visualisation de votre tableau de bord nécessitera environ 0,5 Mo. La réception d’avis ne nécessite aucune donnée.",
 
 //---------------category6---------------
             "faq.category6": "Bien-être du répondant",
@@ -946,7 +918,7 @@ export const resources = {
             //Network error jwt
             "network.error.jwt":"Erreur d'initialisation JSON Web Token , s'il vous plaît réessayer plus tard.",
             "network.error.pwd":"Erreur d'initialisation de mot de passe, s'il vous plaît reéssayer plus tard.",
-            "network.error.general":"Erreur de reseau, s'il vous plaît réessayer plus tard.",
+            "network.error.general":"Erreur de réseau, s'il vous plaît réessayer plus tard.",
 
             //Notification Request
             "notification.resquest.title":"",
@@ -954,8 +926,8 @@ export const resources = {
 
             //Notification messages
             "notification.scheduleTitle":"Notification planifiée",
-            "notification.scheduleMessage":"Comment vous sentez-vous en ce moment? Connectez-vous pour obtenir un StatCan Attitude!",
-            "notification.lastAttemptMessage":"Nous n’avons pas eu de vos nouvelles depuis un certain temps. Connectez-vous pour obtenir un StatCan Attitude!",
+            "notification.scheduleMessage":"Comment vous sentez-vous en ce moment? Connectez-vous pour obtenir un bilan de bien-être!",
+            "notification.lastAttemptMessage":"Nous n’avons pas eu de vos nouvelles depuis un certain temps. Connectez-vous pour obtenir un bilan de bien-être!",
 
             //time picker title
             "timepicker.title":"Choisir une heure",
@@ -963,8 +935,8 @@ export const resources = {
             "timepicker.confirmtext":"Confirmer",
 
               "scheduleTitle":"Notification planifiée",
-              "scheduleMessage":"Comment vous sentez-vous en ce moment? Connectez-vous pour obtenir un StatCan Attitude!",
-              "scheduleMessage1":"Nous n’avons pas eu de vos nouvelles depuis un certain temps. Connectez-vous pour obtenir un StatCan Attitude!",
+              "scheduleMessage":"Comment vous sentez-vous en ce moment? Connectez-vous pour obtenir un bilan de bien-être!",
+              "scheduleMessage1":"Nous n’avons pas eu de vos nouvelles depuis un certain temps. Connectez-vous pour obtenir un bilan de bien-être!",
               "cancel":"Annuler",
               "continue":"Continuer",
               "settingValidation":"Il doit avoir un minimum de 3 heures entre les réglages « Ne pas déranger avant » et « Ne pas déranger après »",

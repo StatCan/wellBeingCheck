@@ -6,8 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="68eb5ccb-ac57-4f6b-b6e1-bf4c6bc72738" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.expo/packager-info.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/packager-info.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalResources.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalResources.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +39,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Brmbi" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -62,13 +63,17 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="21" y="98" width="1182" height="544" key="AVDManager" timestamp="1622144335587">
+    <state x="21" y="98" width="1182" height="544" key="AVDManager" timestamp="1622472032570">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="21" y="98" width="1182" height="544" key="AVDManager/0.0.1366.728@0.0.1366.728" timestamp="1622144335587" />
-    <state x="415" y="118" key="FileChooserDialogImpl" timestamp="1621626575636">
+    <state x="21" y="98" width="1182" height="544" key="AVDManager/0.0.1366.728@0.0.1366.728" timestamp="1622472032570" />
+    <state x="415" y="118" key="FileChooserDialogImpl" timestamp="1622227041790">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="415" y="118" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1621626575636" />
+    <state x="415" y="118" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1622227041790" />
+    <state x="264" y="74" width="587" height="534" key="find.popup" timestamp="1622390753811">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="264" y="74" width="587" height="534" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1622390753811" />
   </component>
 </project>
