@@ -130,19 +130,12 @@ printLogo=()=>{
           </SafeAreaView>
         </BackgroundWhite>
 
-    <View style={{flexDirection:'row',justifyContent:'space-around'}}>
         <Button style={styles.btnNext}
           mode="contained"
           onPress={this._onNextBtnHandle}>
           <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
         </Button>
-         <Button style={styles.btnNext}
-                     mode="contained"
-                      onPress={this.printLogo}>
-                      <Text style={styles.btnText}>Info</Text>
-         </Button>
 
-     </View>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
       </PaperProvider >
     );
