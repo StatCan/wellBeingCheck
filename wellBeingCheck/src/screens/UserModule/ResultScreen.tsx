@@ -211,7 +211,7 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
           // {...global.panResponder.panHandlers}
           >
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <Title style={[styles.title, { marginLeft: 5 }]}>{this.state.title}</Title>
+              <Title style={[styles.title, { marginLeft: 5,fontSize:18 }]}>{this.state.title}</Title>
               {/*<TouchableOpacity onPress={() => this.helpClick()} style={{marginRight:0}}>
                             <AntDesign name="questioncircle" size={30} style={{color:'#918196',marginRight:5}} color="black" />
                           </TouchableOpacity> */}
