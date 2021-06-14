@@ -50,6 +50,10 @@ import ParsedText from "react-native-parsed-text";
 
 import { TimePickerPane } from "../../components/TimePickerPane";
 import { TimePickerKnob } from "../../components/TimePickerKnob";
+import {
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from "react-native-gesture-handler";
 var scheduledDateArray = new Array();
 
 type SettingsState = {
@@ -742,9 +746,8 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   //           }, 1000);
   //     }
 
-
-  _hideNumPingsModal = () => {
-    global.resetTimer(); 
+  _hideNumPingsModal = () => {      //QLTY-17 Daily Number of Notifications, reopening issue fixed
+    global.resetTimer();
     this.setState({ numPingsModalShow: false });
   };
   _showLanguageModal = () => {
@@ -1065,7 +1068,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                         transparent={true}
                         visible={this.state.wakeTimePickerShow}
                         onRequestClose={() => {
-                          // Alert.alert("Modal has been closed.");
+                          this.setState({ wakeTimePickerShow: false });      //QLTY-17 Pop-up behvaiour(Modal in Android Back button works) Fixed
                         }}
                       >
                         <TimePickerPane
@@ -1112,7 +1115,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
                         transparent={true}
                         visible={this.state.sleepTimePickerShow}
                         onRequestClose={() => {
-                          // Alert.alert("Modal has been closed.");
+                          this.setState({ sleepTimePickerShow: false });     //QLTY-17 Pop-up behvaiour(Modal in Android Back button works) fixed
                         }}
                       >
                         <TimePickerPane
