@@ -297,7 +297,8 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
     const passText = text;
     const pasValLength =  text.length >= 8;
     const passValUpper =  (/[A-Z]/.test(text));
-    const passValSpecial =  (/[@!#$%^&*(),.?:{}|<>]/.test(text));
+    // const passValSpecial =  (/[@!#$%^&*(),.?:{}|<>]/.test(text));
+    const passValSpecial =  (/[~@!#$%^&*(),.?:{}|<>=\/_-`|\[\];'"\\\-\+]/.test(text));    //QLTY25 Password Requirement checklist updates the special character
     console.log('Is has special character:'+passValSpecial);
 
 //     const passValSpecial =  (!/[@!#$%^&*(),.?:{}|<>]/.test(password))
