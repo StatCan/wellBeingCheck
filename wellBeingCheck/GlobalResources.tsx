@@ -419,7 +419,7 @@ export const resources = {
             "scheduleMessage1":"We haven’t heard from you in a while. Sign in for a well-being check!",
              "cancel":"Cancel",
              "continue":"Continue",
-             "settingValidation":"There needs to be a minimum of 3 hours between the 'Do not disturb before' and 'Do not disturb after' time settings",
+             "settingValidation":"There needs to be a minimum of 4 hours between the 'Do not disturb before' and 'Do not disturb after' time settings",
              "donotdisturbbetween":"Do not disturb between",
              "from":"From:",
              "to":"To:",
@@ -568,7 +568,7 @@ export const resources = {
          //`http://www.statcan.gc.ca/eng/reference/terms-conditions/general \n\n` +
 
      "terms_and_conditions_content.Modif" : `Modification des conditions générales` ,
-     "terms_and_conditions_content.Modif.a" : ` Statistique Canada se réserve le droit de modifier les présentes conditions générales à sa seule discrétion. Le cas échéant, il vous faudra accepter toute modification avant de pouvoir continuer à utiliser l’application. \n` ,
+     "terms_and_conditions_content.Modif.a" : `Statistique Canada se réserve le droit de modifier les présentes conditions générales à sa seule discrétion. Le cas échéant, il vous faudra accepter toute modification avant de pouvoir continuer à utiliser l’application. \n` ,
 
      "terms_and_conditions_content.privacy" : `Avis de confidentialité` ,
      "terms_and_conditions_content.privacy.a" :    `Statistique Canada s’est engagé à protéger les renseignements personnels de toutes les personnes et entreprises, et ce, qu’elles répondent à l’une de ses enquêtes, fournissent des renseignements personnels, achètent un produit ou un service ou utilisent notre site Web. Afin de respecter cet engagement, nous avons élaboré un cadre de protection des renseignements personnels qui décrit les pratiques, les procédures et les mesures de gouvernance approuvées en matière de protection de la vie privée. \n`,
@@ -617,7 +617,7 @@ export const resources = {
      "terms_and_conditions_content.restrictions.a" :     `L’utilisation de cette application est strictement assujettie à ses conditions générales. Les utilisateurs ne doivent pas : décompiler, réinventer, démonter ou tenter de détourner le code source de l’application; retirer, altérer ou obscurcir tout avis de propriété intellectuelle d’une partie de l’application; reproduire, modifier, améliorer l’application ou en obtenir des résultats altérés; distribuer, louer, vendre, revendre, transférer, afficher publiquement, transmettre ou exploiter l’application, ou en octroyer une licence; établir un lien avec une partie de l’application, en faire une image miroir ou la structurer à des fins illégales et non autorisées. Les utilisateurs doivent accepter de se conformer à toutes les lois, toutes les règles et tous les règlements applicables à l’utilisation de l’application. \n` ,
 
      "terms_and_conditions_content.modifications" :      `Modification et accès ` ,
-     "terms_and_conditions_content.modifications.a" :     `Statistique Canada se réserve le droit de modifier ou d’interrompre l’application pour quelque raison que ce soit et sans préavis. \n` ,
+     "terms_and_conditions_content.modifications.a" :`Statistique Canada se réserve le droit de modifier ou d’interrompre l’application pour quelque raison que ce soit et sans préavis. \n` ,
 
      "terms_and_conditions_content.ownership" :     `Propriété` ,
      "terms_and_conditions_content.ownership.a" :      `Statistique Canada garantit qu’il est le propriétaire légitime de l’application et des documents qui s’y rapportent, et qui font l’objet de la présente entente. \n`,
@@ -939,7 +939,7 @@ export const resources = {
               "scheduleMessage1":"Nous n’avons pas eu de vos nouvelles depuis un certain temps. Connectez-vous pour obtenir un bilan de bien-être!",
               "cancel":"Annuler",
               "continue":"Continuer",
-              "settingValidation":"Il doit avoir un minimum de 3 heures entre les réglages « Ne pas déranger avant » et « Ne pas déranger après »",
+              "settingValidation":"Il doit avoir un minimum de 4 heures entre les réglages « Ne pas déranger avant » et « Ne pas déranger après »",
               "donotdisturbbetween":"Ne dérangez pas entre",
               "from":"De:",
               "to":"À:",

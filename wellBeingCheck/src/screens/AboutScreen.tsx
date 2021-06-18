@@ -730,7 +730,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                         >
                           <View>
                             <Text style={styles.faqListItem}>
-                              <Text > {resources.getString("faq.c5.q1.a")}</Text>
+                              <Text >{resources.getString("faq.c5.q1.a")}</Text>
                               <Text style={styles.faqPhone}
                                 onPress={() => Linking.openURL('tel:18779499492')}>
                                 1-877-949-9492</Text>
@@ -745,7 +745,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                         >
                           <View>
                             <Text style={styles.faqListItem}>
-                              <Text> {resources.getString("faq.c5.q2.a")}
+                              <Text>{resources.getString("faq.c5.q2.a")}
                               </Text>
                               <Text style={styles.faqPhone}
                                 onPress={() => Linking.openURL('tel:18779499492')}>

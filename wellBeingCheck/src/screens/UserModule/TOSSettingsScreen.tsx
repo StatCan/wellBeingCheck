@@ -135,8 +135,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                         ]
                       }
                       childrenProps={{ allowFontScaling: false }}
-                    >
-                      {resources.getString("terms_and_conditions_content.Modif.a")}
+                    >{resources.getString("terms_and_conditions_content.Modif.a")}
 
                     </ParsedText>
                   </Text>
@@ -227,7 +226,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                 accessible={true}
                 accessibilityLabel={resources.getString("terms_and_conditions_content.accessibility")}
                 style={styles.ParagraphHeader}
-                >{resources.getString("terms_and_conditions_content.accessibility")} </Text>
+                >{resources.getString("terms_and_conditions_content.accessibility")}</Text>
 
                 <Paragraph style={styles.paragraph}>
                   <Text>
@@ -242,7 +241,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                         ]
                       }
                       childrenProps={{ allowFontScaling: false }}
-                    > {resources.getString("terms_and_conditions_content.accessibility.a")}
+                    >{resources.getString("terms_and_conditions_content.accessibility.a")}
                     </ParsedText>
                   </Text>
                 </Paragraph>
@@ -263,7 +262,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                         ]
                       }
                       childrenProps={{ allowFontScaling: false }}
-                    > {resources.getString("terms_and_conditions_content.useofcontent.a")}
+                    >{resources.getString("terms_and_conditions_content.useofcontent.a")}
                     </ParsedText>
                   </Text>
                 </Paragraph>
@@ -347,7 +346,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                         ]
                       }
                       childrenProps={{ allowFontScaling: false }}
-                    > {resources.getString("terms_and_conditions_content.disclosure.a")}
+                    >{resources.getString("terms_and_conditions_content.disclosure.a")}
                     </ParsedText>
                   </Text>
                 </Paragraph>
@@ -392,7 +391,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                         ]
                       }
                       childrenProps={{ allowFontScaling: false }}
-                    > {resources.getString("terms_and_conditions_content.trademark.a")}
+                    >{resources.getString("terms_and_conditions_content.trademark.a")}
                     </ParsedText>
                   </Text>
                 </Paragraph>
@@ -412,7 +411,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                         ]
                       }
                       childrenProps={{ allowFontScaling: false }}
-                    > {resources.getString("terms_and_conditions_content.nowarranties.a")}
+                    >{resources.getString("terms_and_conditions_content.nowarranties.a")}
                     </ParsedText>
                   </Text>
                 </Paragraph>

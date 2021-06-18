@@ -350,7 +350,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                         ]
                       }
                       childrenProps={{ allowFontScaling: false }}
-                    > {resources.getString("terms_and_conditions_content.accessibility.a")}
+                    >{resources.getString("terms_and_conditions_content.accessibility.a")}
                     </ParsedText>
                   </Text>
                 </Paragraph>
@@ -579,8 +579,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                           { type: 'url', style: styles.url, onPress: this.handleUrlPress },
                         ]
                       }
-                      childrenProps={{ allowFontScaling: false }}>
-                      {resources.getString("terms_and_conditions_content.modifications.a")}
+                      childrenProps={{ allowFontScaling: false }}>{resources.getString("terms_and_conditions_content.modifications.a")}
                     </ParsedText>
                   </Text>
                 </Paragraph>
