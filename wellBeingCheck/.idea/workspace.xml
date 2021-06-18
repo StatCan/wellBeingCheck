@@ -6,8 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="68eb5ccb-ac57-4f6b-b6e1-bf4c6bc72738" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.expo/packager-info.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/packager-info.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.expo/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/settings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/UserModule/ForgotPasswordChangeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/UserModule/ForgotPasswordChangeScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/fetchJwToken.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/fetchJwToken.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,10 +64,10 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="21" y="98" width="1182" height="544" key="AVDManager" timestamp="1623430277380">
+    <state x="21" y="98" width="1182" height="544" key="AVDManager" timestamp="1624038992294">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="21" y="98" width="1182" height="544" key="AVDManager/0.0.1366.728@0.0.1366.728" timestamp="1623430277380" />
+    <state x="21" y="98" width="1182" height="544" key="AVDManager/0.0.1366.728@0.0.1366.728" timestamp="1624038992294" />
     <state x="415" y="118" key="FileChooserDialogImpl" timestamp="1623077936558">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

@@ -297,7 +297,7 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
     const passText = text;
     const pasValLength =  text.length >= 8;
     const passValUpper =  (/[A-Z]/.test(text));
-    const passValSpecial =  (/[@!#$%^&*(),.?:{}|<>]/.test(text));
+    const passValSpecial =(/[~@!#$%^&*(),.?:{}|<>=\/_-`|\[\];'"\\\-\+]/.test(text));
     console.log('Is has special character:'+passValSpecial);
 
 //     const passValSpecial =  (!/[@!#$%^&*(),.?:{}|<>]/.test(password))
@@ -472,7 +472,7 @@ keyPressed=(e)=>{
 
 const styles = StyleSheet.create({
   passwordInput: {
-    width: 190,
+    width: 208,
     borderRightWidth: 0,
   },
   passwordEyeIcon: {
@@ -484,7 +484,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     height: 58.6,
     top: 17.8,
-    width: 50,
+    width: 45,
     borderStyle: 'solid',
     borderColor: '#a7a6a5',
     borderTopWidth: 1.5,

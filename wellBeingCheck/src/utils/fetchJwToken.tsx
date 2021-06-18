@@ -117,7 +117,7 @@ export async function fetchGraphTypes() {
         }
       );
   }
-export async function fetchImage(url, index, culture) {
+export function fetchImage(url, index, culture) {
     let token = global.jwToken;
     fetch(url, {
       method: 'GET',
