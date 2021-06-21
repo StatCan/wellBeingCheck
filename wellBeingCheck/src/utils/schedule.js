@@ -603,17 +603,17 @@ function calculateSchedule(awakeHour, sleepHour, count, date, current) {
      }
      const convertTime12to24 = (time12h) => {
              const [time, modifier] = time12h.split(' ');
-
+console.log('this is the time .....................................'+time12h);
              let [hours, minutes] = time.split(':');
-
+             if(resources.culture=='en'){
              if (hours === '12') {
-               hours = '00';
-             }
+                  hours = '12';   //  hours = '00';
+                }
 
-             if (modifier === 'PM') {
-               hours = parseInt(hours, 10) + 12;
-             }
-
+                if (modifier === 'PM') {
+                  hours = parseInt(hours, 10) + 12;
+                }
+}
              return `${hours}:${minutes}`;
            }
           convertFrom12To24Format = (time12) => {

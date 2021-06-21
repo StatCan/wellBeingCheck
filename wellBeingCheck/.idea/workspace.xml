@@ -6,13 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="68eb5ccb-ac57-4f6b-b6e1-bf4c6bc72738" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.expo/packager-info.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/packager-info.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.expo/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/settings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GlobalResources.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalResources.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Globals.js" beforeDir="false" afterPath="$PROJECT_DIR$/Globals.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/AboutScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/AboutScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/TermsOfServiceScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/TermsOfServiceScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/UserModule/TOSSettingsScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/UserModule/TOSSettingsScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/ContactUsScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/ContactUsScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/schedule.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/schedule.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +41,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Downloads/covid-alert-app-master/covid-alert-app-master" />
+    <property name="last_opened_file_path" value="$USER_HOME$/i18Demo" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -67,17 +65,17 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="46" y="74" width="999" height="544" key="AVDManager" timestamp="1624048425970">
+    <state x="21" y="98" width="1182" height="544" key="AVDManager" timestamp="1624291455997">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="46" y="74" width="999" height="544" key="AVDManager/0.0.1366.728@0.0.1366.728" timestamp="1624048425970" />
-    <state x="415" y="118" key="FileChooserDialogImpl" timestamp="1623077936558">
+    <state x="21" y="98" width="1182" height="544" key="AVDManager/0.0.1366.728@0.0.1366.728" timestamp="1624291455997" />
+    <state x="415" y="118" key="FileChooserDialogImpl" timestamp="1622655936490">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="415" y="118" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1623077936558" />
-    <state x="264" y="74" width="708" height="534" key="find.popup" timestamp="1623430686088">
+    <state x="415" y="118" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1622655936490" />
+    <state x="264" y="74" width="587" height="534" key="find.popup" timestamp="1622390753811">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="264" y="74" width="708" height="534" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1623430686088" />
+    <state x="264" y="74" width="587" height="534" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1622390753811" />
   </component>
 </project>

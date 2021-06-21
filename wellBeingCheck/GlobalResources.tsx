@@ -227,7 +227,7 @@ export const resources = {
             "login.login": "Login",
             "Language":"Français",//"French",
             "Secure your account": "Secure your account",
-            "login.Wrongpassword.message":"incorrect password",
+            "login.Wrongpassword.message":"Incorrect password",
 
             //information screen
             "contactus_title": "Contact Us",
@@ -641,15 +641,15 @@ export const resources = {
             "reg.action.create": "Créer",
             "Password Requirements": "Exigences de mot de passe",
             "reg.pass.hint_length": "8 caractères minimum",
-            "reg.pass.hint_upper": "une majuscule",
-            "reg.pass.hint_special": "un caractère spécial",
-            "reg.pass.hint_lower": "une minuscule",
-            "reg.pass.hint_number": "un chiffre",
+            "reg.pass.hint_upper": "Une majuscule",
+            "reg.pass.hint_special": "Un caractère spécial",
+            "reg.pass.hint_lower": "Une minuscule",
+            "reg.pass.hint_number": "Un chiffre",
             "reg.pass_conf.empty": "Le mot de passe ne peut pas être vide",
             "reg.pass_conf.match": "Les mots de passe ne correspondent pas",
-            "reg.securityQuestion.validation":"la question sécrete est necessaire",
-            "reg.securityQuestionAnswer.validation":"la réponse à la question secrète est necessaire",
-            "reg.securityQuestionAnswerlength.validation":"la reponse doit etre au moins 4 characteres",
+            "reg.securityQuestion.validation":"La question sécrete est necessaire",
+            "reg.securityQuestionAnswer.validation":"La réponse à la question secrète est necessaire",
+            "reg.securityQuestionAnswerlength.validation":"La reponse doit etre au moins 4 characteres",
 
             //password recovery
             "password_recovery.title": "Récupération de mot de passe",
@@ -726,7 +726,7 @@ export const resources = {
             //Login screen
             "login.forgot_password": "Mot de passe oublié?",
             "login.login": "Entrer",
-            "login.Wrongpassword.message":"mot de passe incorrect",
+            "login.Wrongpassword.message":"Mot de passe incorrect",
 
 
             "notifications": "Notifications",

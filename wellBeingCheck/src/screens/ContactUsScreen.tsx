@@ -129,13 +129,11 @@ printLogo=()=>{
             </ScrollView>
           </SafeAreaView>
         </BackgroundWhite>
-
         <Button style={styles.btnNext}
-          mode="contained"
-          onPress={this._onNextBtnHandle}>
-          <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
-        </Button>
-
+            mode="contained"
+            onPress={this._onNextBtnHandle}>
+            <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
+         </Button>
         <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
       </PaperProvider >
     );
@@ -229,21 +227,20 @@ export default memo(ContactUsScreen);
 //                      <Text style={styles.btnText}>Test</Text>
 //                </Button>
 
-//<View style={{flexDirection:'row',justifyContent:'space-around'}}>
-//
-//        <Button style={styles.btnNext}
-//          mode="contained"
-//          onPress={this._onNextBtnHandle}>
-//          <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
-//        </Button>
-//        </View>
+/*<View style={{flexDirection:'row',justifyContent:'space-around'}}>
 
+        <Button style={styles.btnNext}
+          mode="contained"
+          onPress={this._onNextBtnHandle}>
+          <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
+        </Button>
 
-// <Button style={styles.btnNext}
-//              mode="contained"
-//              onPress={this.printLogo}>
-//              <Text style={styles.btnText}>Info</Text>
-//        </Button>
+ <Button style={styles.btnNext}
+              mode="contained"
+              onPress={this.printLogo}>
+              <Text style={styles.btnText}>Info</Text>
+        </Button>
+</View>*/
 
 /*
   <Button style={styles.btnNext}
@@ -270,3 +267,11 @@ export default memo(ContactUsScreen);
                                     >(613)415-8507</Text>
                                   </TouchableOpacity>
                                 </View>*/
+
+
+
+                           /*     <Button style={styles.btnNext}
+                                          mode="contained"
+                                          onPress={this._onNextBtnHandle}>
+                                          <Text style={styles.btnText}>{resources.getString("gl.return")}</Text>
+                                        </Button>*/
