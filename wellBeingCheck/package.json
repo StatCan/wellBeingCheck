@@ -28,7 +28,7 @@
     "react-native-modal-datetime-picker": "8.1.2",
     "react-native-paper": "^4.2.0",
     "react-native-parsed-text": "^0.0.22",
-    "react-native-safe-area-context": "^3.2.0",
+    "react-native-safe-area-context": "3.1.4",
     "react-native-screens": "^2.11.0",
     "react-native-web": "~0.13.12",
     "react-native-webview": "^10.9.0",

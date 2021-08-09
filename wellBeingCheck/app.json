@@ -1,11 +1,11 @@
 {
-  "name": "StatCan Attitude",
-  "displayName": "StatCan Attitude",
+  "name": "StatCan Action – VitaliT",
+  "displayName": "StatCan Action – VitaliT",
   "expo": {
     "androidStatusBar": {
       "backgroundColor": "#000000"
     },
-    "name":"StatCan Attitude",
+    "name":"StatCan Action – VitaliT",
     "slug": "wellBeingCheck",
     "privacy": "unlisted",
     "sdkVersion": "39.0.0",
