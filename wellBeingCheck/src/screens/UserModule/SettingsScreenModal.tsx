@@ -1187,3 +1187,81 @@ const styles = StyleSheet.create({
 });
 
 export default memo(SettingsScreen);
+
+
+//                  <TimePicker
+//                    showTimePicker={this.state.wakeTimePickerShow}
+//                    style={styles.timePicker}
+//                    time={this.state.waketime}
+//                    timeType="wakeTime"
+//                    isVisible={this.state.wakeTimePickerShow}
+//                    handler={this.wakeTimeHandler}
+//                    cancelHandler={this.cancelTimeHandler}
+//                  />
+
+
+/*
+<TimePicker
+                    showTimePicker={this.state.sleepTimePickerShow}
+                    style={styles.timePicker}
+                    time={this.state.sleeptime}
+                    timeType="sleepTime"
+                    isVisible={this.state.sleepTimePickerShow}
+                    handler={this.sleepTimeHandler}
+                    cancelHandler={this.cancelTimeHandler}
+                  />*/
+
+
+
+/*
+  <View>
+                 <Portal>
+                   <Dialog
+                     visible={this.state.numPingsModalShow}
+                     onDismiss={this._hideNumPingsModal}>
+                     <Dialog.Title>{resources.getString("num_pings_dialog_title")}</Dialog.Title>
+                     <Dialog.Content>
+                       <RadioButton.Group
+                         onValueChange={n => {
+                           this.setState({ notificationcount: parseInt(n) });
+                           console.log("Value changed - setting dirty flag");
+                           this._isDirty = true;
+                         }
+                         }
+                         value={this.state.notificationcount.toString()}>
+                         <View style={styles.radioButtonContainerStyle}>
+                           <RadioButton.Android value='2' color='green' uncheckedColor='#330033' style={styles.bottom}>
+                           </RadioButton.Android>
+                           <Text style={styles.radioButtonTextStyle}>2</Text>
+                         </View>
+
+                         <View style={styles.radioButtonContainerStyle}>
+                           <RadioButton.Android value='3' color='green' uncheckedColor='#330033'>
+                           </RadioButton.Android>
+                           <Text style={styles.radioButtonTextStyle}>3</Text>
+                         </View>
+
+                         <View style={styles.radioButtonContainerStyle}>
+                           <RadioButton.Android value='4' color='green' uncheckedColor='#330033'>
+                           </RadioButton.Android>
+                           <Text style={styles.radioButtonTextStyle}>4</Text>
+                         </View>
+
+                         <View style={styles.radioButtonContainerStyle}>
+                           <RadioButton.Android value='5' color='green' uncheckedColor='#330033'>
+                           </RadioButton.Android>
+                           <Text style={styles.radioButtonTextStyle}>5</Text>
+                         </View>
+
+                       </RadioButton.Group>
+                     </Dialog.Content>
+                     <Dialog.Actions>
+                       <Button
+                         style={styles.dialog_action_btn}
+                         onPress={this._hideNumPingsModal}>
+                         Ok
+                                      </Button>
+                     </Dialog.Actions>
+                   </Dialog>
+                 </Portal>
+               </View>*/
