@@ -131,8 +131,10 @@ class Dashboard extends React.Component<Props, HomeState> {
                   {
                     text: resources.getString("ratenow"),
                     onPress: () => {
-                     if (Platform.OS === 'ios') {Linking.openURL('https://apps.apple.com/app/id1496401127?action=write-review'); }
+                     if (Platform.OS === 'ios') {Linking.openURL('https://apps.apple.com/app/id1566376089?action=write-review'); }
                      else { Linking.openURL('https://play.google.com/store/apps/details?id=com.statcan.wellbeingcheck')}
+                  /*   if (Platform.OS === 'ios') {Linking.openURL('https://apps.apple.com/app/id1496401127?action=write-review'); }
+                     else { Linking.openURL('https://play.google.com/store/apps/details?id=com.statcan.wellbeingcheck')}*/
                     },
                     style: 'cancel',
                   },
@@ -584,3 +586,11 @@ const styles = StyleSheet.create({
 });
 
 export default memo(Dashboard);
+
+/*
+<TouchableOpacity style={{marginTop:100}} onPress={() => {
+                                               if (Platform.OS === 'ios') {Linking.openURL('https://apps.apple.com/app/id1566376089?action=write-review'); }
+                                               else { Linking.openURL('https://play.google.com/store/apps/details?id=com.statcan.wellbeingcheck&hl=fr_CA&gl=CA')}
+                                              }}>
+   <Text>Test</Text>
+ </TouchableOpacity>*/

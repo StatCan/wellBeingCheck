@@ -5,12 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="68eb5ccb-ac57-4f6b-b6e1-bf4c6bc72738" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/screens/UserModule/SettingsScreenModal.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/screens/UserModule/SettingsScreenQ17.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.expo/packager-info.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/packager-info.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalResources.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalResources.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/ContactUsScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/ContactUsScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/schedule.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/schedule.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/Dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/Dashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/UserModule/SettingsScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/UserModule/SettingsScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/UserModule/SettingsScreenBack.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/UserModule/SettingsScreenGood.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,10 +43,11 @@
   </component>
   <component name="PropertiesComponent">
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
-    <property name="last_opened_file_path" value="$USER_HOME$/i18Demo" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/screens/UserModule" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\guojian\Documents\GitHub\wellBeingCheck\wellBeingCheck\src\screens\UserModule" />
       <recent name="C:\Users\guojian\Documents\GitHub\wellbeingcheck\wellBeingCheck\src\components" />
       <recent name="C:\Users\guojian\Documents\GitHub\wellbeingcheck\wellBeingCheck\src\screens\UserModule" />
       <recent name="C:\Users\Jim\Documents\ReactNative\wellBeingCheck\src\components" />
@@ -65,10 +68,10 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="21" y="98" width="1182" height="544" key="AVDManager" timestamp="1624291455997">
+    <state x="137" y="135" width="994" height="544" key="AVDManager" timestamp="1628520494539">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="21" y="98" width="1182" height="544" key="AVDManager/0.0.1366.728@0.0.1366.728" timestamp="1624291455997" />
+    <state x="137" y="135" width="994" height="544" key="AVDManager/0.0.1366.728@0.0.1366.728" timestamp="1628520494539" />
     <state x="415" y="118" key="FileChooserDialogImpl" timestamp="1622655936490">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
