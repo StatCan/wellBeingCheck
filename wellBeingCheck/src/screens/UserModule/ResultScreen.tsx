@@ -111,7 +111,12 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
         }
         tryNum--;
     }
-
+  setGraphTitle=()=>{
+      if (index == 0) { this.setState({ title: resources.getString("Your feelings") }); }
+      else if (index == 1) { this.setState({ title: resources.getString("How you are feeling by location") }); }
+      else if (index == 2) { this.setState({ title: resources.getString("How you are feeling by activity") }); }
+      else if (index == 3) { this.setState({ title: resources.getString("How you are feeling with others") }); }
+  }
   handleScroll(event) {
     let width1 = this.state.width;let oldPage=this.state.current;
     let x = event.nativeEvent.contentOffset.x;
@@ -285,7 +290,11 @@ class UserResultsScreen extends React.Component<Props, ScreenState> {
             </View>
           </View>
         </ImageBackground>
-        <NavigationEvents onDidFocus={() =>{this.loadImage();this.setState({ title: resources.getString("Your feelings")});}} />
+        <NavigationEvents onDidFocus={() =>{
+             this.loadImage();
+          //   this.setState({ title: resources.getString("Your feelings")});
+             this.setGraphTitle();
+             }} />
 
         <Button style={styles.btnNext}
           mode="contained"
