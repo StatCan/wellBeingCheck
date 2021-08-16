@@ -1,11 +1,11 @@
 {
-  "name": "StatCan Action – VitaliT",
-  "displayName": "StatCan Action – VitaliT",
+  "name": "Vitali-T-Stat",
+  "displayName": "Vitali-T-Stat",
   "expo": {
     "androidStatusBar": {
       "backgroundColor": "#000000"
     },
-    "name":"StatCan Action – VitaliT",
+    "name":"Vitali-T-Stat",
     "slug": "wellBeingCheck",
     "privacy": "unlisted",
     "sdkVersion": "39.0.0",
