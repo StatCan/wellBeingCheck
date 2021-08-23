@@ -7,7 +7,6 @@
     <list default="true" id="68eb5ccb-ac57-4f6b-b6e1-bf4c6bc72738" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.expo/packager-info.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/packager-info.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/UserModule/ResultScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/UserModule/ResultScreen.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,10 +62,10 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="28" y="135" width="994" height="544" key="AVDManager" timestamp="1628785021796">
+    <state x="28" y="135" width="994" height="544" key="AVDManager" timestamp="1629728043314">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="28" y="135" width="994" height="544" key="AVDManager/0.0.1366.728@0.0.1366.728" timestamp="1628785021796" />
+    <state x="28" y="135" width="994" height="544" key="AVDManager/0.0.1366.728@0.0.1366.728" timestamp="1629728043314" />
     <state x="415" y="118" key="FileChooserDialogImpl" timestamp="1622655936490">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
