@@ -8,7 +8,7 @@ export const resources = {
     data: {
         en: {
             //global
-            "app.name": "StatCan Action – VitaliT",
+            "app.name": "Vitali-T-Stat",
             "gl.next": "Next",
             "gl.cancel": "Cancel",
             "gl.decline": "Decline",
@@ -36,7 +36,7 @@ export const resources = {
             `Use the Previous and Next buttons located at the bottom right of each page. \n\n`+
             `Session timeout\n`+
             `After 2 hours of inactivity, your session will time out. You will not be able to access any unsaved information.\n\n`+
-            `After 7 minutes of inactivity, StatCan Action – VitaliT will lock. You will need to enter your password to continue. \n\n`+
+            `After 7 minutes of inactivity, Vitali-T-Stat will lock. You will need to enter your password to continue. \n\n`+
             `Definitions and explanations\n`+
             `A help button is available for certain questions. Press this button for additional information or clarification.\n\n`,
 
@@ -45,7 +45,7 @@ export const resources = {
             "terms_and_conditions": "Terms and conditions \n",
             "terms_and_conditions_disagree": "You must accept Terms and Conditions to use this App. Select “OK” to revise your preferences, or call us at 1-877-949-9492 for more information.",
             "terms_and_conditions_content.Disclaimer": `Disclaimer`,
-            "terms_and_conditions_content.Disclaimer.a": `Information collected through the use of the StatCan Action – VitaliT App falls under the authority of the Statistics Act which ensures that any information provided will be kept confidential and will only be used for statistical and research purposes.  It is your responsibility to keep your phone and access to the App secure. We do not recommend removing software restrictions and limitations imposed by the official operating system of your device. Doing so could compromise your phone’s security features and the security/confidentiality of the information collected by this App. \n`,
+            "terms_and_conditions_content.Disclaimer.a": `Information collected through the use of the Vitali-T-Stat App falls under the authority of the Statistics Act which ensures that any information provided will be kept confidential and will only be used for statistical and research purposes.  It is your responsibility to keep your phone and access to the App secure. We do not recommend removing software restrictions and limitations imposed by the official operating system of your device. Doing so could compromise your phone’s security features and the security/confidentiality of the information collected by this App. \n`,
 
             "terms_and_conditions_content.T&A" : `General terms and conditions` ,
             "terms_and_conditions_content.T&A.a" :   `The following Terms and Conditions arise from Statistics Canada's character as a public institution that must operate transparently and in conformity with the provisions of federal legislation, notably, but not exclusively, the Statistics Act, the Privacy Act and the Access to Information Act. Statistics Canada's principal objective is to increase the range and depth of statistical information on Canada's population, society and economy available to the Canadian public. \n` ,
@@ -170,7 +170,7 @@ export const resources = {
             "about_content.navigate.a":`Use the Previous and Next buttons located at the bottom right of each page.  \n` ,
 
             "about_content.timeout":`Session timeout` ,
-            "about_content.timeout.a":`After 7 minutes of inactivity, your session will time out and StatCan Action – VitaliT will lock. You will need to enter your password to continue. You will not be able to access any unsaved information. \n`,
+            "about_content.timeout.a":`After 7 minutes of inactivity, your session will time out and Vitali-T-Stat will lock. You will need to enter your password to continue. You will not be able to access any unsaved information. \n`,
 
             "about_content.def":`Definitions and explanations` ,
             "about_content.def.a":`A help button is available for certain questions. Press this button for additional information or clarification.\n`,
@@ -217,10 +217,10 @@ export const resources = {
             "num_pings_dialog_title": "Number of notifications per day",
             "ThankYouA": "Thank you for checking in!",
             "ThankYouB": "Thank you, now check out your results!",
-            "NoDataAlert": "Results will become available once you complete two StatCan Action – VitaliT.",
+            "NoDataAlert": "Results will become available once you complete two Vitali-T-Stat.",
             "GraphNotAvailable":"The result maybe not be ready due to the slow server response.",
             "Enter password": "Enter password",
-            "Well-Being Check": "StatCan Action – VitaliT",
+            "Well-Being Check": "Vitali-T-Stat",
 
             //Login screen
             "login.forgot_password": "Forgot password?",
@@ -252,7 +252,7 @@ export const resources = {
 
             //category1-Question3
             "faq.c1.q3": "Who is participating in this study? ",
-            "faq.c1.q3.a": "Anyone in Canada over 15 years of age with a compatible smartphone or tablet can download StatCan Action – VitaliT from GooglePlay or the App Store to participate. You can participate with or without an invitation code. Please share this information with your friends so they can download the App too!",
+            "faq.c1.q3.a": "Anyone in Canada over 15 years of age with a compatible smartphone or tablet can download Vitali-T-Stat from GooglePlay or the App Store to participate. You can participate with or without an invitation code. Please share this information with your friends so they can download the App too!",
 
             //category1-Question4
             "faq.c1.q4": "Why are you conducting this study?",
@@ -271,7 +271,7 @@ export const resources = {
 
             //category2-Question1
             "faq.c2.q1": "Why do I need a password and security question?",
-            "faq.c2.q1.a": "StatCan Action – VitaliT requests users to respond to daily questionnaires to identify how their feelings change in different settings. By password protecting the App, we can ensure your data trend has not been impacted by others who may use your phone and access the App. Also, StatCan Action – VitaliT provides users with a Results menu, which displays a trend of your self-assessed feelings and how they relate to what you are doing, who you are with, and where you are. By password protecting the App, we can ensure your trend is not viewed by others unless you log into the App and choose to share it with them.\n\n"+
+            "faq.c2.q1.a": "Vitali-T-Stat requests users to respond to daily questionnaires to identify how their feelings change in different settings. By password protecting the App, we can ensure your data trend has not been impacted by others who may use your phone and access the App. Also, Vitali-T-Stat provides users with a Results menu, which displays a trend of your self-assessed feelings and how they relate to what you are doing, who you are with, and where you are. By password protecting the App, we can ensure your trend is not viewed by others unless you log into the App and choose to share it with them.\n\n"+
             "Statistics Canada does not collect your password when you create it, and therefore will not be able to assist you in resetting your password if required. The security question provides a second tier of security which you can use to reset your password.",
 
             //category2-Question2
@@ -288,13 +288,13 @@ export const resources = {
             "Any research, reports or publications based on this study will use aggregated data only and will not identify you or any individual as being affiliated with this study.",
 
              //category2-Question5
-            "faq.c2.q5": "What data does StatCan Action – VitaliT collect?",
-            "faq.c2.q5.a": "The StatCan Action – VitaliT app collects the responses you provide to questionnaires, as well as the number of notifications you receive each day. It does not collect your password, your security question and answer, or data from your device such as location and app usage.",
+            "faq.c2.q5": "What data does Vitali-T-Stat collect?",
+            "faq.c2.q5.a": "The Vitali-T-Stat app collects the responses you provide to questionnaires, as well as the number of notifications you receive each day. It does not collect your password, your security question and answer, or data from your device such as location and app usage.",
 
             //category2-Question6
             "faq.c2.q6": "How is my data stored and transmitted? How will my data be protected?",
-            "faq.c2.q6.a": "The StatCan Action – VitaliT app fully complies with all privacy and security regulations in place to protect Canadians’ information.\n\n"+
-            "StatCan Action – VitaliT uses Statistics Canada’s Electronic Collection Portal to collect your responses. For more information about the security features in place to protect your data, please visit https://surveys-enquetes.statcan.gc.ca/en/faq/security-securite.html.",
+            "faq.c2.q6.a": "The Vitali-T-Stat app fully complies with all privacy and security regulations in place to protect Canadians’ information.\n\n"+
+            "Vitali-T-Stat uses Statistics Canada’s Electronic Collection Portal to collect your responses. For more information about the security features in place to protect your data, please visit https://surveys-enquetes.statcan.gc.ca/en/faq/security-securite.html.",
 
             //category2-Question7
             "faq.c2.q7": "I want to stop participating in this study",
@@ -327,14 +327,14 @@ export const resources = {
              //category3-Question6
              "faq.c3.q6": "Why am I no longer receiving notifications?",
              "faq.c3.q6.a": "If you have not completed a well-being check in the past 4 days, the App will stop sending you notifications. You can start receiving notifications again by pressing START, located on the App homepage, and completing a well-being check.\n\n"+
-             "StatCan Action – VitaliT will send you notifications for up to 30 days total. After this period is complete, your participation in the study has ended and you will no longer receive notifications.\n\n"+
-             "Your device's Battery Saver Mode may be suppressing notifications from the StatCan Action – VitaliT App. Try changing your settings to remove any battery saving restrictions.\n\n"+
+             "Vitali-T-Stat will send you notifications for up to 30 days total. After this period is complete, your participation in the study has ended and you will no longer receive notifications.\n\n"+
+             "Your device's Battery Saver Mode may be suppressing notifications from the Vitali-T-Stat App. Try changing your settings to remove any battery saving restrictions.\n\n"+
              "For Android users, the app may stop sending you notifications if you recently restarted your device. You can receive notifications again by pressing START, located on the app homepage, and completing a well-being check.\n\n"+
              "If none of these scenarios reflect your situation, please contact us at ",
 
              //category3-Question7
               "faq.c3.q7": "Why am I receiving duplicate notifications?",
-              "faq.c3.q7.a": "If Statistics Canada is forced to perform an update to the StatCan Action – VitaliT App during your participation in this study, there is a chance that you will receive duplicate notifications for up to four days. If you experience this, there is no need to respond to the questionnaire two times in a row.",
+              "faq.c3.q7.a": "If Statistics Canada is forced to perform an update to the Vitali-T-Stat App during your participation in this study, there is a chance that you will receive duplicate notifications for up to four days. If you experience this, there is no need to respond to the questionnaire two times in a row.",
 
             //---------------category4---------------
             "faq.category4": "The Results menu",
@@ -359,11 +359,11 @@ export const resources = {
             //category5-Question4
             "faq.c5.q3": "Can I download the App on multiple devices and sync it?",
             "faq.c5.q3.a": "The App does not have syncing capabilities.\n\n"+
-            "Your participation in the study is based on the device you first downloaded the StatCan Action – VitaliT App on. If you download the App on a different device, you will be identified as a new user for security purposes and your previous responses will no longer be accessible to you through the Results menu.",
+            "Your participation in the study is based on the device you first downloaded the Vitali-T-Stat App on. If you download the App on a different device, you will be identified as a new user for security purposes and your previous responses will no longer be accessible to you through the Results menu.",
 
             //category5-Question5
             "faq.c5.q4": "How much memory does the app require?",
-            "faq.c5.q4.a": "StatCan Action – VitaliT requires 53 MB on Apple devices, and 90 MB on Android devices. ",
+            "faq.c5.q4.a": "Vitali-T-Stat requires 53 MB on Apple devices, and 90 MB on Android devices. ",
 
             //category5-Question5
             "faq.c5.q5": "How much data does the App require?",
@@ -433,12 +433,12 @@ export const resources = {
              "declinemsg2": " for more information.",
 
              // accessibility bilingual text
-             "Accessibility.ApplicationName":"StatCan Action – VitaliT application name ",
+             "Accessibility.ApplicationName":"Vitali-T-Stat application name ",
              "Accessibility.ReturnLogoButton":"Back",
              "Accessibility.getting_started_title":"Getting Started Page title\n",
              "Accessibility.setting_title":"Parametres titre de la page",
              "Accessibility.passwordInputText":"Password textinput",
-             "Accessibility.graphText":"The 'Results' section of the StatCan Action – VitaliT app contains summaries of your responses to the questionnaire. There is a snapshot of your overall self-rated feelings, and three bar charts that display a summary of your feelings by location, activity, and who you are with. If your screen reader cannot read these results, we would be happy to send them to you in a different format. Please send us an email with your name and postal code to infostats@canada.ca (e-mail address must be manually entered). Please also ensure your name and postal code are the same as what was entered in the questionnaire. For additional information or more ways to reach us, please refer to the “Contact us” section of the application.",
+             "Accessibility.graphText":"The 'Results' section of the Vitali-T-Stat app contains summaries of your responses to the questionnaire. There is a snapshot of your overall self-rated feelings, and three bar charts that display a summary of your feelings by location, activity, and who you are with. If your screen reader cannot read these results, we would be happy to send them to you in a different format. Please send us an email with your name and postal code to infostats@canada.ca (e-mail address must be manually entered). Please also ensure your name and postal code are the same as what was entered in the questionnaire. For additional information or more ways to reach us, please refer to the “Contact us” section of the application.",
              "Local24":"",
              "Is24hours":"false",
 
@@ -446,7 +446,7 @@ export const resources = {
         },
         fr: {
             //global
-            "app.name": "StatCan Action – VitaliT",
+            "app.name": "Vitali-T-Stat",
             "gl.next": "Suivant",
             "gl.cancel": "Annuler",
             "gl.decline": "Décliner",
@@ -480,7 +480,7 @@ export const resources = {
                 `Délai d’inactivité d’une session \n` +
                 `Après 2 heures d’inactivité, votre session sera interrompue. Vous ne pourrez accéder à aucun renseignement qui n’a pas été sauvegardé.\n\n` +
 
-                `Après 7 minutes d’inactivité, StatCan Action – VitaliT se verrouille. Vous devrez entrer votre mot de passe pour continuer. \n\n` +
+                `Après 7 minutes d’inactivité, Vitali-T-Stat se verrouille. Vous devrez entrer votre mot de passe pour continuer. \n\n` +
 
                 `Définitions et explications \n` +
                 `Un bouton d’aide est disponible pour certaines questions. Appuyez sur ce bouton pour obtenir plus de renseignements ou des précisions.\n\n`,
@@ -488,7 +488,7 @@ export const resources = {
             //terms & conditions
            // "terms_and_conditions": "Conditions générales\n",
             "terms_and_conditions_content": `Désistement \n` +
-                `La collecte des renseignements effectuée au moyen de l’application StatCan Action – VitaliT est régie par la Loi sur la statistique, en vertu de laquelle tout renseignement fourni demeure confidentiel et n’est utilisé qu’à des fins statistiques et de recherche. Il vous incombe de protéger votre téléphone et votre accès à l’application. Nous vous recommandons de ne pas supprimer les restrictions et les limites imposées par le système d’exploitation officiel de votre appareil quant à l’utilisation des logiciels. Cela pourrait compromettre les fonctions de sécurité de votre téléphone ainsi que la sécurité et la confidentialité des renseignements recueillis par l’application. \n\n` +
+                `La collecte des renseignements effectuée au moyen de l’application Vitali-T-Stat est régie par la Loi sur la statistique, en vertu de laquelle tout renseignement fourni demeure confidentiel et n’est utilisé qu’à des fins statistiques et de recherche. Il vous incombe de protéger votre téléphone et votre accès à l’application. Nous vous recommandons de ne pas supprimer les restrictions et les limites imposées par le système d’exploitation officiel de votre appareil quant à l’utilisation des logiciels. Cela pourrait compromettre les fonctions de sécurité de votre téléphone ainsi que la sécurité et la confidentialité des renseignements recueillis par l’application. \n\n` +
 
                 `Conditions générales  \n` +
                 `Les Conditions générales énoncées ci-dessous résultent du fait que Statistique Canada, à titre d'organisme public, doit faire preuve de transparence et se conformer aux dispositions des lois fédérales, notamment, mais non exclusivement, la Loi sur la statistiques, la Loi sur la protection des renseignements personnels et la Loi sur l'accès à l'information. L'objectif principal de Statistique Canada est d'accroître la portée et la précision de l'information statistique sur la population, la société et l'économie du Canada mise à la disposition du public canadien. \n\n` +
@@ -561,7 +561,7 @@ export const resources = {
      "terms_and_conditions": "Conditions générales \n",
      "terms_and_conditions_disagree": "Vous devez accepter les Conditions générales pour utiliser cette application. Sélectionnez « OK » pour modifier vos préférences, ou appelez-nous au 1-877-949-9492 pour obtenir plus de renseignements.",
      "terms_and_conditions_content.Disclaimer": `Désistement`,
-     "terms_and_conditions_content.Disclaimer.a": `La collecte des renseignements effectuée au moyen de l’application StatCan Action – VitaliT est régie par la Loi sur la statistique, en vertu de laquelle tout renseignement fourni demeure confidentiel et n’est utilisé qu’à des fins statistiques et de recherche. Il vous incombe de protéger votre téléphone et votre accès à l’application. Nous vous recommandons de ne pas supprimer les restrictions et les limites imposées par le système d’exploitation officiel de votre appareil quant à l’utilisation des logiciels. Cela pourrait compromettre les fonctions de sécurité de votre téléphone ainsi que la sécurité et la confidentialité des renseignements recueillis par l’application. \n`,
+     "terms_and_conditions_content.Disclaimer.a": `La collecte des renseignements effectuée au moyen de l’application Vitali-T-Stat est régie par la Loi sur la statistique, en vertu de laquelle tout renseignement fourni demeure confidentiel et n’est utilisé qu’à des fins statistiques et de recherche. Il vous incombe de protéger votre téléphone et votre accès à l’application. Nous vous recommandons de ne pas supprimer les restrictions et les limites imposées par le système d’exploitation officiel de votre appareil quant à l’utilisation des logiciels. Cela pourrait compromettre les fonctions de sécurité de votre téléphone ainsi que la sécurité et la confidentialité des renseignements recueillis par l’application. \n`,
 
      "terms_and_conditions_content.T&A" : `Conditions générales` ,
      "terms_and_conditions_content.T&A.a" :  `Les Conditions générales énoncées ci-dessous résultent du fait que Statistique Canada, à titre d'organisme public, doit faire preuve de transparence et se conformer aux dispositions des lois fédérales, notamment, mais non exclusivement, la Loi sur la statistiques, la Loi sur la protection des renseignements personnels et la Loi sur l'accès à l'information. L'objectif principal de Statistique Canada est d'accroître la portée et la précision de l'information statistique sur la population, la société et l'économie du Canada mise à la disposition du public canadien. \n` ,
@@ -685,7 +685,7 @@ export const resources = {
             "about_content.navigate.a":`Utilisez les boutons Précédent et Suivant situés dans le coin inférieur droit de chaque page. \n` ,
 
             "about_content.timeout":`Délai d’inactivité d’une session` ,
-            "about_content.timeout.a":`Après 7 minutes d’inactivité, votre session sera interrompue et l'application StatCan Action – VitaliT se verrouillera. Vous devrez entrer votre mot de passe pour continuer. Vous ne pourrez accéder à aucun renseignement qui n’a pas été sauvegardé.\n` ,
+            "about_content.timeout.a":`Après 7 minutes d’inactivité, votre session sera interrompue et l'application Vitali-T-Stat se verrouillera. Vous devrez entrer votre mot de passe pour continuer. Vous ne pourrez accéder à aucun renseignement qui n’a pas été sauvegardé.\n` ,
 
             "about_content.def":`Définitions et explications` ,
             "about_content.def.a":`Un bouton d’aide est disponible pour certaines questions. Appuyez sur ce bouton pour obtenir plus de renseignements ou des précisions. \n`,
@@ -741,7 +741,7 @@ export const resources = {
             "NoDataAlert": "Les résultats seront disponibles lorsque vous aurez rempli deux bilans bien-être.",
             "GraphNotAvailable":"Le résultat n'est peut-être pas prêt en raison de la lenteur de la réponse du serveur.",
             "Enter password": "Entrer un mot de passe",
-            "Well-Being Check": "StatCan Action – VitaliT",
+            "Well-Being Check": "Vitali-T-Stat",
             "Forgot your password": "Mot de passe oublié?",
             "Language": "English",//"Anglaise",
             "Secure your account": "Sécuriser votre compte",
@@ -768,7 +768,7 @@ export const resources = {
 
             //category1-Question3
             "faq.c1.q3": "Qui participe à cette enquête?",
-            "faq.c1.q3.a": "Toute personne au Canada de plus de 15 ans qui possède un téléphone intelligent ou une tablette compatible peut télécharger l’application StatCan Action – VitaliT sur Google Play ou sur l’App Store pour participer à l’enquête. Vous pouvez participer avec ou sans code d’invitation.\n"+
+            "faq.c1.q3.a": "Toute personne au Canada de plus de 15 ans qui possède un téléphone intelligent ou une tablette compatible peut télécharger l’application Vitali-T-Stat sur Google Play ou sur l’App Store pour participer à l’enquête. Vous pouvez participer avec ou sans code d’invitation.\n"+
              "Veuillez partager cette information avec vos amis afin qu’ils puissent eux aussi télécharger l’application.",
 
             //category1-Question4
@@ -790,7 +790,7 @@ export const resources = {
 
             //category2-Question1
             "faq.c2.q1": "Pourquoi ai-je besoin d’un mot de passe et d’une question de sécurité?",
-            "faq.c2.q1.a": "L’application StatCan Action – VitaliT demande aux utilisateurs de répondre quotidiennement à des questionnaires afin de déterminer la façon dont leurs sentiments changent dans différents contextes. En protégeant l’application par un mot de passe, nous pouvons nous assurer que la tendance de vos données n’a pas été influencée par d’autres personnes qui pourraient utiliser votre téléphone et accéder à l’application. De plus, l’application StatCan Action – VitaliT fournit aux utilisateurs un menu Résultats, qui affiche la tendance de vos sentiments autoévalués et de la façon dont ils sont liés à ce que vous faites, aux gens avec qui vous êtes et à l’endroit où vous vous trouvez. En protégeant l’application par un mot de passe, nous pouvons nous assurer que cette tendance n’est pas vue par d’autres personnes, à moins que vous vous connectiez à l’application et que vous choisissiez de la partager avec eux.\n\n"+
+            "faq.c2.q1.a": "L’application Vitali-T-Stat demande aux utilisateurs de répondre quotidiennement à des questionnaires afin de déterminer la façon dont leurs sentiments changent dans différents contextes. En protégeant l’application par un mot de passe, nous pouvons nous assurer que la tendance de vos données n’a pas été influencée par d’autres personnes qui pourraient utiliser votre téléphone et accéder à l’application. De plus, l’application Vitali-T-Stat fournit aux utilisateurs un menu Résultats, qui affiche la tendance de vos sentiments autoévalués et de la façon dont ils sont liés à ce que vous faites, aux gens avec qui vous êtes et à l’endroit où vous vous trouvez. En protégeant l’application par un mot de passe, nous pouvons nous assurer que cette tendance n’est pas vue par d’autres personnes, à moins que vous vous connectiez à l’application et que vous choisissiez de la partager avec eux.\n\n"+
             "Statistique Canada ne recueille pas votre mot de passe lorsque vous le créez, et ne pourra donc pas vous aider à le réinitialiser si nécessaire. La question de sécurité fournit un deuxième niveau de sécurité, que vous pouvez utiliser pour réinitialiser votre mot de passe.",
 
             //category2-Question2
@@ -807,13 +807,13 @@ export const resources = {
             "Les recherches, rapports ou publications basés sur cette enquête utiliseront uniquement des données agrégées et ne vous identifieront pas, ni aucune autre personne, comme étant affilié à cette enquête.",
 
              //category2-Question5
-            "faq.c2.q5": "Quelles sont les données recueillies par l’application StatCan Action – VitaliT?",
-            "faq.c2.q5.a": "L’application StatCan Action – VitaliT recueille les réponses que vous fournissez aux questionnaires, ainsi que le nombre de notifications que vous recevez chaque jour. Elle ne recueille pas votre mot de passe, votre question de sécurité et sa réponse, ni les données de votre appareil telles que l’emplacement et l’utilisation de l’application.",
+            "faq.c2.q5": "Quelles sont les données recueillies par l’application Vitali-T-Stat?",
+            "faq.c2.q5.a": "L’application Vitali-T-Stat recueille les réponses que vous fournissez aux questionnaires, ainsi que le nombre de notifications que vous recevez chaque jour. Elle ne recueille pas votre mot de passe, votre question de sécurité et sa réponse, ni les données de votre appareil telles que l’emplacement et l’utilisation de l’application.",
 
             //category2-Question6
             "faq.c2.q6": "Comment mes données sont-elles stockées et transmises? Comment mes données seront-elles protégées?",
-            "faq.c2.q6.a": "L’application StatCan Action – VitaliT est entièrement conforme à toutes les réglementations en matière de protection de la vie privée et de sécurité mises en place pour protéger les informations des Canadiens.\n\n"+
-            "L’application StatCan Action – VitaliT utilise le portail de collecte électronique de Statistique Canada pour recueillir vos réponses. Pour plus d’informations sur les dispositifs de sécurité mis en place pour protéger vos données, veuillez consulter https://surveys-enquetes.statcan.gc.ca/fr/faq/security-securite.html.",
+            "faq.c2.q6.a": "L’application Vitali-T-Stat est entièrement conforme à toutes les réglementations en matière de protection de la vie privée et de sécurité mises en place pour protéger les informations des Canadiens.\n\n"+
+            "L’application Vitali-T-Stat utilise le portail de collecte électronique de Statistique Canada pour recueillir vos réponses. Pour plus d’informations sur les dispositifs de sécurité mis en place pour protéger vos données, veuillez consulter https://surveys-enquetes.statcan.gc.ca/fr/faq/security-securite.html.",
 
             //category2-Question7
             "faq.c2.q7": "Je ne veux plus participer à cette enquête",
@@ -846,14 +846,14 @@ export const resources = {
              //category3-Question6
              "faq.c3.q6": "Pourquoi ne reçois-je plus de notifications?",
              "faq.c3.q6.a":"Si vous n’avez pas effectué un bilan de bien-être au cours des quatre derniers jours, l’application cessera de vous envoyer des notifications. Vous pouvez recommencer à recevoir des notifications en appuyant sur COMMENCER, situé sur la page d’accueil de l’application, et en remplissant un bilan de bien-être.\n\n"+
-                           "L’application StatCan Action – VitaliT vous enverra des notifications pour une durée totale de 30 jours maximum. Au terme de cette période, votre participation à l’enquête est terminée et vous ne recevrez plus de notifications.\n\n"+
-                           "Le mode d’économie d’énergie de votre appareil supprime peut-être les notifications de l’application StatCan Action – VitaliT. Essayez de modifier vos paramètres pour supprimer toute restriction relative à l’économie d’énergie.\n\n"+
+                           "L’application Vitali-T-Stat vous enverra des notifications pour une durée totale de 30 jours maximum. Au terme de cette période, votre participation à l’enquête est terminée et vous ne recevrez plus de notifications.\n\n"+
+                           "Le mode d’économie d’énergie de votre appareil supprime peut-être les notifications de l’application Vitali-T-Stat. Essayez de modifier vos paramètres pour supprimer toute restriction relative à l’économie d’énergie.\n\n"+
                            "Si vous utilisez un appareil Android, il se peut que l’application arrête de vous envoyer des notifications si vous avez redémarré votre appareil récemment. Vous pouvez recevoir à nouveau des notifications en appuyant sur COMMENCER, situé sur la page d’accueil de l’application, et en remplissant un bilan de bien-être.\n\n"+
                            "Si aucun de ces scénarios ne correspond à votre situation, veuillez nous contacter au ",
 
 //category3-Question7
               "faq.c3.q7": "Pourquoi est-ce que je reçois des avis en double?",
-              "faq.c3.q7.a": "Si Statistique Canada doit mettre à jour l’application StatCan Action – VitaliT pendant que vous participez à cette étude, il est possible que vous receviez des avis en double pendant un maximum de quatre jours. Si cette situation se produit, il n’est pas nécessaire de remplir le questionnaire deux fois d’affilée.",
+              "faq.c3.q7.a": "Si Statistique Canada doit mettre à jour l’application Vitali-T-Stat pendant que vous participez à cette étude, il est possible que vous receviez des avis en double pendant un maximum de quatre jours. Si cette situation se produit, il n’est pas nécessaire de remplir le questionnaire deux fois d’affilée.",
 
 
             //---------------category4---------------
@@ -879,11 +879,11 @@ export const resources = {
             //category5-Question4
             "faq.c5.q3": "Puis-je télécharger l’application sur plusieurs appareils et la synchroniser?",
             "faq.c5.q3.a": "L’application n’a pas de capacités de synchronisation.\n\n"+
-            "Votre participation à l’enquête pilote est basée sur l’appareil sur lequel vous avez téléchargé l’application StatCan Action – VitaliT pour la première fois. Si vous téléchargez l’application sur un autre appareil, vous serez identifié comme un nouvel utilisateur pour des raisons de sécurité, et vos réponses précédentes ne seront plus accessibles dans le menu Résultats.",
+            "Votre participation à l’enquête pilote est basée sur l’appareil sur lequel vous avez téléchargé l’application Vitali-T-Stat pour la première fois. Si vous téléchargez l’application sur un autre appareil, vous serez identifié comme un nouvel utilisateur pour des raisons de sécurité, et vos réponses précédentes ne seront plus accessibles dans le menu Résultats.",
 
             //category5-Question5
             "faq.c5.q4": "Quelle est la quantité de mémoire requise par l’application?",
-            "faq.c5.q4.a": "L’application StatCan Action – VitaliT nécessite 53 Mo sur les appareils Apple et 90 Mo sur les appareils Android.",
+            "faq.c5.q4.a": "L’application Vitali-T-Stat nécessite 53 Mo sur les appareils Apple et 90 Mo sur les appareils Android.",
 
             //category5-Question5
             "faq.c5.q5": "Combien de données l’application nécessite-t-elle?",
@@ -952,12 +952,12 @@ export const resources = {
                "declinemsg1": "Vous devez accepter les Conditions générales pour utiliser cette application. Sélectionnez « D'accord » pour modifier vos préférences, ou appelez-nous au ",
                "declinemsg2": " pour obtenir plus de renseignements.",
 
-               "Accessibility.ApplicationName":"le nom de l'application est StatCan Action – VitaliT ",
+               "Accessibility.ApplicationName":"le nom de l'application est Vitali-T-Stat ",
                "Accessibility.ReturnLogoButton":"Retour",
                "Accessibility.getting_started_title":"Pour commencer titre de la page",
                "Accessibility.setting_title":"Parametres titre de la page",
                "Accessibility.passwordInputText":"Saisir le mot de passe",
-               "Accessibility.graphText":"La section « Résultats » de l’application StatCan Action – VitaliT contient un résumé de vos réponses au questionnaire. On y trouve un aperçu de vos sentiments généraux autoévalués, ainsi que trois graphiques à barres affichant un sommaire de vos sentiments selon votre emplacement, vos activités, et les personnes avec qui vous êtes. Si votre lecteur d’écran n’arrive pas à lire ces résultats, nous pouvons vous les envoyer dans un autre format. Veuillez nous écrire à l’adresse infostats@canada.ca en indiquant votre nom et votre code postal (l’adresse de courriel doit être entrée manuellement). Lorsque vous présenter cette demande, veuillez également vous assurer que votre nom et votre code postal sont identiques à ceux que vous avez entrés dans le questionnaire. Pour obtenir de plus amples informations ou afin d’obtenir d’autres moyens pour nous contacter, veuillez vous diriger à la section « Contactez-nous » de l’application.",
+               "Accessibility.graphText":"La section « Résultats » de l’application Vitali-T-Stat contient un résumé de vos réponses au questionnaire. On y trouve un aperçu de vos sentiments généraux autoévalués, ainsi que trois graphiques à barres affichant un sommaire de vos sentiments selon votre emplacement, vos activités, et les personnes avec qui vous êtes. Si votre lecteur d’écran n’arrive pas à lire ces résultats, nous pouvons vous les envoyer dans un autre format. Veuillez nous écrire à l’adresse infostats@canada.ca en indiquant votre nom et votre code postal (l’adresse de courriel doit être entrée manuellement). Lorsque vous présenter cette demande, veuillez également vous assurer que votre nom et votre code postal sont identiques à ceux que vous avez entrés dans le questionnaire. Pour obtenir de plus amples informations ou afin d’obtenir d’autres moyens pour nous contacter, veuillez vous diriger à la section « Contactez-nous » de l’application.",
                "Local24":"en_GB",
                "Is24hours":"true",
 
