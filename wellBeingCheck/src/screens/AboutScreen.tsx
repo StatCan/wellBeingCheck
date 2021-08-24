@@ -544,6 +544,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                               [
                                 { pattern: /Statistics Act/, style: styles.italic },
                                 { pattern: /Loi sur la statistique/, style: styles.italic },
+                                { type: 'url', style: styles.url, onPress: this.handleUrlPress },
                               ]
                             }
                             childrenProps={{ allowFontScaling: false }}

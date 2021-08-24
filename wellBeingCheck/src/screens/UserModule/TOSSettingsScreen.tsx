@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet, Dimensions, Linking,PanResponder } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Linking,PanResponder,TouchableOpacity } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Button from '../../components/Button';
 import { newTheme } from '../../core/theme';
@@ -149,7 +149,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                 >{resources.getString("terms_and_conditions_content.privacy")} </Text>
 
                 <Paragraph style={styles.paragraph}>
-                  <Text>
+                  <Text style={{flexWrap: 'wrap',flexDirection:'row'}}>
 
                  <ParsedText
                       style={styles.text}
@@ -165,9 +165,8 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                       childrenProps={{ allowFontScaling: false }}
                     >
                       {resources.getString("terms_and_conditions_content.privacy.a")}
-
                     </ParsedText>
-                  </Text>
+                 </Text>
                 </Paragraph>
                 <Text
                 accessibilityRole='header'
