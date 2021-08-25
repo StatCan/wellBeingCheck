@@ -45,7 +45,16 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
   handleUrlPress(url, matchIndex /*: number*/) {
     global.resetTimer();//  global.globalTick=0;
          Linking.openURL(url);
-  }
+  };
+ handleTrustCenterPress(name, matchIndex /*: number*/) {
+     //   Alert.alert(`Hello ${name}`);
+        if(name=="Trust Centre"){
+            Linking.openURL('https://www.statcan.gc.ca/eng/trust');
+        }else if(name=="Centre de confiance"){
+            Linking.openURL('https://www.statcan.gc.ca/fra/confiance');
+        }
+         global.resetTimer();
+      };
 
   render() {
     return (
@@ -159,7 +168,7 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                           { pattern: /Privacy Act/, style: styles.italic },
                           { pattern: /Loi sur la statistique/, style: styles.italic },
                           { pattern: /Loi sur la protection des renseignements personnels/, style: styles.italic },
-                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
+                          {pattern: /Trust Centre|Centre de confiance/, style: styles.url, onPress: this.handleTrustCenterPress},
                         ]
                       }
                       childrenProps={{ allowFontScaling: false }}

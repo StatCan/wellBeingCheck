@@ -139,7 +139,15 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
   handlePhonePress(phone, matchIndex /*: number*/) {
     Linking.openURL('tel:18779499492');
   };
-
+    handleTrustCenterPress(name, matchIndex /*: number*/) {
+   //   Alert.alert(`Hello ${name}`);
+      if(name=="Trust Centre"){
+          Linking.openURL('https://www.statcan.gc.ca/eng/trust');
+      }else if(name=="Centre de confiance"){
+          Linking.openURL('https://www.statcan.gc.ca/fra/confiance');
+      }
+       global.resetTimer();
+    };
   render() {
     // if (!this.state.fontLoaded) {
     //   console.log('fontloading .....')
@@ -268,7 +276,8 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                           { pattern: /Privacy Act/, style: styles.italic },
                           { pattern: /Loi sur la statistique/, style: styles.italic },
                           { pattern: /Loi sur la protection des renseignements personnels/, style: styles.italic },
-                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
+
+                         {pattern: /Trust Centre|Centre de confiance/, style: styles.url, onPress: this.handleTrustCenterPress},
                         ]
                       }
                       childrenProps={{ allowFontScaling: false }}

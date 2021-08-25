@@ -9,6 +9,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GlobalResources.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalResources.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/AboutScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/AboutScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/TermsOfServiceScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/TermsOfServiceScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/screens/UserModule/TOSSettingsScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/UserModule/TOSSettingsScreen.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,10 +66,10 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="137" y="135" width="994" height="544" key="AVDManager" timestamp="1629811312014">
+    <state x="137" y="135" width="994" height="544" key="AVDManager" timestamp="1629906335169">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="137" y="135" width="994" height="544" key="AVDManager/0.0.1366.728@0.0.1366.728" timestamp="1629811312014" />
+    <state x="137" y="135" width="994" height="544" key="AVDManager/0.0.1366.728@0.0.1366.728" timestamp="1629906335169" />
     <state x="415" y="118" key="FileChooserDialogImpl" timestamp="1622655936490">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

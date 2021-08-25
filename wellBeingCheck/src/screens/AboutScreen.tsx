@@ -341,6 +341,15 @@ class AboutScreen extends React.Component<Props, AboutState> {
          }
      global.resetTimer();
   }
+    handleTrustCenterPress(name, matchIndex /*: number*/) {
+   //   Alert.alert(`Hello ${name}`);
+      if(name=="Trust Centre"){
+          Linking.openURL('https://www.statcan.gc.ca/eng/trust');
+      }else if(name=="Centre de confiance"){
+          Linking.openURL('https://www.statcan.gc.ca/fra/confiance');
+      }
+       global.resetTimer();
+    }
   handlePhonePress(phone, matchIndex /*: number*/) {
     Linking.openURL('tel:1-877-949-9492');
     //  ('tel:555-867-5309')
@@ -544,7 +553,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                               [
                                 { pattern: /Statistics Act/, style: styles.italic },
                                 { pattern: /Loi sur la statistique/, style: styles.italic },
-                                { type: 'url', style: styles.url, onPress: this.handleUrlPress },
+                                {pattern: /Trust Centre|Centre de confiance/, style: styles.url, onPress: this.handleTrustCenterPress},
                               ]
                             }
                             childrenProps={{ allowFontScaling: false }}

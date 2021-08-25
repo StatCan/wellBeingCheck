@@ -35,7 +35,7 @@ export const resources = {
             `To navigate the questionnaire \n`+
             `Use the Previous and Next buttons located at the bottom right of each page. \n\n`+
             `Session timeout\n`+
-            `After 2 hours of inactivity, your session will time out. You will not be able to access any unsaved information.\n\n`+
+          //  `After 2 hours of inactivity, your session will time out. You will not be able to access any unsaved information.\n\n`+
             `After 7 minutes of inactivity, Vitali-T-Stat will lock. You will need to enter your password to continue. \n\n`+
             `Definitions and explanations\n`+
             `A help button is available for certain questions. Press this button for additional information or clarification.\n\n`,
@@ -55,7 +55,7 @@ export const resources = {
             "terms_and_conditions_content.Modif.a" :  `Statistics Canada reserves the right to change these Terms and Conditions in its sole discretion.  Any modifications to these Terms and Conditions by Statistics Canada must be accepted before continuing to use the App. \n` ,
 
             "terms_and_conditions_content.privacy" : `Privacy notice` ,
-            "terms_and_conditions_content.privacy.a" :    `Statistics Canada is committed to respecting the privacy of individuals and businesses—whether they are responding to one of our surveys, providing personal information, purchasing a product or service or using our website. To fulfill this commitment, Statistics Canada has created a Privacy Framework that describes the Approved practices, procedures and governance related to privacy. All personal information collected, used, disclosed or retained by Statistics Canada is protected by the Privacy Act and by the Statistics Act whether it was provided by a respondent or received from a third party.\n\nTo learn more about how Statistics Canada protects your information, visit our Trust Centre(https://www.statcan.gc.ca/eng/trust).\n`,
+            "terms_and_conditions_content.privacy.a" :    `Statistics Canada is committed to respecting the privacy of individuals and businesses—whether they are responding to one of our surveys, providing personal information, purchasing a product or service or using our website. To fulfill this commitment, Statistics Canada has created a Privacy Framework that describes the Approved practices, procedures and governance related to privacy. All personal information collected, used, disclosed or retained by Statistics Canada is protected by the Privacy Act and by the Statistics Act whether it was provided by a respondent or received from a third party.\n\nTo learn more about how Statistics Canada protects your information, visit our Trust Centre.\n`,
                 //`http://www.statcan.gc.ca/eng/reference/privacy \n\n` +
 
             "terms_and_conditions_content.confidentiality" :  `Confidentiality statement` ,
@@ -285,7 +285,7 @@ export const resources = {
             //category2-Question4
             "faq.c2.q4": "Is the information I provide confidential?",
             "faq.c2.q4.a": "Yes, Statistics Canada guarantees the confidentiality of your responses under the Statistics Act.\n"+
-            "Any research, reports or publications based on this study will use aggregated data only and will not identify you or any individual as being affiliated with this study.\nTo learn more about how Statistics Canada protects your information, visit our Trust Centre(https://www.statcan.gc.ca/eng/trust).",
+            "Any research, reports or publications based on this study will use aggregated data only and will not identify you or any individual as being affiliated with this study.\nTo learn more about how Statistics Canada protects your information, visit our Trust Centre.",
 
              //category2-Question5
             "faq.c2.q5": "What data does Vitali-T-Stat collect?",
@@ -478,7 +478,7 @@ export const resources = {
                 `Utilisez les boutons Précédent et Suivant situés dans le coin inférieur droit de chaque page. \n\n` +
 
                 `Délai d’inactivité d’une session \n` +
-                `Après 2 heures d’inactivité, votre session sera interrompue. Vous ne pourrez accéder à aucun renseignement qui n’a pas été sauvegardé.\n\n` +
+            //    `Après 2 heures d’inactivité, votre session sera interrompue. Vous ne pourrez accéder à aucun renseignement qui n’a pas été sauvegardé.\n\n` +
 
                 `Après 7 minutes d’inactivité, Vitali-T-Stat se verrouille. Vous devrez entrer votre mot de passe pour continuer. \n\n` +
 
@@ -573,7 +573,7 @@ export const resources = {
      "terms_and_conditions_content.privacy" : `Avis de confidentialité` ,
      "terms_and_conditions_content.privacy.a" :    `Statistique Canada s’est engagé à protéger les renseignements personnels de toutes les personnes et entreprises, et ce, qu’elles répondent à l’une de ses enquêtes, fournissent des renseignements personnels, achètent un produit ou un service ou utilisent notre site Web. Afin de respecter cet engagement, nous avons élaboré un cadre de protection des renseignements personnels qui décrit les pratiques, les procédures et les mesures de gouvernance approuvées en matière de protection de la vie privée. \n`+
       `Tous les renseignements personnels recueillis, utilisés, divulgués ou conservés par Statistique Canada sont protégés en vertu de la Loi sur la protection des renseignements personnels et de la Loi sur la statistique, qu’ils aient été fournis par un répondant ou reçus d’une tierce partie. La protection des renseignements personnels et la confidentialité \n\n` +
-      `Pour savoir comment Statistique Canada protège votre information, consultez le Centre de confiance(https://www.statcan.gc.ca/fra/confiance).\n` ,
+      `Pour savoir comment Statistique Canada protège votre information, consultez le Centre de confiance.\n` ,
          //`http://www.statcan.gc.ca/eng/reference/privacy \n\n` +
 
      "terms_and_conditions_content.confidentiality" :  `Énoncé de confidentialité` ,
@@ -806,7 +806,7 @@ export const resources = {
             //category2-Question4
             "faq.c2.q4": "Les informations que je fournis sont-elles confidentielles?",
             "faq.c2.q4.a": "Oui, Statistique Canada garantit la confidentialité de vos réponses en vertu de la Loi sur la statistique.\n"+
-            "Les recherches, rapports ou publications basés sur cette enquête utiliseront uniquement des données agrégées et ne vous identifieront pas, ni aucune autre personne, comme étant affilié à cette enquête.\nPour savoir comment Statistique Canada protège votre information, consultez le Centre de confiance(https://www.statcan.gc.ca/fra/confiance).",
+            "Les recherches, rapports ou publications basés sur cette enquête utiliseront uniquement des données agrégées et ne vous identifieront pas, ni aucune autre personne, comme étant affilié à cette enquête.\nPour savoir comment Statistique Canada protège votre information, consultez le Centre de confiance.",
 
              //category2-Question5
             "faq.c2.q5": "Quelles sont les données recueillies par l’application Vitali-T-Stat?",
