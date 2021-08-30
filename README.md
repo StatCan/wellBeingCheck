@@ -1,1 +1,1 @@
-# wellBeingCheck 
+# wellBeingCheck app
