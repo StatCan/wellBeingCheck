@@ -289,7 +289,7 @@ export const resources = {
 
              //category2-Question5
             "faq.c2.q5": "What data does Vitali-T-Stat collect?",
-            "faq.c2.q5.a": "The Vitali-T-Stat app collects the responses you provide to questionnaires, as well as the number of notifications you receive each day. It does not collect your password, your security question and answer, or data from your device such as location and app usage.",
+            "faq.c2.q5.a": "The Vitali-T-Stat app helps us collect the responses you provide to questionnaires. The responses collected are transmitted directly to Statistics Canada’s secure Electronic Collection Portal.  No response is stored on your mobile device. This app does not collect data, such as location, from your device.",
 
             //category2-Question6
             "faq.c2.q6": "How is my data stored and transmitted? How will my data be protected?",
@@ -810,7 +810,7 @@ export const resources = {
 
              //category2-Question5
             "faq.c2.q5": "Quelles sont les données recueillies par l’application Vitali-T-Stat?",
-            "faq.c2.q5.a": "L’application Vitali-T-Stat recueille les réponses que vous fournissez aux questionnaires, ainsi que le nombre de notifications que vous recevez chaque jour. Elle ne recueille pas votre mot de passe, votre question de sécurité et sa réponse, ni les données de votre appareil telles que l’emplacement et l’utilisation de l’application.",
+            "faq.c2.q5.a": "L’application Vitali-T-Stat nous aide à collecter les réponses que vous fournissez aux questionnaires. Les réponses recueillies sont transmises directement au portail de collecte électronique sécurisé de Statistique Canada. Aucune réponse n’est conservée sur votre appareil mobile. Cette application ne collecte pas de données, telles que votre emplacement, de votre appareil.",
 
             //category2-Question6
             "faq.c2.q6": "Comment mes données sont-elles stockées et transmises? Comment mes données seront-elles protégées?",
