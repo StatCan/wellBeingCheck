@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, ScrollView, PanResponder, Alert, BackHandler, Linking, TouchableOpacity,Image } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ScrollView, PanResponder, Alert, BackHandler, Linking, TouchableOpacity,Image,AccessibilityInfo } from 'react-native';
 import Button from '../components/Button';
 import { Provider as PaperProvider, Title, List, Paragraph } from 'react-native-paper';
 import { newTheme } from '../core/theme';
@@ -72,7 +72,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
   constructor(AboutScreen) {
     super(AboutScreen)
     this.state = {
-
+      screenReader:false,
       faqMainExpanded: false,
       //-------Category 1-------//
       faqC1Expanded: false,
@@ -124,6 +124,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
 
   componentDidMount() {
     this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+     AccessibilityInfo.isScreenReaderEnabled().then(e=>this.setState({screenReader:e}));
   }
 
   componentWillUnmount() {
@@ -327,6 +328,16 @@ class AboutScreen extends React.Component<Props, AboutState> {
   handleUrlPress(url, matchIndex /*: number*/) {
     Linking.openURL(url);
   }
+  handleUrlPress1() {
+      if(resources.culture=='fr')
+        Linking.openURL('https://www.statcan.gc.ca/bienetre');
+      else Linking.openURL('https://www.statcan.gc.ca/wellbeing');
+    }
+   handleUrlPress2() {
+       if(resources.culture=='fr')
+         Linking.openURL('https://surveys-enquetes.statcan.gc.ca/fr/faq/security-securite.html');
+       else Linking.openURL('https://surveys-enquetes.statcan.gc.ca/en/faq/security-securite.html');
+     }
   handleNamePress(name, matchIndex /*: number*/) {
  //   Alert.alert(`Hello ${name}`);
     if(name=="Mental Health and Wellness"){
@@ -341,6 +352,28 @@ class AboutScreen extends React.Component<Props, AboutState> {
          }
      global.resetTimer();
   }
+   handleNamePress1() {
+   if(resources.culture=='fr'){
+       Linking.openURL('https://www.canada.ca/fr/sante-publique/sujets/sante-mentale-et-bien-etre.html');
+      }else{
+          Linking.openURL('https://www.canada.ca/en/public-health/topics/mental-health-wellness.html');
+      }
+       global.resetTimer();
+    }
+     handleNamePress2() {
+     if(resources.culture=='fr'){
+        Linking.openURL('https://wellnesstogether.ca/fr-CA');
+
+        } else{
+                  Linking.openURL('https://ca.portal.gs/');
+             }
+         global.resetTimer();
+      }
+   handleMessagePress() {
+          Linking.openURL('sms:741741');
+           global.resetTimer();
+        }
+
     handleTrustCenterPress(name, matchIndex /*: number*/) {
    //   Alert.alert(`Hello ${name}`);
       if(name=="Trust Centre"){
@@ -350,6 +383,15 @@ class AboutScreen extends React.Component<Props, AboutState> {
       }
        global.resetTimer();
     }
+     handleTrustCenterPress1() {
+         //   Alert.alert(`Hello ${name}`);
+            if(resources.culture=='fr'){
+                Linking.openURL('https://www.statcan.gc.ca/eng/trust');
+            }else{
+                Linking.openURL('https://www.statcan.gc.ca/fra/confiance');
+            }
+             global.resetTimer();
+          };
   handlePhonePress(phone, matchIndex /*: number*/) {
     Linking.openURL('tel:1-877-949-9492');
     //  ('tel:555-867-5309')
@@ -415,6 +457,8 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           titleNumberOfLines={3}
                         >
                           <View>
+                          {this.state.screenReader?
+                          <TouchableOpacity style={styles.faqListItem} accessibilityRole='link' accessible={true}  accessibilityLabel={resources.getString("faq.c1.q1.a")} onPress={()=>this.handleUrlPress1()} ><Text style={{flexWrap: 'wrap',flexDirection:'row'}}>{resources.getString("faq.c1.q1.a1")}<Text style={styles.url}>{resources.getString("faq.c1.q1.a2")}</Text></Text></TouchableOpacity>                          :
                             <ParsedText
                               style={styles.faqListItem}
                               parse={
@@ -425,7 +469,10 @@ class AboutScreen extends React.Component<Props, AboutState> {
                               childrenProps={{ allowFontScaling: false }}
                             >
                               {resources.getString("faq.c1.q1.a")}
+
                             </ParsedText>
+
+                            }
                           </View>
                         </List.Accordion>
                         <List.Accordion
@@ -459,6 +506,8 @@ class AboutScreen extends React.Component<Props, AboutState> {
                         >
 
                           <View>
+                           {this.state.screenReader?
+                            <TouchableOpacity style={styles.faqListItem} accessibilityRole='link' accessible={true}  accessibilityLabel={resources.getString("faq.c1.q4.a")} onPress={()=>this.handleUrlPress1()} ><Text style={{flexWrap: 'wrap',flexDirection:'row'}}>{resources.getString("faq.c1.q4.a1")}<Text style={styles.url}>{resources.getString("faq.c1.q4.a2")}</Text></Text></TouchableOpacity>:
                             <ParsedText
                               style={styles.faqListItem}
                               parse={
@@ -469,7 +518,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                               childrenProps={{ allowFontScaling: false }}
                             >
                               {resources.getString("faq.c1.q4.a")}
-                            </ParsedText>
+                            </ParsedText>}
                           </View>
                         </List.Accordion>
 
@@ -547,6 +596,9 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           onPress={this._handleFaqC2Q4Expand}
                           titleNumberOfLines={3}
                         >
+                         {this.state.screenReader?
+                            <TouchableOpacity style={styles.faqListItem} accessibilityRole='link' accessible={true}  accessibilityLabel={resources.getString("faq.c2.q4.a")} onPress={()=>this.handleTrustCenterPress1()} ><Text style={{flexWrap: 'wrap',flexDirection:'row'}}>{resources.getString("faq.c2.q4.a1")}<Text style={styles.url}>{resources.getString("faq.c2.q4.a2")}</Text></Text></TouchableOpacity>:
+
                           <ParsedText
                             style={styles.faqListItem}
                             parse={
@@ -561,7 +613,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
 
                             {resources.getString("faq.c2.q4.a")}
 
-                          </ParsedText>
+                          </ParsedText>}
 
                         </List.Accordion>
                         <List.Accordion
@@ -581,6 +633,8 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           titleNumberOfLines={3}
                         >
                           <View>
+                          {this.state.screenReader?
+                             <TouchableOpacity style={styles.faqListItem} accessibilityRole='link' accessible={true}  accessibilityLabel={resources.getString("faq.c2.q6.a")} onPress={()=>this.handleUrlPress2()} ><Text style={{flexWrap: 'wrap',flexDirection:'row'}}>{resources.getString("faq.c2.q6.a1")}<Text style={styles.url}>{resources.getString("faq.c2.q6.a2")}</Text></Text></TouchableOpacity>:
                             <ParsedText
                               style={styles.faqListItem}
                               parse={
@@ -591,7 +645,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                               childrenProps={{ allowFontScaling: false }}
                             >
                               {resources.getString("faq.c2.q6.a")}
-                            </ParsedText>
+                            </ParsedText>}
                           </View>
                         </List.Accordion>
                         <List.Accordion
@@ -672,17 +726,23 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           onPress={this._handleFaqC3Q6Expand}
                           titleNumberOfLines={3}
                         >
-                          <View>
-
-                            <Text style={styles.faqListItem}>
-                              <Text>{resources.getString("faq.c3.q6.a")}
-                              </Text>
-                              <Text style={styles.faqPhone}
-                                onPress={() => Linking.openURL('tel:18779499492')}>
-                                1-877-949-9492.
-                            </Text>
-                            </Text>
-                          </View>
+{this.state.screenReader?
+  <View>
+     <Text style={styles.faqListItem}>{resources.getString("faq.c3.q6.a1")}</Text>
+     <TouchableOpacity style={[styles.faqListItem,{marginLeft:0}]} accessibilityRole='link' accessible={true}  accessibilityLabel={resources.getString("faq.c3.q6.a2")+'1-877-949-9492'} onPress={() => Linking.openURL('tel:18779499492')} >
+          <Text style={styles.faqListItem}>{resources.getString("faq.c3.q6.a2")}<Text style={styles.url}>1-877-949-9492.</Text></Text>
+     </TouchableOpacity>
+  </View>:
+  <View>
+      <Text style={styles.faqListItem}>
+         <Text>{resources.getString("faq.c3.q6.a")}
+         </Text>
+         <Text style={styles.faqPhone}
+           onPress={() => Linking.openURL('tel:18779499492')}>
+           1-877-949-9492.
+         </Text>
+      </Text>
+                          </View>}
                         </List.Accordion>
 
 
@@ -738,14 +798,16 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           onPress={this._handleFaqC5Q1Expand}
                           titleNumberOfLines={3}
                         >
-                          <View>
-                            <Text style={styles.faqListItem}>
-                              <Text >{resources.getString("faq.c5.q1.a")}</Text>
-                              <Text style={styles.faqPhone}
-                                onPress={() => Linking.openURL('tel:18779499492')}>
-                                1-877-949-9492</Text>
-                            </Text>
-                          </View>
+           {this.state.screenReader?
+                <TouchableOpacity style={[styles.faqListItem,{marginLeft:0}]} accessibilityRole='link' accessible={true}  onPress={() => Linking.openURL('tel:18779499492')} >
+                     <Text style={styles.faqListItem}>{resources.getString("faq.c5.q1.a")}<Text style={styles.url}>1-877-949-9492.</Text></Text>
+                </TouchableOpacity>:
+            <View>
+                <Text style={styles.faqListItem}>
+                   <Text >{resources.getString("faq.c5.q1.a")}</Text>
+                   <Text style={styles.faqPhone} onPress={() => Linking.openURL('tel:18779499492')}>1-877-949-9492</Text>
+                </Text>
+            </View>}
                         </List.Accordion>
                         <List.Accordion
                           title={resources.getString("faq.c5.q2")}
@@ -753,6 +815,10 @@ class AboutScreen extends React.Component<Props, AboutState> {
                           onPress={this._handleFaqC5Q2Expand}
                           titleNumberOfLines={3}
                         >
+                      {this.state.screenReader?
+                           <TouchableOpacity style={[styles.faqListItem,{marginLeft:0}]} accessibilityRole='link' accessible={true}  onPress={() => Linking.openURL('tel:18779499492')} >
+                                <Text style={styles.faqListItem}>{resources.getString("faq.c5.q2.a")}<Text style={styles.url}>1-877-949-9492.</Text></Text>
+                           </TouchableOpacity>:
                           <View>
                             <Text style={styles.faqListItem}>
                               <Text>{resources.getString("faq.c5.q2.a")}
@@ -761,7 +827,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                                 onPress={() => Linking.openURL('tel:18779499492')}>
                                 1-877-949-9492</Text>
                             </Text>
-                          </View>
+                          </View>}
                         </List.Accordion>
                         <List.Accordion
                           title={resources.getString("faq.c5.q3")}
@@ -796,36 +862,31 @@ class AboutScreen extends React.Component<Props, AboutState> {
                       </List.Accordion>
                     </View>
                     {/* Category 6 */}
-                                                                          <View style={styles.faqViewAns}>
-                                                                            <List.Accordion
-                                                                              style={styles.faqCategories}
-                                                                              title={resources.getString("faq.category6")}
-                                                                              expanded={this.state.faqC6Expanded}
-                                                                              onPress={this._handleFaqC6Expand}
-                                                                            >
-                                                                              <List.Accordion
-                                                                                title={resources.getString("faq.c6.q1")}
-                                                                                expanded={this.state.faqC6Q1Expanded}
-                                                                                onPress={this._handleFaqC6Q1Expand}
-                                                                                titleNumberOfLines={3}
-                                                                              >
-                                                                                <View>
-                                                                                                           <ParsedText
-                                                                                                             style={styles.faqListItem}
-                                                                                                             parse={
-                                                                                                               [
-                                                                                                                 {pattern: /Mental Health and Wellness|Wellness Together Canada/, style: styles.url, onPress: this.handleNamePress},
-                                                                                                                 {pattern: /Santé mentale et bien-être|Espace mieux-être Canada/, style: styles.url, onPress: this.handleNamePress},
-                                                                                                               ]
-                                                                                                             }
-                                                                                                             childrenProps={{ allowFontScaling: false }}
-                                                                                                           >
-                                                                                                             {resources.getString("faq.c6.q1.a")}
-                                                                                                           </ParsedText>
-                                                                                                         </View>
-                                                                              </List.Accordion>
-                                                                            </List.Accordion>
-                                                                          </View>
+                    <View style={styles.faqViewAns}>
+                       <List.Accordion
+                         style={styles.faqCategories}
+                         title={resources.getString("faq.category6")}
+                         expanded={this.state.faqC6Expanded}
+                         onPress={this._handleFaqC6Expand}
+                         >
+                         <List.Accordion
+                         title={resources.getString("faq.c6.q1")}
+                         expanded={this.state.faqC6Q1Expanded}
+                         onPress={this._handleFaqC6Q1Expand}
+                         titleNumberOfLines={3}
+                         >
+                            <View style={styles.faqListItem}>
+                              <Text>{resources.getString("faq.c6.q1.a0")}</Text>
+                              <TouchableOpacity style={styles.faqListItem} accessibilityRole='link' accessible={true}  accessibilityLabel={resources.getString("faq.c6.q1.a1")} onPress={()=>this.handleNamePress1()} ><Text style={styles.url}>{resources.getString("faq.c6.q1.a1")}</Text></TouchableOpacity>
+                              <Text>{resources.getString("faq.c6.q1.a2")}</Text>
+                              <TouchableOpacity style={styles.faqListItem} accessibilityRole='link' accessible={true}  accessibilityLabel={resources.getString("faq.c6.q1.a3")} onPress={()=>this.handleNamePress2()} ><Text style={styles.url}>{resources.getString("faq.c6.q1.a3")}</Text></TouchableOpacity>
+                              <Text>{resources.getString("faq.c6.q1.a4")}</Text>
+                              <TouchableOpacity style={styles.faqListItem} accessibilityRole='link' accessible={true}  accessibilityLabel={resources.getString("faq.c6.q1.a5")} onPress={() =>this.handleMessagePress()} ><Text style={styles.url}>{resources.getString("faq.c6.q1.a5")}</Text></TouchableOpacity>
+                              <TouchableOpacity style={styles.faqListItem} accessibilityRole='link' accessible={true}  accessibilityLabel={resources.getString("faq.c6.q1.a6")} onPress={()=>this.handleMessagePress()}><Text style={styles.url}>{resources.getString("faq.c6.q1.a6")}</Text></TouchableOpacity>
+                            </View>
+                            </List.Accordion>
+                            </List.Accordion>
+                            </View>
                   </List.Accordion>
 
                 </View>
@@ -1297,3 +1358,30 @@ const styles = StyleSheet.create({
 });
 
 export default memo(AboutScreen);
+
+
+/*
+                          {this.state.screenReader?
+                            <View>
+                              <Text>{resources.getString("faq.c6.q1.a")}</Text>
+                              <TouchableOpacity style={styles.faqListItem} accessibilityRole='link' accessible={true}  accessibilityLabel={resources.getString("faq.c6.q1.a1")} onPress={()=>this.handleUrlPress2()} ><Text style={{flexWrap: 'wrap',flexDirection:'row'}}>{resources.getString("faq.c6.q1.a1")}</Text></TouchableOpacity>
+                              <Text>{resources.getString("faq.c6.q1.a2")}</Text>
+                              <TouchableOpacity style={styles.faqListItem} accessibilityRole='link' accessible={true}  accessibilityLabel={resources.getString("faq.c6.q1.a3")} onPress={()=>this.handleUrlPress2()} ><Text style={{flexWrap: 'wrap',flexDirection:'row'}}>{resources.getString("faq.c6.q1.a3")}</Text></TouchableOpacity>
+                              <Text>{resources.getString("faq.c6.q1.a4")}</Text>
+                              <TouchableOpacity style={styles.faqListItem} accessibilityRole='link' accessible={true}  accessibilityLabel={resources.getString("faq.c6.q1.a5")} onPress={()=>this.handleUrlPress2()} ><Text style={{flexWrap: 'wrap',flexDirection:'row'}}>{resources.getString("faq.c6.q1.a5")}</Text></TouchableOpacity>
+                              <TouchableOpacity style={styles.faqListItem} accessibilityRole='link' accessible={true}  accessibilityLabel={resources.getString("faq.c6.q1.a6")} onPress={()=>this.handleUrlPress2()} ><Text style={{flexWrap: 'wrap',flexDirection:'row'}}>{resources.getString("faq.c6.q1.a6")}</Text></TouchableOpacity>
+                            </View>:
+                          <View>
+                             <ParsedText
+                              style={styles.faqListItem}
+                              parse={
+                              [
+                               {pattern: /Mental Health and Wellness|Wellness Together Canada/, style: styles.url, onPress: this.handleNamePress},
+                               {pattern: /Santé mentale et bien-être|Espace mieux-être Canada/, style: styles.url, onPress: this.handleNamePress},
+                              ]
+                              }
+                              childrenProps={{ allowFontScaling: false }}
+                              >
+                              {resources.getString("faq.c6.q1.a")}
+                             </ParsedText>
+                             </View>} */

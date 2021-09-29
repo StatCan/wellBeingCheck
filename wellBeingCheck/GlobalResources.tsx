@@ -249,6 +249,8 @@ export const resources = {
             //category1-Question1
             "faq.c1.q1": "Is this a legitimate Statistics Canada study?",
             "faq.c1.q1.a": `Yes. More information can be found on Statistics Canada’s website: https://www.statcan.gc.ca/wellbeing`,
+            "faq.c1.q1.a1": `Yes. More information can be found on Statistics Canada’s website:`,
+            "faq.c1.q1.a2": `https://www.statcan.gc.ca/wellbeing`,
 
             //category1-Question2
             "faq.c1.q2": "Am I required to complete this study?",
@@ -261,6 +263,8 @@ export const resources = {
             //category1-Question4
             "faq.c1.q4": "Why are you conducting this study?",
             "faq.c1.q4.a": "The purpose of this pilot study is to better understand the everyday well-being of Canadians by asking in the moment questions about their activities and feelings. For more information about this study, please visit https://www.statcan.gc.ca/wellbeing",
+            "faq.c1.q4.a1": "The purpose of this pilot study is to better understand the everyday well-being of Canadians by asking in the moment questions about their activities and feelings. For more information about this study, please visit ",
+            "faq.c1.q4.a2": "https://www.statcan.gc.ca/wellbeing",
 
             //category1-Question5
             "faq.c1.q5": "How long will it take me to complete the study?",
@@ -290,6 +294,8 @@ export const resources = {
             "faq.c2.q4": "Is the information I provide confidential?",
             "faq.c2.q4.a": "Yes, Statistics Canada guarantees the confidentiality of your responses under the Statistics Act.\n"+
             "Any research, reports or publications based on this study will use aggregated data only and will not identify you or any individual as being affiliated with this study.\nTo learn more about how Statistics Canada protects your information, visit our Trust Centre.",
+            "faq.c2.q4.a1": "Yes, Statistics Canada guarantees the confidentiality of your responses under the Statistics Act.\nAny research, reports or publications based on this study will use aggregated data only and will not identify you or any individual as being affiliated with this study.\nTo learn more about how Statistics Canada protects your information, visit our ",
+            "faq.c2.q4.a2": "Trust Centre.",
 
              //category2-Question5
             "faq.c2.q5": "What data does Vitali-T-Stat collect?",
@@ -299,6 +305,9 @@ export const resources = {
             "faq.c2.q6": "How is my data stored and transmitted? How will my data be protected?",
             "faq.c2.q6.a": "The Vitali-T-Stat app fully complies with all privacy and security regulations in place to protect Canadians’ information.\n\n"+
             "Vitali-T-Stat uses Statistics Canada’s Electronic Collection Portal to collect your responses. For more information about the security features in place to protect your data, please visit https://surveys-enquetes.statcan.gc.ca/en/faq/security-securite.html.",
+"faq.c2.q6.a1": "The Vitali-T-Stat app fully complies with all privacy and security regulations in place to protect Canadians’ information.\n\n"+
+            "Vitali-T-Stat uses Statistics Canada’s Electronic Collection Portal to collect your responses. For more information about the security features in place to protect your data, please visit ",
+"faq.c2.q6.a2": "https://surveys-enquetes.statcan.gc.ca/en/faq/security-securite.html.",
 
             //category2-Question7
             "faq.c2.q7": "I want to stop participating in this study",
@@ -335,7 +344,12 @@ export const resources = {
              "Your device's Battery Saver Mode may be suppressing notifications from the Vitali-T-Stat App. Try changing your settings to remove any battery saving restrictions.\n\n"+
              "For Android users, the app may stop sending you notifications if you recently restarted your device. You can receive notifications again by pressing START, located on the app homepage, and completing a well-being check.\n\n"+
              "If none of these scenarios reflect your situation, please contact us at ",
+             "faq.c3.q6.a1": "If you have not completed a well-being check in the past 4 days, the App will stop sending you notifications. You can start receiving notifications again by pressing START, located on the App homepage, and completing a well-being check.\n\n"+
+                          "Vitali-T-Stat will send you notifications for up to 30 days total. After this period is complete, your participation in the study has ended and you will no longer receive notifications.\n\n"+
+                          "Your device's Battery Saver Mode may be suppressing notifications from the Vitali-T-Stat App. Try changing your settings to remove any battery saving restrictions.\n\n"+
+                          "For Android users, the app may stop sending you notifications if you recently restarted your device. You can receive notifications again by pressing START, located on the app homepage, and completing a well-being check.\n",
 
+             "faq.c3.q6.a2":"If none of these scenarios reflect your situation, please contact us at ",
              //category3-Question7
               "faq.c3.q7": "Why am I receiving duplicate notifications?",
               "faq.c3.q7.a": "If Statistics Canada is forced to perform an update to the Vitali-T-Stat App during your participation in this study, there is a chance that you will receive duplicate notifications for up to four days. If you experience this, there is no need to respond to the questionnaire two times in a row.",
@@ -378,7 +392,6 @@ export const resources = {
             //category6-Question1
             "faq.c6.q1": "Looking for well-being resources?",
              "faq.c6.q1.a":"Please make use of either of the following resources or contact a healthcare professional:\n\n"+
-
             "Mental Health and Wellness\n\n"+
             "Mental health and wellness resources compiled by the Government of Canada\n\n"+
             "Wellness Together Canada\n\n"+
@@ -386,6 +399,13 @@ export const resources = {
             "Adults: Text WELLNESS to 741741\n\n"+
             "Front Line Workers: Text FRONTLINE to 741741",
 
+            "faq.c6.q1.a0":"Please make use of either of the following resources or contact a healthcare professional:\n",
+            "faq.c6.q1.a1": "Mental Health and Wellness\n",
+            "faq.c6.q1.a2":"Mental health and wellness resources compiled by the Government of Canada\n",
+            "faq.c6.q1.a3":"Wellness Together Canada\n",
+            "faq.c6.q1.a4":"Mental health and substance use support, resources, and counselling with a mental health professional\n",
+            "faq.c6.q1.a5":"Adults: Text WELLNESS to 741741\n",
+            "faq.c6.q1.a6":"Front Line Workers: Text FRONTLINE to 741741",
 
 
 
@@ -773,7 +793,8 @@ export const resources = {
             //category1-Question1
             "faq.c1.q1": "Est-ce une enquête légitime de Statistique Canada?",
             "faq.c1.q1.a": "Oui. Vous trouverez de plus amples informations sur le site Web de Statistique Canada https://www.statcan.gc.ca/bienetre",
-
+            "faq.c1.q1.a1": `Oui. Vous trouverez de plus amples informations sur le site Web de Statistique Canada `,
+            "faq.c1.q1.a2": `https://www.statcan.gc.ca/bienetre`,
             //category1-Question2
             "faq.c1.q2": "Suis-je obligé de répondre à cette enquête?",
             "faq.c1.q2.a": "Non. La participation est volontaire.",
@@ -786,7 +807,8 @@ export const resources = {
             //category1-Question4
             "faq.c1.q4": "Pourquoi menez-vous cette enquête?",
             "faq.c1.q4.a": "L’objectif de cette enquête pilote est de mieux comprendre le bien-être au quotidien des Canadiens. Pour ce faire, nous leur avons posé des questions sur leurs activités et leurs sentiments au moment présent. Pour plus d’informations sur cette enquête, veuillez consulter https://www.statcan.gc.ca/bienetre",
-
+            "faq.c1.q4.a1":  "L’objectif de cette enquête pilote est de mieux comprendre le bien-être au quotidien des Canadiens. Pour ce faire, nous leur avons posé des questions sur leurs activités et leurs sentiments au moment présent. Pour plus d’informations sur cette enquête, veuillez consulter ",
+            "faq.c1.q4.a2": "https://www.statcan.gc.ca/bienetre",
             //category1-Question5
             "faq.c1.q5": "Combien de temps me faudra-t-il pour terminer l’enquête?",
             "faq.c1.q5.a": "Un bilan de bien-être devrait prendre environ 2 minutes à remplir. Vous pouvez choisir le nombre de fois que vous souhaitez participer chaque jour en personnalisant le nombre de notifications que vous recevrez dans le menu des paramètres. Nous vous demandons de participer à l’étude pendant un mois.",
@@ -817,7 +839,8 @@ export const resources = {
             "faq.c2.q4": "Les informations que je fournis sont-elles confidentielles?",
             "faq.c2.q4.a": "Oui, Statistique Canada garantit la confidentialité de vos réponses en vertu de la Loi sur la statistique.\n"+
             "Les recherches, rapports ou publications basés sur cette enquête utiliseront uniquement des données agrégées et ne vous identifieront pas, ni aucune autre personne, comme étant affilié à cette enquête.\nPour savoir comment Statistique Canada protège votre information, consultez le Centre de confiance.",
-
+           "faq.c2.q4.a1": "Oui, Statistique Canada garantit la confidentialité de vos réponses en vertu de la Loi sur la statistique.\nLes recherches, rapports ou publications basés sur cette enquête utiliseront uniquement des données agrégées et ne vous identifieront pas, ni aucune autre personne, comme étant affilié à cette enquête.\nPour savoir comment Statistique Canada protège votre information, consultez le ",
+           "faq.c2.q4.a2": "Centre de confiance.",
              //category2-Question5
             "faq.c2.q5": "Quelles sont les données recueillies par l’application Vitali-T-Stat?",
             "faq.c2.q5.a": "L’application Vitali-T-Stat recueille les réponses que vous fournissez aux questionnaires, ainsi que le nombre de notifications que vous recevez chaque jour. Elle ne recueille pas votre mot de passe, votre question de sécurité et sa réponse, ni les données de votre appareil telles que l’emplacement et l’utilisation de l’application.",
@@ -826,6 +849,9 @@ export const resources = {
             "faq.c2.q6": "Comment mes données sont-elles stockées et transmises? Comment mes données seront-elles protégées?",
             "faq.c2.q6.a": "L’application Vitali-T-Stat est entièrement conforme à toutes les réglementations en matière de protection de la vie privée et de sécurité mises en place pour protéger les informations des Canadiens.\n\n"+
             "L’application Vitali-T-Stat utilise le portail de collecte électronique de Statistique Canada pour recueillir vos réponses. Pour plus d’informations sur les dispositifs de sécurité mis en place pour protéger vos données, veuillez consulter https://surveys-enquetes.statcan.gc.ca/fr/faq/security-securite.html.",
+"faq.c2.q6.a1": "L’application Vitali-T-Stat est entièrement conforme à toutes les réglementations en matière de protection de la vie privée et de sécurité mises en place pour protéger les informations des Canadiens.\n\n"+
+                 "L’application Vitali-T-Stat utilise le portail de collecte électronique de Statistique Canada pour recueillir vos réponses. Pour plus d’informations sur les dispositifs de sécurité mis en place pour protéger vos données, veuillez consulter ",
+"faq.c2.q6.a2": "https://surveys-enquetes.statcan.gc.ca/fr/faq/security-securite.html.",
 
             //category2-Question7
             "faq.c2.q7": "Je ne veux plus participer à cette enquête",
@@ -862,7 +888,11 @@ export const resources = {
                            "Le mode d’économie d’énergie de votre appareil supprime peut-être les notifications de l’application Vitali-T-Stat. Essayez de modifier vos paramètres pour supprimer toute restriction relative à l’économie d’énergie.\n\n"+
                            "Si vous utilisez un appareil Android, il se peut que l’application arrête de vous envoyer des notifications si vous avez redémarré votre appareil récemment. Vous pouvez recevoir à nouveau des notifications en appuyant sur COMMENCER, situé sur la page d’accueil de l’application, et en remplissant un bilan de bien-être.\n\n"+
                            "Si aucun de ces scénarios ne correspond à votre situation, veuillez nous contacter au ",
-
+             "faq.c3.q6.a1":"Si vous n’avez pas effectué un bilan de bien-être au cours des quatre derniers jours, l’application cessera de vous envoyer des notifications. Vous pouvez recommencer à recevoir des notifications en appuyant sur COMMENCER, situé sur la page d’accueil de l’application, et en remplissant un bilan de bien-être.\n\n"+
+                           "L’application Vitali-T-Stat vous enverra des notifications pour une durée totale de 30 jours maximum. Au terme de cette période, votre participation à l’enquête est terminée et vous ne recevrez plus de notifications.\n\n"+
+                           "Le mode d’économie d’énergie de votre appareil supprime peut-être les notifications de l’application Vitali-T-Stat. Essayez de modifier vos paramètres pour supprimer toute restriction relative à l’économie d’énergie.\n\n"+
+                           "Si vous utilisez un appareil Android, il se peut que l’application arrête de vous envoyer des notifications si vous avez redémarré votre appareil récemment. Vous pouvez recevoir à nouveau des notifications en appuyant sur COMMENCER, situé sur la page d’accueil de l’application, et en remplissant un bilan de bien-être.\n\n",
+             "faq.c3.q6.a2":"Si aucun de ces scénarios ne correspond à votre situation, veuillez nous contacter au ",
 //category3-Question7
               "faq.c3.q7": "Pourquoi est-ce que je reçois des avis en double?",
               "faq.c3.q7.a": "Si Statistique Canada doit mettre à jour l’application Vitali-T-Stat pendant que vous participez à cette étude, il est possible que vous receviez des avis en double pendant un maximum de quatre jours. Si cette situation se produit, il n’est pas nécessaire de remplir le questionnaire deux fois d’affilée.",
