@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { View, Text, StyleSheet, Dimensions, Linking,PanResponder,TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Linking,PanResponder,TouchableOpacity,AccessibilityInfo } from 'react-native';
 import { AsyncStorage } from 'react-native';
 import Button from '../../components/Button';
 import { newTheme } from '../../core/theme';
@@ -34,10 +34,13 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
   constructor(TermsOfServiceState) {
     super(TermsOfServiceState)
     this.state = {
-      termsOfService: false,
+      termsOfService: false,screenReader:false
     };
   }
-
+  componentDidMount() {
+     AccessibilityInfo.isScreenReaderEnabled().then(e=>this.setState({screenReader:e}));
+    //  this.setState({ webviewLoaded: true });
+  }
   _openSettingsScreen = () => {
     global.resetTimer();//global.globalTick=0;
     this.props.navigation.navigate('SettingsScreen');
@@ -55,7 +58,15 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
         }
          global.resetTimer();
       };
-
+ handleTrustCenterPress1() {
+     //   Alert.alert(`Hello ${name}`);
+        if(resources.culture=='fr'){
+            Linking.openURL('https://www.statcan.gc.ca/eng/trust');
+        }else{
+            Linking.openURL('https://www.statcan.gc.ca/fra/confiance');
+        }
+         global.resetTimer();
+      };
   render() {
     return (
       <PaperProvider theme={newTheme}>
@@ -173,10 +184,11 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
                       }
                       childrenProps={{ allowFontScaling: false }}
                     >
-                      {resources.getString("terms_and_conditions_content.privacy.a")}
+                      {this.state.screenReader?resources.getString("terms_and_conditions_content.privacy.a1"):resources.getString("terms_and_conditions_content.privacy.a")}
                     </ParsedText>
                  </Text>
                 </Paragraph>
+                {this.state.screenReader&&<TouchableOpacity accessibilityRole='link' accessible={true}  accessibilityLabel={resources.getString("terms_and_conditions_content.privacy.a4")} onPress={()=>this.handleTrustCenterPress1()} ><Text style={{flexWrap: 'wrap',flexDirection:'row'}}>{resources.getString("terms_and_conditions_content.privacy.a2")}<Text style={styles.url}>{resources.getString("terms_and_conditions_content.privacy.a3")}</Text></Text></TouchableOpacity>}
                 <Text
                 accessibilityRole='header'
                 accessible={true}
