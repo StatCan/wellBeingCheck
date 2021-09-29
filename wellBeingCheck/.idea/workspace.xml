@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="68eb5ccb-ac57-4f6b-b6e1-bf4c6bc72738" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.expo/packager-info.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/packager-info.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GlobalResources.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalResources.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Globals.js" beforeDir="false" afterPath="$PROJECT_DIR$/Globals.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/TimePickerPane.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TimePickerPane.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/AboutScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/AboutScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/GettingStartedScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/GettingStartedScreen.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/TermsOfServiceScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/TermsOfServiceScreen.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/TimePickerPane1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TimePickerBack.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TimePickerKnob.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,10 +40,11 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\guojian\Documents\GitHub\wellBeingCheck\wellBeingCheck\src\components" />
       <recent name="C:\Users\guojian\Documents\GitHub\wellBeingCheck\wellBeingCheck\src\screens\UserModule" />
       <recent name="C:\Users\guojian\Documents\GitHub\wellbeingcheck\wellBeingCheck\src\components" />
       <recent name="C:\Users\guojian\Documents\GitHub\wellbeingcheck\wellBeingCheck\src\screens\UserModule" />
@@ -68,5 +64,16 @@
       <updated>1601039663923</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
