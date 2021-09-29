@@ -579,6 +579,12 @@ export const resources = {
       `Tous les renseignements personnels recueillis, utilisés, divulgués ou conservés par Statistique Canada sont protégés en vertu de la Loi sur la protection des renseignements personnels et de la Loi sur la statistique, qu’ils aient été fournis par un répondant ou reçus d’une tierce partie. La protection des renseignements personnels et la confidentialité \n\n` +
       `Pour savoir comment Statistique Canada protège votre information, consultez le Centre de confiance.\n` ,
          //`http://www.statcan.gc.ca/eng/reference/privacy \n\n` +
+     "terms_and_conditions_content.privacy.a1" : `Statistique Canada s’est engagé à protéger les renseignements personnels de toutes les personnes et entreprises, et ce, qu’elles répondent à l’une de ses enquêtes, fournissent des renseignements personnels, achètent un produit ou un service ou utilisent notre site Web. Afin de respecter cet engagement, nous avons élaboré un cadre de protection des renseignements personnels qui décrit les pratiques, les procédures et les mesures de gouvernance approuvées en matière de protection de la vie privée. \nTous les renseignements personnels recueillis, utilisés, divulgués ou conservés par Statistique Canada sont protégés en vertu de la Loi sur la protection des renseignements personnels et de la Loi sur la statistique, qu’ils aient été fournis par un répondant ou reçus d’une tierce partie. La protection des renseignements personnels et la confidentialité \n\n`,
+     "terms_and_conditions_content.privacy.a2" : `Pour savoir comment Statistique Canada protège votre information, consultez le `,
+     "terms_and_conditions_content.privacy.a3" :`Centre de confiance.\n`,
+     "terms_and_conditions_content.privacy.a4" : `Pour savoir comment Statistique Canada protège votre information, consultez le Centre de confiance.\n`,
+
+
 
      "terms_and_conditions_content.confidentiality" :  `Énoncé de confidentialité` ,
      "terms_and_conditions_content.confidentiality.a" :  `La collecte des renseignements effectuée au moyen de l’application est régie par la Loi sur la statistique, en vertu de laquelle tout renseignement fourni demeure confidentiel et n’est utilisé qu’à des fins statistiques et de recherche. \n`,
