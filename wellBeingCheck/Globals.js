@@ -1,6 +1,6 @@
 import { PanResponder} from 'react-native';
 global.name='AAA';
-    global.department='bbb';
+global.department='bbb';
 global.question='';
 global.answer='';
 global.timeStamp=0;

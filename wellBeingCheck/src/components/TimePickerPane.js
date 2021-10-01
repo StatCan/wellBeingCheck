@@ -270,10 +270,10 @@ export class TimePickerPane extends React.Component {
               )}
               </View>
               <View style={{flexDirection:'row',justifyContent:'space-around'}}>
-                <TouchableOpacity onPress={() => {this.cancel()}}>
+                <TouchableOpacity onPress={() => {this.cancel()}} accessibilityRole='button' accessible={true}>
                    <Text style={{fontSize:20}}>{this.props.cancelLabel}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {this.confirm()}}>
+                <TouchableOpacity onPress={() => {this.confirm()}} accessibilityRole='button' accessible={true}>
                                    <Text style={{fontSize:20}}>{this.props.confirmLabel}</Text>
                 </TouchableOpacity>
               </View>
