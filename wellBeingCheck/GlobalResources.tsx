@@ -174,7 +174,7 @@ export const resources = {
             "about_content.navigate.a":`Use the Previous and Next buttons located at the bottom right of each page.  \n` ,
 
             "about_content.timeout":`Session timeout` ,
-            "about_content.timeout.a":`After 7 minutes of inactivity, your session will time out and Vitali-T-Stat will lock. You will need to enter your password to continue. You will not be able to access any unsaved information. \n`,
+            "about_content.timeout.a":`After 7 minutes of inactivity, Vitali-T-Stat will lock. You will need to enter your password to continue.\n`,
 
             "about_content.def":`Definitions and explanations` ,
             "about_content.def.a":`A help button is available for certain questions. Press this button for additional information or clarification.\n`,
@@ -717,7 +717,7 @@ export const resources = {
             "about_content.navigate.a":`Utilisez les boutons Précédent et Suivant situés dans le coin inférieur droit de chaque page. \n` ,
 
             "about_content.timeout":`Délai d’inactivité d’une session` ,
-            "about_content.timeout.a":`Après 7 minutes d’inactivité, votre session sera interrompue et l'application Vitali-T-Stat se verrouillera. Vous devrez entrer votre mot de passe pour continuer. Vous ne pourrez accéder à aucun renseignement qui n’a pas été sauvegardé.\n` ,
+            "about_content.timeout.a":`Après 7 minutes d’inactivité, Vitali-T-Stat se verrouille. Vous devrez entrer votre mot de passe pour continuer.\n` ,
 
             "about_content.def":`Définitions et explications` ,
             "about_content.def.a":`Un bouton d’aide est disponible pour certaines questions. Appuyez sur ce bouton pour obtenir plus de renseignements ou des précisions. \n`,
