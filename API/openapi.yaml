@@ -107,7 +107,8 @@ paths:
         '403':
           description: The password is already set for the device. Use reset password flow instead.
 
-    put:
+  /security/resetpassword:
+    post:
       operationId: resetPassword
       summary: Reset the password for a deviceId
       description: |
