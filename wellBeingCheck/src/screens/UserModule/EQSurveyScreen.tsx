@@ -111,7 +111,7 @@ async handleSurveyAdone(){
                 .catch((error) => {console.error(error);return false;});
            }
    resetPassword(newPass) {
-      let url=global.webApiBaseUrl+'api/security/password';console.log(url);
+      let url=global.webApiBaseUrl+'api/security/resetpassword';console.log(url);
       let data={
           deviceId:global.userToken,
           sac:global.sac,
@@ -123,7 +123,7 @@ async handleSurveyAdone(){
           newSecurityAnswerHash:hashString(global.securityAnswer,global.securityAnswerSalt)
       }
       return fetch(url,{
-         method: 'PUT',
+         method: 'POST',
          headers: {'Content-Type': 'application/json',},
          body: JSON.stringify(data),
       })

@@ -7,7 +7,11 @@
     <list default="true" id="68eb5ccb-ac57-4f6b-b6e1-bf4c6bc72738" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.expo/packager-info.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/packager-info.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/screens/GettingStartedScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/GettingStartedScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GlobalResources.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/GlobalResources.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/UserModule/EQSurveyScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/UserModule/EQSurveyScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/UserModule/ForgotPasswordChangeScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/UserModule/ForgotPasswordChangeScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/screens/UserModule/RegisterScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/screens/UserModule/RegisterScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/schedule.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/schedule.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
