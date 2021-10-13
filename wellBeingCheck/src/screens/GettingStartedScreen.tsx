@@ -110,24 +110,6 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
                 >
                   {resources.getString("getting_started_content")}
                 </ParsedText>
-                <ParsedText
-                                  style={styles.text}
-                                  parse={
-                                    [
-                                      { pattern: /Why we are conducting this study|Notifications|Authorization and confidentiality|Record linkages/, style: styles.bold },
-                                      { pattern: /Time required to complete this questionnaire|To navigate the questionnaire|Session timeout|Definitions and explanations/, style: styles.bold },
-
-                                      { pattern: /Pourquoi nous menons cette étude|Notifications|Autorisation et confidentialité|Couplages d’enregistrements/, style: styles.bold },
-                                      { pattern: /Temps requis pour remplir ce questionnaire|Pour parcourir le questionnaire|Délai d’inactivité d’une session|Définitions et explications/, style: styles.bold },
-
-                                      { pattern: /Statistics Act/, style: styles.italic },
-                                      { pattern: /Loi sur la statistique/, style: styles.italic},
-                                    ]
-                                  }
-                                  childrenProps={{ allowFontScaling: false }}
-                                >
-                                  {resources.getString("getting_started_content1")}
-                                </ParsedText>
               </Paragraph>
                <View >
                   <Text style={styles.bold}
