@@ -79,10 +79,10 @@ printLogo=()=>{
                   accessibilityRole='header'
                   accessibilityLabel={resources.getString("contactus_email")}
                   >{resources.getString("contactus_email")}</Text>
-                  <TouchableOpacity onPress={() => Linking.openURL('mailto:infostats@statcan.gc.ca')}>
+                  <TouchableOpacity onPress={() => Linking.openURL('mailto:infostats@canada.ca')}>
                     <Text
                     style={styles.text}
-                    >infostats@statcan.gc.ca</Text>
+                    >infostats@canada.ca</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.content}>
