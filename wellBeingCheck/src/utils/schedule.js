@@ -106,13 +106,13 @@ askPermissions = async () => {
        return await Notifications.requestPermissionsAsync({
           ios:{
              allowAlert:true,
-             aloowSound:true,
+             allowSound:true,
              allowBadge:true,
              allowAnnouncements:true,
           },
        });
     }
-    return false;
+    return true;
   };
 //cancell all notifications which were setup before
 function cancellAllSchedules(){

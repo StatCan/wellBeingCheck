@@ -465,7 +465,7 @@ export const resources = {
              "Accessibility.graphText":"The 'Results' section of the Vitali-T-Stat app contains summaries of your responses to the questionnaire. There is a snapshot of your overall self-rated feelings, and three bar charts that display a summary of your feelings by location, activity, and who you are with. If your screen reader cannot read these results, we would be happy to send them to you in a different format. Please send us an email with your name and postal code to infostats@canada.ca (e-mail address must be manually entered). Please also ensure your name and postal code are the same as what was entered in the questionnaire. For additional information or more ways to reach us, please refer to the “Contact us” section of the application.",
              "Local24":"",
              "Is24hours":"false",
-
+             "Failed to create new account":"Failed to create new account!",
 
         },
         fr: {
@@ -1002,7 +1002,7 @@ export const resources = {
                "Accessibility.graphText":"La section « Résultats » de l’application Vitali-T-Stat contient un résumé de vos réponses au questionnaire. On y trouve un aperçu de vos sentiments généraux autoévalués, ainsi que trois graphiques à barres affichant un sommaire de vos sentiments selon votre emplacement, vos activités, et les personnes avec qui vous êtes. Si votre lecteur d’écran n’arrive pas à lire ces résultats, nous pouvons vous les envoyer dans un autre format. Veuillez nous écrire à l’adresse infostats@canada.ca en indiquant votre nom et votre code postal (l’adresse de courriel doit être entrée manuellement). Lorsque vous présenter cette demande, veuillez également vous assurer que votre nom et votre code postal sont identiques à ceux que vous avez entrés dans le questionnaire. Pour obtenir de plus amples informations ou afin d’obtenir d’autres moyens pour nous contacter, veuillez vous diriger à la section « Contactez-nous » de l’application.",
                "Local24":"en_GB",
                "Is24hours":"true",
-
+               "Failed to create new account":"Échec de la création du nouveau compte !",
 
         }
     }

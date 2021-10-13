@@ -117,8 +117,8 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
     const isPasswordConfirmValid = passwordConfirmValidator(this.state.password, this.state.passwordConfirm);
 
     //translate password error
-    let passwordErrorText = this._getPasswordErrorText(isPasswordValid)
-    let passwordConfirmErrorText = this._getPasswordConfirmErrorText(isPasswordConfirmValid)
+    let passwordErrorText = this._getPasswordErrorText(isPasswordValid);
+    let passwordConfirmErrorText = this._getPasswordConfirmErrorText(isPasswordConfirmValid);
 
     if ((isPasswordValid == 200) && (isPasswordConfirmValid == '')) {
       this.setState({ passwordError: '' });
@@ -131,8 +131,34 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
       return false;
     }
   }
-
-  _CreateNewAccount = () => {
+ async _CreateNewAccount(){
+     let result=await AsyncStorage.getItem('user_account');
+     if(result==null){ Alert.alert('',resources.getString('Failed to create new account'));return;}
+     let resultAsObj = JSON.parse(result);
+     let secQue = resultAsObj.security_question;
+     let secAnsw = resultAsObj.security_answer;
+     //first hash the password as md5
+     let passwordHashed = md5.hex_md5(this.state.password);
+     let userAccountObj = {
+        password: passwordHashed,
+        security_question: secQue,
+        security_answer: secAnsw,
+     };
+     let success = true;
+     if (global.doneSurveyA) {
+         success =await this.resetPassword(passwordHashed);
+     }
+     if (success) {
+         AsyncStorage.setItem('user_account', JSON.stringify(userAccountObj), () => {
+         global.securityAnswer = secAnsw; global.password = passwordHashed;
+         console.log('new password...............:' + global.password);
+         this.props.navigation.navigate('Dashboard');
+         });
+     } else {
+        Alert.alert('',resources.getString('Failed to create new account'));
+     }
+  }
+  /* _CreateNewAccount1 = () => {
     //validation passed lets store user
     AsyncStorage.getItem('user_account', (err, result) => {
       console.log(result);
@@ -168,10 +194,33 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
         alert('Failed to create new account!')
       }
     });
-  }
-
+  } */
+ resetPassword(newPass) {
+      let url=global.webApiBaseUrl+'api/security/resetpassword';console.log(url);
+      let data={
+          deviceId:global.userToken,
+          sac:global.sac,
+          newSalt:global.passwordSalt,
+          newPasswordHash:hashString(newPass,global.passwordSalt),
+          securityAnswerHash:hashString(global.securityAnswer,global.securityAnswerSalt),
+          newSecurityQuestionId:global.securityQuestionId,
+          newSecurityAnswerSalt:global.securityAnswerSalt,
+          newSecurityAnswerHash:hashString(global.securityAnswer,global.securityAnswerSalt)
+      }
+      return fetch(url,{
+         method: 'POST',
+         headers: {'Content-Type': 'application/json',},
+         body: JSON.stringify(data),
+      })
+      .then((response) =>{
+          if(response.status==200){console.log('good');global.password=newPass; return true;}
+          else {console.log('Bad:'+response.status);return false;}
+      } )    // .then((response) => response.json())
+            //  .then((responseJson) => {console.log('resetPassword:'+responseJson);    return responseJson;})
+      .catch((error) => {console.error(error);console.log('Bad');return false;});
+   }
   //resetPassword  tested well
-  async resetPassword(newPass) {
+ /*  async resetPassword1(newPass) {
     let isConnected = await checkConnection();
     if (!isConnected) { alert('You are offline, try it later'); return false; }
     let url = global.webApiBaseUrl + 'api/security/password'; console.log(url);
@@ -206,7 +255,7 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
       //  .then((responseJson) => {console.log('resetPassword:'+responseJson);    return responseJson;})
       .catch((error) => { console.error(error); console.log('Bad'); return false; });
   }
-
+ */
   //resetPasswordNew test failed  check later
   async resetPasswordNew(newPass) {
     let service = new BackEndService(
@@ -307,7 +356,7 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
     if(Platform.OS == 'ios' && text!='' && this.state.passwordIsHidden){
         console.log('Pass:'+pass+'->'+text);text=pass+text;pass='';console.log('Input:'+text);}
     const isPasswordValid = passwordValidator(text);
-    let passwordErrorText = this._getPasswordErrorText(isPasswordValid)
+    let passwordErrorText = this._getPasswordErrorText(isPasswordValid);
     if (isPasswordValid == 200)passwordErrorText='';
      this.setState({ password: text,pasVal_length: pasValLength,passVal_Upper: passValUpper,passVal_Special: passValSpecial,passVal_Lower: passValLower,passVal_Number: passValNumber,passwordError: passwordErrorText });
 

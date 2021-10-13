@@ -185,7 +185,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
     };
 
     AsyncStorage.setItem('user_account', JSON.stringify(userAccountObj), () => {
-      global.securityAnswer = this.state.securityAnswer; global.password = passwordHashed; global.securityQuestionId = 4;
+      global.securityAnswer = this.state.securityAnswer; global.password = passwordHashed; global.securityQuestionId =this.state.securityQuestionId;
         global.syslog+='Register:'+(new Date()).toString()+','; AsyncStorage.setItem('Syslog',global.syslog); //Test only
       this.props.navigation.navigate('Dashboard');
     });
