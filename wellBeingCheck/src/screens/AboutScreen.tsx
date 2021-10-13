@@ -410,9 +410,6 @@ class AboutScreen extends React.Component<Props, AboutState> {
     let msg = msg1 + msg2;
     alert(msg);
   }
-  printLogo=()=>{
-          alert('Scheduled:\r\n'+global.sendouts+'\r\nIndicator:'+global.busy+'\r\nUserId:'+global.userToken+'\r\nSac:'+global.sac);
-   }
   render() {
     return (
       <PaperProvider theme={newTheme} >
@@ -1209,7 +1206,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
                   </Text>
                 </View>
                 <View >
-                  <Text style={styles.appVersion} onPress={this.printLogo}>{expo.version}</Text>
+                  <Text style={styles.appVersion}>{expo.version}</Text>
                 </View>
               </View>
             </ScrollView>
