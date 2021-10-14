@@ -29,7 +29,9 @@ export function checkConnection() {
 }
 
 export function hashString(str,salt) {
-               return str.split("").reverse().join("")+salt;
+               let a=str.split("").reverse().join("")+salt;
+               let b=a.toLowerCase();
+               return b;
            }
 
 export function checkConnection1() {
