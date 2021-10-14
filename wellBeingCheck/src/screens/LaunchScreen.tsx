@@ -69,13 +69,18 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
 
 
     AsyncStorage.getItem('user_account', (err, userAccountResult) => {
-      if (global.debugMode) console.log(userAccountResult);
-      let userAccountResultObj = JSON.parse(userAccountResult)
-      let currentPassword = null
+     // if (global.debugMode)
+      console.log(userAccountResult);
+      let userAccountResultObj = JSON.parse(userAccountResult);console.log('userAccountResultObj:',userAccountResultObj);
+      let currentPassword = null;
       if (userAccountResultObj) {
         currentPassword = userAccountResultObj.password;
         global.password = currentPassword;
+        global.securityAnswer = userAccountResultObj.security_answer;
+        global.securityQuestionId =userAccountResultObj.security_question_id;
       }
+      console.log('user account',global.password,'security Answer:',global.securityAnswer,'security Question Id',global.securityQuestionId);
+
       AsyncStorage.getItem('user_getting_started', (err, userGettingStartedResult) => {
         if (global.debugMode) console.log(userGettingStartedResult);
         let userGettingStartedResultObj = JSON.parse(userGettingStartedResult)
