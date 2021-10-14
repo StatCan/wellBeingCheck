@@ -32,7 +32,7 @@
     },
     "android": {
       "package": "com.statcan.wellbeingcheck",
-      "versionCode": 73,
+      "versionCode": 74,
       "permissions": []
     },
     "locales": {
