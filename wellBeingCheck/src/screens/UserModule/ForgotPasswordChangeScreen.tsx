@@ -144,6 +144,7 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
         password: passwordHashed,
         security_question: secQue,
         security_answer: secAnsw,
+        security_question_id:secQueId,
      };
      let success = true;
      if (global.doneSurveyA) {
