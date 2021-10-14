@@ -206,7 +206,8 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
           newSecurityQuestionId:global.securityQuestionId,
           newSecurityAnswerSalt:global.securityAnswerSalt,
           newSecurityAnswerHash:hashString(global.securityAnswer,global.securityAnswerSalt)
-      }
+      };
+       console.log('ddddddata when reset',data);
       return fetch(url,{
          method: 'POST',
          headers: {'Content-Type': 'application/json',},
