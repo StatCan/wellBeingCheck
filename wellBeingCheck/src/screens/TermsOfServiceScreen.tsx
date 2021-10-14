@@ -1,20 +1,38 @@
-import React, { memo } from 'react';
-import { View, Text, StyleSheet, Dimensions, TouchableOpacity, Alert, Linking, ActivityIndicator, BackHandler,Modal,AccessibilityInfo} from 'react-native';
-import { AsyncStorage } from 'react-native';
-import Button from '../components/Button';
-import { newTheme } from '../core/theme';
-import { Provider as PaperProvider, Title, Paragraph } from 'react-native-paper';
-import * as Permissions from 'expo-permissions';
-import BackgroundWide from '../components/BackgroundWide';
-import LogoClearSmall from '../components/LogoClearSmall';
-import { resources } from '../../GlobalResources';
-import AppBanner from '../components/AppBanner';
-import ParsedText from 'react-native-parsed-text';
-import * as Font from 'expo-font';
+/** @format */
+
+import React, { memo } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+  Alert,
+  Linking,
+  ActivityIndicator,
+  BackHandler,
+  Modal,
+  AccessibilityInfo,
+} from "react-native";
+import { AsyncStorage } from "react-native";
+import Button from "../components/Button";
+import { newTheme } from "../core/theme";
+import {
+  Provider as PaperProvider,
+  Title,
+  Paragraph,
+} from "react-native-paper";
+import * as Permissions from "expo-permissions";
+import BackgroundWide from "../components/BackgroundWide";
+import LogoClearSmall from "../components/LogoClearSmall";
+import { resources } from "../../GlobalResources";
+import AppBanner from "../components/AppBanner";
+import ParsedText from "react-native-parsed-text";
+import * as Font from "expo-font";
 
 //import Text from '../components/CustomFont';
-const pheight = (Math.floor(Dimensions.get('window').height) - 100)*0.4;
-const width = Math.floor(Dimensions.get('window').width);
+const pheight = (Math.floor(Dimensions.get("window").height) - 100) * 0.4;
+const width = Math.floor(Dimensions.get("window").width);
 
 import {
   NavigationParams,
@@ -22,16 +40,16 @@ import {
   NavigationState,
   SafeAreaView,
   ScrollView,
-} from 'react-navigation';
-import { SafeAreaConsumer } from 'react-native-safe-area-context';
+} from "react-navigation";
+import { SafeAreaConsumer } from "react-native-safe-area-context";
 
 type TermsOfServiceState = {
-  termsOfService: boolean,
-  title: string,
-  fontLoaded: boolean,
-  displayPopup:boolean,
-  agree:boolean
-}
+  termsOfService: boolean;
+  title: string;
+  fontLoaded: boolean;
+  displayPopup: boolean;
+  agree: boolean;
+};
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>;
@@ -41,42 +59,48 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
   backHandler: any;
 
   constructor(TermsOfServiceState) {
-    super(TermsOfServiceState)
+    super(TermsOfServiceState);
     this.state = {
       termsOfService: false,
       title: resources.getString("Well-Being Check"),
-      fontLoaded: false,agree:false,displayPopup:false
+      fontLoaded: false,
+      agree: false,
+      displayPopup: false,
     };
   }
-
 
   componentDidMount = async () => {
     this.askPermissions();
     //load the lato font from the local folder
     await Font.loadAsync({
-      'Lato-Black': require('../assets/fonts/Lato/Lato-Black.ttf'),
-      'Lato-BlackItalic': require('../assets/fonts/Lato/Lato-BlackItalic.ttf'),
-      'Lato-Bold': require('../assets/fonts/Lato/Lato-Bold.ttf'),
-      'Lato-BoldItalic': require('../assets/fonts/Lato/Lato-BoldItalic.ttf'),
-      'Lato-Italic': require('../assets/fonts/Lato/Lato-Italic.ttf'),
-      'Lato-Light': require('../assets/fonts/Lato/Lato-Light.ttf'),
-      'Lato-LightItalic': require('../assets/fonts/Lato/Lato-LightItalic.ttf'),
-      'Lato-Regular': require('../assets/fonts/Lato/Lato-Regular.ttf'),
-      'Lato-Thin': require('../assets/fonts/Lato/Lato-Thin.ttf'),
-      'Lato-ThinItalic': require('../assets/fonts/Lato/Lato-ThinItalic.ttf'),
+      "Lato-Black": require("../assets/fonts/Lato/Lato-Black.ttf"),
+      "Lato-BlackItalic": require("../assets/fonts/Lato/Lato-BlackItalic.ttf"),
+      "Lato-Bold": require("../assets/fonts/Lato/Lato-Bold.ttf"),
+      "Lato-BoldItalic": require("../assets/fonts/Lato/Lato-BoldItalic.ttf"),
+      "Lato-Italic": require("../assets/fonts/Lato/Lato-Italic.ttf"),
+      "Lato-Light": require("../assets/fonts/Lato/Lato-Light.ttf"),
+      "Lato-LightItalic": require("../assets/fonts/Lato/Lato-LightItalic.ttf"),
+      "Lato-Regular": require("../assets/fonts/Lato/Lato-Regular.ttf"),
+      "Lato-Thin": require("../assets/fonts/Lato/Lato-Thin.ttf"),
+      "Lato-ThinItalic": require("../assets/fonts/Lato/Lato-ThinItalic.ttf"),
     });
-    AccessibilityInfo.isScreenReaderEnabled().then(e=>this.setState({screenReader:e}));
+    AccessibilityInfo.isScreenReaderEnabled().then((e) =>
+      this.setState({ screenReader: e })
+    );
     this.setState({ fontLoaded: true });
-    this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
+    this.backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.handleBackPress
+    );
   };
 
   componentWillUnmount() {
-    this.backHandler.remove()
+    this.backHandler.remove();
   }
 
   handleBackPress = () => {
     return true;
-  }
+  };
 
   askPermissions = async () => {
     const { status: existingStatus } = await Permissions.getAsync(
@@ -89,11 +113,13 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
     }
     if (finalStatus !== "granted") {
       if (global.debugMode) console.log("Notifications Permission Not Granted");
-      global.notificationState = false; AsyncStorage.setItem('NotificationState', 'false');
+      global.notificationState = false;
+      AsyncStorage.setItem("NotificationState", "false");
       return false;
     }
     if (global.debugMode) console.log("Notifications Permission Granted");
-    global.notificationState = true; AsyncStorage.setItem('NotificationState', 'true');
+    global.notificationState = true;
+    AsyncStorage.setItem("NotificationState", "true");
     return true;
   };
 
@@ -103,34 +129,47 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
       termsOfService: true,
     };
 
-    AsyncStorage.setItem('user_terms_and_conditions', JSON.stringify(userTermsAndConditionsObj), () => {
-       global.syslog+='terms:'+(new Date()).toString()+','; AsyncStorage.setItem('Syslog',global.syslog); //Test only
-      this.props.navigation.navigate('RegisterScreen');
-    });
-  }
+    AsyncStorage.setItem(
+      "user_terms_and_conditions",
+      JSON.stringify(userTermsAndConditionsObj),
+      () => {
+        global.syslog += "terms:" + new Date().toString() + ",";
+        AsyncStorage.setItem("Syslog", global.syslog); //Test only
+        this.props.navigation.navigate("RegisterScreen");
+      }
+    );
+  };
 
   _onTermsDisagree = () => {
     console.log("_onTermsDisagree");
     let userTermsAndConditionsObj = {
       termsOfService: false,
     };
-   AsyncStorage.setItem('user_terms_and_conditions', JSON.stringify(userTermsAndConditionsObj));
+    AsyncStorage.setItem(
+      "user_terms_and_conditions",
+      JSON.stringify(userTermsAndConditionsObj)
+    );
 
-   //handle disagree 2:
- //  this.props.navigation.navigate('DeclineScreen');
+    //handle disagree 2:
+    //  this.props.navigation.navigate('DeclineScreen');
 
- //handle disagree 3:
-   this.setState({displayPopup:true});
+    //handle disagree 3:
+    this.setState({ displayPopup: true });
 
-
-//handle disagree 1:
-  //  AsyncStorage.setItem('user_terms_and_conditions', JSON.stringify(userTermsAndConditionsObj), () => {
-  //    Alert.alert('', resources.getString("terms_and_conditions_disagree"));
-   // });
-  }
+    //handle disagree 1:
+    //  AsyncStorage.setItem('user_terms_and_conditions', JSON.stringify(userTermsAndConditionsObj), () => {
+    //    Alert.alert('', resources.getString("terms_and_conditions_disagree"));
+    // });
+  };
 
   toggleLanguage() {
-    if (resources.culture == 'en') { resources.culture = 'fr'; AsyncStorage.setItem('Culture', '2'); } else { resources.culture = 'en'; AsyncStorage.setItem('Culture', '1'); }
+    if (resources.culture == "en") {
+      resources.culture = "fr";
+      AsyncStorage.setItem("Culture", "2");
+    } else {
+      resources.culture = "en";
+      AsyncStorage.setItem("Culture", "1");
+    }
     this.setState({ title: resources.getString("Well-Being Check") });
   }
 
@@ -138,26 +177,26 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
     Linking.openURL(url);
   }
   handlePhonePress(phone, matchIndex /*: number*/) {
-    Linking.openURL('tel:18779499492');
-  };
-    handleTrustCenterPress(name, matchIndex /*: number*/) {
-   //   Alert.alert(`Hello ${name}`);
-      if(name=="Trust Centre"){
-          Linking.openURL('https://www.statcan.gc.ca/eng/trust');
-      }else if(name=="Centre de confiance"){
-          Linking.openURL('https://www.statcan.gc.ca/fra/confiance');
-      }
-       global.resetTimer();
-    };
-     handleTrustCenterPress1() {
-         //   Alert.alert(`Hello ${name}`);
-            if(resources.culture=='fr'){
-                Linking.openURL('https://www.statcan.gc.ca/eng/trust');
-            }else{
-                Linking.openURL('https://www.statcan.gc.ca/fra/confiance');
-            }
-             global.resetTimer();
-          };
+    Linking.openURL("tel:18779499492");
+  }
+  handleTrustCenterPress(name, matchIndex /*: number*/) {
+    //   Alert.alert(`Hello ${name}`);
+    if (name == "Trust Centre") {
+      Linking.openURL("https://www.statcan.gc.ca/eng/trust");
+    } else if (name == "Centre de confiance") {
+      Linking.openURL("https://www.statcan.gc.ca/fra/confiance");
+    }
+    global.resetTimer();
+  }
+  handleTrustCenterPress1() {
+    //   Alert.alert(`Hello ${name}`);
+    if (resources.culture == "fr") {
+      Linking.openURL("https://www.statcan.gc.ca/eng/trust");
+    } else {
+      Linking.openURL("https://www.statcan.gc.ca/fra/confiance");
+    }
+    global.resetTimer();
+  }
   render() {
     // if (!this.state.fontLoaded) {
     //   console.log('fontloading .....')
@@ -166,519 +205,775 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
 
     return (
       <PaperProvider theme={newTheme}>
-
-        <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
+        <SafeAreaConsumer>
+          {(insets) => <View style={{ paddingTop: insets.top }} />}
+        </SafeAreaConsumer>
         <AppBanner />
         <SafeAreaView style={styles.container}>
-
           <View style={styles.headerContainer}>
             <LogoClearSmall />
-            <TouchableOpacity onPress={() => this.toggleLanguage()} style={{ alignSelf: 'flex-end', marginRight: 0 }}
-            accessibilityRole='button'
-            accessible={true}
+            <TouchableOpacity
+              onPress={() => this.toggleLanguage()}
+              hitSlop={{ top: 20, bottom: 20, left: 35, right: 35 }}
+              style={{
+                alignSelf: "flex-end",
+                marginRight: 0,
+              }}
+              accessibilityRole="button"
+              accessible={true}
             >
-              <Text >{resources.getString("Language")}</Text></TouchableOpacity>
+              <Text>{resources.getString("Language")}</Text>
+            </TouchableOpacity>
           </View>
 
-            <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-              <Title style={styles.title}>{resources.getString("terms_and_conditions")}</Title>
+          <ScrollView
+            style={styles.scrollView}
+            showsVerticalScrollIndicator={false}
+          >
+            <Title style={styles.title}>
+              {resources.getString("terms_and_conditions")}
+            </Title>
 
-
-             <Text
-                accessibilityRole='header'
-                accessible={true}
-                accessibilityLabel={resources.getString("terms_and_conditions_content.Disclaimer")}
-                style={styles.ParagraphHeader}
-                >{resources.getString("terms_and_conditions_content.Disclaimer")} </Text>
-
-                <Paragraph style={styles.paragraph}>
-                  <Text>
-
-                 <ParsedText
-                      style={styles.text}
-                      parse={
-                        [
-                          { pattern: /Statistics Act/, style: styles.italic },
-                          { pattern: /Loi sur la statistique/, style: styles.italic },
-                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
-                        ]
-                      }
-                      childrenProps={{ allowFontScaling: false }}
-                    >
-                      {resources.getString("terms_and_conditions_content.Disclaimer.a")}
-
-                    </ParsedText>
-                  </Text>
-                </Paragraph>
-
-
-             <Text
-                accessibilityRole='header'
-                accessible={true}
-                accessibilityLabel={resources.getString("terms_and_conditions_content.T&A")}
-                style={styles.ParagraphHeader}
-                >{resources.getString("terms_and_conditions_content.T&A")} </Text>
-
-                <Paragraph style={styles.paragraph}>
-                  <Text>
-
-                 <ParsedText
-                      style={styles.text}
-                      parse={
-                        [
-                          { pattern: /Statistics Act/, style: styles.italic },
-                          { pattern: /Privacy Act/, style: styles.italic },
-                          { pattern: /Access to Information Act/, style: styles.italic },
-                          { pattern: /Loi sur la statistique/, style: styles.italic },
-                          { pattern: /Loi sur la protection des renseignements personnels/, style: styles.italic },
-                          { pattern: /Loi sur l'accès à l'information/, style: styles.italic },
-                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
-                        ]
-                      }
-                      childrenProps={{ allowFontScaling: false }}
-                    >
-                      {resources.getString("terms_and_conditions_content.T&A.a")}
-
-                    </ParsedText>
-                  </Text>
-                </Paragraph>
-
-              <Text
-                accessibilityRole='header'
-                accessible={true}
-                accessibilityLabel={resources.getString("terms_and_conditions_content.Modif")}
-                style={styles.ParagraphHeader}
-                >{resources.getString("terms_and_conditions_content.Modif")} </Text>
-
-                <Paragraph style={styles.paragraph}>
-                  <Text>
-
-                 <ParsedText
-                      style={styles.text}
-                      parse={
-                        [
-                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
-                        ]
-                      }
-                      childrenProps={{ allowFontScaling: false }}
-                    >
-                      {resources.getString("terms_and_conditions_content.Modif.a")}
-
-                    </ParsedText>
-                  </Text>
-                </Paragraph>
-
-                <Text
-                accessibilityRole='header'
-                accessible={true}
-                accessibilityLabel={resources.getString("terms_and_conditions_content.privacy")}
-                style={styles.ParagraphHeader}
-                >{resources.getString("terms_and_conditions_content.privacy")} </Text>
-
-                <Paragraph style={styles.paragraph}>
-                                  <Text style={{flexWrap: 'wrap',flexDirection:'row'}}>
-
-                                 <ParsedText
-                                      style={styles.text}
-                                      parse={
-                                        [
-                                          { pattern: /Statistics Act/, style: styles.italic },
-                                          { pattern: /Privacy Act/, style: styles.italic },
-                                          { pattern: /Loi sur la statistique/, style: styles.italic },
-                                          { pattern: /Loi sur la protection des renseignements personnels/, style: styles.italic },
-                                          {pattern: /Trust Centre|Centre de confiance/, style: styles.url, onPress: this.handleTrustCenterPress},
-                                        ]
-                                      }
-                                      childrenProps={{ allowFontScaling: false }}
-                                    >
-                                      {this.state.screenReader?resources.getString("terms_and_conditions_content.privacy.a1"):resources.getString("terms_and_conditions_content.privacy.a")}
-                                    </ParsedText>
-                                 </Text>
-                                </Paragraph>
-                                {this.state.screenReader&&<TouchableOpacity accessibilityRole='link' accessible={true}  accessibilityLabel={resources.getString("terms_and_conditions_content.privacy.a4")} onPress={()=>this.handleTrustCenterPress1()} ><Text style={{flexWrap: 'wrap',flexDirection:'row'}}>{resources.getString("terms_and_conditions_content.privacy.a2")}<Text style={styles.url}>{resources.getString("terms_and_conditions_content.privacy.a3")}</Text></Text></TouchableOpacity>}
-
-                <Text
-                accessibilityRole='header'
-                accessible={true}
-                accessibilityLabel={resources.getString("terms_and_conditions_content.confidentiality")}
-                style={styles.ParagraphHeader}
-                >{resources.getString("terms_and_conditions_content.confidentiality")} </Text>
-
-                <Paragraph style={styles.paragraph}>
-                  <Text>
-
-                 <ParsedText
-                      style={styles.text}
-                      parse={
-                        [
-                          { pattern: /Statistics Act/, style: styles.italic },
-                          { pattern: /Loi sur la statistique/, style: styles.italic },
-                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
-                        ]
-                      }
-                      childrenProps={{ allowFontScaling: false }}
-                    >
-                      {resources.getString("terms_and_conditions_content.confidentiality.a")}
-
-                    </ParsedText>
-                  </Text>
-                </Paragraph>
-                <Text
-                accessibilityRole='header'
-                accessible={true}
-                accessibilityLabel={resources.getString("terms_and_conditions_content.language")}
-                style={styles.ParagraphHeader}
-                >{resources.getString("terms_and_conditions_content.language")} </Text>
-
-                <Paragraph style={styles.paragraph}>
-                  <Text>
-
-                 <ParsedText
-                      style={styles.text}
-                      parse={
-                        [
-                          { pattern: /Official Languages Act/, style: styles.italic },
-                          { pattern: /Loi sur les langues officielles/, style: styles.italic },
-                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
-                        ]
-                      }
-                      childrenProps={{ allowFontScaling: false }}
-                    >
-                      {resources.getString("terms_and_conditions_content.language.a")}
-
-                    </ParsedText>
-                  </Text>
-                </Paragraph>
-               <Text
-                accessibilityRole='header'
-                accessible={true}
-                accessibilityLabel={resources.getString("terms_and_conditions_content.accessibility")}
-                style={styles.ParagraphHeader}
-                >{resources.getString("terms_and_conditions_content.accessibility")} </Text>
-
-                <Paragraph style={styles.paragraph}>
-                  <Text>
-
-                 <ParsedText
-                      style={styles.text}
-                      parse={
-                        [
-                          { pattern: /Standard on Optimizing Website and Applications for Mobile Devices/, style: styles.italic },
-                          { pattern: /Norme sur l’optimisation des sites Web et des applications pour appareils mobiles/, style: styles.italic },
-                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
-                        ]
-                      }
-                      childrenProps={{ allowFontScaling: false }}
-                    >{resources.getString("terms_and_conditions_content.accessibility.a")}
-                    </ParsedText>
-                  </Text>
-                </Paragraph>
-               <Text
-                accessibilityRole='header'
-                accessible={true}
-                accessibilityLabel={resources.getString("terms_and_conditions_content.useofcontent")}
-                style={styles.ParagraphHeader}
-                >{resources.getString("terms_and_conditions_content.useofcontent")} </Text>
-
-                <Paragraph style={styles.paragraph}>
-                 <Text>
-                 <ParsedText
-                      style={styles.text}
-                      parse={
-                        [
-                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
-                        ]
-                      }
-                      childrenProps={{ allowFontScaling: false }}
-                    > {resources.getString("terms_and_conditions_content.useofcontent.a")}
-                    </ParsedText>
-                  </Text>
-                </Paragraph>
             <Text
-                accessibilityRole='header'
-                accessible={true}
-                accessibilityLabel={resources.getString("terms_and_conditions_content.uniqueIdentifier")}
-                style={styles.ParagraphHeader}
-                >{resources.getString("terms_and_conditions_content.uniqueIdentifier")} </Text>
+              accessibilityRole="header"
+              accessible={true}
+              accessibilityLabel={resources.getString(
+                "terms_and_conditions_content.Disclaimer"
+              )}
+              style={styles.ParagraphHeader}
+            >
+              {resources.getString("terms_and_conditions_content.Disclaimer")}{" "}
+            </Text>
 
-                <Paragraph style={styles.paragraph}>
-                  <Text>
-                 <ParsedText
-                      style={styles.text}
-                      parse={
-                        [
-                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
-                        ]
-                      }
-                      childrenProps={{ allowFontScaling: false }}
-                    >
-                      {resources.getString("terms_and_conditions_content.uniqueIdentifier.a")}
-                    </ParsedText>
-                  </Text>
-                </Paragraph>
-                <Text
-                accessibilityRole='header'
-                accessible={true}
-                accessibilityLabel={resources.getString("terms_and_conditions_content.Law")}
-                style={styles.ParagraphHeader}
-                >{resources.getString("terms_and_conditions_content.Law")} </Text>
-                <Paragraph style={styles.paragraph}>
-                  <Text>
-                 <ParsedText
-                      style={styles.text}
-                      parse={
-                        [
-                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
-                        ]
-                      }
-                      childrenProps={{ allowFontScaling: false }}
-                    >{resources.getString("terms_and_conditions_content.Law.a")}
-                    </ParsedText>
-                  </Text>
-                </Paragraph>
-                <Text
-                accessibilityRole='header'
-                accessible={true}
-                accessibilityLabel={resources.getString("terms_and_conditions_content.Liability")}
-                style={styles.ParagraphHeader}
-                >{resources.getString("terms_and_conditions_content.Liability")} </Text>
+            <Paragraph style={styles.paragraph}>
+              <Text>
+                <ParsedText
+                  style={styles.text}
+                  parse={[
+                    { pattern: /Statistics Act/, style: styles.italic },
+                    { pattern: /Loi sur la statistique/, style: styles.italic },
+                    {
+                      type: "url",
+                      style: styles.url,
+                      onPress: this.handleUrlPress,
+                    },
+                  ]}
+                  childrenProps={{ allowFontScaling: false }}
+                >
+                  {resources.getString(
+                    "terms_and_conditions_content.Disclaimer.a"
+                  )}
+                </ParsedText>
+              </Text>
+            </Paragraph>
 
-                <Paragraph style={styles.paragraph}>
-                  <Text>
-                 <ParsedText
-                      style={styles.text}
-                      parse={
-                        [
-                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
-                        ]
-                      }
-                      childrenProps={{ allowFontScaling: false }}
-                    >
-                      {resources.getString("terms_and_conditions_content.Liability.a")}
-                    </ParsedText>
-                  </Text>
-                </Paragraph>
-                <Text
-                accessibilityRole='header'
-                accessible={true}
-                accessibilityLabel={resources.getString("terms_and_conditions_content.disclosure")}
-                style={styles.ParagraphHeader}
-                >{resources.getString("terms_and_conditions_content.disclosure")} </Text>
-                <Paragraph style={styles.paragraph}>
-                  <Text>
-                 <ParsedText
-                      style={styles.text}
-                      parse={
-                        [
-                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
-                        ]
-                      }
-                      childrenProps={{ allowFontScaling: false }}
-                    > {resources.getString("terms_and_conditions_content.disclosure.a")}
-                    </ParsedText>
-                  </Text>
-                </Paragraph>
+            <Text
+              accessibilityRole="header"
+              accessible={true}
+              accessibilityLabel={resources.getString(
+                "terms_and_conditions_content.T&A"
+              )}
+              style={styles.ParagraphHeader}
+            >
+              {resources.getString("terms_and_conditions_content.T&A")}{" "}
+            </Text>
 
-                <Text
-                accessibilityRole='header'
-                accessible={true}
-                accessibilityLabel={resources.getString("terms_and_conditions_content.copyright")}
-                style={styles.ParagraphHeader}
-                >{resources.getString("terms_and_conditions_content.copyright")} </Text>
+            <Paragraph style={styles.paragraph}>
+              <Text>
+                <ParsedText
+                  style={styles.text}
+                  parse={[
+                    { pattern: /Statistics Act/, style: styles.italic },
+                    { pattern: /Privacy Act/, style: styles.italic },
+                    {
+                      pattern: /Access to Information Act/,
+                      style: styles.italic,
+                    },
+                    { pattern: /Loi sur la statistique/, style: styles.italic },
+                    {
+                      pattern:
+                        /Loi sur la protection des renseignements personnels/,
+                      style: styles.italic,
+                    },
+                    {
+                      pattern: /Loi sur l'accès à l'information/,
+                      style: styles.italic,
+                    },
+                    {
+                      type: "url",
+                      style: styles.url,
+                      onPress: this.handleUrlPress,
+                    },
+                  ]}
+                  childrenProps={{ allowFontScaling: false }}
+                >
+                  {resources.getString("terms_and_conditions_content.T&A.a")}
+                </ParsedText>
+              </Text>
+            </Paragraph>
 
-                <Paragraph style={styles.paragraph}>
-                  <Text>
-                  <ParsedText
-                      style={styles.text}
-                      parse={
-                        [
-                          { pattern: /Copyright Act of Canada/, style: styles.italic },
-                          { pattern: /Loi sur le droit d'auteur du Canada/, style: styles.italic },
-                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
-                        ]
-                      }
-                      childrenProps={{ allowFontScaling: false }}
-                    >
-                    {resources.getString("terms_and_conditions_content.copyright.a")}
-                    </ParsedText>
-                  </Text>
-                </Paragraph>
-                <Text
-                accessibilityRole='header'
+            <Text
+              accessibilityRole="header"
+              accessible={true}
+              accessibilityLabel={resources.getString(
+                "terms_and_conditions_content.Modif"
+              )}
+              style={styles.ParagraphHeader}
+            >
+              {resources.getString("terms_and_conditions_content.Modif")}{" "}
+            </Text>
+
+            <Paragraph style={styles.paragraph}>
+              <Text>
+                <ParsedText
+                  style={styles.text}
+                  parse={[
+                    {
+                      type: "url",
+                      style: styles.url,
+                      onPress: this.handleUrlPress,
+                    },
+                  ]}
+                  childrenProps={{ allowFontScaling: false }}
+                >
+                  {resources.getString("terms_and_conditions_content.Modif.a")}
+                </ParsedText>
+              </Text>
+            </Paragraph>
+
+            <Text
+              accessibilityRole="header"
+              accessible={true}
+              accessibilityLabel={resources.getString(
+                "terms_and_conditions_content.privacy"
+              )}
+              style={styles.ParagraphHeader}
+            >
+              {resources.getString("terms_and_conditions_content.privacy")}{" "}
+            </Text>
+
+            <Paragraph style={styles.paragraph}>
+              <Text style={{ flexWrap: "wrap", flexDirection: "row" }}>
+                <ParsedText
+                  style={styles.text}
+                  parse={[
+                    { pattern: /Statistics Act/, style: styles.italic },
+                    { pattern: /Privacy Act/, style: styles.italic },
+                    { pattern: /Loi sur la statistique/, style: styles.italic },
+                    {
+                      pattern:
+                        /Loi sur la protection des renseignements personnels/,
+                      style: styles.italic,
+                    },
+                    {
+                      pattern: /Trust Centre|Centre de confiance/,
+                      style: styles.url,
+                      onPress: this.handleTrustCenterPress,
+                    },
+                  ]}
+                  childrenProps={{ allowFontScaling: false }}
+                >
+                  {this.state.screenReader
+                    ? resources.getString(
+                        "terms_and_conditions_content.privacy.a1"
+                      )
+                    : resources.getString(
+                        "terms_and_conditions_content.privacy.a"
+                      )}
+                </ParsedText>
+              </Text>
+            </Paragraph>
+            {this.state.screenReader && (
+              <TouchableOpacity
+                accessibilityRole="link"
                 accessible={true}
-                accessibilityLabel={resources.getString("terms_and_conditions_content.trademark")}
-                style={styles.ParagraphHeader}
-                >{resources.getString("terms_and_conditions_content.trademark")} </Text>
-                <Paragraph style={styles.paragraph}>
-                 <Text>
-                 <ParsedText
-                      style={styles.text}
-                      parse={
-                        [
-                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
-                        ]
-                      }
-                      childrenProps={{ allowFontScaling: false }}
-                    > {resources.getString("terms_and_conditions_content.trademark.a")}
-                    </ParsedText>
+                accessibilityLabel={resources.getString(
+                  "terms_and_conditions_content.privacy.a4"
+                )}
+                onPress={() => this.handleTrustCenterPress1()}
+              >
+                <Text style={{ flexWrap: "wrap", flexDirection: "row" }}>
+                  {resources.getString(
+                    "terms_and_conditions_content.privacy.a2"
+                  )}
+                  <Text style={styles.url}>
+                    {resources.getString(
+                      "terms_and_conditions_content.privacy.a3"
+                    )}
                   </Text>
-                </Paragraph>
-                <Text
-                accessibilityRole='header'
-                accessible={true}
-                accessibilityLabel={resources.getString("terms_and_conditions_content.nowarranties")}
-                style={styles.ParagraphHeader}
-                >{resources.getString("terms_and_conditions_content.nowarranties")} </Text>
-                <Paragraph style={styles.paragraph}>
-                  <Text>
-                 <ParsedText
-                      style={styles.text}
-                      parse={
-                        [
-                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
-                        ]
-                      }
-                      childrenProps={{ allowFontScaling: false }}
-                    > {resources.getString("terms_and_conditions_content.nowarranties.a")}
-                    </ParsedText>
-                  </Text>
-                </Paragraph>
-                <Text
-                accessibilityRole='header'
-                accessible={true}
-                accessibilityLabel={resources.getString("terms_and_conditions_content.indemnity")}
-                style={styles.ParagraphHeader}
-                >{resources.getString("terms_and_conditions_content.indemnity")} </Text>
-                <Paragraph style={styles.paragraph}>
-                <Text>
-                 <ParsedText
-                      style={styles.text}
-                      parse={
-                        [
-                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
-                        ]
-                      }
-                      childrenProps={{ allowFontScaling: false }}>
-                      {resources.getString("terms_and_conditions_content.indemnity.a")}
-                    </ParsedText>
-                  </Text>
-                </Paragraph>
-                <Text
-                accessibilityRole='header'
-                accessible={true}
-                accessibilityLabel={resources.getString("terms_and_conditions_content.restrictions")}
-                style={styles.ParagraphHeader}
-                >{resources.getString("terms_and_conditions_content.restrictions")} </Text>
-                <Paragraph style={styles.paragraph}>
-                  <Text>
-                 <ParsedText
-                      style={styles.text}
-                      parse={
-                        [
-                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
-                        ]
-                      }
-                      childrenProps={{ allowFontScaling: false }}>
-                      {resources.getString("terms_and_conditions_content.restrictions.a")}
-                    </ParsedText>
-                  </Text>
-                </Paragraph>
-               <Text
-                accessibilityRole='header'
-                accessible={true}
-                accessibilityLabel={resources.getString("terms_and_conditions_content.modifications")}
-                style={styles.ParagraphHeader}
-                >{resources.getString("terms_and_conditions_content.modifications")} </Text>
-                <Paragraph style={styles.paragraph}>
-                  <Text>
-                 <ParsedText
-                      style={styles.text}
-                      parse={
-                        [
-                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
-                        ]
-                      }
-                      childrenProps={{ allowFontScaling: false }}>{resources.getString("terms_and_conditions_content.modifications.a")}
-                    </ParsedText>
-                  </Text>
-                </Paragraph>
-               <Text
-                accessibilityRole='header'
-                accessible={true}
-                accessibilityLabel={resources.getString("terms_and_conditions_content.ownership")}
-                style={styles.ParagraphHeader}
-                >{resources.getString("terms_and_conditions_content.ownership")} </Text>
-                <Paragraph style={styles.paragraph}>
-                 <Text>
-                 <ParsedText
-                      style={styles.text}
-                      parse={
-                        [
-                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
-                        ]
-                      }
-                      childrenProps={{ allowFontScaling: false }}>
-                      {resources.getString("terms_and_conditions_content.ownership.a")}
-                    </ParsedText>
-                  </Text>
-                </Paragraph>
-                <Text
-                accessibilityRole='header'
-                accessible={true}
-                accessibilityLabel={resources.getString("terms_and_conditions_content.maintenance")}
-                style={styles.ParagraphHeader}
-                >{resources.getString("terms_and_conditions_content.maintenance")} </Text>
-                <Paragraph style={styles.paragraph}>
-                  <Text>
-                 <ParsedText
-                      style={styles.text}
-                      parse={
-                        [
-                          { type: 'url', style: styles.url, onPress: this.handleUrlPress },
-                        ]
-                      }
-                      childrenProps={{ allowFontScaling: false }}
-                    >
-                      {resources.getString("terms_and_conditions_content.maintenance.a")}
-                    </ParsedText>
-                  </Text>
-                </Paragraph>
-            </ScrollView>
+                </Text>
+              </TouchableOpacity>
+            )}
+
+            <Text
+              accessibilityRole="header"
+              accessible={true}
+              accessibilityLabel={resources.getString(
+                "terms_and_conditions_content.confidentiality"
+              )}
+              style={styles.ParagraphHeader}
+            >
+              {resources.getString(
+                "terms_and_conditions_content.confidentiality"
+              )}{" "}
+            </Text>
+
+            <Paragraph style={styles.paragraph}>
+              <Text>
+                <ParsedText
+                  style={styles.text}
+                  parse={[
+                    { pattern: /Statistics Act/, style: styles.italic },
+                    { pattern: /Loi sur la statistique/, style: styles.italic },
+                    {
+                      type: "url",
+                      style: styles.url,
+                      onPress: this.handleUrlPress,
+                    },
+                  ]}
+                  childrenProps={{ allowFontScaling: false }}
+                >
+                  {resources.getString(
+                    "terms_and_conditions_content.confidentiality.a"
+                  )}
+                </ParsedText>
+              </Text>
+            </Paragraph>
+            <Text
+              accessibilityRole="header"
+              accessible={true}
+              accessibilityLabel={resources.getString(
+                "terms_and_conditions_content.language"
+              )}
+              style={styles.ParagraphHeader}
+            >
+              {resources.getString("terms_and_conditions_content.language")}{" "}
+            </Text>
+
+            <Paragraph style={styles.paragraph}>
+              <Text>
+                <ParsedText
+                  style={styles.text}
+                  parse={[
+                    { pattern: /Official Languages Act/, style: styles.italic },
+                    {
+                      pattern: /Loi sur les langues officielles/,
+                      style: styles.italic,
+                    },
+                    {
+                      type: "url",
+                      style: styles.url,
+                      onPress: this.handleUrlPress,
+                    },
+                  ]}
+                  childrenProps={{ allowFontScaling: false }}
+                >
+                  {resources.getString(
+                    "terms_and_conditions_content.language.a"
+                  )}
+                </ParsedText>
+              </Text>
+            </Paragraph>
+            <Text
+              accessibilityRole="header"
+              accessible={true}
+              accessibilityLabel={resources.getString(
+                "terms_and_conditions_content.accessibility"
+              )}
+              style={styles.ParagraphHeader}
+            >
+              {resources.getString(
+                "terms_and_conditions_content.accessibility"
+              )}{" "}
+            </Text>
+
+            <Paragraph style={styles.paragraph}>
+              <Text>
+                <ParsedText
+                  style={styles.text}
+                  parse={[
+                    {
+                      pattern:
+                        /Standard on Optimizing Website and Applications for Mobile Devices/,
+                      style: styles.italic,
+                    },
+                    {
+                      pattern:
+                        /Norme sur l’optimisation des sites Web et des applications pour appareils mobiles/,
+                      style: styles.italic,
+                    },
+                    {
+                      type: "url",
+                      style: styles.url,
+                      onPress: this.handleUrlPress,
+                    },
+                  ]}
+                  childrenProps={{ allowFontScaling: false }}
+                >
+                  {resources.getString(
+                    "terms_and_conditions_content.accessibility.a"
+                  )}
+                </ParsedText>
+              </Text>
+            </Paragraph>
+            <Text
+              accessibilityRole="header"
+              accessible={true}
+              accessibilityLabel={resources.getString(
+                "terms_and_conditions_content.useofcontent"
+              )}
+              style={styles.ParagraphHeader}
+            >
+              {resources.getString("terms_and_conditions_content.useofcontent")}{" "}
+            </Text>
+
+            <Paragraph style={styles.paragraph}>
+              <Text>
+                <ParsedText
+                  style={styles.text}
+                  parse={[
+                    {
+                      type: "url",
+                      style: styles.url,
+                      onPress: this.handleUrlPress,
+                    },
+                  ]}
+                  childrenProps={{ allowFontScaling: false }}
+                >
+                  {" "}
+                  {resources.getString(
+                    "terms_and_conditions_content.useofcontent.a"
+                  )}
+                </ParsedText>
+              </Text>
+            </Paragraph>
+            <Text
+              accessibilityRole="header"
+              accessible={true}
+              accessibilityLabel={resources.getString(
+                "terms_and_conditions_content.uniqueIdentifier"
+              )}
+              style={styles.ParagraphHeader}
+            >
+              {resources.getString(
+                "terms_and_conditions_content.uniqueIdentifier"
+              )}{" "}
+            </Text>
+
+            <Paragraph style={styles.paragraph}>
+              <Text>
+                <ParsedText
+                  style={styles.text}
+                  parse={[
+                    {
+                      type: "url",
+                      style: styles.url,
+                      onPress: this.handleUrlPress,
+                    },
+                  ]}
+                  childrenProps={{ allowFontScaling: false }}
+                >
+                  {resources.getString(
+                    "terms_and_conditions_content.uniqueIdentifier.a"
+                  )}
+                </ParsedText>
+              </Text>
+            </Paragraph>
+            <Text
+              accessibilityRole="header"
+              accessible={true}
+              accessibilityLabel={resources.getString(
+                "terms_and_conditions_content.Law"
+              )}
+              style={styles.ParagraphHeader}
+            >
+              {resources.getString("terms_and_conditions_content.Law")}{" "}
+            </Text>
+            <Paragraph style={styles.paragraph}>
+              <Text>
+                <ParsedText
+                  style={styles.text}
+                  parse={[
+                    {
+                      type: "url",
+                      style: styles.url,
+                      onPress: this.handleUrlPress,
+                    },
+                  ]}
+                  childrenProps={{ allowFontScaling: false }}
+                >
+                  {resources.getString("terms_and_conditions_content.Law.a")}
+                </ParsedText>
+              </Text>
+            </Paragraph>
+            <Text
+              accessibilityRole="header"
+              accessible={true}
+              accessibilityLabel={resources.getString(
+                "terms_and_conditions_content.Liability"
+              )}
+              style={styles.ParagraphHeader}
+            >
+              {resources.getString("terms_and_conditions_content.Liability")}{" "}
+            </Text>
+
+            <Paragraph style={styles.paragraph}>
+              <Text>
+                <ParsedText
+                  style={styles.text}
+                  parse={[
+                    {
+                      type: "url",
+                      style: styles.url,
+                      onPress: this.handleUrlPress,
+                    },
+                  ]}
+                  childrenProps={{ allowFontScaling: false }}
+                >
+                  {resources.getString(
+                    "terms_and_conditions_content.Liability.a"
+                  )}
+                </ParsedText>
+              </Text>
+            </Paragraph>
+            <Text
+              accessibilityRole="header"
+              accessible={true}
+              accessibilityLabel={resources.getString(
+                "terms_and_conditions_content.disclosure"
+              )}
+              style={styles.ParagraphHeader}
+            >
+              {resources.getString("terms_and_conditions_content.disclosure")}{" "}
+            </Text>
+            <Paragraph style={styles.paragraph}>
+              <Text>
+                <ParsedText
+                  style={styles.text}
+                  parse={[
+                    {
+                      type: "url",
+                      style: styles.url,
+                      onPress: this.handleUrlPress,
+                    },
+                  ]}
+                  childrenProps={{ allowFontScaling: false }}
+                >
+                  {" "}
+                  {resources.getString(
+                    "terms_and_conditions_content.disclosure.a"
+                  )}
+                </ParsedText>
+              </Text>
+            </Paragraph>
+
+            <Text
+              accessibilityRole="header"
+              accessible={true}
+              accessibilityLabel={resources.getString(
+                "terms_and_conditions_content.copyright"
+              )}
+              style={styles.ParagraphHeader}
+            >
+              {resources.getString("terms_and_conditions_content.copyright")}{" "}
+            </Text>
+
+            <Paragraph style={styles.paragraph}>
+              <Text>
+                <ParsedText
+                  style={styles.text}
+                  parse={[
+                    {
+                      pattern: /Copyright Act of Canada/,
+                      style: styles.italic,
+                    },
+                    {
+                      pattern: /Loi sur le droit d'auteur du Canada/,
+                      style: styles.italic,
+                    },
+                    {
+                      type: "url",
+                      style: styles.url,
+                      onPress: this.handleUrlPress,
+                    },
+                  ]}
+                  childrenProps={{ allowFontScaling: false }}
+                >
+                  {resources.getString(
+                    "terms_and_conditions_content.copyright.a"
+                  )}
+                </ParsedText>
+              </Text>
+            </Paragraph>
+            <Text
+              accessibilityRole="header"
+              accessible={true}
+              accessibilityLabel={resources.getString(
+                "terms_and_conditions_content.trademark"
+              )}
+              style={styles.ParagraphHeader}
+            >
+              {resources.getString("terms_and_conditions_content.trademark")}{" "}
+            </Text>
+            <Paragraph style={styles.paragraph}>
+              <Text>
+                <ParsedText
+                  style={styles.text}
+                  parse={[
+                    {
+                      type: "url",
+                      style: styles.url,
+                      onPress: this.handleUrlPress,
+                    },
+                  ]}
+                  childrenProps={{ allowFontScaling: false }}
+                >
+                  {" "}
+                  {resources.getString(
+                    "terms_and_conditions_content.trademark.a"
+                  )}
+                </ParsedText>
+              </Text>
+            </Paragraph>
+            <Text
+              accessibilityRole="header"
+              accessible={true}
+              accessibilityLabel={resources.getString(
+                "terms_and_conditions_content.nowarranties"
+              )}
+              style={styles.ParagraphHeader}
+            >
+              {resources.getString("terms_and_conditions_content.nowarranties")}{" "}
+            </Text>
+            <Paragraph style={styles.paragraph}>
+              <Text>
+                <ParsedText
+                  style={styles.text}
+                  parse={[
+                    {
+                      type: "url",
+                      style: styles.url,
+                      onPress: this.handleUrlPress,
+                    },
+                  ]}
+                  childrenProps={{ allowFontScaling: false }}
+                >
+                  {" "}
+                  {resources.getString(
+                    "terms_and_conditions_content.nowarranties.a"
+                  )}
+                </ParsedText>
+              </Text>
+            </Paragraph>
+            <Text
+              accessibilityRole="header"
+              accessible={true}
+              accessibilityLabel={resources.getString(
+                "terms_and_conditions_content.indemnity"
+              )}
+              style={styles.ParagraphHeader}
+            >
+              {resources.getString("terms_and_conditions_content.indemnity")}{" "}
+            </Text>
+            <Paragraph style={styles.paragraph}>
+              <Text>
+                <ParsedText
+                  style={styles.text}
+                  parse={[
+                    {
+                      type: "url",
+                      style: styles.url,
+                      onPress: this.handleUrlPress,
+                    },
+                  ]}
+                  childrenProps={{ allowFontScaling: false }}
+                >
+                  {resources.getString(
+                    "terms_and_conditions_content.indemnity.a"
+                  )}
+                </ParsedText>
+              </Text>
+            </Paragraph>
+            <Text
+              accessibilityRole="header"
+              accessible={true}
+              accessibilityLabel={resources.getString(
+                "terms_and_conditions_content.restrictions"
+              )}
+              style={styles.ParagraphHeader}
+            >
+              {resources.getString("terms_and_conditions_content.restrictions")}{" "}
+            </Text>
+            <Paragraph style={styles.paragraph}>
+              <Text>
+                <ParsedText
+                  style={styles.text}
+                  parse={[
+                    {
+                      type: "url",
+                      style: styles.url,
+                      onPress: this.handleUrlPress,
+                    },
+                  ]}
+                  childrenProps={{ allowFontScaling: false }}
+                >
+                  {resources.getString(
+                    "terms_and_conditions_content.restrictions.a"
+                  )}
+                </ParsedText>
+              </Text>
+            </Paragraph>
+            <Text
+              accessibilityRole="header"
+              accessible={true}
+              accessibilityLabel={resources.getString(
+                "terms_and_conditions_content.modifications"
+              )}
+              style={styles.ParagraphHeader}
+            >
+              {resources.getString(
+                "terms_and_conditions_content.modifications"
+              )}{" "}
+            </Text>
+            <Paragraph style={styles.paragraph}>
+              <Text>
+                <ParsedText
+                  style={styles.text}
+                  parse={[
+                    {
+                      type: "url",
+                      style: styles.url,
+                      onPress: this.handleUrlPress,
+                    },
+                  ]}
+                  childrenProps={{ allowFontScaling: false }}
+                >
+                  {resources.getString(
+                    "terms_and_conditions_content.modifications.a"
+                  )}
+                </ParsedText>
+              </Text>
+            </Paragraph>
+            <Text
+              accessibilityRole="header"
+              accessible={true}
+              accessibilityLabel={resources.getString(
+                "terms_and_conditions_content.ownership"
+              )}
+              style={styles.ParagraphHeader}
+            >
+              {resources.getString("terms_and_conditions_content.ownership")}{" "}
+            </Text>
+            <Paragraph style={styles.paragraph}>
+              <Text>
+                <ParsedText
+                  style={styles.text}
+                  parse={[
+                    {
+                      type: "url",
+                      style: styles.url,
+                      onPress: this.handleUrlPress,
+                    },
+                  ]}
+                  childrenProps={{ allowFontScaling: false }}
+                >
+                  {resources.getString(
+                    "terms_and_conditions_content.ownership.a"
+                  )}
+                </ParsedText>
+              </Text>
+            </Paragraph>
+            <Text
+              accessibilityRole="header"
+              accessible={true}
+              accessibilityLabel={resources.getString(
+                "terms_and_conditions_content.maintenance"
+              )}
+              style={styles.ParagraphHeader}
+            >
+              {resources.getString("terms_and_conditions_content.maintenance")}{" "}
+            </Text>
+            <Paragraph style={styles.paragraph}>
+              <Text>
+                <ParsedText
+                  style={styles.text}
+                  parse={[
+                    {
+                      type: "url",
+                      style: styles.url,
+                      onPress: this.handleUrlPress,
+                    },
+                  ]}
+                  childrenProps={{ allowFontScaling: false }}
+                >
+                  {resources.getString(
+                    "terms_and_conditions_content.maintenance.a"
+                  )}
+                </ParsedText>
+              </Text>
+            </Paragraph>
+          </ScrollView>
         </SafeAreaView>
-              <Modal animationType="slide" transparent={true} style={{flex:1,alignItems:'center',justifyContent:'center',borderColor:'blue'}}
-                     visible={this.state.displayPopup}
-                     onRequestClose={() => {
-                         // Alert.alert("Modal has been closed.");
-                     }}
-               >
-                        <View style={[styles.modalView,{marginTop:pheight}]}>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          style={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            borderColor: "blue",
+          }}
+          visible={this.state.displayPopup}
+          onRequestClose={() => {
+            // Alert.alert("Modal has been closed.");
+          }}
+        >
+          <View style={[styles.modalView, { marginTop: pheight }]}>
+            <Text style={styles.popupText}>
+              {resources.getString("declinemsg1")}
+            </Text>
+            <TouchableOpacity
+              onPress={() => Linking.openURL("tel:18779499492")}
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+            >
+              <Text style={styles.highlightText}>1-877-949-9492</Text>
+            </TouchableOpacity>
+            <Text style={styles.popupText}>
+              {resources.getString("declinemsg2")}
+            </Text>
 
-                             <Text style={styles.popupText}>{resources.getString("declinemsg1")}</Text>
-                             <TouchableOpacity onPress={() => Linking.openURL('tel:18779499492')}   hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}>
-                                     <Text style={styles.highlightText}>1-877-949-9492</Text>
-                             </TouchableOpacity>
-                             <Text style={styles.popupText}>{resources.getString("declinemsg2")}</Text>
-
-                              <TouchableOpacity onPress={()=>this.setState({displayPopup:false})} style={{ alignSelf:'flex-end',marginRight:40}}>
-                               <Text style={styles.popupBtn}>{resources.getString("ok")}</Text>
-                              </TouchableOpacity>
-
-                        </View>
-              </Modal>
+            <TouchableOpacity
+              onPress={() => this.setState({ displayPopup: false })}
+              style={{ alignSelf: "flex-end", marginRight: 40 }}
+            >
+              <Text style={styles.popupBtn}>{resources.getString("ok")}</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
 
         <View style={styles.footer}>
-          <Button style={styles.btnDecline}
+          <Button
+            style={styles.btnDecline}
             mode="contained"
-            onPress={this._onTermsDisagree}>
-            <Text style={styles.whiteText}>{resources.getString("gl.decline")}</Text>
+            onPress={this._onTermsDisagree}
+          >
+            <Text style={styles.whiteText}>
+              {resources.getString("gl.decline")}
+            </Text>
           </Button>
-          <Button style={styles.btnAgree}
+          <Button
+            style={styles.btnAgree}
             mode="contained"
-            onPress={this._onTermsAgree}>
-            <Text style={styles.whiteText}>{resources.getString("gl.agree")}</Text>
+            onPress={this._onTermsAgree}
+          >
+            <Text style={styles.whiteText}>
+              {resources.getString("gl.agree")}
+            </Text>
           </Button>
         </View>
-        <SafeAreaConsumer>{insets => <View style={{ paddingTop: insets.top }} />}</SafeAreaConsumer>
+        <SafeAreaConsumer>
+          {(insets) => <View style={{ paddingTop: insets.top }} />}
+        </SafeAreaConsumer>
       </PaperProvider>
     );
   }
@@ -686,25 +981,25 @@ class TermsOfServiceScreen extends React.Component<Props, TermsOfServiceState> {
 
 const styles = StyleSheet.create({
   headerContainer: {
-    flexDirection: 'row',
-    width: '100%',
+    flexDirection: "row",
+    width: "100%",
     height: 24,
     marginLeft: 20,
     marginTop: 15,
-    justifyContent: 'space-between'
+    justifyContent: "space-between",
   },
 
-  ParagraphHeader:{
-    fontWeight: 'bold',
-    color: '#66cc99',
+  ParagraphHeader: {
+    fontWeight: "bold",
+    color: "#66cc99",
     //fontFamily: 'Lato-Bold',
-    fontSize: 18
+    fontSize: 18,
   },
   footer: {
-    flexDirection: 'row',
-    width: '100%',
+    flexDirection: "row",
+    width: "100%",
     alignItems: "flex-end",
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
     paddingRight: 20,
   },
   btnDecline: {
@@ -719,96 +1014,100 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 22,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginTop: 40,
-    color: '#000',
-   // fontFamily: 'Lato-Black',
+    color: "#000",
+    // fontFamily: 'Lato-Black',
   },
   label: {
     color: newTheme.colors.secondary,
   },
   whiteText: {
-    color: newTheme.colors.whiteText
+    color: newTheme.colors.whiteText,
   },
   container: {
     flex: 1,
-    width: (Dimensions.get('window').width) - 50,
+    width: Dimensions.get("window").width - 50,
   },
   paragraph: {
-    alignSelf: 'baseline',
+    alignSelf: "baseline",
     fontSize: 15,
-    width: '100%',
-    direction: "ltr"
+    width: "100%",
+    direction: "ltr",
   },
   scrollView: {
-    width: (Dimensions.get('window').width) - 50,
+    width: Dimensions.get("window").width - 50,
     marginHorizontal: 20,
-    marginTop: 20
+    marginTop: 20,
   },
   text: {
-    color: '#000',
-   // fontFamily: 'Lato-Regular',
+    color: "#000",
+    // fontFamily: 'Lato-Regular',
   },
   italic: {
-    fontStyle: 'italic',
+    fontStyle: "italic",
     //fontFamily: 'Lato-Italic'
   },
   bold: {
-    fontWeight: 'bold',
-    color: '#66cc99',
+    fontWeight: "bold",
+    color: "#66cc99",
     //fontFamily: 'Lato-Bold',
-    fontSize: 18
+    fontSize: 18,
   },
   url: {
-    color: 'blue',
-    textDecorationLine: 'underline',
+    color: "blue",
+    textDecorationLine: "underline",
   },
-   centeredView: {
-         flex: 1,
-         justifyContent: "center",
-         alignItems: "center",
-         marginTop: 22
-      },
-   modalView: {
-       borderWidth:1,borderColor:'lightgray',
-       alignSelf:'center',
-       marginTop:200,
-       justifyContent:'center',
-       width:'80%',
-       backgroundColor: "white",
-       borderRadius: 5,
-       padding: 15,
-       alignItems: "center",
-       shadowColor: "#000",
-       shadowOffset: {
-         width: 0,
-         height: 2
-       },
-       shadowOpacity: 0.25,
-       shadowRadius: 3.84,
-       elevation: 5
-     },
-     popupText: {
-       //  color: '#66cc99',
-         fontSize: 18,flexWrap:'wrap',
-        // fontWeight:'bold'
-        alignSelf:'flex-start'
-       },
-     highlightText:{
-         fontSize:20,
-         color: '#000',fontWeight:'bold',
-         marginTop:20,marginBottom:20,
-         alignSelf:'center'
-       },
-     popupBtn:{
-          fontSize: 18,marginTop:20,
-          fontWeight:'bold',color: '#66cc99',
-     }
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    borderWidth: 1,
+    borderColor: "lightgray",
+    alignSelf: "center",
+    marginTop: 200,
+    justifyContent: "center",
+    width: "80%",
+    backgroundColor: "white",
+    borderRadius: 5,
+    padding: 15,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  popupText: {
+    //  color: '#66cc99',
+    fontSize: 18,
+    flexWrap: "wrap",
+    // fontWeight:'bold'
+    alignSelf: "flex-start",
+  },
+  highlightText: {
+    fontSize: 20,
+    color: "#000",
+    fontWeight: "bold",
+    marginTop: 20,
+    marginBottom: 20,
+    alignSelf: "center",
+  },
+  popupBtn: {
+    fontSize: 18,
+    marginTop: 20,
+    fontWeight: "bold",
+    color: "#66cc99",
+  },
 });
 
 export default memo(TermsOfServiceScreen);
-
-
 
 //            {(this.state.asgree)?null:<View style={{flex:1,position: 'absolute', top: '3%', left: '3%',width:'100%',height:'100%',borderWidth:1,borderColor:'red',backgroundColor:'lightgray'}}>
 //               <View style={{ position: 'absolute', top: '30%', left: '20%', zIndex: 20,backgroundColor:'white',width:240,height:300,opacity:0.9 }}>
