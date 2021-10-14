@@ -137,6 +137,7 @@ class ForgotPasswordChangeScreen extends React.Component<Props, ForgotPasswordCh
      let resultAsObj = JSON.parse(result);
      let secQue = resultAsObj.security_question;
      let secAnsw = resultAsObj.security_answer;
+     let secQueId=resultAsObj.security_question_id;
      //first hash the password as md5
      let passwordHashed = md5.hex_md5(this.state.password);
      let userAccountObj = {
