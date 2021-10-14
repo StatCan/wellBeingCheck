@@ -102,6 +102,7 @@ export async function sendNotificationRepeatly(){
 askPermissions = async () => {
     if(Platform.OS=='android')return true;
     let settings=await Notifications.getPermissionsAsync();
+    if(settings.granted)return true;
     if(settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL){
        return await Notifications.requestPermissionsAsync({
           ios:{
