@@ -97,7 +97,9 @@ async handleSurveyAdone(){
                           passwordHash:hashString(global.password,global.passwordSalt),
                           securityQuestionId:global.securityQuestionId,
                           securityAnswerSalt:global.securityAnswerSalt,
-                          securityAnswerHash:hashString(global.securityAnswer,global.securityAnswerSalt)}
+                          securityAnswerHash:hashString(global.securityAnswer,global.securityAnswerSalt)};
+                  console.log('ddddddata when set',data);
+
                 return fetch(url,{
                       method: 'POST',
                         headers: {
