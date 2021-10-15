@@ -23,16 +23,16 @@ const TimePicker = (props) => {
 
   if (contains(times[1], 'p')||contains(times[1], 'P')){
         var pmTime=times[0];
-        console.log('ttttt----this the add fonction2222',pmTime);
+    //    console.log('ttttt----this the add fonction2222',pmTime);
         times[0]=parseInt(pmTime)+12;
-        console.log('1111111111----this the add after update',times[0]);
+    //    console.log('1111111111----this the add after update',times[0]);
       }
 
   date.setHours(parseInt(times[0]));
 
-  console.log('0- timer props ;',props);
-  console.log('1- timer times ;',times);
-  console.log('3- timepicker    times[0]));',times[0]);
+//  console.log('0- timer props ;',props);
+//  console.log('1- timer times ;',times);
+//  console.log('3- timepicker    times[0]));',times[0]);
 
   date.setMinutes(parseInt(times[1]));
   date.setSeconds(0);

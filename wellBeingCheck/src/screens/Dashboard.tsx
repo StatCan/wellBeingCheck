@@ -307,7 +307,27 @@ class Dashboard extends React.Component<Props, HomeState> {
        else {Alert.alert('',resources.getString("securityIssue"));this.setState({ loaded: false }); return;}
        this.setState({loaded:false});
   }
+ adjustTime(){
+    let awakeHour=global.awakeHour;let sleepHour=global.sleepHour;
 
+         if (Platform.OS === 'ios'){
+               awakeHour=awakeHour.replace('AM','').replace('PM','').trim();
+               sleepHour=sleepHour.replace('AM','').replace('PM','').trim();
+                   if (resources.culture == "fr") {
+
+                    } else {
+                         awakeHour=awakeHour+' AM';
+                         sleepHour=sleepHour+' PM';
+                    }
+         }else{
+                  global.awakeHour=awakeHour;
+                  global.sleepHour=sleepHour;
+         }
+
+
+         this.props.navigation.navigate('SettingsScreen', { refresh: this._refresh });
+
+ }
   render() {
     return (
       <PaperProvider theme={newTheme}>
@@ -325,7 +345,7 @@ class Dashboard extends React.Component<Props, HomeState> {
             {/*-----------Setting button using UX logo ic_setting.png--------*/}
             <View>
               <View>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('SettingsScreen', { refresh: this._refresh })}
+                <TouchableOpacity onPress={() =>this.adjustTime()}
                   style={{ marginRight: 5, marginTop: 50 }}
                   accessible={true}
                   accessibilityLabel={resources.getString("settings")}

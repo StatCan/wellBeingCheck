@@ -62,6 +62,22 @@ class LoginScreen extends React.Component<Props, LoginState> {
     if (this.state.passwordError != '') {
       this.setState({ passwordError: resources.getString("login.Wrongpassword.message") });
     }
+
+    let awakeHour=global.awakeHour;let sleepHour=global.sleepHour;
+         if (Platform.OS === 'ios'){
+                   if (resources.culture == "fr") {console.log('hhhhhhhhhhhhhhhhhh=================');
+                         awakeHour=awakeHour.replace('AM','').replace('PM','').trim();
+                         sleepHour=sleepHour.replace('AM','').replace('PM','').trim();
+                    } else {
+                         awakeHour=awakeHour+' AM';
+                         sleepHour=sleepHour+' PM';
+                    }
+         }else{
+                  global.awakeHour=awakeHour;
+                  global.sleepHour=sleepHour;
+         }
+
+
   }
     componentDidMount() {
       this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);

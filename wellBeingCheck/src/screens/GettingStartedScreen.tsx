@@ -96,6 +96,7 @@ class GettingStartedScreen extends React.Component<Props, GettingStartedState> {
     }
     this.setState({ title: resources.getString("Well-Being Check") });
     this.setState({ tr: resources.getString("getting_started_content") });
+
   }
 
   render() {
