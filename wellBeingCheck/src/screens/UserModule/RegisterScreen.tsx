@@ -192,6 +192,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
   }
 
   _onSignUpPressed = () => {
+    console.log('trimed space:',this.state.securityAnswer,' length=',this.state.securityAnswer);
     const isValid = this._validateForm();
     if (isValid) {
       this._CreateAccount();
@@ -400,7 +401,7 @@ class RegisterScreen extends React.Component<Props, RegisterState> {
                 underlineColor={newTheme.colors.primary}
                 theme={newTheme}
                 value={this.state.securityAnswer}
-                onChangeText={text => this.setState({ securityAnswer: text })}
+                onChangeText={text => this.setState({ securityAnswer: text.trim() })}
                 error={!!this.state.securityAnswerError}
                 errorText={this.state.securityAnswerError}
               />

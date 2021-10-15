@@ -65,6 +65,7 @@ class ForgotPasswordScreen extends React.Component<Props, ForgotPasswordState> {
   }
 
   _onResetPasswordPressed = () => {
+  console.log('trimed space in change;',this.state.securityAnswer,' length=',this.state.securityAnswer);
     AsyncStorage.getItem('user_account', (err, result) => {
       console.log(result);
       if (result) {
@@ -129,7 +130,7 @@ class ForgotPasswordScreen extends React.Component<Props, ForgotPasswordState> {
               label={resources.getString("answer")}
               returnKeyType="next"
               value={this.state.securityAnswer}
-              onChangeText={text => this.setState({ securityAnswer: text })}
+              onChangeText={text => this.setState({ securityAnswer: text.trim() })}
               error={!!this.state.securityAnswerError}
               errorText={this.state.securityAnswerError}
             />
