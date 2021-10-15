@@ -145,19 +145,14 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
           if(pingNum==null)pingNum=2;global.pingNum=pingNum;
 
 // fix for timepicker accessibility
-          if (Platform.OS === 'ios'){
+       if (Platform.OS === 'ios'){
            if (resources.culture == "fr") {
-
             let awakeHour=await AsyncStorage.getItem('AwakeHour');
             if(awakeHour==null)awakeHour='8:00';
             global.awakeHour=awakeHour;
             let sleepHour=await AsyncStorage.getItem('SleepHour');
             if(sleepHour==null)sleepHour='22:00';
             global.sleepHour=sleepHour;
-
-              // global.awakeHour='8:00';
-              // global.sleepHour='22:00';
-              console.log("-------------------fr----------s----------s----------")
             } else {
               let awakeHour=await AsyncStorage.getItem('AwakeHour');
               if(awakeHour==null)awakeHour='8:00 AM';
@@ -165,10 +160,8 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
               let sleepHour=await AsyncStorage.getItem('SleepHour');
               if(sleepHour==null)sleepHour='10:00 PM';
               global.sleepHour=sleepHour;
-              // global.awakeHour='8:00 AM';
-              // global.sleepHour='10:00 PM';
-              console.log("-------------------en----------s----------s----------")
-            } }else{
+            }
+       }else{
           let awakeHour=await AsyncStorage.getItem('AwakeHour');
           if(awakeHour==null)awakeHour='8:00';global.awakeHour=awakeHour;
           let sleepHour=await AsyncStorage.getItem('SleepHour');

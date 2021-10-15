@@ -37,7 +37,6 @@ type SettingsState = {
   titleBackgroundColor: string,
   settingsFirstTime: boolean,
   idle:boolean,
-  tempSleepTime:string
 }
 
 interface Props {
@@ -73,11 +72,8 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
         titleBackgroundColor: "#000",
         settingsFirstTime: false,
         idle:true,
-        tempSleepTime:'',
       };
       is24=resources.culture == 'fr' ? true : false;
-      testDatetime.setHours(22);
-      testDatetime.setMinutes(10);
 
       this.wakeTimeHandler = this.wakeTimeHandler.bind(this);
       this.sleepTimeHandler = this.sleepTimeHandler.bind(this);
@@ -86,22 +82,6 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
 
   componentDidMount() {
        this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
-       var tt= ''
-       console.log('temps time for sleep time',tt);
-       console.log('temps time for sleep time this.state.sleeptime.substring(5,7))',this.state.sleeptime.substring(5,7));
-       console.log('temps time for sleep time (parseInt(this.state.sleeptime.substring(0,2)) + 12).toString())',(parseInt(this.state.sleeptime.substring(0,2)) + 12).toString());
-       console.log('temps time for sleep time this.state.sleeptime)',this.state.sleeptime);
-       this.getPMvalue
-//
-//     AppState.removeEventListener("change", this.handleAppStateChangeInSeeting);
-//     AppState.addEventListener("change", this.handleAppStateChangeInSetting);
-  }
-  getPMvalue(){
-
-    if (this.state.sleeptime.substring(5,7)=='P'){
-      var tt= (parseInt(this.state.sleeptime.substring(0,2)) + 12).toString();
-      this.setState({tempSleepTime:tt})
-}
   }
   componentWillUnmount() {
     //this.handleBackAction();
@@ -121,12 +101,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
   }
 
   async wakeTimeHandler(time) {
-    global.resetTimer();//global.globalTick=0;
-    console.log("wakeup time handler------------------------------------time from time picker before the substring:"+ time)
-    //time = time.substring(0, 5);
-    console.log("wakeup time handler------------------------------------time from time picker:"+ time)
-    console.log("wakeup time handler"+this.state.sleeptime)
-    // TODO: we need to change the validation if this is am-pm
+    global.resetTimer();
      let valid = 0;
      if(resources.culture=="fr"){
              valid = validateSetting(time, this.state.sleeptime, this.state.notificationcount);
@@ -134,21 +109,13 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
             let w=this.timeTo24(time);let s=this.timeTo24(this.state.sleeptime);
             valid = validateSetting(w,s, this.state.notificationcount);
      }
-
-
-    // let valid = validateSetting(time, this.state.sleeptime, this.state.notificationcount);
-    //let valid = 0;
-
-    console.log('validate:------->' + valid);
     if (valid != 0){Alert.alert('', resources.getString("settingValidation"));return;}
 
     this.setState({
       waketime: time,
       wakeTimePickerShow: false,idle:false
     })
-    console.log("Value changed - setting dirty flag");
     this._isDirty = true;
-     console.log('Awake:'+this.state.waketime);
      await this.handleBackAction(1);
      this.setState({idle:true});
   }
@@ -162,17 +129,8 @@ cancelTimeHandler(time) {
   }
 
   async sleepTimeHandler(time) {
-    global.resetTimer();//global.globalTick=0;
-
-    //console.log("get the time substring missing the PM "+time);
+    global.resetTimer();
     time = time.substring(0, 10);
-
-    console.log("get the time substring missing the PM "+time);
-    console.log("get the time substring missing the PM "+time.substring(0, 9));
-
-
-    // console.log("get the time substring missing the PM after substring time.substring(0, 5); "+time);
-    // TODO: we need to change the validation if this is am-pm
      let valid = 0;
      if(resources.culture=="fr"){
          valid = validateSetting(this.state.waketime, time, this.state.notificationcount);
@@ -180,20 +138,12 @@ cancelTimeHandler(time) {
         let w=this.timeTo24(this.state.waketime);let s=this.timeTo24(time);
         valid = validateSetting(w,s, this.state.notificationcount);
      }
-   //   let valid = validateSetting(this.state.waketime, time, this.state.notificationcount);
-   //  let valid = 0;
-     console.log('validate:------->' + valid);
      if (valid != 0){Alert.alert('', resources.getString("settingValidation"));return;}
-
-    console.log('go process');
     this.setState({
                          sleeptime: time,
                          sleepTimePickerShow: false,idle:false
                        });
-
-    console.log("Value changed - setting dirty flag");
     this._isDirty = true;
-    console.log('Sleep:'+this.state.sleeptime);
     await this.handleBackAction(1);
     this.setState({idle:true});
   }
@@ -561,11 +511,25 @@ am_pm_to_hoursSleep(time) {
 
 hours_am_pmSleep(time) {
 
-  var hours = time[0] + time[1];
+ // var hours = time[0] + time[1];
+ // console.log('here the wake time hours change from 24 to ampm:   '+hours);
+
+//  var min = time[3] + time[4];
+//  console.log('here the wake time hours change from 24 to ampm:   '+hours);
+
+//var hours = time[0] + time[1];
+  let short=time[1]==':';
+   var hours = time[0];if(!short)hours+=time[1];
   console.log('here the wake time hours change from 24 to ampm:   '+hours);
 
-  var min = time[3] + time[4];
-  console.log('here the wake time hours change from 24 to ampm:   '+hours);
+
+ // var min = time[3] + time[4];
+  var min='00';
+  if(short)min=time[2] + time[3];
+  else min=time[3] + time[4];
+  console.log('here the wake time mins change from 24 to ampm:   '+min);
+
+
 
   if (hours < 12) {
       //return hours + ':' + min + ' AM';

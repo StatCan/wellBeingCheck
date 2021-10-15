@@ -309,20 +309,75 @@ class Dashboard extends React.Component<Props, HomeState> {
   }
  adjustTime(){
     let awakeHour=global.awakeHour;let sleepHour=global.sleepHour;
+    if (Platform.OS === 'ios'){
+          if (resources.culture == "fr") {
+              if(awakeHour.includes('AM')){
+                    awakeHour=awakeHour.replace('AM','').trim();
+                    console.log('it is AM',awakeHour);
+              }
+              else if(awakeHour.includes('PM')){
+                 let timew=awakeHour.replace('PM','').trim();
+                 let shortw=timew[1]==':';
+                  let awakeHourStr = timew[0];if(!shortw)awakeHourStr+=timew[1];
+                  let awakeHourVal= 12+parseInt(awakeHourStr);if(awakeHourVal>=24)awakeHourVal=0;
+                  var minw='00';
+                  if(shortw)minw=timew[2] + timew[3];
+                  else minw=timew[3] + timew[4];
+                  awakeHour=`${awakeHourVal}:${minw}`;
+                  console.log('awakeHour in french:',awakeHour);
 
-         if (Platform.OS === 'ios'){
-               awakeHour=awakeHour.replace('AM','').replace('PM','').trim();
-               sleepHour=sleepHour.replace('AM','').replace('PM','').trim();
-                   if (resources.culture == "fr") {
+              }
+              if(sleepHour.includes('AM')){
+                  sleepHour=sleepHour.replace('AM','').trim();
+                  console.log('it is AM',sleepHour);
+              }
+               else if(sleepHour.includes('PM')){
+                let time=sleepHour.replace('PM','').trim();
+                let short=time[1]==':';
+                let sleepHourStr = time[0];if(!short)sleepHourStr+=time[1];
+                let sleepHourVal= 12+parseInt(sleepHourStr);if(sleepHourVal>=24)sleepHourVal=0;
+                var min='00';
+                if(short)min=time[2] + time[3];
+                else min=time[3] + time[4];
+                sleepHour=`${sleepHourVal}:${min}`;
+                console.log('sleepHour in french:',sleepHour);
+               }
 
-                    } else {
-                         awakeHour=awakeHour+' AM';
-                         sleepHour=sleepHour+' PM';
-                    }
-         }else{
-                  global.awakeHour=awakeHour;
-                  global.sleepHour=sleepHour;
-         }
+               global.awakeHour=awakeHour;
+               global.sleepHour=sleepHour;
+
+
+          } else {   //English
+                if(!awakeHour.includes('AM') && !awakeHour.includes('PM')){
+                   let timew=awakeHour.trim();
+                   let shortw=timew[1]==':';let apm='AM';
+                   let awakeHourStr = timew[0];if(!shortw)awakeHourStr+=timew[1];
+                   let awakeHourVal= parseInt(awakeHourStr);if(awakeHourVal>=12){awakeHourVal-=12;let apm='PM';}
+                   let minw='00';
+                   if(shortw)minw=timew[2] + timew[3];
+                   else minw=timew[3] + timew[4];
+                   awakeHour=`${awakeHourVal}:${minw} ${apm}`;
+                   console.log('awakeHour in french:',awakeHour);
+                }
+
+                if(!sleepHour.includes('AM') && !sleepHour.includes('PM')){
+                    let times=sleepHour.trim();
+                    let shorts=times[1]==':';let apm='AM';
+                    let sleepHourStr = times[0];if(!shorts)sleepHourStr+=times[1];
+                    let sleepHourVal= parseInt(sleepHourStr);if(sleepHourVal>=12){sleepHourVal-=12;let apm='PM';}
+                    let mins='00';
+                    if(shorts)mins=times[2] + times[3];
+                    else mins=times[3] + times[4];
+                    sleepHour=`${sleepHourVal}:${mins} ${apm}`;
+                    console.log('sleepHour in french:',sleepHour);
+                }
+                 global.awakeHour=awakeHour;
+                 global.sleepHour=sleepHour;
+          }
+    }else{
+       global.awakeHour=awakeHour;
+       global.sleepHour=sleepHour;
+    }
 
 
          this.props.navigation.navigate('SettingsScreen', { refresh: this._refresh });

@@ -4,9 +4,8 @@
     <list default="true" id="7ae1ba63-1f83-4294-a504-a2408dde6aa7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wellBeingCheck/.expo/packager-info.json" beforeDir="false" afterPath="$PROJECT_DIR$/wellBeingCheck/.expo/packager-info.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wellBeingCheck/src/components/TimePicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/wellBeingCheck/src/components/TimePicker.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wellBeingCheck/src/screens/Dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/wellBeingCheck/src/screens/Dashboard.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wellBeingCheck/src/screens/GettingStartedScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/wellBeingCheck/src/screens/GettingStartedScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wellBeingCheck/src/screens/LaunchScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/wellBeingCheck/src/screens/LaunchScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wellBeingCheck/src/screens/UserModule/LoginScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/wellBeingCheck/src/screens/UserModule/LoginScreen.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wellBeingCheck/src/screens/UserModule/SettingsScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/wellBeingCheck/src/screens/UserModule/SettingsScreen.tsx" afterDir="false" />
     </list>
@@ -18,11 +17,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wellBeingCheck/src/screens/UserModule/SettingsScreen.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="556">
-              <caret line="549" column="56" lean-forward="true" selection-start-line="549" selection-start-column="56" selection-end-line="549" selection-end-column="56" />
+            <state relative-caret-position="452">
+              <caret line="547" column="3" lean-forward="true" selection-start-line="533" selection-start-column="2" selection-end-line="547" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -30,8 +29,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wellBeingCheck/src/screens/LaunchScreen.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
-              <caret line="150" column="66" lean-forward="true" selection-start-line="150" selection-start-column="66" selection-end-line="150" selection-end-column="66" />
+            <state relative-caret-position="205">
+              <caret line="148" column="43" selection-start-line="148" selection-start-column="43" selection-end-line="148" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -39,40 +38,27 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wellBeingCheck/src/screens/GettingStartedScreen.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="253">
+            <state relative-caret-position="1455">
               <caret line="97" column="74" selection-start-line="97" selection-start-column="74" selection-end-line="97" selection-end-column="74" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wellBeingCheck/src/screens/Dashboard.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="353" column="72" lean-forward="true" selection-start-line="353" selection-start-column="72" selection-end-line="353" selection-end-column="72" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wellBeingCheck/src/components/TimePicker.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="34" column="2" selection-start-line="34" selection-start-column="2" selection-end-line="34" selection-end-column="2" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wellBeingCheck/src/screens/UserModule/LoginScreen.tsx">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="191">
-              <caret line="48" column="3" lean-forward="true" selection-start-line="48" selection-start-column="3" selection-end-line="48" selection-end-column="3" />
+            <state relative-caret-position="104">
+              <caret line="371" column="38" selection-start-line="371" selection-start-column="38" selection-end-line="371" selection-end-column="38" />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>repla</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -80,11 +66,12 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/wellBeingCheck/src/screens/UserModule/LoginScreen.tsx" />
         <option value="$PROJECT_DIR$/wellBeingCheck/src/components/TimePicker.js" />
         <option value="$PROJECT_DIR$/wellBeingCheck/src/screens/GettingStartedScreen.tsx" />
-        <option value="$PROJECT_DIR$/wellBeingCheck/src/screens/Dashboard.tsx" />
+        <option value="$PROJECT_DIR$/wellBeingCheck/src/screens/UserModule/LoginScreen.tsx" />
+        <option value="$PROJECT_DIR$/wellBeingCheck/src/screens/LaunchScreen.tsx" />
         <option value="$PROJECT_DIR$/wellBeingCheck/src/screens/UserModule/SettingsScreen.tsx" />
+        <option value="$PROJECT_DIR$/wellBeingCheck/src/screens/Dashboard.tsx" />
       </list>
     </option>
   </component>
@@ -99,8 +86,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -152,6 +137,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -204,18 +191,6 @@
     </layout>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/wellBeingCheck/src/utils/schedule.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-11524" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wellBeingCheck/src/screens/UserModule/LoginScreen.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="48" column="3" lean-forward="true" selection-start-line="48" selection-start-column="3" selection-end-line="48" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wellBeingCheck/src/components/TimePicker.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
@@ -223,31 +198,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wellBeingCheck/src/screens/LaunchScreen.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="150" column="66" lean-forward="true" selection-start-line="150" selection-start-column="66" selection-end-line="150" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wellBeingCheck/src/screens/Dashboard.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="353" column="72" lean-forward="true" selection-start-line="353" selection-start-column="72" selection-end-line="353" selection-end-column="72" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wellBeingCheck/src/screens/GettingStartedScreen.tsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="253">
+        <state relative-caret-position="1455">
           <caret line="97" column="74" selection-start-line="97" selection-start-column="74" selection-end-line="97" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wellBeingCheck/src/utils/schedule.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="831" column="49" selection-start-line="831" selection-start-column="44" selection-end-line="831" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wellBeingCheck/src/screens/UserModule/LoginScreen.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="63" column="5" selection-start-line="63" selection-start-column="5" selection-end-line="63" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wellBeingCheck/src/screens/LaunchScreen.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="148" column="43" selection-start-line="148" selection-start-column="43" selection-end-line="148" selection-end-column="43" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/wellBeingCheck/src/screens/UserModule/SettingsScreen.tsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="556">
-          <caret line="549" column="56" lean-forward="true" selection-start-line="549" selection-start-column="56" selection-end-line="549" selection-end-column="56" />
+        <state relative-caret-position="452">
+          <caret line="547" column="3" lean-forward="true" selection-start-line="533" selection-start-column="2" selection-end-line="547" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wellBeingCheck/src/screens/Dashboard.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="371" column="38" selection-start-line="371" selection-start-column="38" selection-end-line="371" selection-end-column="38" />
         </state>
       </provider>
     </entry>
