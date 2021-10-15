@@ -48,7 +48,7 @@ export function checkConnection() {
 }
 
 export function hashString(str, salt) {
-  let str= str.replace(/\s/g, '');
+  str= str.replace(/\s/g, '');
   let a = str.split("").reverse().join("") + salt;
   let b = a.toLowerCase();
   return b;
