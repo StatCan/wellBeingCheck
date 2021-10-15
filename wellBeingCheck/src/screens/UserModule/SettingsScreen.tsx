@@ -588,18 +588,11 @@ hours_am_pmSleep(time) {
       this.setState({ cultureString: 'Français' });
       this.setState({ culture: '2' });
 
-    if (Platform.OS === 'ios'){
-      this.am_pm_to_hourswake(this.state.waketime);
-      this.am_pm_to_hoursSleep(this.state.sleeptime);
-       }
     } else if (c === "1") {
       resources.culture = 'en';
       this.setState({ cultureString: 'English' });
       this.setState({ culture: '1' });
-      if (Platform.OS === 'ios'){
-      this.hours_am_pmWake(this.state.waketime);
-      this.hours_am_pmSleep(this.state.sleeptime);
-      }
+
 
     }
     AsyncStorage.setItem('Culture', c);
@@ -709,10 +702,7 @@ hours_am_pmSleep(time) {
   render() {
     let wakeDesc='';let sleepDesc='';let is24H=this.state.culture=='2';
 
-    if( Platform.OS === 'ios'){
-        wakeDesc=resources.culture=='fr'? this.state.waketime +' h':this.state.waketime;
-        sleepDesc=resources.culture=='fr'? this.state.sleeptime +' h':this.state.sleeptime;
-    }else{
+
         if(is24H){
               wakeDesc=this.state.waketime +' h';
               sleepDesc=this.state.sleeptime +' h';
@@ -727,7 +717,7 @@ hours_am_pmSleep(time) {
             if(ddd2.Hour==0)ddd2.Hour=12;   //Change for QLTY-10
            sleepDesc=ddd2.Hour+':'+ddd2.Minute+' '+apm2;
         }
-    }
+
     let debugButtons;
 
     if (global.debugMode) {
@@ -876,18 +866,7 @@ hours_am_pmSleep(time) {
                     description={wakeDesc}
                     descriptionStyle={styles.descriptionStyle}
                   />
-                       {
-                       Platform.OS === 'ios'?
-                                    <TimePicker
-                                     showTimePicker={this.state.wakeTimePickerShow}
-                                     style={styles.timePicker}
-                                     time={this.state.waketime}
-                                     timeType="wakeTime"
-                                     isVisible={this.state.wakeTimePickerShow}
-                                     handler={this.wakeTimeHandler}
-                                     cancelHandler={this.cancelTimeHandler}
-                                    />
-                                   :
+
                                     <View style={styles.centeredView}>
                                           <Modal
                                            animationType="slide"
@@ -904,7 +883,7 @@ hours_am_pmSleep(time) {
                                                                          />
                                                                    </Modal>
                                                                   </View>
-                                         }
+
                   <List.Item
                    accessible={true}
                    accessibilityRole="timer"
@@ -923,18 +902,7 @@ hours_am_pmSleep(time) {
                     description={sleepDesc}
                     descriptionStyle={styles.descriptionStyle}
                   />
-                         {
-                         Platform.OS === 'ios'?
-                                      <TimePicker
-                                       showTimePicker={this.state.sleepTimePickerShow}
-                                       style={styles.timePicker}
-                                       time={this.state.sleeptime}
-                                       timeType="sleepTime"
-                                       isVisible={this.state.sleepTimePickerShow}
-                                       handler={this.sleepTimeHandler}
-                                       cancelHandler={this.cancelTimeHandler}
-                                       />
-                                       :
+
                                         <View style={styles.centeredView}>
                                                                      <Modal
                                                                        animationType="slide"
@@ -953,7 +921,7 @@ hours_am_pmSleep(time) {
                                                                       />
                                                                 </Modal>
                                                                </View>
-                                         }
+
                 </View>
                 <Divider></Divider>
                 <List.Item
