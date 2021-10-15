@@ -533,11 +533,15 @@ am_pm_to_hoursSleep(time) {
   console.log(' awake input time3:   '+time[3]);
   console.log(' awake input time4:   '+time[4]);
 
-  var hours = time[0] + time[1];
+ // var hours = time[0] + time[1];
+ let short=time[1]==':';
+ var hours=time[0];if(!short)hours+=time[1];
   console.log('here the wake time hours change from 24 to ampm:   '+hours);
 
 
-  var min = time[3] + time[4];
+ // var min = time[3] + time[4];
+ var min='00';
+ if(short)min=time[2]+[time[3];else min=time[3] + time[4];
   console.log('here the wake time mins change from 24 to ampm:   '+min);
 
   if (hours < 12) {
