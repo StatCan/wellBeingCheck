@@ -411,7 +411,7 @@ class AboutScreen extends React.Component<Props, AboutState> {
     alert(msg);
   }
   printLogo=()=>{
-          alert('Scheduled:\r\n'+global.sendouts+'\r\nIndicator:'+global.busy+'\r\nUserId:'+global.userToken+'\r\nSac:'+global.sac);
+          alert('Scheduled:\r\n'+global.sendouts+'\r\nIndicator:'+global.busy+'\r\n');
    }
   render() {
     return (
