@@ -58,7 +58,7 @@ class SettingsScreen extends React.Component<Props, SettingsState> {
       super(SettingsState)
       this.state = {
         numPingsModalShow: false,
-        notificationState:true,// global.notificationState,
+        notificationState:global.notificationState,
         chosenNotificationState: true,
         notification: true,
         waketime: global.awakeHour,
