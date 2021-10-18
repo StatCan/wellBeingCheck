@@ -244,17 +244,18 @@ class LaunchScreen extends React.Component<Props, LaunchState> {
 askPermissions = async () => {
     if(Platform.OS=='android')return true;
     let settings=await Notifications.getPermissionsAsync();
+    if(settings.granted)return true;
     if(settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL){
        return await Notifications.requestPermissionsAsync({
           ios:{
              allowAlert:true,
-             aloowSound:true,
+             allowSound:true,
              allowBadge:true,
              allowAnnouncements:true,
           },
        });
     }
-    return false;
+    return true;
   }
 async checkUpgrade(){
       console.log('Check upgrade');currentVersion='1.3.3'; console.log('TestOnly    old version  >>>>>>>>>>>>>>>>>>>>>>>>:'+currentVersion);
