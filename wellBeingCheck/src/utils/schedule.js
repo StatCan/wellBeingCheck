@@ -102,17 +102,16 @@ export async function sendNotificationRepeatly(){
 askPermissions = async () => {
     if(Platform.OS=='android')return true;
     let settings=await Notifications.getPermissionsAsync();
-    if(settings.granted)return true;
-    if(settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL){
-       return await Notifications.requestPermissionsAsync({
+    if(settings.granted||settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL)return true;
+    return await Notifications.requestPermissionsAsync({
           ios:{
              allowAlert:true,
              allowSound:true,
              allowBadge:true,
              allowAnnouncements:true,
           },
-       });
-    }
+    });
+
     return true;
   };
 //cancell all notifications which were setup before

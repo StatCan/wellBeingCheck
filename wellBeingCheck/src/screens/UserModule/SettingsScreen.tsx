@@ -172,7 +172,7 @@ timeTo24(time) {
     let finalStatus =true;
     if(Platform.OS=='ios'){
       let settings=await Notifications.getPermissionsAsync();
-      if(!settings.granted && settings.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL){
+      if(!settings.granted || settings.ios?.status !== Notifications.IosAuthorizationStatus.PROVISIONAL){
          finalStatus= await Notifications.requestPermissionsAsync({
             ios:{
                allowAlert:true,
