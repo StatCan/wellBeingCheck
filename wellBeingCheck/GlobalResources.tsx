@@ -944,6 +944,13 @@ export const resources = {
             "Adultes : Textez MIEUX au 741741\n\n"+
             "Intervenants de première ligne :Textez FRONTLINE au 741741",
 
+            "faq.c6.q1.a0":"N’hésitez pas à utiliser l’une des ressources suivantes ou à communiquer avec un professionnel de la santé:\n",
+            "faq.c6.q1.a1": "Mental Health and Wellness\n",
+            "faq.c6.q1.a2":"Mental health and wellness resources compiled by the Government of Canada\n",
+            "faq.c6.q1.a3":"Wellness Together Canada\n",
+            "faq.c6.q1.a4":"Mental health and substance use support, resources, and counselling with a mental health professional\n",
+            "faq.c6.q1.a5":"Adults: Text WELLNESS to 741741\n",
+            "faq.c6.q1.a6":"Front Line Workers: Text FRONTLINE to 741741",
 
 
 
