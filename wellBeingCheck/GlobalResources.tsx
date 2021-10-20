@@ -949,7 +949,7 @@ export const resources = {
             "faq.c6.q1.a2":"Ressources sur la santé mentale et le bien-être compilées par le gouvernement du Canada\n",
             "faq.c6.q1.a3":"Espace mieux-être Canada\n",
             "faq.c6.q1.a4":"Un service de soutien en matière de santé mentale et d’abus d’alcool ou d’autres drogues, des ressources et des consultations avec un professionnel de la santé mentale\n",
-            "faq.c6.q1.a5":"Textez MIEUX au 741741\n",
+            "faq.c6.q1.a5":"Adultes : Textez MIEUX au 741741\n",
             "faq.c6.q1.a6":"Intervenants de première ligne :Textez FRONTLINE au 741741",
 
 
